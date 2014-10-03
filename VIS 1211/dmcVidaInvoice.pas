@@ -6,8 +6,8 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, Controls, Dialogs,
   SqlTimSt, kbmMemTable, ComCtrls, Variants,
-  clTcpClient, clFtp, Forms,
-  clFTPUtils, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+   Forms,
+   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   StdCtrls, Math, DBCtrls, DateUtils, QImport3XLS, QImport3, QImport3ASCII,
@@ -69,7 +69,6 @@ type
     QExport3XLS1: TQExport4XLS;
     QExport3ASCII1: TQExport4ASCII;
     QExport3ASCII2: TQExport4ASCII;
-    clFTP: TclFtp;
     cdsInvoiceHead: TFDQuery;
     cdsInvoiceHeadInternalInvoiceNo: TIntegerField;
     cdsInvoiceHeadInvoiceType: TIntegerField;

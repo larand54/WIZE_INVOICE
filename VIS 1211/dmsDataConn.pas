@@ -56,7 +56,7 @@ type
     procedure InitProcedure(Proc: TFDStoredProc);
     function  NextSecondMaxNo(const TableName: String; const PrimaryKeyValue: Integer): Integer ;
     function  Get_AD_Name : String ;
-    procedure GetUserNameLoggedIn(Var UserName, UserPswd : String;Const PFD_Name : String) ;
+    procedure GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
 
     function  GetCurrentPkgNo(const ClientNo, NoOfPkgNo : Integer): Integer;
     function  GetCompanyName (CompanyNo : Integer) : String ;
@@ -124,7 +124,7 @@ Begin
  sq_GetLoggedInUser.Close ;
 End ;
 
-procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd : String;Const PFD_Name : String) ;
+procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
 Var AD_Name : String ;
 Begin
  sq_GetLoggedInUser.Open ;
@@ -133,8 +133,8 @@ Begin
    else
     AD_Name:= '-' ;
 // ShowMessage('AD_Name = '+AD_Name) ;
- if Length(PFD_Name) > 0 then
-  AD_Name:= PFD_Name ;
+ if Length(pAD_Name) > 0 then
+  AD_Name:= pAD_Name ;
  sq_GetLoggedInUser.Close ;
  if AD_Name <> '-' then
  Begin

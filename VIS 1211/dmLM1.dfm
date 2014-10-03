@@ -353,8 +353,8 @@ object daMoLM1: TdaMoLM1
       'CASE'
       '-- use sub query to get volume if  not packages'
       'WHEN  UN.VolumeUnitName = '#39'Packages'#39' THEN COUNT(LD.LOADDETAILNO)'
-      'WHEN  UN.VolumeUnitName = '#39'm3 FDxaL'#39' THEN SUM(PTD.m3Actual)'
-      'WHEN  UN.VolumeUnitName = '#39'm3 FDxnL'#39' THEN SUM(PTD.m3Actual)'
+      'WHEN  UN.VolumeUnitName = '#39'm3 aDxaL'#39' THEN SUM(PTD.m3Actual)'
+      'WHEN  UN.VolumeUnitName = '#39'm3 aDxnL'#39' THEN SUM(PTD.m3Actual)'
       'WHEN  UN.VolumeUnitName = '#39'm3 nDxnL'#39' THEN SUM(PTD.m3Nominal)'
       'WHEN  UN.VolumeUnitName = '#39'm3 nDxaL'#39' THEN SUM(PTD.m3Nominal)'
       
@@ -612,7 +612,7 @@ object daMoLM1: TdaMoLM1
       
         'WHEN  UN.VolumeUnitName = '#39'Packages'#39' THEN COUNT( LD.LOADDETAILNO' +
         ')'
-      'WHEN  UN.VolumeUnitName = '#39'm3 FDxaL'#39' THEN SUM(PTD.m3Actual)'
+      'WHEN  UN.VolumeUnitName = '#39'm3 aDxaL'#39' THEN SUM(PTD.m3Actual)'
       'WHEN  UN.VolumeUnitName = '#39'm3 nDxnL'#39' THEN SUM(PTD.m3Nominal)'
       
         'WHEN  UN.VolumeUnitName = '#39'Lopm a'#39' THEN SUM(PTD.LinealMeterActua' +

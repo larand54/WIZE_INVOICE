@@ -1,0 +1,8 @@
+Server=CARMAK-FASTER\SQLEXPRESS
+Database=vis_vida
+OSAuthent=No
+MetaDefCatalog=vis_vida
+MetaDefSchema=dbo
+User_Name=sa
+Password=woods2011
+DriverID=MSSQL

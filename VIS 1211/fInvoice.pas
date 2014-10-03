@@ -33,7 +33,8 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu ;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
+  System.Actions ;
 
 type
   TfrmInvoice = class(TForm)
@@ -3082,7 +3083,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxL' then
      Begin
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(M3Net*cdsInvoiceDetailPrice.AsFloat, -3) ;
 //      cdsInvoiceDetailProductValue.AsFloat                := M3Net *  cdsInvoiceDetailPrice.AsFloat ;
@@ -3535,7 +3536,7 @@ Function GetTotalUnitsPerLOStep1 : Double ;
 Begin
  with dmVidaInvoice do
  begin
-    if sq_GetFreightCostTemplateUnitName.AsString = 'm3 FDxaL' then
+    if sq_GetFreightCostTemplateUnitName.AsString = 'm3 aDxL' then
      Begin
       Result  := GetTotalUnitsForLO('ActualNetM3') ;
 //      cdsInvoiceDetailProductValue.AsFloat:= RoundTo(TotalUnitsPerLO * cdsInvoiceDetailPrice.AsFloat, -3) ;
@@ -3623,7 +3624,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxL' then
      Begin
 //      TotalUnitsPerLO  := GetTotalUnitsForLO('ActualNetM3') ;
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(TotalUnitsPerLO * cdsInvoiceDetailPrice.AsFloat, -3) ;
@@ -3721,7 +3722,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxL' then
      Begin
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(M3Net*cdsInvoiceDetailPrice.AsFloat, -3) ;
 //      cdsInvoiceDetailProductValue.AsFloat                := M3Net *  cdsInvoiceDetailPrice.AsFloat ;
@@ -3774,7 +3775,7 @@ Begin
     sq_GetPkgType_Invoice.Open ;
 
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxL' then
      Begin
       TempVal := sq_GetPkgType_InvoiceAM3.AsFloat ;
      End
@@ -3893,7 +3894,7 @@ Begin
     cdsInvoiceDetailVolumeUnit.AsString                 := cdsInvoiceLOInvoiceAdditionUnitNo.AsString ;//Get unit name ;
 //    cdsInvoiceDetailProductValue.AsFloat                := cdsInvoiceLOInvoiceAdditionAmount.AsFloat ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxL' then
      Begin
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(M3Net*cdsInvoiceDetailPrice.AsFloat, -2) ;
 //      cdsInvoiceDetailProductValue.AsFloat                := M3Net *  cdsInvoiceDetailPrice.AsFloat ;

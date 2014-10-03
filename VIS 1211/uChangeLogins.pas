@@ -7,7 +7,7 @@ uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
 
 type
   TOKHelpBottomDlg = class(TForm)
-    EFD_Name: TEdit;
+    eAD_Name: TEdit;
     Button1: TButton;
     Label1: TLabel;
     eDatabas: TEdit;
@@ -40,7 +40,7 @@ end;
 procedure TOKHelpBottomDlg.Button1Click(Sender: TObject);
 begin
   inherited;
- EFD_Name.Text:= dmsConnector.Get_AD_Name ;
+  eAD_Name.Text:= dmsConnector.Get_AD_Name ;
 end;
 
 procedure TOKHelpBottomDlg.Button2Click(Sender: TObject);

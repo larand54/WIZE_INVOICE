@@ -115,7 +115,7 @@
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -238,7 +238,7 @@
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -1000,15 +1000,15 @@
       'CU.CurrencyNo,'
       ''
       'CU.CurrencyName'#9#9#9'AS CURRENCYNAME,'
-      'FDR.AddressName'#9#9#9'AS BILL_ADDRESS_NAME,'
-      'FDR.AddressLine1'#9#9'AS BILL_ADDRESSLINE1,'
-      'FDR.AddressLine2'#9#9'AS BILL_ADDRESSLINE2,'
-      'FDR.AddressLine3'#9#9'AS BILL_ADDRESSLINE3,'
-      'FDR.AddressLine4'#9#9'AS BILL_ADDRESSLINE4,'
-      'FDR.StateOrProvince'#9#9'AS BILL_STATEORPROVINCE,'
-      'FDR.PostalCode'#9#9#9'AS BILL_POSTALCODE,'
-      'FDrCY.CityName '#9#9#9'AS BILL_ADDRESSCITY,'
-      'FDrCtry.CountryName '#9#9'AS BILL_ADDRESSCOUNTRY,'
+      'ADR.AddressName'#9#9#9'AS BILL_ADDRESS_NAME,'
+      'ADR.AddressLine1'#9#9'AS BILL_ADDRESSLINE1,'
+      'ADR.AddressLine2'#9#9'AS BILL_ADDRESSLINE2,'
+      'ADR.AddressLine3'#9#9'AS BILL_ADDRESSLINE3,'
+      'ADR.AddressLine4'#9#9'AS BILL_ADDRESSLINE4,'
+      'ADR.StateOrProvince'#9#9'AS BILL_STATEORPROVINCE,'
+      'ADR.PostalCode'#9#9#9'AS BILL_POSTALCODE,'
+      'ADRCY.CityName '#9#9#9'AS BILL_ADDRESSCITY,'
+      'ADRCtry.CountryName '#9#9'AS BILL_ADDRESSCOUNTRY,'
       ''
       'ST_ADR.AddressName'#9#9#9'AS SHIPTO_ADDRESS_NAME,'
       'ST_ADR.AddressLine1'#9#9#9'AS SHIPTO_ADDRESSLINE1,'
@@ -1046,11 +1046,11 @@
       ''
       ''
       
-        #9'INNER JOIN dbo.Address '#9#9'FDR'#9#9'ON'#9'FDR.AddressNo'#9#9'= CP.DefaultBil' +
+        #9'INNER JOIN dbo.Address '#9#9'ADR'#9#9'ON'#9'ADR.AddressNo'#9#9'= CP.DefaultBil' +
         'lingAddressNo'
-      #9'INNER JOIN dbo.CITY'#9#9'FDrCY'#9#9'ON'#9'FDrCY.CityNo '#9#9'= FDR.CityNo'
+      #9'INNER JOIN dbo.CITY'#9#9'ADRCY'#9#9'ON'#9'ADrCY.CityNo '#9#9'= ADR.CityNo'
       
-        #9'INNER JOIN dbo.Country'#9#9'FDrCtry'#9#9'ON'#9'FDrCtry.CountryNo '#9'= FDR.Co' +
+        #9'INNER JOIN dbo.Country'#9#9'ADrCtry'#9#9'ON'#9'ADrCtry.CountryNo '#9'= ADR.Co' +
         'untryNo'
       ''
       #9'LEFT OUTER JOIN dbo.Address '#9#9'ST_ADR'#9#9
@@ -1336,7 +1336,7 @@
         '--Inner Join dbo.ShippingPlan_ShippingAddress SPA on SPA.Shippin' +
         'gPlanNo = csd.ShippingPlanNo'
       '--'#9#9#9#9#9#9#9#9#9#9#9#9'AND SPA.Reference = CSD.Reference'
-      '--Inner Join dbo.Address FDr on FDr.AddressNo = SPA.AddressNo'
+      '--Inner Join dbo.Address Adr on Adr.AddressNo = SPA.AddressNo'
       '--Inner Join dbo.City '
       
         'INNER JOIN dbo.PackageType PTD ON PTD.PackageTypeNo = LD.Package' +
@@ -1354,7 +1354,7 @@
       'left join dbo.LoadFreightCost LFC'#9'on L.LoadNo = LFC.LoadNo'
       
         'Inner Join dbo.Confirmed_Load'#9'CL ON CL.Confirmed_LoadNo = LSP.Lo' +
-        'FDNo'
+        'adNo'
       '  '#9#9#9#9'and CL.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo'
       '--Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo'
       '--AND CR.RoleType = 9'
@@ -1366,7 +1366,7 @@
       'AND  L.LoadNo NOT IN (Select LoadNo FROM LoadFreightCost)'
       
         'group by L.LocalShippingCompanyNo,L.LoadNo, L.FS, L.LoadID, L.Lo' +
-        'FDedDate, shipper.clientname,'
+        'adedDate, shipper.clientname,'
       
         'FromPlace.CityName, ToPlace.CityName, LFC.PricePerM3_NET, LFC.To' +
         'talSUM,LFC.CreatedUser,'
@@ -1945,7 +1945,7 @@
         'bjectNo = LD.DefsspNo'
       
         'Inner Join dbo.Confirmed_Load CL ON CL.Confirmed_LoadNo = LSP.Lo' +
-        'FDNo'
+        'adNo'
       '  '#9#9#9#9'and CL.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo'
       ''
       
@@ -1960,7 +1960,7 @@
       'AND  L.LoadNo NOT IN (Select LoadNo FROM dbo.LoadFreightCost)'
       
         'group by L.LocalShippingCompanyNo,L.LoadNo, L.FS, L.LoadID, L.Lo' +
-        'FDedDate, shipper.clientname,'
+        'adedDate, shipper.clientname,'
       'FromPlace.CityName, ToPlace.CityName,'
       'L.SupplierNo, LSP.ShippingPlanNo, L.LocalShippingCompanyNo,'
       'LSP.LoadingLocationNo, csh.CustomerNo, ssp.CustomerNo'

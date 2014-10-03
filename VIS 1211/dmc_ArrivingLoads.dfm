@@ -118,7 +118,7 @@ object dmArrivingLoads: TdmArrivingLoads
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -248,7 +248,7 @@ object dmArrivingLoads: TdmArrivingLoads
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -371,7 +371,7 @@ object dmArrivingLoads: TdmArrivingLoads
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -486,7 +486,7 @@ object dmArrivingLoads: TdmArrivingLoads
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -2042,7 +2042,7 @@ object dmArrivingLoads: TdmArrivingLoads
     SQL.Strings = (
       
         '--check if package is where it was when it was confirmed to a lo' +
-        'FD'
+        'ad'
       'SELECT distinct'
       '-- LD.LoadNo,'
       '-- LD.ShippingPlanNo AS LONo,'
@@ -2237,7 +2237,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ''
       
         '-- INNER JOIN dbo.LoadDetailPkgLength LDP'#9#9'ON'#9'LDP.LoadNo'#9'= Ld.Lo' +
-        'FDNo'
+        'adNo'
       '--'#9#9#9#9#9#9#9'and LDP.LoadDetailNo = LDS.LoadDetailNo'
       ''
       
@@ -4314,7 +4314,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ''
       
         '-- INNER JOIN dbo.LoadDetailPkgLength LDP'#9'ON '#9'LDP.LoadNo = LD.Lo' +
-        'FDNo'
+        'adNo'
       '--'#9#9#9#9#9'AND '#9'LDP.LoadDetailNo = LD.LoadDetailNo'
       ''
       'WHERE'

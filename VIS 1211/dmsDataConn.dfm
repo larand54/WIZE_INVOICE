@@ -8,7 +8,7 @@ object dmsConnector: TdmsConnector
     Left = 176
     Top = 72
     Bitmap = {
-      494C010107000900040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107000900080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -285,7 +285,7 @@ object dmsConnector: TdmsConnector
     Left = 176
     Top = 16
     Bitmap = {
-      494C010112001500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010112001500080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000078000000010020000000000000B4
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1824,12 +1824,12 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=vis.vida.se'
-      'Database=Vis_Vida'
+      'Server=CARMAK-FASTER\SQLEXPRESS'
+      'Database=vis_vida'
       'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
+      'User_Name=sa'
       'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
@@ -1844,6 +1844,7 @@ object dmsConnector: TdmsConnector
     Top = 72
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
     ScreenCursor = gcrHourGlass
     Left = 464
     Top = 128

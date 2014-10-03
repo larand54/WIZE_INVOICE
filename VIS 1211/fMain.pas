@@ -40,7 +40,7 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxRibbonPainter, dxSkinsdxBarPainter,
   dxBarApplicationMenu, dxScreenTip, Vcl.Menus, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxRibbonCustomizationForm ;
+  dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions ;
 
 
 
@@ -794,8 +794,8 @@ begin
 //  dmsConnector.FDConnection1.de .CloseDataSets ;
   dmsConnector.FDConnection1.Connected:= False ;
 
-  if Length(OKHelpBottomDlg.EFD_Name.Text) > 0 then
-  ThisUser.DBUserName:= OKHelpBottomDlg.EFD_Name.Text ;
+  if Length(OKHelpBottomDlg.eAD_Name.Text) > 0 then
+  ThisUser.DBUserName:= OKHelpBottomDlg.eAD_Name.Text ;
 
   if Length(OKHelpBottomDlg.eDatabas.Text) > 0 then
   ThisUser.Database:= OKHelpBottomDlg.eDatabas.Text ;
@@ -805,7 +805,7 @@ begin
      else
       if dmsConnector.FDConnection1.Connected then
       Begin
-       if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.EFD_Name.Text) and (Length(OKHelpBottomDlg.EFD_Name.Text) > 0) )
+       if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.eAD_Name.Text) and (Length(OKHelpBottomDlg.eAD_Name.Text) > 0) )
        or ((OKHelpBottomDlg.eDatabas.Text <> dmsConnector.Org_DB_Name) and (Length(OKHelpBottomDlg.eDatabas.Text) > 0)) then
        Begin
         InitOnStartOfProgram ;

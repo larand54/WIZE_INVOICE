@@ -1088,7 +1088,7 @@ object dmUS_Planning: TdmUS_Planning
       
         'WHEN  UN.VolumeUnitName = '#39'Packages'#39' THEN COUNT( DISTINCT LD.LOA' +
         'DDETAILNO)'
-      'WHEN  UN.VolumeUnitName = '#39'm3 FDxaL'#39' THEN SUM(PTD.m3Actual)'
+      'WHEN  UN.VolumeUnitName = '#39'm3 aDxaL'#39' THEN SUM(PTD.m3Actual)'
       'WHEN  UN.VolumeUnitName = '#39'm3 nDxnL'#39' THEN SUM(PTD.m3Nominal)'
       
         'WHEN  UN.VolumeUnitName = '#39'Lopm a'#39' THEN SUM(PTD.LinealMeterActua' +

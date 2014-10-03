@@ -965,9 +965,9 @@ object fInvoiceWizard: TfInvoiceWizard
             PropertiesClassName = 'TcxComboBoxProperties'
             Properties.Items.Strings = (
               'Stycketal'
-              'm3 FDxaL'
+              'm3 aDxaL'
               'm3 nDxnL'
-              'm3 FDxnL'
+              'm3 aDxnL'
               'm3 nDxaL'
               'Kvm tB'
               'Kvm aB'
@@ -1102,9 +1102,9 @@ object fInvoiceWizard: TfInvoiceWizard
             PropertiesClassName = 'TcxComboBoxProperties'
             Properties.Items.Strings = (
               'Stycketal'
-              'm3 FDxaL'
+              'm3 aDxaL'
               'm3 nDxnL'
-              'm3 FDxnL'
+              'm3 aDxnL'
               'm3 nDxaL'
               'Kvm tB'
               'Kvm aB'

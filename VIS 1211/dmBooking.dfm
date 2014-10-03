@@ -1,7 +1,5 @@
 object dm_Booking: Tdm_Booking
   OldCreateOrder = False
-  Left = 310
-  Top = 139
   Height = 378
   Width = 819
   object dsShippers: TDataSource
@@ -464,18 +462,18 @@ object dm_Booking: Tdm_Booking
     SQL.Strings = (
       'SELECT'
       'SPSA.Reference'#9#9'AS REFERENCE, '
-      'FD.AddressName'#9#9'AS DEL_ADDRESS, '
-      'Supp.ClientName '#9'AS SUPPLIER, '
+      'AD.AddressName'#9#9'AS DEL_ADDRESS,'
+      'Supp.ClientName '#9'AS SUPPLIER,'
       'Loc.CityName '#9#9'AS LOADING_LOCATION,'
-      'OL.OrderLineDescription'#9'AS PRODUCT_DESCRIPTION, '
-      'CSD.LengthDescription'#9'AS LENGTH_DESCRIPTION, '
-      'Su.NoOfUnits'#9#9'AS NOOFUNITS, '
+      'OL.OrderLineDescription'#9'AS PRODUCT_DESCRIPTION,'
+      'CSD.LengthDescription'#9'AS LENGTH_DESCRIPTION,'
+      'Su.NoOfUnits'#9#9'AS NOOFUNITS,'
       'Un.VolumeUnitName'#9'AS VOLUNIT,'
       'Su.ActualM3Net'#9#9'AS ACTM3,'
       'SPSA.AddressNo'#9#9'AS ADDRESS_NO,'
-      'FD.CityNo'#9#9'AS CITY_NO,'
+      'AD.CityNo'#9#9'AS CITY_NO,'
       'Cy.CityName             AS CITY_NAME,'
-      'FD.PostalCode           AS POSTALCODE,'
+      'AD.PostalCode           AS POSTALCODE,'
       'OL.Reference            AS KR_Ref,'
       'CSD.CustShipPlanDetailObjectNo AS CSDNO'
       ''
@@ -506,9 +504,9 @@ object dm_Booking: Tdm_Booking
       #9'LEFT OUTER JOIN dbo.ShippingPlan_ShippingAddress SPSA'
       ''
       
-        #9'LEFT OUTER JOIN dbo.Address'#9'FD'#9#9#9#9'ON FD.AddressNo '#9'= SPSA.Addre' +
+        #9'LEFT OUTER JOIN dbo.Address'#9'AD'#9#9#9#9'ON AD.AddressNo '#9'= SPSA.Addre' +
         'ssNo'
-      #9'LEFT OUTER JOIN dbo.City'#9'Cy'#9#9#9#9'ON Cy.CityNo'#9#9'= FD.CityNo'
+      #9'LEFT OUTER JOIN dbo.City'#9'Cy'#9#9#9#9'ON Cy.CityNo'#9#9'= AD.CityNo'
       
         #9'LEFT OUTER JOIN dbo.Country  Co'#9#9#9#9'        ON Co.CountryNo'#9#9'= A' +
         'D.CountryNo'

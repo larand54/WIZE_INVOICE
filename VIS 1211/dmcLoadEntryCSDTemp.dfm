@@ -2964,9 +2964,9 @@ object dmLoadEntryCSDTemp: TdmLoadEntryCSDTemp
         'ssLine2),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.AddressLine3),'#39#39')+'#39', '#39'+isNul' +
         'l(RTRIM(Addr.AddressLine4),'#39#39')'
       
-        '+'#39', '#39'+isNull(RTRIM(FDrCY.CityName),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.Po' +
+        '+'#39', '#39'+isNull(RTRIM(AdrCY.CityName),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.Po' +
         'stalCode),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.StateOrProvince),'#39#39')+'#39', '#39'+i' +
-        'sNull(RTRIM( FDrCtry.CountryName ),'#39#39') as ADDR,'
+        'sNull(RTRIM( AdrCtry.CountryName ),'#39#39') as ADDR,'
       ''
       'Addr.AddressLine1,'
       'Addr.AddressLine2,'
@@ -2974,14 +2974,14 @@ object dmLoadEntryCSDTemp: TdmLoadEntryCSDTemp
       'Addr.AddressLine4,'
       'Addr.StateOrProvince    AS STATE,'
       'Addr.PostalCode         AS POSTAL_CODE,'
-      'FDrCY.CityName'#9'        AS CITY,'
-      'FDrCtry.CountryName'#9'AS COUNTRY'
+      'AdrCY.CityName'#9'        AS CITY,'
+      'AdrCtry.CountryName'#9'AS COUNTRY'
       ''
       'from dbo.CompanyAddress CA'
       'Inner Join dbo.Address Addr'
-      ' '#9'INNER JOIN dbo.CITY'#9#9#9'FDrCY'#9'ON'#9'FDrCY.CityNo '#9#9'= Addr.CityNo'
+      ' '#9'INNER JOIN dbo.CITY'#9#9#9'AdrCY'#9'ON'#9'AdrCY.CityNo '#9#9'= Addr.CityNo'
       
-        #9'INNER JOIN dbo.Country'#9#9#9'FDrCtry'#9'ON'#9'FDrCtry.CountryNo '#9'= Addr.C' +
+        #9'INNER JOIN dbo.Country'#9#9#9'AdrCtry'#9'ON'#9'AdrCtry.CountryNo '#9'= Addr.C' +
         'ountryNo'
       'on Addr.AddressNo = ca.AddressNo'
       ''
@@ -3185,9 +3185,9 @@ object dmLoadEntryCSDTemp: TdmLoadEntryCSDTemp
         'ssLine2),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.AddressLine3),'#39#39')+'#39', '#39'+isNul' +
         'l(RTRIM(Addr.AddressLine4),'#39#39')'
       
-        '+'#39', '#39'+isNull(RTRIM(FDrCY.CityName),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.Po' +
+        '+'#39', '#39'+isNull(RTRIM(AdrCY.CityName),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.Po' +
         'stalCode),'#39#39')+'#39', '#39'+isNull(RTRIM(Addr.StateOrProvince),'#39#39')+'#39', '#39'+i' +
-        'sNull(RTRIM( FDrCtry.CountryName ),'#39#39') as ADDR,'
+        'sNull(RTRIM( AdrCtry.CountryName ),'#39#39') as ADDR,'
       ''
       'Addr.AddressLine1,'
       'Addr.AddressLine2,'
@@ -3195,14 +3195,14 @@ object dmLoadEntryCSDTemp: TdmLoadEntryCSDTemp
       'Addr.AddressLine4,'
       'Addr.StateOrProvince    AS STATE,'
       'Addr.PostalCode         AS POSTAL_CODE,'
-      'FDrCY.CityName'#9'        AS CITY,'
-      'FDrCtry.CountryName'#9'AS COUNTRY'
+      'AdrCY.CityName'#9'        AS CITY,'
+      'AdrCtry.CountryName'#9'AS COUNTRY'
       ''
       'from dbo.CompanyAddress CA'
       'Inner Join dbo.Address Addr'
-      ' '#9'INNER JOIN dbo.CITY'#9#9#9'FDrCY'#9'ON'#9'FDrCY.CityNo '#9#9'= Addr.CityNo'
+      ' '#9'INNER JOIN dbo.CITY'#9#9#9'AdrCY'#9'ON'#9'AdrCY.CityNo '#9#9'= Addr.CityNo'
       
-        #9'INNER JOIN dbo.Country'#9#9#9'FDrCtry'#9'ON'#9'FDrCtry.CountryNo '#9'= Addr.C' +
+        #9'INNER JOIN dbo.Country'#9#9#9'AdrCtry'#9'ON'#9'AdrCtry.CountryNo '#9'= Addr.C' +
         'ountryNo'
       'on Addr.AddressNo = ca.AddressNo'
       ''

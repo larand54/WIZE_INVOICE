@@ -36,7 +36,7 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White ;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions ;
 
 type
   TfrmAvrop = class(TForm)
@@ -929,7 +929,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if TemplateUnitName = 'm3 FDxaL' then
+    if TemplateUnitName = 'm3 aDxaL' then
      Begin
       TotalUnitsPerLO  := GetTotalUnitsForLO('M3ACTUAL') ;
       Result  := RoundTo(TotalUnitsPerLO * FreightCost, -3) ;
@@ -1707,7 +1707,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxaL' then
      Begin
       TotalUnitsPerLO  := GetTotalUnitsForLO('M3ACTUAL') ;
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(TotalUnitsPerLO * cdsInvoiceDetailPrice.AsFloat, -3) ;
@@ -1777,7 +1777,7 @@ Begin
     sq_GetPkgType_Invoice.Open ;
 
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxaL' then
      Begin
       TempVal := sq_GetPkgType_InvoiceAM3.AsFloat ;
      End
@@ -1792,7 +1792,7 @@ Begin
       TempVal := sq_GetPkgType_InvoicePcs.AsFloat ;
      End
      else
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxnL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxnL' then
      Begin
       TempVal := sq_GetPkgType_InvoiceAdNl.AsFloat ;
      End

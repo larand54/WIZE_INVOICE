@@ -30,7 +30,7 @@ const
   SCaption = 'Update Error - %s';
   SUnchanged = '<Unchanged>';
   SBinary = '(Binary)';
-  SAdt = '(FDT)';
+  SAdt = '(ADT)';
   SArray = '(Array)';
   SFieldName = 'Field Name';
   SOriginal = 'Original Value';

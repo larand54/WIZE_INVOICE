@@ -1476,14 +1476,14 @@ object dmsContact: TdmsContact
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'Select distinct FDr.*'
+      'Select distinct Adr.*'
       'From '
-      'dbo.Address FDr '
+      'dbo.Address Adr '
       'WHERE AddressNo = 0')
     Left = 408
     Top = 296
     object cds_AdrSearchAddressNo: TIntegerField
-      DisplayLabel = 'FDrNr'
+      DisplayLabel = 'AdrNr'
       FieldName = 'AddressNo'
       Origin = 'AddressNo'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -1692,11 +1692,11 @@ object dmsContact: TdmsContact
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'CompanyAddress'
     SQL.Strings = (
-      'Select distinct ca.*, FD.*, ci.CityName, cy.CountryName  '
+      'Select distinct ca.*, ad.*, ci.CityName, cy.CountryName  '
       'From DBO.CompanyAddress CA'
-      'INNER JOIN dbo.Address FD on FD.AddressNo = ca.AddressNo'
-      'Inner Join dbo.City ci on ci.CityNo = FD.CityNo'
-      'Inner Join dbo.Country cy on cy.CountryNo = FD.CountryNo'
+      'INNER JOIN dbo.Address FD on ad.AddressNo = ca.AddressNo'
+      'Inner Join dbo.City ci on ci.CityNo = ad.CityNo'
+      'Inner Join dbo.Country cy on cy.CountryNo = ad.CountryNo'
       ''
       ''
       ''
@@ -2003,30 +2003,30 @@ object dmsContact: TdmsContact
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select addressNo from dbo.Address FD'
-      'WHERE FD.AddressNo = :AddressNo'
+      'WHERE ad.AddressNo = :AddressNo'
       ''
       
-        'and FD.AddressNo not in (Select AddressNo from dbo.ShippingPlan_' +
+        'and ad.AddressNo not in (Select AddressNo from dbo.ShippingPlan_' +
         'ShippingAddress'
-      'WHERE AddressNo = FD.AddressNo)'
+      'WHERE AddressNo = ad.AddressNo)'
       ''
-      'and FD.AddressNo not in (Select DestinationNo from dbo.Orders'
-      'WHERE DestinationNo = FD.AddressNo)'
+      'and ad.AddressNo not in (Select DestinationNo from dbo.Orders'
+      'WHERE DestinationNo = ad.AddressNo)'
       ''
       
-        'and FD.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
+        'and ad.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
         'Orders'
-      'WHERE ClientBillingAddressNo = FD.AddressNo)'
+      'WHERE ClientBillingAddressNo = ad.AddressNo)'
       ''
       
-        'and FD.AddressNo not in (Select AddressNo from dbo.InvoiceShipTo' +
+        'and ad.AddressNo not in (Select AddressNo from dbo.InvoiceShipTo' +
         'Address'
-      'WHERE AddressNo = FD.AddressNo)'
+      'WHERE AddressNo = ad.AddressNo)'
       ''
       
-        'and FD.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
+        'and ad.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
         'CustomerShippingPlanHeader'
-      'WHERE ClientBillingAddressNo = FD.AddressNo)')
+      'WHERE ClientBillingAddressNo = ad.AddressNo)')
     Left = 152
     Top = 296
     ParamData = <
@@ -2066,11 +2066,11 @@ object dmsContact: TdmsContact
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'CompanyAddress'
     SQL.Strings = (
-      'Select distinct ca.*, FD.*, ci.CityName, cy.CountryName  '
+      'Select distinct ca.*, ad.*, ci.CityName, cy.CountryName  '
       'From DBO.CompanyAddress CA'
-      'INNER JOIN dbo.Address FD on FD.AddressNo = ca.AddressNo'
-      'Inner Join dbo.City ci on ci.CityNo = FD.CityNo'
-      'Inner Join dbo.Country cy on cy.CountryNo = FD.CountryNo'
+      'INNER JOIN dbo.Address FD on ad.AddressNo = ca.AddressNo'
+      'Inner Join dbo.City ci on ci.CityNo = ad.CityNo'
+      'Inner Join dbo.Country cy on cy.CountryNo = ad.CountryNo'
       'WHERE ClientNo = :ClientNo'
       'AND ca.AddressType = 1'
       '')

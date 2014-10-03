@@ -60,7 +60,7 @@ object dmcOrder: TdmcOrder
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -166,7 +166,7 @@ object dmcOrder: TdmcOrder
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -305,7 +305,7 @@ object dmcOrder: TdmcOrder
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -741,10 +741,10 @@ object dmcOrder: TdmcOrder
       ''
       'Left join dbo.ClientPreference cp'
       
-        'left join dbo.Address FDr on FDr.AddressNo = cp.DefaultBillingAd' +
+        'left join dbo.Address Adr on Adr.AddressNo = cp.DefaultBillingAd' +
         'dressNo'
       
-        'INNER JOIN dbo.Country StatCtry'#9'ON StatCtry.CountryNo  = FDr.Cou' +
+        'INNER JOIN dbo.Country StatCtry'#9'ON StatCtry.CountryNo  = Adr.Cou' +
         'ntryNo'
       'on cp.ClientNo = cll.ClientNo and cp.Roletype = 9'
       ''
