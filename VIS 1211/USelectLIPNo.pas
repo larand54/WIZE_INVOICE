@@ -16,9 +16,9 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  Data.DB, kbmMemTable, uADCompDataSet, uADCompClient, cxTextEdit, cxMaskEdit,
+  dxSkinXmas2008Blue, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Data.DB, kbmMemTable, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxLabel,
   Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls, cxButtons;
 
@@ -30,7 +30,7 @@ type
     cxLabel2: TcxLabel;
     lcPIP: TcxDBLookupComboBox;
     lcLIP: TcxDBLookupComboBox;
-    cds_LO_LookUp: TADQuery;
+    cds_LO_LookUp: TFDQuery;
     cds_LO_LookUpLoadingPIPNo: TIntegerField;
     cds_LO_LookUpLoadingLIPNo: TIntegerField;
     mtProps: TkbmMemTable;
@@ -43,11 +43,11 @@ type
     dsProps: TDataSource;
     ds_LIP2: TDataSource;
     ds_PIP2: TDataSource;
-    cds_PIP: TADQuery;
+    cds_PIP: TFDQuery;
     cds_PIPPIPNo: TIntegerField;
     cds_PIPORT: TStringField;
     cds_PIPOwnerNo: TIntegerField;
-    cds_LIP: TADQuery;
+    cds_LIP: TFDQuery;
     cds_LIPLIPNo: TIntegerField;
     cds_LIPLAGERGRUPP: TStringField;
     cds_LIPPIPNo: TIntegerField;

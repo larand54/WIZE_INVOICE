@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, SqlTimSt,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompClient,
-  uADCompDataSet ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet ;
 
 type
   Tdm_Booking = class(TDataModule)
@@ -16,10 +16,10 @@ type
     dsVoyage: TDataSource;
     dsAvropInfo: TDataSource;
     dsBookingProducts: TDataSource;
-    cdsShippers: TADStoredProc;
+    cdsShippers: TFDStoredProc;
     cdsShippersClientNo: TIntegerField;
     cdsShippersClientName: TStringField;
-    cdsBooking: TADQuery;
+    cdsBooking: TFDQuery;
     cdsBookingBookingNo: TIntegerField;
     cdsBookingShippingPlanNo: TIntegerField;
     cdsBookingVoyageNo: TIntegerField;
@@ -48,7 +48,7 @@ type
     cdsBookingNoteForLoadSheet: TMemoField;
     cdsBookingVesselOrPort: TStringField;
     cdsBookingPanic_Note: TStringField;
-    cdsVoyageDestination: TADQuery;
+    cdsVoyageDestination: TFDQuery;
     cdsVoyageDestinationBookingNo: TIntegerField;
     cdsVoyageDestinationDestinationNo: TIntegerField;
     cdsVoyageDestinationETA: TSQLTimeStampField;
@@ -57,7 +57,7 @@ type
     cdsVoyageDestinationCreatedUser: TSmallintField;
     cdsVoyageDestinationModifiedUser: TSmallintField;
     cdsVoyageDestinationDateCreated: TSQLTimeStampField;
-    cdsVoyage: TADQuery;
+    cdsVoyage: TFDQuery;
     cdsVoyageVoyageNo: TIntegerField;
     cdsVoyageCarrierNo: TIntegerField;
     cdsVoyageETD: TSQLTimeStampField;
@@ -67,7 +67,7 @@ type
     cdsVoyageModifiedUser: TSmallintField;
     cdsVoyageDateCreated: TSQLTimeStampField;
     cdsVoyageETA: TSQLTimeStampField;
-    cdsAvropInfo: TADQuery;
+    cdsAvropInfo: TFDQuery;
     cdsAvropInfoShippingPlanNo: TIntegerField;
     cdsAvropInfoOrderNoText: TStringField;
     cdsAvropInfoReference: TStringField;
@@ -79,7 +79,7 @@ type
     cdsAvropInfoNoteForLoadSheet: TMemoField;
     cdsAvropInfoInvoiceText: TMemoField;
     cdsAvropInfoOrderType: TIntegerField;
-    cdsBookingProducts: TADQuery;
+    cdsBookingProducts: TFDQuery;
     cdsBookingProductsREFERENCE: TStringField;
     cdsBookingProductsDEL_ADDRESS: TStringField;
     cdsBookingProductsSUPPLIER: TStringField;
@@ -97,7 +97,7 @@ type
     cdsBookingProductsCSDNO: TIntegerField;
     cdsVoyageCarrier: TStringField;
     cdsAvropInfoDeliveryTermsNo: TIntegerField;
-    cds_DocText: TADQuery;
+    cds_DocText: TFDQuery;
     cds_DocTextDocTextNo: TIntegerField;
     cds_DocTextDocText: TMemoField;
     cds_DocTextOrderNo: TIntegerField;

@@ -307,8 +307,8 @@ object frmSelectInvoice: TfrmSelectInvoice
     Left = 113
     Top = 216
   end
-  object cdsInvoiceList: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cdsInvoiceList: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
         'SELECT IH.InternalInvoiceNo AS INT_INVNO, IH.InvoiceDate AS INV_' +

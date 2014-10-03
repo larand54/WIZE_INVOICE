@@ -15,9 +15,9 @@ uses
   dxPSCompsProvider, dxPSFillPatterns, dxPSEdgePatterns, dxPSCore,
   dxPScxCommon, FMTBcd, DBClient, Provider, SqlExpr,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxCurrencyEdit, cxLookAndFeels,
-  cxLookAndFeelPainters, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient, cxLookupEdit,
+  cxLookAndFeelPainters, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxGridBandedTableView,
   cxGridDBBandedTableView, cxImageComboBox, cxMemo, cxDBEdit, cxDBLabel,
   cxCalc, cxButtons, cxPC, cxSplitter, Grids, DBGrids, dxPSPDFExportCore,
@@ -71,7 +71,7 @@ type
     cxGridPopupMenu1: TcxGridPopupMenu;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;
@@ -172,7 +172,7 @@ type
     acOpenInvoice: TAction;
     dxBarLargeButton2: TdxBarLargeButton;
     deStartPeriod: TcxDBDateEdit;
-    mt_SelectedRows: TADMemTable;
+    mt_SelectedRows: TFDMemTable;
     mt_SelectedRowsInvoiceNo: TIntegerField;
     mt_SelectedRowsLONo: TIntegerField;
     acOpenAttestFrm: TAction;
@@ -1045,12 +1045,12 @@ Begin
  With dmModule1 do
  Begin
   Result := True ;
-  admSelectedRows.First ;
-  InternalInvoiceNo  := admSelectedRowsInternalInvoiceNo.AsInteger ;
-  While not admSelectedRows.Eof do
+  FDmSelectedRows.First ;
+  InternalInvoiceNo  := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
+  While not FDmSelectedRows.Eof do
   Begin
-   admSelectedRows.Next ;
-   if InternalInvoiceNo  <> admSelectedRowsInternalInvoiceNo.AsInteger then
+   FDmSelectedRows.Next ;
+   if InternalInvoiceNo  <> FDmSelectedRowsInternalInvoiceNo.AsInteger then
    Begin
     Result  := False ;
     ShowMessage('Flera fakturanr är valda, endast en faktura kan attesteras åt gången.') ;
@@ -1062,7 +1062,7 @@ End ;
 procedure TfrmFreightExternLoad.AttestFrakt(Sender: TObject;const Beskrivning : String) ;
 var fAttest_SetHdrInfo: TfAttest_SetHdrInfo;
 begin
- dmModule1.admSelectedRows.Active  := True ;
+ dmModule1.FDmSelectedRows.Active  := True ;
  Try
  if grdLoadsDBBandedTableView1.DataController.DataSet.State in [dsEdit] then
   grdLoadsDBBandedTableView1.DataController.DataSet.Post ;
@@ -1070,21 +1070,21 @@ begin
  GetSelectedInvoiceAndLORows ;
 
 // if CheckThatAllRowsAreSameInvoiceNo then
- if dmModule1.admSelectedRows.RecordCount > 0 then
+ if dmModule1.FDmSelectedRows.RecordCount > 0 then
  Begin
   fAttest_SetHdrInfo:= TfAttest_SetHdrInfo.Create(nil);
   Try
   fAttest_SetHdrInfo.MemSped.Active := True ;
   fAttest_SetHdrInfo.MemSped.Insert ;
-  fAttest_SetHdrInfo.MemSpedShipperNO.AsInteger := dmModule1.admSelectedRowsSHIPPINGCOMPANYNO.AsInteger ;
+  fAttest_SetHdrInfo.MemSpedShipperNO.AsInteger := dmModule1.FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger ;
   fAttest_SetHdrInfo.MemSped.Post ;
-  fAttest_SetHdrInfo.labelAmount.Caption  := dmModule1.admSelectedRowsTotalAmount.AsString ;
+  fAttest_SetHdrInfo.labelAmount.Caption  := dmModule1.FDmSelectedRowsTotalAmount.AsString ;
   if fAttest_SetHdrInfo.ShowModal = mrOK then
   Begin
-   if dmModule1.admSelectedRows.State in [dsBrowse] then
-    dmModule1.admSelectedRows.Edit ;
-   dmModule1.admSelectedRowsSHIPPINGCOMPANYNO.AsInteger := fAttest_SetHdrInfo.MemSpedShipperNO.AsInteger ;
-    dmModule1.admSelectedRows.Post ;
+   if dmModule1.FDmSelectedRows.State in [dsBrowse] then
+    dmModule1.FDmSelectedRows.Edit ;
+   dmModule1.FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger := fAttest_SetHdrInfo.MemSpedShipperNO.AsInteger ;
+    dmModule1.FDmSelectedRows.Post ;
    SetMemTableValues(fAttest_SetHdrInfo.teSupplier_InvoiceNo.Text,
    fAttest_SetHdrInfo.meSupplier_InvoiceDate.Text, fAttest_SetHdrInfo.memoNote.Text) ;
 
@@ -1108,7 +1108,7 @@ begin
   else
    ShowMessage('Inga markerade rader..') ;
  Finally
-  dmModule1.admSelectedRows.Active  := False ;
+  dmModule1.FDmSelectedRows.Active  := False ;
  End ;
 end;
 
@@ -1162,30 +1162,30 @@ begin
   grdLoadsDBBandedTableView1.DataController.DataSet.First ;
   While not grdLoadsDBBandedTableView1.DataController.DataSet.Eof do
   Begin
-   admSelectedRows.Insert ;
-   admSelectedRowsInternalInvoiceNo.AsInteger       := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('InternalInvoiceNo').AsInteger ;
-   admSelectedRowsLONo.AsInteger                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ShippingPlanNo').AsInteger ;
+   FDmSelectedRows.Insert ;
+   FDmSelectedRowsInternalInvoiceNo.AsInteger       := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('InternalInvoiceNo').AsInteger ;
+   FDmSelectedRowsLONo.AsInteger                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ShippingPlanNo').AsInteger ;
 //   if cds_PropsAgentNo.IsNull then
    if cds_PropsAutoColWidth.AsInteger >= c_Frakt then
-   admSelectedRowsAmount.AsFloat                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('Frakt').AsFloat
+   FDmSelectedRowsAmount.AsFloat                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('Frakt').AsFloat
    else
-   admSelectedRowsAmount.AsFloat                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('Komm').AsFloat ;
+   FDmSelectedRowsAmount.AsFloat                    := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('Komm').AsFloat ;
 
 //   if cds_PropsAgentNo.IsNull then
    if cds_PropsAutoColWidth.AsInteger >= c_Frakt then
    Begin
-    admSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
-    admSelectedRowsCURRENCYNO.AsInteger              := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ValutaNr').AsInteger ;
+    FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
+    FDmSelectedRowsCURRENCYNO.AsInteger              := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ValutaNr').AsInteger ;
    End
    else
    Begin
-    admSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
-    admSelectedRowsCURRENCYNO.AsInteger              := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ValutaNr').AsInteger ;
+    FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
+    FDmSelectedRowsCURRENCYNO.AsInteger              := grdLoadsDBBandedTableView1.DataController.DataSet.FieldByName('ValutaNr').AsInteger ;
    End ;
 
 
-   admSelectedRowsTotalAmount.AsFloat               := TotalAmount ;
-   admSelectedRows.Post ;
+   FDmSelectedRowsTotalAmount.AsFloat               := TotalAmount ;
+   FDmSelectedRows.Post ;
    grdLoadsDBBandedTableView1.DataController.DataSet.Next ;
   End ;//cds_LF
   Finally
@@ -1211,10 +1211,10 @@ begin
     ColIdx    := grdLoadsDBBandedTableView1.DataController.GetItemByFieldName('InternalInvoiceNo').Index;
     IntInvNo  := grdLoadsDBBandedTableView1.DataController.Values[RecIdx, ColIdx];
 
-    admSelectedRows.Insert ;
-    admSelectedRowsInternalInvoiceNo.AsInteger      := IntInvNo ;
-    admSelectedRowsLONo.AsInteger                   := LONo ;
-    admSelectedRows.Post ;
+    FDmSelectedRows.Insert ;
+    FDmSelectedRowsInternalInvoiceNo.AsInteger      := IntInvNo ;
+    FDmSelectedRowsLONo.AsInteger                   := LONo ;
+    FDmSelectedRows.Post ;
 
    End ;
 
@@ -1243,15 +1243,15 @@ begin
  Try
  with dmModule1  do
  Begin
-  admSelectedRows.First ;
-  While not admSelectedRows.Eof do
+  FDmSelectedRows.First ;
+  While not FDmSelectedRows.Eof do
   Begin
-   admSelectedRows.Edit ;
-   admSelectedRowsSupplier_InvoiceNo.AsString       := Supplier_InvoiceNo ;
-   admSelectedRowsSupplier_InvoiceDate.AsDateTime   := StrToDateTime(Supplier_InvoiceDate) ;
-   admSelectedRowsNote.AsString                     := Note ;
-   admSelectedRows.Post ;
-   admSelectedRows.Next ;
+   FDmSelectedRows.Edit ;
+   FDmSelectedRowsSupplier_InvoiceNo.AsString       := Supplier_InvoiceNo ;
+   FDmSelectedRowsSupplier_InvoiceDate.AsDateTime   := StrToDateTime(Supplier_InvoiceDate) ;
+   FDmSelectedRowsNote.AsString                     := Note ;
+   FDmSelectedRows.Post ;
+   FDmSelectedRows.Next ;
   End ;//While..
  End ;//with
 
@@ -1589,28 +1589,28 @@ begin
    cds_LFConfirmKomm.AsInteger  := 1 ;
 
 
-   admSelectedRows.Insert ;
-   admSelectedRowsInternalInvoiceNo.AsInteger       := cds_LFInternalInvoiceNo.AsInteger ;
-   admSelectedRowsLONo.AsInteger                    := cds_LFShippingPlanNo.AsInteger ;
+   FDmSelectedRows.Insert ;
+   FDmSelectedRowsInternalInvoiceNo.AsInteger       := cds_LFInternalInvoiceNo.AsInteger ;
+   FDmSelectedRowsLONo.AsInteger                    := cds_LFShippingPlanNo.AsInteger ;
    if cds_PropsAgentNo.IsNull then
-   admSelectedRowsAmount.AsFloat                    := cds_LFFrakt.AsFloat
+   FDmSelectedRowsAmount.AsFloat                    := cds_LFFrakt.AsFloat
    else
-   admSelectedRowsAmount.AsFloat                    := cds_LFKomm.AsFloat ;
+   FDmSelectedRowsAmount.AsFloat                    := cds_LFKomm.AsFloat ;
 
    if cds_PropsAgentNo.IsNull then
    Begin
-    admSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsShipperNo.AsInteger ;
-    admSelectedRowsCURRENCYNO.AsInteger              := cds_LFFraktCurrencyNo.AsInteger ;
+    FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsShipperNo.AsInteger ;
+    FDmSelectedRowsCURRENCYNO.AsInteger              := cds_LFFraktCurrencyNo.AsInteger ;
    End
    else
    Begin
-    admSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
-    admSelectedRowsCURRENCYNO.AsInteger              := cds_LFKommCurrencyNo.AsInteger ;
+    FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cds_PropsAgentNo.AsInteger ;
+    FDmSelectedRowsCURRENCYNO.AsInteger              := cds_LFKommCurrencyNo.AsInteger ;
    End ;
 
 
-   admSelectedRowsTotalAmount.AsFloat               := TotalAmount ;
-   admSelectedRows.Post ;
+   FDmSelectedRowsTotalAmount.AsFloat               := TotalAmount ;
+   FDmSelectedRows.Post ;
    cds_LF.Next ;
   End ;//cds_LF
   Finally

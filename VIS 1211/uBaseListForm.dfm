@@ -216,9 +216,9 @@ object fBaseListForm: TfBaseListForm
       OnExecute = acExportXLSExecute
     end
   end
-  object cds_Props: TADQuery
+  object cds_Props: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.userprops'

@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, SqlExpr, Provider, kbmMemTable, SqlTimSt, Dialogs,
-  VidaType, Controls, Forms, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient ;
+  VidaType, Controls, Forms, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
 
 type
  TAmbiguityEvent = procedure(
@@ -60,13 +60,13 @@ type
     mtLoadShippingPlanDateCreated: TSQLTimeStampField;
     mtLoadShippingPlanSalesRegionNo: TIntegerField;
     mtLoadShippingPlanFunction: TIntegerField;
-    sq_GetLO_Records: TADQuery;
-    cdsLORows: TADQuery;
-    cds_LSP: TADQuery;
-    sq_PkgInLoad: TADQuery;
-    sq_Booking_Data: TADQuery;
-    sq_CheckLoadNo: TADQuery;
-    cds_LoadHead: TADQuery;
+    sq_GetLO_Records: TFDQuery;
+    cdsLORows: TFDQuery;
+    cds_LSP: TFDQuery;
+    sq_PkgInLoad: TFDQuery;
+    sq_Booking_Data: TFDQuery;
+    sq_CheckLoadNo: TFDQuery;
+    cds_LoadHead: TFDQuery;
     cds_LoadHeadLoadNo: TIntegerField;
     cds_LoadHeadSupplierNo: TIntegerField;
     cds_LoadHeadLoadedDate: TSQLTimeStampField;
@@ -223,11 +223,11 @@ type
     sq_GetLO_RecordsProductCategoryNo: TIntegerField;
     sq_GetLO_Recordsdefsspno: TIntegerField;
     sq_GetLO_RecordsVaruSlag: TIntegerField;
-    cdsPkgsByInvOwner: TADQuery;
-    cds_LO_LookUp: TADQuery;
-    cds_LoadPackages: TADQuery;
-    sq_GetPkgNos: TADQuery;
-    sq_OnePkgDetailData: TADQuery;
+    cdsPkgsByInvOwner: TFDQuery;
+    cds_LO_LookUp: TFDQuery;
+    cds_LoadPackages: TFDQuery;
+    sq_GetPkgNos: TFDQuery;
+    sq_OnePkgDetailData: TFDQuery;
     sq_CheckLoadNoLoadNo: TIntegerField;
     sq_Booking_DataSHIPPER: TStringField;
     sq_Booking_DataREADYDATE: TStringField;
@@ -291,13 +291,13 @@ type
     cds_LO_LookUpFunction: TIntegerField;
     cds_LO_LookUpLoadingPIPNo: TIntegerField;
     cds_LO_LookUpLoadingLIPNo: TIntegerField;
-    sq_IsLoadMadeInAvrop: TADQuery;
+    sq_IsLoadMadeInAvrop: TFDQuery;
     sq_IsLoadMadeInAvropConfirmed_LoadNo: TIntegerField;
     sq_IsLoadMadeInAvropNewLoadNo: TIntegerField;
-    sp_DeleteOneLoad: TADStoredProc;
-    sp_RemPkgFromLoad: TADStoredProc;
-    sp_ProcessPkgAND_Log: TADStoredProc;
-    sp_DeletePackage: TADStoredProc;
+    sp_DeleteOneLoad: TFDStoredProc;
+    sp_RemPkgFromLoad: TFDStoredProc;
+    sp_ProcessPkgAND_Log: TFDStoredProc;
+    sp_DeletePackage: TFDStoredProc;
     cds_LoadPackagesLoadNo: TIntegerField;
     cds_LoadPackagesShippingPlanNo: TIntegerField;
     cds_LoadPackagesPRODUCT: TStringField;
@@ -340,24 +340,24 @@ type
     cds_LoadPackagesInvNr: TIntegerField;
     ds_LIP2: TDataSource;
     ds_PIP2: TDataSource;
-    cds_PIP2: TADQuery;
+    cds_PIP2: TFDQuery;
     cds_PIP2PIPNO: TIntegerField;
     cds_PIP2PIPNAME: TStringField;
-    cds_LIP2: TADQuery;
+    cds_LIP2: TFDQuery;
     cds_LIP2LIPNo: TIntegerField;
     cds_LIP2LIPName: TStringField;
     cds_LoadHeadPIP: TStringField;
     cds_LoadHeadLIP: TStringField;
-    ad_GetMaxLoadDetailNo: TADQuery;
-    ad_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField;
-    sq_SortingOrderMarkedPkgs: TADQuery;
-    sq_Delete_SortingOrderMarkedPkgs: TADQuery;
-    sp_Vis_newCreditLoad: TADStoredProc;
-    sp_Vis_newCreditInvoice: TADStoredProc;
-    sq_VerkLoadExists: TADQuery;
-    sp_vis_CopyLOToInternalLO: TADStoredProc;
-    sp_Vis_CopyToInternalLO_Load: TADStoredProc;
-    sp_SetPkgStatusInLoad: TADStoredProc;
+    FD_GetMaxLoadDetailNo: TFDQuery;
+    FD_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField;
+    sq_SortingOrderMarkedPkgs: TFDQuery;
+    sq_Delete_SortingOrderMarkedPkgs: TFDQuery;
+    sp_Vis_newCreditLoad: TFDStoredProc;
+    sp_Vis_newCreditInvoice: TFDStoredProc;
+    sq_VerkLoadExists: TFDQuery;
+    sp_vis_CopyLOToInternalLO: TFDStoredProc;
+    sp_Vis_CopyToInternalLO_Load: TFDStoredProc;
+    sp_SetPkgStatusInLoad: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
     procedure dspLORowsGetTableName(Sender: TObject; DataSet: TDataSet;
@@ -1213,14 +1213,14 @@ end;
 Function TdmLoadEntryCSD.GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo : Integer) : Integer ;
 Begin
  Try
- ad_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger  := LoadNo ;
- ad_GetMaxLoadDetailNo.Open ;
- if not  ad_GetMaxLoadDetailNo.Eof then
-   Result := ad_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
+ FD_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger  := LoadNo ;
+ FD_GetMaxLoadDetailNo.Open ;
+ if not  FD_GetMaxLoadDetailNo.Eof then
+   Result := FD_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
     else
      Result := 0 ;
  Finally
-  ad_GetMaxLoadDetailNo.Close ;
+  FD_GetMaxLoadDetailNo.Close ;
  End ;
 End ;
 
@@ -1263,9 +1263,9 @@ begin
 end;
 
 function TdmLoadEntryCSD.DuplicatePackageNo(const PackageNo : Integer;const Prefix : String) : Boolean ;
-Var TempDataSet: TADMemTable ;
+Var TempDataSet: TFDMemTable ;
 Begin
- TempDataSet := TADMemTable.Create(nil);
+ TempDataSet := TFDMemTable.Create(nil);
  try
  { clone the real dataset with Reset set to True }
  { so that the current range is not cloned }

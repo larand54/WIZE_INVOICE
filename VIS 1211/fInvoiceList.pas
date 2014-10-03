@@ -13,11 +13,11 @@ uses
   cxGridCustomView, cxGrid, cxGridExportLink, cxTextEdit, cxCurrencyEdit,
   cxCalc, cxLookAndFeels, cxDropDownEdit, cxContainer, cxMaskEdit,
   cxCalendar, cxLookAndFeelPainters, cxButtons, cxGroupBox, cxRadioGroup, DateUtils,
-  cxCheckComboBox, cxGridCustomPopupMenu, cxGridPopupMenu, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, CheckLst,
-  cxGridBandedTableView, cxGridDBBandedTableView, cxDBEdit, uADCompDataSet,
-  uADCompClient, cxImageComboBox, cxLookupEdit, cxDBLookupEdit,
+  cxCheckComboBox, cxGridCustomPopupMenu, cxGridPopupMenu, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, CheckLst,
+  cxGridBandedTableView, cxGridDBBandedTableView, cxDBEdit, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxImageComboBox, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, Buttons, kbmMemTable, Math, cxDBLabel, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
@@ -228,9 +228,9 @@ type
     acSaveMall: TAction;
     acSaveMallAs: TAction;
     acOpenMall: TAction;
-    cds_mall: TADQuery;
+    cds_mall: TFDQuery;
     ds_mall: TDataSource;
-    cds_PropsInv: TADQuery;
+    cds_PropsInv: TFDQuery;
     cds_PropsInvVerkNo: TIntegerField;
     cds_PropsInvOwnerNo: TIntegerField;
     cds_PropsInvPIPNo: TIntegerField;

@@ -125,9 +125,9 @@ object fTradingLinkMult: TfTradingLinkMult
     Left = 473
     Top = 251
   end
-  object cds_AvropLink: TADQuery
+  object cds_AvropLink: TFDQuery
     Active = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
         'Select C.ClientName AS Kund, CSH.ShippingPlanNo AS Avropsnr from' +
@@ -156,9 +156,9 @@ object fTradingLinkMult: TfTradingLinkMult
       Required = True
     end
   end
-  object sq_POorderInfo: TADQuery
+  object sq_POorderInfo: TFDQuery
     Active = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
         'Select ord.OrderNoText AS Kontrakt, C.ClientName AS Leverant'#246'r, ' +

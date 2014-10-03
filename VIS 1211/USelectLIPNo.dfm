@@ -93,9 +93,9 @@ object fSelectLIPNo: TfSelectLIPNo
       Width = 305
     end
   end
-  object cds_LO_LookUp: TADQuery
+  object cds_LO_LookUp: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT '
@@ -187,9 +187,9 @@ object fSelectLIPNo: TfSelectLIPNo
     Left = 288
     Top = 128
   end
-  object cds_PIP: TADQuery
+  object cds_PIP: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -217,9 +217,9 @@ object fSelectLIPNo: TfSelectLIPNo
       Origin = 'OwnerNo'
     end
   end
-  object cds_LIP: TADQuery
+  object cds_LIP: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       

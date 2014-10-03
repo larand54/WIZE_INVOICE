@@ -22,9 +22,9 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxEdit, DB, cxDBData, cxGridLevel,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGrid, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient, cxContainer, cxLabel,
+  cxGridDBTableView, cxGrid, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxContainer, cxLabel,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxCalc, cxCheckBox, cxTextEdit,
   dxRibbonSkins, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
   dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -487,11 +487,11 @@ begin
    if not ThisUser.Logon then
     Close
      else
-      if dmsConnector.ADConnection1.Connected then
+      if dmsConnector.FDConnection1.Connected then
       Begin
        Caption:= Application.Title + '/' + dmsConnector.GetCompanyName (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' + GetVersion
-       + ' - ' + dmsConnector.ADConnection1.Params.Values['Server']
-       + '/' + dmsConnector.ADConnection1.Params.Values['Database'] + ' ' ;
+       + ' - ' + dmsConnector.FDConnection1.Params.Values['Server']
+       + '/' + dmsConnector.FDConnection1.Params.Values['Database'] + ' ' ;
        InitOnStartOfProgram ;
       End
       else
@@ -731,7 +731,7 @@ Try
  With dmsSystem do
  Begin
   Try
-  if dmsConnector.ADConnection1.Connected then
+  if dmsConnector.FDConnection1.Connected then
   Delete_UserReservedPkgs ;
   Except
   End ;
@@ -791,11 +791,11 @@ begin
  try
  if OKHelpBottomDlg.ShowModal = mrOK then
  Begin
-//  dmsConnector.ADConnection1.de .CloseDataSets ;
-  dmsConnector.ADConnection1.Connected:= False ;
+//  dmsConnector.FDConnection1.de .CloseDataSets ;
+  dmsConnector.FDConnection1.Connected:= False ;
 
-  if Length(OKHelpBottomDlg.eAD_Name.Text) > 0 then
-  ThisUser.DBUserName:= OKHelpBottomDlg.eAD_Name.Text ;
+  if Length(OKHelpBottomDlg.EFD_Name.Text) > 0 then
+  ThisUser.DBUserName:= OKHelpBottomDlg.EFD_Name.Text ;
 
   if Length(OKHelpBottomDlg.eDatabas.Text) > 0 then
   ThisUser.Database:= OKHelpBottomDlg.eDatabas.Text ;
@@ -803,9 +803,9 @@ begin
    if not ThisUser.Logon then
     Close
      else
-      if dmsConnector.ADConnection1.Connected then
+      if dmsConnector.FDConnection1.Connected then
       Begin
-       if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.eAD_Name.Text) and (Length(OKHelpBottomDlg.eAD_Name.Text) > 0) )
+       if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.EFD_Name.Text) and (Length(OKHelpBottomDlg.EFD_Name.Text) > 0) )
        or ((OKHelpBottomDlg.eDatabas.Text <> dmsConnector.Org_DB_Name) and (Length(OKHelpBottomDlg.eDatabas.Text) > 0)) then
        Begin
         InitOnStartOfProgram ;
@@ -815,8 +815,8 @@ begin
 
         Application.Title:= 'VIS' ;
         a:= Application.Title+'/'+dmsConnector.GetCompanyName (ThisUser.CompanyNo) +'/' + ThisUser.UserName +' ver '+GetVersion
-        +' - '+dmsConnector.ADConnection1.Params.Values['Server']
-        +'/'+dmsConnector.ADConnection1.Params.Values['Database']+' ' ;
+        +' - '+dmsConnector.FDConnection1.Params.Values['Server']
+        +'/'+dmsConnector.FDConnection1.Params.Values['Database']+' ' ;
        End
        else
        Begin
@@ -827,8 +827,8 @@ begin
 
         Application.Title:= 'VIS' ;
         frmMain.Caption:= Application.Title+'/'+dmsConnector.GetCompanyName (ThisUser.CompanyNo) +'/' + ThisUser.UserName +' ver '+GetVersion
-        +' - '+dmsConnector.ADConnection1.Params.Values['Server']
-        +'/'+dmsConnector.ADConnection1.Params.Values['Database']+' ' ;
+        +' - '+dmsConnector.FDConnection1.Params.Values['Server']
+        +'/'+dmsConnector.FDConnection1.Params.Values['Database']+' ' ;
        End ;
 
       End

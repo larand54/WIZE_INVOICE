@@ -17,7 +17,7 @@ object dm_SokFormular: Tdm_SokFormular
     Left = 704
     Top = 80
   end
-  object cds_MakeSokAvrop: TADQuery
+  object cds_MakeSokAvrop: TFDQuery
     BeforePost = cds_MakeSokAvropBeforePost
     CachedUpdates = True
     Indexes = <
@@ -34,7 +34,7 @@ object dm_SokFormular: Tdm_SokFormular
       end>
     IndexName = 'cds_MakeSokAvropIndex1'
     OnUpdateRecord = cds_MakeSokAvropUpdateRecord
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     ResourceOptions.AssignedValues = [rvCmdExecMode]
     ResourceOptions.CmdExecMode = amCancelDialog
@@ -487,9 +487,9 @@ object dm_SokFormular: Tdm_SokFormular
       Size = 30
     end
   end
-  object cds_SokAvrop: TADQuery
+  object cds_SokAvrop: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select SA.*,'
@@ -680,12 +680,12 @@ object dm_SokFormular: Tdm_SokFormular
       Size = 3
     end
   end
-  object cds_Booking: TADQuery
+  object cds_Booking: TFDQuery
     AfterPost = cds_BookingAfterPost
     MasterSource = ds_SokAvrop
     MasterFields = 'BOOKINGNO'
-    Connection = dmsConnector.ADConnection1
-    UpdateObject = ADUpdateSQL2
+    Connection = dmsConnector.FDConnection1
+    UpdateObject = FDUpdateSQL2
     SQL.Strings = (
       'Select * from dbo.Booking')
     Left = 528
@@ -839,8 +839,8 @@ object dm_SokFormular: Tdm_SokFormular
       Size = 50
     end
   end
-  object cds_PropsTaBort: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cds_PropsTaBort: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select * FROM dbo.userprops'
       'WHERE UserID = :UserID'
@@ -1079,8 +1079,8 @@ object dm_SokFormular: Tdm_SokFormular
       Size = 50
     end
   end
-  object ADUpdateSQL1: TADUpdateSQL
-    Connection = dmsConnector.ADConnection1
+  object FDUpdateSQL1: TFDUpdateSQL
+    Connection = dmsConnector.FDConnection1
     ConnectionName = 'VIS'
     ModifySQL.Strings = (
       'UPDATE booking'
@@ -1126,8 +1126,8 @@ object dm_SokFormular: Tdm_SokFormular
     Left = 160
     Top = 128
   end
-  object ADUpdateSQL2: TADUpdateSQL
-    Connection = dmsConnector.ADConnection1
+  object FDUpdateSQL2: TFDUpdateSQL
+    Connection = dmsConnector.FDConnection1
     ConnectionName = 'VIS'
     Left = 528
     Top = 80

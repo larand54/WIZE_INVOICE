@@ -216,7 +216,7 @@ inherited fIntrastat: TfIntrastat
       ImageIndex = 17
     end
   end
-  inherited cds_Props: TADQuery
+  inherited cds_Props: TFDQuery
     AfterInsert = cds_PropsAfterInsert
   end
   inherited SaveDialog1: TSaveDialog

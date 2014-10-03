@@ -21,9 +21,9 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TfLoadOrderSearch = class(TForm)
@@ -56,7 +56,7 @@ type
     EditSlutkund: TEdit;
     Label4: TLabel;
     cxGridPopupMenu1: TcxGridPopupMenu;
-    cds_SearchOrder: TADQuery;
+    cds_SearchOrder: TFDQuery;
     cds_SearchOrderKund: TStringField;
     cds_SearchOrderLO: TIntegerField;
     cds_SearchOrderReferens: TStringField;

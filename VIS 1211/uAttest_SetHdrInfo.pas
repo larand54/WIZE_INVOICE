@@ -6,10 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxContainer, cxEdit, StdCtrls, Buttons, cxLabel, cxMemo, cxTextEdit,
-  cxMaskEdit, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, DB, cxDropDownEdit,
-  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, uADCompDataSet,
-  uADCompClient, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  cxMaskEdit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, DB, cxDropDownEdit,
+  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
   dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -34,7 +34,7 @@ type
     BitBtn2: TBitBtn;
     cxLabel4: TcxLabel;
     labelAmount: TcxLabel;
-    MemSped: TADMemTable;
+    MemSped: TFDMemTable;
     MemSpedShipperNO: TIntegerField;
     MemSpedShipper: TStringField;
     lcShipper: TcxDBLookupComboBox;

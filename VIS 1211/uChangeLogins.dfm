@@ -1,7 +1,7 @@
 object OKHelpBottomDlg: TOKHelpBottomDlg
   Left = 335
   Top = 193
-  ActiveControl = eAD_Name
+  ActiveControl = EFD_Name
   Caption = 'Byt anv'#228'ndare'
   ClientHeight = 220
   ClientWidth = 461
@@ -23,7 +23,7 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Caption = 'AD Namn:'
+    Caption = 'FD Namn:'
   end
   object Label2: TLabel
     Left = 39
@@ -36,7 +36,7 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
     Margins.Bottom = 4
     Caption = 'Databas:'
   end
-  object eAD_Name: TEdit
+  object EFD_Name: TEdit
     Left = 108
     Top = 39
     Width = 149
@@ -56,7 +56,7 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Caption = 'H'#228'mta standard AD namn'
+    Caption = 'H'#228'mta standard FD namn'
     TabOrder = 2
     OnClick = Button1Click
   end

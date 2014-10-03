@@ -5,9 +5,9 @@ interface
 uses
   Classes,   SysUtils, Controls, Forms,
   VidaType, DB, kbmMemTable, Dialogs, SqlTimSt,
-  ImgList, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADCompClient, uADCompDataSet, QExport4, QExport4ASCII ;
+  ImgList, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.Client, FireDAC.Comp.DataSet, QExport4, QExport4ASCII ;
 
 
 type
@@ -60,8 +60,8 @@ type
     mtImportedProductLengthsALMM: TFloatField;
     mtLO_RecordsMATCH: TIntegerField;
     mtLO_RecordsVaruSlag: TIntegerField;
-    sq_ProductLengths: TADQuery;
-    cds_ProdLength: TADQuery;
+    sq_ProductLengths: TFDQuery;
+    cds_ProdLength: TFDQuery;
     cds_ProdLengthProductLengthNo: TIntegerField;
     cds_ProdLengthActualLengthMM: TFloatField;
     cds_ProdLengthNominalLengthMM: TFloatField;
@@ -75,43 +75,43 @@ type
     cds_ProdLengthSequenceNo: TIntegerField;
     cds_ProdLengthProductLengthGroupNo: TIntegerField;
     cds_ProdLengthAct: TIntegerField;
-    sq_GetPkgTypeNo: TADQuery;
+    sq_GetPkgTypeNo: TFDQuery;
     sq_GetPkgTypeNoPackageTypeNo: TIntegerField;
     sq_GetPkgTypeNoTotalNoOfPieces: TIntegerField;
     sq_GetPkgTypeNoActualLengthMM: TFloatField;
-    sp_StandardLengths: TADStoredProc;
+    sp_StandardLengths: TFDStoredProc;
     sp_StandardLengthsProductLengthNo: TIntegerField;
-    sp_PackageTypes: TADStoredProc;
-    sp_PackageTypeDetail: TADStoredProc;
-    sp_NewPackageType: TADStoredProc;
-    sp_NewPackageDetail: TADStoredProc;
-    sp_NewPackageNo: TADStoredProc;
-    sp_PackageTotals: TADStoredProc;
-    sp_NewPkgNoNoProdLogg: TADStoredProc;
-    sp_OnePackageNo: TADStoredProc;
-    sp_Populate_One_PkgTypeLengths: TADStoredProc;
-    sp_PackageTypesA: TADStoredProc;
-    sp_PackageTypeDetailA: TADStoredProc;
-    sp_NewPackageTypeA: TADStoredProc;
-    sp_NewPackageDetailA: TADStoredProc;
-    sp_NewPackageNoA: TADStoredProc;
-    sp_PackageTotalsA: TADStoredProc;
-    sp_NewPkgNoNoProdLoggA: TADStoredProc;
-    sq_GetUTNo: TADQuery;
+    sp_PackageTypes: TFDStoredProc;
+    sp_PackageTypeDetail: TFDStoredProc;
+    sp_NewPackageType: TFDStoredProc;
+    sp_NewPackageDetail: TFDStoredProc;
+    sp_NewPackageNo: TFDStoredProc;
+    sp_PackageTotals: TFDStoredProc;
+    sp_NewPkgNoNoProdLogg: TFDStoredProc;
+    sp_OnePackageNo: TFDStoredProc;
+    sp_Populate_One_PkgTypeLengths: TFDStoredProc;
+    sp_PackageTypesA: TFDStoredProc;
+    sp_PackageTypeDetailA: TFDStoredProc;
+    sp_NewPackageTypeA: TFDStoredProc;
+    sp_NewPackageDetailA: TFDStoredProc;
+    sp_NewPackageNoA: TFDStoredProc;
+    sp_PackageTotalsA: TFDStoredProc;
+    sp_NewPkgNoNoProdLoggA: TFDStoredProc;
+    sq_GetUTNo: TFDQuery;
     sq_GetUTNoSurfacingNo: TIntegerField;
-    sp_PkgInfo: TADStoredProc;
+    sp_PkgInfo: TFDStoredProc;
     sp_PkgInfoCREATED: TSQLTimeStampField;
     sp_PkgInfoCREATED_BY: TStringField;
     sp_PkgInfoOWNER: TStringField;
     sp_PkgInfoPKG_STATUS: TIntegerField;
     sp_PkgInfoINVENTORY: TStringField;
     sq_ProductLengthsActualLengthMM: TFloatField;
-    sq_PkgLengths: TADQuery;
+    sq_PkgLengths: TFDQuery;
     sq_PkgLengthsProductLengthNo: TIntegerField;
     sq_PkgLengthsActualLengthMM: TFloatField;
     sq_PkgLengthsNoOfPieces: TIntegerField;
-    sp_vis_CngPkgTypeInPkg: TADStoredProc;
-    sq_HTFPkgStatus: TADQuery;
+    sp_vis_CngPkgTypeInPkg: TFDStoredProc;
+    sq_HTFPkgStatus: TFDQuery;
     sq_HTFPkgStatusRecordType: TIntegerField;
     sq_HTFPkgStatusPrefix: TStringField;
     sq_HTFPkgStatusPaketnr: TIntegerField;
@@ -136,9 +136,9 @@ type
     sq_HTFPkgStatusProductCode: TStringField;
     sq_HTFPkgStatusALMM: TFloatField;
     sq_HTFPkgStatusPEFC: TIntegerField;
-    sq_InsTempPkgs: TADQuery;
-    sq_DelTempPkgs: TADQuery;
-    sp_NewPkgNo_Price_NoPP: TADStoredProc;
+    sq_InsTempPkgs: TFDQuery;
+    sq_DelTempPkgs: TFDQuery;
+    sp_NewPkgNo_Price_NoPP: TFDStoredProc;
     QExport4ASCII1: TQExport4ASCII;
     procedure mtPackagesAfterPost(DataSet: TDataSet);
     procedure mtPackagesAfterInsert(DataSet: TDataSet);

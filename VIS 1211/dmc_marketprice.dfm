@@ -1358,7 +1358,7 @@ object dm_marketprice: Tdm_marketprice
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object sq_VerkPriceAdjAdjPrice: TFloatField
-      FieldName = 'AdjPrice'
+      FieldName = 'FDjPrice'
       ProviderFlags = [pfInUpdate]
     end
     object sq_VerkPriceAdjDateCreated: TSQLTimeStampField
@@ -1388,7 +1388,7 @@ object dm_marketprice: Tdm_marketprice
     end
     object cds_VerkPriceAdjAdjPrice: TFloatField
       DisplayLabel = 'Priskorrigering (sek/nm3)'
-      FieldName = 'AdjPrice'
+      FieldName = 'FDjPrice'
     end
     object cds_VerkPriceAdjDateCreated: TSQLTimeStampField
       DisplayLabel = #196'ndrad'

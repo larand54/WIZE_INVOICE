@@ -235,7 +235,7 @@ object fCity: TfCity
     end
   end
   object ds_city: TDataSource
-    DataSet = dmsContact.ad_City
+    DataSet = dmsContact.FD_City
     Left = 88
     Top = 152
   end

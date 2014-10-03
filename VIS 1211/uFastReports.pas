@@ -3,14 +3,14 @@ unit uFastReports;
 interface
 
 uses
-  SysUtils, Classes, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, frxClass, frxRich, frxExportPDF, frxDBSet, DB,
-  uADCompDataSet, uADCompClient;
+  SysUtils, Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, frxClass, frxRich, frxExportPDF, frxDBSet, DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TdmFR = class(TDataModule)
-    sp_vis_FR_Invoice: TADStoredProc;
+    sp_vis_FR_Invoice: TFDStoredProc;
     DataSource1: TDataSource;
     frxDBDataset1: TfrxDBDataset;
     frxPDFExport2: TfrxPDFExport;

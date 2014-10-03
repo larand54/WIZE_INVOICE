@@ -5,14 +5,14 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, dxBar, dxBarExtItems, ExtCtrls, ImgList, StdCtrls,
-  DB, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
+  DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
   cxDataStorage, cxEdit, cxDBData, cxDropDownEdit, cxContainer, cxTextEdit,
   cxMaskEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   cxGridLevel, cxClasses, cxControls, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  uADCompDataSet, uADCompClient, cxLookAndFeels, cxLookAndFeelPainters ;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookAndFeels, cxLookAndFeelPainters ;
 
 type
   TfrmGenShipCost = class(TForm)
@@ -27,7 +27,7 @@ type
     Panel1: TPanel;
     Label1: TLabel;
     Label2: TLabel;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;

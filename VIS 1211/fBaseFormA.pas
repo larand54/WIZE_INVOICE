@@ -81,9 +81,9 @@ uses
   dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd, dxWrap, dxPrnDev, dxPSCompsProvider,
   dxPSFillPatterns, dxPSEdgePatterns, dxPScxCommon,
   dxPSCore, cxCalc,
-  cxCurrencyEdit, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient,
+  cxCurrencyEdit, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxLookAndFeels, dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils,
   dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxPScxPageControlProducer, dxSkinsCore, dxSkinBlack,
@@ -138,7 +138,7 @@ type
     SkrivutF82: TMenuItem;
     SkrivutF83: TMenuItem;
     StngF122: TMenuItem;
-    ADQuery1: TADQuery;
+    FDQuery1: TFDQuery;
     cxGridPopupMenu1: TcxGridPopupMenu;
 
     procedure atExitExecute(Sender: TObject);
@@ -223,7 +223,7 @@ end;
 function TfrmBaseFormA.DataSaved : Boolean ;
 Begin
  Result:= True ;
- if ((DataSource1.DataSet as TADQuery).ChangeCount > 0)
+ if ((DataSource1.DataSet as TFDQuery).ChangeCount > 0)
  or (DataSource1.DataSet.State in [dsEdit, dsInsert]) then
   Result:= False ;
 End ;
@@ -415,14 +415,14 @@ end;
 
 procedure TfrmBaseFormA.acSaveExecute(Sender: TObject);
 begin
- if (DataSource1.DataSet as TADQuery).State in [dsEdit, dsInsert] then
+ if (DataSource1.DataSet as TFDQuery).State in [dsEdit, dsInsert] then
  Begin
-  (DataSource1.DataSet as TADQuery).Post ;
+  (DataSource1.DataSet as TFDQuery).Post ;
  End ;
 
- if (DataSource1.DataSet as TADQuery).ChangeCount > 0 then
+ if (DataSource1.DataSet as TFDQuery).ChangeCount > 0 then
  Begin
-  (DataSource1.DataSet as TADQuery).ApplyUpdates(0) ;
+  (DataSource1.DataSet as TFDQuery).ApplyUpdates(0) ;
  End ;
 end;
 
@@ -433,12 +433,12 @@ end;
 
 procedure TfrmBaseFormA.acDeleteRecordUpdate(Sender: TObject);
 begin
- acDeleteRecord.Enabled:= (DataSource1.DataSet as TADQuery).RecordCount > 0 ;
+ acDeleteRecord.Enabled:= (DataSource1.DataSet as TFDQuery).RecordCount > 0 ;
 end;
 
 procedure TfrmBaseFormA.acCancelChangesExecute(Sender: TObject);
 begin
- (DataSource1.DataSet as TADQuery).CancelUpdates ;
+ (DataSource1.DataSet as TFDQuery).CancelUpdates ;
 end;
 
 procedure TfrmBaseFormA.acCancelChangesUpdate(Sender: TObject);

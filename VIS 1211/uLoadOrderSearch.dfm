@@ -1172,9 +1172,9 @@
     Left = 456
     Top = 96
   end
-  object cds_SearchOrder: TADQuery
+  object cds_SearchOrder: TFDQuery
     Active = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
         'Select distinct kund.SearchName AS Kund, ssp.ShippingPlanNo AS L' +

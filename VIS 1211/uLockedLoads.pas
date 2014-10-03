@@ -10,9 +10,9 @@ uses
   dxPrnPg, dxBkgnd, dxWrap, dxPrnDev, dxPSCompsProvider, dxPSFillPatterns,
   dxPSEdgePatterns, dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils,
   dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxEditorProducers,
-  dxPScxExtEditorProducers, dxPScxPageControlProducer, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient,
+  dxPScxExtEditorProducers, dxPScxPageControlProducer, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   dxPSCore, dxPScxCommon, ActnList, ImgList, cxGridLevel,
   cxClasses, cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, StdCtrls, cxButtons, ExtCtrls, cxLabel,
@@ -32,9 +32,9 @@ uses
 
 type
   TfrmLockLoads = class(TfrmBaseFormA)
-    ADQuery1LoadNo: TIntegerField;
-    ADQuery1ResUserName: TStringField;
-    ADQuery1DateCreated: TSQLTimeStampField;
+    FDQuery1LoadNo: TIntegerField;
+    FDQuery1ResUserName: TStringField;
+    FDQuery1DateCreated: TSQLTimeStampField;
     cxGrid1DBTableView1LoadNo: TcxGridDBColumn;
     cxGrid1DBTableView1ResUserName: TcxGridDBColumn;
     cxGrid1DBTableView1DateCreated: TcxGridDBColumn;

@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, kbmMemTable,
-  dxmdaset, SqlTimSt, Dialogs, Controls, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient ;
+  dxmdaset, SqlTimSt, Dialogs, Controls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
 
 type
   TdmModule1 = class(TDataModule)
@@ -46,7 +46,7 @@ type
     tblLoadFreightPaket: TIntegerField;
     ds_LoadFC: TDataSource;
     ds_LF: TDataSource;
-    cds_PkgInfo: TADQuery;
+    cds_PkgInfo: TFDQuery;
     cds_PkgInfoPKG_CREATED_BY: TStringField;
     cds_PkgInfoPKG_NO: TIntegerField;
     cds_PkgInfoPKG_CREATED: TSQLTimeStampField;
@@ -75,8 +75,8 @@ type
     cds_PkgInfoPACKAGETYPENO: TIntegerField;
     cds_PkgInfoKORTAKODEN: TStringField;
     cds_PkgInfoLANGAKODEN: TStringField;
-    sqGetSupplierNo: TADQuery;
-    cds_LoadPkgInfo: TADQuery;
+    sqGetSupplierNo: TFDQuery;
+    cds_LoadPkgInfo: TFDQuery;
     cds_LoadPkgInfoLOAD_CUSTOMER: TStringField;
     cds_LoadPkgInfoLOAD_SUPPLIER: TStringField;
     cds_LoadPkgInfoLOAD_DATE: TSQLTimeStampField;
@@ -93,7 +93,7 @@ type
     cds_LoadPkgInfoDEBIT_CREDIT: TStringField;
     cds_LoadPkgInfoORDER_NO: TStringField;
     cds_LoadPkgInfoORDER_CUSTOMER: TStringField;
-    cds_LoadFreightCostHeader: TADQuery;
+    cds_LoadFreightCostHeader: TFDQuery;
     cds_LoadFreightCostHeaderAvrakningsNo: TIntegerField;
     cds_LoadFreightCostHeaderStatus: TIntegerField;
     cds_LoadFreightCostHeaderLocalShipperNo: TIntegerField;
@@ -105,11 +105,11 @@ type
     cds_LoadFreightCostHeaderNote: TMemoField;
     cds_LoadFreightCostHeaderShippersInvoiceNo: TStringField;
     cds_LoadFreightCostHeaderVerkNo: TIntegerField;
-    cds_LoadFreightCostDetails: TADQuery;
-    cdsClient: TADStoredProc;
+    cds_LoadFreightCostDetails: TFDQuery;
+    cdsClient: TFDStoredProc;
     cdsClientClientNo: TIntegerField;
     cdsClientClientName: TStringField;
-    sq_ClientData: TADQuery;
+    sq_ClientData: TFDQuery;
     sq_ClientDataDefaultBillingAddressNo: TIntegerField;
     sq_ClientDataClientName: TStringField;
     sq_ClientDataClientNo: TIntegerField;
@@ -143,7 +143,7 @@ type
     sq_ClientDataSHIPTO_POSTALCODE: TStringField;
     sq_ClientDataSHIPTO_CITY: TStringField;
     sq_ClientDataSHIPTO_COUNTRY: TStringField;
-    sq_LoadFreightCost: TADQuery;
+    sq_LoadFreightCost: TFDQuery;
     sq_LoadFreightCostFreightCost: TFloatField;
     sq_LoadFreightCostFreightCostVolUnit: TIntegerField;
     sq_LoadFreightCostFreightCostCurrency: TIntegerField;
@@ -162,14 +162,14 @@ type
     sq_LoadFreightCostBelopp: TFloatField;
     sq_LoadFreightCostSupplierNo: TIntegerField;
     sq_LoadFreightCostLO: TIntegerField;
-    cdsDestination: TADStoredProc;
+    cdsDestination: TFDStoredProc;
     cdsDestinationCityNo: TIntegerField;
     cdsDestinationCityName: TStringField;
-    sq_UpdateLoad: TADQuery;
-    sq_UpdLoadII: TADQuery;
-    sq_InsFakturaLoads: TADQuery;
-    sq_InsAvrHdr: TADQuery;
-    cdsClientAddress: TADQuery;
+    sq_UpdateLoad: TFDQuery;
+    sq_UpdLoadII: TFDQuery;
+    sq_InsFakturaLoads: TFDQuery;
+    sq_InsAvrHdr: TFDQuery;
+    cdsClientAddress: TFDQuery;
     cdsClientAddressADDRESS_NO: TIntegerField;
     cdsClientAddressADDRESS_NAME: TStringField;
     cdsClientAddressADDRESSLINE1: TStringField;
@@ -180,7 +180,7 @@ type
     cdsClientAddressPOSTALCODE: TStringField;
     cdsClientAddressCITY: TStringField;
     cdsClientAddressCOUNTRY: TStringField;
-    cds_LoadFreightCostHeader2: TADQuery;
+    cds_LoadFreightCostHeader2: TFDQuery;
     cds_LoadFreightCostHeader2AvrakningsNo: TIntegerField;
     cds_LoadFreightCostHeader2Status: TIntegerField;
     cds_LoadFreightCostHeader2LocalShipperNo: TIntegerField;
@@ -195,7 +195,7 @@ type
     cds_LoadFreightCostHeader2SHIPPER: TStringField;
     cds_LoadFreightCostHeader2VERK: TStringField;
     cds_LoadFreightCostHeader2ANVANDARE: TStringField;
-    cds_LoadFC: TADQuery;
+    cds_LoadFC: TFDQuery;
     cds_LoadFCLastnr: TIntegerField;
     cds_LoadFCFS: TStringField;
     cds_LoadFCLastID: TStringField;
@@ -215,7 +215,7 @@ type
     cds_LoadFCCustomerNo: TIntegerField;
     cds_LoadFCssp_CustomerNo: TIntegerField;
     cds_LoadFCNote: TStringField;
-    cds_genfreight: TADQuery;
+    cds_genfreight: TFDQuery;
     cds_genfreightSalesRegionNo: TIntegerField;
     cds_genfreightscrow: TIntegerField;
     cds_genfreighttype: TStringField;
@@ -225,7 +225,7 @@ type
     cds_genfreightVolunitNo: TIntegerField;
     cds_genfreightDateCreated: TSQLTimeStampField;
     cds_genfreightModifiedUser: TSmallintField;
-    cdsLoadFreightCost: TADQuery;
+    cdsLoadFreightCost: TFDQuery;
     cdsLoadFreightCostAvrakningsNo: TIntegerField;
     cdsLoadFreightCostLoadNo: TIntegerField;
     cdsLoadFreightCostM3_NET: TFloatField;
@@ -236,18 +236,18 @@ type
     cdsLoadFreightCostDateCreated: TSQLTimeStampField;
     cdsLoadFreightCostDateModified: TSQLTimeStampField;
     cdsLoadFreightCostNote: TStringField;
-    cds_LF: TADQuery;
+    cds_LF: TFDQuery;
     cds_LFAM3: TFloatField;
     cds_LFInternalInvoiceNo: TIntegerField;
-    sq_GetLoadNo: TADQuery;
+    sq_GetLoadNo: TFDQuery;
     sq_GetLoadNoLoadNo: TIntegerField;
-    sq_FindAvr: TADQuery;
+    sq_FindAvr: TFDQuery;
     sq_FindAvrAvrakningsNo: TIntegerField;
     sq_FindAvrVERK: TStringField;
     sq_FindAvrVerkNo: TIntegerField;
-    sq_GetAddressNo: TADQuery;
+    sq_GetAddressNo: TFDQuery;
     sq_GetAddressNoAddressNo: TIntegerField;
-    sp_PcsPerLength: TADStoredProc;
+    sp_PcsPerLength: TFDStoredProc;
     sqGetSupplierNoSupplierNo: TIntegerField;
     cds_LoadFreightCostDetailsTotalSUM: TFloatField;
     cds_LoadFreightCostDetailsM3_NET: TFloatField;
@@ -263,7 +263,7 @@ type
     cds_LoadFreightCostDetailsDateModified: TSQLTimeStampField;
     cds_LoadFreightCostDetailsModifiedUser: TIntegerField;
     cds_LoadFreightCostDetailsNote: TStringField;
-    sp_vis_GenOSRunAll: TADStoredProc;
+    sp_vis_GenOSRunAll: TFDStoredProc;
     sp_vis_GenOSRunAllUserID: TIntegerField;
     sp_vis_GenOSRunAllORDER_STATUS: TIntegerField;
     sp_vis_GenOSRunAllORDER_NO: TStringField;
@@ -293,7 +293,7 @@ type
     sp_vis_GenOSRunAllSalesRegionNo: TIntegerField;
     sp_vis_GenOSRunAllCountryNo: TIntegerField;
     sp_vis_GenOSRunAllCurrencyNo: TIntegerField;
-    sq_Orderstock: TADQuery;
+    sq_Orderstock: TFDQuery;
     sq_OrderstockLev_Land: TStringField;
     sq_OrderstockValuta: TStringField;
     sq_OrderstockOrderNM3int: TFloatField;
@@ -306,7 +306,7 @@ type
     sq_OrderstockOrderstockSEK: TFloatField;
     ds_Orderstock: TDataSource;
     sq_OrderstockFrsljningsregion: TStringField;
-    sp_Vis_Intra_Stat_Exp: TADStoredProc;
+    sp_Vis_Intra_Stat_Exp: TFDStoredProc;
     sp_Vis_Intra_Stat_ExpLandKod: TStringField;
     sp_Vis_Intra_Stat_ExpTransaktionstyp: TIntegerField;
     sp_Vis_Intra_Stat_ExpVarukod: TStringField;
@@ -317,7 +317,7 @@ type
     sq_OrderstockSalesRegionNo: TIntegerField;
     sq_OrderstockCountryNo: TIntegerField;
     sq_OrderstockCurrencyNo: TIntegerField;
-    sp_Vis_GenTradingAnalyze: TADStoredProc;
+    sp_Vis_GenTradingAnalyze: TFDStoredProc;
     sp_Vis_GenTradingAnalyzeLev: TStringField;
     sp_Vis_GenTradingAnalyzePO_Kontraktnr: TStringField;
     sp_Vis_GenTradingAnalyzePO_Fakturanr: TIntegerField;
@@ -355,7 +355,7 @@ type
     cds_LFVaruvrde: TFloatField;
     cds_LFFakturavrde: TFloatField;
     cds_LFConfirmKomm: TIntegerField;
-    cds_InvoicePayStatus: TADQuery;
+    cds_InvoicePayStatus: TFDQuery;
     ds_InvoicePayStatus: TDataSource;
     cds_InvoicePayStatusFAKTURANR: TIntegerField;
     cds_InvoicePayStatusQuickInvoice: TIntegerField;
@@ -372,14 +372,14 @@ type
     cds_InvoicePayStatusPROVISION: TFloatField;
     cds_InvoicePayStatusTrading: TIntegerField;
     cds_InvoicePayStatusFRAKT: TFloatField;
-    ad_InsAttHead: TADQuery;
-    admSelectedRows: TADMemTable;
-    admSelectedRowsInternalInvoiceNo: TIntegerField;
-    admSelectedRowsLONo: TIntegerField;
-    admSelectedRowsSupplier_InvoiceNo: TStringField;
-    admSelectedRowsSupplier_InvoiceDate: TDateTimeField;
-    ad_InsAttestRow: TADQuery;
-    cds_Att_Ext_ServicesII: TADQuery;
+    FD_InsAttHead: TFDQuery;
+    FDmSelectedRows: TFDMemTable;
+    FDmSelectedRowsInternalInvoiceNo: TIntegerField;
+    FDmSelectedRowsLONo: TIntegerField;
+    FDmSelectedRowsSupplier_InvoiceNo: TStringField;
+    FDmSelectedRowsSupplier_InvoiceDate: TDateTimeField;
+    FD_InsAttestRow: TFDQuery;
+    cds_Att_Ext_ServicesII: TFDQuery;
     cds_Att_Ext_ServicesIIInternalInvoiceNo: TIntegerField;
     cds_Att_Ext_ServicesIIShippingPlanNo: TIntegerField;
     cds_Att_Ext_ServicesIISequensNo: TIntegerField;
@@ -396,29 +396,29 @@ type
     cds_Att_Ext_ServicesIIModifiedUser: TIntegerField;
     cds_Att_Ext_ServicesIIQuick_InvoiceNo: TIntegerField;
     ds_Att_Ext_ServicesII: TDataSource;
-    ad_GetFreightCost: TADQuery;
-    ad_GetFreightCostFrakt: TFloatField;
+    FD_GetFreightCost: TFDQuery;
+    FD_GetFreightCostFrakt: TFloatField;
     cds_LFFrakt: TFloatField;
     cds_LFKomm: TFloatField;
-    admSelectedRowsTotalAmount: TFloatField;
-    admSelectedRowsAmount: TFloatField;
-    ad_InsAttLO: TADQuery;
-    admSelectedRowsSHIPPINGCOMPANYNO: TIntegerField;
-    ad_InsAttestRowKomm: TADQuery;
-    admSelectedRowsCURRENCYNO: TIntegerField;
+    FDmSelectedRowsTotalAmount: TFloatField;
+    FDmSelectedRowsAmount: TFloatField;
+    FD_InsAttLO: TFDQuery;
+    FDmSelectedRowsSHIPPINGCOMPANYNO: TIntegerField;
+    FD_InsAttestRowKomm: TFDQuery;
+    FDmSelectedRowsCURRENCYNO: TIntegerField;
     cds_LFFraktCurrencyNo: TIntegerField;
     cds_LFKommCurrencyNo: TIntegerField;
     cds_Att_Ext_ServicesIIAmountAttested: TFloatField;
     cds_Att_Ext_ServicesIIActive: TIntegerField;
-    admSelectedRowsFakturanr: TIntegerField;
+    FDmSelectedRowsFakturanr: TIntegerField;
     cds_LFAgentNo: TIntegerField;
-    adDeleteAttest: TADQuery;
+    adDeleteAttest: TFDQuery;
     cds_LFInvoiceType: TIntegerField;
     cds_LFValutaNr: TIntegerField;
     cds_LFEgenValuta: TStringField;
     cds_Att_Ext_ServicesIIValuta: TStringField;
-    sp_AttestFreightList: TADStoredProc;
-    sp_AttestKommList: TADStoredProc;
+    sp_AttestFreightList: TFDStoredProc;
+    sp_AttestKommList: TFDStoredProc;
     sp_AttestFreightListInvoiceType: TIntegerField;
     sp_AttestFreightListShippingPlanNo: TIntegerField;
     sp_AttestFreightListFakturanr: TIntegerField;
@@ -449,7 +449,7 @@ type
     sp_AttestFreightListValutaNr: TIntegerField;
     sp_AttestFreightListEgenValuta: TStringField;
     ds_LFALL: TDataSource;
-    sp_LF: TADStoredProc;
+    sp_LF: TFDStoredProc;
     sp_LFInvoiceType: TIntegerField;
     sp_LFShippingPlanNo: TIntegerField;
     sp_LFFakturanr: TIntegerField;
@@ -506,7 +506,7 @@ type
     sp_AttestKommListKomm: TFloatField;
     sp_AttestKommListKommCurrencyNo: TIntegerField;
     sp_AttestKommListValutaNr: TIntegerField;
-    sp_AttestKommListSingle: TADStoredProc;
+    sp_AttestKommListSingle: TFDStoredProc;
     sp_AttestKommListSingleInvoiceType: TIntegerField;
     sp_AttestKommListSingleShippingPlanNo: TIntegerField;
     sp_AttestKommListSingleFakturanr: TIntegerField;
@@ -539,7 +539,7 @@ type
     sp_AttestKommListEgenValuta: TStringField;
     sp_AttestKommListSingleEgenValuta: TStringField;
     cds_Att_Ext_ServicesIIKlient: TStringField;
-    cds_CreLim: TADQuery;
+    cds_CreLim: TFDQuery;
     cds_CreLimgrpno: TIntegerField;
     cds_CreLimName: TStringField;
     cds_CreLimCreditLimit: TBCDField;
@@ -549,15 +549,15 @@ type
     cds_CreLimUserModified: TIntegerField;
     cds_CreLimNote: TStringField;
     ds_CreLim: TDataSource;
-    cds_CreClients: TADQuery;
+    cds_CreClients: TFDQuery;
     cds_CreClientsgrpNo: TIntegerField;
     cds_CreClientsClientNo: TIntegerField;
-    cds_CreGrpCli: TADQuery;
+    cds_CreGrpCli: TFDQuery;
     cds_CreGrpCligrpNo: TIntegerField;
     cds_CreGrpCliClientNo: TIntegerField;
-    sq_GetCreditGroupNamn: TADQuery;
+    sq_GetCreditGroupNamn: TFDQuery;
     sq_GetCreditGroupNamnGruppnamn: TStringField;
-    cds_CreditAnalys: TADQuery;
+    cds_CreditAnalys: TFDQuery;
     ds_CreditAnalys: TDataSource;
     cds_CreLimValuta: TStringField;
     cds_CreditAnalysKUND: TStringField;
@@ -576,13 +576,13 @@ type
     cds_InvoicePayStatusAmountPaid: TBCDField;
     cds_InvoicePayStatusNote: TStringField;
     cds_InvoicePayStatusInternalInvoiceNo: TIntegerField;
-    ADUpdateSQL1: TADUpdateSQL;
+    FDUpdateSQL1: TFDUpdateSQL;
     cds_InvoicePayStatusAttBetala: TFloatField;
-    sq_InsPayStatus: TADQuery;
-    admSelectedRowsNote: TStringField;
+    sq_InsPayStatus: TFDQuery;
+    FDmSelectedRowsNote: TStringField;
     sq_OrderstockMPNH: TFloatField;
     sq_OrderstockPriceOK: TIntegerField;
-    sp_OrderstockDtl: TADStoredProc;
+    sp_OrderstockDtl: TFDStoredProc;
     ds_OrderstockDtl: TDataSource;
     sp_OrderstockDtlORDER_NO: TStringField;
     sp_OrderstockDtlStatistikland: TStringField;
@@ -610,10 +610,10 @@ type
     sp_Vis_GenTradingAnalyzeFR: TStringField;
     sp_Vis_GenTradingAnalyzeDiffOfSales: TFloatField;
     sq_OrderstockInternalValue: TFloatField;
-    sq_ModInsPayStatus: TADQuery;
+    sq_ModInsPayStatus: TFDQuery;
     sq_ClientDataStatistikLandNr: TIntegerField;
     cds_LoadFCPrisPerAM3SEK: TBCDField;
-    sp_Orderstock: TADStoredProc;
+    sp_Orderstock: TFDStoredProc;
     sp_OrderstockPriceOK: TIntegerField;
     sp_OrderstockLev_Land: TStringField;
     sp_OrderstockValuta: TStringField;
@@ -669,8 +669,8 @@ type
     procedure cds_CreLimBeforePost(DataSet: TDataSet);
     procedure cds_InvoicePayStatusBeforePost(DataSet: TDataSet);
     procedure cds_InvoicePayStatusUpdateRecord(ASender: TDataSet;
-      ARequest: TADUpdateRequest; var AAction: TADErrorAction;
-      AOptions: TADUpdateRowOptions);
+      ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+      AOptions: TFDUpdateRowOptions);
     procedure cds_InvoicePayStatusCalcFields(DataSet: TDataSet);
     procedure cds_CreGrpCliAfterInsert(DataSet: TDataSet);
     procedure sp_Vis_GenTradingAnalyzeCalcFields(DataSet: TDataSet);
@@ -920,37 +920,37 @@ Var RadNr : Integer ;
 Begin
  Result := 0 ;
  RadNr  := 1 ;
- admSelectedRows.First ;
- ad_GetFreightCost.SQL.Clear ;
- ad_GetFreightCost.SQL.Add('Select SUM(invd.ProductValue) AS Frakt from dbo.InvoiceDetail invd') ;
- ad_GetFreightCost.SQL.Add('WHERE invd.InternalInvoiceNo = ' + admSelectedRowsInternalInvoiceNo.AsString) ;
- ad_GetFreightCost.SQL.Add('AND invd.TypeOfRow = 3') ;
- While not admSelectedRows.Eof do
+ FDmSelectedRows.First ;
+ FD_GetFreightCost.SQL.Clear ;
+ FD_GetFreightCost.SQL.Add('Select SUM(invd.ProductValue) AS Frakt from dbo.InvoiceDetail invd') ;
+ FD_GetFreightCost.SQL.Add('WHERE invd.InternalInvoiceNo = ' + FDmSelectedRowsInternalInvoiceNo.AsString) ;
+ FD_GetFreightCost.SQL.Add('AND invd.TypeOfRow = 3') ;
+ While not FDmSelectedRows.Eof do
  Begin
-  with ad_GetFreightCost do
+  with FD_GetFreightCost do
   Begin
    if RadNr = 1 then
-   SQL.Add('AND (invd.ShippingPlanNo = ' + admSelectedRowsLONo.AsString)
+   SQL.Add('AND (invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString)
    else
-   SQL.Add('or invd.ShippingPlanNo = ' + admSelectedRowsLONo.AsString) ;
+   SQL.Add('or invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString) ;
   End ;
   RadNr := RadNr + 1 ;
-  admSelectedRows.Next ;
+  FDmSelectedRows.Next ;
  End ;
- ad_GetFreightCost.SQL.Add(')') ;
+ FD_GetFreightCost.SQL.Add(')') ;
 
  if RadNr > 1 then
  Begin
   Try
-  ad_GetFreightCost.Active  := True ;
-  if not ad_GetFreightCost.Eof then
-   Result := ad_GetFreightCostFrakt.AsFloat
+  FD_GetFreightCost.Active  := True ;
+  if not FD_GetFreightCost.Eof then
+   Result := FD_GetFreightCostFrakt.AsFloat
   Finally
-   ad_GetFreightCost.Active := False ;
+   FD_GetFreightCost.Active := False ;
   End ;
  End ;
 
-//ad_GetFreightCostFrakt
+//FD_GetFreightCostFrakt
 
 End ; *)
 
@@ -960,7 +960,7 @@ Var SequensNo         : Integer ;
 Begin
  //TotalFreightCost := GetFreightCostOfSelectedRows ;
 
- admSelectedRows.First ;
+ FDmSelectedRows.First ;
 
 //START A TRANSACTION
   dmsConnector.StartTransaction ;
@@ -968,23 +968,23 @@ Begin
   SequensNo := dmsConnector.NextMaxNo('Att_Ext_Services') ;
 
 
- While not admSelectedRows.Eof do
+ While not FDmSelectedRows.Eof do
  Begin
   Try
-  ad_InsAttHead.ParamByName('InternalInvoiceNo').AsInteger          := admSelectedRowsInternalInvoiceNo.AsInteger ;
-  ad_InsAttHead.ParamByName('ShippingPlanNo').AsInteger             := admSelectedRowsLONo.AsInteger ;
-  ad_InsAttHead.ParamByName('SHIPPINGCOMPANYNO').AsInteger          := admSelectedRowsSHIPPINGCOMPANYNO.AsInteger ;
-  ad_InsAttHead.ParamByName('CURRENCYNO').AsInteger                 := admSelectedRowsCURRENCYNO.AsInteger ;
+  FD_InsAttHead.ParamByName('InternalInvoiceNo').AsInteger          := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
+  FD_InsAttHead.ParamByName('ShippingPlanNo').AsInteger             := FDmSelectedRowsLONo.AsInteger ;
+  FD_InsAttHead.ParamByName('SHIPPINGCOMPANYNO').AsInteger          := FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger ;
+  FD_InsAttHead.ParamByName('CURRENCYNO').AsInteger                 := FDmSelectedRowsCURRENCYNO.AsInteger ;
 
-  ad_InsAttHead.ParamByName('SequensNo').AsInteger                  := SequensNo ;
-  ad_InsAttHead.ParamByName('Supplier_InvoiceNo').AsString          := admSelectedRowsSupplier_InvoiceNo.AsString ;
-  ad_InsAttHead.ParamByName('Supplier_InvoiceDate').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(admSelectedRowsSupplier_InvoiceDate.AsDateTime) ;
-  ad_InsAttHead.ParamByName('UserID').AsInteger                     := ThisUser.UserID ;
-  ad_InsAttHead.ParamByName('DESC').AsString                        := Beskrivning ;//'Frakt' ;//admSelectedRowsSupplier_InvoiceNo.AsString ;
-  ad_InsAttHead.ParamByName('Amount').AsFloat                       := admSelectedRowsAmount.AsFloat ;
-  ad_InsAttHead.ParamByName('Quick_InvoiceNo').AsInteger            := admSelectedRowsFakturanr.AsInteger ;
-  ad_InsAttHead.ParamByName('Note').AsString                        := admSelectedRowsNote.AsString ;
-  ad_InsAttHead.ExecSQL ;
+  FD_InsAttHead.ParamByName('SequensNo').AsInteger                  := SequensNo ;
+  FD_InsAttHead.ParamByName('Supplier_InvoiceNo').AsString          := FDmSelectedRowsSupplier_InvoiceNo.AsString ;
+  FD_InsAttHead.ParamByName('Supplier_InvoiceDate').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(FDmSelectedRowsSupplier_InvoiceDate.AsDateTime) ;
+  FD_InsAttHead.ParamByName('UserID').AsInteger                     := ThisUser.UserID ;
+  FD_InsAttHead.ParamByName('DESC').AsString                        := Beskrivning ;//'Frakt' ;//FDmSelectedRowsSupplier_InvoiceNo.AsString ;
+  FD_InsAttHead.ParamByName('Amount').AsFloat                       := FDmSelectedRowsAmount.AsFloat ;
+  FD_InsAttHead.ParamByName('Quick_InvoiceNo').AsInteger            := FDmSelectedRowsFakturanr.AsInteger ;
+  FD_InsAttHead.ParamByName('Note').AsString                        := FDmSelectedRowsNote.AsString ;
+  FD_InsAttHead.ExecSQL ;
      except
       On E: Exception do
       Begin
@@ -993,20 +993,20 @@ Begin
 //       Raise ;
       End ;
      end;
-  admSelectedRows.Next ;
+  FDmSelectedRows.Next ;
  End ;//While     
 
- admSelectedRows.First ;
- While not admSelectedRows.Eof do
+ FDmSelectedRows.First ;
+ While not FDmSelectedRows.Eof do
  Begin
 
  if Beskrivning = 'Komm' then
  Begin
   Try
-  ad_InsAttestRowKomm.ParamByName('InternalInvoiceNo').AsInteger         := admSelectedRowsInternalInvoiceNo.AsInteger ;
-//  ad_InsAttestRowKomm.ParamByName('ShippingPlanNo').AsInteger            := admSelectedRowsLONo.AsInteger ;
-  ad_InsAttestRowKomm.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-  ad_InsAttestRowKomm.ExecSQL ;
+  FD_InsAttestRowKomm.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
+//  FD_InsAttestRowKomm.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
+  FD_InsAttestRowKomm.ParamByName('SequensNo').AsInteger                 := SequensNo ;
+  FD_InsAttestRowKomm.ExecSQL ;
      except
       On E: Exception do
       Begin
@@ -1017,10 +1017,10 @@ Begin
   else
   Begin
   Try
-  ad_InsAttestRow.ParamByName('InternalInvoiceNo').AsInteger         := admSelectedRowsInternalInvoiceNo.AsInteger ;
-  ad_InsAttestRow.ParamByName('ShippingPlanNo').AsInteger            := admSelectedRowsLONo.AsInteger ;
-  ad_InsAttestRow.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-  ad_InsAttestRow.ExecSQL ;
+  FD_InsAttestRow.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
+  FD_InsAttestRow.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
+  FD_InsAttestRow.ParamByName('SequensNo').AsInteger                 := SequensNo ;
+  FD_InsAttestRow.ExecSQL ;
      except
       On E: Exception do
       Begin
@@ -1030,11 +1030,11 @@ Begin
   End ;
 
   Try
-   ad_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger         := admSelectedRowsInternalInvoiceNo.AsInteger ;
-   ad_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := admSelectedRowsLONo.AsInteger ;
-   ad_InsAttLO.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-   ad_InsAttLO.ParamByName('AmountAttested').AsFloat              := admSelectedRowsTotalAmount.AsFloat ;
-   ad_InsAttLO.ExecSQL ;
+   FD_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
+   FD_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
+   FD_InsAttLO.ParamByName('SequensNo').AsInteger                 := SequensNo ;
+   FD_InsAttLO.ParamByName('AmountAttested').AsFloat              := FDmSelectedRowsTotalAmount.AsFloat ;
+   FD_InsAttLO.ExecSQL ;
      except
       On E: Exception do
       Begin
@@ -1044,7 +1044,7 @@ Begin
       End ;
      end;
 
-  admSelectedRows.Next ;
+  FDmSelectedRows.Next ;
  End ;//While
 
  dmsConnector.Commit ;
@@ -1270,12 +1270,12 @@ begin
 end;
 
 procedure TdmModule1.cds_InvoicePayStatusUpdateRecord(ASender: TDataSet;
-  ARequest: TADUpdateRequest; var AAction: TADErrorAction;
-  AOptions: TADUpdateRowOptions);
+  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+  AOptions: TFDUpdateRowOptions);
 begin
-  ADUpdateSQL1.ConnectionName := cds_InvoicePayStatus.ConnectionName;
-  ADUpdateSQL1.DataSet := cds_InvoicePayStatus ;
- ADUpdateSQL1.Apply(ARequest, AAction, AOptions);
+  FDUpdateSQL1.ConnectionName := cds_InvoicePayStatus.ConnectionName;
+  FDUpdateSQL1.DataSet := cds_InvoicePayStatus ;
+ FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
 end;
 
 procedure TdmModule1.cds_InvoicePayStatusCalcFields(DataSet: TDataSet);

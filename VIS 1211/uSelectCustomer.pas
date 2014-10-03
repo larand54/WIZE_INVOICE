@@ -9,9 +9,9 @@ uses
   cxCustomData, cxGraphics, cxFilter, cxData, cxDataStorage, cxEdit,
   cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
   cxGridLevel, cxClasses, cxControls, cxGridCustomView, cxGrid, cxTextEdit,
-  cxLookAndFeels, cxLookAndFeelPainters, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient;
+  cxLookAndFeels, cxLookAndFeelPainters, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TfrmSelectCustomer = class(TForm)
@@ -24,8 +24,8 @@ type
     grdClients: TcxGrid;
     grdClientsDBTableView1ClientNo: TcxGridDBColumn;
     grdClientsDBTableView1ClientName: TcxGridDBColumn;
-    cds_Clients: TADQuery;
-    sq_AllClients: TADQuery;
+    cds_Clients: TFDQuery;
+    sq_AllClients: TFDQuery;
     cds_ClientsClientNo: TIntegerField;
     cds_ClientsClientName: TStringField;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

@@ -18,11 +18,11 @@ uses
   cxGridDBTableView, cxGrid, cxLabel, cxCalc, cxImageComboBox,
   cxGridBandedTableView, cxGridDBBandedTableView, kbmMemTable,
   dxBarExtItems, cxCurrencyEdit, cxGridExportLink, cxLookAndFeelPainters,
-  cxButtons, cxCheckBox, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, cxDBEdit, cxGroupBox, cxRadioGroup, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox, uADCompDataSet, uADCompClient,
-  cxGridCustomPopupMenu, cxGridPopupMenu, uADGUIxIntf, uADGUIxFormsfAsync,
+  cxButtons, cxCheckBox, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, cxDBEdit, cxGroupBox, cxRadioGroup, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  cxGridCustomPopupMenu, cxGridPopupMenu, FireDAC.UI.Intf, FireDAC.VCLUI.Async,
   cxLookAndFeels, DBTables, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -311,7 +311,7 @@ type
     dxBarButton37: TdxBarButton;
     acExpLoad: TAction;
     cxButton3: TcxButton;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;
@@ -929,7 +929,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if TemplateUnitName = 'm3 aDxaL' then
+    if TemplateUnitName = 'm3 FDxaL' then
      Begin
       TotalUnitsPerLO  := GetTotalUnitsForLO('M3ACTUAL') ;
       Result  := RoundTo(TotalUnitsPerLO * FreightCost, -3) ;
@@ -1003,7 +1003,7 @@ Begin
 
 //  oMS.SaveToFile('C:\test\streamTest.txt');
 
- // Write data, collected into oMS, into ADQuery2
+ // Write data, collected into oMS, into FDQuery2
 //  cdsInvoiceHead.Edit; already in edit mode
   oBS := cdsInvoiceHead.CreateBlobStream(cdsInvoiceHead.FieldByName('InvoiceText'), bmWrite);
   try
@@ -1707,7 +1707,7 @@ Begin
 
    sq_GetFreightCost.Close ;
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
      Begin
       TotalUnitsPerLO  := GetTotalUnitsForLO('M3ACTUAL') ;
       cdsInvoiceDetailProductValue.AsFloat:= RoundTo(TotalUnitsPerLO * cdsInvoiceDetailPrice.AsFloat, -3) ;
@@ -1777,7 +1777,7 @@ Begin
     sq_GetPkgType_Invoice.Open ;
 
 
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxaL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxaL' then
      Begin
       TempVal := sq_GetPkgType_InvoiceAM3.AsFloat ;
      End
@@ -1792,7 +1792,7 @@ Begin
       TempVal := sq_GetPkgType_InvoicePcs.AsFloat ;
      End
      else
-    if cdsInvoiceDetailPriceUnit.AsString = 'm3 aDxnL' then
+    if cdsInvoiceDetailPriceUnit.AsString = 'm3 FDxnL' then
      Begin
       TempVal := sq_GetPkgType_InvoiceAdNl.AsFloat ;
      End

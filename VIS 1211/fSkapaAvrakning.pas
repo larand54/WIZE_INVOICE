@@ -12,10 +12,10 @@ uses
   cxGridLevel, cxClasses, cxControls, cxGridCustomView, cxGrid,
   cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit, fDBForm, dxBar,
   dxBarExtItems, cxCheckBox, cxSplitter, cxCurrencyEdit, Buttons,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, cxDBEdit,
-  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, uADCompDataSet,
-  uADCompClient, cxImageComboBox, cxLookAndFeels, cxLookAndFeelPainters,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxDBEdit,
+  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxImageComboBox, cxLookAndFeels, cxLookAndFeelPainters,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
   dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
@@ -119,7 +119,7 @@ type
     UppdateraF61: TMenuItem;
     abortlast1: TMenuItem;
     SparaprisShiftF31: TMenuItem;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;

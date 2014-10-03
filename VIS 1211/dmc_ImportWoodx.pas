@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, kbmMemTable, SqlTimSt, Controls, Forms,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient, Variants, Dialogs ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Variants, Dialogs ;
 
 type
   Tdm_ImportWoodx = class(TDataModule)
@@ -38,16 +38,16 @@ type
     mtLoadProducts: TkbmMemTable;
     mtLoadProductsProductNo: TIntegerField;
     mtLoadProductsProductDisplayName: TStringField;
-    sq_GetDMR: TADQuery;
-    cds_DMWH: TADQuery;
-    sq_Ins_wx_prod_trsl: TADQuery;
-    sq_SearchPkgNo: TADQuery;
-    cds_ImpLenMap: TADQuery;
-    sq_GetISOCtry: TADQuery;
-    cds_ImpProdMap: TADQuery;
-    sq_Delete: TADQuery;
-    sq_GetLONos: TADQuery;
-    cds_ImpClientMap: TADQuery;
+    sq_GetDMR: TFDQuery;
+    cds_DMWH: TFDQuery;
+    sq_Ins_wx_prod_trsl: TFDQuery;
+    sq_SearchPkgNo: TFDQuery;
+    cds_ImpLenMap: TFDQuery;
+    sq_GetISOCtry: TFDQuery;
+    cds_ImpProdMap: TFDQuery;
+    sq_Delete: TFDQuery;
+    sq_GetLONos: TFDQuery;
+    cds_ImpClientMap: TFDQuery;
     cds_ImpClientMapClientName: TStringField;
     cds_ImpClientMapWoodXPartyIdentifier: TStringField;
     cds_ImpClientMapName1: TStringField;
@@ -77,13 +77,13 @@ type
     cds_ImpLenMapLngd: TFloatField;
     cds_ImpLenMapProductLengthNo: TIntegerField;
     sq_SearchPkgNoPackageNo: TIntegerField;
-    sq_ClrPartyID: TADQuery;
-    sq_UpdateClient: TADQuery;
-    cds_ImpLengths: TADQuery;
-    cds_Products: TADQuery;
-    cdsClient: TADQuery;
-    sq_GetOLDesc: TADQuery;
-    sq_GetLinkedProductNo: TADQuery;
+    sq_ClrPartyID: TFDQuery;
+    sq_UpdateClient: TFDQuery;
+    cds_ImpLengths: TFDQuery;
+    cds_Products: TFDQuery;
+    cdsClient: TFDQuery;
+    sq_GetOLDesc: TFDQuery;
+    sq_GetLinkedProductNo: TFDQuery;
     sq_GetLinkedProductNoProductNo: TIntegerField;
     sq_GetOLDescProductDescription: TStringField;
     cdsClientClientNo: TIntegerField;
@@ -112,9 +112,9 @@ type
     cds_ImpLengthsLengthCategory: TStringField;
     cds_ImpLengthsTotalNumberOfUnitsValue: TBCDField;
     cds_ImpLengthsTotalNumberOfUnitsUOM: TStringField;
-    sq_GetDMHW: TADQuery;
-    sq_GetPGNo: TADQuery;
-    cds_ProdLength: TADQuery;
+    sq_GetDMHW: TFDQuery;
+    sq_GetPGNo: TFDQuery;
+    cds_ProdLength: TFDQuery;
     cds_ProdLengthProductLengthNo: TIntegerField;
     cds_ProdLengthActualLengthMM: TFloatField;
     cds_ProdLengthNominalLengthMM: TFloatField;
@@ -132,20 +132,20 @@ type
     sq_GetPGNoProductGroupNo: TIntegerField;
     sq_GetPGNoSurfacingNo: TIntegerField;
     sq_GetPGNoNominalThicknessMM: TFloatField;
-    cds_DMR: TADQuery;
-    sq_GetPartyID: TADQuery;
-    cds_PartyID: TADQuery;
-    sq_GetAddress: TADQuery;
-    cds_NameAddress: TADQuery;
-    cds_DMS: TADQuery;
-    sq_GetDSDMR: TADQuery;
-    cds_DSDMR: TADQuery;
-    sq_GetTrp: TADQuery;
-    cds_TrpPkgInfo: TADQuery;
-    sq_GetIQ: TADQuery;
-    cds_InfoQuant: TADQuery;
-    sq_GetLS: TADQuery;
-    cds_LengthSpec: TADQuery;
+    cds_DMR: TFDQuery;
+    sq_GetPartyID: TFDQuery;
+    cds_PartyID: TFDQuery;
+    sq_GetAddress: TFDQuery;
+    cds_NameAddress: TFDQuery;
+    cds_DMS: TFDQuery;
+    sq_GetDSDMR: TFDQuery;
+    cds_DSDMR: TFDQuery;
+    sq_GetTrp: TFDQuery;
+    cds_TrpPkgInfo: TFDQuery;
+    sq_GetIQ: TFDQuery;
+    cds_InfoQuant: TFDQuery;
+    sq_GetLS: TFDQuery;
+    cds_LengthSpec: TFDQuery;
     sq_GetDMHWPriceVolume: TFMTBCDField;
     sq_GetDMHWAM3: TFMTBCDField;
     sq_GetDMHWTotalNumberOfShipments: TIntegerField;
@@ -289,7 +289,7 @@ type
     cds_DMSExlogUOM: TStringField;
     cds_DMSProductNo: TIntegerField;
     cds_DMSInternalInvoiceNo: TIntegerField;
-    sq_GetDMS: TADQuery;
+    sq_GetDMS: TFDQuery;
     sq_GetDMSLONo: TIntegerField;
     sq_GetDMSShipmentID: TStringField;
     sq_GetDMSShipmentIDType: TStringField;
@@ -326,7 +326,7 @@ type
     cds_DSDMRDeliveryMessageReference: TStringField;
     cds_DSDMRDeliveryMessageReferenceType: TStringField;
     cds_DSDMRInternalInvoiceNo: TIntegerField;
-    cds_ProdID: TADQuery;
+    cds_ProdID: TFDQuery;
     cds_ProdIDDeliveryMessageNumber: TStringField;
     cds_ProdIDDeliveryShipmentLineItemNumber: TIntegerField;
     cds_ProdIDProductIdentifier: TStringField;
@@ -392,7 +392,7 @@ type
     mtVisKlient: TkbmMemTable;
     mtVisKlientClientNo: TIntegerField;
     mtVisKlientLeverantr: TStringField;
-    sq_UpdPrefix: TADQuery;
+    sq_UpdPrefix: TFDQuery;
     cds_ImpClientMapDeliveryMessageDate: TSQLTimeStampField;
     cds_ImpProdMapProdukt: TStringField;
     cds_ImpProdMapLogg: TStringField;
@@ -402,7 +402,7 @@ type
     mtVisKlientPartyIdentifierType: TStringField;
     cdsClientPartyIdentifier: TStringField;
     cdsClientPartyIdentifierType: TStringField;
-    cds_DSDMR2: TADQuery;
+    cds_DSDMR2: TFDQuery;
     ds_DSDMR2: TDataSource;
     cds_DSDMR2DeliveryMessageNumber: TStringField;
     cds_DSDMR2DeliveryShipmentLineItemNumber: TIntegerField;
@@ -424,7 +424,7 @@ type
     cds_DMWHPO_Number: TStringField;
     sq_GetDMHWOrderCreated: TSQLTimeStampField;
     sq_GetDMHWPO_Number: TStringField;
-    sp_Ins_InvoicePkgSpecWoodX: TADStoredProc;
+    sp_Ins_InvoicePkgSpecWoodX: TFDStoredProc;
     procedure dsp_ImpClientMapGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure dsp_ImpProdMapGetTableName(Sender: TObject;

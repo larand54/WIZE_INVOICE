@@ -98,7 +98,7 @@ object fAttest_SetHdrInfo: TfAttest_SetHdrInfo
     Top = 48
     Caption = 'Spedit'#246'r'
   end
-  object MemSped: TADMemTable
+  object MemSped: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

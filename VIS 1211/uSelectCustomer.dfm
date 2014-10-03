@@ -90,8 +90,8 @@ object frmSelectCustomer: TfrmSelectCustomer
     Left = 16
     Top = 112
   end
-  object cds_Clients: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cds_Clients: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       ''
       'SELECT C.ClientNo,     '
@@ -121,8 +121,8 @@ object frmSelectCustomer: TfrmSelectCustomer
       Size = 80
     end
   end
-  object sq_AllClients: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_AllClients: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'SELECT C.ClientNo,     '
       '       C.ClientName    '

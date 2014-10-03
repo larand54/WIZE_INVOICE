@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, kbmMemTable, SqlTimSt, Dialogs,
-  VidaType , Controls, Forms, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient, Variants ;
+  VidaType , Controls, Forms, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Variants ;
 
 type
  TAmbiguityEvent = procedure(
@@ -39,8 +39,8 @@ type
     mtLoadPackagesChanged: TBooleanField;
     mtLoadPackagesSupplierShipPlanObjectNo: TIntegerField;
     mtLoadPackagesCustcdsNo: TIntegerField;
-    cds_LoadHead: TADQuery;
-    cds_LSP: TADQuery;
+    cds_LoadHead: TFDQuery;
+    cds_LSP: TFDQuery;
     cds_LoadHeadLoadNo: TIntegerField;
     cds_LoadHeadSupplierNo: TIntegerField;
     cds_LoadHeadLoadedDate: TSQLTimeStampField;
@@ -93,7 +93,7 @@ type
     cds_LSPFunction: TIntegerField;
     cds_LSPLIPNo: TIntegerField;
     cds_LSPPIPNo: TIntegerField;
-    cdsLORows: TADQuery;
+    cdsLORows: TFDQuery;
     cdsLORowsLoadNo: TIntegerField;
     cdsLORowsShippingPlanNo: TIntegerField;
     cdsLORowsLoadingLocationNo: TIntegerField;
@@ -136,7 +136,7 @@ type
     cdsLORowsPriceListName: TStringField;
     cdsLORowsProductCategoryNo: TIntegerField;
     cdsLORowsOverrideRL: TIntegerField;
-    sq_GetLO_Records: TADQuery;
+    sq_GetLO_Records: TFDQuery;
     sq_GetLO_RecordsCustomerNo: TIntegerField;
     sq_GetLO_RecordsCustShipPlanDetailObjectNo: TIntegerField;
     sq_GetLO_RecordsLO_NUMBER: TIntegerField;
@@ -176,7 +176,7 @@ type
     sq_GetLO_RecordsShipToInvPointNo: TIntegerField;
     sq_GetLO_RecordsOverrideRL: TIntegerField;
     sq_GetLO_RecordsProductCategoryNo: TIntegerField;
-    cds_LoadPackages: TADQuery;
+    cds_LoadPackages: TFDQuery;
     cds_LoadPackagesLoadNo: TIntegerField;
     cds_LoadPackagesShippingPlanNo: TIntegerField;
     cds_LoadPackagesPRODUCT: TStringField;
@@ -213,7 +213,7 @@ type
     cds_LoadPackagesOverrideRL: TIntegerField;
     cds_LoadPackagesOldPackageTypeNo: TIntegerField;
     cds_LoadPackagesInvNr: TIntegerField;
-    cds_LO_LookUp: TADQuery;
+    cds_LO_LookUp: TFDQuery;
     cds_LO_LookUpSHIPPING: TIntegerField;
     cds_LO_LookUpShippingPlanNo: TIntegerField;
     cds_LO_LookUpCustomerNo: TIntegerField;
@@ -231,7 +231,7 @@ type
     cds_LO_LookUpShipToInvPointNo: TIntegerField;
     cds_LO_LookUpLIPNo: TIntegerField;
     cds_LO_LookUpPIPNo: TIntegerField;
-    cdsPkgsByInvOwner: TADQuery;
+    cdsPkgsByInvOwner: TFDQuery;
     cdsPkgsByInvOwnerPackageNo: TIntegerField;
     cdsPkgsByInvOwnerSupplierCode: TStringField;
     cdsPkgsByInvOwnerSupplierNo: TIntegerField;
@@ -240,9 +240,9 @@ type
     cdsPkgsByInvOwnerProductNo: TIntegerField;
     cdsPkgsByInvOwnerNoOfLengths: TIntegerField;
     cdsPkgsByInvOwnerProductLengthNo: TIntegerField;
-    sq_CheckLoadNo: TADQuery;
+    sq_CheckLoadNo: TFDQuery;
     sq_CheckLoadNoLoadNo: TIntegerField;
-    sq_Booking_Data: TADQuery;
+    sq_Booking_Data: TFDQuery;
     sq_Booking_DataSHIPPER: TStringField;
     sq_Booking_DataREADYDATE: TStringField;
     sq_Booking_DataVESSEL: TStringField;
@@ -252,10 +252,10 @@ type
     sq_Booking_DataSHIPPERID: TStringField;
     sq_Booking_DataSHIPPERS_SHIPDATE: TSQLTimeStampField;
     sq_Booking_DataSHIPPERS_SHIPTIME: TSQLTimeStampField;
-    sq_PkgInLoad: TADQuery;
+    sq_PkgInLoad: TFDQuery;
     sq_PkgInLoadLastNr: TIntegerField;
     sq_PkgInLoadLO: TIntegerField;
-    sq_GetPkgNos: TADQuery;
+    sq_GetPkgNos: TFDQuery;
     sq_GetPkgNospackageno: TIntegerField;
     sq_GetPkgNossuppliercode: TStringField;
     sq_GetPkgNosLogicalInventoryPointNo: TIntegerField;
@@ -263,7 +263,7 @@ type
     sq_GetPkgNospackagetypeno: TIntegerField;
     sq_GetPkgNosproductno: TIntegerField;
     sq_GetPkgNosproductlengthno: TIntegerField;
-    sq_OnePkgDetailData: TADQuery;
+    sq_OnePkgDetailData: TFDQuery;
     sq_OnePkgDetailDataPRODUCT: TStringField;
     sq_OnePkgDetailDataPACKAGENO: TIntegerField;
     sq_OnePkgDetailDataPACKAGETYPENO: TIntegerField;
@@ -287,18 +287,18 @@ type
     sq_OnePkgDetailDataMainGradeNo: TIntegerField;
     sq_OnePkgDetailDataLIPNo: TIntegerField;
     sq_OnePkgDetailDataProductCategoryNo: TIntegerField;
-    sq_UpdateLSP: TADQuery;
-    sq_UpdateLoad: TADQuery;
-    sq_OkToDeleteLSP: TADQuery;
+    sq_UpdateLSP: TFDQuery;
+    sq_UpdateLoad: TFDQuery;
+    sq_OkToDeleteLSP: TFDQuery;
     sq_OkToDeleteLSPLoadDetailNo: TIntegerField;
-    sp_DeleteOneLoad: TADStoredProc;
-    sp_RemPkgFromLoad: TADStoredProc;
-    sp_ProcessPkgAND_Log: TADStoredProc;
-    sp_DeletePackage: TADStoredProc;
-    sp_creIntLO: TADStoredProc;
-    sp_UpdIntLO: TADStoredProc;
-    sp_RemPkgFromLoad_II: TADStoredProc;
-    sp_chgManLoadPkgs: TADStoredProc;
+    sp_DeleteOneLoad: TFDStoredProc;
+    sp_RemPkgFromLoad: TFDStoredProc;
+    sp_ProcessPkgAND_Log: TFDStoredProc;
+    sp_DeletePackage: TFDStoredProc;
+    sp_creIntLO: TFDStoredProc;
+    sp_UpdIntLO: TFDStoredProc;
+    sp_RemPkgFromLoad_II: TFDStoredProc;
+    sp_chgManLoadPkgs: TFDStoredProc;
     mtLoadProp: TkbmMemTable;
     mtLoadPropPIPNo: TIntegerField;
     mtLoadPropLIPNo: TIntegerField;
@@ -308,14 +308,14 @@ type
     cds_LoadHeadLIPNo: TIntegerField;
     cds_LoadHeadPIP: TStringField;
     cds_LoadHeadLIP: TStringField;
-    ad_GetMaxLoadDetailNo: TADQuery;
-    ad_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField;
+    FD_GetMaxLoadDetailNo: TFDQuery;
+    FD_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField;
     ds_LIP2: TDataSource;
     ds_PIP2: TDataSource;
-    cds_PIP2: TADQuery;
+    cds_PIP2: TFDQuery;
     cds_PIP2PIPNO: TIntegerField;
     cds_PIP2PIPNAME: TStringField;
-    cds_LIP2: TADQuery;
+    cds_LIP2: TFDQuery;
     cds_LIP2LIPNo: TIntegerField;
     cds_LIP2LIPName: TStringField;
     cds_LoadPackagesM3_NET: TFloatField;
@@ -323,7 +323,7 @@ type
     cds_LoadPackagesKVM: TFloatField;
     cds_LoadPackagesLOPM: TFloatField;
     cds_LoadPackagesCustomPcs: TIntegerField;
-    cds_DelAdress: TADQuery;
+    cds_DelAdress: TFDQuery;
     cds_DelAdressAddressName: TStringField;
     cds_DelAdressADDR: TStringField;
     cds_DelAdressAddressLine1: TStringField;
@@ -335,7 +335,7 @@ type
     cds_DelAdressCITY: TStringField;
     cds_DelAdressCOUNTRY: TStringField;
     cds_DelAdressAddressNo: TIntegerField;
-    cds_LoadDelAdress: TADQuery;
+    cds_LoadDelAdress: TFDQuery;
     cds_LoadDelAdressLoadNo: TIntegerField;
     cds_LoadDelAdressAddressNo: TIntegerField;
     cds_LoadDelAdressNoteLine1: TStringField;
@@ -346,7 +346,7 @@ type
     cds_LoadDelAdressDepartAddressNo: TIntegerField;
     cds_LoadDelAdressDepartAdress: TStringField;
     ds_LoadDelAdress: TDataSource;
-    cds_DepartAdress: TADQuery;
+    cds_DepartAdress: TFDQuery;
     cds_DepartAdressAddressNo: TIntegerField;
     cds_DepartAdressAddressName: TStringField;
     cds_DepartAdressADDR: TStringField;
@@ -358,7 +358,7 @@ type
     cds_DepartAdressPOSTAL_CODE: TStringField;
     cds_DepartAdressCITY: TStringField;
     cds_DepartAdressCOUNTRY: TStringField;
-    sp_TransferFiles: TADStoredProc;
+    sp_TransferFiles: TFDStoredProc;
     ds_TransferFiles: TDataSource;
     cds_LoadDelAdressNoteLine4: TStringField;
     cds_LoadDelAdressNoteLine5: TStringField;
@@ -1378,14 +1378,14 @@ end;
 Function TdmLoadEntrySSPTemp.GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo : Integer) : Integer ;
 Begin
  Try
- ad_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger  := LoadNo ;
- ad_GetMaxLoadDetailNo.Open ;
- if not  ad_GetMaxLoadDetailNo.Eof then
-   Result := ad_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
+ FD_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger  := LoadNo ;
+ FD_GetMaxLoadDetailNo.Open ;
+ if not  FD_GetMaxLoadDetailNo.Eof then
+   Result := FD_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
     else
      Result := 0 ;
  Finally
-  ad_GetMaxLoadDetailNo.Close ;
+  FD_GetMaxLoadDetailNo.Close ;
  End ;
 End ;
 

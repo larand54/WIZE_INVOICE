@@ -179,8 +179,8 @@
     Left = 184
     Top = 248
   end
-  object cds_SearchOrder: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cds_SearchOrder: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'SELECT distinct'
       

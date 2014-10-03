@@ -14,9 +14,9 @@ uses
   cxLabel, cxSplitter, cxCalc, ActnList, cxImageComboBox,
   cxGridExportLink,  cxExport, kbmMemTable, cxLookAndFeels, cxCheckBox,
   FMTBcd, cxDBEdit, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient,
+  cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxLookAndFeelPainters, cxGridCustomPopupMenu, cxGridPopupMenu, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
@@ -176,7 +176,7 @@ type
     grdPortLoadsDBTableView1Verk_LoadNo: TcxGridDBColumn;
     ePkgNo: TEdit;
     cxLabel7: TcxLabel;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;

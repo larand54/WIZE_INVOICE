@@ -10,9 +10,9 @@ uses
   cxDropDownEdit, cxGraphics, FMTBcd, DB, 
   cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, cxLookAndFeelPainters, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, uADCompClient, uADCompDataSet,
+  cxClasses, cxGridCustomView, cxGrid, cxLookAndFeelPainters, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
   cxButtons, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCalendar,
   cxDBEdit, dxBar, cxLabel, cxGridExportLink, cxLookAndFeels, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
@@ -52,7 +52,7 @@ type
     grdShippingInstructDBTableView1SEK_VALUE: TcxGridDBColumn;
     grdShippingInstructDBTableView1M3_ACT: TcxGridDBColumn;
     grdShippingInstructDBTableView1LOADNO: TcxGridDBColumn;
-    cdsShippingInstruction: TADStoredProc;
+    cdsShippingInstruction: TFDStoredProc;
     cdsShippingInstructionETD: TSQLTimeStampField;
     cdsShippingInstructionCarrierName: TStringField;
     cdsShippingInstructionINVOICENO: TIntegerField;

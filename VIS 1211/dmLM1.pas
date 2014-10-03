@@ -9,9 +9,9 @@ uses
   Dialogs,
   dmsVidaContact,
   SqlTimSt,
-  Controls, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADCompDataSet, uADCompClient ;
+  Controls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
 
 type
   TdaMoLM1 = class(TDataModule)
@@ -23,7 +23,7 @@ type
     ds_InvoiceInGroup: TDataSource;
     ds_InvoiceGroup: TDataSource;
     ds_GetLOByInvNo: TDataSource;
-    cdsAvrop1: TADQuery;
+    cdsAvrop1: TFDQuery;
     cdsAvrop1CurrencyNo: TIntegerField;
     cdsAvrop1ShippingPlanStatus: TIntegerField;
     cdsAvrop1ShippingPlanNo: TIntegerField;
@@ -50,7 +50,7 @@ type
     cdsAvrop1Trading: TIntegerField;
     cdsAvrop1SequenceNo: TIntegerField;
     cdsAvrop1REST: TFloatField;
-    cdsNormalLO: TADQuery;
+    cdsNormalLO: TFDQuery;
     cdsNormalLOKR_REF: TStringField;
     cdsNormalLOLO: TIntegerField;
     cdsNormalLOUNIQUERECORDNO: TIntegerField;
@@ -75,7 +75,7 @@ type
     cdsNormalLOLOADING_LOCATION: TStringField;
     cdsNormalLODELIVERED: TFloatField;
     cdsNormalLOREST: TFloatField;
-    cdsExtraLO: TADQuery;
+    cdsExtraLO: TFDQuery;
     cdsExtraLOKR_REF: TStringField;
     cdsExtraLOLO: TIntegerField;
     cdsExtraLOUNIQUERECORDNO: TIntegerField;
@@ -98,7 +98,7 @@ type
     cdsExtraLOOBJECTTYPE: TIntegerField;
     cdsExtraLOCUSTOMER: TStringField;
     cdsExtraLODELIVERED: TFloatField;
-    cdsLoads: TADQuery;
+    cdsLoads: TFDQuery;
     cdsLoadsFOLJESEDEL: TIntegerField;
     cdsLoadsLO: TIntegerField;
     cdsLoadsLOADNO: TIntegerField;
@@ -110,7 +110,7 @@ type
     cdsLoadsNoOfPkgs: TIntegerField;
     cdsLoadsINTERNAL_INVOICENO: TIntegerField;
     cdsLoadsLoadOK: TIntegerField;
-    cdsOrder: TADQuery;
+    cdsOrder: TFDQuery;
     cdsOrderPKValue: TStringField;
     cdsOrderOrderNo: TIntegerField;
     cdsOrderSalesRegionNo: TIntegerField;
@@ -136,16 +136,16 @@ type
     cdsOrderVolumeUnit_No: TIntegerField;
     cdsOrderOrderLineValueSEK: TFloatField;
     cdsOrderOrderLineValueCurrency: TFloatField;
-    cdsSetAvrop: TADQuery;
+    cdsSetAvrop: TFDQuery;
     cdsSetAvropShippingPlanNo: TIntegerField;
     cdsSetAvropShippingPlanStatus: TIntegerField;
-    cds_GetLOByInvNo: TADQuery;
-    sq_FindLONo: TADQuery;
-    sq_Get_CSH_Status: TADQuery;
-    sq_ValidLONr: TADQuery;
-    sq_SearchLOByCSD_Ref: TADQuery;
-    sq_SetRowStatus: TADQuery;
-    sq_SetHdrStatus: TADQuery;
+    cds_GetLOByInvNo: TFDQuery;
+    sq_FindLONo: TFDQuery;
+    sq_Get_CSH_Status: TFDQuery;
+    sq_ValidLONr: TFDQuery;
+    sq_SearchLOByCSD_Ref: TFDQuery;
+    sq_SetRowStatus: TFDQuery;
+    sq_SetHdrStatus: TFDQuery;
     cds_GetLOByInvNoLO: TIntegerField;
     cds_GetLOByInvNoFakturaserie: TStringField;
     cds_GetLOByInvNoInternalInvoiceNo: TIntegerField;
@@ -155,8 +155,8 @@ type
     sq_Get_CSH_StatusShippingPlanStatus: TIntegerField;
     sq_ValidLONrShippingPlanNo: TIntegerField;
     sq_ValidLONrSalesRegionNo: TIntegerField;
-    sp_CngLOonLoad_csd: TADStoredProc;
-    cds_InvoiceGroup: TADQuery;
+    sp_CngLOonLoad_csd: TFDStoredProc;
+    cds_InvoiceGroup: TFDQuery;
     cds_InvoiceGroupInvoiceGroupNo: TIntegerField;
     cds_InvoiceGroupOriginalInvNos: TStringField;
     cds_InvoiceGroupOrdernos: TStringField;
@@ -189,8 +189,8 @@ type
     cds_InvoiceGroupSUM_FreigthCost: TFloatField;
     cds_InvoiceGroupTotal_Product_Value_No_Freight: TFloatField;
     cds_InvoiceGroupInv_Value_To_Be_Paid_2: TFloatField;
-    cds_InvoiceInGroup: TADQuery;
-    cds_KontoLogik: TADQuery;
+    cds_InvoiceInGroup: TFDQuery;
+    cds_KontoLogik: TFDQuery;
     cds_KontoLogikSalesmangroupNo: TIntegerField;
     cds_KontoLogikSalesregionNo: TIntegerField;
     cds_KontoLogikCustomerCountryNo: TIntegerField;
@@ -214,7 +214,7 @@ type
     cds_KontoLogikPO_Country: TStringField;
     cdsAvrop1LoadedPkgs: TIntegerField;
     cdsLoadsPackageEntryOption: TIntegerField;
-    cdsAvrop: TADQuery;
+    cdsAvrop: TFDQuery;
     cdsAvropCurrencyNo: TIntegerField;
     cdsAvropShippingPlanStatus: TIntegerField;
     cdsAvropShippingPlanNo: TIntegerField;
@@ -361,11 +361,11 @@ Begin
 End ;
 
 Function TdaMoLM1.AnyLoadsToInvoice : Boolean ;
-Var TempDataSet: TADMemTable ;
+Var TempDataSet: TFDMemTable ;
 Begin
  if cdsLoads.Active then
  Begin
- TempDataSet := TADMemTable.Create(nil);
+ TempDataSet := TFDMemTable.Create(nil);
  try
  { clone the real dataset with Reset set to True }
  { so that the current range is not cloned }

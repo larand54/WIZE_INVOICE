@@ -437,7 +437,7 @@ begin
   Begin
    if cds_AdrSearch.State in [dsBrowse] then
     cds_AdrSearch.Edit ;
-   cds_AdrSearchCityNo.AsInteger  := dmsContact.ad_CityCityNo.AsInteger ;
+   cds_AdrSearchCityNo.AsInteger  := dmsContact.FD_CityCityNo.AsInteger ;
   End ;//With
 
   Finally

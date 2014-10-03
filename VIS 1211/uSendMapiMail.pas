@@ -18,7 +18,7 @@ type
 //    FAddressbook : IRwMapiAddressbook;
 //    FRecipTable  : IRwMapiRecipientTable;
 //    FRecipTableChanged: Boolean;
-//    procedure AddressBookBeforeDisplayAddressBookDlg(var AddrBookDlgParams: TAddrBookDlgParams);
+//    procedure AddressBookBeforeDisplayAddressBookDlg(var AddrBookDlgParams: TFDdrBookDlgParams);
   public
     { Public declarations }
     procedure SendMail(const Subject, MessageText, MailFromAddress, MailToAddress: String; const Attachments: array of String;const SubMit : Boolean);
@@ -190,7 +190,7 @@ begin
 //  FAddressbook := nil;
 end;
 
-{procedure Tdm_SendMapiMail.AddressBookBeforeDisplayAddressBookDlg(var AddrBookDlgParams: TAddrBookDlgParams);
+{procedure Tdm_SendMapiMail.AddressBookBeforeDisplayAddressBookDlg(var AddrBookDlgParams: TFDdrBookDlgParams);
 begin
   // modify the default addressbook look
   // force the dialog to only show the To and CC fields

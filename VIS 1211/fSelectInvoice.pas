@@ -11,10 +11,10 @@ uses
   Buttons, FMTBcd, DB, cxControls,
   cxContainer, cxEdit, cxTextEdit, DBClient, Provider, SqlExpr, cxGraphics,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxDBData, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, cxLabel, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, uADCompDataSet, uADCompClient,
+  cxData, cxDataStorage, cxDBData, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, cxLabel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxGridLevel, cxClasses, cxGridCustomView, cxGrid, cxMaskEdit,
   cxDropDownEdit ;
 
@@ -48,7 +48,7 @@ type
     grdSelectInvoiceDBTableView1: TcxGridDBTableView;
     grdSelectInvoiceLevel1: TcxGridLevel;
     grdSelectInvoice: TcxGrid;
-    cdsInvoiceList: TADQuery;
+    cdsInvoiceList: TFDQuery;
     cdsInvoiceListINT_INVNO: TIntegerField;
     cdsInvoiceListINV_DATE: TSQLTimeStampField;
     cdsInvoiceListAGENT: TStringField;

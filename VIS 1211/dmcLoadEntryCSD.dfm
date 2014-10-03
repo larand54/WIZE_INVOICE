@@ -385,9 +385,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       FieldName = 'Function'
     end
   end
-  object sq_GetLO_Records: TADQuery
+  object sq_GetLO_Records: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select'
@@ -840,7 +840,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'ShrinkWrapNo'
     end
   end
-  object cdsLORows: TADQuery
+  object cdsLORows: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -850,7 +850,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         Fields = 'CustShipPlanDetailObjectNo'
       end>
     IndexName = 'cdsLORows_Index01'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT'
@@ -1174,10 +1174,10 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'VaruSlag'
     end
   end
-  object cds_LSP: TADQuery
+  object cds_LSP: TFDQuery
     AfterInsert = cds_LSPAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -1394,9 +1394,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       ProviderFlags = []
     end
   end
-  object sq_PkgInLoad: TADQuery
+  object sq_PkgInLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT LD.LoadNo AS LastNr, LD.ShippingPlanNo AS LO'
@@ -1433,9 +1433,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'LO'
     end
   end
-  object sq_Booking_Data: TADQuery
+  object sq_Booking_Data: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -1531,9 +1531,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'SHIPPERS_SHIPTIME'
     end
   end
-  object sq_CheckLoadNo: TADQuery
+  object sq_CheckLoadNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select LoadNo'
@@ -1555,10 +1555,10 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Required = True
     end
   end
-  object cds_LoadHead: TADQuery
+  object cds_LoadHead: TFDQuery
     AfterInsert = cds_LoadHeadAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select *'
@@ -1719,9 +1719,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Lookup = True
     end
   end
-  object cdsPkgsByInvOwner: TADQuery
+  object cdsPkgsByInvOwner: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT PN.PackageNo,'
@@ -1794,9 +1794,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object cds_LO_LookUp: TADQuery
+  object cds_LO_LookUp: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -1948,7 +1948,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'LoadingLIPNo'
     end
   end
-  object cds_LoadPackages: TADQuery
+  object cds_LoadPackages: TFDQuery
     AfterInsert = cds_LoadPackagesAfterInsert
     BeforePost = cds_LoadPackagesBeforePost
     OnPostError = cds_LoadPackagesPostError
@@ -1968,7 +1968,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       end>
     IndexName = 'cds_LoadPkgs01'
     ConstraintsEnabled = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'LoadDetail'
     SQL.Strings = (
@@ -2297,9 +2297,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       ProviderFlags = []
     end
   end
-  object sq_GetPkgNos: TADQuery
+  object sq_GetPkgNos: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -2405,9 +2405,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Required = True
     end
   end
-  object sq_OnePkgDetailData: TADQuery
+  object sq_OnePkgDetailData: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct'
@@ -2591,9 +2591,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'Varuslag'
     end
   end
-  object sq_IsLoadMadeInAvrop: TADQuery
+  object sq_IsLoadMadeInAvrop: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select Confirmed_LoadNo, NewLoadNo FROM dbo.Confirmed_Load CL'
@@ -2618,9 +2618,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Origin = 'NewLoadNo'
     end
   end
-  object sp_DeleteOneLoad: TADStoredProc
+  object sp_DeleteOneLoad: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_DeleteOneLoad'
     Left = 728
@@ -2639,9 +2639,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sp_RemPkgFromLoad: TADStoredProc
+  object sp_RemPkgFromLoad: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vis_remLoadPkg'
     Left = 728
@@ -2709,9 +2709,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sp_ProcessPkgAND_Log: TADStoredProc
+  object sp_ProcessPkgAND_Log: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_ProcessPkg'
     Left = 728
@@ -2779,9 +2779,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sp_DeletePackage: TADStoredProc
+  object sp_DeletePackage: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_DelPkgFromSystem'
     Left = 728
@@ -2841,9 +2841,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     Left = 48
     Top = 392
   end
-  object cds_PIP2: TADQuery
+  object cds_PIP2: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -2878,9 +2878,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Size = 50
     end
   end
-  object cds_LIP2: TADQuery
+  object cds_LIP2: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -2911,11 +2911,11 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       Size = 50
     end
   end
-  object ad_GetMaxLoadDetailNo: TADQuery
+  object FD_GetMaxLoadDetailNo: TFDQuery
     AfterInsert = cds_LoadPackagesAfterInsert
     BeforePost = cds_LoadPackagesBeforePost
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'LoadDetail'
     SQL.Strings = (
@@ -2930,15 +2930,15 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         DataType = ftInteger
         ParamType = ptInput
       end>
-    object ad_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField
+    object FD_GetMaxLoadDetailNoMaxLoadDetailNo: TIntegerField
       FieldName = 'MaxLoadDetailNo'
       Origin = 'MaxLoadDetailNo'
       ReadOnly = True
       Required = True
     end
   end
-  object sq_SortingOrderMarkedPkgs: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_SortingOrderMarkedPkgs: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select * FROM dbo.SortingOrderMarkedPkgs'
       'WHERE UserID = :UserID')
@@ -2950,8 +2950,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sq_Delete_SortingOrderMarkedPkgs: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_Delete_SortingOrderMarkedPkgs: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Delete dbo.SortingOrderMarkedPkgs'
       'WHERE UserID = :UserID')
@@ -2963,8 +2963,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sp_Vis_newCreditLoad: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_Vis_newCreditLoad: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.Vis_newCreditLoad'
     Left = 552
     Top = 408
@@ -2994,8 +2994,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInputOutput
       end>
   end
-  object sp_Vis_newCreditInvoice: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_Vis_newCreditInvoice: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.Vis_newCreditInvoice'
     Left = 552
     Top = 464
@@ -3031,8 +3031,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInputOutput
       end>
   end
-  object sq_VerkLoadExists: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_VerkLoadExists: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'select Confirmed_LoadNo FROM dbo.Confirmed_Load'
       'WHERE NewLoadNo = :NewLoadNo')
@@ -3045,8 +3045,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInput
       end>
   end
-  object sp_vis_CopyLOToInternalLO: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_vis_CopyLOToInternalLO: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_CopyLOToInternalLO'
     Left = 544
     Top = 544
@@ -3076,8 +3076,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInputOutput
       end>
   end
-  object sp_Vis_CopyToInternalLO_Load: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_Vis_CopyToInternalLO_Load: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.Vis_CopyToInternalLO_Load'
     Left = 544
     Top = 600
@@ -3113,8 +3113,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ParamType = ptInputOutput
       end>
   end
-  object sp_SetPkgStatusInLoad: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_SetPkgStatusInLoad: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_SetPkgStatusInLoad'
     Left = 728
     Top = 232

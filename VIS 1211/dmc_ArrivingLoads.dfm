@@ -535,7 +535,7 @@ object dmArrivingLoads: TdmArrivingLoads
     Left = 728
     Top = 528
   end
-  object cdsArrivingLoads: TADQuery
+  object cdsArrivingLoads: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -560,7 +560,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'LOADEDDATE'
       end>
     IndexName = 'cdsArrivingLoadsIndex1'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     ResourceOptions.AssignedValues = [rvCmdExecMode]
     ResourceOptions.CmdExecMode = amCancelDialog
@@ -940,7 +940,7 @@ object dmArrivingLoads: TdmArrivingLoads
       Size = 30
     end
   end
-  object cdsArrivingPackages: TADQuery
+  object cdsArrivingPackages: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -950,7 +950,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'PACKAGE_NO;SUPPLIERCODE'
       end>
     IndexName = 'cdsArrPkgIndex'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -1229,9 +1229,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_GetDefaultCSObjectNo: TADQuery
+  object sq_GetDefaultCSObjectNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select CustShipPlanDetailObjectNo'
@@ -1252,9 +1252,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'CustShipPlanDetailObjectNo'
     end
   end
-  object cdsConfirmed_Load: TADQuery
+  object cdsConfirmed_Load: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select * '
@@ -1293,9 +1293,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ProviderFlags = [pfInUpdate]
     end
   end
-  object cds_verkLaster: TADQuery
+  object cds_verkLaster: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct'
@@ -1431,7 +1431,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object cds_VerkLastPkgs: TADQuery
+  object cds_VerkLastPkgs: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -1441,7 +1441,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'PACKAGE_NO;SUPPLIERCODE'
       end>
     IndexName = 'cdsArrivingPackagesIndex1'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -1558,9 +1558,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Size = 255
     end
   end
-  object cdsOneLoad_TaBort: TADQuery
+  object cdsOneLoad_TaBort: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT *'
@@ -1577,9 +1577,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_SetLoadAR: TADQuery
+  object sq_SetLoadAR: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Update dbo.Loads'
@@ -1599,9 +1599,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_PackageTypes_tabort: TADStoredProc
+  object sp_PackageTypes_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_PkgType'
     Left = 904
@@ -1638,9 +1638,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_NewPackageType_tabort: TADStoredProc
+  object sp_NewPackageType_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_NewPkgType'
     Left = 904
@@ -1695,9 +1695,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_NewPackageDetail_tabort: TADStoredProc
+  object sp_NewPackageDetail_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_NewPackageDetail'
     Left = 904
@@ -1734,9 +1734,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_ChangePkg_tabort: TADStoredProc
+  object sp_ChangePkg_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_ChangePackage_II'
     Left = 904
@@ -1810,9 +1810,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_insPkgLog_tabort: TADStoredProc
+  object sp_insPkgLog_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_insPkgLog'
     Left = 904
@@ -1868,9 +1868,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_PackageTypeDetail_tabort: TADStoredProc
+  object sp_PackageTypeDetail_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_PackageTypeDetail'
     Left = 1048
@@ -1889,9 +1889,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_Populate_One_PkgTypeLengths_tabort: TADStoredProc
+  object sp_Populate_One_PkgTypeLengths_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_Populate_One_PackageTypeLengths'
     Left = 1048
@@ -1910,9 +1910,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_PackageTotals_tabort: TADStoredProc
+  object sp_PackageTotals_tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_PackageTotals'
     Left = 1048
@@ -1931,9 +1931,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object cds_Confirmed_Pkg_Log: TADQuery
+  object cds_Confirmed_Pkg_Log: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * From'
@@ -2011,9 +2011,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'Old_LogicalInventoryPointNo'
     end
   end
-  object sq_RevertPkgs: TADQuery
+  object sq_RevertPkgs: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Update dbo.packagenumber'
@@ -2035,14 +2035,14 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_CheckIfConfirmedPkgsValidInLoad: TADQuery
+  object sq_CheckIfConfirmedPkgsValidInLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
         '--check if package is where it was when it was confirmed to a lo' +
-        'ad'
+        'FD'
       'SELECT distinct'
       '-- LD.LoadNo,'
       '-- LD.ShippingPlanNo AS LONo,'
@@ -2132,9 +2132,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object sq_CheckPkgLog: TADQuery
+  object sq_CheckPkgLog: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * From'
@@ -2212,9 +2212,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'Old_LogicalInventoryPointNo'
     end
   end
-  object sq_Get_LoadShippingPlan: TADQuery
+  object sq_Get_LoadShippingPlan: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -2237,7 +2237,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ''
       
         '-- INNER JOIN dbo.LoadDetailPkgLength LDP'#9#9'ON'#9'LDP.LoadNo'#9'= Ld.Lo' +
-        'adNo'
+        'FDNo'
       '--'#9#9#9#9#9#9#9'and LDP.LoadDetailNo = LDS.LoadDetailNo'
       ''
       
@@ -2300,14 +2300,14 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'LIPNo'
     end
   end
-  object sq_CheckIfConfirmedPkgsValidInInventory: TADQuery
+  object sq_CheckIfConfirmedPkgsValidInInventory: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
         '--check if package is where it was when it was confirmed to a lo' +
-        'ad'
+        'FD'
       'SELECT distinct'
       '   PN.LogicalInventoryPointNo'
       'FROM       dbo.PackageNumber  PN'
@@ -2347,9 +2347,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_ChkPkgs: TADQuery
+  object sq_ChkPkgs: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -2390,9 +2390,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_PkgInvoiced: TADQuery
+  object sq_PkgInvoiced: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct MAX(LD.LoadNo) AS LoadNo, IL.InternalInvoiceNo'
@@ -2417,9 +2417,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_InsertPkgNoLogg: TADQuery
+  object sq_InsertPkgNoLogg: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'INSERT INTO    dbo.PackageNumberLog'
@@ -2473,9 +2473,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_GetVWCost: TADQuery
+  object sq_GetVWCost: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select dbo.VIS_Getvwcost( :LoadedDate)')
@@ -2493,9 +2493,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_Get_VWLIPNo: TADQuery
+  object sq_Get_VWLIPNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select (Select Top 1 LIP2.LogicalInventoryPointNo FROM'
@@ -2527,9 +2527,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sp_ArrivingLoads_Tabort: TADStoredProc
+  object sp_ArrivingLoads_Tabort: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_ARRIVING_LOADS_II'
     Left = 1032
@@ -2554,9 +2554,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_VerkLaster: TADStoredProc
+  object sp_VerkLaster: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_VerkLaster'
     Left = 1032
@@ -2581,9 +2581,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_CopyLOLoadToSales: TADStoredProc
+  object sp_CopyLOLoadToSales: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_CopyLOLoadToSales'
     Left = 1032
@@ -2620,9 +2620,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInputOutput
       end>
   end
-  object sp_CopyARIntAddLOLoad: TADStoredProc
+  object sp_CopyARIntAddLOLoad: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_CopyARIntAddLOLoad_II'
     Left = 1032
@@ -2659,9 +2659,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInputOutput
       end>
   end
-  object sp_ProcessPkgAND_Log: TADStoredProc
+  object sp_ProcessPkgAND_Log: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_ProcessPkg'
     Left = 1032
@@ -2729,9 +2729,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_ChangeToIMPProduct: TADStoredProc
+  object sp_ChangeToIMPProduct: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_ChangeToIMPProduct'
     Left = 1032
@@ -2756,9 +2756,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_GetPriceOfPriceList: TADQuery
+  object sq_GetPriceOfPriceList: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -2798,9 +2798,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_GetOLPrice: TADQuery
+  object sq_GetOLPrice: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select ol.InternalPrice, ol.PriceListNo '
@@ -2828,9 +2828,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'PriceListNo'
     end
   end
-  object cds_LoadRow: TADQuery
+  object cds_LoadRow: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -2984,9 +2984,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object cds_LoadDtlVal: TADQuery
+  object cds_LoadDtlVal: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.LoadDtlVal'
@@ -3068,9 +3068,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'Credited'
     end
   end
-  object cdsLoadDetails: TADQuery
+  object cdsLoadDetails: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'Loaddetail'
     SQL.Strings = (
@@ -3211,9 +3211,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'OverrideRL'
     end
   end
-  object cdsLoadShippingPlan: TADQuery
+  object cdsLoadShippingPlan: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'LoadShippingPlan'
     SQL.Strings = (
@@ -3274,9 +3274,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'DateCreated'
     end
   end
-  object cdsPkgNumber: TADQuery
+  object cdsPkgNumber: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT * '
@@ -3442,9 +3442,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'AvgLengthType'
     end
   end
-  object sq_GetxRateIntLoad: TADQuery
+  object sq_GetxRateIntLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -3495,9 +3495,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_GetxRateExtLoad: TADQuery
+  object sq_GetxRateExtLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -3552,9 +3552,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_DeleteNewLoadByOldLoadNo: TADQuery
+  object sq_DeleteNewLoadByOldLoadNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'DELETE dbo.Loads'
@@ -3573,9 +3573,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_IsLoadInvoiced: TADQuery
+  object sq_IsLoadInvoiced: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -3621,9 +3621,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object sq_GetOLPriceForADDLO: TADQuery
+  object sq_GetOLPriceForADDLO: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select ol.InternalPrice, ol.PriceListNo '
@@ -3648,9 +3648,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'PriceListNo'
     end
   end
-  object sq_LoadPackages: TADQuery
+  object sq_LoadPackages: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct'
@@ -3870,9 +3870,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'OverrideRL'
     end
   end
-  object sq_getMTSLLLipNo: TADQuery
+  object sq_getMTSLLLipNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select'
@@ -3904,9 +3904,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_CompareDetails: TADQuery
+  object sq_CompareDetails: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT Count(*) AS Matching_LD'
@@ -3947,9 +3947,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_SearchPkgNo: TADQuery
+  object sq_SearchPkgNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -3994,9 +3994,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_GetCurrentxRateIntLoad: TADQuery
+  object sq_GetCurrentxRateIntLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -4031,9 +4031,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_GetCurrentxRateExtLoad: TADQuery
+  object sq_GetCurrentxRateExtLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -4069,9 +4069,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object sq_DeleteConfirmed_Load_Entry: TADQuery
+  object sq_DeleteConfirmed_Load_Entry: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Delete dbo.Confirmed_Load '
@@ -4086,9 +4086,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_IsLoadAvraknad: TADQuery
+  object sq_IsLoadAvraknad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT PL.PaymentNo,'
@@ -4118,9 +4118,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object sq_deleteSamLaster: TADQuery
+  object sq_deleteSamLaster: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Delete From dbo.samLastReport'
@@ -4134,9 +4134,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_samLast: TADQuery
+  object sq_samLast: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Insert INTO dbo.samLastReport'
@@ -4156,9 +4156,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_SearchLoadNoByPkgNo: TADQuery
+  object sq_SearchLoadNoByPkgNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -4245,9 +4245,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Size = 50
     end
   end
-  object cds_PksByInventoryPlace: TADQuery
+  object cds_PksByInventoryPlace: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       ''
@@ -4298,9 +4298,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_Check_CDS_Link: TADQuery
+  object sq_Check_CDS_Link: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       '--Check ObjectType 0 and 1'
@@ -4314,7 +4314,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ''
       
         '-- INNER JOIN dbo.LoadDetailPkgLength LDP'#9'ON '#9'LDP.LoadNo = LD.Lo' +
-        'adNo'
+        'FDNo'
       '--'#9#9#9#9#9'AND '#9'LDP.LoadDetailNo = LD.LoadDetailNo'
       ''
       'WHERE'
@@ -4349,9 +4349,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object sq_IsLoadConfirmed: TADQuery
+  object sq_IsLoadConfirmed: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select CL.Confirmed_LoadNo, CL.Confirmed_ShippingPlanNo,'
@@ -4407,9 +4407,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'UserName'
     end
   end
-  object sq_CheckObject2Link: TADQuery
+  object sq_CheckObject2Link: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -4460,9 +4460,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Required = True
     end
   end
-  object sq_DelNewLoads: TADQuery
+  object sq_DelNewLoads: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'DELETE dbo.Loads'
@@ -4485,9 +4485,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_PkgsInLoad: TADQuery
+  object sq_PkgsInLoad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -4515,7 +4515,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object cdsPortArrivingPackages: TADQuery
+  object cdsPortArrivingPackages: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -4525,7 +4525,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'PACKAGE_NO;SUPPLIERCODE'
       end>
     IndexName = 'cdsArrivingPackagesIndex1'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     ResourceOptions.AssignedValues = [rvCmdExecMode]
     ResourceOptions.CmdExecMode = amCancelDialog
@@ -4723,7 +4723,7 @@ object dmArrivingLoads: TdmArrivingLoads
       Size = 50
     end
   end
-  object cdsPortArrivingLoads: TADQuery
+  object cdsPortArrivingLoads: TFDQuery
     CachedUpdates = True
     Indexes = <
       item
@@ -4733,7 +4733,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'LOADNO'
       end>
     IndexName = 'cdsPALIndexLoadNo'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT DISTINCT'
@@ -5030,9 +5030,9 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
   end
-  object cds_Props22: TADQuery
+  object cds_Props22: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.userprops'
@@ -5332,9 +5332,9 @@ object dmArrivingLoads: TdmArrivingLoads
     Left = 600
     Top = 792
   end
-  object sq_UpdatePkgStatus: TADQuery
+  object sq_UpdatePkgStatus: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'UPDATE dbo.PackageNumber'
@@ -5360,9 +5360,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_ChangeToIMPProductForIntLoad: TADStoredProc
+  object sp_ChangeToIMPProductForIntLoad: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_ChangeToIMPProductINTLoad'
     Left = 1032
@@ -5387,9 +5387,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_AR_Invoice: TADStoredProc
+  object sp_AR_Invoice: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_AR_Load_Ext'
     Left = 904
@@ -5426,9 +5426,9 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sq_IsEXTLoadConfirmed: TADQuery
+  object sq_IsEXTLoadConfirmed: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select CL.Confirmed_LoadNo, CL.Confirmed_ShippingPlanNo,'
@@ -5484,9 +5484,9 @@ object dmArrivingLoads: TdmArrivingLoads
       Origin = 'UserName'
     end
   end
-  object sq_samLast_II: TADQuery
+  object sq_samLast_II: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Insert INTO dbo.samLastReport_II'
@@ -5512,9 +5512,9 @@ object dmArrivingLoads: TdmArrivingLoads
         Size = 50
       end>
   end
-  object sq_deleteSamLaster_II: TADQuery
+  object sq_deleteSamLaster_II: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Delete From dbo.samLastReport_II'

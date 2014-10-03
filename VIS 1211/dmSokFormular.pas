@@ -4,16 +4,16 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, Dialogs,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   Tdm_SokFormular = class(TDataModule)
     ds_SokAvrop: TDataSource;
     ds_MakeSokAvrop: TDataSource;
     ds_PropsTaBort: TDataSource;
-    cds_MakeSokAvrop: TADQuery;
+    cds_MakeSokAvrop: TFDQuery;
     cds_MakeSokAvropUKEY: TStringField;
     cds_MakeSokAvropAVROP_STATUS: TStringField;
     cds_MakeSokAvropLO: TIntegerField;
@@ -47,7 +47,7 @@ type
     cds_MakeSokAvropNoOfSuppliers: TIntegerField;
     cds_MakeSokAvropCustomerNo: TIntegerField;
     cds_MakeSokAvropOrderType: TIntegerField;
-    cds_SokAvrop: TADQuery;
+    cds_SokAvrop: TFDQuery;
     cds_SokAvropUKEY: TStringField;
     cds_SokAvropUSERID: TIntegerField;
     cds_SokAvropAVROP_STATUS: TStringField;
@@ -82,7 +82,7 @@ type
     cds_SokAvropSupplierReference: TStringField;
     cds_SokAvropNoOfSuppliers: TIntegerField;
     cds_SokAvropAM3_REST: TFMTBCDField;
-    cds_Booking: TADQuery;
+    cds_Booking: TFDQuery;
     cds_BookingBookingNo: TIntegerField;
     cds_BookingShippingPlanNo: TIntegerField;
     cds_BookingVoyageNo: TIntegerField;
@@ -111,7 +111,7 @@ type
     cds_BookingNoteForLoadSheet: TMemoField;
     cds_BookingVesselOrPort: TStringField;
     cds_BookingPanic_Note: TStringField;
-    cds_PropsTaBort: TADQuery;
+    cds_PropsTaBort: TFDQuery;
     cds_PropsTaBortUserID: TIntegerField;
     cds_PropsTaBortForm: TStringField;
     cds_PropsTaBortName: TStringField;
@@ -156,8 +156,8 @@ type
     cds_PropsTaBortCustomerNo: TIntegerField;
     cds_PropsTaBortShowProduct: TIntegerField;
     cds_MakeSokAvropREST: TFloatField;
-    ADUpdateSQL1: TADUpdateSQL;
-    ADUpdateSQL2: TADUpdateSQL;
+    FDUpdateSQL1: TFDUpdateSQL;
+    FDUpdateSQL2: TFDUpdateSQL;
     cds_MakeSokAvropShippingPlanNo: TIntegerField;
     cds_MakeSokAvropVoyageNo: TIntegerField;
     cds_MakeSokAvropLand: TStringField;
@@ -166,8 +166,8 @@ type
     procedure cds_MakeSokAvropBeforePost(DataSet: TDataSet);
     procedure cds_BookingAfterPost(DataSet: TDataSet);
     procedure cds_MakeSokAvropUpdateRecord(ASender: TDataSet;
-  ARequest: TADUpdateRequest; var AAction: TADErrorAction;
-  AOptions: TADUpdateRowOptions);
+  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+  AOptions: TFDUpdateRowOptions);
   private
     { Private declarations }
     procedure SetBookingValuesInIdenticalBookings ;
@@ -192,46 +192,46 @@ begin
 end;
 
 procedure Tdm_SokFormular.SetBookingValuesInIdenticalBookings ;
-Var ADMemTable1  : TADMemTable ;
+Var FDMemTable1  : TFDMemTable ;
 begin
 //LMX1
  cds_MakeSokAvrop.BeforePost := nil ;
  Try
 
- ADMemTable1  := TADMemTable.Create(nil) ;
- ADMemTable1.CloneCursor(cds_MakeSokAvrop, False, False);
+ FDMemTable1  := TFDMemTable.Create(nil) ;
+ FDMemTable1.CloneCursor(cds_MakeSokAvrop, False, False);
 
 //  cdsClone := TClientDataSet.Create(Nil);
 //  cdsClone.CloneCursor(cds_MakeSokAvrop, False, False);
 
  Try
-  ADMemTable1.SetRange([cds_MakeSokAvropBookingNo.AsInteger],[cds_MakeSokAvropBookingNo.AsInteger]);
+  FDMemTable1.SetRange([cds_MakeSokAvropBookingNo.AsInteger],[cds_MakeSokAvropBookingNo.AsInteger]);
   Try
-   ADMemTable1.First ;
-   While not ADMemTable1.Eof do
+   FDMemTable1.First ;
+   While not FDMemTable1.Eof do
    Begin
-    if ADMemTable1.FieldByName('UKEY').AsString <> cds_MakeSokAvropUKEY.AsString then
+    if FDMemTable1.FieldByName('UKEY').AsString <> cds_MakeSokAvropUKEY.AsString then
     Begin
-     ADMemTable1.Edit ;
-     ADMemTable1.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString:= cds_MakeSokAvropSHIPPINGCOMPANYBOOKINGID.AsString ;
+     FDMemTable1.Edit ;
+     FDMemTable1.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString:= cds_MakeSokAvropSHIPPINGCOMPANYBOOKINGID.AsString ;
      if cds_MakeSokAvropSHIPPERSSHIPDATE.IsNull then
-     ADMemTable1.FieldByName('SHIPPERSSHIPDATE').Clear
+     FDMemTable1.FieldByName('SHIPPERSSHIPDATE').Clear
      else
-     ADMemTable1.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp:=  cds_MakeSokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp ;
-     ADMemTable1.FieldByName('PreliminaryRequestedPeriod').AsString:=  cds_MakeSokAvropPreliminaryRequestedPeriod.AsString ;
-     ADMemTable1.FieldByName('PANIC_NOTE').AsString:=  cds_MakeSokAvropPANIC_NOTE.AsString ;
-     ADMemTable1.FieldByName('SupplierReference').AsString:=  cds_MakeSokAvropSupplierReference.AsString ;
+     FDMemTable1.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp:=  cds_MakeSokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp ;
+     FDMemTable1.FieldByName('PreliminaryRequestedPeriod').AsString:=  cds_MakeSokAvropPreliminaryRequestedPeriod.AsString ;
+     FDMemTable1.FieldByName('PANIC_NOTE').AsString:=  cds_MakeSokAvropPANIC_NOTE.AsString ;
+     FDMemTable1.FieldByName('SupplierReference').AsString:=  cds_MakeSokAvropSupplierReference.AsString ;
 
 
-     ADMemTable1.Post ;
+     FDMemTable1.Post ;
     End ;
-    ADMemTable1.Next ;
+    FDMemTable1.Next ;
    End ;//while
   Finally
-   ADMemTable1.CancelRange ;
+   FDMemTable1.CancelRange ;
   End ;
  Finally
-  ADMemTable1.Free ;
+  FDMemTable1.Free ;
  End ;
 
  Finally
@@ -281,12 +281,12 @@ begin
 end;
 
 procedure Tdm_SokFormular.cds_MakeSokAvropUpdateRecord(ASender: TDataSet;
-  ARequest: TADUpdateRequest; var AAction: TADErrorAction;
-  AOptions: TADUpdateRowOptions);
+  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+  AOptions: TFDUpdateRowOptions);
 begin
-  ADUpdateSQL1.ConnectionName := cds_MakeSokAvrop.ConnectionName;
-  ADUpdateSQL1.DataSet := cds_MakeSokAvrop ;
- ADUpdateSQL1.Apply(ARequest, AAction, AOptions);
+  FDUpdateSQL1.ConnectionName := cds_MakeSokAvrop.ConnectionName;
+  FDUpdateSQL1.DataSet := cds_MakeSokAvrop ;
+ FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
 end;
 
 end.

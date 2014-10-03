@@ -14,9 +14,9 @@ uses
   cxCheckBox, cxCalendar, cxContainer, 
   cxTextEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxLabel, FMTBcd, DBClient, Provider, SqlExpr,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
   dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
@@ -86,7 +86,7 @@ type
     cxLabel1: TcxLabel;
     acShowPkgsWithSameActDimOnly: TAction;
     grdPickPkgNosDBTableView1Produkt: TcxGridDBColumn;
-    sq_PaketLista: TADQuery;
+    sq_PaketLista: TFDQuery;
     sq_PaketListaPackageNo: TIntegerField;
     sq_PaketListaLEVKOD: TStringField;
     sq_PaketListaproductno: TIntegerField;
@@ -96,7 +96,7 @@ type
     sq_PaketListaDateCreated: TSQLTimeStampField;
     sq_PaketListaNOOFLENGTHS: TIntegerField;
     sq_PaketListaProdukt: TStringField;
-    cds_ProdInLager: TADQuery;
+    cds_ProdInLager: TFDQuery;
     cds_ProdInLagerProductDisplayName: TStringField;
     cds_ProdInLagerProductNo: TIntegerField;
     grdPickPkgNosDBTableView1HTFStatus: TcxGridDBColumn;

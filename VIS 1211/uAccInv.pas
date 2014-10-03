@@ -16,9 +16,9 @@ uses
   dxPScxCommon, dxPScxSSLnk, StdCtrls, cxLookAndFeels,
   cxLookAndFeelPainters, dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils,
   dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxEditorProducers,
-  dxPScxExtEditorProducers, dxPScxPageControlProducer, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient,
+  dxPScxExtEditorProducers, dxPScxPageControlProducer, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxContainer, cxTextEdit, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -65,7 +65,7 @@ type
     UppdateraF61: TMenuItem;
     dxComponentPrinter1: TdxComponentPrinter;
     dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
-    cds_ExportTyp1: TADQuery;
+    cds_ExportTyp1: TFDQuery;
     cds_ExportTyp1PackageNo: TStringField;
     cds_ExportTyp1NomThick: TFloatField;
     cds_ExportTyp1NomWidth: TFloatField;
@@ -80,7 +80,7 @@ type
     teInvoiceNo: TcxTextEdit;
     dxBarLargeButton6: TdxBarLargeButton;
     cxLabel1: TcxLabel;
-    sp_ExportInvoiceData: TADStoredProc;
+    sp_ExportInvoiceData: TFDStoredProc;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);

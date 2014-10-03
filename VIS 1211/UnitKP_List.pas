@@ -10,9 +10,9 @@ uses
   cxGraphics, FMTBcd, DB, cxStyles,
   cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, cxGridExportLink, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient,
+  cxClasses, cxGridCustomView, cxGrid, cxGridExportLink, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxLookAndFeelPainters, cxDBEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxButtons, dxBar, cxLabel, cxImageComboBox,
   cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
@@ -74,7 +74,7 @@ type
     SaveDialog2: TSaveDialog;
     cxButton1: TcxButton;
     lcKund: TcxDBLookupComboBox;
-    cdsKP_List: TADStoredProc;
+    cdsKP_List: TFDStoredProc;
     cbAvropStatus: TcxDBImageComboBox;
     cxLabel1: TcxLabel;
     cxLabel2: TcxLabel;

@@ -10,9 +10,9 @@ uses
   cxGridDBTableView, cxGrid, Menus, cxLookAndFeelPainters, StdCtrls,
   cxButtons, Buttons, cxContainer, cxLabel, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, FMTBcd,
-  DBClient, Provider, SqlExpr, cxLookAndFeels, uADStanIntf, uADStanOption,
-  uADStanParam, uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf,
-  uADStanAsync, uADDAptManager, uADCompDataSet, uADCompClient;
+  DBClient, Provider, SqlExpr, cxLookAndFeels, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TfTradingLinkMult = class(TForm)
@@ -30,10 +30,10 @@ type
     grdTradingAvropDBTableView1Kund: TcxGridDBColumn;
     grdTradingAvropDBTableView1Avropsnr: TcxGridDBColumn;
     BitBtn2: TBitBtn;
-    cds_AvropLink: TADQuery;
+    cds_AvropLink: TFDQuery;
     cds_AvropLinkKund: TStringField;
     cds_AvropLinkAvropsnr: TIntegerField;
-    sq_POorderInfo: TADQuery;
+    sq_POorderInfo: TFDQuery;
     sq_POorderInfoKontrakt: TStringField;
     sq_POorderInfoLeverantr: TStringField;
     sq_POorderInfoAvropsnr: TIntegerField;

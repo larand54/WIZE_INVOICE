@@ -12,9 +12,9 @@ uses
   cxCheckBox, cxCalendar, cxContainer, 
   cxTextEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxLabel, FMTBcd, DBClient, Provider, SqlExpr,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
   cxGroupBox, cxRadioGroup;
 
 type
@@ -46,7 +46,7 @@ type
     Label5: TLabel;
     LabelLONr: TLabel;
     grdPickPkgNosDBTableView1Produkt: TcxGridDBColumn;
-    sq_PaketLista: TADQuery;
+    sq_PaketLista: TFDQuery;
     sq_PaketListaPaketNr: TIntegerField;
     sq_PaketListaPrefix: TStringField;
     sq_PaketListaproductno: TIntegerField;

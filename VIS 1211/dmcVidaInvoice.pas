@@ -7,9 +7,9 @@ uses
   SysUtils, Classes, FMTBcd, DB, Controls, Dialogs,
   SqlTimSt, kbmMemTable, ComCtrls, Variants,
   clTcpClient, clFtp, Forms,
-  clFTPUtils, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADCompDataSet, uADCompClient,
+  clFTPUtils, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   StdCtrls, Math, DBCtrls, DateUtils, QImport3XLS, QImport3, QImport3ASCII,
   QExport4ASCII, QExport4, QExport4XLS ;
 
@@ -70,7 +70,7 @@ type
     QExport3ASCII1: TQExport4ASCII;
     QExport3ASCII2: TQExport4ASCII;
     clFTP: TclFtp;
-    cdsInvoiceHead: TADQuery;
+    cdsInvoiceHead: TFDQuery;
     cdsInvoiceHeadInternalInvoiceNo: TIntegerField;
     cdsInvoiceHeadInvoiceType: TIntegerField;
     cdsInvoiceHeadInvoiceDate: TSQLTimeStampField;
@@ -159,8 +159,8 @@ type
     cdsInvoiceHeadSpecialMoms: TIntegerField;
     cdsInvoiceHeadAccountType: TIntegerField;
     cdsInvoiceHeadInvoiced: TIntegerField;
-    cds_LoadPackagesIII: TADQuery;
-    cdsInvoiceLO: TADQuery;
+    cds_LoadPackagesIII: TFDQuery;
+    cdsInvoiceLO: TFDQuery;
     cdsInvoiceLOInternalInvoiceNo: TIntegerField;
     cdsInvoiceLOShippingPlanNo: TIntegerField;
     cdsInvoiceLOOrderNoText: TStringField;
@@ -181,7 +181,7 @@ type
     cdsInvoiceLOETD: TSQLTimeStampField;
     cdsInvoiceLOETA: TSQLTimeStampField;
     cdsInvoiceLOTrpID: TStringField;
-    cdsInvoiceDetail: TADQuery;
+    cdsInvoiceDetail: TFDQuery;
     cdsInvoiceDetailInternalInvoiceNo: TIntegerField;
     cdsInvoiceDetailShippingPlanNo: TIntegerField;
     cdsInvoiceDetailInvoiceDetailNo: TIntegerField;
@@ -221,12 +221,12 @@ type
     cdsInvoiceDetailVatValue: TFloatField;
     cdsInvoiceDetailintNM3: TFloatField;
     cdsInvoiceDetailArticleNo: TIntegerField;
-    cdsInvoiceShipTo: TADQuery;
+    cdsInvoiceShipTo: TFDQuery;
     cdsInvoiceShipToInternalInvoiceNo: TIntegerField;
     cdsInvoiceShipToShippingPlanNo: TIntegerField;
     cdsInvoiceShipToReference: TStringField;
     cdsInvoiceShipToAddressNo: TIntegerField;
-    cdsInvoiceShipToAddress: TADQuery;
+    cdsInvoiceShipToAddress: TFDQuery;
     cdsInvoiceShipToAddressInternalInvoiceNo: TIntegerField;
     cdsInvoiceShipToAddressShippingPlanNo: TIntegerField;
     cdsInvoiceShipToAddressReference: TStringField;
@@ -241,37 +241,37 @@ type
     cdsInvoiceShipToAddressPOSTAL_CODE: TStringField;
     cdsInvoiceShipToAddressCITY: TStringField;
     cdsInvoiceShipToAddressCOUNTRY: TStringField;
-    cdsInvoiceNumber: TADQuery;
+    cdsInvoiceNumber: TFDQuery;
     cdsInvoiceNumberInvoiceNo: TIntegerField;
     cdsInvoiceNumberInternalInvoiceNo: TIntegerField;
     cdsInvoiceNumberUserCreated: TSmallintField;
     cdsInvoiceNumberUserModified: TSmallintField;
     cdsInvoiceNumberDateCreated: TSQLTimeStampField;
-    cdsProformaInvNo: TADQuery;
+    cdsProformaInvNo: TFDQuery;
     cdsProformaInvNoProformaInvoiceNo: TIntegerField;
     cdsProformaInvNoInternalInvoiceNo: TIntegerField;
     cdsProformaInvNoUserCreated: TSmallintField;
     cdsProformaInvNoUserModified: TSmallintField;
     cdsProformaInvNoDateCreated: TSQLTimeStampField;
-    cdsFWInvNo: TADQuery;
+    cdsFWInvNo: TFDQuery;
     cdsFWInvNoInvoiceNo: TIntegerField;
     cdsFWInvNoInternalInvoiceNo: TIntegerField;
     cdsFWInvNoUserCreated: TSmallintField;
     cdsFWInvNoUserModified: TSmallintField;
     cdsFWInvNoDateCreated: TSQLTimeStampField;
-    cdsUSAInvNo: TADQuery;
+    cdsUSAInvNo: TFDQuery;
     cdsUSAInvNoInvoiceNo: TIntegerField;
     cdsUSAInvNoInternalInvoiceNo: TIntegerField;
     cdsUSAInvNoUserCreated: TSmallintField;
     cdsUSAInvNoUserModified: TSmallintField;
     cdsUSAInvNoDateCreated: TSQLTimeStampField;
-    cdsInvoiceList: TADQuery;
-    cds_IH_SpecLoad: TADQuery;
+    cdsInvoiceList: TFDQuery;
+    cds_IH_SpecLoad: TFDQuery;
     cds_IH_SpecLoadInternalInvoiceNo: TIntegerField;
     cds_IH_SpecLoadPIPNo: TIntegerField;
     cds_IH_SpecLoadLIPNo: TIntegerField;
     cds_IH_SpecLoadSpecLoadNo: TIntegerField;
-    cds_ExportTyp1: TADQuery;
+    cds_ExportTyp1: TFDQuery;
     cds_ExportTyp1PackageNo: TStringField;
     cds_ExportTyp1NomThick: TFloatField;
     cds_ExportTyp1NomWidth: TFloatField;
@@ -280,7 +280,7 @@ type
     cds_ExportTyp1Pcs: TIntegerField;
     cds_ExportTyp1Mark: TStringField;
     cds_ExportTyp1PEFC: TStringField;
-    sq_GetInvoiceHeadData: TADQuery;
+    sq_GetInvoiceHeadData: TFDQuery;
     sq_GetInvoiceHeadDataShippingPlanNo: TIntegerField;
     sq_GetInvoiceHeadDataCustomerNo: TIntegerField;
     sq_GetInvoiceHeadDataCustomerNoOH: TIntegerField;
@@ -344,7 +344,7 @@ type
     sq_GetInvoiceHeadDataResponsibleSeller: TIntegerField;
     sq_GetInvoiceHeadDataDestinationText: TStringField;
     sq_GetInvoiceHeadDataSpecialMoms: TIntegerField;
-    sq_GetLOData: TADQuery;
+    sq_GetLOData: TFDQuery;
     sq_GetLODataSTATUS: TIntegerField;
     sq_GetLODataLO: TIntegerField;
     sq_GetLODataORDERNUMBER: TStringField;
@@ -361,7 +361,7 @@ type
     sq_GetLODataETA: TSQLTimeStampField;
     sq_GetLODataTrpID: TStringField;
     sq_GetLODataADDITION_PRICEUNIT: TStringField;
-    sq_GetInvoiceDetailData: TADQuery;
+    sq_GetInvoiceDetailData: TFDQuery;
     sq_GetInvoiceDetailDataCustShipPlanDetailObjectNo: TIntegerField;
     sq_GetInvoiceDetailDataORDERLINENO: TIntegerField;
     sq_GetInvoiceDetailDataREFERENCE: TStringField;
@@ -392,21 +392,21 @@ type
     sq_GetInvoiceDetailDataNOOFPKGS: TIntegerField;
     sq_GetInvoiceDetailDataOL_Reference: TStringField;
     sq_GetInvoiceDetailDataintNM3: TFloatField;
-    sq_GetShipToAddress: TADQuery;
+    sq_GetShipToAddress: TFDQuery;
     sq_GetShipToAddressShippingPlanNo: TIntegerField;
     sq_GetShipToAddressAddressNo: TIntegerField;
     sq_GetShipToAddressReference: TStringField;
-    sq_GetNextInvoiceNo: TADQuery;
+    sq_GetNextInvoiceNo: TFDQuery;
     sq_GetNextInvoiceNoNEXT_INVNO: TIntegerField;
-    sq_GetProFormInvNo: TADQuery;
+    sq_GetProFormInvNo: TFDQuery;
     sq_GetProFormInvNoProformaInvoiceNo: TIntegerField;
-    cds_PurchaseInvNo: TADQuery;
+    cds_PurchaseInvNo: TFDQuery;
     cds_PurchaseInvNoPO_InvoiceNo: TIntegerField;
     cds_PurchaseInvNoInternalInvoiceNo: TIntegerField;
     cds_PurchaseInvNoUserCreated: TSmallintField;
     cds_PurchaseInvNoUserModified: TSmallintField;
     cds_PurchaseInvNoDateCreated: TSQLTimeStampField;
-    cds_InvoiceGroup: TADQuery;
+    cds_InvoiceGroup: TFDQuery;
     cds_InvoiceGroupInvoiceGroupNo: TIntegerField;
     cds_InvoiceGroupOriginalInvNos: TStringField;
     cds_InvoiceGroupOrdernos: TStringField;
@@ -439,10 +439,10 @@ type
     cds_InvoiceGroupSUM_FreigthCost: TFloatField;
     cds_InvoiceGroupTotal_Product_Value_No_Freight: TFloatField;
     cds_InvoiceGroupInv_Value_To_Be_Paid_2: TFloatField;
-    cds_InvoiceInGroup: TADQuery;
+    cds_InvoiceInGroup: TFDQuery;
     cds_InvoiceInGroupInvoiceGroupNo: TIntegerField;
     cds_InvoiceInGroupInternalInvoiceNo: TIntegerField;
-    cdsBookingData: TADQuery;
+    cdsBookingData: TFDQuery;
     cdsBookingDataBOOKING_ID: TStringField;
     cdsBookingDataSUPP_REFERENCE: TStringField;
     cdsBookingDataSHIPPER: TStringField;
@@ -453,7 +453,7 @@ type
     cdsBookingDataFREIGHTCOST: TFloatField;
     cdsBookingDataFREIGHT_UNIT: TStringField;
     cdsBookingDataFREIGHT_CURRENCY: TStringField;
-    cds_InvDtl_Att: TADQuery;
+    cds_InvDtl_Att: TFDQuery;
     cds_InvDtl_AttInternalInvoiceNo: TIntegerField;
     cds_InvDtl_AttShippingPlanNo: TIntegerField;
     cds_InvDtl_AttInvoiceDetailNo: TIntegerField;
@@ -493,7 +493,7 @@ type
     cds_InvDtl_AttVatValue: TFloatField;
     cds_InvDtl_AttintNM3: TFloatField;
     cds_InvDtl_AttArticleNo: TIntegerField;
-    cds_Att_Ext_ServicesII: TADQuery;
+    cds_Att_Ext_ServicesII: TFDQuery;
     cds_Att_Ext_ServicesIIInternalInvoiceNo: TIntegerField;
     cds_Att_Ext_ServicesIIShippingPlanNo: TIntegerField;
     cds_Att_Ext_ServicesIISequensNo: TIntegerField;
@@ -508,7 +508,7 @@ type
     cds_Att_Ext_ServicesIIModifiedDate: TSQLTimeStampField;
     cds_Att_Ext_ServicesIIModifiedUser: TIntegerField;
     cds_Att_Ext_ServicesIIQuick_InvoiceNo: TIntegerField;
-    cdsInvoiceHead_II: TADQuery;
+    cdsInvoiceHead_II: TFDQuery;
     cdsInvoiceHead_IIInternalInvoiceNo: TIntegerField;
     cdsInvoiceHead_IIInvoiceType: TIntegerField;
     cdsInvoiceHead_IIInvoiceDate: TSQLTimeStampField;
@@ -597,10 +597,10 @@ type
     cdsInvoiceHead_IISpecialMoms: TIntegerField;
     cdsInvoiceHead_IIAccountType: TIntegerField;
     cdsInvoiceHead_IIInvoiced: TIntegerField;
-    cds_PIP: TADQuery;
+    cds_PIP: TFDQuery;
     cds_PIPPIPNO: TIntegerField;
     cds_PIPPIPNAME: TStringField;
-    cds_LoadPackagesII: TADQuery;
+    cds_LoadPackagesII: TFDQuery;
     cds_LoadPackagesIILoadNo: TIntegerField;
     cds_LoadPackagesIIShippingPlanNo: TIntegerField;
     cds_LoadPackagesIIPRODUCT: TStringField;
@@ -638,7 +638,7 @@ type
     cds_LoadPackagesIIChanged: TIntegerField;
     cds_LoadPackagesIIDefsspno: TIntegerField;
     cds_LoadPackagesIIOverrideRL: TIntegerField;
-    sq_GetPkgType_Invoice: TADQuery;
+    sq_GetPkgType_Invoice: TFDQuery;
     sq_GetPkgType_InvoicePcs: TIntegerField;
     sq_GetPkgType_InvoiceAM3: TFMTBCDField;
     sq_GetPkgType_InvoiceNM3: TFMTBCDField;
@@ -651,7 +651,7 @@ type
     sq_GetPkgType_InvoiceNM1: TFMTBCDField;
     sq_GetPkgType_InvoiceOrderVol: TFMTBCDField;
     sq_GetPkgType_InvoicePriceVol: TFMTBCDField;
-    sq_PkgType_Invoice: TADQuery;
+    sq_PkgType_Invoice: TFDQuery;
     cds_LoadPackagesIIILoadNo: TIntegerField;
     cds_LoadPackagesIIIShippingPlanNo: TIntegerField;
     cds_LoadPackagesIIIPRODUCT: TStringField;
@@ -691,26 +691,26 @@ type
     cds_LoadPackagesIIIOverrideRL: TIntegerField;
     cds_LoadPackagesIIIPIPNo: TIntegerField;
     cds_LoadPackagesIIIInternalInvoiceNo: TIntegerField;
-    cdsInvoice_Load: TADQuery;
+    cdsInvoice_Load: TFDQuery;
     cdsInvoice_LoadInternalInvoiceNo: TIntegerField;
     cdsInvoice_LoadLoadNo: TIntegerField;
     cdsInvoice_LoadShippingPlanNo: TIntegerField;
     cdsInvoice_LoadDateCreated: TSQLTimeStampField;
     cdsInvoice_LoadCreatedUser: TSmallintField;
     cdsInvoice_LoadModifiedUser: TSmallintField;
-    sq_LONoInInvoice: TADQuery;
+    sq_LONoInInvoice: TFDQuery;
     sq_LONoInInvoiceShippingPlanNo: TIntegerField;
-    cdsInvoice_Credited: TADQuery;
+    cdsInvoice_Credited: TFDQuery;
     cdsInvoice_CreditedInternalInvoiceNo: TIntegerField;
     cdsInvoice_CreditedNewInternalInvoiceNo: TIntegerField;
     cdsInvoice_CreditedDateCreated: TSQLTimeStampField;
     cdsInvoice_CreditedCreatedUser: TSmallintField;
     cdsInvoice_CreditedModifiedUser: TSmallintField;
-    cds_LIP: TADQuery;
+    cds_LIP: TFDQuery;
     cds_LIPLIPNo: TIntegerField;
     cds_LIPLIPName: TStringField;
     cds_LIPPIPNo: TIntegerField;
-    cds_CopyLSP: TADQuery;
+    cds_CopyLSP: TFDQuery;
     cds_CopyLSPLoadNo: TIntegerField;
     cds_CopyLSPShippingPlanNo: TIntegerField;
     cds_CopyLSPConfirmedByReciever: TIntegerField;
@@ -721,7 +721,7 @@ type
     cds_CopyLSPInvoiced: TIntegerField;
     cds_CopyLSPLoadingLocationNo: TIntegerField;
     cds_CopyLSPShipToInvPointNo: TIntegerField;
-    cds_CopyLD: TADQuery;
+    cds_CopyLD: TFDQuery;
     cds_CopyLDLoadDetailNo: TIntegerField;
     cds_CopyLDLoadNo: TIntegerField;
     cds_CopyLDShippingPlanNo: TIntegerField;
@@ -740,7 +740,7 @@ type
     cds_CopyLDDefsspno: TIntegerField;
     cds_CopyLDOverrideRL: TIntegerField;
     cds_CopyLDOldPackageTypeNo: TIntegerField;
-    cds_LoadHead: TADQuery;
+    cds_LoadHead: TFDQuery;
     cds_LoadHeadLoadNo: TIntegerField;
     cds_LoadHeadSupplierNo: TIntegerField;
     cds_LoadHeadLoadedDate: TSQLTimeStampField;
@@ -762,7 +762,7 @@ type
     cds_LoadHeadLoadOK: TIntegerField;
     cds_LoadHeadLoadAR: TIntegerField;
     cds_LoadHeadShippingPlanNo: TIntegerField;
-    cds_LoadPackages: TADQuery;
+    cds_LoadPackages: TFDQuery;
     cds_LoadPackagesLoadNo: TIntegerField;
     cds_LoadPackagesShippingPlanNo: TIntegerField;
     cds_LoadPackagesPRODUCT: TStringField;
@@ -800,19 +800,19 @@ type
     cds_LoadPackagesChanged: TIntegerField;
     cds_LoadPackagesDefsspno: TIntegerField;
     cds_LoadPackagesOverrideRL: TIntegerField;
-    cds_NoOfInvoices: TADQuery;
+    cds_NoOfInvoices: TFDQuery;
     cds_NoOfInvoicesFakturnr: TIntegerField;
     cds_NoOfInvoicesLO: TIntegerField;
     cds_NoOfInvoicesFakturadatum: TSQLTimeStampField;
     cds_NoOfInvoicesInternalInvoiceNo: TIntegerField;
-    sq_PkgType_Inv: TADQuery;
-    sq_LoadToInvoice: TADQuery;
+    sq_PkgType_Inv: TFDQuery;
+    sq_LoadToInvoice: TFDQuery;
     sq_LoadToInvoiceLoadNo: TIntegerField;
-    cds_ExpSoftSet: TADQuery;
+    cds_ExpSoftSet: TFDQuery;
     cds_ExpSoftSetFieldValue: TStringField;
-    sq_GetInvNo: TADQuery;
+    sq_GetInvNo: TFDQuery;
     sq_GetInvNoInvoiceNo: TIntegerField;
-    sq_GetLODataII: TADQuery;
+    sq_GetLODataII: TFDQuery;
     sq_GetLODataIISTATUS: TIntegerField;
     sq_GetLODataIILO: TIntegerField;
     sq_GetLODataIIORDERNUMBER: TStringField;
@@ -829,7 +829,7 @@ type
     sq_GetLODataIIETA: TSQLTimeStampField;
     sq_GetLODataIITrpID: TStringField;
     sq_GetLODataIIADDITION_PRICEUNIT: TStringField;
-    sq_GetInvoiceDetailDataII: TADQuery;
+    sq_GetInvoiceDetailDataII: TFDQuery;
     sq_GetInvoiceDetailDataIICustShipPlanDetailObjectNo: TIntegerField;
     sq_GetInvoiceDetailDataIIORDERLINENO: TIntegerField;
     sq_GetInvoiceDetailDataIIREFERENCE: TStringField;
@@ -859,46 +859,46 @@ type
     sq_GetInvoiceDetailDataIINOOFPIECES: TIntegerField;
     sq_GetInvoiceDetailDataIINOOFPKGS: TIntegerField;
     sq_GetInvoiceDetailDataIIOL_Reference: TStringField;
-    cds_AttestRow: TADQuery;
+    cds_AttestRow: TFDQuery;
     cds_AttestRowInternalInvoiceNo: TIntegerField;
     cds_AttestRowShippingPlanNo: TIntegerField;
     cds_AttestRowSequensNo: TIntegerField;
     cds_AttestRowinvoicedetailno: TIntegerField;
-    sq_GetPaymentText: TADQuery;
+    sq_GetPaymentText: TFDQuery;
     sq_GetPaymentTextPaymentText: TMemoField;
-    sq_Del_AttestRow: TADQuery;
-    sq_updInvPkgDtl: TADQuery;
-    sq_GetLoadIDII: TADQuery;
+    sq_Del_AttestRow: TFDQuery;
+    sq_updInvPkgDtl: TFDQuery;
+    sq_GetLoadIDII: TFDQuery;
     sq_GetLoadIDIILoadNo: TIntegerField;
     sq_GetLoadIDIILoadID: TStringField;
-    sq_VolUnit: TADQuery;
+    sq_VolUnit: TFDQuery;
     sq_VolUnitVolumeUnit_No: TIntegerField;
     sq_VolUnitVolumeUnitName: TStringField;
-    sq_PriceUnit: TADQuery;
+    sq_PriceUnit: TFDQuery;
     sq_PriceUnitTemplateUnitNo: TIntegerField;
     sq_PriceUnitTemplateUnitName: TStringField;
-    sq_DelIH: TADQuery;
-    sq_DelIHEmptyLoads: TADQuery;
-    sq_SearchLoadNo: TADQuery;
+    sq_DelIH: TFDQuery;
+    sq_DelIHEmptyLoads: TFDQuery;
+    sq_SearchLoadNo: TFDQuery;
     sq_SearchLoadNoInvoiceType: TIntegerField;
     sq_SearchLoadNoInternalInvoiceNo: TIntegerField;
-    sq_GetAttestRow: TADQuery;
+    sq_GetAttestRow: TFDQuery;
     sq_GetAttestRowInternalInvoiceNo: TIntegerField;
     sq_GetAttestRowShippingPlanNo: TIntegerField;
     sq_GetAttestRowSequensNo: TIntegerField;
     sq_GetAttestRowinvoicedetailno: TIntegerField;
-    sq_DeleteInvoice: TADQuery;
-    sq_InvAttested: TADQuery;
+    sq_DeleteInvoice: TFDQuery;
+    sq_InvAttested: TFDQuery;
     sq_InvAttestedSequensNo: TIntegerField;
-    sq_GetInvoiceType: TADQuery;
+    sq_GetInvoiceType: TFDQuery;
     sq_GetInvoiceTypeInvoiceType: TIntegerField;
-    sq_Invoiced_Load: TADQuery;
-    sq_GetIntInvNo: TADQuery;
+    sq_Invoiced_Load: TFDQuery;
+    sq_GetIntInvNo: TFDQuery;
     sq_GetIntInvNoInternalInvoiceNo: TIntegerField;
     sq_GetIntInvNoInvoiceType: TIntegerField;
-    sq_CghInv_PkgNos: TADQuery;
-    sq_Delete_Confirmed_Load: TADQuery;
-    sq_CopyLSPByLoNo: TADQuery;
+    sq_CghInv_PkgNos: TFDQuery;
+    sq_Delete_Confirmed_Load: TFDQuery;
+    sq_CopyLSPByLoNo: TFDQuery;
     sq_CopyLSPByLoNoLoadNo: TIntegerField;
     sq_CopyLSPByLoNoShippingPlanNo: TIntegerField;
     sq_CopyLSPByLoNoConfirmedByReciever: TIntegerField;
@@ -909,43 +909,43 @@ type
     sq_CopyLSPByLoNoInvoiced: TIntegerField;
     sq_CopyLSPByLoNoLoadingLocationNo: TIntegerField;
     sq_CopyLSPByLoNoShipToInvPointNo: TIntegerField;
-    sq_GetNextLDNo: TADQuery;
+    sq_GetNextLDNo: TFDQuery;
     sq_GetNextLDNoNextLDNo: TIntegerField;
-    sq_SearchLONo: TADQuery;
+    sq_SearchLONo: TFDQuery;
     sq_SearchLONoInternalInvoiceNo: TIntegerField;
-    sq_GetInvoicedLods: TADQuery;
+    sq_GetInvoicedLods: TFDQuery;
     sq_GetInvoicedLodsLoadNo: TIntegerField;
     sq_GetInvoicedLodsShippingPlanNo: TIntegerField;
-    sq_GetLoadID: TADQuery;
+    sq_GetLoadID: TFDQuery;
     sq_GetLoadIDLoadNo: TIntegerField;
     sq_GetLoadIDLoadID: TStringField;
-    sq_Ins_AttestRow: TADQuery;
-    sq_CheckLoadNo: TADQuery;
+    sq_Ins_AttestRow: TFDQuery;
+    sq_CheckLoadNo: TFDQuery;
     sq_CheckLoadNoLoadNo: TIntegerField;
-    sq_CreditInv: TADQuery;
+    sq_CreditInv: TFDQuery;
     sq_CreditInvInternalInvoiceNo: TIntegerField;
     sq_CreditInvCustomerNo: TIntegerField;
-    sq_GetInvTexts: TADQuery;
+    sq_GetInvTexts: TFDQuery;
     sq_GetInvTextsDocText: TMemoField;
-    sq_GetClientInvTexts: TADQuery;
+    sq_GetClientInvTexts: TFDQuery;
     sq_GetClientInvTextsDocText: TMemoField;
-    sq_DeletePkgTypeLoad: TADQuery;
-    sq_RemoveFrom_InvLoad: TADQuery;
-    sq_DelPkgTypeByIntInv: TADQuery;
-    sq_KortSkeppFS: TADQuery;
-    sq_AnyLoadsToInvoice: TADQuery;
-    sq_GetFreightCost: TADQuery;
+    sq_DeletePkgTypeLoad: TFDQuery;
+    sq_RemoveFrom_InvLoad: TFDQuery;
+    sq_DelPkgTypeByIntInv: TFDQuery;
+    sq_KortSkeppFS: TFDQuery;
+    sq_AnyLoadsToInvoice: TFDQuery;
+    sq_GetFreightCost: TFDQuery;
     sq_GetFreightCostShippingPlanNo: TIntegerField;
     sq_GetFreightCostBookingNo: TIntegerField;
     sq_GetFreightCostFreightCost: TFloatField;
     sq_GetFreightCostFreightCostVolUnit: TIntegerField;
     sq_GetFreightCostFreightCostCurrency: TIntegerField;
     sq_GetFreightCostTemplateUnitName: TStringField;
-    sp_RemPkgFromLoad: TADStoredProc;
-    sp_vida_Populate_SamFaktura: TADStoredProc;
-    sp_GenSoftSet700790: TADStoredProc;
-    sp_GenSoftSet449: TADStoredProc;
-    sp_GetNextProformaInvNo: TADStoredProc;
+    sp_RemPkgFromLoad: TFDStoredProc;
+    sp_vida_Populate_SamFaktura: TFDStoredProc;
+    sp_GenSoftSet700790: TFDStoredProc;
+    sp_GenSoftSet449: TFDStoredProc;
+    sp_GetNextProformaInvNo: TFDStoredProc;
     cdsInvoiceHeadSR: TStringField;
     cdsInvoiceListQuickInvoice: TIntegerField;
     cdsInvoiceListINV_DATE: TSQLTimeStampField;
@@ -964,7 +964,7 @@ type
     cdsInvoiceListSljGrupp: TStringField;
     cdsInvoiceListCustomerNo: TIntegerField;
     ds_Props: TDataSource;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;
@@ -1019,7 +1019,7 @@ type
     cdsInvoiceDetailTotalInvoice: TAggregateField;
     cdsInvoiceDetailArticleName: TStringField;
     cdsInvoiceHeadMoms: TIntegerField;
-    cds_KontoLogik: TADQuery;
+    cds_KontoLogik: TFDQuery;
     cds_KontoLogikSalesmangroupNo: TIntegerField;
     cds_KontoLogikSalesregionNo: TIntegerField;
     cds_KontoLogikCustomerCountryNo: TIntegerField;
@@ -1034,15 +1034,15 @@ type
     cdsInvoiceDetailKonto: TStringField;
     cdsInvoiceDetailVatCode: TIntegerField;
     cdsInvoiceDetailmoms_konto: TStringField;
-    ad_GetSalesManGroupNo: TADQuery;
+    FD_GetSalesManGroupNo: TFDQuery;
     cdsInvoiceHeadResKontraSerie: TStringField;
     cdsInvoiceHeadKundResKontra: TStringField;
     cdsInvoiceHeadSalesGroupNo: TIntegerField;
     cdsInvoiceHeadCountryNo: TIntegerField;
-    amt_Credit: TADMemTable;
+    amt_Credit: TFDMemTable;
     amt_CreditLONo: TIntegerField;
     amt_CreditIntInvNo: TIntegerField;
-    sq_RemInvLoadII: TADQuery;
+    sq_RemInvLoadII: TFDQuery;
     mtImport: TkbmMemTable;
     QImport2ASCII2: TQImport3ASCII;
     mtImportPaketnr: TIntegerField;
@@ -1080,8 +1080,8 @@ type
     cdsInvoiceListInternalInvoiceNo: TIntegerField;
     cdsInvoiceListAgentNo: TIntegerField;
     cds_PurchaseInvNoPrefix: TStringField;
-    sq_StoreTransferFile: TADQuery;
-    sq_TransferFiles: TADQuery;
+    sq_StoreTransferFile: TFDQuery;
+    sq_TransferFiles: TFDQuery;
     sq_TransferFilesFileName: TStringField;
     sq_TransferFilesTransferType: TIntegerField;
     sq_TransferFilesDateCreated: TSQLTimeStampField;
@@ -1090,7 +1090,7 @@ type
     sq_TransferFilesSendDate: TSQLTimeStampField;
     mtImportPrefix: TStringField;
     mtImportRecordType: TIntegerField;
-    sq_PackageStatusHTF: TADQuery;
+    sq_PackageStatusHTF: TFDQuery;
     sq_PackageStatusHTFRecordType: TIntegerField;
     sq_PackageStatusHTFPrefix: TStringField;
     sq_PackageStatusHTFPaketnr: TIntegerField;
@@ -1103,7 +1103,7 @@ type
     sq_PackageStatusHTFComplete: TIntegerField;
     sq_TransferFilesLONo: TIntegerField;
     sq_PackageStatusHTFFileName: TStringField;
-    sq_PackageStatusHTFByFileName: TADQuery;
+    sq_PackageStatusHTFByFileName: TFDQuery;
     sq_PackageStatusHTFByFileNameRecordType: TIntegerField;
     sq_PackageStatusHTFByFileNamePrefix: TStringField;
     sq_PackageStatusHTFByFileNamePaketnr: TIntegerField;
@@ -1119,7 +1119,7 @@ type
     sq_PackageStatusHTFByFileNameLONo: TIntegerField;
     sq_TransferFilesHTF_FS: TStringField;
     sq_PackageStatusHTFHTF_FS: TStringField;
-    sq_HTFPkgStatus: TADQuery;
+    sq_HTFPkgStatus: TFDQuery;
     sq_HTFPkgStatusRecordType: TIntegerField;
     sq_HTFPkgStatusPrefix: TStringField;
     sq_HTFPkgStatusPaketnr: TIntegerField;
@@ -1144,7 +1144,7 @@ type
     sq_HTFPkgStatusPackageTypeNo: TIntegerField;
     sq_HTFPkgStatusLoadNo: TIntegerField;
     sq_TransferFilesLoadNo: TIntegerField;
-    sq_LD: TADQuery;
+    sq_LD: TFDQuery;
     sq_LDLoadNo: TIntegerField;
     sq_LDShippingPlanNo: TIntegerField;
     sq_LDLoadDetailNo: TIntegerField;
@@ -1165,17 +1165,17 @@ type
     sq_PackageStatusHTFByFileNameHTF_FS: TStringField;
     sq_PackageStatusHTFByFileNamePackageTypeNo: TIntegerField;
     sq_PackageStatusHTFByFileNameLoadNo: TIntegerField;
-    sq_LDMax: TADQuery;
+    sq_LDMax: TFDQuery;
     sq_LDMaxMaxLoadDetailNo: TIntegerField;
-    sq_GetLDLIPNo: TADQuery;
+    sq_GetLDLIPNo: TFDQuery;
     sq_GetLDLIPNoLIPNo: TIntegerField;
-    sq_RemovePkgs: TADQuery;
-    sq_GetLONoByLoadNo: TADQuery;
+    sq_RemovePkgs: TFDQuery;
+    sq_GetLONoByLoadNo: TFDQuery;
     sq_GetLONoByLoadNoLONo: TIntegerField;
     cds_InvDtl_AttAttSekPerAM3: TBCDField;
-    sq_UpdateTransferFile: TADQuery;
-    sp_GenSoftSet449SP: TADStoredProc;
-    sq_TransferFilesTillHTF: TADQuery;
+    sq_UpdateTransferFile: TFDQuery;
+    sp_GenSoftSet449SP: TFDStoredProc;
+    sq_TransferFilesTillHTF: TFDQuery;
     sq_TransferFilesTillHTFFileName: TStringField;
     sq_TransferFilesTillHTFTransferType: TIntegerField;
     sq_TransferFilesTillHTFDateCreated: TSQLTimeStampField;
@@ -1209,7 +1209,7 @@ type
     sq_PackageStatusHTFPEFC: TIntegerField;
     sq_PackageStatusHTFProductNo: TIntegerField;
     sq_PackageStatusHTFDateAndTime: TStringField;
-    cdsInvTrfLogg: TADQuery;
+    cdsInvTrfLogg: TFDQuery;
     cdsInvTrfLoggInvoiceNo: TIntegerField;
     cdsInvTrfLoggInternalInvoiceNo: TIntegerField;
     cdsInvTrfLoggObject2: TStringField;
@@ -1252,7 +1252,7 @@ type
     cdsInvTrfLoggVaruGrupp: TIntegerField;
     cdsInvTrfLoggPO_Country: TIntegerField;
     cdsInvTrfLoggTrading: TIntegerField;
-    sq_InvTotals: TADQuery;
+    sq_InvTotals: TFDQuery;
     sq_InvTotalsidXOR: TStringField;
     sq_InvTotalsKassaRabatt_For: TBCDField;
     sq_InvTotalsKassaRabatt_SEK: TBCDField;
@@ -1287,17 +1287,17 @@ type
     sq_InvTotalsVaruGrupp: TIntegerField;
     sq_InvTotalsPO_CountryNo: TIntegerField;
     sq_InvTotalsinvoicetype: TIntegerField;
-    sq_invoiceTrf: TADQuery;
-    sp_VIS_xp_voulogwrite: TADStoredProc;
-    sp_VIS_xp_vourowlogwrite: TADStoredProc;
-    sp_xp_ldglogwriteOLD: TADStoredProc;
-    sq_Region: TADQuery;
+    sq_invoiceTrf: TFDQuery;
+    sp_VIS_xp_voulogwrite: TFDStoredProc;
+    sp_VIS_xp_vourowlogwrite: TFDStoredProc;
+    sp_xp_ldglogwriteOLD: TFDStoredProc;
+    sq_Region: TFDQuery;
     sq_RegionRegion: TStringField;
     cdsInvoiceListSHIPPER: TStringField;
     cdsInvoiceListPostit: TStringField;
     cdsInvoiceListPO_prefix: TStringField;
     dsInvoiceShipToAddress_II: TDataSource;
-    cdsInvoiceShipToAddress_II: TADQuery;
+    cdsInvoiceShipToAddress_II: TFDQuery;
     cdsInvoiceShipToAddress_IIInternalInvoiceNo: TIntegerField;
     cdsInvoiceShipToAddress_IIShippingPlanNo: TIntegerField;
     cdsInvoiceShipToAddress_IIReference: TStringField;
@@ -1316,12 +1316,12 @@ type
     cds_Att_Ext_ServicesIIAmountAttested: TFloatField;
     cds_Att_Ext_ServicesIIAmount: TFloatField;
     cds_Att_Ext_ServicesIIActive: TIntegerField;
-    cds_Att_Ext_LO: TADQuery;
-    ad_InsAttLO: TADQuery;
-    adDeleteAttExtLO: TADQuery;
-    sq_GetPOCountry: TADQuery;
+    cds_Att_Ext_LO: TFDQuery;
+    FD_InsAttLO: TFDQuery;
+    adDeleteAttExtLO: TFDQuery;
+    sq_GetPOCountry: TFDQuery;
     sq_GetPOCountryCountryNo: TIntegerField;
-    sq_FSKonton: TADQuery;
+    sq_FSKonton: TFDQuery;
     StringField1: TStringField;
     BCDField1: TBCDField;
     BCDField2: TBCDField;
@@ -1358,32 +1358,32 @@ type
     IntegerField10: TIntegerField;
     IntegerField11: TIntegerField;
     IntegerField12: TIntegerField;
-    sq_Del_AttestKoppling: TADQuery;
-    sp_GenSoftSet700790_SP: TADStoredProc;
+    sq_Del_AttestKoppling: TFDQuery;
+    sp_GenSoftSet700790_SP: TFDStoredProc;
     sq_HTFPkgStatusProductCode: TStringField;
     sq_HTFPkgStatusALMM: TFloatField;
     sq_HTFPkgStatusPEFC: TIntegerField;
     sq_HTFPkgStatusDateAndTime: TStringField;
-    sq_GetPackageData: TADQuery;
+    sq_GetPackageData: TFDQuery;
     sq_GetPackageDataProductNo: TIntegerField;
     sq_GetPackageDataLIP_PkgNo: TIntegerField;
     sq_GetPackageDataPaketNr: TIntegerField;
     sq_GetPackageDataFileName: TStringField;
-    sq_GetFileNameOfLoadNo: TADQuery;
+    sq_GetFileNameOfLoadNo: TFDQuery;
     sq_GetFileNameOfLoadNoFileName: TStringField;
     cdsInvoiceDetailNettoSEKPerNM3: TBCDField;
     cdsInvoiceDetailBruttoSEKPerNM3: TBCDField;
-    sq_GetNettoPris: TADQuery;
+    sq_GetNettoPris: TFDQuery;
     sq_GetInvoiceDetailDataOrderNo: TIntegerField;
     sq_GetNettoPrisValueField: TFloatField;
-    sq_GetBruttoPris: TADQuery;
+    sq_GetBruttoPris: TFDQuery;
     sq_GetBruttoPrisValueField: TFloatField;
-    sq_InsInvNo: TADQuery;
-    sq_CopyLoad: TADQuery;
-    sp_vis_CopyLoad: TADStoredProc;
-    sq_GetOrgInvoiceNoByCredit: TADQuery;
+    sq_InsInvNo: TFDQuery;
+    sq_CopyLoad: TFDQuery;
+    sp_vis_CopyLoad: TFDStoredProc;
+    sq_GetOrgInvoiceNoByCredit: TFDQuery;
     sq_GetOrgInvoiceNoByCreditInternalInvoiceNo: TIntegerField;
-    ADQuery1: TADQuery;
+    FDQuery1: TFDQuery;
     IntegerField13: TIntegerField;
     IntegerField14: TIntegerField;
     SmallintField2: TSmallintField;
@@ -1394,7 +1394,7 @@ type
     cdsInvoiceHeadIntInvNoToAttestAgainst: TIntegerField;
     cdsInvoiceListVarukonto: TStringField;
     cdsInvoiceListFraktkonto: TStringField;
-    sq_GetArticleNo: TADQuery;
+    sq_GetArticleNo: TFDQuery;
     sq_GetArticleNoArticleNo: TIntegerField;
     sq_GetInvoiceHeadDataBillingCountryNo: TIntegerField;
     sq_GetInvoiceHeadDataSalesGroupNo: TIntegerField;
@@ -1406,19 +1406,19 @@ type
     cdsInvoiceListStatistikland: TStringField;
     cdsInvTrfLoggfrakt_SEK: TBCDField;
     cdsInvoiceListDelKredit: TIntegerField;
-    sq_InvLOs: TADQuery;
+    sq_InvLOs: TFDQuery;
     sq_InvLOsShippingPlanNo: TIntegerField;
-    sq_PkgType_InvoiceForCredit: TADQuery;
+    sq_PkgType_InvoiceForCredit: TFDQuery;
     sq_InvTotalsProduktvardeFOR: TFloatField;
     sq_InvTotalsProduktvardeSEK: TBCDField;
     cdsInvoiceListFraktValutaSEK: TFloatField;
     sq_InvTotalsFraktKonto: TStringField;
-    sp_InvTotals: TADStoredProc;
-    sp_TransformHTFPkgs: TADStoredProc;
+    sp_InvTotals: TFDStoredProc;
+    sp_TransformHTFPkgs: TFDStoredProc;
     cdsInvoiceListIncludeFreightCostInPrice: TIntegerField;
     cdsInvoiceDetailInclInPrice: TIntegerField;
     cdsInvoiceDetailInclInInvoiceTotal: TIntegerField;
-    mt_VerLogg: TADMemTable;
+    mt_VerLogg: TFDMemTable;
     mt_VerLoggKonto: TStringField;
     mt_VerLoggNamn: TStringField;
     mt_VerLoggValuta: TStringField;
@@ -1429,16 +1429,16 @@ type
     mt_VerLoggText: TStringField;
     ds_VerLogg: TDataSource;
     mt_VerLoggRadOrder: TIntegerField;
-    sq_GetTotalFreigthInPrice: TADQuery;
+    sq_GetTotalFreigthInPrice: TFDQuery;
     sq_GetTotalFreigthInPriceFreight: TFloatField;
-    sq_GetTotalAM3PerLO: TADQuery;
+    sq_GetTotalAM3PerLO: TFDQuery;
     sq_GetTotalAM3PerLOAM3: TFloatField;
     sq_GetInvoiceHeadDataFreightIncluded: TIntegerField;
     sq_GetInvoiceDetailDataIIOrderNo: TIntegerField;
     sq_GetInvoiceDetailDataIIInternalPrice: TFloatField;
     cdsInvoiceListArticleName: TStringField;
     cdsInvoiceListFraktValuta: TFMTBCDField;
-    cds_InvNoAGENT: TADQuery;
+    cds_InvNoAGENT: TFDQuery;
     cds_InvNoAGENTInvoiceNo: TIntegerField;
     cds_InvNoAGENTInternalInvoiceNo: TIntegerField;
     cds_InvNoAGENTUserCreated: TSmallintField;
@@ -1446,14 +1446,14 @@ type
     cds_InvNoAGENTDateCreated: TSQLTimeStampField;
     cds_InvNoAGENTPrefix: TStringField;
     cdsInvoiceHeadMultFactor: TIntegerField;
-    sq_InvoiceType: TADQuery;
+    sq_InvoiceType: TFDQuery;
     sq_InvoiceTypeInvoiceType: TIntegerField;
-    sq_InsVTAInvNo: TADQuery;
+    sq_InsVTAInvNo: TFDQuery;
     sq_GetInvoiceHeadDataOrderType: TIntegerField;
     sq_GetInvoiceHeadDataSalesRegionNo: TIntegerField;
-    sq_GetInvoiceNumber: TADQuery;
+    sq_GetInvoiceNumber: TFDQuery;
     sq_GetInvoiceNumberInvoiceNo: TIntegerField;
-    cds_LindaExport: TADQuery;
+    cds_LindaExport: TFDQuery;
     cds_LindaExportPackageNo: TStringField;
     cds_LindaExportNomThick: TFloatField;
     cds_LindaExportNomWidth: TFloatField;
@@ -1469,10 +1469,10 @@ type
     QExportLindaExcel: TQExport4XLS;
     QImport3XLS1: TQImport3XLS;
     QExport4ASCII1: TQExport4ASCII;
-    sq_GetArticleGroupNo: TADQuery;
+    sq_GetArticleGroupNo: TFDQuery;
     sq_GetArticleGroupNoArticleGroupNo: TIntegerField;
-    sq_InsBKOInvoiceNo: TADQuery;
-    sq_GetOrgInvoiceNoByCredit_BKO: TADQuery;
+    sq_InsBKOInvoiceNo: TFDQuery;
+    sq_GetOrgInvoiceNoByCredit_BKO: TFDQuery;
     sq_GetOrgInvoiceNoByCredit_BKOInternalInvoiceNo: TIntegerField;
     mt_VerLoggVatCode: TIntegerField;
     mt_VerLoggAvdelning: TStringField;
@@ -1518,10 +1518,10 @@ type
     sp_InvTotalsidXOR: TStringField;
     sp_InvTotalsDebit_Credit: TIntegerField;
     sp_InvTotalsXRATE: TFloatField;
-    sp_xp_ldglogwrite: TADStoredProc;
-    sp_CustomerHaveValidEAN: TADStoredProc;
-    sp_InvoiceSentAsEDI: TADStoredProc;
-    cdsInvoice_Credited_Komp: TADQuery;
+    sp_xp_ldglogwrite: TFDStoredProc;
+    sp_CustomerHaveValidEAN: TFDStoredProc;
+    sp_InvoiceSentAsEDI: TFDStoredProc;
+    cdsInvoice_Credited_Komp: TFDQuery;
     cdsInvoice_Credited_KompInternalInvoiceNo: TIntegerField;
     cdsInvoice_Credited_KompNewInternalInvoiceNo: TIntegerField;
     cdsInvoice_Credited_KompUserCreated: TIntegerField;
@@ -1530,24 +1530,24 @@ type
     sp_InvTotalsTotal_Product_Value_No_Freight_For: TFloatField;
     sp_InvTotalsTotal_Product_Value_No_Freight_Sek: TFloatField;
     sq_GetLODataOrderNo: TIntegerField;
-    sq_InvoiceNos: TADQuery;
+    sq_InvoiceNos: TFDQuery;
     sq_InvoiceNosInvoiceNo: TIntegerField;
     cds_ExportTyp1KVALITET: TStringField;
-    cds_InsertToInvoiceEDI: TADQuery;
-    sp_vis_InvoicedEDIStatus: TADStoredProc;
-    sp_vis_DeleteInvoicedEDI: TADStoredProc;
+    cds_InsertToInvoiceEDI: TFDQuery;
+    sp_vis_InvoicedEDIStatus: TFDStoredProc;
+    sp_vis_DeleteInvoicedEDI: TFDStoredProc;
     cdsInvoiceShipToAddressGLN: TStringField;
-    cds_ClientGLNNo: TADQuery;
+    cds_ClientGLNNo: TFDQuery;
     cds_ClientGLNNoPartyIdentifier1: TStringField;
     cdsInvoiceHeadCustomerGLNNo: TStringField;
     cds_ClientGLNNoClientNo: TIntegerField;
-    sp_GetAvdelning: TADStoredProc;
+    sp_GetAvdelning: TFDStoredProc;
     sp_GetAvdelningAvdelning: TStringField;
-    sp_vis_DelPrelInvoice: TADStoredProc;
-    sp_PkgLogInvoiced: TADStoredProc;
-    sq_DeleteProformaInvoice: TADQuery;
+    sp_vis_DelPrelInvoice: TFDStoredProc;
+    sp_PkgLogInvoiced: TFDStoredProc;
+    sq_DeleteProformaInvoice: TFDQuery;
     cdsInvoiceListAddressLine1: TStringField;
-    cds_CSH_ExtraCost: TADQuery;
+    cds_CSH_ExtraCost: TFDQuery;
     cds_CSH_ExtraCostShippingPlanNo: TIntegerField;
     cds_CSH_ExtraCostCSH_ExtraCostRowNo: TIntegerField;
     cds_CSH_ExtraCostInvoiceAdditionAmount: TFloatField;
@@ -1558,9 +1558,9 @@ type
     cds_CSH_ExtraCostDateCreated: TSQLTimeStampField;
     cds_CSH_ExtraCostArticleNo: TIntegerField;
     cds_CSH_ExtraCostPriceUnit: TStringField;
-    sp_LdConnCtrl: TADStoredProc;
-    sp_DEL_ExportInvoiceData: TADStoredProc;
-    sp_STORE_ExportInvoiceData: TADStoredProc;
+    sp_LdConnCtrl: TFDStoredProc;
+    sp_DEL_ExportInvoiceData: TFDStoredProc;
+    sp_STORE_ExportInvoiceData: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1598,23 +1598,23 @@ type
     procedure cdsInvoiceHeadBeforePost(DataSet: TDataSet);
     procedure cdsInvoiceHeadInvoiceDateChange(Sender: TField);
     procedure cdsInvoiceDetailUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
     procedure cdsInvoiceHeadUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
     procedure cdsInvoiceLOUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
     procedure cdsInvoiceShipToUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
     procedure cdsInvoiceShipToAddressUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
     procedure cds_IH_SpecLoadUpdateError(ASender: TDataSet;
-      AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-      var AAction: TADErrorAction);
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
   private
     { Private declarations }
     GlobalLoadDetailNo  : Integer ;
@@ -4706,29 +4706,29 @@ begin
 end;
 
 procedure TdmVidaInvoice.cdsInvoiceHeadUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update InvoiceHead : ' + AException.Message) ;
 end;
 
 procedure TdmVidaInvoice.cdsInvoiceLOUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update InvoiceLO : ' + AException.Message) ;
 end;
 
 procedure TdmVidaInvoice.cdsInvoiceShipToAddressUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update InvoiceShipToAddress : ' + AException.Message) ;
 end;
 
 procedure TdmVidaInvoice.cdsInvoiceShipToUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update InvoiceShipTo : ' + AException.Message) ;
 end;
@@ -4750,7 +4750,7 @@ end;
 
 function TdmVidaInvoice.GetSalesManGroupNo(const ResponsibleSeller : Integer) : Integer ;
 Begin
-// ad_GetSalesManGroupNo
+// FD_GetSalesManGroupNo
 End ;
 
 procedure TdmVidaInvoice.SetKontonr ;
@@ -6772,8 +6772,8 @@ begin
 end;
 
 procedure TdmVidaInvoice.cds_IH_SpecLoadUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update IH_SpecLoad : ' + AException.Message) ;
 end;
@@ -6790,11 +6790,11 @@ procedure TdmVidaInvoice.InsertAttest (const QInvNo : Integer) ;
 Begin
  with dmModule1  do
  Begin
-  admSelectedRows.Active := False ;
-  admSelectedRows.Active := True ;
+  FDmSelectedRows.Active := False ;
+  FDmSelectedRows.Active := True ;
   PrepareForAttest_DELKREDIT(QInvNo) ;
   dmModule1.InsertAttestHeader('Vara') ;
-  admSelectedRows.Active := False ;
+  FDmSelectedRows.Active := False ;
  End ;// with dmModule1  do
 End ;
 
@@ -6854,17 +6854,17 @@ begin
    cdsInvoiceDetail.Filter:= //'InternalInvoiceNo = ' + dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND
    'ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;
 
-   admSelectedRows.Insert ;
-   admSelectedRowsInternalInvoiceNo.AsInteger       := cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger ;
-   admSelectedRowsFakturanr.AsInteger               := Quick_InvoiceNo ;
-   admSelectedRowsLONo.AsInteger                    := cdsInvoiceLOShippingPlanNo.AsInteger ;
-   admSelectedRowsAmount.AsFloat                    := GetTotalAmountPerLO ; //Summa från delkredit
+   FDmSelectedRows.Insert ;
+   FDmSelectedRowsInternalInvoiceNo.AsInteger       := cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger ;
+   FDmSelectedRowsFakturanr.AsInteger               := Quick_InvoiceNo ;
+   FDmSelectedRowsLONo.AsInteger                    := cdsInvoiceLOShippingPlanNo.AsInteger ;
+   FDmSelectedRowsAmount.AsFloat                    := GetTotalAmountPerLO ; //Summa från delkredit
 
-   admSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cdsInvoiceHeadCustomerNo.AsInteger ;
-   admSelectedRowsCURRENCYNO.AsInteger              := cdsInvoiceHeadCurrencyNo.AsInteger ;
+   FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger       := cdsInvoiceHeadCustomerNo.AsInteger ;
+   FDmSelectedRowsCURRENCYNO.AsInteger              := cdsInvoiceHeadCurrencyNo.AsInteger ;
 
-   admSelectedRowsTotalAmount.AsFloat               := TotalAmount ; //Summa från delkredit
-   admSelectedRows.Post ;
+   FDmSelectedRowsTotalAmount.AsFloat               := TotalAmount ; //Summa från delkredit
+   FDmSelectedRows.Post ;
    cdsInvoiceLO.Next ;
   End ;//cdsInvoiceLO
   Finally
@@ -8704,8 +8704,8 @@ end;
 
 
 procedure TdmVidaInvoice.cdsInvoiceDetailUpdateError(ASender: TDataSet;
-  AException: EADException; ARow: TADDatSRow; ARequest: TADUpdateRequest;
-  var AAction: TADErrorAction);
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 begin
  dmsSystem.FDoLog('Error Update InvoiceDetail : ' + AException.Message) ;
 end;

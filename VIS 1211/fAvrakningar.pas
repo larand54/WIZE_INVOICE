@@ -12,10 +12,10 @@ uses
   cxGridTableView, cxGridDBTableView, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGrid, cxLookAndFeels, cxCalc, dxBar, dxBarExtItems,
   cxGridExportLink, cxSplitter, cxContainer, cxMaskEdit,
-  cxDropDownEdit, Buttons, SqlTimSt, cxCurrencyEdit, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, cxDBEdit, cxLookupEdit,
-  cxDBLookupEdit, uADCompDataSet, uADCompClient, cxLookAndFeelPainters,
+  cxDropDownEdit, Buttons, SqlTimSt, cxCurrencyEdit, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxDBEdit, cxLookupEdit,
+  cxDBLookupEdit, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookAndFeelPainters,
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
   dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
@@ -140,7 +140,7 @@ type
     grdAvrRowsDBTableView1Attesterad: TcxGridDBColumn;
     grdAvrRowsDBTableView1Objecttype: TcxGridDBColumn;
     cxStyleNotAttesterad: TcxStyle;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;

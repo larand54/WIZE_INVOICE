@@ -13,9 +13,9 @@ uses
   cxGridDBTableView, cxGrid, cxGridBandedTableView, cxGridDBBandedTableView,
   kbmMemTable, Menus, cxLookAndFeelPainters, cxButtons, cxSplitter,
   cxCheckBox, cxDBEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient, cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -193,10 +193,10 @@ type
     meSupplierCode: TcxDBMaskEdit;
     ds_LIP2: TDataSource;
     ds_PIP2: TDataSource;
-    cds_PIP2: TADQuery;
+    cds_PIP2: TFDQuery;
     cds_PIP2PIPNO: TIntegerField;
     cds_PIP2PIPNAME: TStringField;
-    cds_LIP2: TADQuery;
+    cds_LIP2: TFDQuery;
     cds_LIP2LIPNo: TIntegerField;
     cds_LIP2LIPName: TStringField;
     procedure FormCreate(Sender: TObject);

@@ -91,8 +91,8 @@ object dmsContact: TdmsContact
     Left = 672
     Top = 72
   end
-  object sp_ClientCode: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_ClientCode: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_GetClientCode_CSD'
     Left = 48
@@ -118,8 +118,8 @@ object dmsContact: TdmsContact
       Size = 3
     end
   end
-  object sq_GetLanguageID: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_GetLanguageID: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'SELECT distinct'
       'LanguageCode'
@@ -138,9 +138,9 @@ object dmsContact: TdmsContact
       Origin = 'LanguageCode'
     end
   end
-  object cds_PkgNoSerie: TADQuery
+  object cds_PkgNoSerie: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from dbo.PkgNoSerie')
@@ -163,9 +163,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sq_GetUserName: TADQuery
+  object sq_GetUserName: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select RTRIM(LastName)+'#39', '#39'+FirstName as FullName'
@@ -188,9 +188,9 @@ object dmsContact: TdmsContact
       Size = 32
     end
   end
-  object sq_IsLego: TADQuery
+  object sq_IsLego: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select R.RoleType'
@@ -213,9 +213,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object cds_Users: TADQuery
+  object cds_Users: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select UserID,'
@@ -236,9 +236,9 @@ object dmsContact: TdmsContact
       Size = 36
     end
   end
-  object cds_ClientToLL: TADQuery
+  object cds_ClientToLL: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -270,9 +270,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object cds_SalesGrp: TADQuery
+  object cds_SalesGrp: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.SalesmanGroup')
@@ -290,9 +290,9 @@ object dmsContact: TdmsContact
       Size = 15
     end
   end
-  object cds_SR: TADQuery
+  object cds_SR: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.ClientName, C.ClientNo'
@@ -315,9 +315,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object cds_Market: TADQuery
+  object cds_Market: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select Distinct * '
@@ -354,9 +354,9 @@ object dmsContact: TdmsContact
       Origin = 'ModifiedUser'
     end
   end
-  object cds_volunit: TADQuery
+  object cds_volunit: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from dbo.UnitName')
@@ -391,9 +391,9 @@ object dmsContact: TdmsContact
       Origin = 'SequenceNo'
     end
   end
-  object cdsPriceUnit: TADQuery
+  object cdsPriceUnit: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from dbo.PackUnit')
@@ -411,9 +411,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object cds_Shippers: TADStoredProc
+  object cds_Shippers: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Shippers'
     Left = 32
@@ -437,9 +437,9 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cds_LocalShipper: TADStoredProc
+  object cds_LocalShipper: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Local_Shippers'
     Left = 120
@@ -463,9 +463,9 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cdsOwners: TADStoredProc
+  object cdsOwners: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Owners'
     Left = 200
@@ -478,9 +478,9 @@ object dmsContact: TdmsContact
         ParamType = ptResult
       end>
   end
-  object cdsProducers: TADStoredProc
+  object cdsProducers: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Producers'
     Left = 264
@@ -504,10 +504,10 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cds_RegPoints: TADQuery
+  object cds_RegPoints: TFDQuery
     AfterInsert = cds_RegPointsAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -551,10 +551,10 @@ object dmsContact: TdmsContact
       ProviderFlags = [pfInUpdate]
     end
   end
-  object cds_ProductionUnit: TADQuery
+  object cds_ProductionUnit: TFDQuery
     AfterInsert = cds_ProductionUnitAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select *'
@@ -701,9 +701,9 @@ object dmsContact: TdmsContact
       Lookup = True
     end
   end
-  object sq_IsIntVerk: TADQuery
+  object sq_IsIntVerk: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.IntVerk'
@@ -722,9 +722,9 @@ object dmsContact: TdmsContact
       Origin = 'IntVerk'
     end
   end
-  object cds_Verk: TADQuery
+  object cds_Verk: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.ClientNo, C.ClientName, C.PktNrLevKod,'
@@ -753,18 +753,18 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cdsCity: TADQuery
+  object cdsCity: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select * from dbo.city')
     Left = 680
     Top = 296
   end
-  object cdsCities: TADStoredProc
+  object cdsCities: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Cities'
     Left = 744
@@ -788,9 +788,9 @@ object dmsContact: TdmsContact
       Size = 50
     end
   end
-  object cdsAddressAndReference: TADStoredProc
+  object cdsAddressAndReference: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_AddressAndReference_CSD'
     Left = 848
@@ -825,9 +825,9 @@ object dmsContact: TdmsContact
       Size = 30
     end
   end
-  object sq_GetPIPByClientNo: TADQuery
+  object sq_GetPIPByClientNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select Distinct PIP.PhysicalInventoryPointNo AS PIPNO'
@@ -850,9 +850,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sq_IsClientRoleType: TADQuery
+  object sq_IsClientRoleType: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select ClientNo from '
@@ -879,9 +879,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sq_UserIssueReport: TADQuery
+  object sq_UserIssueReport: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Delete from dbo.UserIssueReport '
@@ -917,9 +917,9 @@ object dmsContact: TdmsContact
         ParamType = ptInput
       end>
   end
-  object sq_GetSR: TADQuery
+  object sq_GetSR: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.SalesRegionNo'
@@ -938,9 +938,9 @@ object dmsContact: TdmsContact
       Origin = 'SalesRegionNo'
     end
   end
-  object sq_GetSuppCodeByPktLevKod: TADQuery
+  object sq_GetSuppCodeByPktLevKod: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.PkgPrefix from dbo.PkgPrefix C'
@@ -959,9 +959,9 @@ object dmsContact: TdmsContact
       Size = 3
     end
   end
-  object sq_GetSpeditorEmail: TADQuery
+  object sq_GetSpeditorEmail: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT EmailAddress'
@@ -992,9 +992,9 @@ object dmsContact: TdmsContact
       Size = 50
     end
   end
-  object sq_GetPkgPrefix: TADQuery
+  object sq_GetPkgPrefix: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct pf.PkgPrefix'
@@ -1014,9 +1014,9 @@ object dmsContact: TdmsContact
       Size = 3
     end
   end
-  object sq_IsVerk: TADQuery
+  object sq_IsVerk: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select R.RoleType'
@@ -1038,9 +1038,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sq_IsRoleType: TADQuery
+  object sq_IsRoleType: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select CR.ClientNo from ClientRole CR'
@@ -1067,9 +1067,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sq_GetPIPNo: TADQuery
+  object sq_GetPIPNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select Distinct LIP.PhysicalInventoryPointNo AS PIPNO'
@@ -1088,9 +1088,9 @@ object dmsContact: TdmsContact
       Origin = 'PIPNO'
     end
   end
-  object sqClientPrefDocs: TADQuery
+  object sqClientPrefDocs: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from dbo.ClientPrefDoc cpd'
@@ -1169,9 +1169,9 @@ object dmsContact: TdmsContact
       Size = 100
     end
   end
-  object sqGetEmailAdr: TADQuery
+  object sqGetEmailAdr: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select EmailAddress from dbo.contact co'
@@ -1194,9 +1194,9 @@ object dmsContact: TdmsContact
       Size = 50
     end
   end
-  object sqGetFirstAndLastName: TADQuery
+  object sqGetFirstAndLastName: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select RTRIM(FirstName) +'#39' '#39'+ RTRIM(LastName) AS FullName'
@@ -1218,9 +1218,9 @@ object dmsContact: TdmsContact
       Size = 31
     end
   end
-  object cdsCurrency: TADQuery
+  object cdsCurrency: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT * FROM dbo.CURRENCY')
@@ -1238,9 +1238,9 @@ object dmsContact: TdmsContact
       Size = 5
     end
   end
-  object cdsDelTerms: TADQuery
+  object cdsDelTerms: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT * FROM'
@@ -1265,9 +1265,9 @@ object dmsContact: TdmsContact
       Size = 100
     end
   end
-  object sq_GetPrefixByClientNo: TADQuery
+  object sq_GetPrefixByClientNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.ClientCode from dbo.client C'
@@ -1287,9 +1287,9 @@ object dmsContact: TdmsContact
       Size = 3
     end
   end
-  object sp_Customers: TADStoredProc
+  object sp_Customers: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Customers'
     Left = 592
@@ -1313,9 +1313,9 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object sp_Agent: TADStoredProc
+  object sp_Agent: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vis_AllAgents'
     Left = 520
@@ -1349,9 +1349,9 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cds_Country: TADQuery
+  object cds_Country: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select CountryNo, CountryName from dbo.country')
@@ -1375,9 +1375,9 @@ object dmsContact: TdmsContact
     Left = 744
     Top = 72
   end
-  object sq_GetMaxLIPNoOfPIPNo: TADQuery
+  object sq_GetMaxLIPNoOfPIPNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select MAX(LIP.LogicalInventoryPointNo) AS LIPNO'
@@ -1403,9 +1403,9 @@ object dmsContact: TdmsContact
     Left = 592
     Top = 224
   end
-  object sp_actAgents: TADStoredProc
+  object sp_actAgents: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_ActAgents'
     Left = 672
@@ -1433,9 +1433,9 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cds_ActShippers: TADStoredProc
+  object cds_ActShippers: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vis_ActShippers'
     Left = 752
@@ -1469,21 +1469,21 @@ object dmsContact: TdmsContact
     Left = 544
     Top = 344
   end
-  object cds_AdrSearch: TADQuery
+  object cds_AdrSearch: TFDQuery
     AfterInsert = cds_AdrSearchAfterInsert
     BeforePost = cds_AdrSearchBeforePost
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'Select distinct adr.*'
+      'Select distinct FDr.*'
       'From '
-      'dbo.Address adr '
+      'dbo.Address FDr '
       'WHERE AddressNo = 0')
     Left = 408
     Top = 296
     object cds_AdrSearchAddressNo: TIntegerField
-      DisplayLabel = 'AdrNr'
+      DisplayLabel = 'FDrNr'
       FieldName = 'AddressNo'
       Origin = 'AddressNo'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -1611,7 +1611,7 @@ object dmsContact: TdmsContact
       DisplayLabel = 'Ort'
       FieldKind = fkLookup
       FieldName = 'City'
-      LookupDataSet = ad_City
+      LookupDataSet = FD_City
       LookupKeyFields = 'CityNo'
       LookupResultField = 'CityName'
       KeyFields = 'CityNo'
@@ -1625,49 +1625,49 @@ object dmsContact: TdmsContact
     Left = 408
     Top = 344
   end
-  object ad_City: TADQuery
+  object FD_City: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.City'
       'Order By CityName')
     Left = 472
     Top = 296
-    object ad_CityCityNo: TIntegerField
+    object FD_CityCityNo: TIntegerField
       FieldName = 'CityNo'
       Origin = 'CityNo'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object ad_CityCityName: TStringField
+    object FD_CityCityName: TStringField
       DisplayLabel = 'Ort'
       FieldName = 'CityName'
       Origin = 'CityName'
       ProviderFlags = [pfInUpdate]
       Size = 50
     end
-    object ad_CitySequenceNo: TIntegerField
+    object FD_CitySequenceNo: TIntegerField
       FieldName = 'SequenceNo'
       Origin = 'SequenceNo'
       ProviderFlags = [pfInUpdate]
     end
-    object ad_CityDateCreated: TSQLTimeStampField
+    object FD_CityDateCreated: TSQLTimeStampField
       FieldName = 'DateCreated'
       Origin = 'DateCreated'
       ProviderFlags = [pfInUpdate]
     end
-    object ad_CityModifiedUser: TSmallintField
+    object FD_CityModifiedUser: TSmallintField
       FieldName = 'ModifiedUser'
       Origin = 'ModifiedUser'
       ProviderFlags = [pfInUpdate]
     end
-    object ad_CityCreatedUser: TSmallintField
+    object FD_CityCreatedUser: TSmallintField
       FieldName = 'CreatedUser'
       Origin = 'CreatedUser'
       ProviderFlags = [pfInUpdate]
     end
-    object ad_CityImpVerk: TIntegerField
+    object FD_CityImpVerk: TIntegerField
       DisplayLabel = 'Impregneringsort'
       FieldName = 'ImpVerk'
       Origin = 'ImpVerk'
@@ -1675,7 +1675,7 @@ object dmsContact: TdmsContact
     end
   end
   object ds_City: TDataSource
-    DataSet = ad_City
+    DataSet = FD_City
     Left = 472
     Top = 344
   end
@@ -1684,19 +1684,19 @@ object dmsContact: TdmsContact
     Left = 304
     Top = 344
   end
-  object cds_Comp_DelAdr: TADQuery
+  object cds_Comp_DelAdr: TFDQuery
     AfterInsert = cds_Comp_DelAdrAfterInsert
     CachedUpdates = True
     MasterFields = 'ClientNo'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'CompanyAddress'
     SQL.Strings = (
-      'Select distinct ca.*, ad.*, ci.CityName, cy.CountryName  '
+      'Select distinct ca.*, FD.*, ci.CityName, cy.CountryName  '
       'From DBO.CompanyAddress CA'
-      'INNER JOIN dbo.Address ad on ad.AddressNo = ca.AddressNo'
-      'Inner Join dbo.City ci on ci.CityNo = ad.CityNo'
-      'Inner Join dbo.Country cy on cy.CountryNo = ad.CountryNo'
+      'INNER JOIN dbo.Address FD on FD.AddressNo = ca.AddressNo'
+      'Inner Join dbo.City ci on ci.CityNo = FD.CityNo'
+      'Inner Join dbo.Country cy on cy.CountryNo = FD.CountryNo'
       ''
       ''
       ''
@@ -1875,9 +1875,9 @@ object dmsContact: TdmsContact
       Size = 30
     end
   end
-  object sq_AdrName: TADQuery
+  object sq_AdrName: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * From DBO.Address'
@@ -1999,34 +1999,34 @@ object dmsContact: TdmsContact
       Origin = 'SequenceNo'
     end
   end
-  object sqAdrDepend: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sqAdrDepend: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
-      'Select addressNo from dbo.Address ad'
-      'WHERE ad.AddressNo = :AddressNo'
+      'Select addressNo from dbo.Address FD'
+      'WHERE FD.AddressNo = :AddressNo'
       ''
       
-        'and ad.AddressNo not in (Select AddressNo from dbo.ShippingPlan_' +
+        'and FD.AddressNo not in (Select AddressNo from dbo.ShippingPlan_' +
         'ShippingAddress'
-      'WHERE AddressNo = ad.AddressNo)'
+      'WHERE AddressNo = FD.AddressNo)'
       ''
-      'and ad.AddressNo not in (Select DestinationNo from dbo.Orders'
-      'WHERE DestinationNo = ad.AddressNo)'
+      'and FD.AddressNo not in (Select DestinationNo from dbo.Orders'
+      'WHERE DestinationNo = FD.AddressNo)'
       ''
       
-        'and ad.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
+        'and FD.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
         'Orders'
-      'WHERE ClientBillingAddressNo = ad.AddressNo)'
+      'WHERE ClientBillingAddressNo = FD.AddressNo)'
       ''
       
-        'and ad.AddressNo not in (Select AddressNo from dbo.InvoiceShipTo' +
+        'and FD.AddressNo not in (Select AddressNo from dbo.InvoiceShipTo' +
         'Address'
-      'WHERE AddressNo = ad.AddressNo)'
+      'WHERE AddressNo = FD.AddressNo)'
       ''
       
-        'and ad.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
+        'and FD.AddressNo not in (Select ClientBillingAddressNo from dbo.' +
         'CustomerShippingPlanHeader'
-      'WHERE ClientBillingAddressNo = ad.AddressNo)')
+      'WHERE ClientBillingAddressNo = FD.AddressNo)')
     Left = 152
     Top = 296
     ParamData = <
@@ -2042,9 +2042,9 @@ object dmsContact: TdmsContact
       Required = True
     end
   end
-  object sqDelCompAdr: TADQuery
+  object sqDelCompAdr: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Delete DBO.CompanyAddress '
@@ -2058,19 +2058,19 @@ object dmsContact: TdmsContact
         ParamType = ptInput
       end>
   end
-  object cds_CompAdr: TADQuery
+  object cds_CompAdr: TFDQuery
     AfterInsert = cds_CompAdrAfterInsert
     CachedUpdates = True
     MasterFields = 'ClientNo'
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     UpdateOptions.UpdateTableName = 'CompanyAddress'
     SQL.Strings = (
-      'Select distinct ca.*, ad.*, ci.CityName, cy.CountryName  '
+      'Select distinct ca.*, FD.*, ci.CityName, cy.CountryName  '
       'From DBO.CompanyAddress CA'
-      'INNER JOIN dbo.Address ad on ad.AddressNo = ca.AddressNo'
-      'Inner Join dbo.City ci on ci.CityNo = ad.CityNo'
-      'Inner Join dbo.Country cy on cy.CountryNo = ad.CountryNo'
+      'INNER JOIN dbo.Address FD on FD.AddressNo = ca.AddressNo'
+      'Inner Join dbo.City ci on ci.CityNo = FD.CityNo'
+      'Inner Join dbo.Country cy on cy.CountryNo = FD.CountryNo'
       'WHERE ClientNo = :ClientNo'
       'AND ca.AddressType = 1'
       '')
@@ -2253,8 +2253,8 @@ object dmsContact: TdmsContact
     Left = 416
     Top = 608
   end
-  object sp_AttLev: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_AttLev: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_AttLev'
     Left = 672
     Top = 224
@@ -2288,8 +2288,8 @@ object dmsContact: TdmsContact
       Size = 80
     end
   end
-  object cds_ReportStaticsII: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cds_ReportStaticsII: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select * FROM dbo.ReportStaticsII')
     Left = 832
@@ -2360,9 +2360,9 @@ object dmsContact: TdmsContact
     Left = 832
     Top = 72
   end
-  object sq_GetEmailAdr_Utlastad: TADQuery
+  object sq_GetEmailAdr_Utlastad: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select EmailAddress from dbo.contact co'
@@ -2385,8 +2385,8 @@ object dmsContact: TdmsContact
       Size = 50
     end
   end
-  object sp_GetLegoOfLL: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_GetLegoOfLL: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_GetLegoOfLL'
     Left = 520
     Top = 616

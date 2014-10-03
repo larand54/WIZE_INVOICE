@@ -306,9 +306,9 @@ object fAccInv: TfAccInv
       BuiltInReportLink = True
     end
   end
-  object cds_ExportTyp1: TADQuery
+  object cds_ExportTyp1: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select DISTINCT'
@@ -467,8 +467,8 @@ object fAccInv: TfAccInv
       Origin = 'AM3'
     end
   end
-  object sp_ExportInvoiceData: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_ExportInvoiceData: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_ExportInvoiceData'
     Left = 224
     Top = 352

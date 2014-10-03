@@ -401,7 +401,7 @@ inherited fOrderStocken: TfOrderStocken
       OnExecute = acShowOSDetailsExecute
     end
   end
-  inherited cds_Props: TADQuery
+  inherited cds_Props: TFDQuery
     AfterInsert = cds_PropsAfterInsert
   end
   object dxComponentPrinter1: TdxComponentPrinter

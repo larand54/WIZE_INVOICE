@@ -49,12 +49,12 @@ object dmcLO: TdmcLO
     Left = 702
     Top = 64
   end
-  object cds_IntHdr: TADQuery
+  object cds_IntHdr: TFDQuery
     AfterInsert = cds_IntHdrAfterInsert
     BeforePost = cds_IntHdrBeforePost
     AfterScroll = cds_IntHdrAfterScroll
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select IH.* FROM dbo.InternalOrderHead IH'
@@ -257,10 +257,10 @@ object dmcLO: TdmcLO
       Lookup = True
     end
   end
-  object cds_copyPI: TADQuery
+  object cds_copyPI: TFDQuery
     AfterInsert = cds_copyPIAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select  P.* FROM dbo.ProdInstru P'
@@ -444,7 +444,7 @@ object dmcLO: TdmcLO
       Origin = 'StrapTypeNo'
     end
   end
-  object cds_LO: TADQuery
+  object cds_LO: TFDQuery
     AfterInsert = cds_LOAfterInsert
     BeforePost = cds_LOBeforePost
     BeforeDelete = cds_LOBeforeDelete
@@ -452,7 +452,7 @@ object dmcLO: TdmcLO
     OnPostError = cds_LOPostError
     CachedUpdates = True
     OnReconcileError = cds_LOReconcileError
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select SSP.*,'
@@ -744,11 +744,11 @@ object dmcLO: TdmcLO
       FieldName = 'REST'
     end
   end
-  object cds_ELOLengths: TADQuery
+  object cds_ELOLengths: TFDQuery
     AfterInsert = cds_ELOLengthsAfterInsert
     BeforePost = cds_ELOLengthsBeforePost
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select PL.ActualLengthMM, LL.*'
@@ -788,9 +788,9 @@ object dmcLO: TdmcLO
       Origin = 'PkgCodePPNo'
     end
   end
-  object cds_Pref: TADQuery
+  object cds_Pref: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select C.VATNo, cp.* FROM dbo.Client C'
@@ -942,9 +942,9 @@ object dmcLO: TdmcLO
       Origin = 'FreightInDiscount'
     end
   end
-  object cds_PhysInvByCityNo: TADQuery
+  object cds_PhysInvByCityNo: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -972,9 +972,9 @@ object dmcLO: TdmcLO
       Origin = 'OwnerNo'
     end
   end
-  object cds_ProdList: TADQuery
+  object cds_ProdList: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT pd.ProductNo, pg.ProductGroupNo, gd.GradeName,'
@@ -1126,9 +1126,9 @@ object dmcLO: TdmcLO
       Required = True
     end
   end
-  object sq_FindLO: TADQuery
+  object sq_FindLO: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select IH.ShippingPlanNo FROM dbo.InternalOrderHead IH'
@@ -1151,10 +1151,10 @@ object dmcLO: TdmcLO
       Required = True
     end
   end
-  object cds_ProdInstruct: TADQuery
+  object cds_ProdInstruct: TFDQuery
     AfterInsert = cds_ProdInstructAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select  P.* FROM dbo.ProdInstru P'
@@ -1338,9 +1338,9 @@ object dmcLO: TdmcLO
       Origin = 'StrapTypeNo'
     end
   end
-  object cds_LIP: TADQuery
+  object cds_LIP: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select Distinct LIP.LogicalInventoryPointNo AS LIPNO,'
@@ -1378,9 +1378,9 @@ object dmcLO: TdmcLO
       Origin = 'CityNo'
     end
   end
-  object cds_Users: TADQuery
+  object cds_Users: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select UserID,'
@@ -1402,9 +1402,9 @@ object dmcLO: TdmcLO
       Size = 36
     end
   end
-  object sqPkgLayoutStd: TADQuery
+  object sqPkgLayoutStd: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       
@@ -1430,10 +1430,10 @@ object dmcLO: TdmcLO
       Origin = 'AntalKopior'
     end
   end
-  object cds_ELOLayout: TADQuery
+  object cds_ELOLayout: TFDQuery
     AfterInsert = cds_ELOLayoutAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select SL.* FROM dbo.ELOSpecLayout SL'

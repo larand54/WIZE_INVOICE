@@ -118,7 +118,7 @@ inherited fAvdelning: TfAvdelning
     Left = 480
     Top = 104
   end
-  object mtClient: TADMemTable [11]
+  object mtClient: TFDMemTable [11]
     FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -145,10 +145,10 @@ inherited fAvdelning: TfAvdelning
       Lookup = True
     end
   end
-  object cds_Avdelning: TADQuery [12]
+  object cds_Avdelning: TFDQuery [12]
     AfterInsert = cds_AvdelningAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select * FROM dbo.Avdelning'
       'WHERE ClientNo = :ClientNo')
@@ -189,9 +189,9 @@ inherited fAvdelning: TfAvdelning
       ProviderFlags = [pfInUpdate]
     end
   end
-  object cds_SR: TADQuery [13]
+  object cds_SR: TFDQuery [13]
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.ClientName, C.ClientNo'

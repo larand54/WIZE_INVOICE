@@ -210,7 +210,7 @@ object fReportStatics: TfReportStatics
       end
     end
   end
-  object mtClient: TADMemTable
+  object mtClient: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

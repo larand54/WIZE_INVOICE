@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB,
-  kbmMemTable, SqlTimSt, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient ;
+  kbmMemTable, SqlTimSt, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
 
 
 type
@@ -23,8 +23,8 @@ type
     mtLoadNosPaymentNo: TIntegerField;
     mtLoadNosPaymentType: TIntegerField;
     mtLoadNosSupplierNo: TIntegerField;
-    cdsPaymentLoadList: TADQuery;
-    cdsArrivingLoads: TADQuery;
+    cdsPaymentLoadList: TFDQuery;
+    cdsArrivingLoads: TFDQuery;
     cdsArrivingLoadsINVPOINTNO: TIntegerField;
     cdsArrivingLoadsINVPOINTNAME: TStringField;
     cdsArrivingLoadsINITIALS: TStringField;
@@ -38,7 +38,7 @@ type
     cdsArrivingLoadsSKATTE_UPPLAG: TIntegerField;
     cdsArrivingLoadsPRISOK: TIntegerField;
     cdsArrivingLoadsKrediterad: TIntegerField;
-    cdsArrivingPackages: TADQuery;
+    cdsArrivingPackages: TFDQuery;
     cdsArrivingPackagesSSP_SupplierNo: TIntegerField;
     cdsArrivingPackagesLO: TIntegerField;
     cdsArrivingPackagesPACKAGE_NO: TIntegerField;
@@ -65,13 +65,13 @@ type
     cdsArrivingPackagesPaymentNo: TIntegerField;
     cdsArrivingPackagesPaymentType: TIntegerField;
     cdsArrivingPackagesSupplierNo: TIntegerField;
-    cdsPaymentLoads: TADQuery;
+    cdsPaymentLoads: TFDQuery;
     cdsPaymentLoadsPaymentNo: TIntegerField;
     cdsPaymentLoadsLoadNo: TIntegerField;
     cdsPaymentLoadsTypeOf: TIntegerField;
     cdsPaymentLoadsCreditToPaymentNo: TIntegerField;
     cdsPaymentLoadsPaymentType: TIntegerField;
-    cdsPayHead: TADQuery;
+    cdsPayHead: TFDQuery;
     cdsPayHeadPaymentNo: TIntegerField;
     cdsPayHeadSenderStatus: TIntegerField;
     cdsPayHeadReceiverStatus: TIntegerField;
@@ -84,10 +84,10 @@ type
     cdsPayHeadMILL_InvoiceNo: TStringField;
     cdsPayHeadNotering: TStringField;
     cdsPayHeadPaymentType: TIntegerField;
-    cds_ConfLoad: TADQuery;
-    sq_priceOK: TADQuery;
+    cds_ConfLoad: TFDQuery;
+    sq_priceOK: TFDQuery;
     sq_priceOKPrice: TFloatField;
-    cdsPaymentHead: TADQuery;
+    cdsPaymentHead: TFDQuery;
     cdsPaymentHeadPaymentNo: TIntegerField;
     cdsPaymentHeadMILL_InvoiceNo: TStringField;
     cdsPaymentHeadDateCreated: TSQLTimeStampField;
@@ -101,9 +101,9 @@ type
     cdsPaymentHeadNotering: TStringField;
     cdsPaymentHeadPaymentType: TIntegerField;
     cdsPaymentHeadLeverantr: TStringField;
-    sq_GetNewLIPno: TADQuery;
+    sq_GetNewLIPno: TFDQuery;
     sq_GetNewLIPnoNew_LogicalInventoryPointNo: TIntegerField;
-    cdsPaymentLoadListII: TADQuery;
+    cdsPaymentLoadListII: TFDQuery;
     cdsPaymentLoadListIILO: TIntegerField;
     cdsPaymentLoadListIIAttesterad: TIntegerField;
     cdsPaymentLoadListIIObjecttype: TIntegerField;
@@ -128,11 +128,11 @@ type
     cdsPaymentLoadListIIProductNo: TIntegerField;
     cdsPaymentLoadListIIPaymentType: TIntegerField;
     cdsPaymentLoadListIICreditToPaymentNo: TIntegerField;
-    sq_Upd_CreditToPaymentNo: TADQuery;
-    sq_UpdCredInLoadDtlVal: TADQuery;
-    sq_SSP_Exist: TADQuery;
+    sq_Upd_CreditToPaymentNo: TFDQuery;
+    sq_UpdCredInLoadDtlVal: TFDQuery;
+    sq_SSP_Exist: TFDQuery;
     sq_SSP_ExistSupplierShipPlanObjectNo: TIntegerField;
-    cds_Update_SSP: TADQuery;
+    cds_Update_SSP: TFDQuery;
     cds_Update_SSPCustomerNo: TIntegerField;
     cds_Update_SSPLoadNo: TIntegerField;
     cds_Update_SSPSupplierShipPlanObjectNo: TIntegerField;
@@ -144,7 +144,7 @@ type
     cds_Update_SSPProductNo: TIntegerField;
     cds_Update_SSPProductLengthNo: TIntegerField;
     cds_Update_SSPModifiedUser: TIntegerField;
-    cds_SSP: TADQuery;
+    cds_SSP: TFDQuery;
     cds_SSPSupplierShipPlanObjectNo: TIntegerField;
     cds_SSPCustShipPlanDetailObjectNo: TIntegerField;
     cds_SSPShipType: TIntegerField;
@@ -202,10 +202,10 @@ type
     cds_SSPPackageWidth: TIntegerField;
     cds_SSPPackageHeight: TIntegerField;
     cds_SSPLengthSpec: TStringField;
-    cds_LS: TADQuery;
+    cds_LS: TFDQuery;
     cds_LSLoadNo: TIntegerField;
     cds_LSShippingPlanNo: TIntegerField;
-    cds_LoadDetail: TADQuery;
+    cds_LoadDetail: TFDQuery;
     cds_LoadDetailLoadDetailNo: TIntegerField;
     cds_LoadDetailLoadNo: TIntegerField;
     cds_LoadDetailShippingPlanNo: TIntegerField;
@@ -224,10 +224,10 @@ type
     cds_LoadDetailDefsspno: TIntegerField;
     cds_LoadDetailOverrideRL: TIntegerField;
     cds_LoadDetailOldPackageTypeNo: TIntegerField;
-    cdsLastAvr: TADQuery;
+    cdsLastAvr: TFDQuery;
     cdsLastAvrPaymentNo: TIntegerField;
     cdsLastAvrLoadNo: TIntegerField;
-    cds_IntOrderHead: TADQuery;
+    cds_IntOrderHead: TFDQuery;
     cds_IntOrderHeadOrderNo: TIntegerField;
     cds_IntOrderHeadShippingPlanNo: TIntegerField;
     cds_IntOrderHeadCustomerNo: TIntegerField;
@@ -265,26 +265,26 @@ type
     cds_IntOrderHeadMiniText: TStringField;
     cds_IntOrderHeadMiniTextFS: TIntegerField;
     cds_IntOrderHeadMiniTextLO: TIntegerField;
-    sq_DelConPkgLog: TADQuery;
-    sq_ChangeLOnrInPaymentLoad: TADQuery;
-    cds_Pkgs: TADQuery;
+    sq_DelConPkgLog: TFDQuery;
+    sq_ChangeLOnrInPaymentLoad: TFDQuery;
+    cds_Pkgs: TFDQuery;
     cds_PkgsLogicalInventoryPointNo: TIntegerField;
     cds_PkgsPackageNo: TIntegerField;
     cds_PkgsSupplierCode: TStringField;
-    sq_LO_Type: TADQuery;
+    sq_LO_Type: TFDQuery;
     sq_LO_TypeObjectType: TIntegerField;
     sq_LO_TypeOrderType: TIntegerField;
-    sq_LoadPackages: TADQuery;
+    sq_LoadPackages: TFDQuery;
     sq_LoadPackagesLogicalInventoryPointNo: TIntegerField;
     sq_LoadPackagesPackageNo: TIntegerField;
     sq_LoadPackagesSupplierCode: TStringField;
-    sq_NoOfLoads_LO: TADQuery;
+    sq_NoOfLoads_LO: TFDQuery;
     sq_NoOfLoads_LONoOfLoads: TIntegerField;
-    cds_LoadRemAvr: TADQuery;
+    cds_LoadRemAvr: TFDQuery;
     cds_LoadRemAvrLoadNo: TIntegerField;
     cds_LoadRemAvrDateCreated: TSQLTimeStampField;
     cds_LoadRemAvrCreatedUser: TSmallintField;
-    cds_LoadHead: TADQuery;
+    cds_LoadHead: TFDQuery;
     cds_LoadHeadLoadNo: TIntegerField;
     cds_LoadHeadSupplierNo: TIntegerField;
     cds_LoadHeadLoadedDate: TSQLTimeStampField;
@@ -306,13 +306,13 @@ type
     cds_LoadHeadLoadOK: TIntegerField;
     cds_LoadHeadLoadAR: TIntegerField;
     cds_LoadHeadShippingPlanNo: TIntegerField;
-    sq_UpdateLoadDtlVal: TADQuery;
-    sq_InsLoadDtlVal: TADQuery;
-    sq_UpdLoadDtlValSingleLoad: TADQuery;
-    sq_DelLastAvr: TADQuery;
-    sq_IsLoadCredited: TADQuery;
+    sq_UpdateLoadDtlVal: TFDQuery;
+    sq_InsLoadDtlVal: TFDQuery;
+    sq_UpdLoadDtlValSingleLoad: TFDQuery;
+    sq_DelLastAvr: TFDQuery;
+    sq_IsLoadCredited: TFDQuery;
     sq_IsLoadCreditedPaymentNo: TIntegerField;
-    sq_SummaryLoadDetails: TADQuery;
+    sq_SummaryLoadDetails: TFDQuery;
     sq_SummaryLoadDetailsAKT_THICK: TFloatField;
     sq_SummaryLoadDetailsAKT_WIDTH: TFloatField;
     sq_SummaryLoadDetailsACT_M3: TFMTBCDField;
@@ -324,12 +324,12 @@ type
     sq_SummaryLoadDetailsPRICE: TFloatField;
     sq_SummaryLoadDetailsLO: TIntegerField;
     sq_SummaryLoadDetailsGRADENAME: TStringField;
-    sq_INS_PaymentLoad_ST: TADQuery;
-    sq_FindAvr: TADQuery;
+    sq_INS_PaymentLoad_ST: TFDQuery;
+    sq_FindAvr: TFDQuery;
     sq_FindAvrAVRAKNING_NO: TIntegerField;
     sq_FindAvrVerk: TStringField;
     sq_FindAvrVerkNo: TIntegerField;
-    cdsConfirmed_Load: TADQuery;
+    cdsConfirmed_Load: TFDQuery;
     cdsConfirmed_LoadConfirmed_LoadNo: TIntegerField;
     cdsConfirmed_LoadConfirmed_ShippingPlanNo: TIntegerField;
     cdsConfirmed_LoadNewLoadNo: TIntegerField;
@@ -360,7 +360,7 @@ type
     cdsPaymentLoadListCountryNo: TIntegerField;
     cdsPaymentLoadListGRADENAME: TStringField;
     cdsPaymentLoadListMILL_INVOICE_NO: TStringField;
-    cdsKP_List: TADStoredProc;
+    cdsKP_List: TFDStoredProc;
     cdsPaymentHeadCustName: TStringField;
     cdsPaymentLoadListIIAR_AV: TStringField;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);

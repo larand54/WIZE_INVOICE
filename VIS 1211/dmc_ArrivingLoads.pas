@@ -5,9 +5,9 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, kbmMemTable,
   Messages, Controls, Forms,  Dialogs, SqlTimSt, Variants, vidatype,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager, uADCompDataSet,
-  uADCompClient ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client ;
 
 type
 
@@ -92,7 +92,7 @@ type
     dsrcPortArrivingPackages: TDataSource;
     mtLoadPackagesOverrideRL: TIntegerField;
     ds_PksByInventoryPlace: TDataSource;
-    cdsArrivingLoads: TADQuery;
+    cdsArrivingLoads: TFDQuery;
     cdsArrivingLoadsLoadAR: TIntegerField;
     cdsArrivingLoadsCountryCode: TStringField;
     cdsArrivingLoadsLO: TIntegerField;
@@ -123,7 +123,7 @@ type
     cdsArrivingLoadsLipNo: TIntegerField;
     cdsArrivingLoadsTrading: TIntegerField;
     cdsArrivingLoadsARtillLager: TStringField;
-    cdsArrivingPackages: TADQuery;
+    cdsArrivingPackages: TFDQuery;
     cdsArrivingPackagesProductLengthNo: TIntegerField;
     cdsArrivingPackagesLoadNo: TIntegerField;
     cdsArrivingPackagesLO: TIntegerField;
@@ -144,8 +144,8 @@ type
     cdsArrivingPackagesNLMM: TFloatField;
     cdsArrivingPackagesALMM: TFloatField;
     cdsArrivingPackagesPackageTypeNo: TIntegerField;
-    sq_GetDefaultCSObjectNo: TADQuery;
-    cdsConfirmed_Load: TADQuery;
+    sq_GetDefaultCSObjectNo: TFDQuery;
+    cdsConfirmed_Load: TFDQuery;
     cdsConfirmed_LoadConfirmed_LoadNo: TIntegerField;
     cdsConfirmed_LoadConfirmed_ShippingPlanNo: TIntegerField;
     cdsConfirmed_LoadNewLoadNo: TIntegerField;
@@ -153,7 +153,7 @@ type
     cdsConfirmed_LoadDateCreated: TSQLTimeStampField;
     cdsConfirmed_LoadCreatedUser: TIntegerField;
     cdsConfirmed_LoadModifiedUser: TIntegerField;
-    cds_verkLaster: TADQuery;
+    cds_verkLaster: TFDQuery;
     cds_verkLasterLASTNR: TIntegerField;
     cds_verkLasterFS: TStringField;
     cds_verkLasterDATUM: TSQLTimeStampField;
@@ -163,7 +163,7 @@ type
     cds_verkLasterLASTSTALLE: TStringField;
     cds_verkLasterVERK: TStringField;
     cds_verkLasterINT_KUND: TStringField;
-    cds_VerkLastPkgs: TADQuery;
+    cds_VerkLastPkgs: TFDQuery;
     cds_VerkLastPkgsLoadNo: TIntegerField;
     cds_VerkLastPkgsLO: TIntegerField;
     cds_VerkLastPkgsPACKAGE_NO: TIntegerField;
@@ -177,17 +177,17 @@ type
     cds_VerkLastPkgsPACKAGE_LOG: TStringField;
     cds_VerkLastPkgsLOAD_DETAILNO: TIntegerField;
     cds_VerkLastPkgsPSCPERLENGTH: TStringField;
-    cdsOneLoad_TaBort: TADQuery;
-    sq_SetLoadAR: TADQuery;
-    sp_PackageTypes_tabort: TADStoredProc;
-    sp_NewPackageType_tabort: TADStoredProc;
-    sp_NewPackageDetail_tabort: TADStoredProc;
-    sp_ChangePkg_tabort: TADStoredProc;
-    sp_insPkgLog_tabort: TADStoredProc;
-    sp_PackageTypeDetail_tabort: TADStoredProc;
-    sp_Populate_One_PkgTypeLengths_tabort: TADStoredProc;
-    sp_PackageTotals_tabort: TADStoredProc;
-    cds_Confirmed_Pkg_Log: TADQuery;
+    cdsOneLoad_TaBort: TFDQuery;
+    sq_SetLoadAR: TFDQuery;
+    sp_PackageTypes_tabort: TFDStoredProc;
+    sp_NewPackageType_tabort: TFDStoredProc;
+    sp_NewPackageDetail_tabort: TFDStoredProc;
+    sp_ChangePkg_tabort: TFDStoredProc;
+    sp_insPkgLog_tabort: TFDStoredProc;
+    sp_PackageTypeDetail_tabort: TFDStoredProc;
+    sp_Populate_One_PkgTypeLengths_tabort: TFDStoredProc;
+    sp_PackageTotals_tabort: TFDStoredProc;
+    cds_Confirmed_Pkg_Log: TFDQuery;
     cds_Confirmed_Pkg_LogPackageNo: TIntegerField;
     cds_Confirmed_Pkg_LogSupplierCode: TStringField;
     cds_Confirmed_Pkg_LogConfirmed_LoadNo: TIntegerField;
@@ -199,10 +199,10 @@ type
     cds_Confirmed_Pkg_LogPackageStatus: TIntegerField;
     cds_Confirmed_Pkg_LogOperation: TIntegerField;
     cds_Confirmed_Pkg_LogOld_LogicalInventoryPointNo: TIntegerField;
-    sq_RevertPkgs: TADQuery;
-    sq_CheckIfConfirmedPkgsValidInLoad: TADQuery;
+    sq_RevertPkgs: TFDQuery;
+    sq_CheckIfConfirmedPkgsValidInLoad: TFDQuery;
     sq_CheckIfConfirmedPkgsValidInLoadPACKAGENO: TIntegerField;
-    sq_CheckPkgLog: TADQuery;
+    sq_CheckPkgLog: TFDQuery;
     sq_CheckPkgLogPackageNo: TIntegerField;
     sq_CheckPkgLogSupplierCode: TStringField;
     sq_CheckPkgLogConfirmed_LoadNo: TIntegerField;
@@ -214,7 +214,7 @@ type
     sq_CheckPkgLogPackageStatus: TIntegerField;
     sq_CheckPkgLogOperation: TIntegerField;
     sq_CheckPkgLogOld_LogicalInventoryPointNo: TIntegerField;
-    sq_Get_LoadShippingPlan: TADQuery;
+    sq_Get_LoadShippingPlan: TFDQuery;
     sq_Get_LoadShippingPlanLoadNo: TIntegerField;
     sq_Get_LoadShippingPlanShippingPlanNo: TIntegerField;
     sq_Get_LoadShippingPlanAVROP_CustomerNo: TIntegerField;
@@ -222,29 +222,29 @@ type
     sq_Get_LoadShippingPlanObjectType: TIntegerField;
     sq_Get_LoadShippingPlanOrderType: TIntegerField;
     sq_Get_LoadShippingPlanLIPNo: TIntegerField;
-    sq_CheckIfConfirmedPkgsValidInInventory: TADQuery;
-    sq_ChkPkgs: TADQuery;
+    sq_CheckIfConfirmedPkgsValidInInventory: TFDQuery;
+    sq_ChkPkgs: TFDQuery;
     sq_ChkPkgsLoadNo: TIntegerField;
     sq_ChkPkgsLoggLoadNo: TIntegerField;
-    sq_PkgInvoiced: TADQuery;
-    sq_InsertPkgNoLogg: TADQuery;
-    sq_GetVWCost: TADQuery;
+    sq_PkgInvoiced: TFDQuery;
+    sq_InsertPkgNoLogg: TFDQuery;
+    sq_GetVWCost: TFDQuery;
     sq_GetVWCostUnnamed1: TFloatField;
-    sq_Get_VWLIPNo: TADQuery;
+    sq_Get_VWLIPNo: TFDQuery;
     sq_Get_VWLIPNoVW_LIPNo: TIntegerField;
-    sp_ArrivingLoads_Tabort: TADStoredProc;
-    sp_VerkLaster: TADStoredProc;
-    sp_CopyLOLoadToSales: TADStoredProc;
-    sp_CopyARIntAddLOLoad: TADStoredProc;
-    sp_ProcessPkgAND_Log: TADStoredProc;
-    sp_ChangeToIMPProduct: TADStoredProc;
+    sp_ArrivingLoads_Tabort: TFDStoredProc;
+    sp_VerkLaster: TFDStoredProc;
+    sp_CopyLOLoadToSales: TFDStoredProc;
+    sp_CopyARIntAddLOLoad: TFDStoredProc;
+    sp_ProcessPkgAND_Log: TFDStoredProc;
+    sp_ChangeToIMPProduct: TFDStoredProc;
     sq_GetDefaultCSObjectNoCustShipPlanDetailObjectNo: TIntegerField;
-    sq_GetPriceOfPriceList: TADQuery;
+    sq_GetPriceOfPriceList: TFDQuery;
     sq_GetPriceOfPriceListUnnamed1: TFloatField;
-    sq_GetOLPrice: TADQuery;
+    sq_GetOLPrice: TFDQuery;
     sq_GetOLPriceInternalPrice: TFloatField;
     sq_GetOLPricePriceListNo: TIntegerField;
-    cds_LoadRow: TADQuery;
+    cds_LoadRow: TFDQuery;
     cds_LoadRowLoadNo: TIntegerField;
     cds_LoadRowLoadDetailNo: TIntegerField;
     cds_LoadRowShippingPlanNo: TIntegerField;
@@ -267,7 +267,7 @@ type
     cds_LoadRowSSP_CustomerNo: TIntegerField;
     cds_LoadRowFS: TStringField;
     cds_LoadRowInternKundFrakt: TFloatField;
-    cds_LoadDtlVal: TADQuery;
+    cds_LoadDtlVal: TFDQuery;
     cds_LoadDtlValLoadNo: TIntegerField;
     cds_LoadDtlValLoadDetailNo: TIntegerField;
     cds_LoadDtlValProductLengthNo: TIntegerField;
@@ -282,7 +282,7 @@ type
     cds_LoadDtlValOldPrice: TFloatField;
     cds_LoadDtlValVerk_FS: TStringField;
     cds_LoadDtlValCredited: TIntegerField;
-    cdsLoadDetails: TADQuery;
+    cdsLoadDetails: TFDQuery;
     cdsLoadDetailsLoadNo: TIntegerField;
     cdsLoadDetailsLoadDetailNo: TIntegerField;
     cdsLoadDetailsShippingPlanNo: TIntegerField;
@@ -303,7 +303,7 @@ type
     cdsLoadDetailsLIPNo: TIntegerField;
     cdsLoadDetailsDefsspno: TIntegerField;
     cdsLoadDetailsOverrideRL: TIntegerField;
-    cdsLoadShippingPlan: TADQuery;
+    cdsLoadShippingPlan: TFDQuery;
     cdsLoadShippingPlanLoadNo: TIntegerField;
     cdsLoadShippingPlanShippingPlanNo: TIntegerField;
     cdsLoadShippingPlanConfirmedByReciever: TIntegerField;
@@ -312,7 +312,7 @@ type
     cdsLoadShippingPlanCreatedUser: TIntegerField;
     cdsLoadShippingPlanModifiedUser: TIntegerField;
     cdsLoadShippingPlanDateCreated: TSQLTimeStampField;
-    cdsPkgNumber: TADQuery;
+    cdsPkgNumber: TFDQuery;
     cdsPkgNumberLoadDetailNo: TIntegerField;
     cdsPkgNumberLoadNo: TIntegerField;
     cdsPkgNumberShippingPlanNo: TIntegerField;
@@ -347,12 +347,12 @@ type
     cdsPkgNumberUpdate_Price_Date: TSQLTimeStampField;
     cdsPkgNumberCreatedOfPkgStr: TIntegerField;
     cdsPkgNumberAvgLengthType: TIntegerField;
-    sq_GetxRateIntLoad: TADQuery;
-    sq_GetxRateExtLoad: TADQuery;
-    sq_DeleteNewLoadByOldLoadNo: TADQuery;
-    sq_IsLoadInvoiced: TADQuery;
-    sq_GetOLPriceForADDLO: TADQuery;
-    sq_LoadPackages: TADQuery;
+    sq_GetxRateIntLoad: TFDQuery;
+    sq_GetxRateExtLoad: TFDQuery;
+    sq_DeleteNewLoadByOldLoadNo: TFDQuery;
+    sq_IsLoadInvoiced: TFDQuery;
+    sq_GetOLPriceForADDLO: TFDQuery;
+    sq_LoadPackages: TFDQuery;
     sq_LoadPackagesLoadNo: TIntegerField;
     sq_LoadPackagesLONo: TIntegerField;
     sq_LoadPackagesPRODUCT: TStringField;
@@ -396,26 +396,26 @@ type
     sq_GetxRateIntLoadLoadedDate: TSQLTimeStampField;
     sq_GetxRateIntLoadvaluta: TStringField;
     sq_GetxRateIntLoadXRate: TFloatField;
-    sq_getMTSLLLipNo: TADQuery;
-    sq_CompareDetails: TADQuery;
-    sq_SearchPkgNo: TADQuery;
-    sq_GetCurrentxRateIntLoad: TADQuery;
-    sq_GetCurrentxRateExtLoad: TADQuery;
-    sq_DeleteConfirmed_Load_Entry: TADQuery;
-    sq_IsLoadAvraknad: TADQuery;
-    sq_deleteSamLaster: TADQuery;
-    sq_samLast: TADQuery;
+    sq_getMTSLLLipNo: TFDQuery;
+    sq_CompareDetails: TFDQuery;
+    sq_SearchPkgNo: TFDQuery;
+    sq_GetCurrentxRateIntLoad: TFDQuery;
+    sq_GetCurrentxRateExtLoad: TFDQuery;
+    sq_DeleteConfirmed_Load_Entry: TFDQuery;
+    sq_IsLoadAvraknad: TFDQuery;
+    sq_deleteSamLaster: TFDQuery;
+    sq_samLast: TFDQuery;
     sq_IsLoadAvraknadPaymentNo: TIntegerField;
     sq_IsLoadAvraknadLoadNo: TIntegerField;
     sq_GetCurrentxRateExtLoadXRate: TFloatField;
     sq_GetCurrentxRateIntLoadXRate: TFloatField;
     sq_CompareDetailsMatching_LD: TIntegerField;
-    sq_SearchLoadNoByPkgNo: TADQuery;
-    cds_PksByInventoryPlace: TADQuery;
-    sq_Check_CDS_Link: TADQuery;
-    sq_IsLoadConfirmed: TADQuery;
-    sq_CheckObject2Link: TADQuery;
-    sq_DelNewLoads: TADQuery;
+    sq_SearchLoadNoByPkgNo: TFDQuery;
+    cds_PksByInventoryPlace: TFDQuery;
+    sq_Check_CDS_Link: TFDQuery;
+    sq_IsLoadConfirmed: TFDQuery;
+    sq_CheckObject2Link: TFDQuery;
+    sq_DelNewLoads: TFDQuery;
     sq_CheckObject2LinkSupplierShipPlanObjectNo: TIntegerField;
     sq_CheckObject2LinkCustShipPlanDetailObjectNo: TIntegerField;
     sq_IsLoadConfirmedConfirmed_LoadNo: TIntegerField;
@@ -426,10 +426,10 @@ type
     sq_IsLoadConfirmedUserName: TStringField;
     sq_Check_CDS_LinkSupplierShipPlanObjectNo: TIntegerField;
     sq_Check_CDS_LinkCustShipPlanDetailObjectNo: TIntegerField;
-    sq_PkgsInLoad: TADQuery;
+    sq_PkgsInLoad: TFDQuery;
     sq_getMTSLLLipNoLIPNo: TIntegerField;
     sq_PkgsInLoadNoOfPkgs: TIntegerField;
-    cdsPortArrivingPackages: TADQuery;
+    cdsPortArrivingPackages: TFDQuery;
     cdsPortArrivingPackagesLoadNo: TIntegerField;
     cdsPortArrivingPackagesLO: TIntegerField;
     cdsPortArrivingPackagesPACKAGE_NO: TIntegerField;
@@ -446,7 +446,7 @@ type
     cdsPortArrivingPackagesBC: TStringField;
     cdsPortArrivingPackagesGS: TStringField;
     cdsPortArrivingPackagesMRKNING: TStringField;
-    cdsPortArrivingLoads: TADQuery;
+    cdsPortArrivingLoads: TFDQuery;
     cdsPortArrivingLoadsCountryCode: TStringField;
     cdsPortArrivingLoadsLO: TIntegerField;
     cdsPortArrivingLoadsLOADNO: TIntegerField;
@@ -480,7 +480,7 @@ type
     sq_SearchLoadNoByPkgNoLOADNO: TIntegerField;
     sq_SearchLoadNoByPkgNoVERK_LOADNO: TIntegerField;
     sq_SearchLoadNoByPkgNoMRKNING: TStringField;
-    cds_Props22: TADQuery;
+    cds_Props22: TFDQuery;
     cds_Props22UserID: TIntegerField;
     cds_Props22Form: TStringField;
     cds_Props22Name: TStringField;
@@ -531,15 +531,15 @@ type
     cds_Props22Verk: TStringField;
     ds_Props: TDataSource;
     cdsArrivingLoadsImpVerk: TIntegerField;
-    sq_UpdatePkgStatus: TADQuery;
+    sq_UpdatePkgStatus: TFDQuery;
     cds_verkLasterAM3: TFloatField;
     cds_verkLasterNM3: TFloatField;
     cds_verkLasterStyck: TIntegerField;
     cds_verkLasterPaket: TIntegerField;
-    sp_ChangeToIMPProductForIntLoad: TADStoredProc;
+    sp_ChangeToIMPProductForIntLoad: TFDStoredProc;
     cdsArrivingLoadsEGEN: TIntegerField;
-    sp_AR_Invoice: TADStoredProc;
-    sq_IsEXTLoadConfirmed: TADQuery;
+    sp_AR_Invoice: TFDStoredProc;
+    sq_IsEXTLoadConfirmed: TFDQuery;
     sq_IsEXTLoadConfirmedConfirmed_LoadNo: TIntegerField;
     sq_IsEXTLoadConfirmedConfirmed_ShippingPlanNo: TIntegerField;
     sq_IsEXTLoadConfirmedNewLoadNo: TIntegerField;
@@ -548,8 +548,8 @@ type
     sq_IsEXTLoadConfirmedUserName: TStringField;
     cdsArrivingPackagesUsed: TIntegerField;
     cdsPortArrivingLoadsPaket: TIntegerField;
-    sq_samLast_II: TADQuery;
-    sq_deleteSamLaster_II: TADQuery;
+    sq_samLast_II: TFDQuery;
+    sq_deleteSamLaster_II: TFDQuery;
     cdsArrivingLoadsintNM3: TFloatField;
     cdsArrivingLoadsAM3: TFloatField;
     cdsArrivingLoadsPcs: TIntegerField;
@@ -717,7 +717,7 @@ begin
   //otherwise simply remove the verk load from confirmed_load table
 
 
-   dmsConnector.ADTransaction1.StartTransaction ;
+   dmsConnector.FDTransaction1.StartTransaction ;
   Try
 
 //Är lasten fakturerad?
@@ -2136,7 +2136,7 @@ end;
 Function TdmArrivingLoads.ex_AR_SALES_Loads(const OldLoadNo, LIPNo : Integer) : Integer ;
 Begin
    //START A TRANSACTION
- dmsConnector.ADTransaction1.StartTransaction ;
+ dmsConnector.FDTransaction1.StartTransaction ;
 
  Try
  Result := -1 ;

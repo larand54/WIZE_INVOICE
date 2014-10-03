@@ -483,9 +483,9 @@ object fPickPkgNo: TfPickPkgNo
     Left = 472
     Top = 312
   end
-  object sq_PaketLista: TADQuery
+  object sq_PaketLista: TFDQuery
     Active = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select pn.PackageNo, pn.SupplierCode AS LEVKOD,'
       'pt.productno,'
@@ -586,8 +586,8 @@ object fPickPkgNo: TfPickPkgNo
       Size = 50
     end
   end
-  object cds_ProdInLager: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object cds_ProdInLager: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select Distinct pr.ProductDisplayName, pr.ProductNo FROM '
       'dbo.PackageNumber pn'

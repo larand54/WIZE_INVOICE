@@ -14,10 +14,10 @@ uses
   cxLabel, cxSplitter, cxCalc, ActnList, cxImageComboBox,
   cxGridExportLink,  cxExport, kbmMemTable, cxLookAndFeels, cxCheckBox,
   FMTBcd, cxDBEdit, cxGridCustomPopupMenu,
-  cxGridPopupMenu, cxLookAndFeelPainters, cxButtons, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, uADCompDataSet, uADCompClient, dxSkinsCore, dxSkinBlack,
+  cxGridPopupMenu, cxLookAndFeelPainters, cxButtons, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox, FireDAC.Comp.DataSet, FireDAC.Comp.Client, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
   dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
@@ -198,7 +198,7 @@ type
     mtSelectedLoadsLoadAR: TIntegerField;
     grdLoadsDBTableView1ARtillLager: TcxGridDBColumn;
     cxGridPopupMenu1: TcxGridPopupMenu;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;
@@ -262,14 +262,14 @@ type
     cxLabel6: TcxLabel;
     lcLaststlle: TcxDBLookupComboBox;
     lcDestination: TcxDBLookupComboBox;
-    sq_City: TADQuery;
+    sq_City: TFDQuery;
     sq_CityOrt: TStringField;
     sq_CityCityNo: TIntegerField;
     cds_PropsLaststlle: TStringField;
     cxLabel7: TcxLabel;
     cxLabel8: TcxLabel;
     cds_PropsDestination: TStringField;
-    sq_Dest: TADQuery;
+    sq_Dest: TFDQuery;
     sq_DestOrt: TStringField;
     sq_DestCityNo: TIntegerField;
     lcSlutKund: TcxDBLookupComboBox;

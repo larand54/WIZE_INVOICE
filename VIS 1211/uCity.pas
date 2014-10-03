@@ -69,12 +69,12 @@ procedure TfCity.bbOKClick(Sender: TObject);
 begin
  With dmsContact do
  Begin
-  if ad_City.State in [dsEdit, dsInsert] then
-   ad_City.Post ;
-  if ad_City.ChangeCount > 0 then
+  if FD_City.State in [dsEdit, dsInsert] then
+   FD_City.Post ;
+  if FD_City.ChangeCount > 0 then
   Begin
-   ad_City.ApplyUpdates(0) ;
-   ad_City.CommitUpdates ;
+   FD_City.ApplyUpdates(0) ;
+   FD_City.CommitUpdates ;
   End ; 
  End ;
 
@@ -85,9 +85,9 @@ Begin
  Result:= True ;
  With dmsContact do
  Begin
-  if ad_City.State in [dsEdit, dsInsert] then
+  if FD_City.State in [dsEdit, dsInsert] then
    Result:= False ;
-  if ad_City.UpdatesPending then
+  if FD_City.UpdatesPending then
    Result:= False ;
  End ;
 End ;
@@ -116,7 +116,7 @@ begin
  Begin
   if MessageDlg('Är du säker?',
      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   ad_City.Delete ;
+   FD_City.Delete ;
  End ;
 end;
 
@@ -124,13 +124,13 @@ procedure TfCity.acSaveExecute(Sender: TObject);
 begin
  With dmsContact do
  Begin
-  if ad_City.State in [dsInsert, dsEdit] then
-   ad_City.Post ;
+  if FD_City.State in [dsInsert, dsEdit] then
+   FD_City.Post ;
 
-  if ad_City.ChangeCount > 0 then
+  if FD_City.ChangeCount > 0 then
   Begin
-   ad_City.ApplyUpdates(0) ;
-   ad_City.CommitUpdates ;
+   FD_City.ApplyUpdates(0) ;
+   FD_City.CommitUpdates ;
   End ; 
  End ;
 end;
@@ -139,10 +139,10 @@ procedure TfCity.acCancelChangesExecute(Sender: TObject);
 begin
  With dmsContact do
  Begin
-  if ad_City.State in [dsEdit, dsInsert] then
-   ad_City.Cancel ;
-  if ad_City.ChangeCount > 0 then
-   ad_City.CancelUpdates ;
+  if FD_City.State in [dsEdit, dsInsert] then
+   FD_City.Cancel ;
+  if FD_City.ChangeCount > 0 then
+   FD_City.CancelUpdates ;
  End ;
 end;
 
@@ -150,7 +150,7 @@ procedure TfCity.acNewCityExecute(Sender: TObject);
 begin
  With dmsContact do
  Begin
-  ad_City.Insert ;
+  FD_City.Insert ;
   cxGrid1.SetFocus ;
  End ;
 end;

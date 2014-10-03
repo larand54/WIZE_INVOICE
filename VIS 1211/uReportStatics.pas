@@ -6,10 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError, uADDatSManager,
-  uADPhysIntf, uADDAptIntf, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, uADCompDataSet,
-  uADCompClient, cxGridLevel, cxClasses, cxGridCustomView,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
+  cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, ExtCtrls,
   Menus, ActnList, StdCtrls, cxButtons, cxLabel, cxRichEdit, cxGridCardView,
   cxGridDBCardView;
@@ -21,7 +21,7 @@ type
     grdReportStaticsDBTableView1: TcxGridDBTableView;
     grdReportStaticsLevel1: TcxGridLevel;
     grdReportStatics: TcxGrid;
-    mtClient: TADMemTable;
+    mtClient: TFDMemTable;
     mtClientClientNo: TIntegerField;
     mtClientSalesregion: TStringField;
     lcSalesregion: TcxDBLookupComboBox;

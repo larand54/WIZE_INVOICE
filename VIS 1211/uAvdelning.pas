@@ -23,9 +23,9 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, uADCompDataSet, uADCompClient, dxPSCore, dxPScxCommon,
+  dxSkinsdxRibbonPainter, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, dxPSCore, dxPScxCommon,
   Vcl.ActnList, Vcl.ImgList, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   Vcl.StdCtrls, cxButtons, Vcl.ExtCtrls, cxContainer, cxTextEdit, cxMaskEdit,
@@ -41,19 +41,19 @@ type
     cxGrid1DBTableView1DateCreated: TcxGridDBColumn;
     Panel3: TPanel;
     ds_Client: TDataSource;
-    mtClient: TADMemTable;
+    mtClient: TFDMemTable;
     mtClientClientNo: TIntegerField;
     mtClientVerk: TStringField;
     lcClient: TcxDBLookupComboBox;
     acRefresh: TAction;
-    cds_Avdelning: TADQuery;
+    cds_Avdelning: TFDQuery;
     cds_AvdelningClientNo: TIntegerField;
     cds_AvdelningKontonr: TStringField;
     cds_AvdelningAvdelning: TStringField;
     cds_AvdelningCreatedUser: TIntegerField;
     cds_AvdelningDateCreated: TSQLTimeStampField;
     cxLabel1: TcxLabel;
-    cds_SR: TADQuery;
+    cds_SR: TFDQuery;
     cds_SRClientName: TStringField;
     cds_SRClientNo: TIntegerField;
     procedure acRefreshExecute(Sender: TObject);

@@ -15,9 +15,9 @@ uses
   cxGraphics, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
   cxClasses, cxGridCustomView, cxGrid,  
-  ActnList, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADCompDataSet, uADCompClient, cxDropDownEdit, cxLookupEdit,
+  ActnList, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxMaskEdit, cxDBEdit, cxLookAndFeels,
   cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
   dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -79,16 +79,16 @@ type
     dsProps: TDataSource;
     ds_LIP2: TDataSource;
     ds_PIP2: TDataSource;
-    cds_PIP2: TADQuery;
+    cds_PIP2: TFDQuery;
     cds_PIP2PIPNO: TIntegerField;
     cds_PIP2PIPNAME: TStringField;
-    cds_LIP2: TADQuery;
+    cds_LIP2: TFDQuery;
     cds_LIP2LIPNo: TIntegerField;
     cds_LIP2LIPName: TStringField;
     mtPropsPIP: TStringField;
     mtPropsLIP: TStringField;
     mtPropsOwnerNo: TIntegerField;
-    cds_GetInvoicedPkgs: TADQuery;
+    cds_GetInvoicedPkgs: TFDQuery;
     cds_GetInvoicedPkgsInternalInvoiceNo: TIntegerField;
     cds_GetInvoicedPkgsDESCRIPTION: TStringField;
     cds_GetInvoicedPkgsPKGNO: TIntegerField;
@@ -100,13 +100,13 @@ type
     cds_GetInvoicedPkgsLoadNo: TIntegerField;
     cds_GetInvoicedPkgsLoadDetailNo: TIntegerField;
     cds_GetInvoicedPkgsPCS_PER_LENGTH: TStringField;
-    sq_Insert_Confirmed_Load: TADQuery;
-    sq_Insert_Confirmed_Package_Log: TADQuery;
-    sq_ChangeInventory_PackageNumber: TADQuery;
-    sq_Delete_Delete_Confirmed_Package_Log: TADQuery;
-    sq_ProformaInvNo: TADQuery;
+    sq_Insert_Confirmed_Load: TFDQuery;
+    sq_Insert_Confirmed_Package_Log: TFDQuery;
+    sq_ChangeInventory_PackageNumber: TFDQuery;
+    sq_Delete_Delete_Confirmed_Package_Log: TFDQuery;
+    sq_ProformaInvNo: TFDQuery;
     sq_ProformaInvNoInternalInvoiceNo: TIntegerField;
-    GetPIPandLIPNos: TADQuery;
+    GetPIPandLIPNos: TFDQuery;
     GetPIPandLIPNosShipToCityNo: TIntegerField;
     GetPIPandLIPNosShipToLIPNo: TIntegerField;
     procedure FormShow(Sender: TObject);

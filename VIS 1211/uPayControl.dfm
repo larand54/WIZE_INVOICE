@@ -437,7 +437,7 @@ inherited fPayControl: TfPayControl
       OnUpdate = acOpenInvoiceUpdate
     end
   end
-  inherited cds_Props: TADQuery
+  inherited cds_Props: TFDQuery
     AfterInsert = cds_PropsAfterInsert
     Left = 112
   end

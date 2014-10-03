@@ -40,10 +40,10 @@ uses
   cxCurrencyEdit, kbmMemTable, cxSplitter,
   cxShellBrowserDialog, ShlObj, cxShellCommon, cxShellListView,
   cxLookAndFeelPainters, cxButtons, cxPC, cxCalendar, cxDBEdit, cxCheckBox,
-  uADStanIntf, uADStanOption, uADStanParam,
-  uADStanError, uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync,
-  uADDAptManager, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
-  uADCompDataSet, uADCompClient, cxGridCustomPopupMenu, cxGridPopupMenu,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxGridCustomPopupMenu, cxGridPopupMenu,
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd,
   dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxPScxPageControlProducer, cxCheckComboBox,
@@ -1553,8 +1553,8 @@ begin
   cdsSawmillLoadOrders.SQL.Add('ON PIS.ProdInstruNo = SP.ProdInstructNo') ;
 
   cdsSawmillLoadOrders.SQL.Add('Left join dbo.ClientPreference cp') ;
-  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address adr on adr.AddressNo = cp.DefaultBillingAddressNo') ;
-  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = adr.CountryNo') ;
+  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address FDr on FDr.AddressNo = cp.DefaultBillingAddressNo') ;
+  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = FDr.CountryNo') ;
   cdsSawmillLoadOrders.SQL.Add('on cp.ClientNo = cll.ClientNo and cp.Roletype = 9') ;
 
   cdsSawmillLoadOrders.SQL.Add('WHERE  CLL.ClientNo          =  ' + dmcOrder.cds_PropsVerkNo.AsString);
@@ -2030,8 +2030,8 @@ cdsSawmillLoadOrders.SQL.Add('UNION');
   cdsSawmillLoadOrders.SQL.Add('ON PIS.ProdInstruNo = SP.ProdInstructNo') ;
 
   cdsSawmillLoadOrders.SQL.Add('Left join dbo.ClientPreference cp') ;
-  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address adr on adr.AddressNo = cp.DefaultBillingAddressNo') ;
-  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = adr.CountryNo') ;
+  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address FDr on FDr.AddressNo = cp.DefaultBillingAddressNo') ;
+  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = FDr.CountryNo') ;
   cdsSawmillLoadOrders.SQL.Add('on cp.ClientNo = cll.ClientNo and cp.Roletype = 9') ;
 
 
@@ -2430,8 +2430,8 @@ begin
   cdsSawmillLoadOrders.SQL.Add('ON PIS.ProdInstruNo = SP.ProdInstructNo') ;
 
   cdsSawmillLoadOrders.SQL.Add('Left join dbo.ClientPreference cp') ;
-  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address adr on adr.AddressNo = cp.DefaultBillingAddressNo') ;
-  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = adr.CountryNo') ;
+  cdsSawmillLoadOrders.SQL.Add('left join dbo.Address FDr on FDr.AddressNo = cp.DefaultBillingAddressNo') ;
+  cdsSawmillLoadOrders.SQL.Add('INNER JOIN dbo.Country StatCtry	ON StatCtry.CountryNo  = FDr.CountryNo') ;
   cdsSawmillLoadOrders.SQL.Add('on cp.ClientNo = sp.SupplierNo and cp.Roletype = 9') ;
 
   //if Lego then supplier or customer = SP
@@ -2948,10 +2948,10 @@ end;
 
 procedure TfrmLoadOrder.acNewLoadWithLOExecute(Sender: TObject);
 begin
-// if not dmsConnector.ADMoniFlatFileClientLink1.Tracing then
+// if not dmsConnector.FDMoniFlatFileClientLink1.Tracing then
 // Begin
-//  dmsConnector.ADConnection1.Params.Values['MonitorBy'] := 'FlatFile';
-//  dmsConnector.ADMoniFlatFileClientLink1.Tracing  := True ;
+//  dmsConnector.FDConnection1.Params.Values['MonitorBy'] := 'FlatFile';
+//  dmsConnector.FDMoniFlatFileClientLink1.Tracing  := True ;
 // End ;
 //  Try
   with TfLoadEntrySSP.CreateWithNewLoad(NIL,
@@ -2982,8 +2982,8 @@ begin
   end;
 
 //  Finally
-//   dmsConnector.ADMoniFlatFileClientLink1.Tracing  := False ;
-//   dmsConnector.ADConnection1.Params.Values['MonitorBy'] := '';
+//   dmsConnector.FDMoniFlatFileClientLink1.Tracing  := False ;
+//   dmsConnector.FDConnection1.Params.Values['MonitorBy'] := '';
 //  End ;
 end;
 

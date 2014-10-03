@@ -1176,14 +1176,14 @@ begin
   While not mt_AttestRow.Eof do
   Begin
    Try
-   ad_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger         := dmVidaInvoice.mt_AttestRowInternalInvoiceNo.AsInteger ;
+   FD_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger         := dmVidaInvoice.mt_AttestRowInternalInvoiceNo.AsInteger ;
    if cds_Att_Ext_ServicesIIDescription.AsString = 'Komm' then
-   ad_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := 0
+   FD_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := 0
    else
-   ad_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := dmVidaInvoice.mt_AttestRowShippingPlanNo.AsInteger ;
-   ad_InsAttLO.ParamByName('SequensNo').AsInteger                 := dmVidaInvoice.mt_AttestRowSequensNo.AsInteger ;
-   ad_InsAttLO.ParamByName('AmountAttested').AsFloat              := 0 ;
-   ad_InsAttLO.ExecSQL ;
+   FD_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := dmVidaInvoice.mt_AttestRowShippingPlanNo.AsInteger ;
+   FD_InsAttLO.ParamByName('SequensNo').AsInteger                 := dmVidaInvoice.mt_AttestRowSequensNo.AsInteger ;
+   FD_InsAttLO.ParamByName('AmountAttested').AsFloat              := 0 ;
+   FD_InsAttLO.ExecSQL ;
      except
       On E: Exception do
       Begin

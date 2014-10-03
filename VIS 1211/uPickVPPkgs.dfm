@@ -280,8 +280,8 @@ object fPickVPPkgs: TfPickVPPkgs
       OnExecute = acUnmarkAllExecute
     end
   end
-  object sq_PaketLista: TADQuery
-    Connection = dmsConnector.ADConnection1
+  object sq_PaketLista: TFDQuery
+    Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select distinct'
       'pn.PackageNo AS PaketNr, pn.SupplierCode AS Prefix,'

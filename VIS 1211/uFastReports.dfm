@@ -2,8 +2,8 @@ object dmFR: TdmFR
   OldCreateOrder = False
   Height = 442
   Width = 824
-  object sp_vis_FR_Invoice: TADStoredProc
-    Connection = dmsConnector.ADConnection1
+  object sp_vis_FR_Invoice: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_FR_Invoice'
     Left = 56
     Top = 32

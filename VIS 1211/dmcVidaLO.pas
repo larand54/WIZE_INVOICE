@@ -4,9 +4,9 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, SqlExpr, DBClient, Provider, SqlTimSt, Dialogs, Forms, Controls,
-  kbmMemTable, uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADCompDataSet, uADCompClient ;
+  kbmMemTable, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
 
 type
   TdmcLO = class(TDataModule)
@@ -19,8 +19,8 @@ type
     ds_ELOLengths: TDataSource;
     ds_ELOLayout: TDataSource;
     ds_ProdList: TDataSource;
-    cds_IntHdr: TADQuery;
-    cds_copyPI: TADQuery;
+    cds_IntHdr: TFDQuery;
+    cds_copyPI: TFDQuery;
     cds_IntHdrOrderNo: TIntegerField;
     cds_IntHdrShippingPlanNo: TIntegerField;
     cds_IntHdrCustomerNo: TIntegerField;
@@ -61,7 +61,7 @@ type
     cds_IntHdrKund: TStringField;
     cds_IntHdrSR: TStringField;
     cds_IntHdrPrislista: TStringField;
-    cds_LO: TADQuery;
+    cds_LO: TFDQuery;
     cds_LOSupplierShipPlanObjectNo: TIntegerField;
     cds_LOCustShipPlanDetailObjectNo: TIntegerField;
     cds_LOShipType: TIntegerField;
@@ -123,12 +123,12 @@ type
     cds_LOVerk: TStringField;
     cds_LOPrisLista: TStringField;
     cds_LOREST: TFloatField;
-    cds_ELOLengths: TADQuery;
+    cds_ELOLengths: TFDQuery;
     cds_ELOLengthsActualLengthMM: TFloatField;
     cds_ELOLengthsSupplierShipPlanObjectNo: TIntegerField;
     cds_ELOLengthsProductLengthNo: TIntegerField;
     cds_ELOLengthsPkgCodePPNo: TIntegerField;
-    cds_Pref: TADQuery;
+    cds_Pref: TFDQuery;
     cds_PrefVATNo: TStringField;
     cds_PrefClientNo: TIntegerField;
     cds_PrefRoleType: TIntegerField;
@@ -159,11 +159,11 @@ type
     cds_PrefVAT_OnInvoice: TIntegerField;
     cds_PrefCommisionInDiscount: TIntegerField;
     cds_PrefFreightInDiscount: TIntegerField;
-    cds_PhysInvByCityNo: TADQuery;
+    cds_PhysInvByCityNo: TFDQuery;
     cds_PhysInvByCityNoCityNo: TIntegerField;
     cds_PhysInvByCityNoCITYNAME: TStringField;
     cds_PhysInvByCityNoOwnerNo: TIntegerField;
-    cds_ProdList: TADQuery;
+    cds_ProdList: TFDQuery;
     cds_ProdListProductNo: TIntegerField;
     cds_ProdListProductGroupNo: TIntegerField;
     cds_ProdListGradeName: TStringField;
@@ -181,7 +181,7 @@ type
     cds_ProdListNominalThicknessINCH: TStringField;
     cds_ProdListNominalWidthINCH: TStringField;
     cds_ProdListProductCategoryName: TStringField;
-    sq_FindLO: TADQuery;
+    sq_FindLO: TFDQuery;
     sq_FindLOShippingPlanNo: TIntegerField;
     cds_copyPIProdInstruNo: TIntegerField;
     cds_copyPIFOHCpercent: TFloatField;
@@ -222,8 +222,8 @@ type
     cds_copyPIExternalNote: TMemoField;
     cds_copyPITruckSticksNo: TIntegerField;
     cds_copyPIStrapTypeNo: TIntegerField;
-    cds_ProdInstruct: TADQuery;
-    cds_LIP: TADQuery;
+    cds_ProdInstruct: TFDQuery;
+    cds_LIP: TFDQuery;
     cds_ProdInstructProdInstruNo: TIntegerField;
     cds_ProdInstructFOHCpercent: TFloatField;
     cds_ProdInstructMiniBundleHeight: TIntegerField;
@@ -263,15 +263,15 @@ type
     cds_ProdInstructExternalNote: TMemoField;
     cds_ProdInstructTruckSticksNo: TIntegerField;
     cds_ProdInstructStrapTypeNo: TIntegerField;
-    cds_Users: TADQuery;
+    cds_Users: TFDQuery;
     cds_UsersUserID: TIntegerField;
     cds_UsersNamn: TStringField;
-    sqPkgLayoutStd: TADQuery;
+    sqPkgLayoutStd: TFDQuery;
     cds_LIPLIPNO: TIntegerField;
     cds_LIPLAGERGRUPP: TStringField;
     cds_LIPOwnerNo: TIntegerField;
     cds_LIPCityNo: TIntegerField;
-    cds_ELOLayout: TADQuery;
+    cds_ELOLayout: TFDQuery;
     cds_ELOLayoutSupplierShipPlanObjectNo: TIntegerField;
     cds_ELOLayoutLayoutNo: TIntegerField;
     cds_ELOLayoutAntalKopior: TIntegerField;
@@ -316,8 +316,8 @@ type
     procedure cds_copyPIAfterInsert(DataSet: TDataSet);
     procedure cds_ProdInstructAfterInsert(DataSet: TDataSet);
     procedure cds_ELOLayoutAfterInsert(DataSet: TDataSet);
-    procedure cds_LOReconcileError(DataSet: TADDataSet; E: EADException;
-      UpdateKind: TADDatSRowState; var Action: TADDAptReconcileAction);
+    procedure cds_LOReconcileError(DataSet: TFDDataSet; E: EFDException;
+      UpdateKind: TFDDatSRowState; var Action: TFDDAptReconcileAction);
   private
     { Private declarations }
     PackageCode_Layout  : Array of array of variant ;
@@ -1898,8 +1898,8 @@ begin
  cds_ELOLayoutSupplierShipPlanObjectNo.AsInteger  := cds_LOSupplierShipPlanObjectNo.AsInteger ;
 end;
 
-procedure TdmcLO.cds_LOReconcileError(DataSet: TADDataSet; E: EADException;
-  UpdateKind: TADDatSRowState; var Action: TADDAptReconcileAction);
+procedure TdmcLO.cds_LOReconcileError(DataSet: TFDDataSet; E: EFDException;
+  UpdateKind: TFDDatSRowState; var Action: TFDDAptReconcileAction);
 begin
  if cds_LOCustomerNo.IsNull then
  Begin

@@ -34,9 +34,9 @@ object dm_Booking: Tdm_Booking
     Left = 336
     Top = 216
   end
-  object cdsShippers: TADStoredProc
+  object cdsShippers: TFDStoredProc
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'vida_Shippers'
     Left = 40
@@ -60,10 +60,10 @@ object dm_Booking: Tdm_Booking
       Size = 80
     end
   end
-  object cdsBooking: TADQuery
+  object cdsBooking: TFDQuery
     BeforePost = cdsBookingBeforePost
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from Booking'
@@ -225,11 +225,11 @@ object dm_Booking: Tdm_Booking
       Size = 50
     end
   end
-  object cdsVoyageDestination: TADQuery
+  object cdsVoyageDestination: TFDQuery
     AfterInsert = cdsVoyageDestinationAfterInsert
     AfterEdit = cdsVoyageDestinationAfterEdit
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from VoyageDestination'
@@ -285,10 +285,10 @@ object dm_Booking: Tdm_Booking
       ProviderFlags = [pfInUpdate]
     end
   end
-  object cdsVoyage: TADQuery
+  object cdsVoyage: TFDQuery
     AfterInsert = cdsVoyageAfterInsert
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * from Voyage'
@@ -359,10 +359,10 @@ object dm_Booking: Tdm_Booking
       Lookup = True
     end
   end
-  object cdsAvropInfo: TADQuery
+  object cdsAvropInfo: TFDQuery
     AfterScroll = cdsAvropInfoAfterScroll
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT '
@@ -457,14 +457,14 @@ object dm_Booking: Tdm_Booking
       Required = True
     end
   end
-  object cdsBookingProducts: TADQuery
+  object cdsBookingProducts: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT'
       'SPSA.Reference'#9#9'AS REFERENCE, '
-      'AD.AddressName'#9#9'AS DEL_ADDRESS, '
+      'FD.AddressName'#9#9'AS DEL_ADDRESS, '
       'Supp.ClientName '#9'AS SUPPLIER, '
       'Loc.CityName '#9#9'AS LOADING_LOCATION,'
       'OL.OrderLineDescription'#9'AS PRODUCT_DESCRIPTION, '
@@ -473,9 +473,9 @@ object dm_Booking: Tdm_Booking
       'Un.VolumeUnitName'#9'AS VOLUNIT,'
       'Su.ActualM3Net'#9#9'AS ACTM3,'
       'SPSA.AddressNo'#9#9'AS ADDRESS_NO,'
-      'AD.CityNo'#9#9'AS CITY_NO,'
+      'FD.CityNo'#9#9'AS CITY_NO,'
       'Cy.CityName             AS CITY_NAME,'
-      'AD.PostalCode           AS POSTALCODE,'
+      'FD.PostalCode           AS POSTALCODE,'
       'OL.Reference            AS KR_Ref,'
       'CSD.CustShipPlanDetailObjectNo AS CSDNO'
       ''
@@ -506,9 +506,9 @@ object dm_Booking: Tdm_Booking
       #9'LEFT OUTER JOIN dbo.ShippingPlan_ShippingAddress SPSA'
       ''
       
-        #9'LEFT OUTER JOIN dbo.Address'#9'AD'#9#9#9#9'ON AD.AddressNo '#9'= SPSA.Addre' +
+        #9'LEFT OUTER JOIN dbo.Address'#9'FD'#9#9#9#9'ON FD.AddressNo '#9'= SPSA.Addre' +
         'ssNo'
-      #9'LEFT OUTER JOIN dbo.City'#9'Cy'#9#9#9#9'ON Cy.CityNo'#9#9'= AD.CityNo'
+      #9'LEFT OUTER JOIN dbo.City'#9'Cy'#9#9#9#9'ON Cy.CityNo'#9#9'= FD.CityNo'
       
         #9'LEFT OUTER JOIN dbo.Country  Co'#9#9#9#9'        ON Co.CountryNo'#9#9'= A' +
         'D.CountryNo'
@@ -616,9 +616,9 @@ object dm_Booking: Tdm_Booking
       Required = True
     end
   end
-  object cds_DocText: TADQuery
+  object cds_DocText: TFDQuery
     CachedUpdates = True
-    Connection = dmsConnector.ADConnection1
+    Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select DT.* FROM'

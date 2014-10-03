@@ -14,10 +14,10 @@ uses
   dxPSGlbl, dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd, dxWrap, dxPrnDev,
   dxPSCompsProvider, dxPSFillPatterns, dxPSEdgePatterns, dxPSCore,
   dxPScxCommon,  FMTBcd,
-  cxGridCustomPopupMenu, cxGridPopupMenu, cxCurrencyEdit, uADStanIntf,
-  uADStanOption, uADStanParam, uADStanError, uADDatSManager, uADPhysIntf,
-  uADDAptIntf, uADStanAsync, uADDAptManager, cxDBEdit, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox, uADCompDataSet, uADCompClient,
+  cxGridCustomPopupMenu, cxGridPopupMenu, cxCurrencyEdit, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxDBEdit, cxLookupEdit,
+  cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxLookAndFeels, cxLookAndFeelPainters, dxPSPDFExportCore, dxPSPDFExport,
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxEditorProducers, dxPScxExtEditorProducers,
@@ -119,7 +119,7 @@ type
     acMarkAllMarkedLoads: TAction;
     grdLoadsDBTableView1Note: TcxGridDBColumn;
     dxBarButton5: TdxBarButton;
-    cds_Props: TADQuery;
+    cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
     cds_PropsName: TStringField;
@@ -177,7 +177,7 @@ type
     lcShipper: TcxDBLookupComboBox;
     deStartPeriod: TcxDBDateEdit;
     deEndPeriod: TcxDBDateEdit;
-    cds_Shippers: TADStoredProc;
+    cds_Shippers: TFDStoredProc;
     cds_ShippersClientNo: TIntegerField;
     cds_ShippersClientName: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

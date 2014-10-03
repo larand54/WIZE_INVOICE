@@ -7,35 +7,35 @@ uses
   DB,
   
   SysUtils, FMTBcd, Provider, ImgList, Controls, Dialogs,
-  uADStanIntf, uADStanOption, uADStanParam, uADStanError,
-  uADDatSManager, uADPhysIntf, uADDAptIntf, uADStanAsync, uADDAptManager,
-  uADGUIxIntf, uADStanDef, uADStanPool, uADPhysManager, uADCompClient,
-  uADMoniBase, uADMoniRemoteClient, uADGUIxFormsfLogin, uADGUIxFormsfError,
-  uADGUIxFormsWait, uADPhysODBCBase, uADPhysMSSQL, uADCompDataSet,
-  uADMoniFlatFile, uADCompGUIx ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Comp.Client,
+  FireDAC.Moni.Base, FireDAC.Moni.RemoteClient, FireDAC.VCLUI.Login, FireDAC.VCLUI.Error,
+  FireDAC.VCLUI.Wait, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, FireDAC.Comp.DataSet,
+  FireDAC.Moni.FlatFile, FireDAC.Comp.UI ;
 
 type
   TdmsConnector = class(TDataModule)
     ilStatus: TImageList;
     imglistActions: TImageList;
-    sq_GetLoggedInUser: TADQuery;
+    sq_GetLoggedInUser: TFDQuery;
     sq_GetLoggedInUserLoggedInUser: TWideStringField;
-    sq_GetUserName: TADQuery;
+    sq_GetUserName: TFDQuery;
     sq_GetUserNameUserName: TStringField;
     sq_GetUserNamePassWord: TStringField;
-    ADConnection1: TADConnection;
-    ADPhysMSSQLDriverLink1: TADPhysMSSQLDriverLink;
-    ADGUIxWaitCursor1: TADGUIxWaitCursor;
-    sq_GetCompany: TADQuery;
+    FDConnection1: TFDConnection;
+    FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    sq_GetCompany: TFDQuery;
     sq_GetCompanyClientName: TStringField;
-    spad_GetSecondNo: TADStoredProc;
-    spad_MaxNo: TADStoredProc;
-    sp_GetCurrPkgNo: TADStoredProc;
-    sp_MinNo: TADStoredProc;
-    ADTransaction1: TADTransaction;
-    SQLConn_XOR: TADConnection;
-    ADMoniFlatFileClientLink1: TADMoniFlatFileClientLink;
-    sp_UpdateMaxSecByLoad: TADStoredProc;
+    spad_GetSecondNo: TFDStoredProc;
+    spad_MaxNo: TFDStoredProc;
+    sp_GetCurrPkgNo: TFDStoredProc;
+    sp_MinNo: TFDStoredProc;
+    FDTransaction1: TFDTransaction;
+    SQLConn_XOR: TFDConnection;
+    FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink;
+    sp_UpdateMaxSecByLoad: TFDStoredProc;
     procedure DataModuleCreate           (Sender: TObject);
     procedure DataModuleDestroy          (Sender: TObject);
   private
@@ -53,10 +53,10 @@ type
     Org_DB_Name : String ;
 //    DeleteTdmVidaInvoice  : Boolean ;
     procedure UpdateMaxSecByLoad(const LoadNo : Integer) ;
-    procedure InitProcedure(Proc: TADStoredProc);
+    procedure InitProcedure(Proc: TFDStoredProc);
     function  NextSecondMaxNo(const TableName: String; const PrimaryKeyValue: Integer): Integer ;
     function  Get_AD_Name : String ;
-    procedure GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
+    procedure GetUserNameLoggedIn(Var UserName, UserPswd : String;Const PFD_Name : String) ;
 
     function  GetCurrentPkgNo(const ClientNo, NoOfPkgNo : Integer): Integer;
     function  GetCompanyName (CompanyNo : Integer) : String ;
@@ -92,7 +92,7 @@ uses
 
 {$R *.dfm}
 
-procedure TdmsConnector.InitProcedure(Proc: TADStoredProc);
+procedure TdmsConnector.InitProcedure(Proc: TFDStoredProc);
 var
   i: Integer;
 begin
@@ -124,7 +124,7 @@ Begin
  sq_GetLoggedInUser.Close ;
 End ;
 
-procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
+procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd : String;Const PFD_Name : String) ;
 Var AD_Name : String ;
 Begin
  sq_GetLoggedInUser.Open ;
@@ -133,8 +133,8 @@ Begin
    else
     AD_Name:= '-' ;
 // ShowMessage('AD_Name = '+AD_Name) ;
- if Length(pAD_Name) > 0 then
-  AD_Name:= pAD_Name ;
+ if Length(PFD_Name) > 0 then
+  AD_Name:= PFD_Name ;
  sq_GetLoggedInUser.Close ;
  if AD_Name <> '-' then
  Begin
@@ -161,7 +161,7 @@ End ;
 
 procedure TdmsConnector.Commit ;
 begin
- ADTransaction1.Commit ;
+ FDTransaction1.Commit ;
 end;
 
 constructor TdmsConnector.Create(AOwner : TComponent);
@@ -172,7 +172,7 @@ end;
 
 procedure TdmsConnector.DataModuleCreate(Sender: TObject);
 begin
-// ADMoniFlatFileClientLink1.Tracing := False ;
+// FDMoniFlatFileClientLink1.Tracing := False ;
 //ALVESQL04
 //CARMAK-HP8530W\SQLEXPRESS
 end;
@@ -185,7 +185,7 @@ procedure TdmsConnector.DataModuleDestroy(Sender: TObject);
 //
 begin
 //  SQLConnection.close ;
- ADConnection1.Close ;
+ FDConnection1.Close ;
 end;
 
 
@@ -201,17 +201,17 @@ begin
     SQLConnection.Params.Values['Password']  := DBUserPswd;
  }
 
-    ADConnection1.Params.Values['Server'  ]  := HostName;
-    ADConnection1.Params.Values['Database']  := Database;
-    ADConnection1.Params.Values['User_Name'] := DBUserName;
-    ADConnection1.Params.Values['Password']  := DBUserPswd;
-{    ShowMessage('Hostname: '+ADConnection1.Params.Values['HostName']
-    +'  Database: '+ ADConnection1.Params.Values['Database']
-    +'  User name: '+ ADConnection1.Params.Values['User Name']
-    +'  Password: '+ ADConnection1.Params.Values['Password']     ) ; }
-    ADConnection1.Connected := True ; // .Open;
+    FDConnection1.Params.Values['Server'  ]  := HostName;
+    FDConnection1.Params.Values['Database']  := Database;
+    FDConnection1.Params.Values['User_Name'] := DBUserName;
+    FDConnection1.Params.Values['Password']  := DBUserPswd;
+{    ShowMessage('Hostname: '+FDConnection1.Params.Values['HostName']
+    +'  Database: '+ FDConnection1.Params.Values['Database']
+    +'  User name: '+ FDConnection1.Params.Values['User Name']
+    +'  Password: '+ FDConnection1.Params.Values['Password']     ) ; }
+    FDConnection1.Connected := True ; // .Open;
 
-    Result := ADConnection1.Connected;
+    Result := FDConnection1.Connected;
 
   except
     on EAbort do
@@ -245,14 +245,14 @@ end;
 
 procedure TdmsConnector.Rollback ;
 begin
-  ADTransaction1.Rollback ;
+  FDTransaction1.Rollback ;
 end;
 
 function TdmsConnector.StartTransaction : LongWord;
 begin
-// ADTransaction1.
-// ADConnection1.StartTransaction ;
- ADTransaction1.StartTransaction ;
+// FDTransaction1.
+// FDConnection1.StartTransaction ;
+ FDTransaction1.StartTransaction ;
 end;
 
 function TdmsConnector.GetCompanyName (CompanyNo : Integer) : String ;
