@@ -1,0 +1,587 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{44411B54-35B5-4DF9-8ADF-E73EDFC21DE0}</ProjectGuid>
+			<MainSource>VIS.dpr</MainSource>
+			<Base>True</Base>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Platform>Win32</Platform>
+			<AppType>Application</AppType>
+			<FrameworkType>VCL</FrameworkType>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_ExeOutput>EXE</DCC_ExeOutput>
+			<DCC_UsePackage>vcl;rtl;dbrtl;adortl;vcldb;vclx;bdertl;vcldbx;ibxpress;dsnap;cds;bdecds;qrpt;teeui;teedb;tee;dss;teeqr;visualclx;visualdbclx;dsnapcrba;dsnapcon;VclSmp;vclshlctrls;vclie;xmlrtl;inet;inetdbbde;inetdbxpress;inetdb;nmfast;webdsnap;websnap;dbexpress;dbxcds;indy;dclOffice2k;CICS;ADOX;LECSGeneral;Harris;SqlDir60;kbmMemD6Run</DCC_UsePackage>
+			<DCC_MapFile>3</DCC_MapFile>
+			<DCC_Description>Comms Component for SysMedia test app</DCC_Description>
+			<DCC_RangeChecking>true</DCC_RangeChecking>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_Define>LOGGER;EUREKALOG;EUREKALOG_VER6; PROFILE;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
+			<DCC_K>false</DCC_K>
+			<DCC_F>false</DCC_F>
+			<DCC_S>false</DCC_S>
+			<DCC_N>true</DCC_N>
+			<DCC_E>false</DCC_E>
+			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
+			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
+			<DCC_DcuOutput>DCU</DCC_DcuOutput>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="VIS.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="fMain.pas">
+				<Form>frmMain</Form>
+			</DCCReference>
+			<DCCReference Include="VidaConst.pas"/>
+			<DCCReference Include="dmsDataConn.pas">
+				<Form>dmsConnector</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="..\..\Shared\frmLogonSystem.pas">
+				<Form>dlgLogOnSystem</Form>
+			</DCCReference>
+			<DCCReference Include="frmDBAdmin.pas">
+				<Form>dlgDBAdmin</Form>
+			</DCCReference>
+			<DCCReference Include="uEncode.pas"/>
+			<DCCReference Include="VidaUtils.pas"/>
+			<DCCReference Include="dmsVidaSystem.pas">
+				<Form>dmsSystem</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="dmcVidaSystem.pas">
+				<Form>dmcSystem</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="VidaType.pas"/>
+			<DCCReference Include="fDBForm.pas">
+				<Form>frmDBForm</Form>
+			</DCCReference>
+			<DCCReference Include="dmsVidaContact.pas">
+				<Form>dmsContact</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="dmLM1.pas">
+				<Form>daMoLM1</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="fAvrop.pas">
+				<Form>frmAvrop</Form>
+			</DCCReference>
+			<DCCReference Include="fInvoice.pas">
+				<Form>frmInvoice</Form>
+			</DCCReference>
+			<DCCReference Include="fInvoiceList.pas">
+				<Form>frmInvoiceList</Form>
+			</DCCReference>
+			<DCCReference Include="fSkapaAvrakning.pas">
+				<Form>frmSkapaAvrakning</Form>
+			</DCCReference>
+			<DCCReference Include="UnitdmModule1.pas">
+				<Form>dmModule1</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="fAvrakningar.pas">
+				<Form>frmGjordaAvrakningar</Form>
+			</DCCReference>
+			<DCCReference Include="UnitSelectClient.pas">
+				<Form>FormSelectClient</Form>
+			</DCCReference>
+			<DCCReference Include="UnitDestination.pas">
+				<Form>FormDestination</Form>
+			</DCCReference>
+			<DCCReference Include="UnitAddress.pas">
+				<Form>FormAddress</Form>
+			</DCCReference>
+			<DCCReference Include="UnitEnterInvoiceNo.pas">
+				<Form>FormEnterInvoiceNo</Form>
+			</DCCReference>
+			<DCCReference Include="UnitCurrency.pas">
+				<Form>FormCurrency</Form>
+			</DCCReference>
+			<DCCReference Include="UnitDelTerms.pas">
+				<Form>FormDelTerms</Form>
+			</DCCReference>
+			<DCCReference Include="UnitPaymentTerms.pas">
+				<Form>FormPaymentTerms</Form>
+			</DCCReference>
+			<DCCReference Include="UnitCRViewReport.pas">
+				<Form>FormCRViewReport</Form>
+			</DCCReference>
+			<DCCReference Include="UnitBookingForm.pas">
+				<Form>FormBookingForm</Form>
+			</DCCReference>
+			<DCCReference Include="dmBooking.pas">
+				<Form>dm_Booking</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitCarrier.pas">
+				<Form>FormCarrier</Form>
+			</DCCReference>
+			<DCCReference Include="dmcAvrakning.pas">
+				<Form>dm_Avrakning</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitShippingInstruction.pas">
+				<Form>frmShippingInstruction</Form>
+			</DCCReference>
+			<DCCReference Include="UnitKP_List.pas">
+				<Form>frmKP_List</Form>
+			</DCCReference>
+			<DCCReference Include="UnitMaintenance.pas">
+				<Form>frmMaintenance</Form>
+			</DCCReference>
+			<DCCReference Include="dmcVidaInvoice.pas">
+				<Form>dmVidaInvoice</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="fMoveInvPkgToInventory.pas">
+				<Form>formfMoveInvPkgToInventory</Form>
+			</DCCReference>
+			<DCCReference Include="dlgPickPkg.pas">
+				<Form>frmPackagePicker</Form>
+			</DCCReference>
+			<DCCReference Include="UnitPackageEntry.pas">
+				<Form>frmPackageEntry</Form>
+			</DCCReference>
+			<DCCReference Include="dmsVidaProduct.pas">
+				<Form>dmsProduct</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitPkgNoSeries.pas">
+				<Form>frmPkgNoSeries</Form>
+			</DCCReference>
+			<DCCReference Include="dmcVidaOrder.pas">
+				<Form>dmcOrder</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="fLoadOrder.pas">
+				<Form>frmLoadOrder</Form>
+			</DCCReference>
+			<DCCReference Include="UnitLoadEntrySSP.pas">
+				<Form>fLoadEntrySSP</Form>
+			</DCCReference>
+			<DCCReference Include="dmcLoadEntrySSP.pas">
+				<Form>dmLoadEntrySSP</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitLoadArrivals.pas">
+				<Form>frmLoadArrivals</Form>
+			</DCCReference>
+			<DCCReference Include="dmc_ArrivingLoads.pas">
+				<Form>dmArrivingLoads</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitPkgInfo.pas">
+				<Form>frmPkgInfo</Form>
+			</DCCReference>
+			<DCCReference Include="UnitPkgNo.pas">
+				<Form>frmPkgNo</Form>
+			</DCCReference>
+			<DCCReference Include="UnitSokAvropFormular.pas">
+				<Form>frmSokAvropFormular</Form>
+			</DCCReference>
+			<DCCReference Include="dmSokFormular.pas">
+				<Form>dm_SokFormular</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitAvrakningar.pas">
+				<Form>frmAvrakningar</Form>
+			</DCCReference>
+			<DCCReference Include="uFreightLoad.pas">
+				<Form>frmFreightLoad</Form>
+			</DCCReference>
+			<DCCReference Include="uUserPreference.pas">
+				<Form>fUserPreference</Form>
+			</DCCReference>
+			<DCCReference Include="UnitCRPrintReport.pas">
+				<Form>FormCRPrintReport</Form>
+			</DCCReference>
+			<DCCReference Include="uStickyNote.pas">
+				<Form>frmStickyNote</Form>
+			</DCCReference>
+			<DCCReference Include="uChooseSupplier.pas">
+				<Form>frmChooseSupplier</Form>
+			</DCCReference>
+			<DCCReference Include="uGenShipCost.pas">
+				<Form>frmGenShipCost</Form>
+			</DCCReference>
+			<DCCReference Include="dlgPickPkg_II.pas">
+				<Form>frmPackagePicker_II</Form>
+			</DCCReference>
+			<DCCReference Include="uEntryField.pas">
+				<Form>fEntryField</Form>
+			</DCCReference>
+			<DCCReference Include="fAttestInvoice.pas">
+				<Form>frmAttestInvoice</Form>
+			</DCCReference>
+			<DCCReference Include="fSelectInvoice.pas">
+				<Form>frmSelectInvoice</Form>
+			</DCCReference>
+			<DCCReference Include="uBasMatPunkter.pas">
+				<Form>fBasMatPunkter</Form>
+			</DCCReference>
+			<DCCReference Include="uMultiplaShippers.pas">
+				<Form>fMultiplaShippers</Form>
+			</DCCReference>
+			<DCCReference Include="UnotInvoicedReport.pas">
+				<Form>fnotInvoicedReport</Form>
+			</DCCReference>
+			<DCCReference Include="uPkgNoSeries.pas">
+				<Form>fPkgNoSeries</Form>
+			</DCCReference>
+			<DCCReference Include="uSamlingsfaktura.pas">
+				<Form>fSamlingsfaktura</Form>
+			</DCCReference>
+			<DCCReference Include="ULastLista.pas">
+				<Form>fLastLista</Form>
+			</DCCReference>
+			<DCCReference Include="uPktNrPos.pas">
+				<Form>fPktNrPos</Form>
+			</DCCReference>
+			<DCCReference Include="UPkgNoPos.pas">
+				<Form>fPkgNoPos</Form>
+			</DCCReference>
+			<DCCReference Include="uPickPkgNo.pas">
+				<Form>fPickPkgNo</Form>
+			</DCCReference>
+			<DCCReference Include="uScanLoadPkgNo.pas">
+				<Form>fScanLoadPkgNo</Form>
+			</DCCReference>
+			<DCCReference Include="Recerror.pas">
+				<Form>ReconcileErrorForm</Form>
+			</DCCReference>
+			<DCCReference Include="uConfirmCodeDialog.pas">
+				<Form>frmConfirmCodeDialog</Form>
+			</DCCReference>
+			<DCCReference Include="uLanguage.pas">
+				<Form>frmLanguage</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectShipper.pas">
+				<Form>fSelectShipper</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectLIP.pas">
+				<Form>fSelectLIP</Form>
+			</DCCReference>
+			<DCCReference Include="uAnkomstRegProgress.pas">
+				<Form>fAnkomstRegProgress</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectLoadPlanDest.pas">
+				<Form>fSelectLoadPlanDest</Form>
+			</DCCReference>
+			<DCCReference Include="UnitCRPrintOneReport.pas">
+				<Form>FormCRPrintOneReport</Form>
+			</DCCReference>
+			<DCCReference Include="UnitCRExportOneReport.pas">
+				<Form>FormCRExportOneReport</Form>
+			</DCCReference>
+			<DCCReference Include="uSendMapiMail.pas">
+				<Form>dm_SendMapiMail</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uSelectMultInvoice.pas">
+				<Form>fSelectMultInvoice</Form>
+			</DCCReference>
+			<DCCReference Include="dmcLoadEntryCSD.pas">
+				<Form>dmLoadEntryCSD</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitLoadEntryCSD.pas">
+				<Form>fLoadEntryCSD</Form>
+			</DCCReference>
+			<DCCReference Include="uAddSpecialLengths.pas">
+				<Form>fAddSpecialLengths</Form>
+			</DCCReference>
+			<DCCReference Include="uSearchRunNo.pas">
+				<Form>fSearchRunNo</Form>
+			</DCCReference>
+			<DCCReference Include="C:\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageImportU.pas"/>
+			<DCCReference Include="C:\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageExportU.pas"/>
+			<DCCReference Include="C:\Bangheng Software Technology\Woodx\Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas"/>
+			<DCCReference Include="C:\Bangheng Software Technology\Woodx\Aug 31B dbExpress\MainU.pas">
+				<Form>XMLImportExport</Form>
+			</DCCReference>
+			<DCCReference Include="dmc_marketprice.pas">
+				<Form>dm_marketprice</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uPriceList.pas">
+				<Form>fPriceList</Form>
+			</DCCReference>
+			<DCCReference Include="dmc_ImportWoodx.pas">
+				<Form>dm_ImportWoodx</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uSelectWoodxClient.pas">
+				<Form>fSelectWoodxClient</Form>
+			</DCCReference>
+			<DCCReference Include="dmc_UserProps.pas">
+				<Form>dm_UserProps</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uWait.pas">
+				<Form>fWait</Form>
+			</DCCReference>
+			<DCCReference Include="UPortArrivals.pas">
+				<Form>frmPortArrivals</Form>
+			</DCCReference>
+			<DCCReference Include="uSokAvropMall.pas">
+				<Form>fSokAvropMall</Form>
+			</DCCReference>
+			<DCCReference Include="..\..\CommonUnits\UnitAboutBox.pas">
+				<Form>AboutBox</Form>
+			</DCCReference>
+			<DCCReference Include="..\..\CommonUnits\VidaUser.pas"/>
+			<DCCReference Include="uChangeLogins.pas">
+				<Form>OKHelpBottomDlg</Form>
+			</DCCReference>
+			<DCCReference Include="uChkAvrLoads.pas">
+				<Form>fChkAvrLoads</Form>
+			</DCCReference>
+			<DCCReference Include="uInvoiceWizard.pas">
+				<Form>fInvoiceWizard</Form>
+			</DCCReference>
+			<DCCReference Include="uShowMemo.pas">
+				<Form>fShowMemo</Form>
+			</DCCReference>
+			<DCCReference Include="uLOLengths.pas">
+				<Form>fLOLengths</Form>
+			</DCCReference>
+			<DCCReference Include="uLoadOrderListSetup.pas">
+				<Form>fLoadOrderListSetup</Form>
+			</DCCReference>
+			<DCCReference Include="uTradingLinkMult.pas">
+				<Form>fTradingLinkMult</Form>
+			</DCCReference>
+			<DCCReference Include="dmcVidaLO.pas">
+				<Form>dmcLO</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uInScannedPkgs.pas">
+				<Form>fInScannedPkgs</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectLaststalleAndShipto.pas">
+				<Form>fSelectLastStalleAndShipTo</Form>
+			</DCCReference>
+			<DCCReference Include="dmcRunAttest.pas">
+				<Form>dmRunAttest</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uFreightAvrSearch.pas">
+				<Form>fFreightAvrSearch</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectLONoByInvoiceSerie.pas">
+				<Form>fSelectLONoByInvoiceSerie</Form>
+			</DCCReference>
+			<DCCReference Include="uLoadOrderSearch.pas">
+				<Form>fLoadOrderSearch</Form>
+			</DCCReference>
+			<DCCReference Include="uFtpParam.pas">
+				<Form>fFtpParam</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectBTHorBTB.pas">
+				<Form>fSelectBTHorBTB</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectFSFileName.pas">
+				<Form>fSelectFSFileName</Form>
+			</DCCReference>
+			<DCCReference Include="uKundspecifika.pas">
+				<Form>fKundspecifika</Form>
+			</DCCReference>
+			<DCCReference Include="uAddKundSpecifika.pas">
+				<Form>fAddKundSpecifika</Form>
+			</DCCReference>
+			<DCCReference Include="C:\VCL7\RAPWare\Source\Examples\EasyMAPI\Shared\fLogon.pas">
+				<Form>FrmLogon</Form>
+			</DCCReference>
+			<DCCReference Include="fBaseFormA.pas">
+				<Form>frmBaseFormA</Form>
+			</DCCReference>
+			<DCCReference Include="uArticle.pas">
+				<Form>fArticle</Form>
+			</DCCReference>
+			<DCCReference Include="uKontoLogik.pas">
+				<Form>fKontoLogik</Form>
+			</DCCReference>
+			<DCCReference Include="C:\Documents and Settings\HP\Mina dokument\uImportPkgStatusOfHampen.pas">
+				<Form>fImportPkgStatusOfHampen</Form>
+			</DCCReference>
+			<DCCReference Include="dmcLoadEntryCSDTemp.pas">
+				<Form>dmLoadEntryCSDTemp</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitLoadEntryCSDTemp.pas">
+				<Form>fLoadEntryCSDTemp</Form>
+			</DCCReference>
+			<DCCReference Include="uBaseListForm.pas">
+				<Form>fBaseListForm</Form>
+			</DCCReference>
+			<DCCReference Include="uOrderStocken.pas">
+				<Form>fOrderStocken</Form>
+			</DCCReference>
+			<DCCReference Include="uIntrastat.pas">
+				<Form>fIntrastat</Form>
+			</DCCReference>
+			<DCCReference Include="uTradingAnalyze.pas">
+				<Form>fTradingAnalyze</Form>
+			</DCCReference>
+			<DCCReference Include="uShowInvTrfLog.pas">
+				<Form>fShowInvTrfLog</Form>
+			</DCCReference>
+			<DCCReference Include="uFreightExternLoad.pas">
+				<Form>frmFreightExternLoad</Form>
+			</DCCReference>
+			<DCCReference Include="uPayControl.pas">
+				<Form>fPayControl</Form>
+			</DCCReference>
+			<DCCReference Include="uAttest_SetHdrInfo.pas">
+				<Form>fAttest_SetHdrInfo</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectAttBeskrivning.pas">
+				<Form>fSelectAttBeskrivning</Form>
+			</DCCReference>
+			<DCCReference Include="dmcLoadEntrySSPTemp.pas">
+				<Form>dmLoadEntrySSPTemp</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="UnitLoadEntrySSPTemp.pas">
+				<Form>fLoadEntrySSPTemp</Form>
+			</DCCReference>
+			<DCCReference Include="uFastReports.pas">
+				<Form>dmFR</Form>
+				<DesignClass>TDataModule</DesignClass>
+			</DCCReference>
+			<DCCReference Include="uExportLoadPurpose.pas">
+				<Form>fExportLoadPurpose</Form>
+			</DCCReference>
+			<DCCReference Include="uPickVPPkgs.pas">
+				<Form>fPickVPPkgs</Form>
+			</DCCReference>
+			<DCCReference Include="uCreditGrpClients.pas">
+				<Form>frmCreditGrpClients</Form>
+			</DCCReference>
+			<DCCReference Include="uSelectCustomer.pas">
+				<Form>frmSelectCustomer</Form>
+			</DCCReference>
+			<DCCReference Include="uCredit.pas">
+				<Form>frmCredit</Form>
+			</DCCReference>
+			<DCCReference Include="uImportedPackages.pas">
+				<Form>fImportedPackages</Form>
+			</DCCReference>
+			<DCCReference Include="uEntryPriceField.pas">
+				<Form>fEntryPriceField</Form>
+			</DCCReference>
+			<DCCReference Include="uVerifikationLogg.pas">
+				<Form>fVerifikationLogg</Form>
+			</DCCReference>
+			<DCCReference Include="uCreditLimitAnalys.pas">
+				<Form>frmCreditLimitAnalys</Form>
+			</DCCReference>
+			<DCCReference Include="fShipToAddress.pas">
+				<Form>frmShipToAddress</Form>
+			</DCCReference>
+			<DCCReference Include="uCity.pas">
+				<Form>fCity</Form>
+			</DCCReference>
+			<DCCReference Include="uCountry.pas">
+				<Form>fCountry</Form>
+			</DCCReference>
+			<DCCReference Include="uOrderStockDetails.pas">
+				<Form>fOrderStockDetails</Form>
+			</DCCReference>
+			<DCCReference Include="uAccInv.pas">
+				<Form>fAccInv</Form>
+			</DCCReference>
+			<DCCReference Include="uLockedLoads.pas">
+				<Form>frmLockLoads</Form>
+			</DCCReference>
+			<None Include="VIS.todo"/>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\8.0\UserTools.proj"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>VCLApplication</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">VIS.dpr</Source>
+					</Source>
+					<Language>
+						<Language Name="RootDir">..\..\..\..\ProjectXE\VIS IX\VIS 1211\</Language>
+					</Language>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">2</VersionInfo>
+						<VersionInfo Name="MinorVer">1</VersionInfo>
+						<VersionInfo Name="Release">2</VersionInfo>
+						<VersionInfo Name="Build">51</VersionInfo>
+						<VersionInfo Name="Debug">True</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">2057</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName">Carmak AB</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">VIS</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">2.1.2.51</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName">VIS</VersionInfoKeys>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename">VIS.exe</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductName">Vida Information Systems</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">Production version</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>
