@@ -1,12 +1,11 @@
-
-{*******************************************************}
-{                                                       }
-{       Delphi Visual Component Library                 }
-{       ClientDataSet Standard Reconcile Error Dialog   }
-{                                                       }
-{       Copyright (c) 1998 Borland International        }
-{                                                       }
-{*******************************************************}
+{ ******************************************************* }
+{ }
+{ Delphi Visual Component Library }
+{ ClientDataSet Standard Reconcile Error Dialog }
+{ }
+{ Copyright (c) 1998 Borland International }
+{ }
+{ ******************************************************* }
 
 { Note: To use this dialog you should add a call to HandleReconcileError in
   the OnReconcileError event handler of TClientDataSet (see the Client dataset
@@ -23,9 +22,9 @@ uses
   Dialogs, StdCtrls, Grids, DB, ExtCtrls, DBClient;
 
 const
-  ActionStr: array[TReconcileAction] of string = ('Skip', 'Abort', 'Merge',
+  ActionStr: array [TReconcileAction] of string = ('Skip', 'Abort', 'Merge',
     'Correct', 'Cancel', 'Refresh');
-  UpdateKindStr: array[TUpdateKind] of string = ('Modified', 'Inserted',
+  UpdateKindStr: array [TUpdateKind] of string = ('Modified', 'Inserted',
     'Deleted');
   SCaption = 'Update Error - %s';
   SUnchanged = '<Unchanged>';
@@ -76,7 +75,7 @@ type
       Error: EReconcileError);
   end;
 
-function HandleReconcileError(DataSet: TDataSet;  UpdateKind: TUpdateKind;
+function HandleReconcileError(DataSet: TDataSet; UpdateKind: TUpdateKind;
   ReconcileError: EReconcileError): TReconcileAction;
 
 implementation
@@ -85,6 +84,7 @@ implementation
 
 type
   PFieldData = ^TFieldData;
+
   TFieldData = record
     Field: TField;
     NewValue: string;
@@ -94,25 +94,29 @@ type
     Edited: Boolean;
   end;
 
-{ Public and Private Methods }
+  { Public and Private Methods }
 
 function HandleReconcileError(DataSet: TDataSet; UpdateKind: TUpdateKind;
   ReconcileError: EReconcileError): TReconcileAction;
 var
   UpdateForm: TReconcileErrorForm;
 begin
-  UpdateForm := TReconcileErrorForm.CreateForm(DataSet, UpdateKind, ReconcileError);
+  UpdateForm := TReconcileErrorForm.CreateForm(DataSet, UpdateKind,
+    ReconcileError);
   with UpdateForm do
-  try
-    if ShowModal = mrOK then
-    begin
-      Result := TReconcileAction(ActionGroup.Items.Objects[ActionGroup.ItemIndex]);
-      if Result = raCorrect then SetFieldValues(DataSet);
-    end else
-      Result := raAbort;
-  finally
-    Free;
-  end;
+    try
+      if ShowModal = mrOK then
+      begin
+        Result := TReconcileAction(ActionGroup.Items.Objects
+          [ActionGroup.ItemIndex]);
+        if Result = raCorrect then
+          SetFieldValues(DataSet);
+      end
+      else
+        Result := raAbort;
+    finally
+      Free;
+    end;
 end;
 
 { Routine to convert a variant value into a string.
@@ -121,7 +125,7 @@ end;
 function VarToString(V: Variant; DataType: TFieldType): string;
 const
   BinaryDataTypes: set of TFieldType = [ftBytes, ftVarBytes, ftBlob,
-    ftGraphic..ftCursor];
+    ftGraphic .. ftCursor];
 begin
   try
     if VarIsClear(V) then
@@ -164,26 +168,28 @@ var
 begin
   HasCurValues := False;
   for I := 0 to FDataSet.FieldCount - 1 do
-  with FDataset.Fields[I] do
-  begin
-    if (FieldKind <> fkData) then Continue;
-    FD := New(PFieldData);
-    try
-      FD.Field := FDataset.Fields[I];
-      FD.Edited := False;
-      if FUpdateKind <> ukDelete then
-        FD.NewValue := VarToString(NewValue, DataType);
-      V := CurValue;
-      if not VarIsClear(V) then HasCurValues := True;
-      FD.CurValue := VarToString(CurValue, DataType);
-      if FUpdateKind <> ukInsert then
-        FD.OldValue := VarToString(OldValue, DataType);
-      FDataFields.Add(FD);
-    except
-      Dispose(FD);
-      raise;
+    with FDataSet.Fields[I] do
+    begin
+      if (FieldKind <> fkData) then
+        Continue;
+      FD := New(PFieldData);
+      try
+        FD.Field := FDataSet.Fields[I];
+        FD.Edited := False;
+        if FUpdateKind <> ukDelete then
+          FD.NewValue := VarToString(NewValue, DataType);
+        V := CurValue;
+        if not VarIsClear(V) then
+          HasCurValues := True;
+        FD.CurValue := VarToString(CurValue, DataType);
+        if FUpdateKind <> ukInsert then
+          FD.OldValue := VarToString(OldValue, DataType);
+        FDataFields.Add(FD);
+      except
+        Dispose(FD);
+        raise;
+      end;
     end;
-  end;
   InitUpdateData(HasCurValues);
 end;
 
@@ -195,29 +201,30 @@ var
 begin
   FColCount := 1;
   UpdateData.ColCount := 4;
-  UpdateData.Cells[0,0] := SFieldName;
+  UpdateData.Cells[0, 0] := SFieldName;
   if FUpdateKind <> ukDelete then
   begin
     FNewColIdx := FColCount;
     Inc(FColCount);
-    UpdateData.Cells[FNewColIdx,0] := UpdateKindStr[FUpdateKind] + SValue;
-  end else
+    UpdateData.Cells[FNewColIdx, 0] := UpdateKindStr[FUpdateKind] + SValue;
+  end
+  else
   begin
     FOldColIdx := FColCount;
     Inc(FColCount);
-    UpdateData.Cells[FOldColIdx,0] := SOriginal;
+    UpdateData.Cells[FOldColIdx, 0] := SOriginal;
   end;
   if HasCurValues then
   begin
     FCurColIdx := FColCount;
     Inc(FColCount);
-    UpdateData.Cells[FCurColIdx,0] := SConflict;
+    UpdateData.Cells[FCurColIdx, 0] := SConflict;
   end;
   if FUpdateKind = ukModify then
   begin
     FOldColIdx := FColCount;
     Inc(FColCount);
-    UpdateData.Cells[FOldColIdx,0] := SOriginal;
+    UpdateData.Cells[FOldColIdx, 0] := SOriginal;
   end;
   UpdateData.ColCount := FColCount;
 end;
@@ -251,7 +258,8 @@ var
   CurRow: Integer;
   Action: TReconcileAction;
 begin
-  if not Visible then Exit;
+  if not Visible then
+    Exit;
   Action := TReconcileAction(ActionGroup.Items.Objects[ActionGroup.ItemIndex]);
   UpdateData.Col := 1;
   UpdateData.Row := 1;
@@ -263,21 +271,24 @@ begin
   for I := 0 to FDataFields.Count - 1 do
     with PFieldData(FDataFields[I])^ do
     begin
-      if ConflictsOnly.Checked and (CurValue = SUnChanged) then Continue;
-      if ChangedOnly.Checked and (NewValue = SUnChanged) then Continue;
+      if ConflictsOnly.Checked and (CurValue = SUnchanged) then
+        Continue;
+      if ChangedOnly.Checked and (NewValue = SUnchanged) then
+        Continue;
       UpdateData.RowCount := CurRow + 1;
       UpdateData.Cells[0, CurRow] := Field.DisplayName;
       if FNewColIdx > 0 then
       begin
         case Action of
           raCancel, raRefresh:
-            UpdateData.Cells[FNewColIdx, CurRow] := SUnChanged;
+            UpdateData.Cells[FNewColIdx, CurRow] := SUnchanged;
           raCorrect:
             if Edited then
-              UpdateData.Cells[FNewColIdx, CurRow] := EditValue else
+              UpdateData.Cells[FNewColIdx, CurRow] := EditValue
+            else
               UpdateData.Cells[FNewColIdx, CurRow] := NewValue;
-          else
-            UpdateData.Cells[FNewColIdx, CurRow] := NewValue;
+        else
+          UpdateData.Cells[FNewColIdx, CurRow] := NewValue;
         end;
         UpdateData.Objects[FNewColIdx, CurRow] := FDataFields[I];
       end;
@@ -285,8 +296,9 @@ begin
         UpdateData.Cells[FCurColIdx, CurRow] := CurValue;
       if FOldColIdx > 0 then
         if (Action in [raMerge, raRefresh]) and (CurValue <> SUnchanged) then
-           UpdateData.Cells[FOldColIdx, CurRow] := CurValue else
-           UpdateData.Cells[FOldColIdx, CurRow] := OldValue;
+          UpdateData.Cells[FOldColIdx, CurRow] := CurValue
+        else
+          UpdateData.Cells[FOldColIdx, CurRow] := OldValue;
       Inc(CurRow);
     end;
   AdjustColumnWidths;
@@ -301,12 +313,13 @@ var
 begin
   for I := 0 to FDataFields.Count - 1 do
     with PFieldData(FDataFields[I])^ do
-      if Edited then Field.NewValue := EditValue;
+      if Edited then
+        Field.NewValue := EditValue;
 end;
 
 procedure TReconcileErrorForm.AdjustColumnWidths;
 var
-  NewWidth, I: integer;
+  NewWidth, I: Integer;
 begin
   with UpdateData do
   begin
@@ -320,7 +333,8 @@ end;
 
 procedure TReconcileErrorForm.FormCreate(Sender: TObject);
 begin
-  if FDataSet = nil then Exit;
+  if FDataSet = nil then
+    Exit;
   FDataFields := TList.Create;
   InitDataFields;
   Caption := Format(SCaption, [FDataSet.Name]);
@@ -332,7 +346,8 @@ begin
   ConflictsOnly.Checked := ConflictsOnly.Enabled;
   ChangedOnly.Enabled := FNewColIdx > 0;
   InitReconcileActions;
-  UpdateData.DefaultRowHeight := UpdateData.Canvas.TextHeight('SWgjp') + 7; { Do not localize }
+  UpdateData.DefaultRowHeight := UpdateData.Canvas.TextHeight('SWgjp') + 7;
+  { Do not localize }
 end;
 
 procedure TReconcileErrorForm.FormDestroy(Sender: TObject);
@@ -349,8 +364,8 @@ end;
 
 { Set the Edited flag in the DataField list and save the value }
 
-procedure TReconcileErrorForm.UpdateDataSetEditText(Sender: TObject; ACol,
-  ARow: Integer; const Value: string);
+procedure TReconcileErrorForm.UpdateDataSetEditText(Sender: TObject;
+  ACol, ARow: Integer; const Value: string);
 begin
   PFieldData(UpdateData.Objects[ACol, ARow]).EditValue := Value;
   PFieldData(UpdateData.Objects[ACol, ARow]).Edited := True;
@@ -359,12 +374,14 @@ end;
 { Enable the editing in the grid if we are on the NewValue column and the
   current reconcile action is raCorrect }
 
-procedure TReconcileErrorForm.UpdateDataSelectCell(Sender: TObject; Col,
-  Row: Integer; var CanSelect: Boolean);
+procedure TReconcileErrorForm.UpdateDataSelectCell(Sender: TObject;
+  Col, Row: Integer; var CanSelect: Boolean);
 begin
   if (Col = FNewColIdx) and
-    (TReconcileAction(ActionGroup.Items.Objects[ActionGroup.ItemIndex]) = raCorrect) then
-    UpdateData.Options := UpdateData.Options + [goEditing] else
+    (TReconcileAction(ActionGroup.Items.Objects[ActionGroup.ItemIndex])
+    = raCorrect) then
+    UpdateData.Options := UpdateData.Options + [goEditing]
+  else
     UpdateData.Options := UpdateData.Options - [goEditing];
 end;
 

@@ -1,9 +1,9 @@
 object fCity: TfCity
   Left = 317
   Top = 137
-  Width = 483
-  Height = 478
   Caption = 'ORT'
+  ClientHeight = 440
+  ClientWidth = 467
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,15 +17,18 @@ object fCity: TfCity
   TextHeight = 13
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 44
-    Width = 475
-    Height = 407
+    Top = 42
+    Width = 467
+    Height = 398
     Align = alClient
     TabOrder = 0
     LookAndFeel.Kind = lfFlat
+    ExplicitTop = 44
+    ExplicitWidth = 475
+    ExplicitHeight = 407
     object cxGrid1DBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
-      NavigatorButtons.Cancel.Visible = True
+      Navigator.Buttons.CustomButtons = <>
+      Navigator.Buttons.Cancel.Visible = True
       DataController.DataSource = ds_city
       DataController.KeyFieldNames = 'CityNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -66,13 +69,12 @@ object fCity: TfCity
   object dxBarDockControl1: TdxBarDockControl
     Left = 0
     Top = 0
-    Width = 475
-    Height = 44
+    Width = 467
+    Height = 42
     Align = dalTop
     BarManager = dxBarManager1
   end
   object ActionList1: TActionList
-    Images = dmsConnector.imgSTD
     Left = 184
     Top = 152
     object Delete_UT: TDataSetDelete
@@ -116,8 +118,8 @@ object fCity: TfCity
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -126,7 +128,6 @@ object fCity: TfCity
       2)
     Categories.Visibles = (
       True)
-    ImageOptions.LargeImages = dmsConnector.imgSTD
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 168

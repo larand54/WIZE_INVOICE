@@ -6,11 +6,24 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
   cxDataStorage, cxEdit, DB, cxDBData, FMTBcd, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, 
+  cxGridTableView, cxGridDBTableView,
   cxGridLevel, cxClasses, cxControls, cxGridCustomView, cxGrid, cxLabel,
   cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,
   kbmMemTable, StdCtrls, Buttons, ActnList, cxDBEdit, SqlTimSt, DBClient,
-  Provider, SqlExpr ;
+  Provider, SqlExpr, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
 
 type
   TfSearchRunNo = class(TForm)
@@ -65,12 +78,12 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    procedure RefreshRunProds ;
+    procedure RefreshRunProds;
   public
     { Public declarations }
   end;
 
-//var fSearchRunNo: TfSearchRunNo;
+  // var fSearchRunNo: TfSearchRunNo;
 
 implementation
 
@@ -80,42 +93,46 @@ uses dmsDataConn;
 
 procedure TfSearchRunNo.acRefreshExecute(Sender: TObject);
 begin
- if mtProps.State in [dsEdit, dsInsert] then
-  mtProps.Post ;
- cds_RunNos.Active:= False ;
- sq_RunNos.ParamByName('RegPointNo').AsInteger        := mtPropsRegPointNo.AsInteger ;
- sq_RunNos.ParamByName('SupplierNo').AsInteger        := mtPropsSupplierNo.AsInteger ;
- sq_RunNos.ParamByName('StartPeriod').AsSQLTimeStamp  := DateTimeToSQLtimeStamp(mtPropsStartPeriod.AsDateTime) ;
- sq_RunNos.ParamByName('EndPeriod').AsSQLTimeStamp    := DateTimeToSQLtimeStamp(mtPropsEndPeriod.AsDateTime) ;
- cds_RunNos.Active:= True ;
+  if mtProps.State in [dsEdit, dsInsert] then
+    mtProps.Post;
+  cds_RunNos.Active := False;
+  sq_RunNos.ParamByName('RegPointNo').AsInteger := mtPropsRegPointNo.AsInteger;
+  sq_RunNos.ParamByName('SupplierNo').AsInteger := mtPropsSupplierNo.AsInteger;
+  sq_RunNos.ParamByName('StartPeriod').AsSQLTimeStamp :=
+    DateTimeToSQLtimeStamp(mtPropsStartPeriod.AsDateTime);
+  sq_RunNos.ParamByName('EndPeriod').AsSQLTimeStamp :=
+    DateTimeToSQLtimeStamp(mtPropsEndPeriod.AsDateTime);
+  cds_RunNos.Active := True;
 end;
 
-procedure TfSearchRunNo.RefreshRunProds ;
+procedure TfSearchRunNo.RefreshRunProds;
 begin
- cds_RunProds.Active:= False ;
- sq_RunProds.ParamByName('RegPointNo').AsInteger        := mtPropsRegPointNo.AsInteger ;
- sq_RunProds.ParamByName('SupplierNo').AsInteger        := mtPropsSupplierNo.AsInteger ;
- sq_RunProds.ParamByName('RunNo').AsInteger             := cds_RunNosKrnr.AsInteger ;
- cds_RunProds.Active:= True ;
+  cds_RunProds.Active := False;
+  sq_RunProds.ParamByName('RegPointNo').AsInteger :=
+    mtPropsRegPointNo.AsInteger;
+  sq_RunProds.ParamByName('SupplierNo').AsInteger :=
+    mtPropsSupplierNo.AsInteger;
+  sq_RunProds.ParamByName('RunNo').AsInteger := cds_RunNosKrnr.AsInteger;
+  cds_RunProds.Active := True;
 end;
 
-procedure TfSearchRunNo.ds_RunNosDataChange(Sender: TObject;  Field: TField);
+procedure TfSearchRunNo.ds_RunNosDataChange(Sender: TObject; Field: TField);
 begin
- RefreshRunProds ;
+  RefreshRunProds;
 end;
 
 procedure TfSearchRunNo.FormCreate(Sender: TObject);
 begin
- mtProps.Active                 := True ;
- mtProps.Insert ;
- mtPropsStartPeriod.AsDateTime  := Now-10 ;
- mtPropsEndPeriod.AsDateTime    := Now ;
- mtProps.Post ;
+  mtProps.Active := True;
+  mtProps.Insert;
+  mtPropsStartPeriod.AsDateTime := Now - 10;
+  mtPropsEndPeriod.AsDateTime := Now;
+  mtProps.Post;
 end;
 
 procedure TfSearchRunNo.FormShow(Sender: TObject);
 begin
- acRefreshExecute(Sender) ;
+  acRefreshExecute(Sender);
 end;
 
 end.

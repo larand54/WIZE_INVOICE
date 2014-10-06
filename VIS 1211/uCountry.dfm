@@ -1,9 +1,9 @@
 object fCountry: TfCountry
   Left = 288
   Top = 181
-  Width = 511
-  Height = 478
   Caption = 'LAND'
+  ClientHeight = 440
+  ClientWidth = 495
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,15 +17,18 @@ object fCountry: TfCountry
   TextHeight = 13
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 40
-    Width = 503
-    Height = 411
+    Top = 42
+    Width = 495
+    Height = 398
     Align = alClient
     TabOrder = 0
     LookAndFeel.Kind = lfFlat
+    ExplicitTop = 40
+    ExplicitWidth = 503
+    ExplicitHeight = 411
     object cxGrid1DBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
-      NavigatorButtons.Cancel.Visible = True
+      Navigator.Buttons.CustomButtons = <>
+      Navigator.Buttons.Cancel.Visible = True
       DataController.DataSource = dmsContact.ds_Country
       DataController.KeyFieldNames = 'CountryNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -93,8 +96,8 @@ object fCountry: TfCountry
   object dxBarDockControl1: TdxBarDockControl
     Left = 0
     Top = 0
-    Width = 503
-    Height = 40
+    Width = 495
+    Height = 42
     Align = dalTop
     BarManager = dxBarManager1
   end
@@ -143,8 +146,8 @@ object fCountry: TfCountry
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (

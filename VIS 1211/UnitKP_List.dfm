@@ -160,9 +160,9 @@ inherited frmKP_List: TfrmKP_List
       ExplicitHeight = 89
       inherited dxBarDockControl1: TdxBarDockControl
         Width = 528
-        Height = 44
+        Height = 46
         ExplicitWidth = 528
-        ExplicitHeight = 44
+        ExplicitHeight = 46
       end
     end
     inherited Panel8: TPanel
@@ -246,14 +246,14 @@ inherited frmKP_List: TfrmKP_List
         TabOrder = 0
       end
       inherited dxBarDockControl2: TdxBarDockControl
-        Height = 44
-        ExplicitHeight = 44
+        Height = 46
+        ExplicitHeight = 46
       end
     end
   end
   inherited imglistActions: TImageList
     Bitmap = {
-      494C01010B000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

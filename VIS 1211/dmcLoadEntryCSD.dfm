@@ -54,7 +54,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -178,7 +178,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -311,7 +311,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

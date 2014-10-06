@@ -1,10 +1,10 @@
 object fSelectMultInvoice: TfSelectMultInvoice
   Left = 229
   Top = 107
-  Width = 478
-  Height = 279
   ActiveControl = grdMultInvoice
   Caption = 'V'#228'lj en faktura'
+  ClientHeight = 241
+  ClientWidth = 462
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,29 +17,34 @@ object fSelectMultInvoice: TfSelectMultInvoice
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 211
-    Width = 470
+    Top = 200
+    Width = 462
     Height = 41
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 211
+    ExplicitWidth = 470
     object BitBtn1: TBitBtn
       Left = 192
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
   object grdMultInvoice: TcxGrid
     Left = 0
     Top = 0
-    Width = 470
-    Height = 211
+    Width = 462
+    Height = 200
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 470
+    ExplicitHeight = 211
     object grdMultInvoiceDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmVidaInvoice.ds_NoOfInvoices
       DataController.KeyFieldNames = 'InternalInvoiceNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

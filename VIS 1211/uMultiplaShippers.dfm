@@ -28,10 +28,8 @@ object fMultiplaShippers: TfMultiplaShippers
       Top = 13
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
       OnClick = bbOKClick
     end
@@ -41,10 +39,8 @@ object fMultiplaShippers: TfMultiplaShippers
       Width = 75
       Height = 25
       Caption = #197'ngra'
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -91,7 +87,7 @@ object fMultiplaShippers: TfMultiplaShippers
     ExplicitWidth = 747
     ExplicitHeight = 378
     object grdSpedsInvoiceDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.dsShippers
       DataController.KeyFieldNames = 'AvrakningsNr'
       DataController.Summary.DefaultGroupSummaryItems = <>

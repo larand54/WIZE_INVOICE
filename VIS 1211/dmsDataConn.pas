@@ -5,14 +5,19 @@ interface
 uses
   Classes,
   DB,
-  
+
   SysUtils, FMTBcd, Provider, ImgList, Controls, Dialogs,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
-  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Comp.Client,
-  FireDAC.Moni.Base, FireDAC.Moni.RemoteClient, FireDAC.VCLUI.Login, FireDAC.VCLUI.Error,
-  FireDAC.VCLUI.Wait, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, FireDAC.Comp.DataSet,
-  FireDAC.Moni.FlatFile, FireDAC.Comp.UI ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt,
+  FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys,
+  FireDAC.Comp.Client,
+  FireDAC.Moni.Base, FireDAC.Moni.RemoteClient, FireDAC.VCLUI.Login,
+  FireDAC.VCLUI.Error,
+  FireDAC.VCLUI.Wait, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL,
+  FireDAC.Comp.DataSet,
+  FireDAC.Moni.FlatFile, FireDAC.Comp.UI;
 
 type
   TdmsConnector = class(TDataModule)
@@ -36,47 +41,43 @@ type
     SQLConn_XOR: TFDConnection;
     FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink;
     sp_UpdateMaxSecByLoad: TFDStoredProc;
-    procedure DataModuleCreate           (Sender: TObject);
-    procedure DataModuleDestroy          (Sender: TObject);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
 
-    FLastTransNo : LongWord;
+    FLastTransNo: LongWord;
 
   public
     { Public declarations }
 
-    DriveLetter,
-    InifilesMap : String ;
-    LoginChanged : Boolean ;
-    Org_AD_Name : String ;
-    Org_DB_Name : String ;
-//    DeleteTdmVidaInvoice  : Boolean ;
-    procedure UpdateMaxSecByLoad(const LoadNo : Integer) ;
+    DriveLetter, InifilesMap: String;
+    LoginChanged: Boolean;
+    Org_AD_Name: String;
+    Org_DB_Name: String;
+    // DeleteTdmVidaInvoice  : Boolean ;
+    procedure UpdateMaxSecByLoad(const LoadNo: Integer);
     procedure InitProcedure(Proc: TFDStoredProc);
-    function  NextSecondMaxNo(const TableName: String; const PrimaryKeyValue: Integer): Integer ;
-    function  Get_AD_Name : String ;
-    procedure GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
+    function NextSecondMaxNo(const TableName: String;
+      const PrimaryKeyValue: Integer): Integer;
+    function Get_AD_Name: String;
+    procedure GetUserNameLoggedIn(Var UserName, UserPswd: String;
+      Const pAD_Name: String);
 
-    function  GetCurrentPkgNo(const ClientNo, NoOfPkgNo : Integer): Integer;
-    function  GetCompanyName (CompanyNo : Integer) : String ;
+    function GetCurrentPkgNo(const ClientNo, NoOfPkgNo: Integer): Integer;
+    function GetCompanyName(CompanyNo: Integer): String;
 
-    constructor Create(AOwner : TComponent); override;
+    constructor Create(AOwner: TComponent); override;
 
-    procedure Commit ;
-    procedure Rollback ;
-    function StartTransaction : LongWord;
+    procedure Commit;
+    procedure Rollback;
+    function StartTransaction: LongWord;
 
-    function LogOnToDatabase(
-      HostName   : string;
-      Database   : string;
-      DBUserName : string;
-      DBUserPswd : string
-      ) : Boolean;
+    function LogOnToDatabase(HostName: string; Database: string;
+      DBUserName: string; DBUserPswd: string): Boolean;
 
     function NextMaxNo(TableName: string): Integer;
     function NextMinNo(TableName: string): Integer;
-
 
   end;
 
@@ -87,8 +88,7 @@ implementation
 
 uses
   Forms, dmsVidaSystem;
-//  VidaUser;
-
+// VidaUser;
 
 {$R *.dfm}
 
@@ -97,11 +97,12 @@ var
   i: Integer;
 begin
   Proc.Close;
-  for i:=0 to Proc.Params.Count-1 do
+  for i := 0 to Proc.Params.Count - 1 do
     Proc.Params[i].Clear;
 end;
 
-function TdmsConnector.NextSecondMaxNo(const TableName: String; const PrimaryKeyValue: Integer): Integer ;
+function TdmsConnector.NextSecondMaxNo(const TableName: String;
+  const PrimaryKeyValue: Integer): Integer;
 begin
   InitProcedure(spad_GetSecondNo);
   spad_GetSecondNo.ParamByName('@TableName').AsString := TableName;
@@ -114,57 +115,59 @@ begin
   end;
 end;
 
-function TdmsConnector.Get_AD_Name : String ;
+function TdmsConnector.Get_AD_Name: String;
 Begin
- sq_GetLoggedInUser.Open ;
- if not sq_GetLoggedInUser.Eof then
-  Result:= sq_GetLoggedInUserLoggedInUser.AsString
-   else
-    Result:= '-' ;
- sq_GetLoggedInUser.Close ;
-End ;
+  sq_GetLoggedInUser.Open;
+  if not sq_GetLoggedInUser.Eof then
+    Result := sq_GetLoggedInUserLoggedInUser.AsString
+  else
+    Result := '-';
+  sq_GetLoggedInUser.Close;
+End;
 
-procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd : String;Const pAD_Name : String) ;
-Var AD_Name : String ;
+procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd: String;
+  Const pAD_Name: String);
+Var
+  AD_Name: String;
 Begin
- sq_GetLoggedInUser.Open ;
- if not sq_GetLoggedInUser.Eof then
-  AD_Name:= sq_GetLoggedInUserLoggedInUser.AsString
-   else
-    AD_Name:= '-' ;
-// ShowMessage('AD_Name = '+AD_Name) ;
- if Length(pAD_Name) > 0 then
-  AD_Name:= pAD_Name ;
- sq_GetLoggedInUser.Close ;
- if AD_Name <> '-' then
- Begin
-  sq_GetUserName.ParamByName('AD_Name').AsString:= AD_Name ;
-  sq_GetUserName.Open ;
-  if not sq_GetUserName.Eof Then
+  sq_GetLoggedInUser.Open;
+  if not sq_GetLoggedInUser.Eof then
+    AD_Name := sq_GetLoggedInUserLoggedInUser.AsString
+  else
+    AD_Name := '-';
+  // ShowMessage('AD_Name = '+AD_Name) ;
+  if Length(pAD_Name) > 0 then
+    AD_Name := pAD_Name;
+  sq_GetLoggedInUser.Close;
+  if AD_Name <> '-' then
   Begin
-   UserName:= sq_GetUserNameUserName.AsString ;
-   UserPswd:= sq_GetUserNamePassWord.AsString ;
-  End
-   else
+    sq_GetUserName.ParamByName('AD_Name').AsString := AD_Name;
+    sq_GetUserName.Open;
+    if not sq_GetUserName.Eof Then
     Begin
-     ShowMessage('Användare ' + AD_Name + ' saknar behörighet i VIS') ;
-     UserName:= '-' ;
-    End ;
-  sq_GetUserName.Close ;
- End
- else
- Begin
-  ShowMessage('Windows användarnamn saknas') ;
-  UserName:= '-' ;
- End ;
-End ;
+      UserName := sq_GetUserNameUserName.AsString;
+      UserPswd := sq_GetUserNamePassWord.AsString;
+    End
+    else
+    Begin
+      ShowMessage('Användare ' + AD_Name + ' saknar behörighet i VIS');
+      UserName := '-';
+    End;
+    sq_GetUserName.Close;
+  End
+  else
+  Begin
+    ShowMessage('Windows användarnamn saknas');
+    UserName := '-';
+  End;
+End;
 
-procedure TdmsConnector.Commit ;
+procedure TdmsConnector.Commit;
 begin
- FDTransaction1.Commit ;
+  FDTransaction1.Commit;
 end;
 
-constructor TdmsConnector.Create(AOwner : TComponent);
+constructor TdmsConnector.Create(AOwner: TComponent);
 begin
   inherited;
   FLastTransNo := 0;
@@ -172,11 +175,10 @@ end;
 
 procedure TdmsConnector.DataModuleCreate(Sender: TObject);
 begin
-// FDMoniFlatFileClientLink1.Tracing := False ;
-//ALVESQL04
-//CARMAK-HP8530W\SQLEXPRESS
+  // FDMoniFlatFileClientLink1.Tracing := False ;
+  // ALVESQL04
+  // CARMAK-HP8530W\SQLEXPRESS
 end;
-
 
 procedure TdmsConnector.DataModuleDestroy(Sender: TObject);
 //
@@ -184,40 +186,40 @@ procedure TdmsConnector.DataModuleDestroy(Sender: TObject);
 // the application is closed.
 //
 begin
-//  SQLConnection.close ;
- FDConnection1.Close ;
+  // SQLConnection.close ;
+  FDConnection1.Close;
 end;
 
-
-function TdmsConnector.LogOnToDatabase(HostName, Database, DBUserName, DBUserPswd: string) : Boolean;
+function TdmsConnector.LogOnToDatabase(HostName, Database, DBUserName,
+  DBUserPswd: string): Boolean;
 begin
   try
-{    DecodeDate(Now,YY,MM,DD);
-    DecodeTime(Now,HH,MN,SS,MS);
-    SQLMonitor.FileName := Format('Logs\%d%d%d%d%d%d.txt',[YY,MM,DD,HH,MN,SS]);
-    SQLConnection.Params.Values['HostName']  := HostName;
-    SQLConnection.Params.Values['Database']  := Database;
-    SQLConnection.Params.Values['User Name'] := DBUserName;
-    SQLConnection.Params.Values['Password']  := DBUserPswd;
- }
+    { DecodeDate(Now,YY,MM,DD);
+      DecodeTime(Now,HH,MN,SS,MS);
+      SQLMonitor.FileName := Format('Logs\%d%d%d%d%d%d.txt',[YY,MM,DD,HH,MN,SS]);
+      SQLConnection.Params.Values['HostName']  := HostName;
+      SQLConnection.Params.Values['Database']  := Database;
+      SQLConnection.Params.Values['User Name'] := DBUserName;
+      SQLConnection.Params.Values['Password']  := DBUserPswd;
+    }
 
-    FDConnection1.Params.Values['Server'  ]  := HostName;
-    FDConnection1.Params.Values['Database']  := Database;
+    FDConnection1.Params.Values['Server'] := HostName;
+    FDConnection1.Params.Values['Database'] := Database;
     FDConnection1.Params.Values['User_Name'] := DBUserName;
-    FDConnection1.Params.Values['Password']  := DBUserPswd;
-{    ShowMessage('Hostname: '+FDConnection1.Params.Values['HostName']
-    +'  Database: '+ FDConnection1.Params.Values['Database']
-    +'  User name: '+ FDConnection1.Params.Values['User Name']
-    +'  Password: '+ FDConnection1.Params.Values['Password']     ) ; }
-    FDConnection1.Connected := True ; // .Open;
+    FDConnection1.Params.Values['Password'] := DBUserPswd;
+    { ShowMessage('Hostname: '+FDConnection1.Params.Values['HostName']
+      +'  Database: '+ FDConnection1.Params.Values['Database']
+      +'  User name: '+ FDConnection1.Params.Values['User Name']
+      +'  Password: '+ FDConnection1.Params.Values['Password']     ) ; }
+    FDConnection1.Connected := True; // .Open;
 
     Result := FDConnection1.Connected;
 
   except
     on EAbort do
-//    Begin
-     Result := FALSE;
-  // End ;
+      // Begin
+      Result := FALSE;
+    // End ;
   end;
 end;
 
@@ -243,34 +245,35 @@ begin
   end;
 end;
 
-procedure TdmsConnector.Rollback ;
+procedure TdmsConnector.Rollback;
 begin
-  FDTransaction1.Rollback ;
+  FDTransaction1.Rollback;
 end;
 
-function TdmsConnector.StartTransaction : LongWord;
+function TdmsConnector.StartTransaction: LongWord;
 begin
-// FDTransaction1.
-// FDConnection1.StartTransaction ;
- FDTransaction1.StartTransaction ;
+  // FDTransaction1.
+  // FDConnection1.StartTransaction ;
+  FDTransaction1.StartTransaction;
 end;
 
-function TdmsConnector.GetCompanyName (CompanyNo : Integer) : String ;
+function TdmsConnector.GetCompanyName(CompanyNo: Integer): String;
 Begin
- sq_GetCompany.Close ;
- sq_GetCompany.ParamByName('CompanyNo').AsInteger:= CompanyNo ;
- sq_GetCompany.Open ;
- if not sq_GetCompany.Eof then
-  Result:= sq_GetCompanyClientName.AsString
+  sq_GetCompany.Close;
+  sq_GetCompany.ParamByName('CompanyNo').AsInteger := CompanyNo;
+  sq_GetCompany.Open;
+  if not sq_GetCompany.Eof then
+    Result := sq_GetCompanyClientName.AsString
   else
-  Result:= '' ;
- sq_GetCompany.Close ;
-End ;
+    Result := '';
+  sq_GetCompany.Close;
+End;
 
-function TdmsConnector.GetCurrentPkgNo(const ClientNo, NoOfPkgNo : Integer): Integer;
+function TdmsConnector.GetCurrentPkgNo(const ClientNo,
+  NoOfPkgNo: Integer): Integer;
 begin
-  sp_GetCurrPkgNo.ParamByName('@ClientNo').AsInteger := ClientNo ;
-  sp_GetCurrPkgNo.ParamByName('@NoOfPkgNo').AsInteger := NoOfPkgNo ;
+  sp_GetCurrPkgNo.ParamByName('@ClientNo').AsInteger := ClientNo;
+  sp_GetCurrPkgNo.ParamByName('@NoOfPkgNo').AsInteger := NoOfPkgNo;
 
   sp_GetCurrPkgNo.ExecProc;
   try
@@ -280,18 +283,18 @@ begin
   end;
 end;
 
-procedure TdmsConnector.UpdateMaxSecByLoad(const LoadNo : Integer) ;
+procedure TdmsConnector.UpdateMaxSecByLoad(const LoadNo: Integer);
 begin
-  sp_UpdateMaxSecByLoad.ParamByName('@LoadNo').AsInteger := LoadNo ;
+  sp_UpdateMaxSecByLoad.ParamByName('@LoadNo').AsInteger := LoadNo;
   try
-   sp_UpdateMaxSecByLoad.ExecProc;
-   except
+    sp_UpdateMaxSecByLoad.ExecProc;
+  except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
 end;
 
 end.

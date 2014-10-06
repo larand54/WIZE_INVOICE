@@ -23,19 +23,21 @@ object frmFreightLoad: TfrmFreightLoad
     Left = 0
     Top = 0
     Width = 1009
-    Height = 44
+    Height = 46
     Align = dalTop
     AllowDocking = False
     BarManager = dxBarManager1
   end
   object grdLoads: TcxGrid
     Left = 0
-    Top = 107
+    Top = 109
     Width = 1009
-    Height = 515
+    Height = 513
     Align = alClient
     PopupMenu = pmGrdLoads
     TabOrder = 1
+    ExplicitTop = 107
+    ExplicitHeight = 515
     object grdLoadsDBTableView1: TcxGridDBTableView
       OnKeyDown = grdLoadsDBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
@@ -173,11 +175,12 @@ object frmFreightLoad: TfrmFreightLoad
   end
   object Panel1: TPanel
     Left = 0
-    Top = 44
+    Top = 46
     Width = 1009
     Height = 63
     Align = alTop
     TabOrder = 2
+    ExplicitTop = 44
     object Label1: TLabel
       Left = 240
       Top = 16
@@ -320,8 +323,8 @@ object frmFreightLoad: TfrmFreightLoad
     AllowReset = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -455,7 +458,7 @@ object frmFreightLoad: TfrmFreightLoad
     Left = 208
     Top = 248
     Bitmap = {
-      494C01010B000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1444,9 +1447,9 @@ object frmFreightLoad: TfrmFreightLoad
     Top = 192
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdLoads
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -1457,7 +1460,6 @@ object frmFreightLoad: TfrmFreightLoad
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

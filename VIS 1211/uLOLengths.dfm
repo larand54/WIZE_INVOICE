@@ -1,9 +1,9 @@
 object fLOLengths: TfLOLengths
   Left = 404
   Top = 117
-  Width = 583
-  Height = 492
   Caption = 'LO l'#228'ngder'
+  ClientHeight = 454
+  ClientWidth = 567
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object fLOLengths: TfLOLengths
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 575
+    Width = 567
     Height = 41
     Align = alTop
     TabOrder = 0
@@ -72,12 +72,14 @@ object fLOLengths: TfLOLengths
   object grdLOLengths: TcxGrid
     Left = 0
     Top = 41
-    Width = 575
-    Height = 375
+    Width = 567
+    Height = 364
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 575
+    ExplicitHeight = 375
     object grdLOLengthsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmcOrder.ds_LOLengths
       DataController.KeyFieldNames = 'SupplierShipPlanObjectNo;ProductLengthNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -122,19 +124,22 @@ object fLOLengths: TfLOLengths
   end
   object Panel2: TPanel
     Left = 0
-    Top = 416
-    Width = 575
+    Top = 405
+    Width = 567
     Height = 49
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 416
+    ExplicitWidth = 575
     object BitBtn1: TBitBtn
       Left = 224
       Top = 8
       Width = 83
       Height = 32
       Caption = '&St'#228'ng'
-      TabOrder = 0
       Kind = bkClose
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
   object ActionList1: TActionList
@@ -171,7 +176,7 @@ object fLOLengths: TfLOLengths
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '5.50'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -215,7 +220,6 @@ object fLOLengths: TfLOLengths
         'uctLengthNo'
       'WHERE plgn.GroupName = :GroupName'
       'Order By pl.ActualLengthMM')
-    SQLConnection = dmsConnector.SQLConnection
     Left = 80
     Top = 112
     object sq_PGLengthsActualLengthMM: TFloatField

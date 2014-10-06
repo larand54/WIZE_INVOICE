@@ -370,7 +370,7 @@ object frmBaseFormA: TfrmBaseFormA
     Left = 360
     Top = 216
     Bitmap = {
-      494C01010C001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1627,8 +1627,10 @@ object frmBaseFormA: TfrmBaseFormA
     Top = 72
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = cxGrid1
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -1638,6 +1640,7 @@ object frmBaseFormA: TfrmBaseFormA
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

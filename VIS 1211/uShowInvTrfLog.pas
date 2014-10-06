@@ -27,7 +27,9 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, cxGridCustomLayoutView;
+  dxSkinsdxRibbonPainter, cxGridCustomLayoutView, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, cxNavigator, System.Actions;
 
 type
   TfShowInvTrfLog = class(TForm)
@@ -60,7 +62,8 @@ type
     grdInvTrfLogDBCardView1InvoiceTotal_SEK: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1ForsaljningsKonto_SEK: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1Rounding_SEK: TcxGridDBCardViewRow;
-    grdInvTrfLogDBCardView1TotalInvoiceValueNoRounding_SEK: TcxGridDBCardViewRow;
+    grdInvTrfLogDBCardView1TotalInvoiceValueNoRounding_SEK
+      : TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1Provision_SEK: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1KassaRabatt_SEK: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1frakt_SEK: TcxGridDBCardViewRow;
@@ -68,7 +71,8 @@ type
     grdInvTrfLogDBCardView1ForsaljningsKonto_For: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1Rounding_For: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1Provision_For: TcxGridDBCardViewRow;
-    grdInvTrfLogDBCardView1TotalInvoiceValueNoRounding_For: TcxGridDBCardViewRow;
+    grdInvTrfLogDBCardView1TotalInvoiceValueNoRounding_For
+      : TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1KassaRabatt_For: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1frakt_for: TcxGridDBCardViewRow;
     grdInvTrfLogDBCardView1InvoiceDate: TcxGridDBCardViewRow;
@@ -96,7 +100,7 @@ type
     { Public declarations }
   end;
 
-//var fShowInvTrfLog: TfShowInvTrfLog;
+  // var fShowInvTrfLog: TfShowInvTrfLog;
 
 implementation
 
@@ -106,15 +110,15 @@ uses dmcVidaInvoice;
 
 procedure TfShowInvTrfLog.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfShowInvTrfLog.acPrintExecute(Sender: TObject);
 begin
-  dxComponentPrinter1Link1.PrinterPage.Orientation    := poPortrait ;
-  dxComponentPrinter1Link1.ShrinkToPageWidth          := True ;
-  dxComponentPrinter1Link1.OptionsOnEveryPage.Footers := False ;
-  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1) ;
+  dxComponentPrinter1Link1.PrinterPage.Orientation := poPortrait;
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+  dxComponentPrinter1Link1.OptionsOnEveryPage.Footers := False;
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 end.

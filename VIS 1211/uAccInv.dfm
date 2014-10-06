@@ -23,7 +23,6 @@ object fAccInv: TfAccInv
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 802
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -35,7 +34,7 @@ object fAccInv: TfAccInv
         Left = 1
         Top = 1
         Width = 432
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -47,12 +46,11 @@ object fAccInv: TfAccInv
       Height = 57
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 730
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
         Width = 70
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -64,7 +62,6 @@ object fAccInv: TfAccInv
       Height = 57
       Align = alClient
       TabOrder = 2
-      ExplicitWidth = 296
       object teInvoiceNo: TcxTextEdit
         Left = 80
         Top = 20
@@ -96,8 +93,8 @@ object fAccInv: TfAccInv
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -289,9 +286,9 @@ object fAccInv: TfAccInv
     Top = 160
     object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -302,7 +299,6 @@ object fAccInv: TfAccInv
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

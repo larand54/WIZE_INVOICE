@@ -1,10 +1,10 @@
 object fSelectLastStalleAndShipTo: TfSelectLastStalleAndShipTo
   Left = 362
   Top = 175
-  Width = 412
-  Height = 212
   ActiveControl = lcLaststalle
   Caption = 'V'#228'lj lastst'#228'lle && destination'
+  ClientHeight = 174
+  ClientWidth = 396
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -47,26 +47,30 @@ object fSelectLastStalleAndShipTo: TfSelectLastStalleAndShipTo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 135
-    Width = 404
+    Top = 124
+    Width = 396
     Height = 50
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 135
+    ExplicitWidth = 404
     object BitBtn1: TBitBtn
       Left = 114
       Top = 13
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 202
       Top = 13
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object lcDestination: TcxDBLookupComboBox
@@ -98,7 +102,7 @@ object fSelectLastStalleAndShipTo: TfSelectLastStalleAndShipTo
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '5.50'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

@@ -1,10 +1,10 @@
 object fLoadOrderListSetup: TfLoadOrderListSetup
   Left = 229
   Top = 107
-  Width = 467
-  Height = 290
   ActiveControl = lcLengthgrupp
   Caption = 'Lastorder inst'#228'llningar'
+  ClientHeight = 252
+  ClientWidth = 451
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,19 +16,22 @@ object fLoadOrderListSetup: TfLoadOrderListSetup
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 222
-    Width = 459
+    Top = 211
+    Width = 451
     Height = 41
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 222
+    ExplicitWidth = 459
     object BitBtn1: TBitBtn
       Left = 176
       Top = 8
       Width = 75
       Height = 25
       Caption = '&St'#228'ng'
-      TabOrder = 0
       Kind = bkClose
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
   object lcLengthgrupp: TcxDBLookupComboBox

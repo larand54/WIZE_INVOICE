@@ -28,10 +28,8 @@ object FormDestination: TFormDestination
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -39,10 +37,8 @@ object FormDestination: TFormDestination
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -56,7 +52,7 @@ object FormDestination: TFormDestination
     ExplicitWidth = 364
     ExplicitHeight = 399
     object grdOrtDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.dsDestination
       DataController.KeyFieldNames = 'CityNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

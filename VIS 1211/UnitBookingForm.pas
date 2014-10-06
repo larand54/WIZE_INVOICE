@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,
-  db, StdCtrls,  ExtCtrls, dxBar, dxBarExtItems,
+  db, StdCtrls, ExtCtrls, dxBar, dxBarExtItems,
   Buttons, ImgList, SqlTimSt, ActnList, Menus,
   cxLookAndFeels, cxControls, cxContainer, cxEdit, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxCalendar, cxDBEdit, cxStyles, cxCustomData, cxGraphics,
@@ -25,7 +25,8 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
-  cxNavigator ;
+  cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TFormBookingForm = class(TForm)
@@ -143,354 +144,361 @@ type
     procedure acSetETDExecute(Sender: TObject);
   private
     { Private declarations }
-    OrderType : Integer ;
-    procedure Save ;
-    procedure SetETDDate ;
-    procedure CheckSaveVessel ;
-    Function  DataSaved : Boolean ;
+    OrderType: Integer;
+    procedure Save;
+    procedure SetETDDate;
+    procedure CheckSaveVessel;
+    Function DataSaved: Boolean;
   public
     { Public declarations }
-    BookingNo  : Integer ;
-    ReadMeOnly : Boolean ;
-    procedure LoadVessels ;
+    BookingNo: Integer;
+    ReadMeOnly: Boolean;
+    procedure LoadVessels;
     procedure CreateCo(const ShippingPlanNo: Integer);
   end;
 
-//var FormBookingForm: TFormBookingForm;
+  // var FormBookingForm: TFormBookingForm;
 
 implementation
 
-uses   VidaConst,
+uses VidaConst,
   VidaUser,
-dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
+  dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
   dmsVidaContact;
 
 {$R *.dfm}
 
-Function TFormBookingForm.DataSaved : Boolean ;
+Function TFormBookingForm.DataSaved: Boolean;
 Begin
- Result:= True ;
- with dm_Booking do
- Begin
-  if cdsVoyage.State in [dsEdit, dsInsert] then
-   Result:= False ;
-  if cdsVoyage.ChangeCount > 0 then
-   Result:= False ;
+  Result := True;
+  with dm_Booking do
+  Begin
+    if cdsVoyage.State in [dsEdit, dsInsert] then
+      Result := False;
+    if cdsVoyage.ChangeCount > 0 then
+      Result := False;
 
-  if cdsBooking.State in [dsEdit, dsInsert] then
-   Result:= False ;
-  if cdsBooking.ChangeCount > 0 then
-   Result:= False ;
- End ;
-End ;
+    if cdsBooking.State in [dsEdit, dsInsert] then
+      Result := False;
+    if cdsBooking.ChangeCount > 0 then
+      Result := False;
+  End;
+End;
 
 procedure TFormBookingForm.CreateCo(const ShippingPlanNo: Integer);
 begin
- dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/'+grdLoRows.Name, grdLoRowsDBTableView1)  ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoRows.Name,
+    grdLoRowsDBTableView1);
 
- with dm_Booking do
- Begin
-  cdsVoyage.Active:= True ;
-
-  cdsAvropInfo.Active:= False ;
-  cdsAvropInfo.ParamByName('ShippingPlanNo').AsInteger        := ShippingPlanNo ;
-  cdsAvropInfo.Active:= True ;
-  OrderType := cdsAvropInfoOrderType.AsInteger ;
-
-  cdsBookingProducts.Active:= False ;
-  cdsBookingProducts.ParamByName('ShippingPlanNo').AsInteger  := ShippingPlanNo ;
-  cdsBookingProducts.Active:= True ;
-
-  cdsBooking.Active:= False ;
-  cdsBooking.ParamByName('ShippingPlanNo').AsInteger          := ShippingPlanNo ;
-  cdsBooking.Active:= True ;
-
-  LoadVessels ;
-
-  if not cdsBooking.Eof then
+  with dm_Booking do
   Begin
-//Existing booking found
-   cdsVoyage.Active:= False ;
-   cdsVoyage.ParamByName('VoyageNo').AsInteger:= cdsBookingBookingNo.AsInteger ;
-   cdsVoyage.Active:= True ;
+    cdsVoyage.Active := True;
 
-   if (cdsVoyage.RecordCount = 0) or
-   ((cdsVoyage.RecordCount = 1) and (cdsVoyageVoyageno.AsInteger <> cdsBookingBookingNo.AsInteger)) then
-   Begin
-    cdsVoyage.Insert ;
-//    cdsVoyageVoyageNo.AsInteger     := dmsConnector.NextMaxNo('Voyage') ;
-    cdsVoyageCarrierNo.AsInteger    := 0 ;
-//    cdsVoyageCreatedUser.AsInteger:= ThisUser.UserID ;
-//    cdsVoyageModifiedUser.AsInteger:= ThisUser.UserID ;
-//    cdsVoyageDateCreated.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
-    cdsVoyage.Post ;
+    cdsAvropInfo.Active := False;
+    cdsAvropInfo.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
+    cdsAvropInfo.Active := True;
+    OrderType := cdsAvropInfoOrderType.AsInteger;
 
-//    cdsBooking.Edit ;
-//    cdsBookingVoyageNo.AsInteger:= cdsVoyageVoyageNo.AsInteger ;
-//    cdsBooking.Post ;
+    cdsBookingProducts.Active := False;
+    cdsBookingProducts.ParamByName('ShippingPlanNo').AsInteger :=
+      ShippingPlanNo;
+    cdsBookingProducts.Active := True;
 
-   End
-   else
+    cdsBooking.Active := False;
+    cdsBooking.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
+    cdsBooking.Active := True;
+
+    LoadVessels;
+
+    if not cdsBooking.Eof then
     Begin
-//     deETD.Date:= SQLTimeStampToDateTime(cdsVoyageETD.AsSQLTimeStamp) ;
-    End ;
-  End //   if cdsVoyage.RecordCount = 0 then
-  else
-  Begin
-   cdsBooking.Insert ;
-   cdsBookingBookingNo.AsInteger        := dmsConnector.NextMaxNo('Booking') ;
-   cdsBookingShippingPlanNo.AsInteger   := ShippingPlanNo ;
-   cdsBookingLOText.AsVariant           := cdsAvropInfoLOText.AsVariant ;
-   cdsBookingInvoiceText.AsVariant      := cdsAvropInfoInvoiceText.AsVariant ;
-   cdsBookingNoteForLoadSheet.AsVariant := cdsAvropInfoNoteForLoadSheet.AsVariant ;
-   cdsBookingVoyageNo.AsInteger         := cdsBookingBookingNo.AsInteger ;
-   cdsBooking.Post ;
+      // Existing booking found
+      cdsVoyage.Active := False;
+      cdsVoyage.ParamByName('VoyageNo').AsInteger :=
+        cdsBookingBookingNo.AsInteger;
+      cdsVoyage.Active := True;
 
-   cdsVoyage.Insert ;
-//   cdsVoyageVoyageNo.AsInteger          := dmsConnector.NextMaxNo('Voyage') ;
-   cdsVoyageCarrierNo.AsInteger         := 0 ;
-//   cdsVoyageCreatedUser.AsInteger       := ThisUser.UserID ;
-//   cdsVoyageModifiedUser.AsInteger      := ThisUser.UserID ;
-//   cdsVoyageDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-   cdsVoyage.Post ;
-  End ;
- End ; //with
+      if (cdsVoyage.RecordCount = 0) or
+        ((cdsVoyage.RecordCount = 1) and (cdsVoyageVoyageno.AsInteger <>
+        cdsBookingBookingNo.AsInteger)) then
+      Begin
+        cdsVoyage.Insert;
+        // cdsVoyageVoyageNo.AsInteger     := dmsConnector.NextMaxNo('Voyage') ;
+        cdsVoyageCarrierNo.AsInteger := 0;
+        // cdsVoyageCreatedUser.AsInteger:= ThisUser.UserID ;
+        // cdsVoyageModifiedUser.AsInteger:= ThisUser.UserID ;
+        // cdsVoyageDateCreated.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
+        cdsVoyage.Post;
+
+        // cdsBooking.Edit ;
+        // cdsBookingVoyageNo.AsInteger:= cdsVoyageVoyageNo.AsInteger ;
+        // cdsBooking.Post ;
+
+      End
+      else
+      Begin
+        // deETD.Date:= SQLTimeStampToDateTime(cdsVoyageETD.AsSQLTimeStamp) ;
+      End;
+    End // if cdsVoyage.RecordCount = 0 then
+    else
+    Begin
+      cdsBooking.Insert;
+      cdsBookingBookingNo.AsInteger := dmsConnector.NextMaxNo('Booking');
+      cdsBookingShippingPlanNo.AsInteger := ShippingPlanNo;
+      cdsBookingLOText.AsVariant := cdsAvropInfoLOText.AsVariant;
+      cdsBookingInvoiceText.AsVariant := cdsAvropInfoInvoiceText.AsVariant;
+      cdsBookingNoteForLoadSheet.AsVariant :=
+        cdsAvropInfoNoteForLoadSheet.AsVariant;
+      cdsBookingVoyageNo.AsInteger := cdsBookingBookingNo.AsInteger;
+      cdsBooking.Post;
+
+      cdsVoyage.Insert;
+      // cdsVoyageVoyageNo.AsInteger          := dmsConnector.NextMaxNo('Voyage') ;
+      cdsVoyageCarrierNo.AsInteger := 0;
+      // cdsVoyageCreatedUser.AsInteger       := ThisUser.UserID ;
+      // cdsVoyageModifiedUser.AsInteger      := ThisUser.UserID ;
+      // cdsVoyageDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
+      cdsVoyage.Post;
+    End;
+  End; // with
 end;
 
 procedure TFormBookingForm.FormCreate(Sender: TObject);
 begin
- BookingNo:= -1 ;
- with dm_Booking, dmsContact, dmsSystem do
- Begin
-  cdsDelTerms.Active      := False ;
-  cdsDelTerms.Active      := True ;
+  BookingNo := -1;
+  with dm_Booking, dmsContact, dmsSystem do
+  Begin
+    cdsDelTerms.Active := False;
+    cdsDelTerms.Active := True;
 
-  cds_Currency.Active     := True ;
-  cdsPriceUnit.Active     := True ;
+    cds_Currency.Active := True;
+    cdsPriceUnit.Active := True;
 
-  cdsCarrier.Active       := True ;
-  cdsBookingType.Active   := True ;
-  cds_volunit.Active      := True ;
-  cdsCurrency.Active      := True ;
+    cdsCarrier.Active := True;
+    cdsBookingType.Active := True;
+    cds_volunit.Active := True;
+    cdsCurrency.Active := True;
 
-  cdsBooking.Active       := True ;
-  cdsShippers.Active      := True ;
-  cdsVoyage.Active        := True ;
- End ;
+    cdsBooking.Active := True;
+    cdsShippers.Active := True;
+    cdsVoyage.Active := True;
+  End;
 
- ReadMeOnly:= False ;
+  ReadMeOnly := False;
 end;
 
 procedure TFormBookingForm.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- with dm_Booking do
- Begin
-  if DataSaved = False then
-  if MessageDlg('Data ej sparad, vill du avsluta?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   CanClose:= True
-    else
-     CanClose:= False ;
- End ; //with
+  with dm_Booking do
+  Begin
+    if DataSaved = False then
+      if MessageDlg('Data ej sparad, vill du avsluta?', mtConfirmation,
+        [mbYes, mbNo], 0) = mrYes then
+        CanClose := True
+      else
+        CanClose := False;
+  End; // with
 end;
 
 procedure TFormBookingForm.FormShow(Sender: TObject);
 begin
- if ReadMeOnly = True then
- Begin
-  PanelTop.Enabled              := False ;
-  mLOText.Properties.ReadOnly             := True ;
-  mInvoiceText.Properties.ReadOnly        := True ;
-  mNoteForLoadSheet.Properties.ReadOnly   := True ;
-  PanelConfirm.Enabled        := False ;
- end ;
+  if ReadMeOnly = True then
+  Begin
+    PanelTop.Enabled := False;
+    mLOText.Properties.ReadOnly := True;
+    mInvoiceText.Properties.ReadOnly := True;
+    mNoteForLoadSheet.Properties.ReadOnly := True;
+    PanelConfirm.Enabled := False;
+  end;
 end;
 
 procedure TFormBookingForm.acSaveExecute(Sender: TObject);
 begin
- Save ;
+  Save;
 end;
 
-procedure TFormBookingForm.Save ;
+procedure TFormBookingForm.Save;
 begin
- with dm_Booking do
- Begin
-  CheckSaveVessel ;
-
-  if cdsBooking.State in [dsEdit, dsInsert] then
-   cdsBooking.Post ;
-  if cdsBooking.ChangeCount > 0 then
+  with dm_Booking do
   Begin
-   cdsBooking.ApplyUpdates(0) ;
-   cdsBooking.CommitUpdates ;
-  End ;
+    CheckSaveVessel;
 
-  if cdsVoyage.State in  [dsEdit, dsInsert] then
-   cdsVoyage.Post ;
-  if cdsVoyage.ChangeCount > 0 then
-   Begin
-    cdsVoyage.ApplyUpdates(0) ;
-    cdsVoyage.CommitUpdates ;
-   End ;
+    if cdsBooking.State in [dsEdit, dsInsert] then
+      cdsBooking.Post;
+    if cdsBooking.ChangeCount > 0 then
+    Begin
+      cdsBooking.ApplyUpdates(0);
+      cdsBooking.CommitUpdates;
+    End;
 
-  BookingNo:= cdsBookingBookingNo.AsInteger ;
- End ;
+    if cdsVoyage.State in [dsEdit, dsInsert] then
+      cdsVoyage.Post;
+    if cdsVoyage.ChangeCount > 0 then
+    Begin
+      cdsVoyage.ApplyUpdates(0);
+      cdsVoyage.CommitUpdates;
+    End;
+
+    BookingNo := cdsBookingBookingNo.AsInteger;
+  End;
 end;
 
 procedure TFormBookingForm.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TFormBookingForm.acSaveUpdate(Sender: TObject);
 begin
-  acSave.Enabled:= not DataSaved ;
+  acSave.Enabled := not DataSaved;
 end;
 
 procedure TFormBookingForm.acPrintExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
- A[0]:= dm_Booking.cdsBookingShippingPlanNo.AsInteger ;
- if OrderType = 0 then
- FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
- else
-  FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A) ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dm_Booking.cdsBookingShippingPlanNo.AsInteger;
+    if OrderType = 0 then
+      FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+    else
+      FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A);
 
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport) ;
- End ;
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
-
 
 procedure TFormBookingForm.FormDestroy(Sender: TObject);
 begin
- with dm_Booking, dmsContact, dmsSystem do
- Begin
-  cdsCarrier.Active:= False ;
-  cdsBookingType.Active:= False ;
-  cds_volunit.Active:= False ;
-  cdsCurrency.Active:= False ;
+  with dm_Booking, dmsContact, dmsSystem do
+  Begin
+    cdsCarrier.Active := False;
+    cdsBookingType.Active := False;
+    cds_volunit.Active := False;
+    cdsCurrency.Active := False;
 
-  cdsBooking.Active:= False ;
-  cdsShippers.Active:= False ;
-  cdsVoyage.Active:= False ;
-  cdsAvropInfo.Active:= False ;
-  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdLoRows.Name, grdLoRowsDBTableView1) ;
- End ;
+    cdsBooking.Active := False;
+    cdsShippers.Active := False;
+    cdsVoyage.Active := False;
+    cdsAvropInfo.Active := False;
+    dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoRows.Name,
+      grdLoRowsDBTableView1);
+  End;
 end;
 
 procedure TFormBookingForm.acChangeLayoutExecute(Sender: TObject);
 begin
   if grdLoRows.FocusedView is TcxCustomGridTableView then
     with TcxCustomGridTableController(grdLoRows.FocusedView.Controller) do
-      begin
-        Customization := True;
-        CustomizationForm.AlphaBlendValue := 255;
-        CustomizationForm.AlphaBlend := True;
-      end;
+    begin
+      Customization := True;
+      CustomizationForm.AlphaBlendValue := 255;
+      CustomizationForm.AlphaBlend := True;
+    end;
 end;
 
 procedure TFormBookingForm.acNewVesselNameExecute(Sender: TObject);
-Var FormCarrier : TFormCarrier ;
+Var
+  FormCarrier: TFormCarrier;
 begin
- FormCarrier:= TFormCarrier.Create(Nil);
- Try
-  FormCarrier.ShowModal ;
-  with dm_Booking do
-  Begin
-   LoadVessels ;
-  End ;
- Finally
-  FreeAndNil(FormCarrier) ;//.Free ;
- End ;
+  FormCarrier := TFormCarrier.Create(Nil);
+  Try
+    FormCarrier.ShowModal;
+    with dm_Booking do
+    Begin
+      LoadVessels;
+    End;
+  Finally
+    FreeAndNil(FormCarrier); // .Free ;
+  End;
 end;
 
-procedure TFormBookingForm.LoadVessels ;
+procedure TFormBookingForm.LoadVessels;
 Begin
- With dmsSystem do
- Begin
-  cbVessel.Properties.Items.Clear ;
-  with cdsCarrier do
-  begin
-//    DisableControls;
-   if not Active then
-    Active  := True ;
-//    Try
-    First;
-    while not Eof do
+  With dmsSystem do
+  Begin
+    cbvessel.Properties.Items.Clear;
+    with cdsCarrier do
     begin
-      cbVessel.Properties.Items.Add(FieldByName('CarrierName').AsString);
-      Next;
+      // DisableControls;
+      if not Active then
+        Active := True;
+      // Try
+      First;
+      while not Eof do
+      begin
+        cbvessel.Properties.Items.Add(FieldByName('CarrierName').AsString);
+        Next;
+      end;
+      // Finally
+      // Active  := False ;
+      // End ;
+      // EnableControls;
     end;
-//    Finally
-//     Active  := False ;
-//    End ;
-//    EnableControls;
-  end;
- End ;//With dmsSystem do
-End ;
+  End; // With dmsSystem do
+End;
 
 procedure TFormBookingForm.cbvesselExit(Sender: TObject);
 begin
- CheckSaveVessel ;
+  CheckSaveVessel;
 end;
 
-procedure TFormBookingForm.CheckSaveVessel ;
-Var CarrierNo : Integer ;
+procedure TFormBookingForm.CheckSaveVessel;
+Var
+  CarrierNo: Integer;
 begin
- with dm_Booking do
- Begin
-  if Length(Trim(cbvessel.text)) > 0 then
+  with dm_Booking do
   Begin
-   CarrierNo := dmsSystem.GetCarrierNo(cbvessel.text) ;
-   if cdsVoyage.State = dsBrowse then
-    cdsVoyage.Edit ;
-   cdsVoyageCarrierNo.AsInteger    := CarrierNo ;
-   cdsVoyage.Post ;
-  End //if Length(Trim(cbvessel.text)) > 0 then
-  else
-  Begin
-   cdsVoyage.Edit ;
-   cdsVoyageCarrierNo.Clear ;
-   cdsVoyage.Post ;
-  End ;
- End ;//with dm_Booking do
+    if Length(Trim(cbvessel.text)) > 0 then
+    Begin
+      CarrierNo := dmsSystem.GetCarrierNo(cbvessel.text);
+      if cdsVoyage.State = dsBrowse then
+        cdsVoyage.Edit;
+      cdsVoyageCarrierNo.AsInteger := CarrierNo;
+      cdsVoyage.Post;
+    End // if Length(Trim(cbvessel.text)) > 0 then
+    else
+    Begin
+      cdsVoyage.Edit;
+      cdsVoyageCarrierNo.Clear;
+      cdsVoyage.Post;
+    End;
+  End; // with dm_Booking do
 end;
 
-procedure TFormBookingForm.SetETDDate ;
+procedure TFormBookingForm.SetETDDate;
 Begin
- with dm_Booking do
- Begin
-  if (cdsVoyage.Active) and (cdsVoyage.RecordCount > 0) then
+  with dm_Booking do
   Begin
-   if cdsVoyage.State in [dsBrowse] then
-    cdsVoyage.Edit ;
-   cdsVoyageETD.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
-   cdsVoyage.Post ;
-  End ;
- End ; //With
-End ;
+    if (cdsVoyage.Active) and (cdsVoyage.RecordCount > 0) then
+    Begin
+      if cdsVoyage.State in [dsBrowse] then
+        cdsVoyage.Edit;
+      cdsVoyageETD.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+      cdsVoyage.Post;
+    End;
+  End; // With
+End;
 
 procedure TFormBookingForm.acSetETDandSaveAndExitExecute(Sender: TObject);
 begin
- SetETDDate ;
- Save ;
- ModalResult:= mrOK ;
+  SetETDDate;
+  Save;
+  ModalResult := mrOK;
 end;
-
 
 procedure TFormBookingForm.acSetETDExecute(Sender: TObject);
 begin
- SetETDDate ;
+  SetETDDate;
 end;
 
 end.

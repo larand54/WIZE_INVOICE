@@ -21,9 +21,13 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  cxNavigator, System.Actions;
 
 type
   TfLoadOrderSearch = class(TForm)
@@ -91,271 +95,282 @@ type
     procedure EditSlutkundEnter(Sender: TObject);
     procedure EditSlutkundExit(Sender: TObject);
   private
-    SelectOK  : Boolean ;
-    FLONo     : Integer;
+    SelectOK: Boolean;
+    FLONo: Integer;
 
-    procedure BuildSQL(const LO, LoadNo : Integer;const CDS_REF, SlutKund : String) ;
+    procedure BuildSQL(const LO, LoadNo: Integer;
+      const CDS_REF, SlutKund: String);
   public
     property LONo: Integer read FLONo;
   end;
 
-  function OpenLoadOrderSearch(var LONr : Integer) : Boolean;
+function OpenLoadOrderSearch(var LONr: Integer): Boolean;
 
-//var fFreightAvrSearch: TfFreightAvrSearch;
+// var fFreightAvrSearch: TfFreightAvrSearch;
 
 implementation
 
 {$R *.dfm}
-uses dmsDataConn, VidaConst , dmsVidaSystem, VidaUser ;
 
-//-----------------------------------------------------------------------
-function OpenLoadOrderSearch(var LONr : Integer) : Boolean;
+uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser;
+
+// -----------------------------------------------------------------------
+function OpenLoadOrderSearch(var LONr: Integer): Boolean;
 begin
   Result := False;
   with TfLoadOrderSearch.Create(Application) do
   begin
-{  	FSearchOption := SearchOption;
-  	if FSearchOption = cSearchLO then
-    begin
+    { FSearchOption := SearchOption;
+      if FSearchOption = cSearchLO then
+      begin
       Label1.Caption := 'LO Nr:';
       Caption := 'Sök LO Nr';
-    end
-    else
-  	if FSearchOption = cSearchALO then
-    begin
+      end
+      else
+      if FSearchOption = cSearchALO then
+      begin
       Label1.Caption := 'Add LO No:';
       Caption := 'Add LO No Search';
-    end
-    else
-  	if FSearchOption = cSearchReferens then
-    begin
+      end
+      else
+      if FSearchOption = cSearchReferens then
+      begin
       Label1.Caption := 'Referens:';
       Caption := 'Sök referens';
-    end; }
+      end; }
 
     if ShowModal = mrOk then
     begin
-      Result        := True;
-      LONr          := cds_SearchOrderLO.AsInteger ;
+      Result := True;
+      LONr := cds_SearchOrderLO.AsInteger;
 
-{    	if FSearchOption = cSearchLO then
-      Begin
-       if cds_SearchOrderALO.AsInteger > 0 then
+      { if FSearchOption = cSearchLO then
+        Begin
+        if cds_SearchOrderALO.AsInteger > 0 then
         PLONr:= cds_SearchOrderALO.AsInteger
-         else
-          PLONr:= LONO ;
-      End
-      else
-    	if FSearchOption = cSearchReferens then
-      Begin
-       if cds_SearchOrderALO.AsInteger > 0 then
+        else
+        PLONr:= LONO ;
+        End
+        else
+        if FSearchOption = cSearchReferens then
+        Begin
+        if cds_SearchOrderALO.AsInteger > 0 then
         PLONr:= cds_SearchOrderALO.AsInteger
-         else
-          PLONr:= LONO ;
-      End
-      else
-       PLONr := 0 ; }
+        else
+        PLONr:= LONO ;
+        End
+        else
+        PLONr := 0 ; }
 
+      { if cds_SearchOrderALO.AsInteger > 0 then
+        PLONr:= cds_SearchOrderALO.AsInteger
+        else
+        PLONr := 0 ; }
 
-{     if cds_SearchOrderALO.AsInteger > 0 then
-      PLONr:= cds_SearchOrderALO.AsInteger
-       else
-        PLONr := 0 ;           }
-
-    if not (cds_SearchOrder.bof and cds_SearchOrder.eof) then
-     Begin
-//      grdSearchOrder.SetFocus ;
-      SelectOK:= True ;
-     End ;
+      if not(cds_SearchOrder.bof and cds_SearchOrder.eof) then
+      Begin
+        // grdSearchOrder.SetFocus ;
+        SelectOK := True;
+      End;
       if SelectOK = False then
-       LONr := 0 ;
+        LONr := 0;
     end;
     Free;
   end;
 end;
 
-//-----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 procedure TfLoadOrderSearch.FormCreate(Sender: TObject);
 begin
   editSearch.Text := '';
-  SelectOK        := False ;
+  SelectOK := False;
 
-//  sq_SearchOrder.Close;
+  // sq_SearchOrder.Close;
 end;
 
 procedure TfLoadOrderSearch.atOKExecute(Sender: TObject);
 begin
   with cds_SearchOrder do
   begin
-    if (not Active) or (Eof and bof) then Exit;
-    FLONo    :=  FieldByName('LO').AsInteger;
-//    FLONo       :=  FieldByName('LO').AsInteger;
-//    FLONo       :=  FieldByName('LO').AsInteger;
-//    FOrderNoText:=  FieldByName('OrderNoText').AsString ;
+    if (not Active) or (eof and bof) then
+      Exit;
+    FLONo := FieldByName('LO').AsInteger;
+    // FLONo       :=  FieldByName('LO').AsInteger;
+    // FLONo       :=  FieldByName('LO').AsInteger;
+    // FOrderNoText:=  FieldByName('OrderNoText').AsString ;
     ModalResult := mrOk;
   end;
 end;
 
-//-----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 procedure TfLoadOrderSearch.atOKUpdate(Sender: TObject);
 begin
   with cds_SearchOrder do
-    (Sender as TAction).Enabled := Active and (not (bof and Eof) );
+    (Sender as TAction).Enabled := Active and (not(bof and eof));
 end;
 
-
-procedure TfLoadOrderSearch.EditSearchCSDRefKeyUp(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfLoadOrderSearch.EditSearchCSDRefKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
 begin
-  if Key <> VK_RETURN then Exit;
+  if Key <> VK_RETURN then
+    Exit;
   if Length(Trim(EditSearchCSDRef.Text)) > 0 then
-  BuildSQL(-1, -1, EditSearchCSDRef.Text, '') ;
+    BuildSQL(-1, -1, EditSearchCSDRef.Text, '');
 end;
 
 procedure TfLoadOrderSearch.EditSearchLOKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key <> VK_RETURN then Exit;
-  if StrToIntDef(EditSearchLO.Text,0) > 0 then
-  BuildSQL(StrToIntDef(EditSearchLO.Text,0), -1, '', '') ;
+  if Key <> VK_RETURN then
+    Exit;
+  if StrToIntDef(EditSearchLO.Text, 0) > 0 then
+    BuildSQL(StrToIntDef(EditSearchLO.Text, 0), -1, '', '');
 end;
 
 procedure TfLoadOrderSearch.grdLoadOrderSearchDBTableView1KeyUp(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-  if Key = VK_RETURN then atOKExecute(sender);
+  if Key = VK_RETURN then
+    atOKExecute(Sender);
 end;
 
 procedure TfLoadOrderSearch.FormShow(Sender: TObject);
 begin
- if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoadOrderSearchDBTableView1.Name, grdLoadOrderSearchDBTableView1) = False then ;
+  if dmsSystem.LoadGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLoadOrderSearchDBTableView1.Name,
+    grdLoadOrderSearchDBTableView1) = False then;
 end;
 
 procedure TfLoadOrderSearch.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoadOrderSearchDBTableView1.Name, grdLoadOrderSearchDBTableView1) ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLoadOrderSearchDBTableView1.Name,
+    grdLoadOrderSearchDBTableView1);
 end;
 
 procedure TfLoadOrderSearch.editSearchEnter(Sender: TObject);
 begin
- editSearch.Color:= clYellow ;
+  editSearch.Color := clYellow;
 end;
 
 procedure TfLoadOrderSearch.editSearchExit(Sender: TObject);
 begin
- editSearch.Color:= clWindow ;
+  editSearch.Color := clWindow;
 end;
 
 procedure TfLoadOrderSearch.EditSearchCSDRefEnter(Sender: TObject);
 begin
- EditSearchCSDRef.Color:= clYellow ;
+  EditSearchCSDRef.Color := clYellow;
 end;
 
 procedure TfLoadOrderSearch.EditSearchCSDRefExit(Sender: TObject);
 begin
- EditSearchCSDRef.Color:= clWindow ;
+  EditSearchCSDRef.Color := clWindow;
 end;
 
 procedure TfLoadOrderSearch.EditSearchLOEnter(Sender: TObject);
 begin
- EditSearchLO.Color:= clYellow ;
+  EditSearchLO.Color := clYellow;
 end;
 
 procedure TfLoadOrderSearch.EditSearchLOExit(Sender: TObject);
 begin
- EditSearchLO.Color:= clWindow ;
+  EditSearchLO.Color := clWindow;
 end;
 
-procedure TfLoadOrderSearch.BuildSQL(const LO, LoadNo : Integer;const CDS_REF, SlutKund : String) ;
-Var Save_Cursor : TCursor;
-    pCDS_REF,
-    pSlutKund   : String ;
+procedure TfLoadOrderSearch.BuildSQL(const LO, LoadNo: Integer;
+  const CDS_REF, SlutKund: String);
+Var
+  Save_Cursor: TCursor;
+  pCDS_REF, pSlutKund: String;
 begin
- pCDS_REF       := '%' + CDS_REF + '%' ;
- pSlutKund      := '%' + SlutKund + '%' ;
- SelectOK       := False ;
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
- Try
-//  grdSearchOrderDBTableView1LO.Visible         := True ;
-//  grdSearchOrderDBTableView1Reference.Visible  := True ;
-//  grdSearchOrderDBTableView1ALO.Visible        := False ;
-  with cds_SearchOrder do
-  begin
-    cds_SearchOrder.Active:= False ;
-    SQL.Clear;
-    SQL.Add('Select distinct kund.ClientName AS Kund, ssp.ShippingPlanNo AS LO,') ;
-    SQL.Add('csd.Reference AS Referens, ssp.ProductDescription AS Produkt, Verk.SearchName AS Leverantör, ssp.ShippingPlanStatus AS Status,') ;
-    SQL.Add('SlutKund.ClientName AS Slutkund,') ;
-    SQL.Add('Case') ;
-    SQL.Add('WHEN ssp.ObjectType = 0 THEN ' + QuotedStr('Interna')) ;
-    SQL.Add('WHEN ssp.ObjectType = 1 THEN ' + QuotedStr('Add LO')) ;
-    SQL.Add('WHEN ssp.ObjectType = 2 THEN ' + QuotedStr('Externa') + ' END AS LO_typ, ssp.SupplierShipPlanObjectNo AS LO_ID') ;
-    SQL.Add('FROM dbo.SupplierShippingPlan ssp') ;
-    SQL.Add('Inner Join dbo.Client kund on kund.ClientNo = ssp.CustomerNo') ;
-    SQL.Add('Inner Join dbo.Client Verk on Verk.ClientNo = ssp.SupplierNo') ;
-    SQL.Add('Left Outer Join dbo.CustomerShippingPlanDetails csd') ;
-    SQL.Add('Inner Join dbo.CustomerShippingPlanHeader csh on csh.ShippingPlanNo = csd.ShippingPlanNo') ;
-    SQL.Add('Inner Join dbo.Client SlutKund on SlutKund.ClientNo = csh.CustomerNo') ;
-    SQL.Add('on csd.CustShipPlanDetailObjectNo = ssp.CustShipPlanDetailObjectNo');
-    SQL.Add('Left Outer Join dbo.LoadShippingPlan LSP on LSP.ShippingPlanNo = ssp.ShippingPlanNo');
-    if LO > 0 then
-    sql.Add('Where SSP.ShippingPlanNo = ' + IntToStr(LO));
-    if LoadNo > 0 then
-    sql.Add('Where LSP.LoadNo = ' + IntToStr(LoadNo));
-    if Length(Trim(CDS_REF)) > 0 then
-    sql.Add('Where csd.Reference Like ' + QuotedStr(pCDS_REF)) ;
+  pCDS_REF := '%' + CDS_REF + '%';
+  pSlutKund := '%' + SlutKund + '%';
+  SelectOK := False;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
+    // grdSearchOrderDBTableView1LO.Visible         := True ;
+    // grdSearchOrderDBTableView1Reference.Visible  := True ;
+    // grdSearchOrderDBTableView1ALO.Visible        := False ;
+    with cds_SearchOrder do
+    begin
+      cds_SearchOrder.Active := False;
+      SQL.Clear;
+      SQL.Add('Select distinct kund.ClientName AS Kund, ssp.ShippingPlanNo AS LO,');
+      SQL.Add('csd.Reference AS Referens, ssp.ProductDescription AS Produkt, Verk.SearchName AS Leverantör, ssp.ShippingPlanStatus AS Status,');
+      SQL.Add('SlutKund.ClientName AS Slutkund,');
+      SQL.Add('Case');
+      SQL.Add('WHEN ssp.ObjectType = 0 THEN ' + QuotedStr('Interna'));
+      SQL.Add('WHEN ssp.ObjectType = 1 THEN ' + QuotedStr('Add LO'));
+      SQL.Add('WHEN ssp.ObjectType = 2 THEN ' + QuotedStr('Externa') +
+        ' END AS LO_typ, ssp.SupplierShipPlanObjectNo AS LO_ID');
+      SQL.Add('FROM dbo.SupplierShippingPlan ssp');
+      SQL.Add('Inner Join dbo.Client kund on kund.ClientNo = ssp.CustomerNo');
+      SQL.Add('Inner Join dbo.Client Verk on Verk.ClientNo = ssp.SupplierNo');
+      SQL.Add('Left Outer Join dbo.CustomerShippingPlanDetails csd');
+      SQL.Add('Inner Join dbo.CustomerShippingPlanHeader csh on csh.ShippingPlanNo = csd.ShippingPlanNo');
+      SQL.Add('Inner Join dbo.Client SlutKund on SlutKund.ClientNo = csh.CustomerNo');
+      SQL.Add('on csd.CustShipPlanDetailObjectNo = ssp.CustShipPlanDetailObjectNo');
+      SQL.Add('Left Outer Join dbo.LoadShippingPlan LSP on LSP.ShippingPlanNo = ssp.ShippingPlanNo');
+      if LO > 0 then
+        SQL.Add('Where SSP.ShippingPlanNo = ' + IntToStr(LO));
+      if LoadNo > 0 then
+        SQL.Add('Where LSP.LoadNo = ' + IntToStr(LoadNo));
+      if Length(Trim(CDS_REF)) > 0 then
+        SQL.Add('Where csd.Reference Like ' + QuotedStr(pCDS_REF));
 
-    if Length(Trim(SlutKund)) > 0 then
-    sql.Add('Where SlutKund.ClientName Like ' + QuotedStr(pSlutKund)) ;
+      if Length(Trim(SlutKund)) > 0 then
+        SQL.Add('Where SlutKund.ClientName Like ' + QuotedStr(pSlutKund));
 
+      if ThisUser.CompanyNo <> 741 then
+        SQL.Add('AND ssp.SupplierNo = ' + IntToStr(ThisUser.CompanyNo));
 
-    if ThisUser.CompanyNo <> 741 then
-    sql.Add('AND ssp.SupplierNo = ' + IntToStr(ThisUser.CompanyNo)) ;
+      // sql.SaveToFile('cds_SearchOrder.txt');
 
-//    sql.SaveToFile('cds_SearchOrder.txt');
-
-    try
-     cds_SearchOrder.Active:= True ;
-    except
+      try
+        cds_SearchOrder.Active := True;
+      except
+      end;
+      if not(cds_SearchOrder.bof and cds_SearchOrder.eof) then
+      Begin
+        grdLoadOrderSearch.SetFocus;
+        SelectOK := True;
+      End;
     end;
-    if not (cds_SearchOrder.bof and cds_SearchOrder.eof) then
-     Begin
-      grdLoadOrderSearch.SetFocus ;
-      SelectOK:= True ;
-     End ;
+
+  finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
   end;
-
- finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
 end;
 
-procedure TfLoadOrderSearch.editSearchKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfLoadOrderSearch.editSearchKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  if Key <> VK_RETURN then Exit;
-  if StrToIntDef(editSearch.Text,0) > 0 then
-  BuildSQL(-1, StrToIntDef(editSearch.Text,0), '', '') ;
+  if Key <> VK_RETURN then
+    Exit;
+  if StrToIntDef(editSearch.Text, 0) > 0 then
+    BuildSQL(-1, StrToIntDef(editSearch.Text, 0), '', '');
 end;
 
-procedure TfLoadOrderSearch.EditSlutkundKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfLoadOrderSearch.EditSlutkundKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  if Key <> VK_RETURN then Exit;
-  if Length(Trim(EditSlutKund.Text)) > 0 then
-  BuildSQL(-1, -1, '', EditSlutKund.Text) ;
+  if Key <> VK_RETURN then
+    Exit;
+  if Length(Trim(EditSlutkund.Text)) > 0 then
+    BuildSQL(-1, -1, '', EditSlutkund.Text);
 end;
 
 procedure TfLoadOrderSearch.EditSlutkundEnter(Sender: TObject);
 begin
- EditSlutkund.Color:= clYellow ;
+  EditSlutkund.Color := clYellow;
 end;
 
 procedure TfLoadOrderSearch.EditSlutkundExit(Sender: TObject);
 begin
- EditSlutkund.Color:= clWindow ;
+  EditSlutkund.Color := clWindow;
 end;
 
 end.

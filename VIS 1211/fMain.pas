@@ -14,7 +14,7 @@ uses
   Forms,
   ImgList,
   SysUtils,
-  Windows, ShellApi,   inifiles, StdCtrls, jpeg, Graphics,
+  Windows, ShellApi, inifiles, StdCtrls, jpeg, Graphics,
   printers, ComCtrls, Messages,
   cxShellBrowserDialog, cxPropertiesStore, cxClasses,
   dxRibbonGallery, dxRibbon, dxStatusBar, dxRibbonStatusBar, cxControls,
@@ -22,8 +22,10 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxEdit, DB, cxDBData, cxGridLevel,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGrid, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  cxGridDBTableView, cxGrid, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
   FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxContainer, cxLabel,
   cxGridCustomPopupMenu, cxGridPopupMenu, cxCalc, cxCheckBox, cxTextEdit,
   dxRibbonSkins, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
@@ -40,10 +42,7 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxRibbonPainter, dxSkinsdxBarPainter,
   dxBarApplicationMenu, dxScreenTip, Vcl.Menus, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions ;
-
-
-
+  dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions;
 
 type
   TfrmMain = class(TForm)
@@ -196,7 +195,8 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acBytAnvandareExecute(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure acFTPSetupExecute(Sender: TObject);
+(* LG    procedure acFTPSetupExecute(Sender: TObject);
+*)
     procedure acReportNamesExecute(Sender: TObject);
     procedure acAvropExecute(Sender: TObject);
     procedure acARExecute(Sender: TObject);
@@ -231,17 +231,17 @@ type
     procedure rg_PrintSetUpClick(Sender: TObject);
     procedure dxBarButton18Click(Sender: TObject);
   private
-    a : String ;
-    function  GetLastNrToUnLock : Integer ;
-    function  FormOpen : Boolean ;
+    a: String;
+    function GetLastNrToUnLock: Integer;
+    function FormOpen: Boolean;
     procedure AppException(Sender: TObject; E: Exception);
-    procedure PaketInmatningPerPktKod (Sender: TObject);
+    procedure PaketInmatningPerPktKod(Sender: TObject);
     procedure CleanUpForms(Sender: TObject);
-    procedure GetIniFileMap(Sender: TObject) ;
-    procedure CheckMappar ;
-    procedure CheckDrive ;
-    procedure GetPropIniStores(Sender: TObject) ;
-    Procedure InitOnStartOfProgram ;
+    procedure GetIniFileMap(Sender: TObject);
+    procedure CheckMappar;
+    procedure CheckDrive;
+    procedure GetPropIniStores(Sender: TObject);
+    Procedure InitOnStartOfProgram;
   public
 
   end;
@@ -249,99 +249,94 @@ type
 var
   FrmMain: TfrmMain;
 
-
-
 implementation
 
 uses
   Dialogs,
 
-
   VidaConst,
   VidaType,
-  VidaUser,  fInvoiceList,
+  VidaUser, fInvoiceList,
   dmcVidaSystem, UnitSetup, UnitCRViewReport,
   dmLM1, UnitShippingInstruction, UnitKP_List,
   fLoadOrder, dmcVidaOrder, UnitAboutBox,
   UnitLoadArrivals, UnitPkgInfo, dmsDataConn,
-  //UnitInventoryReport,
+  // UnitInventoryReport,
   UnitSokAvropFormular,
-  UnitAvrakningar, dmsVidaProduct, //dmsVidaPkg,
-  dmsVidaSystem, uFreightLoad, uUserPreference, //Ucurrency,
-  //uPkgLog,
-  UnitCRPrintReport, //UnitProdRep,
-  uGenShipCost, //uProductionUnit,
+  UnitAvrakningar, dmsVidaProduct, // dmsVidaPkg,
+  dmsVidaSystem, uFreightLoad, uUserPreference, // Ucurrency,
+  // uPkgLog,
+  UnitCRPrintReport, // UnitProdRep,
+  uGenShipCost, // uProductionUnit,
   uBasMatPunkter,
   UnotInvoicedReport,
   uSamlingsfaktura, uLastLista,
-  //uPktNrPos,
-  //uPkgNoPos, //UnitPkgsByPktType, //UExtMovePkg,
-  //dm_Inventory,
-  uEncode , fAvrakningar, fSkapaAvrakning,
-  UPortArrivals, uChangeLogins , uChkAvrLoads, dmc_UserProps,
-  //uAttestLegoRun, //fRunAttester, //fSkapaRunAttest, 
-  //uFreightExternLoad,
-  uFtpParam, uKundspecifika, uKontoLogik, uOrderStocken, uIntrastat,
+  // uPktNrPos,
+  // uPkgNoPos, //UnitPkgsByPktType, //UExtMovePkg,
+  // dm_Inventory,
+  uEncode, fAvrakningar, fSkapaAvrakning,
+  UPortArrivals, uChangeLogins, uChkAvrLoads, dmc_UserProps,
+  // uAttestLegoRun, //fRunAttester, //fSkapaRunAttest,
+  // uFreightExternLoad,
+  uKundspecifika, uKontoLogik, uOrderStocken, uIntrastat,
   uTradingAnalyze, uFreightExternLoad, uPayControl,
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
   PrintUnit, PreviewForm, uPrintTest;
 
-
-
 {$R *.DFM}
 
-function TfrmMain.FormOpen : Boolean ;
+function TfrmMain.FormOpen: Boolean;
 Begin
-  Result:= False ;
+  Result := False;
   if Assigned(fLastLista) then
-   Result:= True ;
+    Result := True;
   if Assigned(fnotInvoicedReport) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmAvrakningar) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmGjordaAvrakningar) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmLoadArrivals) then
-   Result:= True ;
+    Result := True;
 
   if Assigned(fChkAvrLoads) then
-   Result:= True ;
+    Result := True;
 
-//  if Assigned(frmPayment) then
-//   Result:= True ;
+  // if Assigned(frmPayment) then
+  // Result:= True ;
   if Assigned(frmFreightLoad) then
-   Result:= True ;
+    Result := True;
   if Assigned(fSamlingsfaktura) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmInvoiceList) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmAvrop) then
-   Result:= True ;
-//  if Assigned(frmProdRep) then
-//   Result:= True ;
-//  if Assigned(frmInventoryReport) then
-//   Result:= True ;
-//  if Assigned(frmCreatePayment) then
-//   Result:= True ;
+    Result := True;
+  // if Assigned(frmProdRep) then
+  // Result:= True ;
+  // if Assigned(frmInventoryReport) then
+  // Result:= True ;
+  // if Assigned(frmCreatePayment) then
+  // Result:= True ;
 
   if Assigned(frmSkapaAvrakning) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmSokAvropFormular) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmLoadOrder) then
-   Result:= True ;
+    Result := True;
 
   if Assigned(frmPortArrivals) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmKP_List) then
-   Result:= True ;
+    Result := True;
   if Assigned(frmShippingInstruction) then
-   Result:= True ;
+    Result := True;
 
   if Assigned(frmShippingInstruction) then
-   Result:= True ;
+    Result := True;
 
-End ;
+End;
 
 function GetVersion: string;
 var
@@ -353,7 +348,8 @@ var
 begin
   Result := '';
   VerInfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), Dummy);
-  if VerInfoSize = 0 then Exit;
+  if VerInfoSize = 0 then
+    Exit;
   GetMem(VerInfo, VerInfoSize);
   GetFileVersionInfo(PChar(ParamStr(0)), 0, VerInfoSize, VerInfo);
   VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
@@ -367,1178 +363,1200 @@ begin
   FreeMem(VerInfo, VerInfoSize);
 end;
 
-procedure TfrmMain.CheckDrive ;
+procedure TfrmMain.CheckDrive;
 Begin
   if not DirectoryExists('h:\') then
   Begin
-   cxShellBrowserDialog1.Title:= 'Disk drive H: finns ej, ange en annan.' ;
-   cxShellBrowserDialog1.Execute ;
-   dmsConnector.DriveLetter:= cxShellBrowserDialog1.Path ;
+    cxShellBrowserDialog1.Title := 'Disk drive H: finns ej, ange en annan.';
+    cxShellBrowserDialog1.Execute;
+    dmsConnector.DriveLetter := cxShellBrowserDialog1.Path;
   End
-   else
-    dmsConnector.DriveLetter:= 'h:\';
- IncludeTrailingBackslash(dmsConnector.DriveLetter) ;
-End ;
+  else
+    dmsConnector.DriveLetter := 'h:\';
+  IncludeTrailingBackslash(dmsConnector.DriveLetter);
+End;
 
-(*procedure MyNotify(ExcRecord: TEurekaExceptionRecord; var Handled: Boolean);
-begin
-{ if DebugHook <> 0 then
+(* procedure MyNotify(ExcRecord: TEurekaExceptionRecord; var Handled: Boolean);
+  begin
+  { if DebugHook <> 0 then
   Handled := False
-   else
-    Handled:= True ; }
- Handled := not (ExcRecord.ExceptionObject is EdxEditInvalidInput) ;
-end;*)
+  else
+  Handled:= True ; }
+  Handled := not (ExcRecord.ExceptionObject is EdxEditInvalidInput) ;
+  end; *)
 
-//---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 procedure TfrmMain.AppException(Sender: TObject; E: Exception);
 begin
   if Pos('547', E.Message) > 0 then
     ShowMessage('The system can not insert record due to data conflict!')
+  else if Pos('2601', E.Message) > 0 then
+    ShowMessage('The system can not insert record due to data duplication!')
+  else if Pos('10015', E.Message) > 0 then
+    ShowMessage('The system can not insert record due to data duplication!')
   else
-    if Pos('2601', E.Message) > 0 then
-      ShowMessage('The system can not insert record due to data duplication!')
-    else
-      if Pos('10015', E.Message) > 0 then
-        ShowMessage('The system can not insert record due to data duplication!')
-      else
-        ShowMessage('System Error. Original Message: ' + E.Message)
+    ShowMessage('System Error. Original Message: ' + E.Message)
 end;
 
-
-//---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-// ExceptionNotify := MyNotify; // Assign ExceptionNotify variable to MyNotify procedure.
+  // ExceptionNotify := MyNotify; // Assign ExceptionNotify variable to MyNotify procedure.
   Application.OnException := AppException;
 end;
 
-
-//---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 procedure TfrmMain.atExitExecute(Sender: TObject);
 begin
   close
 end;
 
-//-------------------------------------------------------------
+// -------------------------------------------------------------
 procedure TfrmMain.atAboutExecute(Sender: TObject);
 begin
- TAboutBox.Execute ;
+  TAboutBox.Execute;
 end;
 
-procedure TfrmMain.CheckMappar ;
-Var EditCRFolder, EditIniFiles, eUserDir, eExcelDir, eLODir : String ;
+procedure TfrmMain.CheckMappar;
+Var
+  EditCRFolder, EditIniFiles, eUserDir, eExcelDir, eLODir: String;
 Begin
- if DirectoryExists(dmsConnector.DriveLetter) then
- Begin
-  if not DirectoryExists(dmsConnector.DriveLetter+'VIS') then
-    if not CreateDir(dmsConnector.DriveLetter+'VIS') then
-    raise Exception.Create('Cannot create '+dmsConnector.DriveLetter+'VIS');
+  if DirectoryExists(dmsConnector.DriveLetter) then
+  Begin
+    if not DirectoryExists(dmsConnector.DriveLetter + 'VIS') then
+      if not CreateDir(dmsConnector.DriveLetter + 'VIS') then
+        raise Exception.Create('Cannot create ' +
+          dmsConnector.DriveLetter + 'VIS');
 
-  if not DirectoryExists(dmsConnector.DriveLetter+'VIS\KONFIG') then
-    if not CreateDir(dmsConnector.DriveLetter+'VIS\KONFIG') then
-    raise Exception.Create('Cannot create '+dmsConnector.DriveLetter+'VIS\KONFIG');
+    if not DirectoryExists(dmsConnector.DriveLetter + 'VIS\KONFIG') then
+      if not CreateDir(dmsConnector.DriveLetter + 'VIS\KONFIG') then
+        raise Exception.Create('Cannot create ' + dmsConnector.DriveLetter +
+          'VIS\KONFIG');
 
-  if not DirectoryExists(dmsConnector.DriveLetter+'VIS\MALL') then
-    if not CreateDir(dmsConnector.DriveLetter+'VIS\MALL') then
-    raise Exception.Create('Cannot create '+dmsConnector.DriveLetter+'VIS\MALL');
+    if not DirectoryExists(dmsConnector.DriveLetter + 'VIS\MALL') then
+      if not CreateDir(dmsConnector.DriveLetter + 'VIS\MALL') then
+        raise Exception.Create('Cannot create ' + dmsConnector.DriveLetter +
+          'VIS\MALL');
 
-  if not DirectoryExists(dmsConnector.DriveLetter+'VIS\TEMP') then
-    if not CreateDir(dmsConnector.DriveLetter+'VIS\TEMP') then
-    raise Exception.Create('Cannot create '+dmsConnector.DriveLetter+'VIS\TEMP');
- End ;
-{ if not FileExists(dmsConnector.DriveLetter+'VIS\KONFIG\VIS.INI') then
- with TIniFile.Create(dmsConnector.DriveLetter+'VIS\KONFIG\VIS.INI') do
+    if not DirectoryExists(dmsConnector.DriveLetter + 'VIS\TEMP') then
+      if not CreateDir(dmsConnector.DriveLetter + 'VIS\TEMP') then
+        raise Exception.Create('Cannot create ' + dmsConnector.DriveLetter +
+          'VIS\TEMP');
+  End;
+  { if not FileExists(dmsConnector.DriveLetter+'VIS\KONFIG\VIS.INI') then
+    with TIniFile.Create(dmsConnector.DriveLetter+'VIS\KONFIG\VIS.INI') do
     try
-     EditCRFolder:= ReadString ('Security', 'CRPath', '\\vida912\E\Microsoft SQL Server\MSSQL\Program\VISRAPPORTER\') ;
-     EditIniFiles:= ReadString ('Security', 'InifilesMap', dmsConnector.DriveLetter+'VIS\KONFIG\') ;
-     eUserDir:= ReadString ('Setup', 'UserDir', dmsConnector.DriveLetter+'VIS\MALL');
-     eExcelDir:= ReadString ('Setup', 'ExcelDir', dmsConnector.DriveLetter+'VIS\TEMP');
-     eLODir:= ReadString ('Setup', 'LODir', dmsConnector.DriveLetter+'VIS\MALL');
+    EditCRFolder:= ReadString ('Security', 'CRPath', '\\vida912\E\Microsoft SQL Server\MSSQL\Program\VISRAPPORTER\') ;
+    EditIniFiles:= ReadString ('Security', 'InifilesMap', dmsConnector.DriveLetter+'VIS\KONFIG\') ;
+    eUserDir:= ReadString ('Setup', 'UserDir', dmsConnector.DriveLetter+'VIS\MALL');
+    eExcelDir:= ReadString ('Setup', 'ExcelDir', dmsConnector.DriveLetter+'VIS\TEMP');
+    eLODir:= ReadString ('Setup', 'LODir', dmsConnector.DriveLetter+'VIS\MALL');
 
-     WriteString('Setup','UserDir', eUserDir);
-     WriteString('Setup','ExcelDir', eExcelDir);
-     WriteString('Setup','LODir', eLODir);
-     WriteString ('Security', 'CRPath', EditCRFolder) ;
-     WriteString ('Security', 'InifilesMap', EditIniFiles) ;
-     dmsConnector.InifilesMap:= EditIniFiles ;  
-  Finally
-   Free ;
-  End }
-End ;
+    WriteString('Setup','UserDir', eUserDir);
+    WriteString('Setup','ExcelDir', eExcelDir);
+    WriteString('Setup','LODir', eLODir);
+    WriteString ('Security', 'CRPath', EditCRFolder) ;
+    WriteString ('Security', 'InifilesMap', EditIniFiles) ;
+    dmsConnector.InifilesMap:= EditIniFiles ;
+    Finally
+    Free ;
+    End }
+End;
 
-
-//-------------------------------------------------------------
+// -------------------------------------------------------------
 procedure TfrmMain.FormShow(Sender: TObject);
-var Height, Width, Top, Left : Integer ;
+var
+  Height, Width, Top, Left: Integer;
 begin
- dmsConnector.DriveLetter:= 'H:\' ;
- if dmsConnector.DriveLetter = 'C:\' then
-  ShowMessage('Ändra till H:') ;
+  dmsConnector.DriveLetter := 'H:\';
+  if dmsConnector.DriveLetter = 'C:\' then
+    ShowMessage('Ändra till H:');
 
- CheckMappar ;
-// ThisUser.Database:= 'carmak-speed\sqlexpress:vis_vida' ;
-// ThisUser.Database:= '172.24.0.40:vis_vida' ;
+  CheckMappar;
+   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
+  // ThisUser.Database:= '172.24.0.40:vis_vida' ;
 
- ThisUser.Database:= 'vis.vida.se:vis_vida' ;
+  //// ThisUser.Database := 'vis.vida.se:vis_vida';
 
-// ThisUser.Database:= 'alvevistest01:vis_vida' ;
-// ThisUser.Database:= 'alvesql03:vis_vida' ;
- dmsConnector.Org_DB_Name:= ThisUser.HostName + ':' + ThisUser.Database ;
-   if not ThisUser.Logon then
-    Close
-     else
-      if dmsConnector.FDConnection1.Connected then
-      Begin
-       Caption:= Application.Title + '/' + dmsConnector.GetCompanyName (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' + GetVersion
-       + ' - ' + dmsConnector.FDConnection1.Params.Values['Server']
-       + '/' + dmsConnector.FDConnection1.Params.Values['Database'] + ' ' ;
-       InitOnStartOfProgram ;
-      End
-      else
-      Begin
-       Close ;
-      End ;
- dm_UserProps.GetAppFormSize(frmMain.Name, Height, Width, Top, Left) ;
- if (Height > 0) and (Width > 0) then //and (Top > 0) and (Left > 0) then
- Begin
-  frmMain.Height  := Height ;
-  frmMain.Width   := Width ;
-  frmMain.Top     := Top ;
-  frmMain.Left    := Left ;
- End ;
- Load_Plugin ;
+  // ThisUser.Database:= 'alvevistest01:vis_vida' ;
+  // ThisUser.Database:= 'alvesql03:vis_vida' ;
+  dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
+  if not ThisUser.Logon then
+    close
+  else if dmsConnector.FDConnection1.Connected then
+  Begin
+    Caption := Application.Title + '/' + dmsConnector.GetCompanyName
+      (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' + GetVersion +
+      ' - ' + dmsConnector.FDConnection1.Params.Values['Server'] + '/' +
+      dmsConnector.FDConnection1.Params.Values['Database'] + ' ';
+    InitOnStartOfProgram;
+  End
+  else
+  Begin
+    close;
+  End;
+  dm_UserProps.GetAppFormSize(FrmMain.Name, Height, Width, Top, Left);
+  if (Height > 0) and (Width > 0) then // and (Top > 0) and (Left > 0) then
+  Begin
+    FrmMain.Height := Height;
+    FrmMain.Width := Width;
+    FrmMain.Top := Top;
+    FrmMain.Left := Left;
+  End;
+  Load_Plugin;
 end;
 
-Procedure TfrmMain.InitOnStartOfProgram ;
+Procedure TfrmMain.InitOnStartOfProgram;
 Begin
 
-End ;
+End;
 
-//Sparas centralt
+// Sparas centralt
 procedure TfrmMain.dxBarButton13Click(Sender: TObject);
 begin
- if (ThisUser.UserID = 8) or (ThisUser.UserID = 4) or (ThisUser.UserID = 5) then
- Begin
-  TFormSetup.Execute ;
- End ;
+  if (ThisUser.UserID = 8) or (ThisUser.UserID = 4) or (ThisUser.UserID = 5)
+  then
+  Begin
+    TFormSetup.Execute;
+  End;
 end;
 
 procedure TfrmMain.dxBarButton18Click(Sender: TObject);
-var fPrintTest: TfPrintTest;
+var
+  fPrintTest: TfPrintTest;
 begin
- fPrintTest := TfPrintTest.Create(nil) ;
- Try
-  fPrintTest.ShowModal ;
- Finally
-  FreeAndNil(fPrintTest) ;
- End;
+  fPrintTest := TfPrintTest.Create(nil);
+  Try
+    fPrintTest.ShowModal;
+  Finally
+    FreeAndNil(fPrintTest);
+  End;
 end;
 
-//initialization
-  //UseDelphiDateTimeFormats := True;
+// initialization
+// UseDelphiDateTimeFormats := True;
 procedure TfrmMain.bbAddPackageClick(Sender: TObject);
-//Var frmPkgEntry : TfrmPkgEntry ;
+// Var frmPkgEntry : TfrmPkgEntry ;
 begin
-{ if ThisUser.CanView[dcAdd_packagesSec] then
- Begin
-  dmsPkg:= TdmsPkg.Create(Nil) ;
-  frmPkgEntry:= TfrmPkgEntry.Create(Nil);
-  Try
-   frmPkgEntry.ShowModal ;
-  Finally
-   dmsPkg.mtpackages.Active:= False ;
-   FreeAndNil(frmPkgEntry) ;
-   FreeAndNil(dmsPkg) ;
-  End ;
- End ; }
-end ;
-
+  { if ThisUser.CanView[dcAdd_packagesSec] then
+    Begin
+    dmsPkg:= TdmsPkg.Create(Nil) ;
+    frmPkgEntry:= TfrmPkgEntry.Create(Nil);
+    Try
+    frmPkgEntry.ShowModal ;
+    Finally
+    dmsPkg.mtpackages.Active:= False ;
+    FreeAndNil(frmPkgEntry) ;
+    FreeAndNil(dmsPkg) ;
+    End ;
+    End ; }
+end;
 
 procedure TfrmMain.acUserPreferenceExecute(Sender: TObject);
 begin
- TfUserPreference.Execute ;
+  TfUserPreference.Execute;
 end;
 
 procedure TfrmMain.bbCurrencyClick(Sender: TObject);
 begin
-// if ThisUser.CanView[dcFakturaSec] then
-//  TfCurrency.Execute ;
+  // if ThisUser.CanView[dcFakturaSec] then
+  // TfCurrency.Execute ;
 end;
 
 procedure TfrmMain.bbGeneralShippingCostClick(Sender: TObject);
-var frmGenShipCost: TfrmGenShipCost;
+var
+  frmGenShipCost: TfrmGenShipCost;
 begin
- if ThisUser.CanView[dcFakturaSec] then
- Begin
- frmGenShipCost:= TfrmGenShipCost.Create(Nil);
- Try
-  frmGenShipCost.ShowModal ;
- Finally
-  FreeAndNil(frmGenShipCost) ;
- End ;
- End ;
+  if ThisUser.CanView[dcFakturaSec] then
+  Begin
+    frmGenShipCost := TfrmGenShipCost.Create(Nil);
+    Try
+      frmGenShipCost.ShowModal;
+    Finally
+      FreeAndNil(frmGenShipCost);
+    End;
+  End;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-if Key = #13 then begin
+  if Key = #13 then
+  begin
     Key := #0;
-//    if (Sender is TdxdBGrid) then
-//      TdxdBGrid(Sender).Perform(WM_KeyDown,VK_Tab,0)
-//    else
-      Perform(Wm_NextDlgCtl,0,0);
+    // if (Sender is TdxdBGrid) then
+    // TdxdBGrid(Sender).Perform(WM_KeyDown,VK_Tab,0)
+    // else
+    Perform(Wm_NextDlgCtl, 0, 0);
   end;
 end;
 
-procedure TfrmMain.PaketInmatningPerPktKod (Sender: TObject);
+procedure TfrmMain.PaketInmatningPerPktKod(Sender: TObject);
 Begin
-{ if ThisUser.CanView[dcInventorySection] then
-  Begin
-   TfrmPkgsByPktType.StartProc ;
-  End ; }
-End ;
+  { if ThisUser.CanView[dcInventorySection] then
+    Begin
+    TfrmPkgsByPktType.StartProc ;
+    End ; }
+End;
 
 procedure TfrmMain.rg_PrintSetUpClick(Sender: TObject);
 begin
 
-  //ShowMessage(print_Type);
+  // ShowMessage(print_Type);
 end;
 
 procedure TfrmMain.rg_ReportOptionsClick(Sender: TObject);
 begin
 
-  //ShowMessage(output_Type);
+  // ShowMessage(output_Type);
 end;
 
 procedure TfrmMain.CleanUpForms(Sender: TObject);
 begin
- if Assigned(fLastLista) then
-  FreeAndNil(fLastLista) ;
+  if Assigned(fLastLista) then
+    FreeAndNil(fLastLista);
 
- if Assigned(fnotInvoicedReport) then
-  FreeAndNil(fnotInvoicedReport) ;
+  if Assigned(fnotInvoicedReport) then
+    FreeAndNil(fnotInvoicedReport);
 
- if Assigned(frmAvrakningar) then
-  FreeAndNil(frmAvrakningar) ;
+  if Assigned(frmAvrakningar) then
+    FreeAndNil(frmAvrakningar);
 
 
-// if Assigned(frmRunAttester) then
-//  FreeAndNil(frmRunAttester) ;
+  // if Assigned(frmRunAttester) then
+  // FreeAndNil(frmRunAttester) ;
 
- if Assigned(frmGjordaAvrakningar) then
-  FreeAndNil(frmGjordaAvrakningar) ;
+  if Assigned(frmGjordaAvrakningar) then
+    FreeAndNil(frmGjordaAvrakningar);
 
- if Assigned(frmLoadArrivals) then
-  FreeAndNil(frmLoadArrivals) ;
+  if Assigned(frmLoadArrivals) then
+    FreeAndNil(frmLoadArrivals);
 
- if Assigned(fChkAvrLoads) then
-  FreeAndNil(fChkAvrLoads) ;
+  if Assigned(fChkAvrLoads) then
+    FreeAndNil(fChkAvrLoads);
 
-// if Assigned(frmPayment) then
-//  FreeAndNil(frmPayment);
+  // if Assigned(frmPayment) then
+  // FreeAndNil(frmPayment);
 
- if Assigned(frmFreightLoad) then
- Begin
-//  frmFreightLoad.Close ;
-  FreeAndNil(frmFreightLoad) ;
- End ;
+  if Assigned(frmFreightLoad) then
+  Begin
+    // frmFreightLoad.Close ;
+    FreeAndNil(frmFreightLoad);
+  End;
 
- if Assigned(frmFreightExternLoad) then
- Begin
-//  frmFreightLoad.Close ;
-  FreeAndNil(frmFreightExternLoad) ;
- End ;
+  if Assigned(frmFreightExternLoad) then
+  Begin
+    // frmFreightLoad.Close ;
+    FreeAndNil(frmFreightExternLoad);
+  End;
 
- if Assigned(fTradingAnalyze) then
- Begin
-  FreeAndNil(fTradingAnalyze) ;
- End ;
+  if Assigned(fTradingAnalyze) then
+  Begin
+    FreeAndNil(fTradingAnalyze);
+  End;
 
- if Assigned(fSamlingsfaktura) then
-  FreeAndNil(fSamlingsfaktura) ;
+  if Assigned(fSamlingsfaktura) then
+    FreeAndNil(fSamlingsfaktura);
 
- if Assigned(frmInvoiceList) then
- Begin
-  frmInvoiceList.Close ;
-  FreeAndNil(frmInvoiceList) ;
- End ;
+  if Assigned(frmInvoiceList) then
+  Begin
+    frmInvoiceList.close;
+    FreeAndNil(frmInvoiceList);
+  End;
 
- if Assigned(frmAvrop) then
- Begin
-  frmAvrop.Close ;
-  FreeAndNil(frmAvrop) ;
- End ;
+  if Assigned(frmAvrop) then
+  Begin
+    frmAvrop.close;
+    FreeAndNil(frmAvrop);
+  End;
 
-{ if Assigned(frmProdRep) then
- Begin
-  frmProdRep.Close ;
-  FreeAndNil(frmProdRep) ;
- End ;
+  { if Assigned(frmProdRep) then
+    Begin
+    frmProdRep.Close ;
+    FreeAndNil(frmProdRep) ;
+    End ;
 
- if Assigned(frmInventoryReport) then
- Begin
-  frmInventoryReport.Close ;
-  FreeAndNil(frmInventoryReport) ;
- End ; }
+    if Assigned(frmInventoryReport) then
+    Begin
+    frmInventoryReport.Close ;
+    FreeAndNil(frmInventoryReport) ;
+    End ; }
 
-// if Assigned(frmCreatePayment) then
-//  FreeAndNil(frmCreatePayment) ;
+  // if Assigned(frmCreatePayment) then
+  // FreeAndNil(frmCreatePayment) ;
 
-{ if Assigned(frmSkapaRunAttest) then
-  FreeAndNil(frmSkapaRunAttest) ; }
+  { if Assigned(frmSkapaRunAttest) then
+    FreeAndNil(frmSkapaRunAttest) ; }
 
- if Assigned(frmSkapaAvrakning) then
-  FreeAndNil(frmSkapaAvrakning) ;
+  if Assigned(frmSkapaAvrakning) then
+    FreeAndNil(frmSkapaAvrakning);
 
- if Assigned(frmSokAvropFormular) then
-  FreeAndNil(frmSokAvropFormular) ;
+  if Assigned(frmSokAvropFormular) then
+    FreeAndNil(frmSokAvropFormular);
 
- if Assigned(frmLoadOrder) then
- Begin
-  frmLoadOrder.Close ;
-  FreeAndNil(frmLoadOrder) ;
- End ;
+  if Assigned(frmLoadOrder) then
+  Begin
+    frmLoadOrder.close;
+    FreeAndNil(frmLoadOrder);
+  End;
 
- if Assigned(frmPortArrivals) then
-  FreeAndNil(frmPortArrivals) ;
+  if Assigned(frmPortArrivals) then
+    FreeAndNil(frmPortArrivals);
 
- if Assigned(frmKP_List) then
-  FreeAndNil(frmKP_List) ;
+  if Assigned(frmKP_List) then
+    FreeAndNil(frmKP_List);
 
- if Assigned(frmShippingInstruction) then
-  FreeAndNil(frmShippingInstruction) ;
+  if Assigned(frmShippingInstruction) then
+    FreeAndNil(frmShippingInstruction);
 
-//  if Assigned(dmInventory) then
-//  dmInventory:= TdmInventory.Create(Nil);
+  // if Assigned(dmInventory) then
+  // dmInventory:= TdmInventory.Create(Nil);
 end;
 
-
-//Hämtas från användarens lokala "H"
-procedure TfrmMain.GetIniFileMap(Sender: TObject) ;
+// Hämtas från användarens lokala "H"
+procedure TfrmMain.GetIniFileMap(Sender: TObject);
 begin
- with TIniFile.Create(dmsConnector.DriveLetter+'\VIS\KONFIG\VIS.INI') do
- try
- //tog bort vis.ini
-  dmsConnector.InifilesMap:= ReadString ('Security', 'InifilesMap', 'H:\VIS\KONFIG\') ;
- Finally
-  Free ;
- End ;
+  with TIniFile.Create(dmsConnector.DriveLetter + '\VIS\KONFIG\VIS.INI') do
+    try
+      // tog bort vis.ini
+      dmsConnector.InifilesMap := ReadString('Security', 'InifilesMap',
+        'H:\VIS\KONFIG\');
+    Finally
+      Free;
+    End;
 end;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-Try
- With dmsSystem do
- Begin
   Try
-  if dmsConnector.FDConnection1.Connected then
-  Delete_UserReservedPkgs ;
-  Except
-  End ;
- End ;
- Finally
+    With dmsSystem do
+    Begin
+      Try
+        if dmsConnector.FDConnection1.Connected then
+          Delete_UserReservedPkgs;
+      Except
+      End;
+    End;
+  Finally
+    Try
+      CleanUpForms(Sender);
+    Except
+    End;
+  End;
+
+  dm_UserProps.SetAppFormSize(FrmMain.Name, FrmMain.Height, FrmMain.Width,
+    FrmMain.Top, FrmMain.Left);
+
   Try
-  CleanUpForms(Sender) ;
+    ThisUser.Free;
   Except
-  End ;
- End ;
-
- dm_UserProps.SetAppFormSize(frmMain.Name, frmMain.Height, frmMain.Width, frmMain.Top, frmMain.Left) ;
-
- Try
- ThisUser.Free ;
- Except
- End ;
- CanClose := True ;
+  End;
+  CanClose := True;
 end;
 
-procedure TfrmMain.GetPropIniStores(Sender: TObject) ;
+procedure TfrmMain.GetPropIniStores(Sender: TObject);
 begin
- with TIniFile.Create(dmsConnector.DriveLetter+'\VIS\KONFIG\VIS.INI') do
- try
-  cxPropertiesStore1.StorageName:= dmsConnector.DriveLetter+'\VIS\KONFIG\propstore.ini' ;
-  cxPropertiesStore1.Active:= True ;
-  cxPropertiesStore1.RestoreFrom ;
- Finally
-  Free ;
- End ;
+  with TIniFile.Create(dmsConnector.DriveLetter + '\VIS\KONFIG\VIS.INI') do
+    try
+      cxPropertiesStore1.StorageName := dmsConnector.DriveLetter +
+        '\VIS\KONFIG\propstore.ini';
+      cxPropertiesStore1.Active := True;
+      cxPropertiesStore1.RestoreFrom;
+    Finally
+      Free;
+    End;
 end;
 
 procedure TfrmMain.acBytAnvandareExecute(Sender: TObject);
-var OKHelpBottomDlg: TOKHelpBottomDlg;
+var
+  OKHelpBottomDlg: TOKHelpBottomDlg;
 begin
- if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\ulalun')
- or (Trim(dmsConnector.Get_AD_Name) = 'Lars') 
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\ulrlun')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\admin')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\marhug')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\krikuh')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\lingus')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\annjon')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\kritom')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\johlis')
- or (Trim(dmsConnector.Get_AD_Name) = 'sa')
- then
- Begin
- if FormOpen then
- Begin
-  ShowMessage('Stäng alla formulär först!');
-  Exit ;
- End ;
- OKHelpBottomDlg:= TOKHelpBottomDlg.Create(nil);
- try
- if OKHelpBottomDlg.ShowModal = mrOK then
- Begin
-//  dmsConnector.FDConnection1.de .CloseDataSets ;
-  dmsConnector.FDConnection1.Connected:= False ;
-
-  if Length(OKHelpBottomDlg.eAD_Name.Text) > 0 then
-  ThisUser.DBUserName:= OKHelpBottomDlg.eAD_Name.Text ;
-
-  if Length(OKHelpBottomDlg.eDatabas.Text) > 0 then
-  ThisUser.Database:= OKHelpBottomDlg.eDatabas.Text ;
-
-   if not ThisUser.Logon then
-    Close
-     else
-      if dmsConnector.FDConnection1.Connected then
+  if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\ulalun') or
+    (Trim(dmsConnector.Get_AD_Name) = 'Lars') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\ulrlun') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\admin') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\marhug') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\krikuh') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\lingus') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\annjon') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\kritom') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\johlis') or
+    (Trim(dmsConnector.Get_AD_Name) = 'sa') then
+  Begin
+    if FormOpen then
+    Begin
+      ShowMessage('Stäng alla formulär först!');
+      Exit;
+    End;
+    OKHelpBottomDlg := TOKHelpBottomDlg.Create(nil);
+    try
+      if OKHelpBottomDlg.ShowModal = mrOK then
       Begin
-       if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.eAD_Name.Text) and (Length(OKHelpBottomDlg.eAD_Name.Text) > 0) )
-       or ((OKHelpBottomDlg.eDatabas.Text <> dmsConnector.Org_DB_Name) and (Length(OKHelpBottomDlg.eDatabas.Text) > 0)) then
-       Begin
-        InitOnStartOfProgram ;
-        Timer1.Enabled:= True ;
-        dmsConnector.LoginChanged:= True ;
-//        dxNavBar1.DefaultStyles.Background.BackColor:= clGreen ;
+        // dmsConnector.FDConnection1.de .CloseDataSets ;
+        dmsConnector.FDConnection1.Connected := False;
 
-        Application.Title:= 'VIS' ;
-        a:= Application.Title+'/'+dmsConnector.GetCompanyName (ThisUser.CompanyNo) +'/' + ThisUser.UserName +' ver '+GetVersion
-        +' - '+dmsConnector.FDConnection1.Params.Values['Server']
-        +'/'+dmsConnector.FDConnection1.Params.Values['Database']+' ' ;
-       End
-       else
-       Begin
-        InitOnStartOfProgram ;
-        dmsConnector.LoginChanged:= False ;
-        Timer1.Enabled:= False ;
-//        dxNavBar1.DefaultStyles.Background.BackColor:= clWhite ;
+        if Length(OKHelpBottomDlg.eAD_Name.Text) > 0 then
+          ThisUser.DBUserName := OKHelpBottomDlg.eAD_Name.Text;
 
-        Application.Title:= 'VIS' ;
-        frmMain.Caption:= Application.Title+'/'+dmsConnector.GetCompanyName (ThisUser.CompanyNo) +'/' + ThisUser.UserName +' ver '+GetVersion
-        +' - '+dmsConnector.FDConnection1.Params.Values['Server']
-        +'/'+dmsConnector.FDConnection1.Params.Values['Database']+' ' ;
-       End ;
+        if Length(OKHelpBottomDlg.eDatabas.Text) > 0 then
+          ThisUser.Database := OKHelpBottomDlg.eDatabas.Text;
 
-      End
-      else
-      Begin
-       Close ;
-      End ;
- End ;
+        if not ThisUser.Logon then
+          close
+        else if dmsConnector.FDConnection1.Connected then
+        Begin
+          if ((dmsConnector.Get_AD_Name <> OKHelpBottomDlg.eAD_Name.Text) and
+            (Length(OKHelpBottomDlg.eAD_Name.Text) > 0)) or
+            ((OKHelpBottomDlg.eDatabas.Text <> dmsConnector.Org_DB_Name) and
+            (Length(OKHelpBottomDlg.eDatabas.Text) > 0)) then
+          Begin
+            InitOnStartOfProgram;
+            Timer1.Enabled := True;
+            dmsConnector.LoginChanged := True;
+            // dxNavBar1.DefaultStyles.Background.BackColor:= clGreen ;
 
- finally
-  FreeAndNil(OKHelpBottomDlg) ;
- end;
- End
+            Application.Title := 'VIS';
+            a := Application.Title + '/' + dmsConnector.GetCompanyName
+              (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' +
+              GetVersion + ' - ' + dmsConnector.FDConnection1.Params.Values
+              ['Server'] + '/' + dmsConnector.FDConnection1.Params.Values
+              ['Database'] + ' ';
+          End
+          else
+          Begin
+            InitOnStartOfProgram;
+            dmsConnector.LoginChanged := False;
+            Timer1.Enabled := False;
+            // dxNavBar1.DefaultStyles.Background.BackColor:= clWhite ;
+
+            Application.Title := 'VIS';
+            FrmMain.Caption := Application.Title + '/' +
+              dmsConnector.GetCompanyName(ThisUser.CompanyNo) + '/' +
+              ThisUser.UserName + ' ver ' + GetVersion + ' - ' +
+              dmsConnector.FDConnection1.Params.Values['Server'] + '/' +
+              dmsConnector.FDConnection1.Params.Values['Database'] + ' ';
+          End;
+
+        End
+        else
+        Begin
+          close;
+        End;
+      End;
+
+    finally
+      FreeAndNil(OKHelpBottomDlg);
+    end;
+  End
   else
-   ShowMessage('No access');
+    ShowMessage('No access');
 end;
 
 procedure TfrmMain.Timer1Timer(Sender: TObject);
 var
   i: Integer;
 begin
-  Application.Title   := a;
-  frmMain.Caption     := a;
+  Application.Title := a;
+  FrmMain.Caption := a;
   for i := 1 to (Length(a) - 1) do
     a[i] := Application.Title[i + 1];
   a[Length(a)] := Application.Title[1];
 end;
 
-
+(* LG
 procedure TfrmMain.acFTPSetupExecute(Sender: TObject);
-var fFtpParam : TfFtpParam;
+var
+  fFtpParam: TfFtpParam;
 begin
- fFtpParam:= TfFtpParam.Create(nil) ;
- try
-  fFtpParam.ShowModal ;
- finally
-  FreeAndNil(fFtpParam) ;
- end;
+  fFtpParam := TfFtpParam.Create(nil);
+  try
+    fFtpParam.ShowModal;
+  finally
+    FreeAndNil(fFtpParam);
+  end;
 end;
 
+LG *)
+
 procedure TfrmMain.acReportNamesExecute(Sender: TObject);
-var fKundspecifika: TfKundspecifika;
+var
+  fKundspecifika: TfKundspecifika;
 begin
- fKundspecifika:= TfKundspecifika.Create(nil);
- try
-  fKundspecifika.ShowModal ;
- finally
-  FreeAndNil(fKundspecifika) ;
- end;
+  fKundspecifika := TfKundspecifika.Create(nil);
+  try
+    fKundspecifika.ShowModal;
+  finally
+    FreeAndNil(fKundspecifika);
+  end;
 end;
 
 procedure TfrmMain.acReportStatisticsExecute(Sender: TObject);
-var fReportStatics: TfReportStatics;
+var
+  fReportStatics: TfReportStatics;
 begin
- fReportStatics:= TfReportStatics.Create(nil);
- try
-  fReportStatics.ShowModal ;
- finally
-  FreeAndNil(fReportStatics) ;
- end;
+  fReportStatics := TfReportStatics.Create(nil);
+  try
+    fReportStatics.ShowModal;
+  finally
+    FreeAndNil(fReportStatics);
+  end;
 end;
 
 procedure TfrmMain.acAvropExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcAvropSec] then
   Begin
-  if not Assigned(frmAvrop) then
-   Begin
-    frmAvrop :=  TfrmAvrop.Create(Nil) ;
-    frmAvrop.CreateCo(ThisUser.CompanyNo);
-    frmAvrop.Parent := panelBase;
-    frmAvrop.Show;
-    frmAvrop.eSearchLONr.SetFocus ;
-   End
-   else
-   begin
-    frmAvrop.Parent := panelBase;
-    frmAvrop.Show;
-    frmAvrop.eSearchLONr.SetFocus ;
-   end ;
-  End ;//if ThisUser.CanView[dcAvropSec] then
+    if not Assigned(frmAvrop) then
+    Begin
+      frmAvrop := TfrmAvrop.Create(Nil);
+      frmAvrop.CreateCo(ThisUser.CompanyNo);
+      frmAvrop.Parent := panelBase;
+      frmAvrop.Show;
+      frmAvrop.eSearchLONr.SetFocus;
+    End
+    else
+    begin
+      frmAvrop.Parent := panelBase;
+      frmAvrop.Show;
+      frmAvrop.eSearchLONr.SetFocus;
+    end;
+  End; // if ThisUser.CanView[dcAvropSec] then
 end;
 
 procedure TfrmMain.acARExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcARSec] then
   Begin
-   if not Assigned(frmLoadArrivals) then
+    if not Assigned(frmLoadArrivals) then
     Begin
-     frmLoadArrivals := TfrmLoadArrivals.Create(Nil) ;
-     frmLoadArrivals.CreateCo(  ThisUser.CompanyNo);
-     frmLoadArrivals.Parent := panelBase;
-     frmLoadArrivals.Show;
-     frmLoadArrivals.Edit1.Setfocus ;
+      frmLoadArrivals := TfrmLoadArrivals.Create(Nil);
+      frmLoadArrivals.CreateCo(ThisUser.CompanyNo);
+      frmLoadArrivals.Parent := panelBase;
+      frmLoadArrivals.Show;
+      frmLoadArrivals.Edit1.SetFocus;
     End
     else
     begin
-     frmLoadArrivals.Parent := panelBase;
-     frmLoadArrivals.Show;
-     frmLoadArrivals.Edit1.Setfocus ;
-    end ;
-  End ;
+      frmLoadArrivals.Parent := panelBase;
+      frmLoadArrivals.Show;
+      frmLoadArrivals.Edit1.SetFocus;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acEjFaktureratExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-  if not Assigned(fnotInvoicedReport) then
-  Begin
-     fnotInvoicedReport := TfnotInvoicedReport.Create(Nil) ;
-     fnotInvoicedReport.CreateCo( Sender,ThisUser.CompanyNo);
-     fnotInvoicedReport.Parent := panelBase;
-     fnotInvoicedReport.Show;
-     fnotInvoicedReport.deStartPeriod.Setfocus ;
+    if not Assigned(fnotInvoicedReport) then
+    Begin
+      fnotInvoicedReport := TfnotInvoicedReport.Create(Nil);
+      fnotInvoicedReport.CreateCo(Sender, ThisUser.CompanyNo);
+      fnotInvoicedReport.Parent := panelBase;
+      fnotInvoicedReport.Show;
+      fnotInvoicedReport.deStartPeriod.SetFocus;
     End
     else
     Begin
-     fnotInvoicedReport.Parent := panelBase;
-     fnotInvoicedReport.Show;
-     fnotInvoicedReport.deStartPeriod.Setfocus ;
-    End ;
-  End ;
+      fnotInvoicedReport.Parent := panelBase;
+      fnotInvoicedReport.Show;
+      fnotInvoicedReport.deStartPeriod.SetFocus;
+    End;
+  End;
 
 end;
 
 procedure TfrmMain.acFragaAvropExecute(Sender: TObject);
 begin
-//  const_SOKAVROP :
+  // const_SOKAVROP :
   if ThisUser.CanView[dcAvropSec] then
   Begin
-  if not Assigned(frmSokAvropFormular) then
-  Begin
-   frmSokAvropFormular := TfrmSokAvropFormular.Create(Nil) ;
-   frmSokAvropFormular.CreateCo( Sender,ThisUser.CompanyNo);
-   frmSokAvropFormular.Parent := panelBase;
-   frmSokAvropFormular.Show;
-   frmSokAvropFormular.lcSR.SetFocus ;
-  End
-   else
+    if not Assigned(frmSokAvropFormular) then
+    Begin
+      frmSokAvropFormular := TfrmSokAvropFormular.Create(Nil);
+      frmSokAvropFormular.CreateCo(Sender, ThisUser.CompanyNo);
+      frmSokAvropFormular.Parent := panelBase;
+      frmSokAvropFormular.Show;
+      frmSokAvropFormular.lcSR.SetFocus;
+    End
+    else
     begin
-     frmSokAvropFormular.Parent := panelBase;
-     frmSokAvropFormular.Show;
-     frmSokAvropFormular.lcSR.SetFocus ;
-  End ;
-  End ;
+      frmSokAvropFormular.Parent := panelBase;
+      frmSokAvropFormular.Show;
+      frmSokAvropFormular.lcSR.SetFocus;
+    End;
+  End;
 end;
 
 procedure TfrmMain.acKPListaExecute(Sender: TObject);
 begin
-// const_KP_LIST               :          //35
+  // const_KP_LIST               :          //35
   if ThisUser.CanView[dcKP_ListaSec] then
   Begin
-   if not Assigned(frmKP_List) then
+    if not Assigned(frmKP_List) then
     Begin
-     frmKP_List := TfrmKP_List.Create(Nil) ;
-     frmKP_List.CreateCo(  ThisUser.CompanyNo);
-     frmKP_List.Parent := panelBase;
-     frmKP_List.Show;
-     frmKP_List.lcKund.Setfocus ;
+      frmKP_List := TfrmKP_List.Create(Nil);
+      frmKP_List.CreateCo(ThisUser.CompanyNo);
+      frmKP_List.Parent := panelBase;
+      frmKP_List.Show;
+      frmKP_List.lcKund.SetFocus;
     End
     else
     begin
-     frmKP_List.Parent := panelBase;
-     frmKP_List.Show;
-     frmKP_List.lcKund.Setfocus ;
-    end ;
-   End ;
+      frmKP_List.Parent := panelBase;
+      frmKP_List.Show;
+      frmKP_List.lcKund.SetFocus;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acSkeppningsinstruktionExecute(Sender: TObject);
 begin
-//  const_Shipping_Instruction       :         //34
+  // const_Shipping_Instruction       :         //34
   if ThisUser.CanView[dcSkeppInstrSec] then
   Begin
-   if not Assigned(frmShippingInstruction) then
+    if not Assigned(frmShippingInstruction) then
     Begin
-     frmShippingInstruction := TfrmShippingInstruction.Create(Nil) ;
-     frmShippingInstruction.CreateCo(  ThisUser.CompanyNo);
-     frmShippingInstruction.Parent := panelBase;
-     frmShippingInstruction.Show;
-     frmShippingInstruction.deStartPeriod.Setfocus ;
+      frmShippingInstruction := TfrmShippingInstruction.Create(Nil);
+      frmShippingInstruction.CreateCo(ThisUser.CompanyNo);
+      frmShippingInstruction.Parent := panelBase;
+      frmShippingInstruction.Show;
+      frmShippingInstruction.deStartPeriod.SetFocus;
     End
     else
     begin
-     frmShippingInstruction.Parent := panelBase;
-     frmShippingInstruction.Show;
-     frmShippingInstruction.deStartPeriod.Setfocus ;
-    end ;
-   End ;
+      frmShippingInstruction.Parent := panelBase;
+      frmShippingInstruction.Show;
+      frmShippingInstruction.deStartPeriod.SetFocus;
+    end;
+  End;
 
 end;
 
 procedure TfrmMain.acSTEFExecute(Sender: TObject);
 begin
- if ThisUser.CanView[dcUtlastningSec] then
- Begin
- if not Assigned(fStef) then
+  if ThisUser.CanView[dcUtlastningSec] then
   Begin
-   fStef := TfStef.Create(Nil) ;
-//   fStef.CreateCo( Sender,ThisUser.CompanyNo);
-   fStef.Parent := panelBase;
-   fStef.Show;
-   fStef.dtStart.SetFocus ;
-  End
-  else
+    if not Assigned(fStef) then
+    Begin
+      fStef := TfStef.Create(Nil);
+      // fStef.CreateCo( Sender,ThisUser.CompanyNo);
+      fStef.Parent := panelBase;
+      fStef.Show;
+      fStef.dtStart.SetFocus;
+    End
+    else
     begin
-     fStef.Parent := panelBase;
-     fStef.Show;
-     fStef.dtStart.SetFocus ;
-    end ;
- End;
+      fStef.Parent := panelBase;
+      fStef.Show;
+      fStef.dtStart.SetFocus;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acUtlastningVerkExecute(Sender: TObject);
 begin
-// const_ShipMill_Delivery           :  //if ThisUser.CanView[dcOrderSection] then
- if ThisUser.CanView[dcUtlastningSec] then
- Begin
- if not Assigned(frmLoadOrder) then
+  // const_ShipMill_Delivery           :  //if ThisUser.CanView[dcOrderSection] then
+  if ThisUser.CanView[dcUtlastningSec] then
   Begin
-   frmLoadOrder := TfrmLoadOrder.Create(Nil) ;
-   frmLoadOrder.CreateCo( Sender,ThisUser.CompanyNo);
-   frmLoadOrder.Parent := panelBase;
-   frmLoadOrder.Show;
-   frmLoadOrder.teSearchLONo.SetFocus ;
-  End
-  else
+    if not Assigned(frmLoadOrder) then
+    Begin
+      frmLoadOrder := TfrmLoadOrder.Create(Nil);
+      frmLoadOrder.CreateCo(Sender, ThisUser.CompanyNo);
+      frmLoadOrder.Parent := panelBase;
+      frmLoadOrder.Show;
+      frmLoadOrder.teSearchLONo.SetFocus;
+    End
+    else
     begin
-     frmLoadOrder.Parent := panelBase;
-     frmLoadOrder.Show;
-     frmLoadOrder.teSearchLONo.SetFocus ;
-    end ;
+      frmLoadOrder.Parent := panelBase;
+      frmLoadOrder.Show;
+      frmLoadOrder.teSearchLONo.SetFocus;
+    end;
 
- With dmcOrder do
- Begin
-  if (mtPropsNewItemRow.AsInteger > 0) and (mtPropsNewItemRow.IsNull = False) then
-  frmLoadOrder.PanelLoadDetail.Width := mtPropsNewItemRow.AsInteger
-  else
-  frmLoadOrder.PanelLoadDetail.Width := 1001 ;
+    With dmcOrder do
+    Begin
+      if (mtPropsNewItemRow.AsInteger > 0) and (mtPropsNewItemRow.IsNull = False)
+      then
+        frmLoadOrder.PanelLoadDetail.Width := mtPropsNewItemRow.AsInteger
+      else
+        frmLoadOrder.PanelLoadDetail.Width := 1001;
 
-  if frmLoadOrder.PanelLoadDetail.Width > frmLoadOrder.pcLoadOrder.Width then
-   frmLoadOrder.PanelLoadDetail.Width  := frmLoadOrder.pcLoadOrder.Width - 30 ;
- End ;
- End ;
+      if frmLoadOrder.PanelLoadDetail.Width > frmLoadOrder.pcLoadOrder.Width
+      then
+        frmLoadOrder.PanelLoadDetail.Width :=
+          frmLoadOrder.pcLoadOrder.Width - 30;
+    End;
+  End;
 
 end;
 
 procedure TfrmMain.acLevereradeLasterExecute(Sender: TObject);
 begin
-//  const_VerkLaster :
+  // const_VerkLaster :
   if ThisUser.CanView[dcUtlastningSec] then
   Begin
-  if  not  Assigned(fLastLista) then
-  Begin
-     fLastLista := TfLastLista.Create(Nil) ;
-     fLastLista.CreateCo ;
-     fLastLista.Parent := panelBase;
-     fLastLista.Show;
+    if not Assigned(fLastLista) then
+    Begin
+      fLastLista := TfLastLista.Create(Nil);
+      fLastLista.CreateCo;
+      fLastLista.Parent := panelBase;
+      fLastLista.Show;
     End
     else
     begin
-     fLastLista.Parent := panelBase;
-     fLastLista.Show;
-  End ;
-  End ;
+      fLastLista.Parent := panelBase;
+      fLastLista.Show;
+    End;
+  End;
 
 end;
 
 procedure TfrmMain.acFakturalistaExecute(Sender: TObject);
 begin
-//  const_Invoice_VWInvoice           :
+  // const_Invoice_VWInvoice           :
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-  if not Assigned(frmInvoiceList) then
-  Begin
-    frmInvoiceList        := TfrmInvoiceList.Create(Nil) ;
-    frmInvoiceList.Parent := panelBase ;
-    frmInvoiceList.Show ;
-    frmInvoiceList.nfSearchLO.SetFocus ;
-  End
-  else
-   begin
-    frmInvoiceList.Parent := panelBase ;
-    frmInvoiceList.Show ;
-    frmInvoiceList.nfSearchLO.SetFocus ;
-   end ;
-  End ;
+    if not Assigned(frmInvoiceList) then
+    Begin
+      frmInvoiceList := TfrmInvoiceList.Create(Nil);
+      frmInvoiceList.Parent := panelBase;
+      frmInvoiceList.Show;
+      frmInvoiceList.nfSearchLO.SetFocus;
+    End
+    else
+    begin
+      frmInvoiceList.Parent := panelBase;
+      frmInvoiceList.Show;
+      frmInvoiceList.nfSearchLO.SetFocus;
+    end;
+  End;
 
 end;
 
 procedure TfrmMain.acSamlingsFakturaListaExecute(Sender: TObject);
 begin
-//  const_samlingsfaktura :
+  // const_samlingsfaktura :
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-  if not Assigned(fSamlingsfaktura) then
-  Begin
-   fSamlingsfaktura := TfSamlingsfaktura.Create(Nil) ;
-   fSamlingsfaktura.Parent := panelBase;
-   fSamlingsfaktura.Show;
-   fSamlingsfaktura.grdInvoiceGroup.SetFocus ;
-  End
-   else
+    if not Assigned(fSamlingsfaktura) then
+    Begin
+      fSamlingsfaktura := TfSamlingsfaktura.Create(Nil);
+      fSamlingsfaktura.Parent := panelBase;
+      fSamlingsfaktura.Show;
+      fSamlingsfaktura.grdInvoiceGroup.SetFocus;
+    End
+    else
     begin
-     fSamlingsfaktura.Parent := panelBase;
-     fSamlingsfaktura.Show;
-     fSamlingsfaktura.grdInvoiceGroup.SetFocus ;
-    End ;
-  End ;
+      fSamlingsfaktura.Parent := panelBase;
+      fSamlingsfaktura.Show;
+      fSamlingsfaktura.grdInvoiceGroup.SetFocus;
+    End;
+  End;
 end;
 
 procedure TfrmMain.acRegistreraFraktAvrakningExecute(Sender: TObject);
 begin
-//  const_ShipMill_Freight_Avrakningar :
- if (ThisUser.CanView[dcFrakt_AvrakningSec]) or (ThisUser.UserID = 37) then
+  // const_ShipMill_Freight_Avrakningar :
+  if (ThisUser.CanView[dcFrakt_AvrakningSec]) or (ThisUser.UserID = 37) then
   Begin
-   if not Assigned(frmAvrakningar) then
+    if not Assigned(frmAvrakningar) then
     Begin
-     frmAvrakningar := TfrmAvrakningar.Create(Nil) ;
-     frmAvrakningar.Align:= alClient ;
-     frmAvrakningar.BorderStyle:= bsNone ;
-     frmAvrakningar.ButtonPanel.Visible:= False ;
-     frmAvrakningar.CreateCo(  ThisUser.CompanyNo);
+      frmAvrakningar := TfrmAvrakningar.Create(Nil);
+      frmAvrakningar.Align := alClient;
+      frmAvrakningar.BorderStyle := bsNone;
+      frmAvrakningar.ButtonPanel.Visible := False;
+      frmAvrakningar.CreateCo(ThisUser.CompanyNo);
 
-     frmAvrakningar.Parent := panelBase;
-     frmAvrakningar.Show;
-     frmAvrakningar.grdFraktAvr.SetFocus ;
+      frmAvrakningar.Parent := panelBase;
+      frmAvrakningar.Show;
+      frmAvrakningar.grdFraktAvr.SetFocus;
     End
     else
     begin
-     frmAvrakningar.Parent := panelBase;
-     frmAvrakningar.Show;
-     frmAvrakningar.grdFraktAvr.SetFocus ;
-    end ;
-  End ;
+      frmAvrakningar.Parent := panelBase;
+      frmAvrakningar.Show;
+      frmAvrakningar.grdFraktAvr.SetFocus;
+    end;
+  End;
 
 end;
 
 procedure TfrmMain.acRegistreradeFraktAvrakningarExecute(Sender: TObject);
 begin
- if ThisUser.CanView[dcFrakt_AvrakningSec] then
- Begin
-  if not Assigned(frmFreightLoad) then
+  if ThisUser.CanView[dcFrakt_AvrakningSec] then
   Begin
-   frmFreightLoad := TfrmFreightLoad.Create(Application) ;
-   frmFreightLoad.CreateCo ;
-//   frmFreightLoad.Parent := panelBase;
-   frmFreightLoad.Show;
-   frmFreightLoad.lcVerk.Setfocus ;
-  End
-  else
+    if not Assigned(frmFreightLoad) then
+    Begin
+      frmFreightLoad := TfrmFreightLoad.Create(Application);
+      frmFreightLoad.CreateCo;
+      // frmFreightLoad.Parent := panelBase;
+      frmFreightLoad.Show;
+      frmFreightLoad.lcVerk.SetFocus;
+    End
+    else
     begin
-//     frmFreightLoad.Parent := panelBase;
-     frmFreightLoad.Show;
-     frmFreightLoad.lcVerk.Setfocus ;
-    end ;
- End ;
+      // frmFreightLoad.Parent := panelBase;
+      frmFreightLoad.Show;
+      frmFreightLoad.lcVerk.SetFocus;
+    end;
+  End;
 
 end;
 
 procedure TfrmMain.acRegistreraAvrakningExecute(Sender: TObject);
 begin
-//  const_SkapaAvrakning       :
+  // const_SkapaAvrakning       :
   if ThisUser.CanView[dcAvrakningSec] then
   Begin
-  if not Assigned(frmSkapaAvrakning) then
-   Begin
-    frmSkapaAvrakning:= TfrmSkapaAvrakning.Create(Nil);
-    frmSkapaAvrakning.CreateCo(ThisUser.CompanyNo, 0 {Avrakning});
-    frmSkapaAvrakning.Parent:= panelBase ;
-    frmSkapaAvrakning.Show ;
-    frmSkapaAvrakning.lcVerk.Setfocus ;
-   End
-   else
-   begin
-    frmSkapaAvrakning.Parent := panelBase;
-    frmSkapaAvrakning.Show;
-    frmSkapaAvrakning.lcVerk.Setfocus ;
-   end ;
-  End ;
+    if not Assigned(frmSkapaAvrakning) then
+    Begin
+      frmSkapaAvrakning := TfrmSkapaAvrakning.Create(Nil);
+      frmSkapaAvrakning.CreateCo(ThisUser.CompanyNo, 0 { Avrakning } );
+      frmSkapaAvrakning.Parent := panelBase;
+      frmSkapaAvrakning.Show;
+      frmSkapaAvrakning.lcVerk.SetFocus;
+    End
+    else
+    begin
+      frmSkapaAvrakning.Parent := panelBase;
+      frmSkapaAvrakning.Show;
+      frmSkapaAvrakning.lcVerk.SetFocus;
+    end;
+  End;
 
 end;
 
 procedure TfrmMain.acRegistreradeAvrakningarExecute(Sender: TObject);
 begin
-//  const_GjordaAvrakningar :
+  // const_GjordaAvrakningar :
   if ThisUser.CanView[dcAvrakningSec] then
   Begin
-  if not Assigned(frmGjordaAvrakningar) then
-   Begin
-    frmGjordaAvrakningar:= TfrmGjordaAvrakningar.Create(Nil);
-    frmGjordaAvrakningar.CreateCo( ThisUser.CompanyNo, 0 {Avrakning});
-    frmGjordaAvrakningar.Parent:= panelBase ;
-    frmGjordaAvrakningar.Show ;
-    frmGjordaAvrakningar.lcVerk.Setfocus ;
-   End
-   else
-   begin
-    frmGjordaAvrakningar.Parent := panelBase;
-    frmGjordaAvrakningar.Show;
-    frmGjordaAvrakningar.lcVerk.Setfocus ;
-   end ;
-  End ;
+    if not Assigned(frmGjordaAvrakningar) then
+    Begin
+      frmGjordaAvrakningar := TfrmGjordaAvrakningar.Create(Nil);
+      frmGjordaAvrakningar.CreateCo(ThisUser.CompanyNo, 0 { Avrakning } );
+      frmGjordaAvrakningar.Parent := panelBase;
+      frmGjordaAvrakningar.Show;
+      frmGjordaAvrakningar.lcVerk.SetFocus;
+    End
+    else
+    begin
+      frmGjordaAvrakningar.Parent := panelBase;
+      frmGjordaAvrakningar.Show;
+      frmGjordaAvrakningar.lcVerk.SetFocus;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acAnkomnaHamnExecute(Sender: TObject);
 begin
-// const_AnkomnaHamn :
- if ThisUser.CanView[dcARSec] then
+  // const_AnkomnaHamn :
+  if ThisUser.CanView[dcARSec] then
   Begin
-   if not Assigned(frmPortArrivals) then
+    if not Assigned(frmPortArrivals) then
     Begin
-     frmPortArrivals := TfrmPortArrivals.Create(Nil) ;
-     frmPortArrivals.CreateCo(  ThisUser.CompanyNo);
-     frmPortArrivals.Parent := panelBase;
-     frmPortArrivals.Show;
+      frmPortArrivals := TfrmPortArrivals.Create(Nil);
+      frmPortArrivals.CreateCo(ThisUser.CompanyNo);
+      frmPortArrivals.Parent := panelBase;
+      frmPortArrivals.Show;
     End
     else
     begin
-     frmPortArrivals.Parent := panelBase;
-     frmPortArrivals.Show;
-    end ;
-  End ;// if ThisUser.CanView[dcARSec] then
+      frmPortArrivals.Parent := panelBase;
+      frmPortArrivals.Show;
+    end;
+  End; // if ThisUser.CanView[dcARSec] then
 
 end;
 
 procedure TfrmMain.acPaketinfoExecute(Sender: TObject);
-Var frmPkgInfo : TfrmPkgInfo ;
+Var
+  frmPkgInfo: TfrmPkgInfo;
 begin
- if ThisUser.CanView[dcAsk_packagesSec] then
- Begin
- frmPkgInfo:= TfrmPkgInfo.Create(Nil);
- Try
-  frmPkgInfo.PackageNo:= 0 ;
-  frmPkgInfo.SupplierCode:= '';
-  frmPkgInfo.ShowModal ;
- Finally
-  FreeAndNil(frmPkgInfo) ;
- End ;
- End ;
+  if ThisUser.CanView[dcAsk_packagesSec] then
+  Begin
+    frmPkgInfo := TfrmPkgInfo.Create(Nil);
+    Try
+      frmPkgInfo.PackageNo := 0;
+      frmPkgInfo.SupplierCode := '';
+      frmPkgInfo.ShowModal;
+    Finally
+      FreeAndNil(frmPkgInfo);
+    End;
+  End;
 end;
 
 procedure TfrmMain.acKontrolleraAvrakningslasterExecute(Sender: TObject);
 begin
-//  const_CheckLoadsAreReadyForAvrakning : //57
-//  if ThisUser.CanView[dcARSec] then
-  if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\micmor') or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak')
-  or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\admin')
-  or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh')
-  or (Trim(dmsConnector.Get_AD_Name) = 'sa') then
+  // const_CheckLoadsAreReadyForAvrakning : //57
+  // if ThisUser.CanView[dcARSec] then
+  if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\micmor') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\admin') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh') or
+    (Trim(dmsConnector.Get_AD_Name) = 'sa') then
   Begin
-   if not Assigned(fChkAvrLoads) then
+    if not Assigned(fChkAvrLoads) then
     Begin
-     fChkAvrLoads := TfChkAvrLoads.Create(Nil) ;
-     fChkAvrLoads.CreateCo(  ThisUser.CompanyNo);
-     fChkAvrLoads.Parent := panelBase;
-     fChkAvrLoads.Show;
+      fChkAvrLoads := TfChkAvrLoads.Create(Nil);
+      fChkAvrLoads.CreateCo(ThisUser.CompanyNo);
+      fChkAvrLoads.Parent := panelBase;
+      fChkAvrLoads.Show;
     End
     else
     begin
-     fChkAvrLoads.Parent := panelBase;
-     fChkAvrLoads.Show;
-    end ;
-  End ;
+      fChkAvrLoads.Parent := panelBase;
+      fChkAvrLoads.Show;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acKontoLogikExecute(Sender: TObject);
-//var  fKontoLogik: TfKontoLogik;
+// var  fKontoLogik: TfKontoLogik;
 begin
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-   if not Assigned(fKontoLogik) then
+    if not Assigned(fKontoLogik) then
     Begin
-     fKontoLogik := TfKontoLogik.Create(Nil) ;
-     fKontoLogik.Align        := alClient ;
-     fKontoLogik.BorderStyle  := bsNone ;
-//     fKontoLogik.CreateCo(  ThisUser.CompanyNo);
-     fKontoLogik.Parent := panelBase;
-     fKontoLogik.Show;
+      fKontoLogik := TfKontoLogik.Create(Nil);
+      fKontoLogik.Align := alClient;
+      fKontoLogik.BorderStyle := bsNone;
+      // fKontoLogik.CreateCo(  ThisUser.CompanyNo);
+      fKontoLogik.Parent := panelBase;
+      fKontoLogik.Show;
     End
     else
     begin
-     fKontoLogik.Parent := panelBase;
-     fKontoLogik.Show;
-    end ;
-  End ;// if ThisUser.CanView[dcARSec] then
+      fKontoLogik.Parent := panelBase;
+      fKontoLogik.Show;
+    end;
+  End; // if ThisUser.CanView[dcARSec] then
 
-{ fKontoLogik:= TfKontoLogik.Create(nil);
- try
-  fKontoLogik.ShowModal ;
- finally
-  FreeAndNil(fKontoLogik) ;
- end;}
+  { fKontoLogik:= TfKontoLogik.Create(nil);
+    try
+    fKontoLogik.ShowModal ;
+    finally
+    FreeAndNil(fKontoLogik) ;
+    end; }
 end;
 
 procedure TfrmMain.acOrderstockExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-   if not Assigned(fOrderStocken) then
+    if not Assigned(fOrderStocken) then
     Begin
-     fOrderStocken := TfOrderStocken.Create(Nil) ;
-     fOrderStocken.Align        := alClient ;
-     fOrderStocken.BorderStyle  := bsNone ;
-//     fOrderStocken.CreateCo(  ThisUser.CompanyNo);
-     fOrderStocken.Parent := panelBase;
-     fOrderStocken.Show;
+      fOrderStocken := TfOrderStocken.Create(Nil);
+      fOrderStocken.Align := alClient;
+      fOrderStocken.BorderStyle := bsNone;
+      // fOrderStocken.CreateCo(  ThisUser.CompanyNo);
+      fOrderStocken.Parent := panelBase;
+      fOrderStocken.Show;
     End
     else
     begin
-     fOrderStocken.Parent := panelBase;
-     fOrderStocken.Show;
-    end ;
-  End ;// if ThisUser.CanView[dcARSec] then
+      fOrderStocken.Parent := panelBase;
+      fOrderStocken.Show;
+    end;
+  End; // if ThisUser.CanView[dcARSec] then
 end;
 
 procedure TfrmMain.acIntraStatExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-   if not Assigned(fIntrastat) then
+    if not Assigned(fIntrastat) then
     Begin
-     fIntrastat := TfIntrastat.Create(Nil) ;
-     fIntrastat.Align        := alClient ;
-     fIntrastat.BorderStyle  := bsNone ;
-//     fIntrastat.CreateCo(  ThisUser.CompanyNo);
-     fIntrastat.Parent := panelBase;
-     fIntrastat.Show;
+      fIntrastat := TfIntrastat.Create(Nil);
+      fIntrastat.Align := alClient;
+      fIntrastat.BorderStyle := bsNone;
+      // fIntrastat.CreateCo(  ThisUser.CompanyNo);
+      fIntrastat.Parent := panelBase;
+      fIntrastat.Show;
     End
     else
     begin
-     fIntrastat.Parent := panelBase;
-     fIntrastat.Show;
-    end ;
-  End ;// if ThisUser.CanView[dcARSec] then
+      fIntrastat.Parent := panelBase;
+      fIntrastat.Show;
+    end;
+  End; // if ThisUser.CanView[dcARSec] then
 end;
 
 procedure TfrmMain.acTradingAnalyzeExecute(Sender: TObject);
 begin
   if ThisUser.CanView[dcFakturaSec] then
   Begin
-   if not Assigned(fTradingAnalyze) then
+    if not Assigned(fTradingAnalyze) then
     Begin
-     fTradingAnalyze := TfTradingAnalyze.Create(Nil) ;
-     fTradingAnalyze.Align        := alClient ;
-     fTradingAnalyze.BorderStyle  := bsNone ;
-//     fTradingAnalyze.CreateCo(  ThisUser.CompanyNo);
-     fTradingAnalyze.Parent := panelBase;
-     fTradingAnalyze.Show;
+      fTradingAnalyze := TfTradingAnalyze.Create(Nil);
+      fTradingAnalyze.Align := alClient;
+      fTradingAnalyze.BorderStyle := bsNone;
+      // fTradingAnalyze.CreateCo(  ThisUser.CompanyNo);
+      fTradingAnalyze.Parent := panelBase;
+      fTradingAnalyze.Show;
     End
     else
     begin
-     fTradingAnalyze.Parent := panelBase;
-     fTradingAnalyze.Show;
-    end ;
-  End ;// if ThisUser.CanView[dcARSec] then
+      fTradingAnalyze.Parent := panelBase;
+      fTradingAnalyze.Show;
+    end;
+  End; // if ThisUser.CanView[dcARSec] then
 end;
 
 procedure TfrmMain.acAttestCommisionAndExtFreightExecute(Sender: TObject);
 begin
- if ThisUser.CanView[dcFakturaSec] then
- Begin
-  if not Assigned(frmFreightExternLoad) then
+  if ThisUser.CanView[dcFakturaSec] then
   Begin
-   frmFreightExternLoad := TfrmFreightExternLoad.Create(Application) ;
-   frmFreightExternLoad.CreateCo ;
+    if not Assigned(frmFreightExternLoad) then
+    Begin
+      frmFreightExternLoad := TfrmFreightExternLoad.Create(Application);
+      frmFreightExternLoad.CreateCo;
 
-   frmFreightExternLoad.Align         := alClient ;
-   frmFreightExternLoad.BorderStyle   := bsNone ;
-   frmFreightExternLoad.Parent        := panelBase;
+      frmFreightExternLoad.Align := alClient;
+      frmFreightExternLoad.BorderStyle := bsNone;
+      frmFreightExternLoad.Parent := panelBase;
 
-   frmFreightExternLoad.Show;
-   frmFreightExternLoad.icAttesteraMot.SetFocus ;
-  End
-  else
+      frmFreightExternLoad.Show;
+      frmFreightExternLoad.icAttesteraMot.SetFocus;
+    End
+    else
     begin
-//     frmFreightExternLoad.Parent := panelBase;
-     frmFreightExternLoad.Show;
-     frmFreightExternLoad.lcAgent.SetFocus ;
-    end ;
- End ;
+      // frmFreightExternLoad.Parent := panelBase;
+      frmFreightExternLoad.Show;
+      frmFreightExternLoad.lcAgent.SetFocus;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acPayControlExecute(Sender: TObject);
 begin
- if ThisUser.CanView[dcFakturaSec] then
- Begin
-  if not Assigned(fPayControl) then
+  if ThisUser.CanView[dcFakturaSec] then
   Begin
-   fPayControl := TfPayControl.Create(Application) ;
-//   fPayControl.CreateCo ;
+    if not Assigned(fPayControl) then
+    Begin
+      fPayControl := TfPayControl.Create(Application);
+      // fPayControl.CreateCo ;
 
-   fPayControl.Align         := alClient ;
-   fPayControl.BorderStyle   := bsNone ;
-   fPayControl.Parent        := panelBase;
+      fPayControl.Align := alClient;
+      fPayControl.BorderStyle := bsNone;
+      fPayControl.Parent := panelBase;
 
-   fPayControl.Show;
-//   fPayControl.lcAgent.SetFocus ;
-  End
-  else
+      fPayControl.Show;
+      // fPayControl.lcAgent.SetFocus ;
+    End
+    else
     begin
-//     fPayControl.Parent := panelBase;
-     fPayControl.Show;
-//     fPayControl.lcAgent.SetFocus ;
-    end ;
- End ;
+      // fPayControl.Parent := panelBase;
+      fPayControl.Show;
+      // fPayControl.lcAgent.SetFocus ;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acCreditInsuranceExecute(Sender: TObject);
 begin
- if ThisUser.CanView[dcFakturaSec] then
- Begin
-  if not Assigned(frmCredit) then
+  if ThisUser.CanView[dcFakturaSec] then
   Begin
-   frmCredit := TfrmCredit.Create(Application) ;
-//   frmCredit.CreateCo ;
+    if not Assigned(frmCredit) then
+    Begin
+      frmCredit := TfrmCredit.Create(Application);
+      // frmCredit.CreateCo ;
 
-//   frmCredit.Align         := alClient ;
-//   frmCredit.BorderStyle   := bsNone ;
-   frmCredit.Parent        := panelBase;
+      // frmCredit.Align         := alClient ;
+      // frmCredit.BorderStyle   := bsNone ;
+      frmCredit.Parent := panelBase;
 
-   frmCredit.Show;
-//   frmCredit.lcAgent.SetFocus ;
-  End
-  else
+      frmCredit.Show;
+      // frmCredit.lcAgent.SetFocus ;
+    End
+    else
     begin
-     frmCredit.Parent := panelBase;
-     frmCredit.Show;
-//     frmCredit.lcAgent.SetFocus ;
-    end ;
- End ;
+      frmCredit.Parent := panelBase;
+      frmCredit.Show;
+      // frmCredit.lcAgent.SetFocus ;
+    end;
+  End;
 end;
 
 procedure TfrmMain.acCreditAnalysisExecute(Sender: TObject);
 begin
-// if ThisUser.CanView[dcFrakt_AvrakningSec] then
- if ThisUser.CanView[dcFakturaSec] then
- Begin
-  if not Assigned(frmCreditLimitAnalys) then
+  // if ThisUser.CanView[dcFrakt_AvrakningSec] then
+  if ThisUser.CanView[dcFakturaSec] then
   Begin
-   frmCreditLimitAnalys := TfrmCreditLimitAnalys.Create(Application) ;
-//   frmCreditLimitAnalys.CreateCo ;
+    if not Assigned(frmCreditLimitAnalys) then
+    Begin
+      frmCreditLimitAnalys := TfrmCreditLimitAnalys.Create(Application);
+      // frmCreditLimitAnalys.CreateCo ;
 
-//   frmCreditLimitAnalys.Align         := alClient ;
-//   frmCreditLimitAnalys.BorderStyle   := bsNone ;
-   frmCreditLimitAnalys.Parent        := panelBase;
+      // frmCreditLimitAnalys.Align         := alClient ;
+      // frmCreditLimitAnalys.BorderStyle   := bsNone ;
+      frmCreditLimitAnalys.Parent := panelBase;
 
-   frmCreditLimitAnalys.Show;
-//   frmCreditLimitAnalys.lcAgent.SetFocus ;
-  End
-  else
+      frmCreditLimitAnalys.Show;
+      // frmCreditLimitAnalys.lcAgent.SetFocus ;
+    End
+    else
     begin
-     frmCreditLimitAnalys.Parent := panelBase;
-     frmCreditLimitAnalys.Show;
-//     frmCreditLimitAnalys.lcAgent.SetFocus ;
-    end ;
- End ;
+      frmCreditLimitAnalys.Parent := panelBase;
+      frmCreditLimitAnalys.Show;
+      // frmCreditLimitAnalys.lcAgent.SetFocus ;
+    end;
+  End;
 end;
 
-function  TfrmMain.GetLastNrToUnLock : Integer ;
-var fEntryField : TfEntryField;
+function TfrmMain.GetLastNrToUnLock: Integer;
+var
+  fEntryField: TfEntryField;
 begin
- fEntryField:= TfEntryField.Create(Nil);
- Try
-  fEntryField.Caption         := 'Ange Lastnr att låsa upp' ;
-  fEntryField.Label1.Caption  := 'LastNr:' ;
-  if fEntryField.ShowModal = mrOK then
-  Begin
-   if (StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0) > 0) then
-    Result  := StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0)
+  fEntryField := TfEntryField.Create(Nil);
+  Try
+    fEntryField.Caption := 'Ange Lastnr att låsa upp';
+    fEntryField.Label1.Caption := 'LastNr:';
+    if fEntryField.ShowModal = mrOK then
+    Begin
+      if (StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0) > 0) then
+        Result := StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0)
+      else
+        Result := -1;
+    End
     else
-    Result  := -1 ;
-  End
-  else
-  Result  := -1 ;
- Finally
-  FreeAndNil(fEntryField) ;
- End ;
+      Result := -1;
+  Finally
+    FreeAndNil(fEntryField);
+  End;
 end;
 
 procedure TfrmMain.acLockedLoadsExecute(Sender: TObject);
-Var //LoadNo        : Integer ;
-    frmLockLoads  : TfrmLockLoads ;
+Var // LoadNo        : Integer ;
+  frmLockLoads: TfrmLockLoads;
 begin
 
- if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\marhug')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\krikuh')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\annjon')
- or (Trim(dmsConnector.Get_AD_Name) = 'sa')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\kritom')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\nikahm')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\petfre')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\johlis')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\stefri')
- or (Trim(dmsConnector.Get_AD_Name) = 'VIDA\stehag')
- or (Trim(dmsConnector.Get_AD_Name) = 'Lars')  then
- Begin
-  frmLockLoads  := TfrmLockLoads.Create(nil) ;
-  Try
-  frmLockLoads.ShowModal ;
-  Finally
-   FreeAndNil(frmLockLoads) ;
-  End ;
-//  LoadNo  := GetLastNrToUnLock ;
-//  if LoadNo > 0 then
-//   dmsSystem.DelLoad_Res(LoadNo) ;
- End ;
+  if (Trim(dmsConnector.Get_AD_Name) = 'VIDA\larmak') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\marhug') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\krikuh') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\jenjoh') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\annjon') or
+    (Trim(dmsConnector.Get_AD_Name) = 'sa') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\kritom') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\nikahm') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\petfre') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\johlis') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\stefri') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\stehag') or
+    (Trim(dmsConnector.Get_AD_Name) = 'Lars') then
+  Begin
+    frmLockLoads := TfrmLockLoads.Create(nil);
+    Try
+      frmLockLoads.ShowModal;
+    Finally
+      FreeAndNil(frmLockLoads);
+    End;
+    // LoadNo  := GetLastNrToUnLock ;
+    // if LoadNo > 0 then
+    // dmsSystem.DelLoad_Res(LoadNo) ;
+  End;
 end;
 
 end.

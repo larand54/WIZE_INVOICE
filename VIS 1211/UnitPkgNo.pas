@@ -2,9 +2,22 @@ unit UnitPkgNo;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ExtCtrls, Dialogs, cxGraphics, cxControls, cxLookAndFeels,
-  cxLookAndFeelPainters, cxContainer, cxEdit, cxMaskEdit, cxTextEdit ;
+  cxLookAndFeelPainters, cxContainer, cxEdit, cxMaskEdit, cxTextEdit,
+  dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel,
+  dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
+  dxSkinXmas2008Blue;
 
 type
   TfrmPkgNo = class(TForm)
@@ -23,7 +36,7 @@ type
     { Public declarations }
   end;
 
-//var frmPkgNo: TfrmPkgNo;
+  // var frmPkgNo: TfrmPkgNo;
 
 implementation
 
@@ -33,21 +46,23 @@ uses VidaConst;
 
 procedure TfrmPkgNo.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- Try
- if StrToInt(Trim(dxMaskPackageNo.Text)) > Const_MAX_PKG_NO then
-  Begin
-   CanClose := False ;
-   ShowMessage('Paket nummer kan inte överskrida '+IntToStr(Const_MAX_PKG_NO)) ;
-  End ;
+  Try
+    if StrToInt(Trim(dxMaskPackageNo.Text)) > Const_MAX_PKG_NO then
+    Begin
+      CanClose := False;
+      ShowMessage('Paket nummer kan inte överskrida ' +
+        IntToStr(Const_MAX_PKG_NO));
+    End;
   Except
-   ShowMessage('Paket nummer kan inte överskrida '+IntToStr(Const_MAX_PKG_NO)) ;
-   CanClose := False ;
-  End ;
+    ShowMessage('Paket nummer kan inte överskrida ' +
+      IntToStr(Const_MAX_PKG_NO));
+    CanClose := False;
+  End;
 end;
 
 procedure TfrmPkgNo.CancelBtnClick(Sender: TObject);
 begin
- dxMaskPackageNo.Text:= '0' ;
+  dxMaskPackageNo.Text := '0';
 end;
 
 end.

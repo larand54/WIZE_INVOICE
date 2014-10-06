@@ -27,7 +27,9 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, dxPScxCommon;
+  dxSkinsdxRibbonPainter, dxPScxCommon, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  cxNavigator, System.Actions;
 
 type
   TfOrderStockDetails = class(TForm)
@@ -80,42 +82,45 @@ var
 
 implementation
 
-uses dmsDataConn, UnitdmModule1, dmsVidaSystem, VidaUser ;
+uses dmsDataConn, UnitdmModule1, dmsVidaSystem, VidaUser;
 
 {$R *.dfm}
 
 procedure TfOrderStockDetails.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfOrderStockDetails.acPrintExecute(Sender: TObject);
 begin
- //Print
- dxComponentPrinter1Link1.ShrinkToPageWidth:= True ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Orderstock radinfo') ;
+  // Print
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add
+    ('Orderstock radinfo');
 
- dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1); 
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 procedure TfOrderStockDetails.acSaveLayoutExecute(Sender: TObject);
 begin
- //Save layout
- dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStockDetails.Name, grdOrderStockDetailsDBTableView1) ; 
+  // Save layout
+  dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStockDetails.Name,
+    grdOrderStockDetailsDBTableView1);
 end;
 
 procedure TfOrderStockDetails.FormShow(Sender: TObject);
 begin
- dmsSystem.LoadGridLayout(ThisUser.UserID, grdOrderStockDetails.Name, grdOrderStockDetailsDBTableView1) ;
- dmModule1.Refresh_OrderstockDtl ; 
+  dmsSystem.LoadGridLayout(ThisUser.UserID, grdOrderStockDetails.Name,
+    grdOrderStockDetailsDBTableView1);
+  dmModule1.Refresh_OrderstockDtl;
 end;
 
 procedure TfOrderStockDetails.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- dmModule1.Close_OrderstockDtl ;
+  dmModule1.Close_OrderstockDtl;
 end;
 
 end.

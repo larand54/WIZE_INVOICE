@@ -64,7 +64,7 @@ object dmsSystem: TdmsSystem
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -143,7 +143,7 @@ object dmsSystem: TdmsSystem
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -169,7 +169,7 @@ object dmsSystem: TdmsSystem
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -235,7 +235,7 @@ object dmsSystem: TdmsSystem
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -2527,7 +2527,6 @@ object dmsSystem: TdmsSystem
     end
   end
   object sq_dbProps: TFDQuery
-    Active = True
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]

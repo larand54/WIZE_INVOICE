@@ -1,9 +1,9 @@
 object fSelectBTHorBTB: TfSelectBTHorBTB
   Left = 229
   Top = 107
-  Width = 516
-  Height = 256
   Caption = 'V'#228'lj leverant'#246'r'
+  ClientHeight = 218
+  ClientWidth = 500
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -39,18 +39,21 @@ object fSelectBTHorBTB: TfSelectBTHorBTB
   end
   object Panel1: TPanel
     Left = 0
-    Top = 176
-    Width = 508
+    Top = 165
+    Width = 500
     Height = 53
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 176
+    ExplicitWidth = 508
     object BitBtn1: TBitBtn
       Left = 192
       Top = 8
       Width = 105
       Height = 33
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
 end

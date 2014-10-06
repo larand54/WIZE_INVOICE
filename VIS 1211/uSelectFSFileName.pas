@@ -18,7 +18,7 @@ type
     { Public declarations }
   end;
 
-//var fSelectFSFileName: TfSelectFSFileName;
+  // var fSelectFSFileName: TfSelectFSFileName;
 
 implementation
 

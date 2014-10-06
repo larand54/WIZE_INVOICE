@@ -28,10 +28,8 @@ object FormSelectClient: TFormSelectClient
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -39,10 +37,8 @@ object FormSelectClient: TFormSelectClient
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -57,7 +53,7 @@ object FormSelectClient: TFormSelectClient
     ExplicitWidth = 510
     ExplicitHeight = 379
     object grdClientsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.dsClient
       DataController.KeyFieldNames = 'ClientNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

@@ -1,9 +1,9 @@
 object fBasMatPunkter: TfBasMatPunkter
   Left = 244
   Top = 106
-  Width = 514
-  Height = 480
   Caption = 'Bas m'#228'tpunkter'
+  ClientHeight = 442
+  ClientWidth = 498
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,11 +18,12 @@ object fBasMatPunkter: TfBasMatPunkter
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 506
+    Width = 498
     Height = 57
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 506
     object bbInsert: TBitBtn
       Left = 24
       Top = 16
@@ -63,12 +64,14 @@ object fBasMatPunkter: TfBasMatPunkter
   object grdRegPoints: TcxGrid
     Left = 0
     Top = 57
-    Width = 506
-    Height = 396
+    Width = 498
+    Height = 385
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 506
+    ExplicitHeight = 396
     object grdRegPointsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsContact.ds_RegPoints
       DataController.KeyFieldNames = 'RegPointNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

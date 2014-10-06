@@ -17,7 +17,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
 
 type
   TfSelectPrintDevice = class(TForm)
@@ -34,8 +35,8 @@ type
     { Private declarations }
   public
     { Public declarations }
-   Val : Integer ;
-   Class function Execute : word ;
+    Val: Integer;
+    Class function Execute: word;
   end;
 
 var
@@ -47,43 +48,43 @@ uses dmcVidaOrder;
 
 {$R *.dfm}
 
-Class function TfSelectPrintDevice.Execute : word ;
+Class function TfSelectPrintDevice.Execute: word;
 Begin
- With Self.Create(nil) do begin
-  try
+  With Self.Create(nil) do
+  begin
+    try
 
-  ShowModal ;
-  Result  := val ;
+      ShowModal;
+      Result := Val;
 
-  Finally
-   Free ;
-  End
- End ;
-End ;
+    Finally
+      Free;
+    End
+  End;
+End;
 
 procedure TfSelectPrintDevice.bSkrivareClick(Sender: TObject);
 begin
- Val := 1 ;
- Close ;
+  Val := 1;
+  Close;
 end;
 
 procedure TfSelectPrintDevice.bBildskarmClick(Sender: TObject);
 begin
- Val := 2 ;
- Close ;
+  Val := 2;
+  Close;
 end;
 
 procedure TfSelectPrintDevice.bAngraClick(Sender: TObject);
 begin
- Val := 0 ;
- Close ;
+  Val := 0;
+  Close;
 end;
 
 procedure TfSelectPrintDevice.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-// dmcOrder.SaveUserProps ;
+  // dmcOrder.SaveUserProps ;
 end;
 
 end.
- 

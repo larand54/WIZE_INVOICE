@@ -29,10 +29,8 @@ object FormPaymentTerms: TFormPaymentTerms
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -40,10 +38,8 @@ object FormPaymentTerms: TFormPaymentTerms
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -58,7 +54,7 @@ object FormPaymentTerms: TFormPaymentTerms
     ExplicitWidth = 889
     ExplicitHeight = 412
     object grdPayTermsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.dsPaymentTerm
       DataController.KeyFieldNames = 'PaymentTermsNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

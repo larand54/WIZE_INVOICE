@@ -20,6 +20,8 @@ object frmLoadOrder: TfrmLoadOrder
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottomGrid: TPanel
@@ -514,6 +516,7 @@ object frmLoadOrder: TfrmLoadOrder
       Control = pcLoadOrder
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object pcLoadOrder: TcxPageControl
       Left = 0
@@ -533,6 +536,8 @@ object frmLoadOrder: TfrmLoadOrder
       object tsLoads: TcxTabSheet
         Caption = 'Last'
         ImageIndex = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object PanelLoadDetail: TPanel
           Left = 0
           Top = 0
@@ -1675,7 +1680,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 971
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1701,7 +1706,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 63
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1710,8 +1715,8 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -2296,7 +2301,7 @@ object frmLoadOrder: TfrmLoadOrder
     Left = 728
     Top = 312
     Bitmap = {
-      494C010125002900040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010125002900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000F000000001002000000000000068
       01000000000000000000000000000000000000000000FF00FF00FF00FF00FF00
       FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
@@ -5668,7 +5673,7 @@ object frmLoadOrder: TfrmLoadOrder
     Left = 728
     Top = 360
     Bitmap = {
-      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C
@@ -5813,7 +5818,7 @@ object frmLoadOrder: TfrmLoadOrder
     Left = 728
     Top = 416
     Bitmap = {
-      494C010109000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010109000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -6719,9 +6724,9 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 5080
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -6732,8 +6737,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 41907.303333518520000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 41918.476963842590000000
       BuiltInReportLink = True
     end
   end
@@ -6934,7 +6938,7 @@ object frmLoadOrder: TfrmLoadOrder
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -6964,7 +6968,7 @@ object frmLoadOrder: TfrmLoadOrder
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

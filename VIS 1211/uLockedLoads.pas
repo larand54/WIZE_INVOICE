@@ -11,8 +11,10 @@ uses
   dxPSEdgePatterns, dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils,
   dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxPScxPageControlProducer, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
   dxPSCore, dxPScxCommon, ActnList, ImgList, cxGridLevel,
   cxClasses, cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, StdCtrls, cxButtons, ExtCtrls, cxLabel,
@@ -28,7 +30,9 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxPScxGridLnk, dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter;
+  dxSkinsdxRibbonPainter, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions;
 
 type
   TfrmLockLoads = class(TfrmBaseFormA)
@@ -44,7 +48,7 @@ type
     { Public declarations }
   end;
 
-//var frmLockLoads: TfrmLockLoads;
+  // var frmLockLoads: TfrmLockLoads;
 
 implementation
 

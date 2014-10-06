@@ -9,7 +9,20 @@ uses
   VidaType, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
   cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxDBData,
   cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid ;
+  cxGridTableView, cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, cxNavigator;
 
 type
   TfrmPackagePicker_II = class(TForm)
@@ -31,31 +44,31 @@ type
   private
     FSupplierCode: string3;
     FSupplierNo: Integer;
-    FProductNo : Integer ;
-    FProductLengthNo : Integer ;
-    FNoOfLengths : Integer ;
+    FProductNo: Integer;
+    FProductLengthNo: Integer;
+    FNoOfLengths: Integer;
     function getDataSource: TDataSource;
     procedure setDataSource(const Value: TDataSource);
     { Private declarations }
   public
     { Public declarations }
-    property DataSource : TDataSource read getDataSource write setDataSource;
-    property SupplierCodeForSelectedPkg : string3 read FSupplierCode;
-    property SupplierNoForSelectedpkg   : Integer read FSupplierNo;
-    property ProductNoForSelectedpkg   : Integer read FProductNo;
-    property ProductLengthNoForSelectedpkg   : Integer read FProductLengthNo;
-    property NoOfLengthsForSelectedpkg   : Integer read FNoOfLengths;
+    property DataSource: TDataSource read getDataSource write setDataSource;
+    property SupplierCodeForSelectedPkg: string3 read FSupplierCode;
+    property SupplierNoForSelectedpkg: Integer read FSupplierNo;
+    property ProductNoForSelectedpkg: Integer read FProductNo;
+    property ProductLengthNoForSelectedpkg: Integer read FProductLengthNo;
+    property NoOfLengthsForSelectedpkg: Integer read FNoOfLengths;
   end;
 
-//var frmPackagePicker_II: TfrmPackagePicker_II;
+  // var frmPackagePicker_II: TfrmPackagePicker_II;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  vidaUser, //dmcLoadEntry,
-  dmsDataConn ;
+  vidaUser, // dmcLoadEntry,
+  dmsDataConn;
 
 { TfrmPackagePicker }
 
@@ -66,22 +79,26 @@ end;
 
 procedure TfrmPackagePicker_II.setDataSource(const Value: TDataSource);
 begin
-  grdPackages.DataController.DataSource := Value;
+  grdPackages.Datacontroller.DataSource := Value;
 end;
 
 procedure TfrmPackagePicker_II.btnOKClick(Sender: TObject);
 begin
-  FSupplierCode := trim(grdPackages.DataController.DataSource.DataSet.FieldValues['SupplierCode']);
-  FSupplierNo   := grdPackages.DataController.DataSource.DataSet.FieldValues['SupplierNo'] ;
-  FProductNo    := grdPackages.DataController.DataSource.DataSet.FieldValues['ProductNo'] ;
-//  FProductLengthNo := grdPackages.DataSource.DataSet.FieldValues['ProductLengthNo'] ;
-//  FNoOfLengths := grdPackages.DataSource.DataSet.FieldValues['NoOfLengths'] ;
+  FSupplierCode :=
+    trim(grdPackages.Datacontroller.DataSource.DataSet.FieldValues
+    ['SupplierCode']);
+  FSupplierNo := grdPackages.Datacontroller.DataSource.DataSet.FieldValues
+    ['SupplierNo'];
+  FProductNo := grdPackages.Datacontroller.DataSource.DataSet.FieldValues
+    ['ProductNo'];
+  // FProductLengthNo := grdPackages.DataSource.DataSet.FieldValues['ProductLengthNo'] ;
+  // FNoOfLengths := grdPackages.DataSource.DataSet.FieldValues['NoOfLengths'] ;
 end;
 
 procedure TfrmPackagePicker_II.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- CanClose:= True ;
+  CanClose := True;
 end;
 
 end.

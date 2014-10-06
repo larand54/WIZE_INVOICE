@@ -4,8 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, uBaseListForm, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  Dialogs, uBaseListForm, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
   FireDAC.DApt, DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, ActnList, dxBar,
   cxClasses, ExtCtrls, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
@@ -31,7 +33,9 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxPScxEditorProducers,
-  dxPScxExtEditorProducers, dxSkinsdxRibbonPainter ;
+  dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, cxNavigator, System.Actions;
 
 type
   TfTradingAnalyze = class(TfBaseListForm)
@@ -45,16 +49,20 @@ type
     grdTradingAnalyzeDBBandedTableView1PO_Valuta: TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1PO_Belopp_Valuta: TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1PO_Belopp_SEK: TcxGridDBBandedColumn;
-    grdTradingAnalyzeDBBandedTableView1PO_ProduktVrde_Valuta: TcxGridDBBandedColumn;
+    grdTradingAnalyzeDBBandedTableView1PO_ProduktVrde_Valuta
+      : TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1PO_AM3: TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1Sales_Valuta: TcxGridDBBandedColumn;
-    grdTradingAnalyzeDBBandedTableView1Sales_ProduktVrde_Valuta: TcxGridDBBandedColumn;
+    grdTradingAnalyzeDBBandedTableView1Sales_ProduktVrde_Valuta
+      : TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1Sales_AM3: TcxGridDBBandedColumn;
-    grdTradingAnalyzeDBBandedTableView1Sales_Belopp_Valuta: TcxGridDBBandedColumn;
+    grdTradingAnalyzeDBBandedTableView1Sales_Belopp_Valuta
+      : TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1Sales_Belopp_SEK: TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1Kund: TcxGridDBBandedColumn;
     grdTradingAnalyzeDBBandedTableView1Sales_Fakturanr: TcxGridDBBandedColumn;
-    grdTradingAnalyzeDBBandedTableView1Sales_Fakturadatum: TcxGridDBBandedColumn;
+    grdTradingAnalyzeDBBandedTableView1Sales_Fakturadatum
+      : TcxGridDBBandedColumn;
     deStartPeriod: TcxDBDateEdit;
     cxLabel1: TcxLabel;
     deEndPeriod: TcxDBDateEdit;
@@ -101,7 +109,8 @@ type
     procedure acOpenSalesInvoiceUpdate(Sender: TObject);
   private
     { Private declarations }
-    procedure OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst, DelKredit  : Integer) ;
+    procedure OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst,
+      DelKredit: Integer);
   public
     { Public declarations }
   end;
@@ -111,93 +120,97 @@ var
 
 implementation
 
-uses UnitdmModule1, VidaUser , dmsVidaSystem, dmcVidaInvoice, fInvoice;
+uses UnitdmModule1, VidaUser, dmsVidaSystem, dmcVidaInvoice, fInvoice;
 
 {$R *.dfm}
 
 procedure TfTradingAnalyze.acRefreshExecute(Sender: TObject);
 begin
   inherited;
- With dmModule1 do
- Begin
-  sp_Vis_GenTradingAnalyze.Close ;
-  sp_Vis_GenTradingAnalyze.ParamByName('@StartDate').AsSQLTimeStamp := DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime) ;
-  sp_Vis_GenTradingAnalyze.ParamByName('@EndDate').AsSQLTimeStamp   := DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime) ;
-  sp_Vis_GenTradingAnalyze.Open ;
- End ;
+  With dmModule1 do
+  Begin
+    sp_Vis_GenTradingAnalyze.Close;
+    sp_Vis_GenTradingAnalyze.ParamByName('@StartDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime);
+    sp_Vis_GenTradingAnalyze.ParamByName('@EndDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime);
+    sp_Vis_GenTradingAnalyze.Open;
+  End;
 end;
 
 procedure TfTradingAnalyze.acPrintExecute(Sender: TObject);
 begin
   inherited;
- dxComponentPrinter1Link1.ShrinkToPageWidth:= True ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Trading') ;
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Trading');
 
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Period: ' + deStartPeriod.Text
- + ' - ' + deEndPeriod.Text) ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add
+    ('Period: ' + deStartPeriod.Text + ' - ' + deEndPeriod.Text);
 
- dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 procedure TfTradingAnalyze.FormDestroy(Sender: TObject);
 begin
   inherited;
- fTradingAnalyze := NIL;
+  fTradingAnalyze := NIL;
 
   if dmsSystem.DeleteAssigned('TfTradingAnalyze', 'dmVidaInvoice') = True then
   Begin
-   dmVidaInvoice.Free ;
-   dmVidaInvoice := Nil ;
-  End ;
+    dmVidaInvoice.Free;
+    dmVidaInvoice := Nil;
+  End;
 end;
 
 procedure TfTradingAnalyze.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
   inherited;
- cds_PropsUserID.AsInteger  := ThisUser.UserID ;
- cds_PropsForm.AsString     := Self.Name ;
+  cds_PropsUserID.AsInteger := ThisUser.UserID;
+  cds_PropsForm.AsString := Self.Name;
 end;
 
 procedure TfTradingAnalyze.acExportXLSExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
-  ExcelDir,
-  FileName    : String ;
+  Save_Cursor: TCursor;
+  ExcelDir, FileName: String;
 begin
   inherited;
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crHourGlass;    { Show hourglass cursor }
- ExcelDir       := dmsSystem.Get_Dir('ExcelDir') ;
- Try
- SaveDialog1.Filter     := 'Excel files (*.xls)|*.xls';
- SaveDialog1.DefaultExt := 'xls';
- SaveDialog1.InitialDir := ExcelDir ;
- if SaveDialog1.Execute then
- Begin
-  FileName:= SaveDialog1.FileName ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   Try
-  ExportGridToExcel(FileName, grdTradingAnalyze, False, False, True,'xls');
-  ShowMessage('Tabell exporterad till Excel fil ' + FileName);
-  Except
-  End ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+    SaveDialog1.Filter := 'Excel files (*.xls)|*.xls';
+    SaveDialog1.DefaultExt := 'xls';
+    SaveDialog1.InitialDir := ExcelDir;
+    if SaveDialog1.Execute then
+    Begin
+      FileName := SaveDialog1.FileName;
+      Try
+        ExportGridToExcel(FileName, grdTradingAnalyze, False, False,
+          True, 'xls');
+        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+      Except
+      End;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
 procedure TfTradingAnalyze.acSaveLayoutExecute(Sender: TObject);
 begin
   inherited;
- dmsSystem.StoreGridLayout(ThisUser.UserID, grdTradingAnalyze.Name, grdTradingAnalyzeDBBandedTableView1) ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID, grdTradingAnalyze.Name,
+    grdTradingAnalyzeDBBandedTableView1);
 end;
 
 procedure TfTradingAnalyze.FormShow(Sender: TObject);
 begin
   inherited;
- dmsSystem.LoadGridLayout(ThisUser.UserID, grdTradingAnalyze.Name, grdTradingAnalyzeDBBandedTableView1) ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID, grdTradingAnalyze.Name,
+    grdTradingAnalyzeDBBandedTableView1);
 end;
 
 procedure TfTradingAnalyze.acOpenPOInvoiceExecute(Sender: TObject);
@@ -205,151 +218,163 @@ begin
   inherited;
   with dmModule1 do
   Begin
-   OpenInvoice(grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.FieldByName('POIntInvNo').AsInteger, -1, -1) ;
-  End ;
+    OpenInvoice(grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.
+      FieldByName('POIntInvNo').AsInteger, -1, -1);
+  End;
 end;
 
-procedure TfTradingAnalyze.OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst, DelKredit  : Integer) ;
-Var frmInvoice  : TfrmInvoice ;
-    Save_Cursor : TCursor;
+procedure TfTradingAnalyze.OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst,
+  DelKredit: Integer);
+Var
+  frmInvoice: TfrmInvoice;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-  frmInvoice:= TfrmInvoice.Create(NIL);
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceShipTo.Active:= True ;
-   frmInvoice.TabControl1.Tabs.Clear ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= False ;
-   cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-//   cdsInvoiceHead.Open ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= True ;
+    with dmVidaInvoice do
+    Begin
+      frmInvoice := TfrmInvoice.Create(NIL);
+      Try
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceShipTo.Active := True;
+        frmInvoice.TabControl1.Tabs.Clear;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := False;
+        cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        // cdsInvoiceHead.Open ;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := True;
 
-   if (IntInvNoToAttestAgainst > 0) and (DelKredit > 0) then
-   Begin
-    cdsInvoiceHead.Edit ;
-    cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger := IntInvNoToAttestAgainst ;
-    cdsInvoiceHeadDelKredit.AsInteger               := DelKredit ;
-    cdsInvoiceHead.Post ;
-   End ;
+        if (IntInvNoToAttestAgainst > 0) and (DelKredit > 0) then
+        Begin
+          cdsInvoiceHead.Edit;
+          cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger :=
+            IntInvNoToAttestAgainst;
+          cdsInvoiceHeadDelKredit.AsInteger := DelKredit;
+          cdsInvoiceHead.Post;
+        End;
 
+        cdsInvoiceLO.Active := False;
+        // sq_InvoiceLO.Close ;
+        cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        // cdsInvoiceLO.Active:= False ;
+        // cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString ;
+        // cdsInvoiceLO.Filtered:= True ;
 
-   cdsInvoiceLO.Active:= False ;
-//   sq_InvoiceLO.Close ;
-   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//  cdsInvoiceLO.Active:= False ;
-//  cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString ;
-//  cdsInvoiceLO.Filtered:= True ;
+        cdsInvoiceLO.Active := True;
 
-   cdsInvoiceLO.Active:= True ;
+        cds_PIP.Active := False;
+        cds_PIP.ParamByName('OwnerNo').AsInteger :=
+          cdsInvoiceHeadSupplierNo.AsInteger;
+        cds_PIP.Active := True;
 
-   cds_PIP.Active:= False ;
-   cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
-   cds_PIP.Active:= True ;
+        cds_IH_SpecLoad.Active := False;
+        cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        cds_IH_SpecLoad.Active := True;
+        if cds_IH_SpecLoad.RecordCount = 0 then
+        Begin
+          cds_IH_SpecLoad.Insert;
+          cds_IH_SpecLoad.Post;
+        End;
 
-   cds_IH_SpecLoad.Active:= False ;
-   cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cds_IH_SpecLoad.Active:= True ;
-   if cds_IH_SpecLoad.RecordCount = 0 then
-   Begin
-    cds_IH_SpecLoad.Insert ;
-    cds_IH_SpecLoad.Post ;
-   End ;
+        cdsInvoiceLO.First;
+        While not cdsInvoiceLO.Eof do
+        Begin
+          frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString);
+          cdsInvoiceLO.Next;
+        End;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
+        if frmInvoice.TabControl1.Tabs.Count > 0 then
+        Begin
+          cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
+            cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = '
+            + frmInvoice.TabControl1.Tabs[0];
+          cdsInvoiceLO.Filtered := True;
+          cdsInvoiceDetail.Close;
+          cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger
+            := IntInvNo;
+          cdsInvoiceDetail.Filter := 'InternalInvoiceNo = ' +
+            cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = '
+            + frmInvoice.TabControl1.Tabs[0];
+          cdsInvoiceDetail.Filtered := True;
+          cdsInvoiceDetail.Active := True;
+          Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
-  cdsInvoiceLO.First ;
-  While not cdsInvoiceLO.Eof do
-  Begin
-   frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-   cdsInvoiceLO.Next ;
-  End ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+          frmInvoice.ShowModal;
 
-  if frmInvoice.TabControl1.Tabs.Count > 0 then
-  Begin
-   cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = ' + frmInvoice.TabControl1.Tabs[0] ;
-   cdsInvoiceLO.Filtered:= True ;
-   cdsInvoiceDetail.Close ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = '+frmInvoice.TabControl1.Tabs[0] ;
-   cdsInvoiceDetail.Filtered:= True ;
-   cdsInvoiceDetail.Active:= True ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+          if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
+            dmVidaInvoice.cds_IH_SpecLoad.Post;
+          if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+          Begin
+            dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0);
+            dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates;
+          End;
+        End
+        else
+        Begin
+          Exit;
+        End;
 
-
-   frmInvoice.ShowModal ;
-
-   if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
-    dmVidaInvoice.cds_IH_SpecLoad.Post ;
-   if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
-    dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
-   End ;
-  End
-  else
-  Begin
-   Exit ;
-  End ;
-
- Finally
-  fInternalInvoiceNo        := -1 ;
-  cdsInvoiceDetail.Close ;
-  cdsInvoiceLO.Filtered     := False ;
-  cdsInvoiceLO.Active       := False ;
-  cdsInvoiceDetail.Filtered := False ;
-  cdsInvoiceDetail.Filter   := '';
-  cdsInvoiceDetail.Active   := False ;
-  cdsInvoiceShipTo.Active   := False ;
-  FreeAndNil(frmInvoice) ;
- End ;
- End ; // with
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-End ;
+      Finally
+        fInternalInvoiceNo := -1;
+        cdsInvoiceDetail.Close;
+        cdsInvoiceLO.Filtered := False;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceDetail.Filtered := False;
+        cdsInvoiceDetail.Filter := '';
+        cdsInvoiceDetail.Active := False;
+        cdsInvoiceShipTo.Active := False;
+        FreeAndNil(frmInvoice);
+      End;
+    End; // with
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+End;
 
 procedure TfTradingAnalyze.acOpenSalesInvoiceExecute(Sender: TObject);
 begin
   inherited;
   with dmModule1 do
   Begin
-   OpenInvoice(grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.FieldByName('SalesIntInvNo').AsInteger, -1, -1) ;
-  End ;
+    OpenInvoice(grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.
+      FieldByName('SalesIntInvNo').AsInteger, -1, -1);
+  End;
 end;
 
 procedure TfTradingAnalyze.FormCreate(Sender: TObject);
 begin
   inherited;
- if (not Assigned(dmVidaInvoice)) then
- dmVidaInvoice  := TdmVidaInvoice.Create(nil);
- dmsSystem.AssignDMToThisWork('TfTradingAnalyze', 'dmVidaInvoice') ;
+  if (not Assigned(dmVidaInvoice)) then
+    dmVidaInvoice := TdmVidaInvoice.Create(nil);
+  dmsSystem.AssignDMToThisWork('TfTradingAnalyze', 'dmVidaInvoice');
 end;
 
 procedure TfTradingAnalyze.acOpenPOInvoiceUpdate(Sender: TObject);
 begin
   inherited;
- With dmModule1 do
- Begin
-  acOpenPOInvoice.Enabled := (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.Active) and (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.RecordCount > 0) ;
- End ;
+  With dmModule1 do
+  Begin
+    acOpenPOInvoice.Enabled :=
+      (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.Active) and
+      (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.
+      RecordCount > 0);
+  End;
 end;
 
 procedure TfTradingAnalyze.acOpenSalesInvoiceUpdate(Sender: TObject);
 begin
   inherited;
- With dmModule1 do
- Begin
-  acOpenSalesInvoice.Enabled := (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.Active) and (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.RecordCount > 0) ;
- End ;
+  With dmModule1 do
+  Begin
+    acOpenSalesInvoice.Enabled :=
+      (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.Active) and
+      (grdTradingAnalyzeDBBandedTableView1.DataController.DataSet.
+      RecordCount > 0);
+  End;
 end;
 
 end.

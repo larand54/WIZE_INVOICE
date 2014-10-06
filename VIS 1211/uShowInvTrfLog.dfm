@@ -24,6 +24,7 @@ object fShowInvTrfLog: TfShowInvTrfLog
     ExplicitWidth = 811
     ExplicitHeight = 597
     object grdInvTrfLogDBCardView1: TcxGridDBCardView
+      Navigator.Buttons.CustomButtons = <>
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -261,8 +262,10 @@ object fShowInvTrfLog: TfShowInvTrfLog
     Top = 56
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdInvTrfLog
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -279,6 +282,7 @@ object fShowInvTrfLog: TfShowInvTrfLog
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -288,7 +292,7 @@ object fShowInvTrfLog: TfShowInvTrfLog
     Left = 200
     Top = 440
     Bitmap = {
-      494C01010F001300080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F0013000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

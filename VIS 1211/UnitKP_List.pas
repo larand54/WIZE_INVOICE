@@ -11,8 +11,10 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
   cxClasses, cxGridCustomView, cxGrid, cxGridExportLink, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
   cxLookAndFeelPainters, cxDBEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxButtons, dxBar, cxLabel, cxImageComboBox,
   cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
@@ -27,7 +29,9 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
-  dxSkinscxPCPainter, cxNavigator ;
+  dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  System.Actions;
 
 type
   TfrmKP_List = class(TfrmDBForm)
@@ -117,12 +121,12 @@ type
     procedure atExitExecute(Sender: TObject);
   private
     { Private declarations }
-    ClientNo : Integer ;
+    ClientNo: Integer;
   public
     { Public declarations }
-    AppName: String ;
+    AppName: String;
     constructor CreateCo(CompanyNo: Integer);
-    destructor  Destroy;
+    destructor Destroy;
   end;
 
 var
@@ -130,19 +134,20 @@ var
 
 implementation
 
-uses  VidaConst,   VidaUser,  VidaUtils,
-      UnitCRViewReport , dmsVidaContact, dmsDataConn, dmsVidaSystem;
+uses VidaConst, VidaUser, VidaUtils,
+  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem;
 
 {$R *.dfm}
 
 constructor TfrmKP_List.CreateCo(CompanyNo: Integer);
 
 begin
-  inherited; //Create(AOwner);
+  inherited; // Create(AOwner);
   // Load column widths set last time.
-  dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/'+grdKPList.Name, grdKPListDBTableView1)  ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdKPList.Name,
+    grdKPListDBTableView1);
   // Populate the combo box with names of suppliers from the database
-//  dmsContact.LoadClients(cbClients.Properties.Items,1);
+  // dmsContact.LoadClients(cbClients.Properties.Items,1);
 end;
 
 destructor TfrmKP_List.Destroy;
@@ -150,128 +155,127 @@ begin
   inherited;
 end;
 
-
 procedure TfrmKP_List.acCustomizegrdKP_ListExecute(Sender: TObject);
 begin
   inherited;
   if grdKPList.FocusedView is TcxCustomGridTableView then
     with TcxCustomGridTableController(grdKPList.FocusedView.Controller) do
-      begin
-        Customization := True;
-        CustomizationForm.AlphaBlendValue := 255;
-        CustomizationForm.AlphaBlend := True;
-      end;
+    begin
+      Customization := True;
+      CustomizationForm.AlphaBlendValue := 255;
+      CustomizationForm.AlphaBlend := True;
+    end;
 end;
 
 procedure TfrmKP_List.FormDestroy(Sender: TObject);
 begin
- frmKP_List:= NIL ;
+  frmKP_List := NIL;
   inherited;
 end;
 
 procedure TfrmKP_List.acRefreshExecute(Sender: TObject);
 var
-  Save_Cursor:TCursor;
+  Save_Cursor: TCursor;
 begin
   inherited;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;
- Try
-   cdsKP_List.Active:= False ;
-   if (not cds_PropsClientNo.IsNull) and (cds_PropsClientNo.AsInteger > 0) then
-   cdsKP_List.ParamByName('@CustomerNo').AsInteger  := cds_PropsClientNo.AsInteger
-   else
-   cdsKP_List.ParamByName('@CustomerNo').AsInteger  := 0 ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  Try
+    cdsKP_List.Active := False;
+    if (not cds_PropsClientNo.IsNull) and (cds_PropsClientNo.AsInteger > 0) then
+      cdsKP_List.ParamByName('@CustomerNo').AsInteger :=
+        cds_PropsClientNo.AsInteger
+    else
+      cdsKP_List.ParamByName('@CustomerNo').AsInteger := 0;
 
-   if (not cds_PropsAgentNo.IsNull) and (cds_PropsAgentNo.AsInteger > 0) then
-   cdsKP_List.ParamByName('@AgentNo').AsInteger     := cds_PropsAgentNo.AsInteger
-   else
-   cdsKP_List.ParamByName('@AgentNo').AsInteger     := 0 ;
-   cdsKP_List.ParamByName('@Status').AsInteger := cds_PropsStatus.AsInteger ;
-   cdsKP_List.Active:= True ;
+    if (not cds_PropsAgentNo.IsNull) and (cds_PropsAgentNo.AsInteger > 0) then
+      cdsKP_List.ParamByName('@AgentNo').AsInteger := cds_PropsAgentNo.AsInteger
+    else
+      cdsKP_List.ParamByName('@AgentNo').AsInteger := 0;
+    cdsKP_List.ParamByName('@Status').AsInteger := cds_PropsStatus.AsInteger;
+    cdsKP_List.Active := True;
 
-
- finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
+  finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  end;
 end;
 
 procedure TfrmKP_List.acPrintExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
   inherited;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 2);
-  A[0]  := cds_PropsClientNo.AsInteger ;
-  A[1]  := cds_PropsStatus.AsInteger ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 2);
+    A[0] := cds_PropsClientNo.AsInteger;
+    A[1] := cds_PropsStatus.AsInteger;
 
-  FormCRViewReport.CreateCo('KP_LISTA.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+    FormCRViewReport.CreateCo('KP_LISTA.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
 procedure TfrmKP_List.acExportToExcelExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
-  FileName    : String ;
-  ExcelDir    : String ;
+  Save_Cursor: TCursor;
+  FileName: String;
+  ExcelDir: String;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- Try
- SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
- SaveDialog2.DefaultExt:= 'xls';
- SaveDialog2.InitialDir:= ExcelDir ;
- if SaveDialog2.Execute then
- Begin
-  FileName:= SaveDialog2.FileName ;
-
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-  ExportGridToExcel(FileName, grdKPList, False, False, True,'xls');
-  ShowMessage('Tabell exporterad till Excel fil ' + FileName);
-  Except
-  End ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
-end;
+    SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
+    SaveDialog2.DefaultExt := 'xls';
+    SaveDialog2.InitialDir := ExcelDir;
+    if SaveDialog2.Execute then
+    Begin
+      FileName := SaveDialog2.FileName;
 
+      Try
+        ExportGridToExcel(FileName, grdKPList, False, False, True, 'xls');
+        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+      Except
+      End;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
+end;
 
 procedure TfrmKP_List.FormShow(Sender: TObject);
 begin
   inherited;
-  LoadUserProps(Self.Caption) ;
-  lcKund.SetFocus ;
+  LoadUserProps(Self.Caption);
+  lcKund.SetFocus;
 end;
 
-procedure TfrmKP_List.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfrmKP_List.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   inherited;
- SaveUserProps(Self.Caption) ;
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdKPList.Name, grdKPListDBTableView1) ;
- CanClose:= True ;
+  SaveUserProps(Self.Caption);
+  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdKPList.Name,
+    grdKPListDBTableView1);
+  CanClose := True;
 end;
 
 procedure TfrmKP_List.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfrmKP_List.atExitExecute(Sender: TObject);
 begin
   inherited;
- Close ;
+  Close;
 end;
 
 End.

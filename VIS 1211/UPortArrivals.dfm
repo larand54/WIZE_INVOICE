@@ -424,7 +424,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 491
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -440,7 +440,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 59
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -584,8 +584,8 @@ object frmPortArrivals: TfrmPortArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -816,7 +816,7 @@ object frmPortArrivals: TfrmPortArrivals
     Left = 488
     Top = 136
     Bitmap = {
-      494C01010F001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       000000000000000000000000000000000000000000000000000000000000AD7B
       7B00B5848400B5848400B5848400B5848400B5848400B5848400B5848400B584
@@ -2056,7 +2056,7 @@ object frmPortArrivals: TfrmPortArrivals
     Left = 488
     Top = 200
     Bitmap = {
-      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C
@@ -2361,7 +2361,7 @@ object frmPortArrivals: TfrmPortArrivals
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

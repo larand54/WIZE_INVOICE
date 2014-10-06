@@ -1,10 +1,10 @@
 object fScanLoadPkgNo: TfScanLoadPkgNo
   Left = 291
   Top = 335
-  Width = 424
-  Height = 199
   ActiveControl = ePktNr
   Caption = 'L'#228's paketnummer med streckkodsl'#228'sare'
+  ClientHeight = 161
+  ClientWidth = 408
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -36,8 +36,6 @@ object fScanLoadPkgNo: TfScanLoadPkgNo
     Width = 97
     Height = 33
     Caption = 'Klar'
-    ModalResult = 1
-    TabOrder = 1
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -55,7 +53,9 @@ object fScanLoadPkgNo: TfScanLoadPkgNo
       3338F38F000033333333333333A223333333333333338F830000333333333333
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
+    ModalResult = 1
     NumGlyphs = 2
+    TabOrder = 1
   end
   object cbEgenLevKod: TCheckBox
     Left = 56

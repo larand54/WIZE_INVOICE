@@ -18,6 +18,8 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel3: TPanel
@@ -101,7 +103,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
         Left = 1
         Top = 1
         Width = 676
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -117,7 +119,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
         Left = 1
         Top = 1
         Width = 63
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -351,6 +353,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel6
+    ExplicitWidth = 8
   end
   object Panel7: TPanel
     Left = 0
@@ -588,8 +591,8 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -720,7 +723,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
     Left = 480
     Top = 216
     Bitmap = {
-      494C010116001900040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010116001900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000090000000010020000000000000D8
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000313131005263

@@ -414,9 +414,6 @@
         <DCCReference Include="uLoadOrderSearch.pas">
             <Form>fLoadOrderSearch</Form>
         </DCCReference>
-        <DCCReference Include="uFtpParam.pas">
-            <Form>fFtpParam</Form>
-        </DCCReference>
         <DCCReference Include="uSelectBTHorBTB.pas">
             <Form>fSelectBTHorBTB</Form>
         </DCCReference>

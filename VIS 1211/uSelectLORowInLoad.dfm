@@ -55,6 +55,7 @@ object fSelectLORowInLoad: TfSelectLORowInLoad
     Align = alClient
     TabOrder = 2
     object grdLORowsDBBandedTableView1: TcxGridDBBandedTableView
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmLoadEntrySSP.dsLORows
       DataController.KeyFieldNames = 'SupplierShipPlanObjectNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

@@ -3,7 +3,8 @@ unit uSelectLORowInLoad;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -20,7 +21,9 @@ uses
   cxDataStorage, cxEdit, Data.DB, cxDBData, cxCheckBox, cxLabel, Vcl.Menus,
   Vcl.StdCtrls, cxButtons, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridBandedTableView, cxGridDBBandedTableView, cxClasses, cxGridCustomView,
-  cxGrid, Vcl.ExtCtrls;
+  cxGrid, Vcl.ExtCtrls, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  cxNavigator;
 
 type
   TfSelectLORowInLoad = class(TForm)
@@ -59,7 +62,8 @@ type
     grdLORowsDBBandedTableView1MIN_LENGTH: TcxGridDBBandedColumn;
     grdLORowsDBBandedTableView1MAX_LENGTH: TcxGridDBBandedColumn;
     grdLORowsDBBandedTableView1CustomerNo: TcxGridDBBandedColumn;
-    grdLORowsDBBandedTableView1CustShipPlanDetailObjectNo: TcxGridDBBandedColumn;
+    grdLORowsDBBandedTableView1CustShipPlanDetailObjectNo
+      : TcxGridDBBandedColumn;
     grdLORowsDBBandedTableView1ProductLengthGroupNo: TcxGridDBBandedColumn;
     grdLORowsDBBandedTableView1INCH_THICK: TcxGridDBBandedColumn;
     grdLORowsDBBandedTableView1INVCH_WIDTH: TcxGridDBBandedColumn;
@@ -90,47 +94,47 @@ type
     { Public declarations }
   end;
 
-//var fSelectLORowInLoad: TfSelectLORowInLoad;
+  // var fSelectLORowInLoad: TfSelectLORowInLoad;
 
 implementation
 
 {$R *.dfm}
 
-uses dmcLoadEntrySSP, vidaconst ;
+uses dmcLoadEntrySSP, vidaconst;
 
-procedure TfSelectLORowInLoad.grdLORowsDBBandedTableView1MATCHPropertiesChange(
-  Sender: TObject);
+procedure TfSelectLORowInLoad.grdLORowsDBBandedTableView1MATCHPropertiesChange
+  (Sender: TObject);
 begin
-(*
- With dmLoadEntrySSP do
- Begin
-  Try
-  ds_LoadPackages2.OnDataChange:= nil ;
-  if cds_LoadPackages.State = dsBrowse then
-  cds_LoadPackages.Edit ;
-  cds_LoadPackagesChanged.AsInteger                 := 1 ;
-  cds_LoadPackagesPackageOK.AsInteger               := BAD_PKG ;
+  (*
+    With dmLoadEntrySSP do
+    Begin
+    Try
+    ds_LoadPackages2.OnDataChange:= nil ;
+    if cds_LoadPackages.State = dsBrowse then
+    cds_LoadPackages.Edit ;
+    cds_LoadPackagesChanged.AsInteger                 := 1 ;
+    cds_LoadPackagesPackageOK.AsInteger               := BAD_PKG ;
 
-  if cdsLORowsMatch.AsInteger = 1 then
-  Begin
-   cds_LoadPackagesDefsspno.AsInteger                 := cdsLORowsSupplierShipPlanObjectNo.AsInteger ;
-   cds_LoadPackagesDefaultCustShipObjectNo.AsInteger  := -1 ;
-   cds_LoadPackagesOverrideRL.AsInteger               := cdsLORowsOverrideRL.AsInteger ;
-  End
-  else
-  Begin
-   cds_LoadPackagesDefsspno.AsInteger                 := -1 ;
-   cds_LoadPackagesDefaultCustShipObjectNo.AsInteger  := -1 ;
-   cds_LoadPackagesOverrideRL.AsInteger               := 0 ;
-  End ;
-  cds_LoadPackages.Post ;
+    if cdsLORowsMatch.AsInteger = 1 then
+    Begin
+    cds_LoadPackagesDefsspno.AsInteger                 := cdsLORowsSupplierShipPlanObjectNo.AsInteger ;
+    cds_LoadPackagesDefaultCustShipObjectNo.AsInteger  := -1 ;
+    cds_LoadPackagesOverrideRL.AsInteger               := cdsLORowsOverrideRL.AsInteger ;
+    End
+    else
+    Begin
+    cds_LoadPackagesDefsspno.AsInteger                 := -1 ;
+    cds_LoadPackagesDefaultCustShipObjectNo.AsInteger  := -1 ;
+    cds_LoadPackagesOverrideRL.AsInteger               := 0 ;
+    End ;
+    cds_LoadPackages.Post ;
 
-  Get_LO_LinesMatched (cds_LoadPackagesPackageNo.AsInteger,  Trim(cds_LoadPackagesSupplierCode.AsString)) ;
-  Finally
-   ds_LoadPackages2.OnDataChange:= ds_LoadPackages2DataChange ;
-  End ;
- End ; //with
- *)
+    Get_LO_LinesMatched (cds_LoadPackagesPackageNo.AsInteger,  Trim(cds_LoadPackagesSupplierCode.AsString)) ;
+    Finally
+    ds_LoadPackages2.OnDataChange:= ds_LoadPackages2DataChange ;
+    End ;
+    End ; //with
+  *)
 end;
 
 end.

@@ -235,7 +235,7 @@ object frmFreightExternLoad: TfrmFreightExternLoad
         Left = 1
         Top = 1
         Width = 511
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -251,7 +251,7 @@ object frmFreightExternLoad: TfrmFreightExternLoad
         Left = 1
         Top = 1
         Width = 103
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -587,6 +587,7 @@ object frmFreightExternLoad: TfrmFreightExternLoad
       Control = grdLoads
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object cxPageControl1: TcxPageControl
       Left = 0
@@ -598,13 +599,17 @@ object frmFreightExternLoad: TfrmFreightExternLoad
       Properties.ActivePage = tsAttester
       Properties.CustomButtons.Buttons = <>
       Properties.HideTabs = True
-      ClientRectBottom = 321
-      ClientRectLeft = 1
-      ClientRectRight = 1152
-      ClientRectTop = 1
+      ClientRectBottom = 318
+      ClientRectLeft = 4
+      ClientRectRight = 1149
+      ClientRectTop = 4
       object tsAttester: TcxTabSheet
         Caption = 'tsAttester'
         ImageIndex = 0
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Panel6: TPanel
           Left = 0
           Top = 0
@@ -785,8 +790,8 @@ object frmFreightExternLoad: TfrmFreightExternLoad
     AllowReset = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -916,7 +921,7 @@ object frmFreightExternLoad: TfrmFreightExternLoad
     Left = 176
     Top = 248
     Bitmap = {
-      494C01010B000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1888,9 +1893,9 @@ object frmFreightExternLoad: TfrmFreightExternLoad
     Left = 56
     Top = 296
     object dxComponentPrinter1Link1: TdxGridReportLink
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -1901,7 +1906,6 @@ object frmFreightExternLoad: TfrmFreightExternLoad
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -26,10 +26,8 @@ object fEntryField: TfEntryField
     Top = 128
     Width = 75
     Height = 25
-    DoubleBuffered = True
     Kind = bkOK
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 1
   end
   object bbcancel: TBitBtn
@@ -37,10 +35,8 @@ object fEntryField: TfEntryField
     Top = 128
     Width = 75
     Height = 25
-    DoubleBuffered = True
     Kind = bkCancel
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 2
   end
   object eNoofpkgs: TcxMaskEdit

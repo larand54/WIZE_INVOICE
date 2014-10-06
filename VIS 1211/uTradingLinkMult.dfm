@@ -1,9 +1,9 @@
 object fTradingLinkMult: TfTradingLinkMult
   Left = 229
   Top = 107
-  Width = 911
-  Height = 429
   Caption = 'V'#228'lj f'#246'rs'#228'ljnings LO#'
+  ClientHeight = 391
+  ClientWidth = 895
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,35 +18,41 @@ object fTradingLinkMult: TfTradingLinkMult
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 361
-    Width = 903
+    Top = 350
+    Width = 895
     Height = 41
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 361
+    ExplicitWidth = 903
     object BitBtn1: TBitBtn
       Left = 304
       Top = 5
       Width = 83
       Height = 29
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 392
       Top = 5
       Width = 83
       Height = 29
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 903
-    Height = 361
+    Width = 895
+    Height = 350
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 903
+    ExplicitHeight = 361
     object Panel5: TPanel
       Left = 1
       Top = 41
@@ -69,7 +75,7 @@ object fTradingLinkMult: TfTradingLinkMult
           Align = alClient
           TabOrder = 0
           object grdTradingAvropDBTableView1: TcxGridDBTableView
-            NavigatorButtons.ConfirmDelete = False
+            Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = ds_AvropTrading
             DataController.KeyFieldNames = 'Avropsnr'
             DataController.Summary.DefaultGroupSummaryItems = <>

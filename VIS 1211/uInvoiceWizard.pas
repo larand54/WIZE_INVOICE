@@ -25,7 +25,9 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
-  dxSkinsdxBarPainter, cxNavigator  ;
+  dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxBarBuiltInMenu, System.Actions;
 
 type
   TfInvoiceWizard = class(TForm)
@@ -225,976 +227,1061 @@ type
     procedure tsShipToAddressEnter(Sender: TObject);
   private
     { Private declarations }
-//    procedure InsertFromClientProduct ;
-    procedure SaveInvoice ;
-    Function  DataSaved : Boolean ;
-    Function  GotoNextPageOK : Boolean ;
+    // procedure InsertFromClientProduct ;
+    procedure SaveInvoice;
+    Function DataSaved: Boolean;
+    Function GotoNextPageOK: Boolean;
     procedure lFakturaAdressClick(Sender: TObject);
   public
     { Public declarations }
   end;
 
-//var fInvoiceWizard: TfInvoiceWizard;
+  // var fInvoiceWizard: TfInvoiceWizard;
 
 implementation
 
-uses  VidaUser , dmcVidaOrder,
-      dmsVidaSystem, dmsVidaContact, VidaConst ,
-      dmsDataConn, dmcVidaInvoice, UnitdmModule1, UnitSelectClient, uArticle,
+uses VidaUser, dmcVidaOrder,
+  dmsVidaSystem, dmsVidaContact, VidaConst,
+  dmsDataConn, dmcVidaInvoice, UnitdmModule1, UnitSelectClient, uArticle,
   UnitAddress, uLanguage, UnitCurrency, UnitDelTerms, UnitPaymentTerms;
 
 {$R *.dfm}
-Function TfInvoiceWizard.DataSaved : Boolean ;
-Begin
-(* Result:= True ;
- with dm_marketprice do
- Begin
-  if cds_SaveProd.ChangeCount > 0 then
-   Result:= False ;
-  if cds_PriceHdr.ChangeCount > 0 then
-   Result:= False ;
-  if cds_PriceHdr.State in [dsEdit, dsInsert] then
-   Result:= False ;
-  if cds_SelectLengths.ChangeCount > 0 then
-   Result:= False ;
-  if cds_SelectPG.ChangeCount > 0 then
-   Result:= False ;
-  if AllSelected = False then
-   Result:= True ;
- End ; *)
-End ;
 
+Function TfInvoiceWizard.DataSaved: Boolean;
+Begin
+  (* Result:= True ;
+    with dm_marketprice do
+    Begin
+    if cds_SaveProd.ChangeCount > 0 then
+    Result:= False ;
+    if cds_PriceHdr.ChangeCount > 0 then
+    Result:= False ;
+    if cds_PriceHdr.State in [dsEdit, dsInsert] then
+    Result:= False ;
+    if cds_SelectLengths.ChangeCount > 0 then
+    Result:= False ;
+    if cds_SelectPG.ChangeCount > 0 then
+    Result:= False ;
+    if AllSelected = False then
+    Result:= True ;
+    End ; *)
+End;
 
 procedure TfInvoiceWizard.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
-Var MessageIndex : Word ;
+Var
+  MessageIndex: Word;
 begin
- CanClose:= True ;
- if DataSaved = False then
- Begin
-  MessageIndex:= MessageDlg('Ändringar är inte sparade, vill du spara?',
-  mtConfirmation, [mbYes, mbNo, mbCancel], 0);
-  Case MessageIndex of
-   mrYes     : Begin
-                //dm_marketprice.SavePriceTemplateData ;
-               End ;
-   mrNo      : Begin
-                //dm_marketprice.CancelPriceTemplateData ;
-               End ;
-   mrCancel  : CanClose:= False ;
-  End ;
- End ;
+  CanClose := True;
+  if DataSaved = False then
+  Begin
+    MessageIndex := MessageDlg('Ändringar är inte sparade, vill du spara?',
+      mtConfirmation, [mbYes, mbNo, mbCancel], 0);
+    Case MessageIndex of
+      mrYes:
+        Begin
+          // dm_marketprice.SavePriceTemplateData ;
+        End;
+      mrNo:
+        Begin
+          // dm_marketprice.CancelPriceTemplateData ;
+        End;
+      mrCancel:
+        CanClose := False;
+    End;
+  End;
 end;
 
 procedure TfInvoiceWizard.FormShow(Sender: TObject);
 begin
- dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdFaktura.Name, grdFakturaDBTableView1) ;
- pgPriceListGuide.HideTabs := True ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdFaktura.Name,
+    grdFakturaDBTableView1);
+  pgPriceListGuide.HideTabs := True;
 end;
 
 procedure TfInvoiceWizard.pgPriceListGuidePageChanging(Sender: TObject;
   NewPage: TcxTabSheet; var AllowChange: Boolean);
 begin
-// With dm_marketprice do
-(* AllowChange:= True ;
- Begin
-  if NewPage = tsInvoiceHead then
-  Begin
-   lcSR.SetFocus ;
-  End
-  else
-  if NewPage = tsAddress then
-  Begin
-   bSelectCustomer.SetFocus ;
-  End
-  else
-  if NewPage = tsParametrar then
-  Begin
-   bSelectDeliveryTerms.SetFocus ;
-  End
-  else
-  if NewPage = tsAgent then
-  Begin
-   bSelectAgent.SetFocus ;
-  End
-  else
-  if NewPage = tsInvoiceRows then
-  Begin
-   bSelectInvoiceRows.SetFocus ;
-  End
-  else
-  if NewPage = tsShipToAddress then
-  Begin
-   bSelectDeliveryAddress.SetFocus ;
-  End ;
+  // With dm_marketprice do
+  (* AllowChange:= True ;
+    Begin
+    if NewPage = tsInvoiceHead then
+    Begin
+    lcSR.SetFocus ;
+    End
+    else
+    if NewPage = tsAddress then
+    Begin
+    bSelectCustomer.SetFocus ;
+    End
+    else
+    if NewPage = tsParametrar then
+    Begin
+    bSelectDeliveryTerms.SetFocus ;
+    End
+    else
+    if NewPage = tsAgent then
+    Begin
+    bSelectAgent.SetFocus ;
+    End
+    else
+    if NewPage = tsInvoiceRows then
+    Begin
+    bSelectInvoiceRows.SetFocus ;
+    End
+    else
+    if NewPage = tsShipToAddress then
+    Begin
+    bSelectDeliveryAddress.SetFocus ;
+    End ;
 
- End ;  *)
+    End ; *)
 end;
-
 
 procedure TfInvoiceWizard.acClearAgentExecute(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
+  with dmVidaInvoice do
+  Begin
 
-     if cdsInvoiceHead.State = dsBrowse then
-      cdsInvoiceHead.Edit ;
+    if cdsInvoiceHead.State = dsBrowse then
+      cdsInvoiceHead.Edit;
 
-     cdsInvoiceHeadAgentNo.AsInteger  := dmModule1.cdsClientClientNo.AsInteger ;
-     cdsInvoiceHeadAgentName.AsString := dmModule1.cdsClientClientName.AsString ;
- End ;
+    cdsInvoiceHeadAgentNo.AsInteger := dmModule1.cdsClientClientNo.AsInteger;
+    cdsInvoiceHeadAgentName.AsString := dmModule1.cdsClientClientName.AsString;
+  End;
 end;
 
 procedure TfInvoiceWizard.acNextPageExecute(Sender: TObject);
 begin
- with dmcOrder do
- Begin
-  if pgPriceListGuide.ActivePage = tsInvoiceHead then
-   pgPriceListGuide.ActivePage:= tsAddress
-    else
-     if pgPriceListGuide.ActivePage = tsAddress then
-      pgPriceListGuide.ActivePage:= tsParametrar
-       else
-        if pgPriceListGuide.ActivePage = tsParametrar then
-         pgPriceListGuide.ActivePage:= tsAgent
-         else
-          if pgPriceListGuide.ActivePage = tsAgent then
-           pgPriceListGuide.ActivePage:= tsInvoiceRows
-         else
-          if pgPriceListGuide.ActivePage = tsInvoiceRows then
-           pgPriceListGuide.ActivePage:= tsShipToAddress
-         else
-          if pgPriceListGuide.ActivePage = tsShipToAddress then
-           pgPriceListGuide.ActivePage:= tsNotering ;
- End ;//with
+  with dmcOrder do
+  Begin
+    if pgPriceListGuide.ActivePage = tsInvoiceHead then
+      pgPriceListGuide.ActivePage := tsAddress
+    else if pgPriceListGuide.ActivePage = tsAddress then
+      pgPriceListGuide.ActivePage := tsParametrar
+    else if pgPriceListGuide.ActivePage = tsParametrar then
+      pgPriceListGuide.ActivePage := tsAgent
+    else if pgPriceListGuide.ActivePage = tsAgent then
+      pgPriceListGuide.ActivePage := tsInvoiceRows
+    else if pgPriceListGuide.ActivePage = tsInvoiceRows then
+      pgPriceListGuide.ActivePage := tsShipToAddress
+    else if pgPriceListGuide.ActivePage = tsShipToAddress then
+      pgPriceListGuide.ActivePage := tsNotering;
+  End; // with
 end;
 
 procedure TfInvoiceWizard.acPreviousPageExecute(Sender: TObject);
 begin
- with dmcOrder do
- Begin
-      if pgPriceListGuide.ActivePage = tsNotering then
-      pgPriceListGuide.ActivePage:= tsShipToAddress
-       else
-      if pgPriceListGuide.ActivePage = tsShipToAddress then
-      pgPriceListGuide.ActivePage:= tsInvoiceRows
-       else
-      if pgPriceListGuide.ActivePage = tsInvoiceRows then
-      pgPriceListGuide.ActivePage:= tsAgent
-       else
-        if pgPriceListGuide.ActivePage = tsAgent then
-         pgPriceListGuide.ActivePage:= tsParametrar
-         else
-          if pgPriceListGuide.ActivePage = tsParametrar then
-           pgPriceListGuide.ActivePage:= tsAddress
-           else
-            if pgPriceListGuide.ActivePage = tsAddress then
-            Begin
-             pgPriceListGuide.ActivePage:= tsInvoiceHead ;
-            End ;
- End ;
+  with dmcOrder do
+  Begin
+    if pgPriceListGuide.ActivePage = tsNotering then
+      pgPriceListGuide.ActivePage := tsShipToAddress
+    else if pgPriceListGuide.ActivePage = tsShipToAddress then
+      pgPriceListGuide.ActivePage := tsInvoiceRows
+    else if pgPriceListGuide.ActivePage = tsInvoiceRows then
+      pgPriceListGuide.ActivePage := tsAgent
+    else if pgPriceListGuide.ActivePage = tsAgent then
+      pgPriceListGuide.ActivePage := tsParametrar
+    else if pgPriceListGuide.ActivePage = tsParametrar then
+      pgPriceListGuide.ActivePage := tsAddress
+    else if pgPriceListGuide.ActivePage = tsAddress then
+    Begin
+      pgPriceListGuide.ActivePage := tsInvoiceHead;
+    End;
+  End;
 end;
 
 procedure TfInvoiceWizard.acPreviousPageUpdate(Sender: TObject);
 begin
- acPreviousPage.Enabled:= pgPriceListGuide.ActivePage <> tsInvoiceHead ;
+  acPreviousPage.Enabled := pgPriceListGuide.ActivePage <> tsInvoiceHead;
 end;
 
 procedure TfInvoiceWizard.acRemoveDeliveryAdressExecute(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
-  cdsInvoiceShipToAddress.Delete ;
- End ;
+  with dmVidaInvoice do
+  Begin
+    cdsInvoiceShipToAddress.Delete;
+  End;
 end;
 
 procedure TfInvoiceWizard.acRemoveDeliveryAdressUpdate(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
-  acRemoveDeliveryAdress.Enabled  := (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger <> 1)
-  and (cdsInvoiceShipToAddress.Active)
-  and ((cdsInvoiceShipToAddress.RecordCount > 0)
-  or (cdsInvoiceShipToAddress.State in [dsInsert, dsEdit])) ;
- End ;
+  with dmVidaInvoice do
+  Begin
+    acRemoveDeliveryAdress.Enabled := (cdsInvoiceHead.Active) and
+      (cdsInvoiceHeadInvoiced.AsInteger <> 1) and
+      (cdsInvoiceShipToAddress.Active) and
+      ((cdsInvoiceShipToAddress.RecordCount > 0) or
+      (cdsInvoiceShipToAddress.State in [dsInsert, dsEdit]));
+  End;
 end;
 
 procedure TfInvoiceWizard.acRemoveInvoiceRowExecute(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
-  if dmVidaInvoice.cdsInvoiceDetailTypeOfRow.AsInteger = 2 then
-  cdsInvoiceDetail.Delete
-  else
-  ShowMessage('Kan inte ta bort fakturarader') ;
- End ;
+  with dmVidaInvoice do
+  Begin
+    if dmVidaInvoice.cdsInvoiceDetailTypeOfRow.AsInteger = 2 then
+      cdsInvoiceDetail.Delete
+    else
+      ShowMessage('Kan inte ta bort fakturarader');
+  End;
 end;
 
 procedure TfInvoiceWizard.acNextPageUpdate(Sender: TObject);
 begin
- acNextPage.Enabled:= (pgPriceListGuide.ActivePage <> tsNotering)
- and (GotoNextPageOK) ;
+  acNextPage.Enabled := (pgPriceListGuide.ActivePage <> tsNotering) and
+    (GotoNextPageOK);
 end;
 
 procedure TfInvoiceWizard.acSaveExecute(Sender: TObject);
 begin
- Try
-  SaveInvoice ;
-  ModalResult:= mrOK ;
-// dmcOrder.OrderSavedinWizard:= True ;
- // Close ;
- Except
- End ;
+  Try
+    SaveInvoice;
+    ModalResult := mrOK;
+    // dmcOrder.OrderSavedinWizard:= True ;
+    // Close ;
+  Except
+  End;
 end;
 
 procedure TfInvoiceWizard.acSaveUpdate(Sender: TObject);
 begin
- acSave.Enabled := pgPriceListGuide.ActivePage  = tsNotering ;
+  acSave.Enabled := pgPriceListGuide.ActivePage = tsNotering;
 end;
 
 procedure TfInvoiceWizard.acSelectAgentAdressExecute(Sender: TObject);
-Var FormAddress : TFormAddress ;
+Var
+  FormAddress: TFormAddress;
 begin
- with dmVidaInvoice, dmModule1 do
- Begin
-//  if IsInvoiced(Sender) then Exit ;
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then Exit ;
-//  if Invoiced then Exit ;
-  FormAddress := TFormAddress.Create(Nil);
-  Try
-  cdsClientAddress.Active:= False ;
-  cdsClientAddress.Close ;
-  cdsClientAddress.ParamByName('ClientNo').AsInteger    := cdsInvoiceHeadAgentNo.AsInteger ;
-  cdsClientAddress.ParamByName('AddressType').AsInteger := 1 ;
-  cdsClientAddress.Active:= True ;
-
-  if FormAddress.ShowModal = mrOK then
+  with dmVidaInvoice, dmModule1 do
   Begin
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
+    // if IsInvoiced(Sender) then Exit ;
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+    // if Invoiced then Exit ;
+    FormAddress := TFormAddress.Create(Nil);
+    Try
+      cdsClientAddress.Active := False;
+      cdsClientAddress.Close;
+      cdsClientAddress.ParamByName('ClientNo').AsInteger :=
+        cdsInvoiceHeadAgentNo.AsInteger;
+      cdsClientAddress.ParamByName('AddressType').AsInteger := 1;
+      cdsClientAddress.Active := True;
 
-   cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString:=  cdsClientAddressADDRESS_NAME.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString:= cdsClientAddressADDRESSLINE1.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString:= cdsClientAddressADDRESSLINE2.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString:= cdsClientAddressADDRESSLINE3.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString:= cdsClientAddressADDRESSLINE4.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString := cdsClientAddressPROVINCE.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString := cdsClientAddressPOSTALCODE.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString:= cdsClientAddressCITY.AsString ;
-   cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString := cdsClientAddressCOUNTRY.AsString ;
+      if FormAddress.ShowModal = mrOK then
+      Begin
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
 
-   Label43.Caption:= Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString)+', '+Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString)+', '+
-   Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString)+', '+Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString)+', '+
-   Trim(cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString)+', '+Trim(cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString)+', '+
-   Trim(cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString)+', '+Trim(cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString) ;
+        cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString :=
+          cdsClientAddressADDRESS_NAME.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString :=
+          cdsClientAddressADDRESSLINE1.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString :=
+          cdsClientAddressADDRESSLINE2.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString :=
+          cdsClientAddressADDRESSLINE3.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString :=
+          cdsClientAddressADDRESSLINE4.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString :=
+          cdsClientAddressPROVINCE.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString :=
+          cdsClientAddressPOSTALCODE.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString :=
+          cdsClientAddressCITY.AsString;
+        cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString :=
+          cdsClientAddressCOUNTRY.AsString;
 
-   cdsInvoiceHead.Post ;
- End ;
+        Label43.Caption :=
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString);
 
+        cdsInvoiceHead.Post;
+      End;
 
- Finally
-  FreeAndNil(FormAddress) ;//.Free ;
- End ;
+    Finally
+      FreeAndNil(FormAddress); // .Free ;
+    End;
 
- End ; //with
+  End; // with
 end;
 
 procedure TfInvoiceWizard.acSelectAgentExecute(Sender: TObject);
-Var FormSelectClient : TFormSelectClient ;
+Var
+  FormSelectClient: TFormSelectClient;
 begin
- with dmVidaInvoice, dmModule1 do
- Begin
-//  if IsInvoiced(Sender) then Exit ;
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
-  Exit ;
-//  if Invoiced then Exit ;
+  with dmVidaInvoice, dmModule1 do
+  Begin
+    // if IsInvoiced(Sender) then Exit ;
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+    // if Invoiced then Exit ;
 
-   FormSelectClient:= TFormSelectClient.Create(Nil);
-   Try
-    dmModule1.cdsClient.Active:= False ;
-    dmModule1.cdsClient.ParamByName('@RoleType').AsInteger:= 3 ;
-    dmModule1.cdsClient.Active:= True ;
-    if FormSelectClient.ShowModal = mrOk then
-    Begin
-     if cdsInvoiceHead.State = dsBrowse then
-      cdsInvoiceHead.Edit ;
+    FormSelectClient := TFormSelectClient.Create(Nil);
+    Try
+      dmModule1.cdsClient.Active := False;
+      dmModule1.cdsClient.ParamByName('@RoleType').AsInteger := 3;
+      dmModule1.cdsClient.Active := True;
+      if FormSelectClient.ShowModal = mrOK then
+      Begin
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
 
-     cdsInvoiceHeadAgentNo.AsInteger  := dmModule1.cdsClientClientNo.AsInteger ;
-     cdsInvoiceHeadAgentName.AsString := dmModule1.cdsClientClientName.AsString ;
-    End ;
-   Finally
-    dmModule1.cdsClient.Active:= False ;
-    FreeAndNil(FormSelectClient) ;//.Free ;
-   End ;
- End ;
+        cdsInvoiceHeadAgentNo.AsInteger :=
+          dmModule1.cdsClientClientNo.AsInteger;
+        cdsInvoiceHeadAgentName.AsString :=
+          dmModule1.cdsClientClientName.AsString;
+      End;
+    Finally
+      dmModule1.cdsClient.Active := False;
+      FreeAndNil(FormSelectClient); // .Free ;
+    End;
+  End;
 end;
 
 procedure TfInvoiceWizard.acSelectCurrencyExecute(Sender: TObject);
-var  FormCurrency: TFormCurrency;
+var
+  FormCurrency: TFormCurrency;
 begin
- with dmVidaInvoice, dmModule1, dmsSystem do
- Begin
-
- FormCurrency:= tFormCurrency.Create(Nil) ;
- Try
-  if not cds_Currency.Active then
-  cds_Currency.Active:= True ;
-  if FormCurrency.ShowModal = mrOk then
+  with dmVidaInvoice, dmModule1, dmsSystem do
   Begin
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
 
-   cdsInvoiceHeadCurrencyNo.AsInteger   := cds_CurrencyCurrencyNo.AsInteger ;
-   cdsInvoiceHeadCurrencyName.AsString  := cds_CurrencyCurrencyName.AsString ;
+    FormCurrency := TFormCurrency.Create(Nil);
+    Try
+      if not cds_Currency.Active then
+        cds_Currency.Active := True;
+      if FormCurrency.ShowModal = mrOK then
+      Begin
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
 
-   cdsInvoiceHeadPaymentText.AsVariant  :=
-   GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
-   cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
+        cdsInvoiceHeadCurrencyNo.AsInteger := cds_CurrencyCurrencyNo.AsInteger;
+        cdsInvoiceHeadCurrencyName.AsString :=
+          cds_CurrencyCurrencyName.AsString;
 
+        cdsInvoiceHeadPaymentText.AsVariant :=
+          GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
+          cdsInvoiceHeadLanguageCode.AsInteger,
+          cdsInvoiceHeadClientBillingAddressNo.AsInteger);
 
-   cdsInvoiceHead.Post ;
-  End ;
+        cdsInvoiceHead.Post;
+      End;
 
- Finally
-//  cdsCurrency.Active:= False ;
-  FreeAndNil(FormCurrency) ;//.Free ;
- End ;
-End ; //with
+    Finally
+      // cdsCurrency.Active:= False ;
+      FreeAndNil(FormCurrency); // .Free ;
+    End;
+  End; // with
 end;
 
 procedure TfInvoiceWizard.acSelectCustomerExecute(Sender: TObject);
-var  FormSelectClient: TFormSelectClient;
+var
+  FormSelectClient: TFormSelectClient;
 begin
- with dmVidaInvoice, dmModule1 do
- Begin
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
-   Exit ;
-
-   if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
+  with dmVidaInvoice, dmModule1 do
   Begin
-   FormSelectClient:= TFormSelectClient.Create(Nil);
-   Try
-    dmModule1.cdsClient.Active  := False ;
-    dmModule1.cdsClient.ParamByName('@RoleType').AsInteger  := 1 ;
-    dmModule1.cdsClient.Active  := True ;
-    if FormSelectClient.ShowModal = mrOk then
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+
+    if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
     Begin
-     if cdsInvoiceHead.State = dsBrowse then
-      cdsInvoiceHead.Edit ;
+      FormSelectClient := TFormSelectClient.Create(Nil);
+      Try
+        dmModule1.cdsClient.Active := False;
+        dmModule1.cdsClient.ParamByName('@RoleType').AsInteger := 1;
+        dmModule1.cdsClient.Active := True;
+        if FormSelectClient.ShowModal = mrOK then
+        Begin
+          if cdsInvoiceHead.State = dsBrowse then
+            cdsInvoiceHead.Edit;
 
-     cdsInvoiceHeadCustomerNo.AsInteger               := dmModule1.cdsClientClientNo.AsInteger ;
-     cdsInvoiceHeadCustomerName.AsString              := dmModule1.cdsClientClientName.AsString ;
+          cdsInvoiceHeadCustomerNo.AsInteger :=
+            dmModule1.cdsClientClientNo.AsInteger;
+          cdsInvoiceHeadCustomerName.AsString :=
+            dmModule1.cdsClientClientName.AsString;
 
-     sq_ClientData.Close ;
-     sq_ClientData.ParamByName('ClientNo').AsInteger  := dmModule1.cdsClientClientNo.AsInteger ;
-     sq_ClientData.Open ;
+          sq_ClientData.Close;
+          sq_ClientData.ParamByName('ClientNo').AsInteger :=
+            dmModule1.cdsClientClientNo.AsInteger;
+          sq_ClientData.Open;
 
-     cdsInvoiceHeadLanguageCode.AsInteger             := sq_ClientDataLanguageCode.AsInteger ;
+          cdsInvoiceHeadLanguageCode.AsInteger :=
+            sq_ClientDataLanguageCode.AsInteger;
 
-     cdsInvoiceHeadIntraStatCountryNo.AsInteger       := sq_ClientDataStatistikLandNr.AsInteger ;
+          cdsInvoiceHeadIntraStatCountryNo.AsInteger :=
+            sq_ClientDataStatistikLandNr.AsInteger;
 
-     cdsInvoiceHeadInvoiceText.AsVariant              := GetInvoiceTextByClient (cdsInvoiceHeadCustomerNo.AsInteger) ;
-     //sq_ClientDataInvoiceText.AsVariant ; //
-     cdsInvoiceHeadDeliveryTerm.AsString              := sq_ClientDataDeliveryTerm.AsString ;
+          cdsInvoiceHeadInvoiceText.AsVariant :=
+            GetInvoiceTextByClient(cdsInvoiceHeadCustomerNo.AsInteger);
+          // sq_ClientDataInvoiceText.AsVariant ; //
+          cdsInvoiceHeadDeliveryTerm.AsString :=
+            sq_ClientDataDeliveryTerm.AsString;
 
-     cdsInvoiceHeadDeliveryTermsNo.AsInteger          := sq_ClientDataDeliveryTerm_No.AsInteger ;
+          cdsInvoiceHeadDeliveryTermsNo.AsInteger :=
+            sq_ClientDataDeliveryTerm_No.AsInteger;
 
-     cdsInvoiceHeadPaymentDescription.AsString        := sq_ClientDataPayDesc.AsString ;
+          cdsInvoiceHeadPaymentDescription.AsString :=
+            sq_ClientDataPayDesc.AsString;
 
-     cdsInvoiceHeadPaymentTermsNo.AsInteger           := sq_ClientDataPaymentTermsNo.AsInteger ;
+          cdsInvoiceHeadPaymentTermsNo.AsInteger :=
+            sq_ClientDataPaymentTermsNo.AsInteger;
 
-     cdsInvoiceHeadFreightInDiscount.AsInteger        := sq_ClientDataFreightInDiscount.AsInteger ;
-     cdsInvoiceHeadFreightInCommission.AsInteger      := sq_ClientDataFreightInCommission.AsInteger ;
-     cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := sq_ClientDataCommissionPaidByCustomer.AsInteger ;
-     cdsInvoiceHeadDiscount1.AsFloat                  := sq_ClientDataDiscount1.AsFloat ;
-//     if (cdsInvoiceHeadCurrencyName.AsString <= '') and (cdsInvoiceHeadCurrencyNo.AsInteger < 1) then
-     if (not sq_ClientDataCurrencyNo.IsNull) and (sq_ClientDataCurrencyNo.AsInteger > 0) then
-     Begin
-      cdsInvoiceHeadCurrencyName.AsString := sq_ClientDataCURRENCYNAME.AsString ;
-      cdsInvoiceHeadCurrencyNo.AsInteger  := sq_ClientDataCurrencyNo.AsInteger ;
-     End ;
+          cdsInvoiceHeadFreightInDiscount.AsInteger :=
+            sq_ClientDataFreightInDiscount.AsInteger;
+          cdsInvoiceHeadFreightInCommission.AsInteger :=
+            sq_ClientDataFreightInCommission.AsInteger;
+          cdsInvoiceHeadCommissionPaidByCustomer.AsInteger :=
+            sq_ClientDataCommissionPaidByCustomer.AsInteger;
+          cdsInvoiceHeadDiscount1.AsFloat := sq_ClientDataDiscount1.AsFloat;
+          // if (cdsInvoiceHeadCurrencyName.AsString <= '') and (cdsInvoiceHeadCurrencyNo.AsInteger < 1) then
+          if (not sq_ClientDataCurrencyNo.IsNull) and
+            (sq_ClientDataCurrencyNo.AsInteger > 0) then
+          Begin
+            cdsInvoiceHeadCurrencyName.AsString :=
+              sq_ClientDataCURRENCYNAME.AsString;
+            cdsInvoiceHeadCurrencyNo.AsInteger :=
+              sq_ClientDataCurrencyNo.AsInteger;
+          End;
 
-     cdsInvoiceHeadClientBillingAddressNo.AsInteger := sq_ClientDataDefaultBillingAddressNo.AsInteger ;
-     cdsInvoiceHeadAddressName.AsString             :=  sq_ClientDataBILL_ADDRESS_NAME.AsString ;
-     cdsInvoiceHeadAddressLine1.AsString            := sq_ClientDataBILL_ADDRESSLINE1.AsString ;
-     cdsInvoiceHeadAddressLine2.AsString            := sq_ClientDataBILL_ADDRESSLINE2.AsString ;
-     cdsInvoiceHeadAddressLine3.AsString            := sq_ClientDataBILL_ADDRESSLINE3.AsString ;
-     cdsInvoiceHeadAddressLine4.AsString            := sq_ClientDataBILL_ADDRESSLINE4.AsString ;
-     cdsInvoiceHeadStateOrProvince.AsString         := sq_ClientDataBILL_STATEORPROVINCE.AsString ;
-     cdsInvoiceHeadPostalCode.AsString              := sq_ClientDataBILL_POSTALCODE.AsString ;
-     cdsInvoiceHeadCityName.AsString                := sq_ClientDataBILL_ADDRESSCITY.AsString ;
-     cdsInvoiceHeadCountryName.AsString             := sq_ClientDataBILL_ADDRESSCOUNTRY.AsString ;
+          cdsInvoiceHeadClientBillingAddressNo.AsInteger :=
+            sq_ClientDataDefaultBillingAddressNo.AsInteger;
+          cdsInvoiceHeadAddressName.AsString :=
+            sq_ClientDataBILL_ADDRESS_NAME.AsString;
+          cdsInvoiceHeadAddressLine1.AsString :=
+            sq_ClientDataBILL_ADDRESSLINE1.AsString;
+          cdsInvoiceHeadAddressLine2.AsString :=
+            sq_ClientDataBILL_ADDRESSLINE2.AsString;
+          cdsInvoiceHeadAddressLine3.AsString :=
+            sq_ClientDataBILL_ADDRESSLINE3.AsString;
+          cdsInvoiceHeadAddressLine4.AsString :=
+            sq_ClientDataBILL_ADDRESSLINE4.AsString;
+          cdsInvoiceHeadStateOrProvince.AsString :=
+            sq_ClientDataBILL_STATEORPROVINCE.AsString;
+          cdsInvoiceHeadPostalCode.AsString :=
+            sq_ClientDataBILL_POSTALCODE.AsString;
+          cdsInvoiceHeadCityName.AsString :=
+            sq_ClientDataBILL_ADDRESSCITY.AsString;
+          cdsInvoiceHeadCountryName.AsString :=
+            sq_ClientDataBILL_ADDRESSCOUNTRY.AsString;
 
-     Label1.Caption:= Trim(cdsInvoiceHeadAddressLine1.AsString) + ', ' + Trim(cdsInvoiceHeadAddressLine2.AsString) + ', ' +
-     Trim(cdsInvoiceHeadAddressLine3.AsString) + ', ' + Trim(cdsInvoiceHeadAddressLine4.AsString) + ', ' +
-     Trim(cdsInvoiceHeadCityName.AsString) + ', ' + Trim(cdsInvoiceHeadStateOrProvince.AsString) + ', ' +
-     Trim(cdsInvoiceHeadPostalCode.AsString) + ', ' + Trim(cdsInvoiceHeadCountryName.AsString) ;
+          Label1.Caption := Trim(cdsInvoiceHeadAddressLine1.AsString) + ', ' +
+            Trim(cdsInvoiceHeadAddressLine2.AsString) + ', ' +
+            Trim(cdsInvoiceHeadAddressLine3.AsString) + ', ' +
+            Trim(cdsInvoiceHeadAddressLine4.AsString) + ', ' +
+            Trim(cdsInvoiceHeadCityName.AsString) + ', ' +
+            Trim(cdsInvoiceHeadStateOrProvince.AsString) + ', ' +
+            Trim(cdsInvoiceHeadPostalCode.AsString) + ', ' +
+            Trim(cdsInvoiceHeadCountryName.AsString);
 
+          cdsInvoiceHeadST_AddressLine1.AsString :=
+            sq_ClientDataSHIPTO_ADDRESSLINE1.AsString;
+          cdsInvoiceHeadST_AddressLine2.AsString :=
+            sq_ClientDataSHIPTO_ADDRESSLINE2.AsString;
+          cdsInvoiceHeadST_AddressLine3.AsString :=
+            sq_ClientDataSHIPTO_ADDRESSLINE3.AsString;
+          cdsInvoiceHeadST_AddressLine4.AsString :=
+            sq_ClientDataSHIPTO_ADDRESSLINE4.AsString;
+          cdsInvoiceHeadST_StateOrProvince.AsString :=
+            sq_ClientDataSHIPTO_PROVINCE.AsString;
+          cdsInvoiceHeadST_PostalCode.AsString :=
+            sq_ClientDataSHIPTO_POSTALCODE.AsString;
+          cdsInvoiceHeadST_CityName.AsString :=
+            sq_ClientDataSHIPTO_CITY.AsString;
+          cdsInvoiceHeadST_CountryName.AsString :=
+            sq_ClientDataSHIPTO_COUNTRY.AsString;
 
+          cdsInvoiceHeadPaymentText.AsVariant :=
+            GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
+            cdsInvoiceHeadLanguageCode.AsInteger,
+            cdsInvoiceHeadClientBillingAddressNo.AsInteger);
 
-     cdsInvoiceHeadST_AddressLine1.AsString     := sq_ClientDataSHIPTO_ADDRESSLINE1.AsString ;
-     cdsInvoiceHeadST_AddressLine2.AsString     := sq_ClientDataSHIPTO_ADDRESSLINE2.AsString ;
-     cdsInvoiceHeadST_AddressLine3.AsString     := sq_ClientDataSHIPTO_ADDRESSLINE3.AsString ;
-     cdsInvoiceHeadST_AddressLine4.AsString     := sq_ClientDataSHIPTO_ADDRESSLINE4.AsString ;
-     cdsInvoiceHeadST_StateOrProvince.AsString  := sq_ClientDataSHIPTO_PROVINCE.AsString ;
-     cdsInvoiceHeadST_PostalCode.AsString       := sq_ClientDataSHIPTO_POSTALCODE.AsString ;
-     cdsInvoiceHeadST_CityName.AsString         := sq_ClientDataSHIPTO_CITY.AsString ;
-     cdsInvoiceHeadST_CountryName.AsString      := sq_ClientDataSHIPTO_COUNTRY.AsString ;
+          CalculateDueDate;
 
-     cdsInvoiceHeadPaymentText.AsVariant        :=
-      GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
-      cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
-
-     CalculateDueDate ;
-
-     cdsInvoiceHead.Post ;
-     sq_ClientData.Close ;
-    End ;
-   Finally
-    dmModule1.cdsClient.Active:= False ;
-    dmModule1.cdsClient.Close ;
-    FreeAndNil(FormSelectClient) ;//.Free ;
-   End ;
-  End //if..
-  else
-   ShowMessage('Kan inte ändra kund, (bara tillåtet i snabbfaktura)') ;
- End ; //with
+          cdsInvoiceHead.Post;
+          sq_ClientData.Close;
+        End;
+      Finally
+        dmModule1.cdsClient.Active := False;
+        dmModule1.cdsClient.Close;
+        FreeAndNil(FormSelectClient); // .Free ;
+      End;
+    End // if..
+    else
+      ShowMessage('Kan inte ändra kund, (bara tillåtet i snabbfaktura)');
+  End; // with
 end;
 
 procedure TfInvoiceWizard.acSelectDeliveryTermsExecute(Sender: TObject);
-var   FormDelTerms: TFormDelTerms;
+var
+  FormDelTerms: TFormDelTerms;
 begin
- with dmVidaInvoice, dmsContact do
- Begin
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
-   Exit ;
- FormDelTerms:= TFormDelTerms.Create(Nil);
- Try
-  cdsDelTerms.Active:= True ;
-  if FormDelTerms.ShowModal = mrOk then
+  with dmVidaInvoice, dmsContact do
   Begin
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+    FormDelTerms := TFormDelTerms.Create(Nil);
+    Try
+      cdsDelTerms.Active := True;
+      if FormDelTerms.ShowModal = mrOK then
+      Begin
 
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
-   cdsInvoiceHeadDeliveryTermsNo.AsInteger:= cdsDelTermsDeliveryTerm_No.AsInteger ;
-   cdsInvoiceHeadDeliveryTerm.AsString:= cdsDelTermsDeliveryTerm.AsString ;
-   cdsInvoiceHead.Post ;
-  End ;
- Finally
-  cdsDelTerms.Active:= False ;
-  FreeAndNil(FormDelTerms) ;//.Free ;
- End ;
- End ;
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
+        cdsInvoiceHeadDeliveryTermsNo.AsInteger :=
+          cdsDelTermsDeliveryTerm_No.AsInteger;
+        cdsInvoiceHeadDeliveryTerm.AsString := cdsDelTermsDeliveryTerm.AsString;
+        cdsInvoiceHead.Post;
+      End;
+    Finally
+      cdsDelTerms.Active := False;
+      FreeAndNil(FormDelTerms); // .Free ;
+    End;
+  End;
 end;
 
 procedure TfInvoiceWizard.acSelectInvoiceAdressExecute(Sender: TObject);
-var  FormAddress: TFormAddress;
+var
+  FormAddress: TFormAddress;
 begin
- with dmVidaInvoice, dmModule1 do
- Begin
-  FormAddress := TFormAddress.Create(Nil);
-  Try
-  cdsClientAddress.Active:= False ;
-  cdsClientAddress.ParamByName('ClientNo').AsInteger:= cdsInvoiceHeadCustomerNo.AsInteger ;
-  cdsClientAddress.ParamByName('AddressType').AsInteger:= 1 ;
-  cdsClientAddress.Active:= True ;
-
-  if FormAddress.ShowModal = mrOK then
+  with dmVidaInvoice, dmModule1 do
   Begin
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
+    FormAddress := TFormAddress.Create(Nil);
+    Try
+      cdsClientAddress.Active := False;
+      cdsClientAddress.ParamByName('ClientNo').AsInteger :=
+        cdsInvoiceHeadCustomerNo.AsInteger;
+      cdsClientAddress.ParamByName('AddressType').AsInteger := 1;
+      cdsClientAddress.Active := True;
 
+      if FormAddress.ShowModal = mrOK then
+      Begin
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
 
-     cdsInvoiceHeadClientBillingAddressNo.AsInteger:= cdsClientAddressADDRESS_NO.AsInteger ;
-     cdsInvoiceHeadAddressName.AsString:=  cdsClientAddressADDRESS_NAME.AsString ;
-     cdsInvoiceHeadAddressLine1.AsString:= cdsClientAddressADDRESSLINE1.AsString ;
-     cdsInvoiceHeadAddressLine2.AsString:= cdsClientAddressADDRESSLINE2.AsString ;
-     cdsInvoiceHeadAddressLine3.AsString:= cdsClientAddressADDRESSLINE3.AsString ;
-     cdsInvoiceHeadAddressLine4.AsString:= cdsClientAddressADDRESSLINE4.AsString ;
-     cdsInvoiceHeadStateOrProvince.AsString := cdsClientAddressPROVINCE.AsString ;
-     cdsInvoiceHeadPostalCode.AsString := cdsClientAddressPOSTALCODE.AsString ;
-     cdsInvoiceHeadCityName.AsString:= cdsClientAddressCITY.AsString ;
-     cdsInvoiceHeadCountryName.AsString := cdsClientAddressCOUNTRY.AsString ;
+        cdsInvoiceHeadClientBillingAddressNo.AsInteger :=
+          cdsClientAddressADDRESS_NO.AsInteger;
+        cdsInvoiceHeadAddressName.AsString :=
+          cdsClientAddressADDRESS_NAME.AsString;
+        cdsInvoiceHeadAddressLine1.AsString :=
+          cdsClientAddressADDRESSLINE1.AsString;
+        cdsInvoiceHeadAddressLine2.AsString :=
+          cdsClientAddressADDRESSLINE2.AsString;
+        cdsInvoiceHeadAddressLine3.AsString :=
+          cdsClientAddressADDRESSLINE3.AsString;
+        cdsInvoiceHeadAddressLine4.AsString :=
+          cdsClientAddressADDRESSLINE4.AsString;
+        cdsInvoiceHeadStateOrProvince.AsString :=
+          cdsClientAddressPROVINCE.AsString;
+        cdsInvoiceHeadPostalCode.AsString :=
+          cdsClientAddressPOSTALCODE.AsString;
+        cdsInvoiceHeadCityName.AsString := cdsClientAddressCITY.AsString;
+        cdsInvoiceHeadCountryName.AsString := cdsClientAddressCOUNTRY.AsString;
 
-   Label1.Caption:= Trim(cdsInvoiceHeadAddressLine1.AsString)+', '+Trim(cdsInvoiceHeadAddressLine2.AsString)+', '+
-   Trim(cdsInvoiceHeadAddressLine3.AsString)+', '+Trim(cdsInvoiceHeadAddressLine4.AsString)+', '+
-   Trim(cdsInvoiceHeadCityName.AsString)+', '+Trim(cdsInvoiceHeadStateOrProvince.AsString)+', '+
-   Trim(cdsInvoiceHeadPostalCode.AsString)+', '+Trim(cdsInvoiceHeadCountryName.AsString) ;
+        Label1.Caption := Trim(cdsInvoiceHeadAddressLine1.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAddressLine2.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAddressLine3.AsString) + ', ' +
+          Trim(cdsInvoiceHeadAddressLine4.AsString) + ', ' +
+          Trim(cdsInvoiceHeadCityName.AsString) + ', ' +
+          Trim(cdsInvoiceHeadStateOrProvince.AsString) + ', ' +
+          Trim(cdsInvoiceHeadPostalCode.AsString) + ', ' +
+          Trim(cdsInvoiceHeadCountryName.AsString);
 
-     cdsInvoiceHeadPaymentText.AsVariant:=
-      GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
-      cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
+        cdsInvoiceHeadPaymentText.AsVariant :=
+          GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
+          cdsInvoiceHeadLanguageCode.AsInteger,
+          cdsInvoiceHeadClientBillingAddressNo.AsInteger);
 
+        cdsInvoiceHead.Post;
+      End;
 
-   cdsInvoiceHead.Post ;
- End ;
+    Finally
+      FreeAndNil(FormAddress); // .Free ;
+    End;
 
-
- Finally
-  FreeAndNil(FormAddress) ;//.Free ;
- End ;
-
- End ; //with
+  End; // with
 
 end;
-
 
 procedure TfInvoiceWizard.acSelectLanguageExecute(Sender: TObject);
-var frmLanguage: TfrmLanguage ;
+var
+  frmLanguage: TfrmLanguage;
 begin
- with dmVidaInvoice, dmModule1, dmsSystem do
- Begin
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
-   Exit ;
- frmLanguage:= TfrmLanguage.Create(Nil);
- Try
-  if not cds_Language.Active then
-  cds_Language.Active:= True ;
-  if frmLanguage.ShowModal = mrOk then
+  with dmVidaInvoice, dmModule1, dmsSystem do
   Begin
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+    frmLanguage := TfrmLanguage.Create(Nil);
+    Try
+      if not cds_Language.Active then
+        cds_Language.Active := True;
+      if frmLanguage.ShowModal = mrOK then
+      Begin
 
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
-   cdsInvoiceHeadLanguageCode.AsInteger:= cds_LanguageLanguageNo.AsInteger ;
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
+        cdsInvoiceHeadLanguageCode.AsInteger :=
+          cds_LanguageLanguageNo.AsInteger;
 
-   cdsInvoiceHeadPaymentText.AsVariant:=
-   GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
-   cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
+        cdsInvoiceHeadPaymentText.AsVariant :=
+          GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
+          cdsInvoiceHeadLanguageCode.AsInteger,
+          cdsInvoiceHeadClientBillingAddressNo.AsInteger);
 
-   cdsInvoiceHead.Post ;
-  End ;
- Finally
-  FreeAndNil(frmLanguage) ;//.Free ;
- End ;
- End ;
+        cdsInvoiceHead.Post;
+      End;
+    Finally
+      FreeAndNil(frmLanguage); // .Free ;
+    End;
+  End;
 end;
 
-
 procedure TfInvoiceWizard.acSelectPaymentTermsExecute(Sender: TObject);
-var FormPaymentTerms: TFormPaymentTerms;
+var
+  FormPaymentTerms: TFormPaymentTerms;
 begin
- with dmVidaInvoice, dmsSystem do
- Begin
-  if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
-   Exit ;
- FormPaymentTerms:= TFormPaymentTerms.Create(Nil);
- Try
-  cdsPaymentTerm.Active:= False ;
-  cdsPaymentTerm.ParamByName('LanguageCode').AsInteger:= cdsInvoiceHeadLanguageCode.AsInteger ;
-  cdsPaymentTerm.Active:= True ;
-  if FormPaymentTerms.ShowModal = mrOk then
+  with dmVidaInvoice, dmsSystem do
   Begin
+    if (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger = 1) then
+      Exit;
+    FormPaymentTerms := TFormPaymentTerms.Create(Nil);
+    Try
+      cdsPaymentTerm.Active := False;
+      cdsPaymentTerm.ParamByName('LanguageCode').AsInteger :=
+        cdsInvoiceHeadLanguageCode.AsInteger;
+      cdsPaymentTerm.Active := True;
+      if FormPaymentTerms.ShowModal = mrOK then
+      Begin
 
-   if cdsInvoiceHead.State = dsBrowse then
-    cdsInvoiceHead.Edit ;
-   cdsInvoiceHeadPaymentDescription.AsString        := cdsPaymentTermDescription.AsString ;
-   cdsInvoiceHeadPaymentTermsNo.AsInteger           := cdsPaymentTermPaymentTermsNo.AsInteger ;
-   cdsInvoiceHeadFreightInDiscount.AsInteger        := cdsPaymentTermFreightInDiscount.AsInteger ;
-   cdsInvoiceHeadFreightInCommission.AsInteger      := cdsPaymentTermFreightInCommission.AsInteger ;
-   cdsInvoiceHeadDiscount1.AsFloat                  := cdsPaymentTermDiscount1.AsFloat ;
-   cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := cdsPaymentTermCommissionPaidByCustomer.AsInteger ;
+        if cdsInvoiceHead.State = dsBrowse then
+          cdsInvoiceHead.Edit;
+        cdsInvoiceHeadPaymentDescription.AsString :=
+          cdsPaymentTermDescription.AsString;
+        cdsInvoiceHeadPaymentTermsNo.AsInteger :=
+          cdsPaymentTermPaymentTermsNo.AsInteger;
+        cdsInvoiceHeadFreightInDiscount.AsInteger :=
+          cdsPaymentTermFreightInDiscount.AsInteger;
+        cdsInvoiceHeadFreightInCommission.AsInteger :=
+          cdsPaymentTermFreightInCommission.AsInteger;
+        cdsInvoiceHeadDiscount1.AsFloat := cdsPaymentTermDiscount1.AsFloat;
+        cdsInvoiceHeadCommissionPaidByCustomer.AsInteger :=
+          cdsPaymentTermCommissionPaidByCustomer.AsInteger;
 
-   CalculateDueDate ;
+        CalculateDueDate;
 
-
-   cdsInvoiceHead.Post ;
-  End ;
- Finally
-  cdsPaymentTerm.Active:= False ;
-  FreeAndNil(FormPaymentTerms) ;//.Free ;
- End ;
- End ;
+        cdsInvoiceHead.Post;
+      End;
+    Finally
+      cdsPaymentTerm.Active := False;
+      FreeAndNil(FormPaymentTerms); // .Free ;
+    End;
+  End;
 end;
 
 procedure TfInvoiceWizard.acAddDeliveryAdressExecute(Sender: TObject);
-var  FormAddress: TFormAddress;
+var
+  FormAddress: TFormAddress;
 begin
-// if IsInvoiced(Sender) then exit ;
-// if Invoiced then Exit ;
- with dmVidaInvoice, dmModule1 do
- Begin
-  FormAddress := TFormAddress.Create(Nil);
-  Try
-  cdsClientAddress.Active:= False ;
-  cdsClientAddress.Close ;
-  cdsClientAddress.ParamByName('ClientNo').AsInteger    := cdsInvoiceHeadCustomerNo.AsInteger ;
-  cdsClientAddress.ParamByName('AddressType').AsInteger := 2 ;
-  cdsClientAddress.Active:= True ;
-
-
-  if FormAddress.ShowModal = mrOK then
+  // if IsInvoiced(Sender) then exit ;
+  // if Invoiced then Exit ;
+  with dmVidaInvoice, dmModule1 do
   Begin
-   if not cdsInvoiceShipTo.active then
-    cdsInvoiceShipTo.Active := True ;
+    FormAddress := TFormAddress.Create(Nil);
+    Try
+      cdsClientAddress.Active := False;
+      cdsClientAddress.Close;
+      cdsClientAddress.ParamByName('ClientNo').AsInteger :=
+        cdsInvoiceHeadCustomerNo.AsInteger;
+      cdsClientAddress.ParamByName('AddressType').AsInteger := 2;
+      cdsClientAddress.Active := True;
 
-   if not cdsInvoiceShipToAddress.Active then
-    cdsInvoiceShipToAddress.Active  := True ;
+      if FormAddress.ShowModal = mrOK then
+      Begin
+        if not cdsInvoiceShipTo.Active then
+          cdsInvoiceShipTo.Active := True;
 
-    if cdsInvoiceShipTo.Locate('InternalInvoiceNo;ShippingPlanNo;Reference',
-    VarArrayof([cdsInvoiceDetailInternalInvoiceNo.AsInteger, cdsInvoiceDetailShippingPlanNo.AsInteger, cdsInvoiceDetailReference.AsString]),[]) then
-    Begin
-     cdsInvoiceShipToAddress.Edit ;
+        if not cdsInvoiceShipToAddress.Active then
+          cdsInvoiceShipToAddress.Active := True;
 
-     cdsInvoiceShipToAddressAddressName.AsString        := cdsClientAddressADDRESS_NAME.AsString ;
+        if cdsInvoiceShipTo.Locate('InternalInvoiceNo;ShippingPlanNo;Reference',
+          VarArrayof([cdsInvoiceDetailInternalInvoiceNo.AsInteger,
+          cdsInvoiceDetailShippingPlanNo.AsInteger,
+          cdsInvoiceDetailReference.AsString]), []) then
+        Begin
+          cdsInvoiceShipToAddress.Edit;
 
-     cdsInvoiceShipToAddressReference.AsString          := cdsInvoiceDetailReference.AsString ;
+          cdsInvoiceShipToAddressAddressName.AsString :=
+            cdsClientAddressADDRESS_NAME.AsString;
 
-     if cdsInvoiceHeadDebit_Credit.AsInteger = 1 then
-     Begin
-      cdsInvoiceShipToAddressReference.AsString          := '1' ;
-     End ;
+          cdsInvoiceShipToAddressReference.AsString :=
+            cdsInvoiceDetailReference.AsString;
 
-     cdsInvoiceShipToAddressInternalInvoiceNo.AsInteger := cdsInvoiceDetailInternalInvoiceNo.AsInteger ;
-     cdsInvoiceShipToAddressShippingPlanNo.AsInteger    := cdsInvoiceDetailShippingPlanNo.AsInteger ;
+          if cdsInvoiceHeadDebit_Credit.AsInteger = 1 then
+          Begin
+            cdsInvoiceShipToAddressReference.AsString := '1';
+          End;
 
-     cdsInvoiceShipToAddressAddressNo.AsInteger         := cdsClientAddressADDRESS_NO.AsInteger ;
-     cdsInvoiceShipToAddressADDR.AsString               :=
-     TRIM(cdsClientAddressADDRESSLINE1.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE2.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE3.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE4.AsString)
-     +', '+TRIM(cdsClientAddressCITY.AsString)
-     +', '+TRIM(cdsClientAddressPOSTALCODE.AsString)
-     +', '+TRIM(cdsClientAddressPOSTALCODE.AsString) ;
-     cdsInvoiceShipToAddress.Post ;
+          cdsInvoiceShipToAddressInternalInvoiceNo.AsInteger :=
+            cdsInvoiceDetailInternalInvoiceNo.AsInteger;
+          cdsInvoiceShipToAddressShippingPlanNo.AsInteger :=
+            cdsInvoiceDetailShippingPlanNo.AsInteger;
 
+          cdsInvoiceShipToAddressAddressNo.AsInteger :=
+            cdsClientAddressADDRESS_NO.AsInteger;
+          cdsInvoiceShipToAddressADDR.AsString :=
+            Trim(cdsClientAddressADDRESSLINE1.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE2.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE3.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE4.AsString) + ', ' +
+            Trim(cdsClientAddressCITY.AsString) + ', ' +
+            Trim(cdsClientAddressPOSTALCODE.AsString) + ', ' +
+            Trim(cdsClientAddressPOSTALCODE.AsString);
+          cdsInvoiceShipToAddress.Post;
 
-    end
-    else
-    Begin
-     cdsInvoiceShipToAddress.Insert ;
-     cdsInvoiceShipToAddressAddressName.AsString        := cdsClientAddressADDRESS_NAME.AsString ;
-     cdsInvoiceShipToAddressReference.AsString          := cdsInvoiceDetailReference.AsString ;
-     cdsInvoiceShipToAddressInternalInvoiceNo.AsInteger := cdsInvoiceDetailInternalInvoiceNo.AsInteger ;
-     cdsInvoiceShipToAddressShippingPlanNo.AsInteger    := cdsInvoiceDetailShippingPlanNo.AsInteger ;
-     cdsInvoiceShipToAddressAddressNo.AsInteger         := cdsClientAddressADDRESS_NO.AsInteger ;
-     cdsInvoiceShipToAddressADDR.AsString               :=
-     TRIM(cdsClientAddressADDRESSLINE1.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE2.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE3.AsString)
-     +', '+TRIM(cdsClientAddressADDRESSLINE4.AsString)
-     +', '+TRIM(cdsClientAddressCITY.AsString)
-     +', '+TRIM(cdsClientAddressPOSTALCODE.AsString)
-     +', '+TRIM(cdsClientAddressPOSTALCODE.AsString) ;
-     if (Length(Trim(cdsInvoiceShipToAddressReference.AsString)) = 0) or (cdsInvoiceShipToAddressReference.isNull) then
-      cdsInvoiceShipToAddressReference.AsString := 'Lägg till referens här' ;
-     cdsInvoiceShipToAddress.Post ;
-    End ;
-  End ;
+        end
+        else
+        Begin
+          cdsInvoiceShipToAddress.Insert;
+          cdsInvoiceShipToAddressAddressName.AsString :=
+            cdsClientAddressADDRESS_NAME.AsString;
+          cdsInvoiceShipToAddressReference.AsString :=
+            cdsInvoiceDetailReference.AsString;
+          cdsInvoiceShipToAddressInternalInvoiceNo.AsInteger :=
+            cdsInvoiceDetailInternalInvoiceNo.AsInteger;
+          cdsInvoiceShipToAddressShippingPlanNo.AsInteger :=
+            cdsInvoiceDetailShippingPlanNo.AsInteger;
+          cdsInvoiceShipToAddressAddressNo.AsInteger :=
+            cdsClientAddressADDRESS_NO.AsInteger;
+          cdsInvoiceShipToAddressADDR.AsString :=
+            Trim(cdsClientAddressADDRESSLINE1.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE2.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE3.AsString) + ', ' +
+            Trim(cdsClientAddressADDRESSLINE4.AsString) + ', ' +
+            Trim(cdsClientAddressCITY.AsString) + ', ' +
+            Trim(cdsClientAddressPOSTALCODE.AsString) + ', ' +
+            Trim(cdsClientAddressPOSTALCODE.AsString);
+          if (Length(Trim(cdsInvoiceShipToAddressReference.AsString)) = 0) or
+            (cdsInvoiceShipToAddressReference.IsNull) then
+            cdsInvoiceShipToAddressReference.AsString :=
+              'Lägg till referens här';
+          cdsInvoiceShipToAddress.Post;
+        End;
+      End;
 
- Finally
-  FreeAndNil(FormAddress) ;//.Free ;
- End ;
+    Finally
+      FreeAndNil(FormAddress); // .Free ;
+    End;
 
- End ; //with
+  End; // with
 end;
 
 procedure TfInvoiceWizard.acAddDeliveryAdressUpdate(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
-  acAddDeliveryAdress.Enabled  := (cdsInvoiceHead.Active) and (cdsInvoiceHeadInvoiced.AsInteger <> 1)
-  and ((cdsInvoiceDetail.Active) and (cdsInvoiceDetail.RecordCount > 0)) ;
- End ;
+  with dmVidaInvoice do
+  Begin
+    acAddDeliveryAdress.Enabled := (cdsInvoiceHead.Active) and
+      (cdsInvoiceHeadInvoiced.AsInteger <> 1) and
+      ((cdsInvoiceDetail.Active) and (cdsInvoiceDetail.RecordCount > 0));
+  End;
 end;
 
 procedure TfInvoiceWizard.acAddInvoiceRowExecute(Sender: TObject);
-var fArticle : TfArticle ;
+var
+  fArticle: TfArticle;
 begin
-// if IsInvoiced(Sender) then exit ;
-// if Invoiced then Exit ;
- With dmVidaInvoice do
- Begin
-  if not dmsSystem.cds_Article.Active then
-   dmsSystem.cds_Article.Active := True ;
-  fArticle := TfArticle.Create(nil) ;
-  Try
-   if fArticle.ShowModal = mrOK then
-   Begin
-    cdsInvoiceDetail.Append ;
-    cdsInvoiceDetailArticleNo.AsInteger                 := dmsSystem.cds_ArticleArticleNo.AsInteger ;
-    cdsInvoiceDetailProductDescription.AsString         := dmsSystem.cds_ArticleArticleName.AsString ;
-    if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
-    Begin
-     cdsInvoiceDetailReference.AsString                  := '1' ;
-    End ;
-    if cdsInvoiceHeadDebit_Credit.AsInteger = 1 then
-    Begin
-     cdsInvoiceDetailReference.AsString                  := '1' ;
-     if (cdsInvoiceShipToAddress.Active) and (cdsInvoiceShipToAddress.RecordCount > 0) then
-     Begin
-      if cdsInvoiceShipToAddress.State in [dsBrowse] then
-      cdsInvoiceShipToAddress.Edit ;
-      cdsInvoiceShipToAddressReference.AsString  := '1' ;
-     End ;
-    End ;
+  // if IsInvoiced(Sender) then exit ;
+  // if Invoiced then Exit ;
+  With dmVidaInvoice do
+  Begin
+    if not dmsSystem.cds_Article.Active then
+      dmsSystem.cds_Article.Active := True;
+    fArticle := TfArticle.Create(nil);
+    Try
+      if fArticle.ShowModal = mrOK then
+      Begin
+        cdsInvoiceDetail.Append;
+        cdsInvoiceDetailArticleNo.AsInteger :=
+          dmsSystem.cds_ArticleArticleNo.AsInteger;
+        cdsInvoiceDetailProductDescription.AsString :=
+          dmsSystem.cds_ArticleArticleName.AsString;
+        if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
+        Begin
+          cdsInvoiceDetailReference.AsString := '1';
+        End;
+        if cdsInvoiceHeadDebit_Credit.AsInteger = 1 then
+        Begin
+          cdsInvoiceDetailReference.AsString := '1';
+          if (cdsInvoiceShipToAddress.Active) and
+            (cdsInvoiceShipToAddress.RecordCount > 0) then
+          Begin
+            if cdsInvoiceShipToAddress.State in [dsBrowse] then
+              cdsInvoiceShipToAddress.Edit;
+            cdsInvoiceShipToAddressReference.AsString := '1';
+          End;
+        End;
 
-    cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
-    cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additional
-    cdsInvoiceDetailInclInPrice.AsInteger               := 0 ;
-    cdsInvoiceDetailInclInInvoiceTotal.AsInteger        := 1 ;
+        cdsInvoiceDetailShippingPlanNo.AsInteger :=
+          cdsInvoiceLOShippingPlanNo.AsInteger;
+        cdsInvoiceDetailTypeOfRow.AsInteger := 2; // Additional
+        cdsInvoiceDetailInclInPrice.AsInteger := 0;
+        cdsInvoiceDetailInclInInvoiceTotal.AsInteger := 1;
 
-    cdsInvoiceDetail.Post ;
-   End ;
-  Finally
-   FreeAndNil(fArticle) ;
-  End ;
-//  NextInvoiceDetailNo                                 := GetNextInvoice_DetailNo ;//cdsInvoiceDetail.RecordCount + 1 ;
+        cdsInvoiceDetail.Post;
+      End;
+    Finally
+      FreeAndNil(fArticle);
+    End;
+    // NextInvoiceDetailNo                                 := GetNextInvoice_DetailNo ;//cdsInvoiceDetail.RecordCount + 1 ;
 
-{  cdsInvoiceDetail.Append ;
-  if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
-   cdsInvoiceDetailReference.AsString                  := '1' ;
-//  cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
-  cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
-//  cdsInvoiceDetailInvoiceDetailNo.AsInteger           := NextInvoiceDetailNo ;
-  cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additional
-{  cdsInvoiceDetailCreatedUser.AsInteger               := ThisUser.UserID ;
-  cdsInvoiceDetailModifiedUser.AsInteger              := ThisUser.UserID ;
-  }
-//  cdsInvoiceDetailDateCreated.AsSQLTimeStamp          := DateTimeToSQLTimeStamp(Now) ; }
-//  cdsInvoiceDetail.Post ;
- End ;
+    { cdsInvoiceDetail.Append ;
+      if cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
+      cdsInvoiceDetailReference.AsString                  := '1' ;
+      //  cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
+      cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
+      //  cdsInvoiceDetailInvoiceDetailNo.AsInteger           := NextInvoiceDetailNo ;
+      cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additional
+      {  cdsInvoiceDetailCreatedUser.AsInteger               := ThisUser.UserID ;
+      cdsInvoiceDetailModifiedUser.AsInteger              := ThisUser.UserID ;
+    }
+    // cdsInvoiceDetailDateCreated.AsSQLTimeStamp          := DateTimeToSQLTimeStamp(Now) ; }
+    // cdsInvoiceDetail.Post ;
+  End;
 end;
-
 
 procedure TfInvoiceWizard.acCancelChangesExecute(Sender: TObject);
 begin
- With dmVidaInvoice do
- Begin
-  if MessageDlg('Vill du avbryta?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   DeleteInvoice(cdsInvoiceHeadInternalInvoiceNo.AsInteger)
-   else
-    Exit ;
-  ModalResult:= mrCancel ;
-// dmcOrder.OrderSavedinWizard:= False ;
-  Close ;
- End;
+  With dmVidaInvoice do
+  Begin
+    if MessageDlg('Vill du avbryta?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    then
+      DeleteInvoice(cdsInvoiceHeadInternalInvoiceNo.AsInteger)
+    else
+      Exit;
+    ModalResult := mrCancel;
+    // dmcOrder.OrderSavedinWizard:= False ;
+    Close;
+  End;
 end;
 
-Function TfInvoiceWizard.GotoNextPageOK : Boolean ;
+Function TfInvoiceWizard.GotoNextPageOK: Boolean;
 Begin
- Result:= False ;
- With dmcOrder do
- Begin
-  if pgPriceListGuide.ActivePage = tsInvoiceHead then
+  Result := False;
+  With dmcOrder do
   Begin
-    Result:= True ;
-  End
-  else
-  if pgPriceListGuide.ActivePage = tsAddress then
-  Begin
-    Result:= True ;
-  End
-  else
-  if pgPriceListGuide.ActivePage = tsParametrar then
-  Begin
-    Result:= True ;
-  End
-  else
-  if pgPriceListGuide.ActivePage = tsAgent then
-  Begin
-   Result:= True ;
-  End
-  else
-  if pgPriceListGuide.ActivePage = tsInvoiceRows then
-  Begin
-   Result:= True ;
-  End
-  else
-  if pgPriceListGuide.ActivePage = tsShipToAddress then
-  Begin
-   Result:= True ;
-  End ;
- End ;//With
-End ;
+    if pgPriceListGuide.ActivePage = tsInvoiceHead then
+    Begin
+      Result := True;
+    End
+    else if pgPriceListGuide.ActivePage = tsAddress then
+    Begin
+      Result := True;
+    End
+    else if pgPriceListGuide.ActivePage = tsParametrar then
+    Begin
+      Result := True;
+    End
+    else if pgPriceListGuide.ActivePage = tsAgent then
+    Begin
+      Result := True;
+    End
+    else if pgPriceListGuide.ActivePage = tsInvoiceRows then
+    Begin
+      Result := True;
+    End
+    else if pgPriceListGuide.ActivePage = tsShipToAddress then
+    Begin
+      Result := True;
+    End;
+  End; // With
+End;
 
 procedure TfInvoiceWizard.lFakturaAdressClick(Sender: TObject);
-//var  FormAddress: TFormAddress;
+// var  FormAddress: TFormAddress;
 begin
-(* with dmVidaInvoice do
- Begin
-  FormAddress := TFormAddress.Create(Nil);
-  Try
-  cdsClientAddress.Active:= False ;
-  sq_ClientAddress.Close ;
-  sq_ClientAddress.ParamByName('ClientNo').AsInteger:= cdsInvoiceHeadCustomerNo.AsInteger ;
-  sq_ClientAddress.ParamByName('AddressType').AsInteger:= 1 ;
-  cdsClientAddress.Active:= True ;
+  (* with dmVidaInvoice do
+    Begin
+    FormAddress := TFormAddress.Create(Nil);
+    Try
+    cdsClientAddress.Active:= False ;
+    sq_ClientAddress.Close ;
+    sq_ClientAddress.ParamByName('ClientNo').AsInteger:= cdsInvoiceHeadCustomerNo.AsInteger ;
+    sq_ClientAddress.ParamByName('AddressType').AsInteger:= 1 ;
+    cdsClientAddress.Active:= True ;
 
-  if FormAddress.ShowModal = mrOK then
-  Begin
-   if cdsInvoiceHead.State = dsBrowse then
+    if FormAddress.ShowModal = mrOK then
+    Begin
+    if cdsInvoiceHead.State = dsBrowse then
     cdsInvoiceHead.Edit ;
 
 
-     cdsInvoiceHeadClientBillingAddressNo.AsInteger:= cdsClientAddressADDRESS_NO.AsInteger ;
-     cdsInvoiceHeadAddressName.AsString:=  cdsClientAddressADDRESS_NAME.AsString ;
-     cdsInvoiceHeadAddressLine1.AsString:= cdsClientAddressADDRESSLINE1.AsString ;
-     cdsInvoiceHeadAddressLine2.AsString:= cdsClientAddressADDRESSLINE2.AsString ;
-     cdsInvoiceHeadAddressLine3.AsString:= cdsClientAddressADDRESSLINE3.AsString ;
-     cdsInvoiceHeadAddressLine4.AsString:= cdsClientAddressADDRESSLINE4.AsString ;
-     cdsInvoiceHeadStateOrProvince.AsString := cdsClientAddressPROVINCE.AsString ;
-     cdsInvoiceHeadPostalCode.AsString := cdsClientAddressPOSTALCODE.AsString ;
-     cdsInvoiceHeadCityName.AsString:= cdsClientAddressCITY.AsString ;
-     cdsInvoiceHeadCountryName.AsString := cdsClientAddressCOUNTRY.AsString ;
+    cdsInvoiceHeadClientBillingAddressNo.AsInteger:= cdsClientAddressADDRESS_NO.AsInteger ;
+    cdsInvoiceHeadAddressName.AsString:=  cdsClientAddressADDRESS_NAME.AsString ;
+    cdsInvoiceHeadAddressLine1.AsString:= cdsClientAddressADDRESSLINE1.AsString ;
+    cdsInvoiceHeadAddressLine2.AsString:= cdsClientAddressADDRESSLINE2.AsString ;
+    cdsInvoiceHeadAddressLine3.AsString:= cdsClientAddressADDRESSLINE3.AsString ;
+    cdsInvoiceHeadAddressLine4.AsString:= cdsClientAddressADDRESSLINE4.AsString ;
+    cdsInvoiceHeadStateOrProvince.AsString := cdsClientAddressPROVINCE.AsString ;
+    cdsInvoiceHeadPostalCode.AsString := cdsClientAddressPOSTALCODE.AsString ;
+    cdsInvoiceHeadCityName.AsString:= cdsClientAddressCITY.AsString ;
+    cdsInvoiceHeadCountryName.AsString := cdsClientAddressCOUNTRY.AsString ;
 
-   Label42.Caption:= Trim(cdsInvoiceHeadAddressLine1.AsString)+', '+Trim(cdsInvoiceHeadAddressLine2.AsString)+', '+
-   Trim(cdsInvoiceHeadAddressLine3.AsString)+', '+Trim(cdsInvoiceHeadAddressLine4.AsString)+', '+
-   Trim(cdsInvoiceHeadCityName.AsString)+', '+Trim(cdsInvoiceHeadStateOrProvince.AsString)+', '+
-   Trim(cdsInvoiceHeadPostalCode.AsString)+', '+Trim(cdsInvoiceHeadCountryName.AsString) ;
+    Label42.Caption:= Trim(cdsInvoiceHeadAddressLine1.AsString)+', '+Trim(cdsInvoiceHeadAddressLine2.AsString)+', '+
+    Trim(cdsInvoiceHeadAddressLine3.AsString)+', '+Trim(cdsInvoiceHeadAddressLine4.AsString)+', '+
+    Trim(cdsInvoiceHeadCityName.AsString)+', '+Trim(cdsInvoiceHeadStateOrProvince.AsString)+', '+
+    Trim(cdsInvoiceHeadPostalCode.AsString)+', '+Trim(cdsInvoiceHeadCountryName.AsString) ;
 
-     cdsInvoiceHeadPaymentText.AsVariant:=
-      GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
-      cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
-   
-
-   cdsInvoiceHead.Post ;
- End ;
+    cdsInvoiceHeadPaymentText.AsVariant:=
+    GetPaymentText (cdsInvoiceHeadCurrencyNo.AsInteger,
+    cdsInvoiceHeadLanguageCode.AsInteger, cdsInvoiceHeadClientBillingAddressNo.AsInteger) ;
 
 
- Finally
-  FreeAndNil(FormAddress) ;//.Free ;
- End ;
+    cdsInvoiceHead.Post ;
+    End ;
 
- End ; //with
-*)
+
+    Finally
+    FreeAndNil(FormAddress) ;//.Free ;
+    End ;
+
+    End ; //with
+  *)
 end;
 
 procedure TfInvoiceWizard.Panel3Enter(Sender: TObject);
 begin
- bSelectDeliveryTerms.SetFocus ;
+  bSelectDeliveryTerms.SetFocus;
 end;
 
-procedure TfInvoiceWizard.SaveInvoice ;
+procedure TfInvoiceWizard.SaveInvoice;
 begin
-{ if dmVidaInvoice.cdsInvoiceHeadSUM_FreigthCost.AsFloat <> 0 then
- Begin
-  if abs(dmVidaInvoice.cdsInvoiceHeadTotal_Product_Value_No_Freight.AsFloat)
-  / abs(dmVidaInvoice.cdsInvoiceHeadSUM_FreigthCost.AsFloat) > 150 then
-  ShowMessage('Kolla din fraktkostnad.') ;
- End ;
+  { if dmVidaInvoice.cdsInvoiceHeadSUM_FreigthCost.AsFloat <> 0 then
+    Begin
+    if abs(dmVidaInvoice.cdsInvoiceHeadTotal_Product_Value_No_Freight.AsFloat)
+    / abs(dmVidaInvoice.cdsInvoiceHeadSUM_FreigthCost.AsFloat) > 150 then
+    ShowMessage('Kolla din fraktkostnad.') ;
+    End ;
 
 
- if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat > 0)
-  and (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 1) then
-  ShowMessage('Notera, fakturan är markerad som kredit men beloppet är positivt.') ;
+    if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat > 0)
+    and (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 1) then
+    ShowMessage('Notera, fakturan är markerad som kredit men beloppet är positivt.') ;
 
- if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat < 0)
-  and (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 0) then
-  ShowMessage('Notera, fakturan är markerad som debit men beloppet är negativt.') ;
-
-  }
-
- if dmVidaInvoice.cdsInvoiceHeadCurrencyName.AsString <= '' then
- Begin
-  ShowMessage('Valuta saknas, kan ej spara.') ;
-  Exit ;
- End ;
- if dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger < 1 then
- Begin
-  ShowMessage('Kund saknas, kan ej spara.') ;
-  Exit ;
- End ;
-
-// if not  IsInvoiced(Sender) then
-// if Invoiced = False then
-// Begin
-
-
-//end;
-{  if dmVidaInvoice.cdsInvoiceHeadQuickInvoice.AsInteger = 0 then
-  Summarize(Sender)
-  else
-  SummarizeForQuickInvoice(Sender) ;
+    if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat < 0)
+    and (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 0) then
+    ShowMessage('Notera, fakturan är markerad som debit men beloppet är negativt.') ;
 
   }
-// End ;//if not IsInvoiced(Sender) then
 
- if dmVidaInvoice.cdsInvoiceHead.State in [dsEdit, dsInsert] then
-  dmVidaInvoice.cdsInvoiceHead.Post ;
- if dmVidaInvoice.cdsInvoiceHead.ChangeCount > 0 then
- Begin
-  dmVidaInvoice.cdsInvoiceHead.ApplyUpdates(0) ;
-  dmVidaInvoice.cdsInvoiceHead.CommitUpdates ;
- End ;
-
-// if not IsInvoiced(Sender) then
-// if Invoiced = False then
-// Begin
- if dmVidaInvoice.cdsInvoiceLO.State in [dsEdit, dsInsert] then
-  dmVidaInvoice.cdsInvoiceLO.Post ;
- if dmVidaInvoice.cdsInvoiceLO.ChangeCount > 0 then
- Begin
-  dmVidaInvoice.cdsInvoiceLO.ApplyUpdates(0) ;
-  dmVidaInvoice.cdsInvoiceLO.CommitUpdates ;
- End ;
-
- if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
-  dmVidaInvoice.cdsInvoiceDetail.Post ;
- if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
- Begin
-  dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0) ;
-  dmVidaInvoice.cdsInvoiceDetail.CommitUpdates ;
- End ;
-
- if dmVidaInvoice.cdsInvoiceShipTo.State in [dsEdit, dsInsert] then
-  dmVidaInvoice.cdsInvoiceShipTo.Post ;
- if dmVidaInvoice.cdsInvoiceShipTo.ChangeCount > 0 then
- Begin
-  dmVidaInvoice.cdsInvoiceShipTo.ApplyUpdates(0) ;
-  dmVidaInvoice.cdsInvoiceShipTo.CommitUpdates ;
- End ;
-
- if dmVidaInvoice.cdsInvoiceShipToAddress.State in [dsEdit, dsInsert] then
-  dmVidaInvoice.cdsInvoiceShipToAddress.Post ;
- if dmVidaInvoice.cdsInvoiceShipToAddress.ChangeCount > 0 then
- Begin
-  dmVidaInvoice.cdsInvoiceShipToAddress.ApplyUpdates(0) ;
-  dmVidaInvoice.cdsInvoiceShipToAddress.CommitUpdates ;
- End ;
-
-//  NewInvoice:= False ; //set to false if user save
-
-{  if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
-   dmVidaInvoice.cds_IH_SpecLoad.Post ;
-  if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+  if dmVidaInvoice.cdsInvoiceHeadCurrencyName.AsString <= '' then
   Begin
-   dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
-   dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
-  End ;
+    ShowMessage('Valuta saknas, kan ej spara.');
+    Exit;
+  End;
+  if dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger < 1 then
+  Begin
+    ShowMessage('Kund saknas, kan ej spara.');
+    Exit;
+  End;
+
+  // if not  IsInvoiced(Sender) then
+  // if Invoiced = False then
+  // Begin
+
+
+  // end;
+  { if dmVidaInvoice.cdsInvoiceHeadQuickInvoice.AsInteger = 0 then
+    Summarize(Sender)
+    else
+    SummarizeForQuickInvoice(Sender) ;
+
+  }
+  // End ;//if not IsInvoiced(Sender) then
+
+  if dmVidaInvoice.cdsInvoiceHead.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cdsInvoiceHead.Post;
+  if dmVidaInvoice.cdsInvoiceHead.ChangeCount > 0 then
+  Begin
+    dmVidaInvoice.cdsInvoiceHead.ApplyUpdates(0);
+    dmVidaInvoice.cdsInvoiceHead.CommitUpdates;
+  End;
+
+  // if not IsInvoiced(Sender) then
+  // if Invoiced = False then
+  // Begin
+  if dmVidaInvoice.cdsInvoiceLO.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cdsInvoiceLO.Post;
+  if dmVidaInvoice.cdsInvoiceLO.ChangeCount > 0 then
+  Begin
+    dmVidaInvoice.cdsInvoiceLO.ApplyUpdates(0);
+    dmVidaInvoice.cdsInvoiceLO.CommitUpdates;
+  End;
+
+  if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cdsInvoiceDetail.Post;
+  if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
+  Begin
+    dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0);
+    dmVidaInvoice.cdsInvoiceDetail.CommitUpdates;
+  End;
+
+  if dmVidaInvoice.cdsInvoiceShipTo.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cdsInvoiceShipTo.Post;
+  if dmVidaInvoice.cdsInvoiceShipTo.ChangeCount > 0 then
+  Begin
+    dmVidaInvoice.cdsInvoiceShipTo.ApplyUpdates(0);
+    dmVidaInvoice.cdsInvoiceShipTo.CommitUpdates;
+  End;
+
+  if dmVidaInvoice.cdsInvoiceShipToAddress.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cdsInvoiceShipToAddress.Post;
+  if dmVidaInvoice.cdsInvoiceShipToAddress.ChangeCount > 0 then
+  Begin
+    dmVidaInvoice.cdsInvoiceShipToAddress.ApplyUpdates(0);
+    dmVidaInvoice.cdsInvoiceShipToAddress.CommitUpdates;
+  End;
+
+  // NewInvoice:= False ; //set to false if user save
+
+  { if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
+    dmVidaInvoice.cds_IH_SpecLoad.Post ;
+    if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+    Begin
+    dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
+    dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
+    End ;
   }
 
-//  CheckValueExistInRows ;
+  // CheckValueExistInRows ;
 end;
-
-
-
 
 procedure TfInvoiceWizard.tsAddressEnter(Sender: TObject);
 begin
-bSelectCustomer.SetFocus ;
+  bSelectCustomer.SetFocus;
 end;
 
 procedure TfInvoiceWizard.tsAgentEnter(Sender: TObject);
 begin
- bSelectAgent.SetFocus ;
+  bSelectAgent.SetFocus;
 end;
 
 procedure TfInvoiceWizard.tsInvoiceHeadEnter(Sender: TObject);
 begin
- lcSR.SetFocus ;
+  lcSR.SetFocus;
 end;
 
 procedure TfInvoiceWizard.tsInvoiceRowsEnter(Sender: TObject);
 begin
- bSelectInvoiceRows.SetFocus ;
+  bSelectInvoiceRows.SetFocus;
 end;
 
 procedure TfInvoiceWizard.tsShipToAddressEnter(Sender: TObject);
 begin
- bSelectDeliveryAddress.SetFocus ;
+  bSelectDeliveryAddress.SetFocus;
 end;
 
 End.
-
-

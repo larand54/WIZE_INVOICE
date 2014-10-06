@@ -1,7 +1,5 @@
 inherited frmLockLoads: TfrmLockLoads
   Caption = 'Reserverade laster'
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel5: TPanel
@@ -21,7 +19,6 @@ inherited frmLockLoads: TfrmLockLoads
   inherited cxGrid1: TcxGrid
     inherited cxGrid1DBTableView1: TcxGridDBTableView
       DataController.KeyFieldNames = 'LoadNo;ResUserName'
-      OptionsView.Indicator = True
       object cxGrid1DBTableView1LoadNo: TcxGridDBColumn
         DataBinding.FieldName = 'LoadNo'
         PropertiesClassName = 'TcxLabelProperties'
@@ -38,7 +35,7 @@ inherited frmLockLoads: TfrmLockLoads
   end
   inherited imglistActions: TImageList
     Bitmap = {
-      494C01010C000E000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1240,6 +1237,7 @@ inherited frmLockLoads: TfrmLockLoads
   end
   inherited dxComponentPrinter1: TdxComponentPrinter
     inherited dxComponentPrinter1Link1: TdxGridReportLink
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

@@ -3,17 +3,11 @@ inherited fArticle: TfArticle
   Top = 185
   Caption = 'Artiklar f'#246'rs'#228'ljningskonton'
   ClientHeight = 620
-  ExplicitWidth = 320
   ExplicitHeight = 658
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel5: TPanel
     Visible = False
-    ExplicitWidth = 760
-    inherited Panel2: TPanel
-      Left = 650
-      ExplicitLeft = 650
-    end
   end
   inherited Panel1: TPanel
     Top = 573
@@ -45,6 +39,7 @@ inherited fArticle: TfArticle
       Align = alClient
       TabOrder = 1
       object grdKontoNrDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
         DataController.KeyFieldNames = 'AccountType;ArticleNo;KontoNr'
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
@@ -111,7 +106,6 @@ inherited fArticle: TfArticle
     inherited cxGrid1DBTableView1: TcxGridDBTableView
       DataController.KeyFieldNames = 'ArticleNo'
       NewItemRow.Visible = True
-      OptionsView.Indicator = True
       object cxGrid1DBTableView1ArticleNo: TcxGridDBColumn
         DataBinding.FieldName = 'ArticleNo'
         Visible = False
@@ -126,21 +120,18 @@ inherited fArticle: TfArticle
   object Panel4: TPanel [3]
     Left = 0
     Top = 525
-    Width = 752
+    Width = 760
     Height = 48
     Align = alBottom
     TabOrder = 3
     ExplicitTop = 536
-    ExplicitWidth = 760
     object BitBtn1: TBitBtn
       Left = 287
       Top = 8
       Width = 84
       Height = 34
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -148,16 +139,14 @@ inherited fArticle: TfArticle
       Top = 8
       Width = 84
       Height = 34
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
   inherited imglistActions: TImageList
     Bitmap = {
-      494C01010C000E000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C000E00100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1364,6 +1353,7 @@ inherited fArticle: TfArticle
   end
   inherited dxComponentPrinter1: TdxComponentPrinter
     inherited dxComponentPrinter1Link1: TdxGridReportLink
+      AssignedFormatValues = []
       BuiltInReportLink = True
     end
   end

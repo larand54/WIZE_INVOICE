@@ -10,7 +10,20 @@ uses
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, ExtCtrls, cxDBLookupComboBox, cxLabel, Buttons,
   cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
-  cxDBLookupEdit, kbmMemTable, FMTBcd, SqlExpr;
+  cxDBLookupEdit, kbmMemTable, FMTBcd, SqlExpr, cxLookAndFeels, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
 
 type
   TfLOLengths = class(TForm)
@@ -52,10 +65,10 @@ type
     { Private declarations }
   public
     { Public declarations }
-    PkgCodePPZeroGroupNo : Integer ;
+    PkgCodePPZeroGroupNo: Integer;
   end;
 
-//var fLOLengths: TfLOLengths;
+  // var fLOLengths: TfLOLengths;
 
 implementation
 
@@ -65,76 +78,80 @@ uses dmcVidaOrder, dmsVidaSystem, dmsDataConn, dmsVidaProduct;
 
 procedure TfLOLengths.acAddLengthExecute(Sender: TObject);
 begin
- With dmcOrder do
- Begin
-  cds_LOLengths.Insert ;
- End ;
+  With dmcOrder do
+  Begin
+    cds_LOLengths.Insert;
+  End;
 end;
 
 procedure TfLOLengths.acRemoveLengthExecute(Sender: TObject);
 begin
- With dmcOrder do
- Begin
-  RemoveCodeFromZeroGroup(PkgCodePPZeroGroupNo, cds_LOLengthsPkgCodePPNo.AsInteger) ;
-  cds_LOLengths.Delete ;
- End ;
+  With dmcOrder do
+  Begin
+    RemoveCodeFromZeroGroup(PkgCodePPZeroGroupNo,
+      cds_LOLengthsPkgCodePPNo.AsInteger);
+    cds_LOLengths.Delete;
+  End;
 end;
 
 procedure TfLOLengths.acRemoveLengthUpdate(Sender: TObject);
 begin
- With dmcOrder do
- Begin
-  acRemoveLength.Enabled:= (cds_LOLengths.Active) and ((cds_LOLengths.RecordCount > 0)
-  or (cds_LOLengths.State in [dsEdit, dsInsert])) ;
- End ;
+  With dmcOrder do
+  Begin
+    acRemoveLength.Enabled := (cds_LOLengths.Active) and
+      ((cds_LOLengths.RecordCount > 0) or (cds_LOLengths.State in [dsEdit,
+      dsInsert]));
+  End;
 end;
 
 procedure TfLOLengths.FormShow(Sender: TObject);
 begin
- mtLengths.Active:= True ;
+  mtLengths.Active := True;
 end;
 
-procedure TfLOLengths.acCopyLengthsFromSelectedLengthGroupExecute(
-  Sender: TObject);
+procedure TfLOLengths.acCopyLengthsFromSelectedLengthGroupExecute
+  (Sender: TObject);
 begin
- With dmcOrder do
- Begin
-  cds_LOLengths.DisableControls ;
-  Try
-  sq_PGLengths.ParamByName('GroupName').AsString  := mtLengthsALMM.AsString ;
-  sq_PGLengths.Open ;
-  Try
-  sq_PGLengths.First ;
-  While not sq_PGLengths.Eof do
+  With dmcOrder do
   Begin
-   if not cds_LOLengths.Locate('ProductLengthNo', sq_PGLengthsProductLengthNo.AsInteger, []) then
-   Begin
-    cds_LOLengths.Insert ;
-    cds_LOLengthsProductLengthNo.AsInteger:= sq_PGLengthsProductLengthNo.AsInteger ;
-    cds_LOLengths.Post ;
-   End ;
-   sq_PGLengths.Next ;
-  End ; //While
-  Finally
-   sq_PGLengths.Close ;
-  End ;
-  Finally
-   cds_LOLengths.EnableControls ;
-  End ;
- End ;//With..
+    cds_LOLengths.DisableControls;
+    Try
+      sq_PGLengths.ParamByName('GroupName').AsString := mtLengthsALMM.AsString;
+      sq_PGLengths.Open;
+      Try
+        sq_PGLengths.First;
+        While not sq_PGLengths.Eof do
+        Begin
+          if not cds_LOLengths.Locate('ProductLengthNo',
+            sq_PGLengthsProductLengthNo.AsInteger, []) then
+          Begin
+            cds_LOLengths.Insert;
+            cds_LOLengthsProductLengthNo.AsInteger :=
+              sq_PGLengthsProductLengthNo.AsInteger;
+            cds_LOLengths.Post;
+          End;
+          sq_PGLengths.Next;
+        End; // While
+      Finally
+        sq_PGLengths.Close;
+      End;
+    Finally
+      cds_LOLengths.EnableControls;
+    End;
+  End; // With..
 end;
 
-procedure TfLOLengths.acCopyLengthsFromSelectedLengthGroupUpdate(
-  Sender: TObject);
+procedure TfLOLengths.acCopyLengthsFromSelectedLengthGroupUpdate
+  (Sender: TObject);
 begin
- acCopyLengthsFromSelectedLengthGroup.Enabled:= (mtLengths.Active) //and (mtLengths.RecordCount > 0)
- and (mtLengthsALMM.AsString > ' ') ;
+  acCopyLengthsFromSelectedLengthGroup.Enabled := (mtLengths.Active)
+  // and (mtLengths.RecordCount > 0)
+    and (mtLengthsALMM.AsString > ' ');
 end;
 
-procedure TfLOLengths.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfLOLengths.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- mtLengths.Active:= False ;
+  mtLengths.Active := False;
 end;
 
 end.

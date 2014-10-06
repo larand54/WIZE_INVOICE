@@ -2,8 +2,8 @@ unit uChangeLogins;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
-  Buttons, ExtCtrls ;
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
+  Buttons, ExtCtrls;
 
 type
   TOKHelpBottomDlg = class(TForm)
@@ -24,7 +24,7 @@ type
     { Public declarations }
   end;
 
-//var OKHelpBottomDlg: TOKHelpBottomDlg;
+  // var OKHelpBottomDlg: TOKHelpBottomDlg;
 
 implementation
 
@@ -40,14 +40,13 @@ end;
 procedure TOKHelpBottomDlg.Button1Click(Sender: TObject);
 begin
   inherited;
-  eAD_Name.Text:= dmsConnector.Get_AD_Name ;
+  eAD_Name.Text := dmsConnector.Get_AD_Name;
 end;
 
 procedure TOKHelpBottomDlg.Button2Click(Sender: TObject);
 begin
   inherited;
- eDatabas.Text:= dmsConnector.Org_DB_Name ;
+  eDatabas.Text := dmsConnector.Org_DB_Name;
 end;
 
 end.
-

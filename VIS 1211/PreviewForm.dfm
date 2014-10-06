@@ -25,8 +25,6 @@ object Form2: TForm2
     Align = alClient
     Caption = 'View Crystal Report'
     TabOrder = 0
-    ExplicitWidth = 427
-    ExplicitHeight = 275
   end
   object HYModuleManager1: THYModuleManager
     AutoLoad = False

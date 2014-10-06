@@ -2,7 +2,7 @@ unit uConfirmCodeDialog;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ExtCtrls;
 
 type
@@ -18,7 +18,7 @@ type
     { Public declarations }
   end;
 
-//var frmConfirmCodeDialog: TfrmConfirmCodeDialog;
+  // var frmConfirmCodeDialog: TfrmConfirmCodeDialog;
 
 implementation
 

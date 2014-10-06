@@ -1,8 +1,8 @@
 object fExportLoadPurpose: TfExportLoadPurpose
   Left = 405
   Top = 190
-  Width = 461
-  Height = 290
+  ClientHeight = 252
+  ClientWidth = 445
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -32,26 +32,30 @@ object fExportLoadPurpose: TfExportLoadPurpose
   end
   object Panel1: TPanel
     Left = 0
-    Top = 208
-    Width = 453
+    Top = 197
+    Width = 445
     Height = 55
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 208
+    ExplicitWidth = 453
     object BitBtn1: TBitBtn
       Left = 136
       Top = 8
       Width = 75
       Height = 33
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 224
       Top = 8
       Width = 75
       Height = 33
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
 end

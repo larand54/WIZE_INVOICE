@@ -1,10 +1,10 @@
 object fSelectAttBeskrivning: TfSelectAttBeskrivning
   Left = 372
   Top = 328
-  Width = 478
-  Height = 254
   ActiveControl = cbDescription
   Caption = 'V'#228'lj beskrivning'
+  ClientHeight = 216
+  ClientWidth = 462
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,18 +22,21 @@ object fSelectAttBeskrivning: TfSelectAttBeskrivning
   end
   object Panel1: TPanel
     Left = 0
-    Top = 162
-    Width = 470
+    Top = 151
+    Width = 462
     Height = 65
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 162
+    ExplicitWidth = 470
     object BitBtn1: TBitBtn
       Left = 168
       Top = 16
       Width = 97
       Height = 27
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
   object cbDescription: TcxDBComboBox

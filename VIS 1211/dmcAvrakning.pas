@@ -4,10 +4,11 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB,
-  kbmMemTable, SqlTimSt, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
-
+  kbmMemTable, SqlTimSt, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   Tdm_Avrakning = class(TDataModule)
@@ -372,20 +373,22 @@ type
     procedure dspArrivingPackagesGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cdsArrivingPackages1PRICEChange(Sender: TField);
-    procedure dspPaymentHeadGetTableName(Sender: TObject;
-      DataSet: TDataSet; var TableName: String);
+    procedure dspPaymentHeadGetTableName(Sender: TObject; DataSet: TDataSet;
+      var TableName: String);
     procedure cdsPaymentHeadBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
   public
     { Public declarations }
-    Lista : Integer ;
-    AngraAvrakning : Boolean ;
-    procedure Refresh_ArrivingLoads ;
-    procedure ChangeLOno_In_PaymentLoad(const fLoadNo, Old_LO_No, New_LO_No : Integer) ;
-    Function  GetFraktAvrakningsNoForLoadNo (const LoadNo : Integer;Var verk : String;Var VerkNo : Integer) : Integer ;
-    Function  priceOk(const LoadNo, SupplierNo : Integer) : Boolean ;
-    procedure Upd_CreditToPaymentNo(const PaymentNo, LoadNo : Integer) ;
+    Lista: Integer;
+    AngraAvrakning: Boolean;
+    procedure Refresh_ArrivingLoads;
+    procedure ChangeLOno_In_PaymentLoad(const fLoadNo, Old_LO_No,
+      New_LO_No: Integer);
+    Function GetFraktAvrakningsNoForLoadNo(const LoadNo: Integer;
+      Var verk: String; Var VerkNo: Integer): Integer;
+    Function priceOk(const LoadNo, SupplierNo: Integer): Boolean;
+    procedure Upd_CreditToPaymentNo(const PaymentNo, LoadNo: Integer);
   end;
 
 var
@@ -400,124 +403,126 @@ Uses recerror, dmsDataConn, dmsVidaContact, dmsVidaSystem;
 procedure Tdm_Avrakning.dsrcArrivingLoadsDataChange(Sender: TObject;
   Field: TField);
 begin
- Refresh_ArrivingLoads ;
+  Refresh_ArrivingLoads;
 end;
 
-procedure Tdm_Avrakning.Refresh_ArrivingLoads ;
+procedure Tdm_Avrakning.Refresh_ArrivingLoads;
 begin
- if (cdsArrivingLoads.Active) and (cdsArrivingLoads.RecordCount > 0) then
- Begin
-  cdsArrivingPackages.Active:= False ;
-  cdsArrivingPackages.ParamByName('LoadNo').AsInteger  := cdsArrivingLoadsVIS_FS.AsInteger ;
-  cdsArrivingPackages.Active:= True ;
- End ;
+  if (cdsArrivingLoads.Active) and (cdsArrivingLoads.RecordCount > 0) then
+  Begin
+    cdsArrivingPackages.Active := False;
+    cdsArrivingPackages.ParamByName('LoadNo').AsInteger :=
+      cdsArrivingLoadsVIS_FS.AsInteger;
+    cdsArrivingPackages.Active := True;
+  End;
 end;
 
-
-procedure Tdm_Avrakning.dsPaymentHeadDataChange(Sender: TObject;
-  Field: TField);
+procedure Tdm_Avrakning.dsPaymentHeadDataChange(Sender: TObject; Field: TField);
 begin
-{ cdsPaymentLoadList.Active:= False ;
- sq_PaymentLoadList.ParamByName('PaymentNo').AsInteger:= cdsPaymentHeadPaymentNo.AsInteger ;
- cdsPaymentLoadList.Active:= True ; }
+  { cdsPaymentLoadList.Active:= False ;
+    sq_PaymentLoadList.ParamByName('PaymentNo').AsInteger:= cdsPaymentHeadPaymentNo.AsInteger ;
+    cdsPaymentLoadList.Active:= True ; }
 end;
 
-procedure Tdm_Avrakning.dsp_SSPGetTableName(Sender: TObject;
-  DataSet: TDataSet; var TableName: String);
+procedure Tdm_Avrakning.dsp_SSPGetTableName(Sender: TObject; DataSet: TDataSet;
+  var TableName: String);
 begin
- TableName:= 'SupplierShippingPlan' ;
+  TableName := 'SupplierShippingPlan';
 end;
 
-procedure Tdm_Avrakning.dsp_PkgsGetTableName(Sender: TObject;
-  DataSet: TDataSet; var TableName: String);
+procedure Tdm_Avrakning.dsp_PkgsGetTableName(Sender: TObject; DataSet: TDataSet;
+  var TableName: String);
 begin
- TableName:= 'PackageNumber' ;
+  TableName := 'PackageNumber';
 end;
 
-procedure Tdm_Avrakning.ChangeLOno_In_PaymentLoad(const fLoadNo, Old_LO_No, New_LO_No : Integer) ;
+procedure Tdm_Avrakning.ChangeLOno_In_PaymentLoad(const fLoadNo, Old_LO_No,
+  New_LO_No: Integer);
 Begin
- Try
- sq_ChangeLOnrInPaymentLoad.ParamByName('LoadNo').AsInteger:= fLoadNo ;
- sq_ChangeLOnrInPaymentLoad.ParamByName('OldLo').AsInteger:= Old_LO_No ;
- sq_ChangeLOnrInPaymentLoad.ParamByName('NewLo').AsInteger:= New_LO_No ;
- sq_ChangeLOnrInPaymentLoad.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
+  Try
+    sq_ChangeLOnrInPaymentLoad.ParamByName('LoadNo').AsInteger := fLoadNo;
+    sq_ChangeLOnrInPaymentLoad.ParamByName('OldLo').AsInteger := Old_LO_No;
+    sq_ChangeLOnrInPaymentLoad.ParamByName('NewLo').AsInteger := New_LO_No;
+    sq_ChangeLOnrInPaymentLoad.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
-Function Tdm_Avrakning.GetFraktAvrakningsNoForLoadNo (const LoadNo : Integer;Var verk : String;Var VerkNo : Integer) : Integer ;
+Function Tdm_Avrakning.GetFraktAvrakningsNoForLoadNo(const LoadNo: Integer;
+  Var verk: String; Var VerkNo: Integer): Integer;
 Begin
- sq_FindAvr.ParamByName('LoadNo').AsInteger:= LoadNo ;
- Try
-  sq_FindAvr.Open ;
-  Result:= sq_FindAvrAVRAKNING_NO.AsInteger ;
-  Verk := sq_FindAvrVERK.AsString ;
-  VerkNo := sq_FindAvrVerkNo.asInteger ;
- Finally
-  sq_FindAvr.Close ;
- End ;
-End ;
+  sq_FindAvr.ParamByName('LoadNo').AsInteger := LoadNo;
+  Try
+    sq_FindAvr.Open;
+    Result := sq_FindAvrAVRAKNING_NO.AsInteger;
+    verk := sq_FindAvrVerk.AsString;
+    VerkNo := sq_FindAvrVerkNo.AsInteger;
+  Finally
+    sq_FindAvr.Close;
+  End;
+End;
 
 procedure Tdm_Avrakning.dspArrivingPackagesGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName:= 'LoadDtlVal' ;
+  TableName := 'LoadDtlVal';
 end;
 
 procedure Tdm_Avrakning.cdsArrivingPackages1PRICEChange(Sender: TField);
 begin
- cdsArrivingPackagesSubSum.AsFloat:= cdsArrivingPackagesPRICE.AsFloat * cdsArrivingPackagesM3_NOM.AsFloat ;
+  cdsArrivingPackagesSubSum.AsFloat := cdsArrivingPackagesPRICE.AsFloat *
+    cdsArrivingPackagesM3_NOM.AsFloat;
 end;
 
-Function Tdm_Avrakning.priceOk(const LoadNo, SupplierNo : Integer) : Boolean ;
+Function Tdm_Avrakning.priceOk(const LoadNo, SupplierNo: Integer): Boolean;
 Begin
- sq_priceOk.ParamByName('LoadNo').AsInteger     := LoadNo ;
- sq_priceOk.ParamByName('SupplierNo').AsInteger := SupplierNo ;
- sq_priceOk.Open ;
- if not sq_priceOk.Eof then
-  Result:= False
-   else
-    Result:= True ;
- sq_priceOk.Close ;
-End ;
+  sq_priceOK.ParamByName('LoadNo').AsInteger := LoadNo;
+  sq_priceOK.ParamByName('SupplierNo').AsInteger := SupplierNo;
+  sq_priceOK.Open;
+  if not sq_priceOK.Eof then
+    Result := False
+  else
+    Result := True;
+  sq_priceOK.Close;
+End;
 
-procedure Tdm_Avrakning.Upd_CreditToPaymentNo(const PaymentNo, LoadNo : Integer) ;
+procedure Tdm_Avrakning.Upd_CreditToPaymentNo(const PaymentNo, LoadNo: Integer);
 Begin
- Try
- sq_Upd_CreditToPaymentNo.ParamByName('PaymentNo').AsInteger  := PaymentNo ;
- sq_Upd_CreditToPaymentNo.ParamByName('LoadNo').AsInteger     := LoadNo ;
- sq_Upd_CreditToPaymentNo.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
+  Try
+    sq_Upd_CreditToPaymentNo.ParamByName('PaymentNo').AsInteger := PaymentNo;
+    sq_Upd_CreditToPaymentNo.ParamByName('LoadNo').AsInteger := LoadNo;
+    sq_Upd_CreditToPaymentNo.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
 procedure Tdm_Avrakning.dspPaymentHeadGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName  := 'LastAvrHdr' ;
+  TableName := 'LastAvrHdr';
 end;
 
 procedure Tdm_Avrakning.cdsPaymentHeadBeforePost(DataSet: TDataSet);
 begin
- if (Length(Trim(cdsPaymentHeadMILL_InvoiceNo.AsString)) > 0) and
- (cdsPaymentHeadSenderStatus.AsInteger < 3) then
-  cdsPaymentHeadSenderStatus.AsInteger:= 2 ;
+  if (Length(Trim(cdsPaymentHeadMILL_InvoiceNo.AsString)) > 0) and
+    (cdsPaymentHeadSenderStatus.AsInteger < 3) then
+    cdsPaymentHeadSenderStatus.AsInteger := 2;
 
- if (cdsPaymentHeadSenderStatus.OldValue <> 2) and (cdsPaymentHeadSenderStatus.NewValue = 2) then
- cdsPaymentHeadDateCreated.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(now) ;
+  if (cdsPaymentHeadSenderStatus.OldValue <> 2) and
+    (cdsPaymentHeadSenderStatus.NewValue = 2) then
+    cdsPaymentHeadDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
 end;
 
 end.
-

@@ -21,7 +21,9 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
-  cxNavigator, dxSkinsdxBarPainter;
+  cxNavigator, dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  System.Actions;
 
 type
   TfSamlingsfaktura = class(TForm)
@@ -111,114 +113,118 @@ uses UnitCRViewReport, dmcVidaInvoice, dmLM1, dmsVidaSystem;
 
 procedure TfSamlingsfaktura.FormCreate(Sender: TObject);
 begin
- if (not Assigned(daMoLM1)) then
- daMoLM1  := TdaMoLM1.Create(nil);
- dmsSystem.AssignDMToThisWork('TfSamlingsfaktura', 'daMoLM1') ;
+  if (not Assigned(daMoLM1)) then
+    daMoLM1 := TdaMoLM1.Create(nil);
+  dmsSystem.AssignDMToThisWork('TfSamlingsfaktura', 'daMoLM1');
 
- with daMoLM1 do
- begin
-   cds_InvoiceGroup.Active:= True ;
- End ;
+  with daMoLM1 do
+  begin
+    cds_InvoiceGroup.Active := True;
+  End;
 end;
 
 procedure TfSamlingsfaktura.FormDestroy(Sender: TObject);
 begin
- fSamlingsfaktura:= Nil ;
+  fSamlingsfaktura := Nil;
 
   if dmsSystem.DeleteAssigned('TfSamlingsfaktura', 'daMoLM1') = True then
   Begin
-   daMoLM1.Free ;
-   daMoLM1 := Nil ;
-  End ;
+    daMoLM1.Free;
+    daMoLM1 := Nil;
+  End;
 end;
 
 procedure TfSamlingsfaktura.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- with daMoLM1 do
- begin
-  cds_InvoiceGroup.Active:= False ;
- End ;
- CanClose:= True ;
+  with daMoLM1 do
+  begin
+    cds_InvoiceGroup.Active := False;
+  End;
+  CanClose := True;
 end;
 
 procedure TfSamlingsfaktura.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfSamlingsfaktura.acRefreshExecute(Sender: TObject);
-Var Save_Cursor : TCursor ;
+Var
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with daMoLM1 do
- begin
-   cds_InvoiceGroup.Active:= False ;
-   cds_InvoiceGroup.Active:= True ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
+    with daMoLM1 do
+    begin
+      cds_InvoiceGroup.Active := False;
+      cds_InvoiceGroup.Active := True;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 end;
 
 procedure TfSamlingsfaktura.acRemoveExecute(Sender: TObject);
 begin
- with daMoLM1 do
- begin
-  if MessageDlg('Är du säker ?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  with daMoLM1 do
+  begin
+    if MessageDlg('Är du säker ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    then
     Begin
-     cds_InvoiceGroup.Delete ;
-     cds_InvoiceGroup.ApplyUpdates(0) ;
-    End ;
- End ;
+      cds_InvoiceGroup.Delete;
+      cds_InvoiceGroup.ApplyUpdates(0);
+    End;
+  End;
 end;
 
 procedure TfSamlingsfaktura.acPrintExecute(Sender: TObject);
-var FormCRViewReport: TFormCRViewReport;
-     A                 : array of variant ;
+var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger < 1 then exit ;
+  if daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger < 1 then
+    exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
-  A[0]  := daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger ;
- FormCRViewReport.CreateCo('SAML_FAKT.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger;
+    FormCRViewReport.CreateCo('SAML_FAKT.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
 
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-    FreeAndNil(FormCRViewReport)  ;
- End ;
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfSamlingsfaktura.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfSamlingsfaktura.acRemoveUpdate(Sender: TObject);
 begin
- with daMoLM1 do
- begin
-  acRemove.Enabled  := (cds_InvoiceGroup.Active) and
-  ((cds_InvoiceGroup.State in [dsEdit, dsInsert]) or (cds_InvoiceGroup.RecordCount > 0)) ;
- End ;//With
+  with daMoLM1 do
+  begin
+    acRemove.Enabled := (cds_InvoiceGroup.Active) and
+      ((cds_InvoiceGroup.State in [dsEdit, dsInsert]) or
+      (cds_InvoiceGroup.RecordCount > 0));
+  End; // With
 end;
 
 procedure TfSamlingsfaktura.acPrintUpdate(Sender: TObject);
 begin
- with daMoLM1 do
- begin
-  acPrint.Enabled  := (cds_InvoiceGroup.Active) and
-  (cds_InvoiceGroup.RecordCount > 0) ;
- End ;//With
+  with daMoLM1 do
+  begin
+    acPrint.Enabled := (cds_InvoiceGroup.Active) and
+      (cds_InvoiceGroup.RecordCount > 0);
+  End; // With
 end;
 
 end.

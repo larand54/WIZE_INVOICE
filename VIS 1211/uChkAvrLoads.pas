@@ -5,16 +5,30 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, dxBar, dxBarExtItems,
-  ImgList, StdCtrls, DB, Menus, SqlTimSt, 
+  ImgList, StdCtrls, DB, Menus, SqlTimSt,
   DateUtils, cxControls,
   cxContainer, cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,
   cxStyles, cxCustomData, cxGraphics, cxFilter, cxData, cxDataStorage,
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   cxLabel, cxSplitter, cxCalc, ActnList, cxImageComboBox,
-  cxGridExportLink,  cxExport, kbmMemTable, cxLookAndFeels, cxCheckBox,
+  cxGridExportLink, cxExport, kbmMemTable, cxLookAndFeels, cxCheckBox,
   FMTBcd, cxDBEdit, DBClient, Provider, SqlExpr, Buttons,
-  cxLookAndFeelPainters ;
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, cxNavigator, Vcl.ComCtrls, dxCore, cxDateUtils,
+  dxSkinsdxBarPainter, System.Actions;
 
 type
   TfChkAvrLoads = class(TForm)
@@ -179,7 +193,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
 
-
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acPkgInfoExecute(Sender: TObject);
     procedure acChangeLoadLayoutExecute(Sender: TObject);
@@ -197,9 +210,9 @@ type
 
   private
     { Private declarations }
-    procedure RefreshLoads ;
-    procedure LoadArrivalLoadQuery  ;
-    procedure InsertMarkedLoadsToTempTable (Sender: TObject) ;
+    procedure RefreshLoads;
+    procedure LoadArrivalLoadQuery;
+    procedure InsertMarkedLoadsToTempTable(Sender: TObject);
   public
     { Public declarations }
     Procedure CreateCo(CompanyNo: Integer);
@@ -211,341 +224,346 @@ var
 implementation
 
 uses dmc_ArrivingLoads, VidaUtils, Vidauser,
-  UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn ,
-  VidaConst,  dmsVidaSystem ; //, dmc_Filter;
+  UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn,
+  VidaConst, dmsVidaSystem; // , dmc_Filter;
 
 {$R *.dfm}
 
 Procedure TfChkAvrLoads.CreateCo(CompanyNo: Integer);
-Var x : Integer ;
+Var
+  x: Integer;
 begin
-  if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/'+grdLoads.Name, grdLoadsDBTableView1) = False then ;
-  if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/'+grdPkgs.Name, grdPkgsDBTableView1) = False then ;
+  if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoads.Name,
+    grdLoadsDBTableView1) = False then;
+  if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdPkgs.Name,
+    grdPkgsDBTableView1) = False then;
 
-
- cds_Props.Active:= False ;
- sq_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- sq_Props.ParamByName('Form').AsString    := Self.Name ;
- cds_Props.Active:= True ;
- if cds_Props.Eof then
-  cds_Props.Insert ;
+  cds_Props.Active := False;
+  sq_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  sq_Props.ParamByName('Form').AsString := Self.Name;
+  cds_Props.Active := True;
+  if cds_Props.Eof then
+    cds_Props.Insert;
 
 end;
 
-procedure TfChkAvrLoads.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfChkAvrLoads.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfChkAvrLoads.FormDestroy(Sender: TObject);
 begin
- fChkAvrLoads := NIL;
+  fChkAvrLoads := NIL;
 
   if dmsSystem.DeleteAssigned('TfChkAvrLoads', 'dmArrivingLoads') = True then
   Begin
-   dmArrivingLoads.Free ;
-   dmArrivingLoads := Nil ;
-  End ;
+    dmArrivingLoads.Free;
+    dmArrivingLoads := Nil;
+  End;
 end;
 
 procedure TfChkAvrLoads.FormCreate(Sender: TObject);
 begin
   if (not Assigned(dmArrivingLoads)) then
   Begin
-   dmArrivingLoads  := TdmArrivingLoads.Create(nil);
-  End ;
- dmsSystem.AssignDMToThisWork('TfChkAvrLoads', 'dmArrivingLoads') ;
+    dmArrivingLoads := TdmArrivingLoads.Create(nil);
+  End;
+  dmsSystem.AssignDMToThisWork('TfChkAvrLoads', 'dmArrivingLoads');
 
-  tomdate.Date:= now ;
-  fomdate.Date:= now ;
+  tomdate.Date := now;
+  fomdate.Date := now;
 end;
 
-procedure TfChkAvrLoads.RefreshLoads ;
+procedure TfChkAvrLoads.RefreshLoads;
 var
-  Save_Cursor : TCursor;
-  LoadNo      : Integer ;
+  Save_Cursor: TCursor;
+  LoadNo: Integer;
 begin
- Save_Cursor := Screen.Cursor;
+  Save_Cursor := Screen.Cursor;
 
- cds_hkLoads.DisableControls ;
-// ds_hkLoads.DataSet:= Nil ;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- try
-//   LoadNo                   := cds_hkLoadsLoadNo.AsInteger ;
-   cds_hkLoads.Active       := False ;
-//   sq_chkLoads.Close ;
-   LoadArrivalLoadQuery ;
-   cds_hkLoads.Active       := True ;
-//   cds_hkLoads.LogChanges   := False ;
-//   cds_hkLoads.FindKey([LoadNo]) ;
- finally
-//  ds_hkLoads.DataSet:= cds_hkLoads ;
-  cds_hkLoads.EnableControls ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
+  cds_hkLoads.DisableControls;
+  // ds_hkLoads.DataSet:= Nil ;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  try
+    // LoadNo                   := cds_hkLoadsLoadNo.AsInteger ;
+    cds_hkLoads.Active := False;
+    // sq_chkLoads.Close ;
+    LoadArrivalLoadQuery;
+    cds_hkLoads.Active := True;
+    // cds_hkLoads.LogChanges   := False ;
+    // cds_hkLoads.FindKey([LoadNo]) ;
+  finally
+    // ds_hkLoads.DataSet:= cds_hkLoads ;
+    cds_hkLoads.EnableControls;
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  end;
 
 end;
 
-procedure TfChkAvrLoads.LoadArrivalLoadQuery ;
+procedure TfChkAvrLoads.LoadArrivalLoadQuery;
 Begin
- sq_chkLoads.SQL.Clear ;
- sq_chkLoads.SQL.Add('SELECT DISTINCT') ;
- sq_chkLoads.SQL.Add('L.LoadNo				AS	LOADNO,') ;
- sq_chkLoads.SQL.Add('L.FS				        AS	FS,') ;
- sq_chkLoads.SQL.Add('L.LoadedDate				AS	LOADEDDATE,') ;
- sq_chkLoads.SQL.Add('L.SenderLoadStatus			AS	LOAD_STATUS,') ;
- sq_chkLoads.SQL.Add('L.LoadID				AS	LOAD_ID,') ;
- sq_chkLoads.SQL.Add('Mill.ClientName				AS 	SUPPLIER,') ;
- sq_chkLoads.SQL.Add('Cust.ClientName       AS      CUSTOMER') ;
+  sq_chkLoads.SQL.Clear;
+  sq_chkLoads.SQL.Add('SELECT DISTINCT');
+  sq_chkLoads.SQL.Add('L.LoadNo				AS	LOADNO,');
+  sq_chkLoads.SQL.Add('L.FS				        AS	FS,');
+  sq_chkLoads.SQL.Add('L.LoadedDate				AS	LOADEDDATE,');
+  sq_chkLoads.SQL.Add('L.SenderLoadStatus			AS	LOAD_STATUS,');
+  sq_chkLoads.SQL.Add('L.LoadID				AS	LOAD_ID,');
+  sq_chkLoads.SQL.Add('Mill.ClientName				AS 	SUPPLIER,');
+  sq_chkLoads.SQL.Add('Cust.ClientName       AS      CUSTOMER');
+
+  sq_chkLoads.SQL.Add('FROM');
+  sq_chkLoads.SQL.Add('dbo.Loads L ');
+
+  sq_chkLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
+  sq_chkLoads.SQL.Add('cl.Confirmed_LoadNo = l.LoadNo ');
+
+  sq_chkLoads.SQL.Add
+    ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo');
+
+  sq_chkLoads.SQL.Add
+    ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo');
+
+  sq_chkLoads.SQL.Add('WHERE');
+
+  sq_chkLoads.SQL.Add('(L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)');
+  // sq_chkLoads.SQL.Add('AND SP.ObjectType = 1') ;
+
+  sq_chkLoads.SQL.Add('AND (L.SupplierNo = 232 or L.SupplierNo = 76');
+  sq_chkLoads.SQL.Add('OR L.SupplierNo = 25 or L.SupplierNo = 172');
+  sq_chkLoads.SQL.Add('OR L.SupplierNo = 212 or L.SupplierNo = 578)');
+
+  sq_chkLoads.SQL.Add('AND L.SupplierNo <> L.CustomerNo');
+
+  sq_chkLoads.SQL.Add('AND L.LoadAR = 1');
+  sq_chkLoads.SQL.Add('AND L.LoadedDate >= ' +
+    QuotedStr(DateTimeToStr(fomdate.Date)));
+  sq_chkLoads.SQL.Add('AND L.LoadedDate <= ' +
+    QuotedStr(DateTimeToStr(tomdate.Date)));
+
+  sq_chkLoads.SQL.Add('AND');
+  sq_chkLoads.SQL.Add('L.LoadNo');
+  sq_chkLoads.SQL.Add('NOT IN (SELECT LoadNo');
+  sq_chkLoads.SQL.Add('FROM dbo.LoadDtlVal)');
 
 
- sq_chkLoads.SQL.Add('FROM') ;
- sq_chkLoads.SQL.Add('dbo.Loads L ') ;
+  // LM June 14  fomdate.Date:= RecodeHour(fomdate.Date,0) ;
+  // LM June 14  fomdate.Date:= RecodeMinute(fomdate.Date,0) ;
+  // LM June 14  fomdate.Date:= RecodeSecond(fomdate.Date,0) ;
 
- sq_chkLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
- sq_chkLoads.SQL.Add('cl.Confirmed_LoadNo = l.LoadNo ') ;
+  // sq_chkLoads.SQL.Add('AND cl.DateCreated >= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(fomdate.Date)))) ;
+  // sq_chkLoads.SQL.Add('AND DateCreated >= '+QuotedStr(DateTimeToStr(MittARDatum.Date)));
 
- sq_chkLoads.SQL.Add('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo') ;
+  // LM June 14  tomdate.Date:= RecodeHour(tomdate.Date,23) ;
+  // LM June 14  tomdate.Date:= RecodeMinute(tomdate.Date,59) ;
+  // LM June 14  tomdate.Date:= RecodeSecond(tomdate.Date,59) ;
 
- sq_chkLoads.SQL.Add('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo') ;
+  // sq_chkLoads.SQL.Add('AND DateCreated <= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(tomdate.Date)))+')' ) ;
+  // sq_chkLoads.SQL.Add('AND cl.DateCreated <= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(tomdate.Date)))) ;
 
+  // if thisuser.UserID = 8 then
+  // sq_chkLoads.SQL.SaveToFile('sq_chkLoads.TXT');
+End;
 
-
- sq_chkLoads.SQL.Add('WHERE');
-
- sq_chkLoads.SQL.Add('(L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)') ;
-// sq_chkLoads.SQL.Add('AND SP.ObjectType = 1') ;
-
- sq_chkLoads.SQL.Add('AND (L.SupplierNo = 232 or L.SupplierNo = 76') ;
- sq_chkLoads.SQL.Add('OR L.SupplierNo = 25 or L.SupplierNo = 172') ;
- sq_chkLoads.SQL.Add('OR L.SupplierNo = 212 or L.SupplierNo = 578)') ;
- 
- sq_chkLoads.SQL.Add('AND L.SupplierNo <> L.CustomerNo') ; 
-
-
-  sq_chkLoads.SQL.Add('AND L.LoadAR = 1') ;
-  sq_chkLoads.SQL.Add('AND L.LoadedDate >= '+QuotedStr(DateTimeToStr(fomdate.Date)) ) ;
-  sq_chkLoads.SQL.Add('AND L.LoadedDate <= '+QuotedStr(DateTimeToStr(tomdate.Date)) ) ;
-
-  sq_chkLoads.SQL.Add('AND') ;
-  sq_chkLoads.SQL.Add('L.LoadNo') ;
-  sq_chkLoads.SQL.Add('NOT IN (SELECT LoadNo') ;
-  sq_chkLoads.SQL.Add('FROM dbo.LoadDtlVal)') ;
-
-
-//LM June 14  fomdate.Date:= RecodeHour(fomdate.Date,0) ;
-//LM June 14  fomdate.Date:= RecodeMinute(fomdate.Date,0) ;
-//LM June 14  fomdate.Date:= RecodeSecond(fomdate.Date,0) ;
-
-//  sq_chkLoads.SQL.Add('AND cl.DateCreated >= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(fomdate.Date)))) ;
-//  sq_chkLoads.SQL.Add('AND DateCreated >= '+QuotedStr(DateTimeToStr(MittARDatum.Date)));
-
-//LM June 14  tomdate.Date:= RecodeHour(tomdate.Date,23) ;
-//LM June 14  tomdate.Date:= RecodeMinute(tomdate.Date,59) ;
-//LM June 14  tomdate.Date:= RecodeSecond(tomdate.Date,59) ;
-
-//  sq_chkLoads.SQL.Add('AND DateCreated <= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(tomdate.Date)))+')' ) ;
-//  sq_chkLoads.SQL.Add('AND cl.DateCreated <= '+QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(tomdate.Date)))) ;
-
-// if thisuser.UserID = 8 then
-// sq_chkLoads.SQL.SaveToFile('sq_chkLoads.TXT');
-End ;
-
-procedure TfChkAvrLoads.InsertMarkedLoadsToTempTable (Sender: TObject) ;
- Var i, RecIDX  : Integer ;
-// RecID          : Variant ;
- Save_Cursor    : TCursor;
- ColIdx         : Integer ;
- LIPNo, LoadNo,
- LONo,
- CustomerNo     : Integer ;
+procedure TfChkAvrLoads.InsertMarkedLoadsToTempTable(Sender: TObject);
+Var
+  i, RecIDX: Integer;
+  // RecID          : Variant ;
+  Save_Cursor: TCursor;
+  ColIdx: Integer;
+  LIPNo, LoadNo, LONo, CustomerNo: Integer;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- mtSelectedLoads.Active:= False ;
- mtSelectedLoads.Active:= True ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  mtSelectedLoads.Active := False;
+  mtSelectedLoads.Active := True;
 
-  grdLoadsDBTableView1.BeginUpdate ;
-  grdLoadsDBTableView1.DataController.BeginLocate ;
+  grdLoadsDBTableView1.BeginUpdate;
+  grdLoadsDBTableView1.DataController.BeginLocate;
   Try
-   For I := 0 to grdLoadsDBTableView1.Controller.SelectedRecordCount - 1 do
-   Begin
-    RecIDx      := grdLoadsDBTableView1.Controller.SelectedRecords[i].RecordIndex ;
-
-    ColIdx      := grdLoadsDBTableView1.DataController.GetItemByFieldName('LOADNO').Index;
-    LoadNo      := grdLoadsDBTableView1.DataController.Values[RecIdx, ColIdx];
-
-
-
-//    if not mtSelectedLoads.Locate('LoadNo;LONo', VarArrayOf([LoadNo, LONo]), []) then
-    if not mtSelectedLoads.Locate('LoadNo', LoadNo, []) then
+    For i := 0 to grdLoadsDBTableView1.Controller.SelectedRecordCount - 1 do
     Begin
-     mtSelectedLoads.Insert ;
-     mtSelectedLoadsLoadNo.AsInteger    := LoadNo ;
-     mtSelectedLoads.Post ;
-    End ;
-   End ;//for y
+      RecIDX := grdLoadsDBTableView1.Controller.SelectedRecords[i].RecordIndex;
 
- Finally
-  grdLoadsDBTableView1.DataController.EndLocate ;
-  grdLoadsDBTableView1.EndUpdate ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+      ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+        ('LOADNO').Index;
+      LoadNo := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
+
+      // if not mtSelectedLoads.Locate('LoadNo;LONo', VarArrayOf([LoadNo, LONo]), []) then
+      if not mtSelectedLoads.Locate('LoadNo', LoadNo, []) then
+      Begin
+        mtSelectedLoads.Insert;
+        mtSelectedLoadsLoadNo.AsInteger := LoadNo;
+        mtSelectedLoads.Post;
+      End;
+    End; // for y
+
+  Finally
+    grdLoadsDBTableView1.DataController.EndLocate;
+    grdLoadsDBTableView1.EndUpdate;
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 
 end;
 
-procedure TfChkAvrLoads.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfChkAvrLoads.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- if cds_Props.State in [dsEdit, dsInsert] then
- cds_Props.Post ;
- if cds_Props.ChangeCount > 0 then
- cds_Props.ApplyUpdates(0) ;
+  if cds_Props.State in [dsEdit, dsInsert] then
+    cds_Props.Post;
+  if cds_Props.ChangeCount > 0 then
+    cds_Props.ApplyUpdates(0);
 
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdLoads.Name, grdLoadsDBTableView1) ;
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdPkgs.Name, grdPkgsDBTableView1) ;
- cds_hkLoads.Active  := False ;
- CanClose:= True ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoads.Name,
+    grdLoadsDBTableView1);
+  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdPkgs.Name,
+    grdPkgsDBTableView1);
+  cds_hkLoads.Active := False;
+  CanClose := True;
 end;
 
 procedure TfChkAvrLoads.acPkgInfoExecute(Sender: TObject);
-Var frmPkgInfo: TfrmPkgInfo ;
+Var
+  frmPkgInfo: TfrmPkgInfo;
 begin
- frmPkgInfo:= TfrmPkgInfo.Create(Nil);
- Try
-  frmPkgInfo.PackageNo      := cds_PkgsPACKAGE_NO.AsInteger ;
-  frmPkgInfo.SupplierCode   := cds_PkgsSupplierCode.AsString ;
-  frmPkgInfo.ShowModal ;
- Finally
-  FreeAndNil(frmPkgInfo) ;
- End ;
+  frmPkgInfo := TfrmPkgInfo.Create(Nil);
+  Try
+    frmPkgInfo.PackageNo := cds_PkgsPACKAGE_NO.AsInteger;
+    frmPkgInfo.SupplierCode := cds_PkgsSUPPLIERCODE.AsString;
+    frmPkgInfo.ShowModal;
+  Finally
+    FreeAndNil(frmPkgInfo);
+  End;
 end;
 
 procedure TfChkAvrLoads.acChangeLoadLayoutExecute(Sender: TObject);
 begin
   if grdLoads.FocusedView is TcxCustomGridTableView then
     with TcxCustomGridTableController(grdLoads.FocusedView.Controller) do
-      begin
-        Customization := True;
-        CustomizationForm.AlphaBlendValue := 255;
-        CustomizationForm.AlphaBlend := True;
-      end;
+    begin
+      Customization := True;
+      CustomizationForm.AlphaBlendValue := 255;
+      CustomizationForm.AlphaBlend := True;
+    end;
 end;
 
 procedure TfChkAvrLoads.acChangePkgLayoutExecute(Sender: TObject);
 begin
   if grdPkgs.FocusedView is TcxCustomGridTableView then
     with TcxCustomGridTableController(grdPkgs.FocusedView.Controller) do
-      begin
-        Customization := True;
-        CustomizationForm.AlphaBlendValue := 255;
-        CustomizationForm.AlphaBlend := True;
-      end;
+    begin
+      Customization := True;
+      CustomizationForm.AlphaBlendValue := 255;
+      CustomizationForm.AlphaBlend := True;
+    end;
 end;
 
 procedure TfChkAvrLoads.acPkgInfoUpdate(Sender: TObject);
 begin
- acPkgInfo.Enabled:= cds_Pkgs.RecordCount > 0 ;
+  acPkgInfo.Enabled := cds_Pkgs.RecordCount > 0;
 end;
 
 procedure TfChkAvrLoads.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfChkAvrLoads.acRefreshExecute(Sender: TObject);
- var Year, Month, Day: Word ;
+var
+  Year, Month, Day: Word;
 begin
   DecodeDate(fomdate.Date, Year, Month, Day);
   if IsValidDate(Year, Month, Day) = False then
   Begin
-   ShowMessage('Ange ett FOM datum') ;
-   Exit ;
-  End ;
+    ShowMessage('Ange ett FOM datum');
+    Exit;
+  End;
   DecodeDate(tomdate.Date, Year, Month, Day);
   if IsValidDate(Year, Month, Day) = False then
   Begin
-   ShowMessage('Ange ett TOM datum') ;
-   Exit ;
-  End ;
- RefreshLoads ;
+    ShowMessage('Ange ett TOM datum');
+    Exit;
+  End;
+  RefreshLoads;
 end;
 
 procedure TfChkAvrLoads.acShowGroupBoxExecute(Sender: TObject);
 begin
- if grdLoadsDBTableView1.OptionsView.GroupByBox then
-  grdLoadsDBTableView1.OptionsView.GroupByBox:= False
-   else
-    grdLoadsDBTableView1.OptionsView.GroupByBox:= True ;
+  if grdLoadsDBTableView1.OptionsView.GroupByBox then
+    grdLoadsDBTableView1.OptionsView.GroupByBox := False
+  else
+    grdLoadsDBTableView1.OptionsView.GroupByBox := True;
 end;
 
 procedure TfChkAvrLoads.acExpandAllExecute(Sender: TObject);
 begin
- grdLoadsDBTableView1.ViewData.Expand(True);
+  grdLoadsDBTableView1.ViewData.Expand(True);
 end;
 
 procedure TfChkAvrLoads.acCollapseAllExecute(Sender: TObject);
 begin
- grdLoadsDBTableView1.ViewData.Collapse(True);
+  grdLoadsDBTableView1.ViewData.Collapse(True);
 end;
-
 
 procedure TfChkAvrLoads.acGetIntPricesExecute(Sender: TObject);
 begin
- with dmArrivingLoads do
- Begin
-  InsertMarkedLoadsToTempTable (Sender) ;
-  mtSelectedLoads.First ;
-  While not mtSelectedLoads.Eof do
+  with dmArrivingLoads do
   Begin
-   GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-   sq_DelLastAvr.ParamByName('LoadNo').AsInteger:= mtSelectedLoadsLoadNo.AsInteger ;
-   sq_DelLastAvr.ExecSQL(False ) ;
+    InsertMarkedLoadsToTempTable(Sender);
+    mtSelectedLoads.First;
+    While not mtSelectedLoads.Eof do
+    Begin
+      GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True);
+      sq_DelLastAvr.ParamByName('LoadNo').AsInteger :=
+        mtSelectedLoadsLoadNo.AsInteger;
+      sq_DelLastAvr.ExecSQL(False);
 
-   sq_DelLastAvrDtl.ParamByName('LoadNo').AsInteger:= mtSelectedLoadsLoadNo.AsInteger ;
-   sq_DelLastAvrDtl.ExecSQL(False ) ;
-   mtSelectedLoads.Next ;
-  End ;//While not mtSelectedLoads.Eof do
- End ;
+      sq_DelLastAvrDtl.ParamByName('LoadNo').AsInteger :=
+        mtSelectedLoadsLoadNo.AsInteger;
+      sq_DelLastAvrDtl.ExecSQL(False);
+      mtSelectedLoads.Next;
+    End; // While not mtSelectedLoads.Eof do
+  End;
 end;
 
 procedure TfChkAvrLoads.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
-  cds_PropsForm.AsString        := Self.Name ;
-  cds_PropsUserID.AsInteger     := ThisUser.UserID ;
-  cds_PropsNewItemRow.AsInteger := 1 ;
+  cds_PropsForm.AsString := Self.Name;
+  cds_PropsUserID.AsInteger := ThisUser.UserID;
+  cds_PropsNewItemRow.AsInteger := 1;
 end;
 
-procedure TfChkAvrLoads.ds_hkLoadsDataChange(Sender: TObject;
-  Field: TField);
+procedure TfChkAvrLoads.ds_hkLoadsDataChange(Sender: TObject; Field: TField);
 begin
- cds_Pkgs.Active:= False ;
-// sq_Pkgs.Close ;
- sq_Pkgs.ParamByName('LoadNo').AsInteger          := cds_hkLoadsLOADNO.AsInteger ;
-// sq_Pkgs.Open ;
- cds_Pkgs.Active:= True ;
+  cds_Pkgs.Active := False;
+  // sq_Pkgs.Close ;
+  sq_Pkgs.ParamByName('LoadNo').AsInteger := cds_hkLoadsLOADNO.AsInteger;
+  // sq_Pkgs.Open ;
+  cds_Pkgs.Active := True;
 end;
 
 procedure TfChkAvrLoads.acManualPriceUpdateExecute(Sender: TObject);
 begin
- with dmArrivingLoads do
- Begin
-  if strToIntDef(eLoadNo.Text,0) > 0 then
+  with dmArrivingLoads do
   Begin
-   if MessageDlg('Vill du påföra/uppdatera internpriser?',  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   Begin
-    GetIntPrice(-1, 0, -1, strToIntDef(eLoadNo.Text,0), True) ;
-    sq_DelLastAvr.ParamByName('LoadNo').AsInteger:= strToIntDef(eLoadNo.Text,0) ;
-    sq_DelLastAvr.ExecSQL(False ) ;
+    if strToIntDef(eLoadNo.Text, 0) > 0 then
+    Begin
+      if MessageDlg('Vill du påföra/uppdatera internpriser?', mtConfirmation,
+        [mbYes, mbNo], 0) = mrYes then
+      Begin
+        GetIntPrice(-1, 0, -1, strToIntDef(eLoadNo.Text, 0), True);
+        sq_DelLastAvr.ParamByName('LoadNo').AsInteger :=
+          strToIntDef(eLoadNo.Text, 0);
+        sq_DelLastAvr.ExecSQL(False);
 
-    sq_DelLastAvrDtl.ParamByName('LoadNo').AsInteger:= strToIntDef(eLoadNo.Text,0) ;
-    sq_DelLastAvrDtl.ExecSQL(False ) ;
-   End ; 
-  End
-   else
-    ShowMessage('Lastnr saknas för att göra denna operation.');
- End ;
+        sq_DelLastAvrDtl.ParamByName('LoadNo').AsInteger :=
+          strToIntDef(eLoadNo.Text, 0);
+        sq_DelLastAvrDtl.ExecSQL(False);
+      End;
+    End
+    else
+      ShowMessage('Lastnr saknas för att göra denna operation.');
+  End;
 end;
 
 end.

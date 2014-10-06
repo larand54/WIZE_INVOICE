@@ -28,15 +28,16 @@ object fLoadEntryCSD: TfLoadEntryCSD
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 216
-    ClientRectRight = 1036
+    ClientRectBottom = 212
+    ClientRectLeft = 4
+    ClientRectRight = 1032
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'LASTHUVUD'
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1036
+        Width = 1028
         Height = 73
         Align = alTop
         BevelOuter = bvNone
@@ -212,8 +213,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 153
-        Width = 1036
+        Top = 149
+        Width = 1028
         Height = 39
         Align = alBottom
         TabOrder = 1
@@ -250,8 +251,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       object grdLO: TcxGrid
         Left = 0
         Top = 73
-        Width = 1036
-        Height = 80
+        Width = 1028
+        Height = 76
         Align = alClient
         TabOrder = 2
         object grdLODBTableView1: TcxGridDBTableView
@@ -375,8 +376,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         TabOrder = 0
-        Height = 192
-        Width = 1036
+        Height = 188
+        Width = 1028
       end
     end
   end
@@ -399,7 +400,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 736
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -455,7 +456,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 61
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1415,8 +1416,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -1836,7 +1837,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     Left = 216
     Top = 120
     Bitmap = {
-      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C
@@ -2198,7 +2199,6 @@ object fLoadEntryCSD: TfLoadEntryCSD
     object acSend700: TAction
       Caption = 'Send 700 msg'
       ImageIndex = 2
-      OnExecute = acSend700Execute
       OnUpdate = acSend700Update
     end
     object acCreditPackages: TAction
@@ -2273,7 +2273,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     Left = 408
     Top = 168
     Bitmap = {
-      494C01010B000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

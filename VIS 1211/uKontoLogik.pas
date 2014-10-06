@@ -27,10 +27,12 @@ uses
   dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv,
   dxPSPrVwRibbon, dxPScxPageControlProducer, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxPScxEditorProducers,
-  dxPScxExtEditorProducers, dxSkinsdxRibbonPainter;
+  dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, cxNavigator, System.Actions;
 
 Const
-    CM_MOVEIT = WM_USER + 1;
+  CM_MOVEIT = WM_USER + 1;
 
 type
   TfKontoLogik = class(TForm)
@@ -116,21 +118,22 @@ type
     procedure acPrintUpdate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure grdKontoLogikDBBandedTableView1EditKeyDown(
-      Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
+    procedure grdKontoLogikDBBandedTableView1EditKeyDown
+      (Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
       AEdit: TcxCustomEdit; var Key: Word; Shift: TShiftState);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acAvdelningExecute(Sender: TObject);
   private
     { Private declarations }
-    function  DataSaved : Boolean ;
+    function DataSaved: Boolean;
     procedure CMMoveIt(var Msg: TMessage); message CM_MOVEIT;
   public
     { Public declarations }
   end;
 
-var  fKontoLogik: TfKontoLogik;
+var
+  fKontoLogik: TfKontoLogik;
 
 implementation
 
@@ -139,189 +142,192 @@ uses dmsDataConn, dmLM1, dmsVidaSystem, uAvdelning;
 {$R *.dfm}
 
 procedure TfKontoLogik.CMMoveIt(var Msg: TMessage);
-var AGoForward: Boolean;
+var
+  AGoForward: Boolean;
 begin
-   AGoForward := Boolean(Msg.WParam);
-   grdKontoLogikDBBandedTableView1.Controller.EditingController.HideEdit(True);
-   grdKontoLogikDBBandedTableView1.Controller.FocusNextCell(AGoForward)
+  AGoForward := Boolean(Msg.WParam);
+  grdKontoLogikDBBandedTableView1.Controller.EditingController.HideEdit(True);
+  grdKontoLogikDBBandedTableView1.Controller.FocusNextCell(AGoForward)
 end;
 
 procedure TfKontoLogik.acExitExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfKontoLogik.acSaveExecute(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  if cds_KontoLogik.State in [dsEdit, dsInsert] then
-   cds_KontoLogik.Post ;
-  if cds_KontoLogik.ChangeCount > 0 then
-  Begin
-   cds_KontoLogik.ApplyUpdates(0) ;
-   cds_KontoLogik.CommitUpdates ;
-  End ;
- End ;
+  With daMoLM1 do
+  begin
+    if cds_KontoLogik.State in [dsEdit, dsInsert] then
+      cds_KontoLogik.Post;
+    if cds_KontoLogik.ChangeCount > 0 then
+    Begin
+      cds_KontoLogik.ApplyUpdates(0);
+      cds_KontoLogik.CommitUpdates;
+    End;
+  End;
 end;
 
 procedure TfKontoLogik.acDeleteExecute(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  cds_KontoLogik.Delete ;
- End ;
+  With daMoLM1 do
+  begin
+    cds_KontoLogik.Delete;
+  End;
 end;
 
 procedure TfKontoLogik.acAddExecute(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  cds_KontoLogik.Insert ;
- End ;
+  With daMoLM1 do
+  begin
+    cds_KontoLogik.Insert;
+  End;
 end;
 
 procedure TfKontoLogik.acPrintExecute(Sender: TObject);
 begin
-// dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
-//  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
-//  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräkningsnr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString) ;
-//  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräknad: '+SQLTimeStampToStr('yyyy-mm-dd',cds_LoadFreightCostHeader2AvrakningsDate.AsSQLTimeStamp)) ;
-//  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Fakturanr: '+cds_LoadFreightCostHeader2ShippersInvoiceNo.AsString) ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Konton') ;
+  // dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
+  // dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  // dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräkningsnr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString) ;
+  // dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräknad: '+SQLTimeStampToStr('yyyy-mm-dd',cds_LoadFreightCostHeader2AvrakningsDate.AsSQLTimeStamp)) ;
+  // dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Fakturanr: '+cds_LoadFreightCostHeader2ShippersInvoiceNo.AsString) ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Konton');
   dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 procedure TfKontoLogik.acSaveUpdate(Sender: TObject);
 begin
- acSave.Enabled := not DataSaved ;
+  acSave.Enabled := not DataSaved;
 end;
 
-function TfKontoLogik.DataSaved : Boolean ;
+function TfKontoLogik.DataSaved: Boolean;
 begin
- With daMoLM1 do
- begin
-  Result  := True ;
-  if cds_KontoLogik.State in [dsEdit, dsInsert] then
-   Result := False ;
-  if cds_KontoLogik.ChangeCount > 0 then
-   Result := False ;
- End ;
+  With daMoLM1 do
+  begin
+    Result := True;
+    if cds_KontoLogik.State in [dsEdit, dsInsert] then
+      Result := False;
+    if cds_KontoLogik.ChangeCount > 0 then
+      Result := False;
+  End;
 end;
-
 
 procedure TfKontoLogik.acAvdelningExecute(Sender: TObject);
-var fAvdelning: TfAvdelning;
+var
+  fAvdelning: TfAvdelning;
 begin
-  fAvdelning:= TfAvdelning.Create(nil) ;
+  fAvdelning := TfAvdelning.Create(nil);
   Try
-   fAvdelning.ShowModal ;
+    fAvdelning.ShowModal;
   Finally
-    FreeAndNil(fAvdelning) ;
+    FreeAndNil(fAvdelning);
   End;
 end;
 
 procedure TfKontoLogik.acCancelChangesExecute(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  if cds_KontoLogik.State in [dsEdit, dsInsert] then
-   cds_KontoLogik.Cancel ;
-  if cds_KontoLogik.ChangeCount > 0 then
-  Begin
-   cds_KontoLogik.CancelUpdates ;
-  End ;
- End ;
+  With daMoLM1 do
+  begin
+    if cds_KontoLogik.State in [dsEdit, dsInsert] then
+      cds_KontoLogik.Cancel;
+    if cds_KontoLogik.ChangeCount > 0 then
+    Begin
+      cds_KontoLogik.CancelUpdates;
+    End;
+  End;
 end;
 
 procedure TfKontoLogik.acCancelChangesUpdate(Sender: TObject);
 begin
-  acCancelChanges.Enabled := not DataSaved ;
+  acCancelChanges.Enabled := not DataSaved;
 end;
 
 procedure TfKontoLogik.acDeleteUpdate(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  acDelete.Enabled  := (cds_KontoLogik.Active) and ((cds_KontoLogik.RecordCount > 0)
-  or (cds_KontoLogik.State in [dsEdit, dsInsert])) ;
- End ;
+  With daMoLM1 do
+  begin
+    acDelete.Enabled := (cds_KontoLogik.Active) and
+      ((cds_KontoLogik.RecordCount > 0) or (cds_KontoLogik.State in [dsEdit,
+      dsInsert]));
+  End;
 end;
 
 procedure TfKontoLogik.acPrintUpdate(Sender: TObject);
 begin
- With daMoLM1 do
- begin
-  acPrint.Enabled  := (cds_KontoLogik.Active) and ((cds_KontoLogik.RecordCount > 0)
-  or (cds_KontoLogik.State in [dsEdit, dsInsert])) ;
- End ;
+  With daMoLM1 do
+  begin
+    acPrint.Enabled := (cds_KontoLogik.Active) and
+      ((cds_KontoLogik.RecordCount > 0) or (cds_KontoLogik.State in [dsEdit,
+      dsInsert]));
+  End;
 end;
 
 procedure TfKontoLogik.FormCreate(Sender: TObject);
 begin
- if (not Assigned(daMoLM1)) then
- daMoLM1  := TdaMoLM1.Create(nil);
- dmsSystem.AssignDMToThisWork('TfKontoLogik', 'daMoLM1') ;
+  if (not Assigned(daMoLM1)) then
+    daMoLM1 := TdaMoLM1.Create(nil);
+  dmsSystem.AssignDMToThisWork('TfKontoLogik', 'daMoLM1');
 
- With daMoLM1 do
- begin
-  cds_KontoLogik.Active := True ;
- End ;
+  With daMoLM1 do
+  begin
+    cds_KontoLogik.Active := True;
+  End;
 end;
 
-procedure TfKontoLogik.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfKontoLogik.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- With daMoLM1 do
- begin
-  if not DataSaved then
-  Begin
-   if MessageDlg('Data är inte sparad, vill du stänga?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   Begin
-    CanClose := True ;
-    cds_KontoLogik.Active := False ;
-   End
+  With daMoLM1 do
+  begin
+    if not DataSaved then
+    Begin
+      if MessageDlg('Data är inte sparad, vill du stänga?', mtConfirmation,
+        [mbYes, mbNo], 0) = mrYes then
+      Begin
+        CanClose := True;
+        cds_KontoLogik.Active := False;
+      End
+      else
+        CanClose := False;
+    End
     else
-     CanClose  := False ;
-  End
-   else
-    CanClose := True ;
- End ;
+      CanClose := True;
+  End;
 end;
 
-procedure TfKontoLogik.grdKontoLogikDBBandedTableView1EditKeyDown(
-  Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
+procedure TfKontoLogik.grdKontoLogikDBBandedTableView1EditKeyDown
+  (Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
   AEdit: TcxCustomEdit; var Key: Word; Shift: TShiftState);
 begin
- Try
-  if AEdit is TcxCustomTextEdit then
-    with TcxCustomTextEdit(AEdit) do begin
-      if (Key = VK_RIGHT) and (CursorPos=Length(TcxCustomTextEdit(AEdit).Text)) then
-        PostMessage(Self.Handle,CM_MOVEIT, Integer(True), 0)
-      else if (Key = VK_LEFT) and (CursorPos=0) then
-        PostMessage(Self.Handle,CM_MOVEIT, Integer(False), 0);
-    end;
- Except
- End ;
+  Try
+    if AEdit is TcxCustomTextEdit then
+      with TcxCustomTextEdit(AEdit) do
+      begin
+        if (Key = VK_RIGHT) and
+          (CursorPos = Length(TcxCustomTextEdit(AEdit).Text)) then
+          PostMessage(Self.Handle, CM_MOVEIT, Integer(True), 0)
+        else if (Key = VK_LEFT) and (CursorPos = 0) then
+          PostMessage(Self.Handle, CM_MOVEIT, Integer(False), 0);
+      end;
+  Except
+  End;
 end;
 
 procedure TfKontoLogik.FormDestroy(Sender: TObject);
 begin
- fKontoLogik  := nil ;
+  fKontoLogik := nil;
 
   if dmsSystem.DeleteAssigned('TfKontoLogik', 'daMoLM1') = True then
   Begin
-   daMoLM1.Free ;
-   daMoLM1 := Nil ;
-  End ;
+    daMoLM1.Free;
+    daMoLM1 := Nil;
+  End;
 end;
 
-procedure TfKontoLogik.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfKontoLogik.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action := caFree ;
+  Action := caFree;
 end;
 
 end.

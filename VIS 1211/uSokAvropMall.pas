@@ -20,7 +20,8 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
-  cxNavigator;
+  cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TfSokAvropMall = class(TForm)
@@ -51,7 +52,7 @@ type
     { Public declarations }
   end;
 
-//var fSokAvropMall: TfSokAvropMall;
+  // var fSokAvropMall: TfSokAvropMall;
 
 implementation
 
@@ -61,30 +62,29 @@ uses UnitSokAvropFormular;
 
 procedure TfSokAvropMall.acNewExecute(Sender: TObject);
 begin
- With frmSokAvropFormular do
- Begin
-  cds_Props.Insert ;
- End ;
+  With frmSokAvropFormular do
+  Begin
+    cds_Props.Insert;
+  End;
 end;
 
 procedure TfSokAvropMall.acDeleteExecute(Sender: TObject);
 begin
- With frmSokAvropFormular do
- Begin
-  cds_Props.Delete ;
-  if cds_Props.ChangeCount > 0 then
-   cds_Props.ApplyUpdates(0) ;
- End ;
+  With frmSokAvropFormular do
+  Begin
+    cds_Props.Delete;
+    if cds_Props.ChangeCount > 0 then
+      cds_Props.ApplyUpdates(0);
+  End;
 end;
 
-procedure TfSokAvropMall.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfSokAvropMall.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-{ With frmSokAvropFormular do
- Begin
-  if cds_Props.State in [dsEdit, dsInsert] then
-   cds_Props.Post ;
- End ; }
+  { With frmSokAvropFormular do
+    Begin
+    if cds_Props.State in [dsEdit, dsInsert] then
+    cds_Props.Post ;
+    End ; }
 end;
 
 end.

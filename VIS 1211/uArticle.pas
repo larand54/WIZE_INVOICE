@@ -12,8 +12,10 @@ uses
   dxPScxCommon, DBClient, ActnList, ImgList, cxGridLevel,
   cxClasses, cxControls, cxGridCustomView, cxGrid, StdCtrls, cxButtons,
   ExtCtrls, cxTextEdit, cxSplitter, cxImageComboBox, cxLabel, Buttons,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
@@ -29,7 +31,9 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, dxPScxSSLnk;
+  dxSkinsdxRibbonPainter, dxPScxSSLnk, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions;
 
 type
   TfArticle = class(TfrmBaseFormA)
@@ -60,7 +64,7 @@ type
     { Public declarations }
   end;
 
-//var  fArticle: TfArticle;
+  // var  fArticle: TfArticle;
 
 implementation
 
@@ -71,69 +75,70 @@ uses dmsVidaSystem;
 procedure TfArticle.FormCreate(Sender: TObject);
 begin
   inherited;
- With dmsSystem do
- Begin
-//  cds_ArticleGroup.Active := False ;
-//  cds_ArticleGroup.Active := True ;
+  With dmsSystem do
+  Begin
+    // cds_ArticleGroup.Active := False ;
+    // cds_ArticleGroup.Active := True ;
 
-//  FD_accountRow.Active    := False ;
-//  FD_accountRow.Active    := True ;  
- End ;
+    // FD_accountRow.Active    := False ;
+    // FD_accountRow.Active    := True ;
+  End;
 end;
 
 procedure TfArticle.acSaveExecute(Sender: TObject);
 begin
   inherited;
-{ With dmsSystem do
- Begin
-  if FD_accountRow.State in [dsEdit, dsInsert] then
-   FD_accountRow.Post ;
-  if FD_accountRow.ChangeCount > 0 then
-  Begin
-   FD_accountRow.ApplyUpdates(0) ;
-   FD_accountRow.CommitUpdates ;
-  End ;
- End ;}
+  { With dmsSystem do
+    Begin
+    if FD_accountRow.State in [dsEdit, dsInsert] then
+    FD_accountRow.Post ;
+    if FD_accountRow.ChangeCount > 0 then
+    Begin
+    FD_accountRow.ApplyUpdates(0) ;
+    FD_accountRow.CommitUpdates ;
+    End ;
+    End ; }
 end;
 
 procedure TfArticle.acCancelChangesExecute(Sender: TObject);
 begin
   inherited;
-{ With dmsSystem do
- Begin
-  if FD_accountRow.State in [dsEdit, dsInsert] then
-   FD_accountRow.Cancel ;
-  if FD_accountRow.ChangeCount > 0 then
-   FD_accountRow.CancelUpdates ;
- End ; }
+  { With dmsSystem do
+    Begin
+    if FD_accountRow.State in [dsEdit, dsInsert] then
+    FD_accountRow.Cancel ;
+    if FD_accountRow.ChangeCount > 0 then
+    FD_accountRow.CancelUpdates ;
+    End ; }
 end;
 
 procedure TfArticle.acAddStdKontoTyperExecute(Sender: TObject);
-Var x : Integer ;
+Var
+  x: Integer;
 begin
   inherited;
-{ With dmsSystem do
- Begin
-  For x := 1 to 4 do
-  Begin
-   if not FD_accountRow.Locate('AccountType', x, []) then
-   Begin
+  { With dmsSystem do
+    Begin
+    For x := 1 to 4 do
+    Begin
+    if not FD_accountRow.Locate('AccountType', x, []) then
+    Begin
     FD_accountRow.Insert ;
     FD_accountRowAccountType.AsInteger  := x ;
     FD_accountRow.Post ;
-   End ;
-  End ;
- End ;}
+    End ;
+    End ;
+    End ; }
 end;
 
 procedure TfArticle.acSaveUpdate(Sender: TObject);
 begin
   inherited;
-{ With dmsSystem do
- Begin
-  acSave.Enabled  := (FD_accountRow.Active)
-  and (FD_accountRow.ChangeCount > 0) ;
- End ; }
+  { With dmsSystem do
+    Begin
+    acSave.Enabled  := (FD_accountRow.Active)
+    and (FD_accountRow.ChangeCount > 0) ;
+    End ; }
 end;
 
 end.

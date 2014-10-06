@@ -30,10 +30,8 @@ object frmSelectCustomer: TfrmSelectCustomer
       Top = 16
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object bbCancel: TBitBtn
@@ -41,10 +39,8 @@ object frmSelectCustomer: TfrmSelectCustomer
       Top = 16
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -58,7 +54,7 @@ object frmSelectCustomer: TfrmSelectCustomer
     ExplicitWidth = 470
     ExplicitHeight = 462
     object grdClientsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = ds_Clients
       DataController.KeyFieldNames = 'ClientNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

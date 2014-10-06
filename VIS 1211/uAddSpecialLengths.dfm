@@ -1,10 +1,10 @@
 object fAddSpecialLengths: TfAddSpecialLengths
   Left = 224
   Top = 107
-  Width = 314
-  Height = 242
   ActiveControl = eLength
   Caption = 'Speciall'#228'ngder'
+  ClientHeight = 204
+  ClientWidth = 298
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -46,19 +46,19 @@ object fAddSpecialLengths: TfAddSpecialLengths
   end
   object Panel1: TPanel
     Left = 0
-    Top = 174
-    Width = 306
+    Top = 163
+    Width = 298
     Height = 41
     Align = alBottom
     TabOrder = 3
+    ExplicitTop = 174
+    ExplicitWidth = 306
     object BitBtn3: TBitBtn
       Left = 64
       Top = 8
       Width = 75
       Height = 25
       Caption = 'OK'
-      ModalResult = 1
-      TabOrder = 0
       Glyph.Data = {
         DE010000424DDE01000000000000760000002800000024000000120000000100
         0400000000006801000000000000000000001000000000000000000000000000
@@ -76,15 +76,18 @@ object fAddSpecialLengths: TfAddSpecialLengths
         3338F38F000033333333333333A223333333333333338F830000333333333333
         333A333333333333333338330000333333333333333333333333333333333333
         0000}
+      ModalResult = 1
       NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn4: TBitBtn
       Left = 152
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object eLength: TcxMaskEdit

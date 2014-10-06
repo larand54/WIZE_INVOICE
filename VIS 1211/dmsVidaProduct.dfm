@@ -15,7 +15,7 @@ object dmsProduct: TdmsProduct
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -50,7 +50,7 @@ object dmsProduct: TdmsProduct
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -89,7 +89,7 @@ object dmsProduct: TdmsProduct
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -362,7 +362,7 @@ object dmsProduct: TdmsProduct
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -502,7 +502,7 @@ object dmsProduct: TdmsProduct
     Left = 64
     Top = 368
     Bitmap = {
-      494C01010D001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1709,7 +1709,7 @@ object dmsProduct: TdmsProduct
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -3056,6 +3056,18 @@ object dmsProduct: TdmsProduct
   object QExport4ASCII1: TQExport4ASCII
     About = '(About EMS FDvancedExport)'
     _Version = '4.6.0.2'
+    Formats.DecimalSeparator = ','
+    Formats.ThousandSeparator = #160
+    Formats.DateSeparator = '-'
+    Formats.TimeSeparator = ':'
+    Formats.BooleanTrue = 'true'
+    Formats.BooleanFalse = 'false'
+    Formats.IntegerFormat = '#,###,##0'
+    Formats.FloatFormat = '#,###,##0.00'
+    Formats.DateFormat = 'yyyy/MM/dd'
+    Formats.TimeFormat = 'hh:mm'
+    Formats.DateTimeFormat = 'yyyy/MM/dd hh:mm:ss'
+    Formats.CurrencyFormat = '#,###,##0.00 kr'
     CSVComma = ';'
     Left = 272
     Top = 504

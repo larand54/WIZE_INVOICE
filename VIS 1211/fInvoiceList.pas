@@ -12,11 +12,14 @@ uses
   cxGridTableView, cxGridDBTableView, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGrid, cxGridExportLink, cxTextEdit, cxCurrencyEdit,
   cxCalc, cxLookAndFeels, cxDropDownEdit, cxContainer, cxMaskEdit,
-  cxCalendar, cxLookAndFeelPainters, cxButtons, cxGroupBox, cxRadioGroup, DateUtils,
+  cxCalendar, cxLookAndFeelPainters, cxButtons, cxGroupBox, cxRadioGroup,
+  DateUtils,
   cxCheckComboBox, cxGridCustomPopupMenu, cxGridPopupMenu, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, CheckLst,
-  cxGridBandedTableView, cxGridDBBandedTableView, cxDBEdit, FireDAC.Comp.DataSet,
+  cxGridBandedTableView, cxGridDBBandedTableView, cxDBEdit,
+  FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxImageComboBox, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, Buttons, kbmMemTable, Math, cxDBLabel, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
@@ -31,7 +34,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White ;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  System.Actions;
 
 type
   TfrmInvoiceList = class(TForm)
@@ -483,35 +487,41 @@ type
 
   private
     { Private declarations }
-    ExcelDir : String ;
-    //Reskontra
-    procedure SaveInternalInvoiceNoToExportInvoiceData ;
-    procedure LoadKontraktnr(const ClientNo : Integer) ;
-    procedure AssignKontoNrToSelectedInvoices ;
-    procedure OpenInvoiceAndAssignKontoNr(const IntInvNo  : Integer) ;
-    procedure ReCalcSelectedInvoices ;
-    procedure OpenInvoiceAndReCalc(const IntInvNo  : Integer) ;
+    ExcelDir: String;
+    // Reskontra
+    procedure SaveInternalInvoiceNoToExportInvoiceData;
+    procedure LoadKontraktnr(const ClientNo: Integer);
+    procedure AssignKontoNrToSelectedInvoices;
+    procedure OpenInvoiceAndAssignKontoNr(const IntInvNo: Integer);
+    procedure ReCalcSelectedInvoices;
+    procedure OpenInvoiceAndReCalc(const IntInvNo: Integer);
     procedure OpenStandardMall(Sender: TObject);
-    Function  OpenMall : Boolean ;
-    Function  NoOfCheckedRowsComboFilter(combo : TcxCheckComboBox;var InvoiceType : Integer) : Integer ;
-//    procedure TransferInvoiceToXorOLD(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
-//    procedure TransferInvoiceToXor(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
-    procedure TransferSelectedInvoicesToXOR ;
-    procedure SelectMarkedInvoices ;
-    procedure EMailaKundOchAgentFakturaOchSpecExecute(InternalInvoiceNo : Integer) ;
-    Function  GetMarkedInvoiceAndLOToCredit : Boolean ;
-    procedure OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst, DelKredit  : Integer) ;
-    Function  GetSQLofComboFilter(const dType : Byte;const Kolumn : String;combo : TcxCheckComboBox) : String ;
-    procedure RefreshInvoiceList (Sender: TObject;const KontraktNr, SalesOrgNo : String;const InvoiceNo, InvoiceNoII, LONo, InternalInvoiceNo : Integer) ;
-//    procedure RefreshInvoice(Sender: TObject;const InvoiceNo, LONo, InternalInvoiceNo : Integer);
+    Function OpenMall: Boolean;
+    Function NoOfCheckedRowsComboFilter(combo: TcxCheckComboBox;
+      var InvoiceType: Integer): Integer;
+    // procedure TransferInvoiceToXorOLD(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
+    // procedure TransferInvoiceToXor(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
+    procedure TransferSelectedInvoicesToXOR;
+    procedure SelectMarkedInvoices;
+    procedure EMailaKundOchAgentFakturaOchSpecExecute(InternalInvoiceNo
+      : Integer);
+    Function GetMarkedInvoiceAndLOToCredit: Boolean;
+    procedure OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst,
+      DelKredit: Integer);
+    Function GetSQLofComboFilter(const dType: Byte; const Kolumn: String;
+      combo: TcxCheckComboBox): String;
+    procedure RefreshInvoiceList(Sender: TObject;
+      const KontraktNr, SalesOrgNo: String; const InvoiceNo, InvoiceNoII, LONo,
+      InternalInvoiceNo: Integer);
+    // procedure RefreshInvoice(Sender: TObject;const InvoiceNo, LONo, InternalInvoiceNo : Integer);
     procedure DeleteInvoiceNoAndInvoice(Sender: TObject);
-    procedure printSamlingsFaktura (const InvoiceGroupNo : Integer) ;
-    procedure GetMarkedInvoices ;
-    procedure RemoveInvoiceFromList (const InternalInvoiceNo : Integer) ;
-    Procedure ExportToWoodx ;
-    procedure EmailFakturaAndSpecExecute(const InternalInvoiceNo : Integer) ;
-    procedure EmailaTrpBrevExecute(const InternalInvoiceNo : Integer) ;
-    procedure PrintKundSpecifikFaktura(const RapportNamn : String);
+    procedure printSamlingsFaktura(const InvoiceGroupNo: Integer);
+    procedure GetMarkedInvoices;
+    procedure RemoveInvoiceFromList(const InternalInvoiceNo: Integer);
+    Procedure ExportToWoodx;
+    procedure EmailFakturaAndSpecExecute(const InternalInvoiceNo: Integer);
+    procedure EmailaTrpBrevExecute(const InternalInvoiceNo: Integer);
+    procedure PrintKundSpecifikFaktura(const RapportNamn: String);
   public
     { Public declarations }
   end;
@@ -529,2071 +539,2233 @@ uses
   UnitCRPrintReport, UnitCRExportOneReport, uSendMapiMail,
   UnitCRPrintOneReport, dmc_ImportWoodx, MainU, dmsVidaSystem,
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
-  uSokAvropMall, uEntryField , uFastReports, uVerifikationLogg, uAccInv,
+  uSokAvropMall, uEntryField, uFastReports, uVerifikationLogg, uAccInv,
   UnitdmModule1;
 
 {$R *.dfm}
 
 procedure TfrmInvoiceList.rgConfirmedClick(Sender: TObject);
 begin
-{ if rgConfirmed.ItemIndex = 0 then
-  fomDate.Enabled:= False
-   else
+  { if rgConfirmed.ItemIndex = 0 then
+    fomDate.Enabled:= False
+    else
     fomDate.Enabled:= True ; }
- acRefreshExecute(Sender) ;
+  acRefreshExecute(Sender);
 end;
 
 procedure TfrmInvoiceList.FormShow(Sender: TObject);
 begin
-// acRefreshExecute(Sender) ;
- With dmVidaInvoice do
- Begin
-//  LoadUserProps (Self.Caption) ;
-//  if (cds_PropsLengthVolUnitNo.IsNull) or (cds_PropsLengthVolUnitNo.AsInteger = 0) then
-//   dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdFaktura.Name, grdFakturaDBBandedTableView1) ;
-  OpenStandardMall(Sender) ;
-  if (thisuser.userid = 8) or (thisuser.UserName = 'Lars') then
+  // acRefreshExecute(Sender) ;
+  With dmVidaInvoice do
   Begin
-   BKontonr.Visible   := True ;
-   BKalkylera.Visible := True ;
-  End
-  else
-  Begin
-   BKontonr.Visible   := False ;
-   BKalkylera.Visible := False ;
-  End ;
- End ;
+    // LoadUserProps (Self.Caption) ;
+    // if (cds_PropsLengthVolUnitNo.IsNull) or (cds_PropsLengthVolUnitNo.AsInteger = 0) then
+    // dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdFaktura.Name, grdFakturaDBBandedTableView1) ;
+    OpenStandardMall(Sender);
+    if (thisuser.userid = 8) or (thisuser.UserName = 'Lars') then
+    Begin
+      BKontonr.Visible := True;
+      BKalkylera.Visible := True;
+    End
+    else
+    Begin
+      BKontonr.Visible := False;
+      BKalkylera.Visible := False;
+    End;
+  End;
 end;
 
 procedure TfrmInvoiceList.nfSearchLOKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  RefreshInvoiceList(Sender, '', '', -1, -1, StrToIntDef(Trim(nfSearchLO.Text),0), -1);
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
+  Begin
+    RefreshInvoiceList(Sender, '', '', -1, -1,
+      StrToIntDef(Trim(nfSearchLO.Text), 0), -1);
 
-  cdsInvoiceList.Locate('LO', StrToIntDef(Trim(nfSearchLO.Text),0), []) ;
-  Timer1.Enabled:= True ;
- End ; //with
+    cdsInvoiceList.Locate('LO', StrToIntDef(Trim(nfSearchLO.Text), 0), []);
+    Timer1.Enabled := True;
+  End; // with
 end;
 
-procedure TfrmInvoiceList.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfrmInvoiceList.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfrmInvoiceList.FormCreate(Sender: TObject);
-//Var SalesGroup : Integer ;
+// Var SalesGroup : Integer ;
 begin
-// SalesGroup               := -1 ;
- if (not Assigned(dmVidaInvoice)) then
- dmVidaInvoice  := TdmVidaInvoice.Create(nil);
- dmsSystem.AssignDMToThisWork('TfrmInvoiceList', 'dmVidaInvoice') ;
+  // SalesGroup               := -1 ;
+  if (not Assigned(dmVidaInvoice)) then
+    dmVidaInvoice := TdmVidaInvoice.Create(nil);
+  dmsSystem.AssignDMToThisWork('TfrmInvoiceList', 'dmVidaInvoice');
 
- ExcelDir          := dmsSystem.Get_Dir('ExcelDir') ;
+  ExcelDir := dmsSystem.Get_Dir('ExcelDir');
 
- ccbInvoiceType.Properties.Items.Clear ;
- ccbInvoiceType.Properties.Items.AddCheckItem('VIDA (VWK1)', '0') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('Proforma, fakturera senare', '1') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('Proforma, flytta paket', '2') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('INKÖP', '3') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('USA (VWK2)', '4') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('FW (VWK4)', '5') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('AGENT', '6') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('VTA', '7') ;
- ccbInvoiceType.Properties.Items.AddCheckItem('BKO', '8') ;
+  ccbInvoiceType.Properties.Items.Clear;
+  ccbInvoiceType.Properties.Items.AddCheckItem('VIDA (VWK1)', '0');
+  ccbInvoiceType.Properties.Items.AddCheckItem
+    ('Proforma, fakturera senare', '1');
+  ccbInvoiceType.Properties.Items.AddCheckItem('Proforma, flytta paket', '2');
+  ccbInvoiceType.Properties.Items.AddCheckItem('INKÖP', '3');
+  ccbInvoiceType.Properties.Items.AddCheckItem('USA (VWK2)', '4');
+  ccbInvoiceType.Properties.Items.AddCheckItem('FW (VWK4)', '5');
+  ccbInvoiceType.Properties.Items.AddCheckItem('AGENT', '6');
+  ccbInvoiceType.Properties.Items.AddCheckItem('VTA', '7');
+  ccbInvoiceType.Properties.Items.AddCheckItem('BKO', '8');
 end;
 
 procedure TfrmInvoiceList.FormDestroy(Sender: TObject);
 begin
-  frmInvoiceList:= Nil ;
+  frmInvoiceList := Nil;
 
   if dmsSystem.DeleteAssigned('TfrmInvoiceList', 'dmVidaInvoice') = True then
   Begin
-   dmVidaInvoice.Free ;
-   dmVidaInvoice := Nil ;
-  End ;
+    dmVidaInvoice.Free;
+    dmVidaInvoice := Nil;
+  End;
 end;
 
 procedure TfrmInvoiceList.DeleteInvoiceNoAndInvoice(Sender: TObject);
 begin
- if dmVidaInvoice.cdsInvoiceListINVOICE_KONTO.AsString  = 'DEBIT' then
- Begin
- if MessageDlg('Är du säker på att du vill ta bort fakturan?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if dmVidaInvoice.cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
   Begin
-   With dmVidaInvoice do
-   Begin
-     dmsConnector.StartTransaction ;
-     Try
-// taken care of by Invoiced_Load     sq_SetLSInvoicedStatus.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-//     sq_SetLSInvoicedStatus.ExecSQL(false) ;
-//Om Fakturan är av typ Proforma flytta paket
-     if cdsInvoiceListInvoiceType.AsInteger = 2 then
-     Begin
-      sq_Delete_Confirmed_Load.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-      sq_Delete_Confirmed_Load.ExecSQL ;
+    if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    Begin
+      With dmVidaInvoice do
+      Begin
+        dmsConnector.StartTransaction;
+        Try
+          // taken care of by Invoiced_Load     sq_SetLSInvoicedStatus.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
+          // sq_SetLSInvoicedStatus.ExecSQL(false) ;
+          // Om Fakturan är av typ Proforma flytta paket
+          if cdsInvoiceListInvoiceType.AsInteger = 2 then
+          Begin
+            sq_Delete_Confirmed_Load.ParamByName('InternalInvoiceNo').AsInteger
+              := cdsInvoiceListInternalInvoiceNo.AsInteger;
+            sq_Delete_Confirmed_Load.ExecSQL;
 
-      sq_CghInv_PkgNos.ParamByName('InternalInvoiceNo').AsInteger  := cdsInvoiceListInternalInvoiceNo.AsInteger ;
-      sq_CghInv_PkgNos.ParamByName('Status').AsInteger             := 0 ;
-      sq_CghInv_PkgNos.ExecSQL ;
+            sq_CghInv_PkgNos.ParamByName('InternalInvoiceNo').AsInteger :=
+              cdsInvoiceListInternalInvoiceNo.AsInteger;
+            sq_CghInv_PkgNos.ParamByName('Status').AsInteger := 0;
+            sq_CghInv_PkgNos.ExecSQL;
 
-      sq_DeleteProformaInvoice.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-      sq_DeleteProformaInvoice.ExecSQL ;
+            sq_DeleteProformaInvoice.ParamByName('InternalInvoiceNo').AsInteger
+              := cdsInvoiceListInternalInvoiceNo.AsInteger;
+            sq_DeleteProformaInvoice.ExecSQL;
 
-      PkgLogInvoiced (cdsInvoiceListInternalInvoiceNo.AsInteger, 26) ; //26 = cancel proforma
-    //  ShowMessage('Paketen är borttagna från "proforma lagret"') ;
-     End ;
+            PkgLogInvoiced(cdsInvoiceListInternalInvoiceNo.AsInteger, 26);
+            // 26 = cancel proforma
+            // ShowMessage('Paketen är borttagna från "proforma lagret"') ;
+          End;
 
-     sq_DeleteInvoice.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-     sq_DeleteInvoice.ExecSQL ;
-     dmsConnector.Commit ;
-     Except
-      dmsConnector.Rollback ;
-      ShowMessage('Misslyckades med att ta bort fakturan.') ;
-     End ;
-     cdsInvoiceList.Active:= False ;
-     cdsInvoiceList.Active:= True ;
+          sq_DeleteInvoice.ParamByName('InternalInvoiceNo').AsInteger :=
+            cdsInvoiceListInternalInvoiceNo.AsInteger;
+          sq_DeleteInvoice.ExecSQL;
+          dmsConnector.Commit;
+        Except
+          dmsConnector.Rollback;
+          ShowMessage('Misslyckades med att ta bort fakturan.');
+        End;
+        cdsInvoiceList.Active := False;
+        cdsInvoiceList.Active := True;
 
-   End ;
-  End ;
- End
- else
-  ShowMessage('Kan inte ta bort kredit faktura.') ;
+      End;
+    End;
+  End
+  else
+    ShowMessage('Kan inte ta bort kredit faktura.');
 end;
 
 procedure TfrmInvoiceList.dxBarButton43Click(Sender: TObject);
 begin
- dmVidaInvoice.PrepareExportFiles(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-  dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
- 0 {No "C"}, 1 {without grade}) ;
+  dmVidaInvoice.PrepareExportFiles
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger, 0 { No "C" } ,
+    1 { without grade } );
 end;
 
 procedure TfrmInvoiceList.dxBarButton44Click(Sender: TObject);
 begin
- dmVidaInvoice.PrepareExportFiles(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-  dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
- 0 {No "C"}, 0 {without grade}) ;
+  dmVidaInvoice.PrepareExportFiles
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger, 0 { No "C" } ,
+    0 { without grade } );
 end;
 
 procedure TfrmInvoiceList.dxBarButton45Click(Sender: TObject);
 begin
- dmVidaInvoice.PrepareExportFiles(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-  dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
- 1 {Yes "C"}, 1 {with grade}) ;
+  dmVidaInvoice.PrepareExportFiles
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger, 1 { Yes "C" } ,
+    1 { with grade } );
 end;
 
 procedure TfrmInvoiceList.dxBarButton46Click(Sender: TObject);
 begin
- dmVidaInvoice.PrepareExportFiles(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-  dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
- 1 {Yes "C"}, 0 {without grade}) ;
+  dmVidaInvoice.PrepareExportFiles
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger, 1 { Yes "C" } ,
+    0 { without grade } );
 end;
 
 procedure TfrmInvoiceList.nfSearchInvoiceNoKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  RefreshInvoiceList(Sender, '', '', StrToIntDef(Trim(nfSearchInvoiceNo.Text),0), -1, -1, -1);
-  cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(Trim(nfSearchInvoiceNo.Text),0), []) ;
-  Timer3.Enabled  := True ;
- End ; //with
-end;
-
-procedure TfrmInvoiceList.printSamlingsFaktura (const InvoiceGroupNo : Integer) ;
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
-begin
- if InvoiceGroupNo < 1 then exit ;
-
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := InvoiceGroupNo ;
-
- FormCRViewReport.CreateCo('SAML_FAKT.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
-end;
-
-procedure TfrmInvoiceList.nfSearchLastNrKeyDown(Sender: TObject;var Key: Word; Shift: TShiftState);
-Var InvoiceType, InternalInvoiceNo : Integer ;
-begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  InternalInvoiceNo := Get_InternalInvoiceNo (InvoiceType, StrToIntDef(nfSearchLastNr.Text,0)) ;
-  if InternalInvoiceNo <> -1 then
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
   Begin
-//   peInvoiceType.ItemIndex:= InvoiceType ;
-   RefreshInvoiceList(Sender, '', '', -1, -1, -1, InternalInvoiceNo);
-  End ;
-//  else
-//   ShowMessage('No match') ;
-  Timer2.Enabled  := True ;
- End ; //with
+    RefreshInvoiceList(Sender, '', '', StrToIntDef(Trim(nfSearchInvoiceNo.Text),
+      0), -1, -1, -1);
+    cdsInvoiceList.Locate('INVOICE_NO',
+      StrToIntDef(Trim(nfSearchInvoiceNo.Text), 0), []);
+    Timer3.Enabled := True;
+  End; // with
+end;
+
+procedure TfrmInvoiceList.printSamlingsFaktura(const InvoiceGroupNo: Integer);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
+begin
+  if InvoiceGroupNo < 1 then
+    Exit;
+
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := InvoiceGroupNo;
+
+    FormCRViewReport.CreateCo('SAML_FAKT.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
+end;
+
+procedure TfrmInvoiceList.nfSearchLastNrKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+Var
+  InvoiceType, InternalInvoiceNo: Integer;
+begin
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
+  Begin
+    InternalInvoiceNo := Get_InternalInvoiceNo(InvoiceType,
+      StrToIntDef(nfSearchLastNr.Text, 0));
+    if InternalInvoiceNo <> -1 then
+    Begin
+      // peInvoiceType.ItemIndex:= InvoiceType ;
+      RefreshInvoiceList(Sender, '', '', -1, -1, -1, InternalInvoiceNo);
+    End;
+    // else
+    // ShowMessage('No match') ;
+    Timer2.Enabled := True;
+  End; // with
 end;
 
 procedure TfrmInvoiceList.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-// dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdFaktura.Name, grdFakturaDBBandedTableView1) ;
- CanClose:= True ;
-//  With dmVidaInvoice do
-//   SaveUserProps (Self.Caption) ;
+  // dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdFaktura.Name, grdFakturaDBBandedTableView1) ;
+  CanClose := True;
+  // With dmVidaInvoice do
+  // SaveUserProps (Self.Caption) ;
 end;
 
 procedure TfrmInvoiceList.acOpenInvoiceExecute(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
-   OpenInvoice(cdsInvoiceListInternalInvoiceNo.AsInteger, -1, -1) ;
- End ;//with dmVidaInvoice do
-End ;
+  with dmVidaInvoice do
+  Begin
+    OpenInvoice(cdsInvoiceListInternalInvoiceNo.AsInteger, -1, -1);
+  End; // with dmVidaInvoice do
+End;
 
 procedure TfrmInvoiceList.acRefreshExecute(Sender: TObject);
 begin
- with dmVidaInvoice do
- Begin
- if (cds_PropsINVEndPeriod.IsNull) or (cds_PropsINVStartPeriod.IsNull) then
- Begin
-  ShowMessage('Ange en period.') ;
-  Exit ;
- End ;
- RefreshInvoiceList(Sender, '', '', -1, -1, -1, -1) ;
- grdFaktura.Setfocus ;
- End ;
+  with dmVidaInvoice do
+  Begin
+    if (cds_PropsInvEndPeriod.IsNull) or (cds_PropsInvStartPeriod.IsNull) then
+    Begin
+      ShowMessage('Ange en period.');
+      Exit;
+    End;
+    RefreshInvoiceList(Sender, '', '', -1, -1, -1, -1);
+    grdFaktura.Setfocus;
+  End;
 end;
 
 procedure TfrmInvoiceList.acQuickInvoiceExecute(Sender: TObject);
-Var frmInvoice      : TfrmInvoice ;
-    x               : Integer ;
-//    fInvoiceWizard  : TfInvoiceWizard;
+Var
+  frmInvoice: TfrmInvoice;
+  x: Integer;
+  // fInvoiceWizard  : TfInvoiceWizard;
 begin
- if MessageDlg('Vill du skapa snabbfaktura? ',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- with  dmVidaInvoice do
- Begin
-//Check and Compare that LO are valid to be invoiced together, if OK then
-//Insert InvoiceHeader
+  if MessageDlg('Vill du skapa snabbfaktura? ', mtConfirmation, [mbYes, mbNo],
+    0) = mrYes then
+    with dmVidaInvoice do
+    Begin
+      // Check and Compare that LO are valid to be invoiced together, if OK then
+      // Insert InvoiceHeader
 
-   For x := 0 to cdsInvoiceDetail.FieldCount-1 do
-   cdsInvoiceDetail.Fields.Fields[x].ReadOnly := False ;
-   cdsInvoiceDetail.UpdateOptions.ReadOnly  := False ;
+      For x := 0 to cdsInvoiceDetail.FieldCount - 1 do
+        cdsInvoiceDetail.Fields.Fields[x].ReadOnly := False;
+      cdsInvoiceDetail.UpdateOptions.ReadOnly := False;
 
-  cdsInvoiceHead.Active   := True ;
-  cdsInvoiceLO.Active     := True ;
-  cdsInvoiceDetail.Active := True ;
-//  cdsOneLoad.Active:= True ;
+      cdsInvoiceHead.Active := True;
+      cdsInvoiceLO.Active := True;
+      cdsInvoiceDetail.Active := True;
+      // cdsOneLoad.Active:= True ;
 
+      // Insert Invoice Head
+      dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := nil;
+      Try
+        cdsInvoiceHead.Insert;
+        cdsInvoiceHeadResponsibleSeller.AsInteger := thisuser.userid;
+      Finally
+        dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange :=
+          dmVidaInvoice.cdsInvoiceHeadResponsibleSellerChange;
+      End;
+      cdsInvoiceHeadTrading.AsInteger := 0;
+      cdsInvoiceHeadQuickInvoice.AsInteger := 1;
+      cdsInvoiceHeadInternalInvoiceNo.AsInteger :=
+        dmsConnector.NextMaxNo('InvoiceHeader');
 
+      cdsInvoiceHeadDebit_Credit.AsInteger := 0;
 
-//Insert Invoice Head
-  dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := nil ;
-  Try
-  cdsInvoiceHead.Insert ;
-  cdsInvoiceHeadResponsibleSeller.AsInteger                     := ThisUser.UserID ;
-  Finally
-   dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := dmVidaInvoice.cdsInvoiceHeadResponsibleSellerChange ;
-  End ;
-  cdsInvoiceHeadTrading.AsInteger                               := 0 ;
-  cdsInvoiceHeadQuickInvoice.AsInteger                          := 1 ;
-  cdsInvoiceHeadInternalInvoiceNo.AsInteger                     := dmsConnector.NextMaxNo('InvoiceHeader');
+      cdsInvoiceHeadInvoiceType.AsInteger := 0;
+      cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+      cdsInvoiceHeadSupplierNo.AsInteger := VIDA_WOOD_COMPANY_NO; // Vida Wood
+      cdsInvoiceHeadCustomerNo.AsInteger := -1;
+      cdsInvoiceHeadAgentNo.AsInteger := -1;
+      cdsInvoiceHeadAgentCommission.AsFloat := 0;
+      // cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
+      cdsInvoiceHeadPaymentTermsNo.AsInteger := -1;
+      cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := -1;
+      cdsInvoiceHeadFreightInDiscount.AsInteger := -1;
+      cdsInvoiceHeadFreightInCommission.AsInteger := -1;
+      cdsInvoiceHeadDiscount1.AsFloat := 1;
+      cdsInvoiceHeadCurrencyName.AsString := '';
 
-  cdsInvoiceHeadDebit_Credit.AsInteger                          := 0 ;
+      cdsInvoiceHeadDeliveryTermsNo.AsInteger := -1;
+      cdsInvoiceHeadDestinationNo.AsInteger := -1;
+      cdsInvoiceHeadStatus.AsInteger := 0;
+      cdsInvoiceHeadVAT_OnInvoice.AsInteger := 0;
+      cdsInvoiceHeadSpecialMoms.AsInteger := 0;
+      { cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
+        cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;
 
-  cdsInvoiceHeadInvoiceType.AsInteger                           := 0 ;
-  cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp                      := DateTimeToSQLTimeStamp(now) ;
-  cdsInvoiceHeadSupplierNo.AsInteger                            := VIDA_WOOD_COMPANY_NO ; //Vida Wood
-  cdsInvoiceHeadCustomerNo.AsInteger                            := -1 ;
-  cdsInvoiceHeadAgentNo.AsInteger                               := -1 ;
-  cdsInvoiceHeadAgentCommission.AsFloat                         := 0 ;
-//  cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
-  cdsInvoiceHeadPaymentTermsNo.AsInteger                        := -1 ;
-  cdsInvoiceHeadCommissionPaidByCustomer.AsInteger              := -1 ;
-  cdsInvoiceHeadFreightInDiscount.AsInteger                     := -1 ;
-  cdsInvoiceHeadFreightInCommission.AsInteger                   := -1 ;
-  cdsInvoiceHeadDiscount1.AsFloat                               := 1 ;
-  cdsInvoiceHeadCurrencyName.AsString                           := '' ;
+        cdsInvoiceHeadCurrencyNo.AsInteger                            := sq_GetInvoiceHeadDataCurrencyNo.AsInteger ;
+        cdsInvoiceHeadIncome_Account.AsString                         := '' ;
+        cdsInvoiceHeadCustomerRecivablesAccount.AsString              := '' ;
+        cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
+        cdsInvoiceHeadCarrierName.AsString                            := sq_GetInvoiceHeadDataCarrierName.AsString ;
+        cdsInvoiceHeadETD.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETD.AsSQLTimeStamp ;
+        cdsInvoiceHeadETA.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETA.AsSQLTimeStamp ;
+        cdsInvoiceHeadDestinationNo.AsInteger                         := sq_GetInvoiceHeadDataDestinationNo.AsInteger ;
+        cdsInvoiceHeadClientBillingAddressNo.AsInteger                := sq_GetInvoiceHeadDataClientBillingAddressNo.AsInteger ;
+        cdsInvoiceHeadAddressName.AsString                            := sq_GetInvoiceHeadDataBILL_ADDRESS_NAME.AsString ;
+        cdsInvoiceHeadAddressLine1.AsString                           := sq_GetInvoiceHeadDataAddressLine1.AsString ;
+        cdsInvoiceHeadAddressLine2.AsString                           := sq_GetInvoiceHeadDataAddressLine2.AsString ;
+        cdsInvoiceHeadAddressLine3.AsString                           := sq_GetInvoiceHeadDataAddressLine3.AsString ;
+        cdsInvoiceHeadAddressLine4.AsString                           := sq_GetInvoiceHeadDataAddressLine4.AsString ;
+        cdsInvoiceHeadStateOrProvince.AsString                        := sq_GetInvoiceHeadDataStateOrProvince.AsString ;
+        cdsInvoiceHeadPostalCode.AsString                             := sq_GetInvoiceHeadDataPostalCode.AsString ;
+        cdsInvoiceHeadCityName.AsString                               := sq_GetInvoiceHeadDataAddressCity.AsString ;
+        cdsInvoiceHeadCountryName.AsString                            := sq_GetInvoiceHeadDataAddressCountry.AsString ;
 
-  cdsInvoiceHeadDeliveryTermsNo.AsInteger                       := -1 ;
-  cdsInvoiceHeadDestinationNo.AsInteger                         := -1 ;
-  cdsInvoiceHeadStatus.AsInteger                                := 0 ;
-  cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
-  cdsInvoiceHeadSpecialMoms.AsInteger                           := 0 ;
-{  cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
-  cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;
+        cdsInvoiceHeadAgentName.AsString                              := sq_GetInvoiceHeadDataAgentName.AsString ;
+        cdsInvoiceHeadShipper.AsString                                := sq_GetInvoiceHeadDataShipper.AsString ;
+        cdsInvoiceHeadCustomerName.AsString                           := sq_GetInvoiceHeadDataCustomerName.AsString ;
+        cdsInvoiceHeadDeliveryTerm.AsString                           := sq_GetInvoiceHeadDataDeliveryTerm.AsString ;
+        cdsInvoiceHeadPaymentDescription.AsString                     := sq_GetInvoiceHeadDataPayDesc.AsString ;
+      }
+      cdsInvoiceHeadLanguageCode.AsInteger := 1;
+      // cdsInvoiceHeadDestination.AsString                            := sq_GetInvoiceHeadDataDestination.AsString ;
 
-  cdsInvoiceHeadCurrencyNo.AsInteger                            := sq_GetInvoiceHeadDataCurrencyNo.AsInteger ;
-  cdsInvoiceHeadIncome_Account.AsString                         := '' ;
-  cdsInvoiceHeadCustomerRecivablesAccount.AsString              := '' ;
-  cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
-  cdsInvoiceHeadCarrierName.AsString                            := sq_GetInvoiceHeadDataCarrierName.AsString ;
-  cdsInvoiceHeadETD.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETD.AsSQLTimeStamp ;
-  cdsInvoiceHeadETA.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETA.AsSQLTimeStamp ;
-  cdsInvoiceHeadDestinationNo.AsInteger                         := sq_GetInvoiceHeadDataDestinationNo.AsInteger ;
-  cdsInvoiceHeadClientBillingAddressNo.AsInteger                := sq_GetInvoiceHeadDataClientBillingAddressNo.AsInteger ;
-  cdsInvoiceHeadAddressName.AsString                            := sq_GetInvoiceHeadDataBILL_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadAddressLine1.AsString                           := sq_GetInvoiceHeadDataAddressLine1.AsString ;
-  cdsInvoiceHeadAddressLine2.AsString                           := sq_GetInvoiceHeadDataAddressLine2.AsString ;
-  cdsInvoiceHeadAddressLine3.AsString                           := sq_GetInvoiceHeadDataAddressLine3.AsString ;
-  cdsInvoiceHeadAddressLine4.AsString                           := sq_GetInvoiceHeadDataAddressLine4.AsString ;
-  cdsInvoiceHeadStateOrProvince.AsString                        := sq_GetInvoiceHeadDataStateOrProvince.AsString ;
-  cdsInvoiceHeadPostalCode.AsString                             := sq_GetInvoiceHeadDataPostalCode.AsString ;
-  cdsInvoiceHeadCityName.AsString                               := sq_GetInvoiceHeadDataAddressCity.AsString ;
-  cdsInvoiceHeadCountryName.AsString                            := sq_GetInvoiceHeadDataAddressCountry.AsString ;
+      cdsInvoiceHeadCreatedUser.AsInteger := 2;
+      cdsInvoiceHeadModifiedUser.AsInteger := 2;
+      cdsInvoiceHeadDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+      cdsInvoiceHeadInvoiced.AsInteger := 0;
 
-  cdsInvoiceHeadAgentName.AsString                              := sq_GetInvoiceHeadDataAgentName.AsString ;
-  cdsInvoiceHeadShipper.AsString                                := sq_GetInvoiceHeadDataShipper.AsString ;
-  cdsInvoiceHeadCustomerName.AsString                           := sq_GetInvoiceHeadDataCustomerName.AsString ;
-  cdsInvoiceHeadDeliveryTerm.AsString                           := sq_GetInvoiceHeadDataDeliveryTerm.AsString ;
-  cdsInvoiceHeadPaymentDescription.AsString                     := sq_GetInvoiceHeadDataPayDesc.AsString ;
-}
-  cdsInvoiceHeadLanguageCode.AsInteger                          := 1 ;
-//  cdsInvoiceHeadDestination.AsString                            := sq_GetInvoiceHeadDataDestination.AsString ;
+      { cdsInvoiceHeadST_AddressName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESS_NAME.AsString ;
+        cdsInvoiceHeadST_AddressLine1.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE1.AsString ;
+        cdsInvoiceHeadST_AddressLine2.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE2.AsString ;
+        cdsInvoiceHeadST_AddressLine3.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE3.AsString ;
+        cdsInvoiceHeadST_AddressLine4.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE4.AsString ;
+        cdsInvoiceHeadST_StateOrProvince.AsString                     := sq_GetInvoiceHeadDataAVROP_SHIPTO_PROVINCE.AsString ;
+        cdsInvoiceHeadST_PostalCode.AsString                          := sq_GetInvoiceHeadDataAVROP_SHIPTO_POSTALCODE.AsString ;
+        cdsInvoiceHeadST_CityName.AsString                            := sq_GetInvoiceHeadDataAVROP_SHIPTO_CITY.AsString ;
+        cdsInvoiceHeadST_CountryName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_COUNTRY.AsString ;
 
-  cdsInvoiceHeadCreatedUser.AsInteger                           := 2 ;
-  cdsInvoiceHeadModifiedUser.AsInteger                          := 2 ;
-  cdsInvoiceHeadDateCreated.AsSQLTimeStamp                      := DateTimeToSQLTimeStamp(Now) ;
-  cdsInvoiceHeadInvoiced.AsInteger                              := 0 ;
+        cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString                     := sq_GetInvoiceHeadDataAGENT_ADDRESS_NAME.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE1.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE2.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE3.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE4.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString                  := sq_GetInvoiceHeadDataAGENT_SHIPTO_PROVINCE.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString                := sq_GetInvoiceHeadDataAGENT_SHIPTO_POSTALCODE.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString                      := sq_GetInvoiceHeadDataAGENT_SHIPTO_CITY.AsString ;
+        cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString                   := sq_GetInvoiceHeadDataAGENT_SHIPTO_COUNTRY.AsString ;
+      }
+      cdsInvoiceHead.Post;
 
-{  cdsInvoiceHeadST_AddressName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadST_AddressLine1.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE1.AsString ;
-  cdsInvoiceHeadST_AddressLine2.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE2.AsString ;
-  cdsInvoiceHeadST_AddressLine3.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE3.AsString ;
-  cdsInvoiceHeadST_AddressLine4.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE4.AsString ;
-  cdsInvoiceHeadST_StateOrProvince.AsString                     := sq_GetInvoiceHeadDataAVROP_SHIPTO_PROVINCE.AsString ;
-  cdsInvoiceHeadST_PostalCode.AsString                          := sq_GetInvoiceHeadDataAVROP_SHIPTO_POSTALCODE.AsString ;
-  cdsInvoiceHeadST_CityName.AsString                            := sq_GetInvoiceHeadDataAVROP_SHIPTO_CITY.AsString ;
-  cdsInvoiceHeadST_CountryName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_COUNTRY.AsString ;
+      // sq_GetInvoiceHeadData.Next ;
 
-  cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString                     := sq_GetInvoiceHeadDataAGENT_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE1.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE2.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE3.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE4.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString                  := sq_GetInvoiceHeadDataAGENT_SHIPTO_PROVINCE.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString                := sq_GetInvoiceHeadDataAGENT_SHIPTO_POSTALCODE.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString                      := sq_GetInvoiceHeadDataAGENT_SHIPTO_CITY.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString                   := sq_GetInvoiceHeadDataAGENT_SHIPTO_COUNTRY.AsString ;
- }
-  cdsInvoiceHead.Post ;
+      // sq_GetInvoiceHeadData.Close ;
 
-//  sq_GetInvoiceHeadData.Next ;
+      cdsInvoiceLO.Insert;
+      cdsInvoiceLOInternalInvoiceNo.AsInteger :=
+        cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+      cdsInvoiceLOShippingPlanNo.AsInteger := dmsConnector.NextMinNo('LO_Neg');
+      // Mars 18 2006
 
- // sq_GetInvoiceHeadData.Close ;
+      cdsInvoiceLOOrderNoText.AsString := '';
+      cdsInvoiceLOReference.AsString := '';
+      cdsInvoiceLOOurReference.AsString := '';
+      cdsInvoiceLOSalesMan.AsString := dmsContact.GetFullUserName
+        (thisuser.userid);
+      cdsInvoiceLOBookingNo.AsInteger := -1;
+      cdsInvoiceLOTotalFreightCost.AsFloat := 0;
+      cdsInvoiceLOFreightCostPerUnit.AsFloat := 0;
+      cdsInvoiceLOInvoiceAdditionAmount.AsFloat := 0;
+      cdsInvoiceLOInvoiceAdditionUnitNo.AsInteger := 0;
+      cdsInvoiceLOInvoiceAdditionDescription.AsString := '';
 
-    cdsInvoiceLO.Insert ;
-    cdsInvoiceLOInternalInvoiceNo.AsInteger              := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
-    cdsInvoiceLOShippingPlanNo.AsInteger                 := dmsConnector.NextMinNo('LO_Neg') ; //Mars 18 2006
+      cdsInvoiceLOCreatedUser.AsInteger := 2;
+      cdsInvoiceLOModifiedUser.AsInteger := 2;
+      cdsInvoiceLODateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+      cdsInvoiceLO.Post;
 
-    cdsInvoiceLOOrderNoText.AsString                     := '' ;
-    cdsInvoiceLOReference.AsString                       := '' ;
-    cdsInvoiceLOOurReference.AsString                    := '' ;
-    cdsInvoiceLOSalesMan.AsString                        := dmsContact.GetFullUserName(ThisUser.UserID) ;
-    cdsInvoiceLOBookingNo.AsInteger                      := -1 ;
-    cdsInvoiceLOTotalFreightCost.AsFloat                 := 0 ;
-    cdsInvoiceLOFreightCostPerUnit.AsFloat               := 0 ;
-    cdsInvoiceLOInvoiceAdditionAmount.AsFloat := 0 ;
-    cdsInvoiceLOInvoiceAdditionUnitNo.AsInteger          := 0 ;
-    cdsInvoiceLOInvoiceAdditionDescription.AsString      := '' ;
+      { cdsInvoiceDetail.Insert ;
+        cdsInvoiceDetailReference.AsString                  := '1' ;
+        cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
+        cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
+        //    cdsInvoiceDetailInvoiceDetailNo.AsInteger           := 1 ;
+        cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additonal cost
+        cdsInvoiceDetail.Post ;
+      }
 
-    cdsInvoiceLOCreatedUser.AsInteger                    := 2 ;
-    cdsInvoiceLOModifiedUser.AsInteger                   := 2 ;
-    cdsInvoiceLODateCreated.AsSQLTimeStamp               := DateTimeToSQLTimeStamp(Now) ;
-    cdsInvoiceLO.Post ;
+      { fInvoiceWizard:= TfInvoiceWizard.Create(nil) ;
+        Try
+        fInvoiceWizard.ShowModal ;
+        Finally
+        FreeAndNil(fInvoiceWizard) ;
+        End ; }
 
+      frmInvoice := TfrmInvoice.Create(Nil);
+      Try
+        cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
+          cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = ' +
+          cdsInvoiceLOShippingPlanNo.AsString;
+        cdsInvoiceLO.Filtered := True;
+        cdsInvoiceDetail.Filter := 'InternalInvoiceNo = ' +
+          cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = ' +
+          cdsInvoiceLOShippingPlanNo.AsString;
+        cdsInvoiceDetail.Filtered := True;
 
-{    cdsInvoiceDetail.Insert ;
-    cdsInvoiceDetailReference.AsString                  := '1' ;
-    cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
-    cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
-//    cdsInvoiceDetailInvoiceDetailNo.AsInteger           := 1 ;
-    cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additonal cost
-    cdsInvoiceDetail.Post ;
-}
+        frmInvoice.TabControl1.Tabs.Clear;
 
-{    fInvoiceWizard:= TfInvoiceWizard.Create(nil) ;
-    Try
-     fInvoiceWizard.ShowModal ;
-    Finally
-     FreeAndNil(fInvoiceWizard) ;
-    End ; }
+        // for x := 0 to ListBox1.Count - 1 do
+        frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString);
 
+        frmInvoice.rgDebitCredit.Enabled := True;
+        frmInvoice.ShowModal;
+      Finally
+        FreeAndNil(frmInvoice);
+        cdsInvoiceLO.Filtered := False;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceDetail.Filtered := False;
+        cdsInvoiceDetail.Active := False;
+        cdsInvoiceShipTo.Active := False;
+      End;
 
-
- frmInvoice:= TfrmInvoice.Create(Nil);
- Try
-  cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-  ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;
-  cdsInvoiceLO.Filtered     := True ;
-  cdsInvoiceDetail.Filter   := 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-  ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;
-  cdsInvoiceDetail.Filtered := True ;
-
-  frmInvoice.TabControl1.Tabs.Clear ;
-
-// for x := 0 to ListBox1.Count - 1 do
-  frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-
-  frmInvoice.rgDebitCredit.Enabled:= True ;
-  frmInvoice.ShowModal ;
- Finally
-  FreeAndNil(frmInvoice) ;
-  cdsInvoiceLO.Filtered     := False ;
-  cdsInvoiceLO.Active       := False ;
-  cdsInvoiceDetail.Filtered := False ;
-  cdsInvoiceDetail.Active   := False ;
-  cdsInvoiceShipTo.Active   := False ;
- End ;
-
-  sq_GetLOData.Close ;
- End ; //with dmVidaInvoice do
+      sq_GetLOData.Close;
+    End; // with dmVidaInvoice do
 End;
 
-procedure TfrmInvoiceList.RemoveInvoiceFromList (const InternalInvoiceNo : Integer) ;
+procedure TfrmInvoiceList.RemoveInvoiceFromList(const InternalInvoiceNo
+  : Integer);
 Begin
- With dmVidaInvoice do
- Begin
-  cdsInvoiceList.Filter:= 'InternalInvoiceNo = '+inttostr(InternalInvoiceNo) ;
-  cdsInvoiceList.Filtered:= True ;
-  Try
-  cdsInvoiceList.First ;
-  While not cdsInvoiceList.Eof do
-   cdsInvoiceList.Delete ;
-  Finally
-   cdsInvoiceList.Filtered:= False ;  
-  End ;
- End ;
-End ;
+  With dmVidaInvoice do
+  Begin
+    cdsInvoiceList.Filter := 'InternalInvoiceNo = ' +
+      inttostr(InternalInvoiceNo);
+    cdsInvoiceList.Filtered := True;
+    Try
+      cdsInvoiceList.First;
+      While not cdsInvoiceList.Eof do
+        cdsInvoiceList.Delete;
+    Finally
+      cdsInvoiceList.Filtered := False;
+    End;
+  End;
+End;
 
 procedure TfrmInvoiceList.acDeleteInvoiceExecute(Sender: TObject);
 begin
- if MessageDlg('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- With dmVidaInvoice do
- Begin
-
- Try
-
- if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+  if MessageDlg
+    ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  Begin
-    cdsInvoiceNumber.Active:= True ;
-    if not cdsInvoiceNumber.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+    With dmVidaInvoice do
     Begin
-     dmsConnector.StartTransaction ;
-     Try
 
-     DeleteInvoice (cdsInvoiceListInternalInvoiceNo.AsInteger) ;
+      Try
 
-     dmsConnector.Commit ;
-     RemoveInvoiceFromList (cdsInvoiceListInternalInvoiceNo.AsInteger)
-     Except
-      dmsConnector.Rollback ;
-     End ;
-    End
-    else
-    ShowMessage('Cannot delete, Invoice number assigned!') ;
-   End ;
- Finally
-  cdsInvoiceNumber.Active:= False ;
- End ;
- End ;//With
+        if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+          mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+        Begin
+          cdsInvoiceNumber.Active := True;
+          if not cdsInvoiceNumber.Locate('InternalInvoiceNo',
+            cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+          Begin
+            dmsConnector.StartTransaction;
+            Try
+
+              DeleteInvoice(cdsInvoiceListInternalInvoiceNo.AsInteger);
+
+              dmsConnector.Commit;
+              RemoveInvoiceFromList(cdsInvoiceListInternalInvoiceNo.AsInteger)
+            Except
+              dmsConnector.Rollback;
+            End;
+          End
+          else
+            ShowMessage('Cannot delete, Invoice number assigned!');
+        End;
+      Finally
+        cdsInvoiceNumber.Active := False;
+      End;
+    End; // With
 end;
 
 procedure TfrmInvoiceList.acCreditInvoiceExecute(Sender: TObject);
-Var Credit_Int_Inv_No : Integer ;
-    Year, Month, Day  : Word ;
-    DatumString       : String ;
+Var
+  Credit_Int_Inv_No: Integer;
+  Year, Month, Day: Word;
+  DatumString: String;
 begin
- with dmVidaInvoice do
- Begin
-  DecodeDate(SQLTimeStampToDateTime(cdsInvoiceListINV_DATE.AsSQLTimeStamp), Year, Month, Day) ;
-  DatumString := Copy(IntToStr(Year),3,2) ;
-  if Month < 10 then
-   DatumString  := DatumString + '0' + IntToStr(Month)
+  with dmVidaInvoice do
+  Begin
+    DecodeDate(SQLTimeStampToDateTime(cdsInvoiceListINV_DATE.AsSQLTimeStamp),
+      Year, Month, Day);
+    DatumString := Copy(inttostr(Year), 3, 2);
+    if Month < 10 then
+      DatumString := DatumString + '0' + inttostr(Month)
     else
-     DatumString  := DatumString + IntToStr(Month) ;
+      DatumString := DatumString + inttostr(Month);
 
-  if Day < 10 then
-   DatumString  := DatumString + '0' + IntToStr(Day)
+    if Day < 10 then
+      DatumString := DatumString + '0' + inttostr(Day)
     else
-     DatumString  := DatumString + IntToStr(Day) ;
+      DatumString := DatumString + inttostr(Day);
 
- Credit_Int_Inv_No:= 0 ;
- if MessageDlg('Vill du kreditera faktura nr '+
- cdsInvoiceListINVOICE_NO.AsString+' ?',
-    mtConfirmation, [mbYes, mbNo, mbCancel], 0)
-  = mrYes then
- Begin
- if cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
- Begin
- Try
+    Credit_Int_Inv_No := 0;
+    if MessageDlg('Vill du kreditera faktura nr ' +
+      cdsInvoiceListINVOICE_NO.AsString + ' ?', mtConfirmation,
+      [mbYes, mbNo, mbCancel], 0) = mrYes then
+    Begin
+      if cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
+      Begin
+        Try
 
-  if cdsInvoiceListInvoiceType.AsInteger = 0 then
-  Begin
-   cdsInvoice_Credited.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   cdsInvoice_Credited.Active  := True ;
-   fInternalInvoiceNo         := cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   if cdsInvoice_Credited.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
-   Begin
-    ShowMessage('Info, fakturan är krediterad tidigare av ' + cdsInvoice_CreditedCreatedUser.AsString + '  Se internt fakturanr : ' + cdsInvoice_CreditedNewInternalInvoiceNo.AsString) ;
-   End ;
-  End
-  else
-  if cdsInvoiceListInvoiceType.AsInteger = 8 then
-  Begin
-   cdsInvoice_Credited_Komp.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   cdsInvoice_Credited_Komp.Active  := True ;
-   fInternalInvoiceNo         := cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   if cdsInvoice_Credited_Komp.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
-   Begin
-    ShowMessage('Info, fakturan är krediterad tidigare av ' + cdsInvoice_CreditedCreatedUser.AsString + '  Se internt fakturanr : ' + cdsInvoice_Credited_KompNewInternalInvoiceNo.AsString) ;
-   End ;
-  End;
+          if cdsInvoiceListInvoiceType.AsInteger = 0 then
+          Begin
+            cdsInvoice_Credited.ParamByName('InternalInvoiceNo').AsInteger :=
+              cdsInvoiceListInternalInvoiceNo.AsInteger;
+            cdsInvoice_Credited.Active := True;
+            fInternalInvoiceNo := cdsInvoiceListInternalInvoiceNo.AsInteger;
+            if cdsInvoice_Credited.Locate('InternalInvoiceNo',
+              cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+            Begin
+              ShowMessage('Info, fakturan är krediterad tidigare av ' +
+                cdsInvoice_CreditedCreatedUser.AsString +
+                '  Se internt fakturanr : ' +
+                cdsInvoice_CreditedNewInternalInvoiceNo.AsString);
+            End;
+          End
+          else if cdsInvoiceListInvoiceType.AsInteger = 8 then
+          Begin
+            cdsInvoice_Credited_Komp.ParamByName('InternalInvoiceNo').AsInteger
+              := cdsInvoiceListInternalInvoiceNo.AsInteger;
+            cdsInvoice_Credited_Komp.Active := True;
+            fInternalInvoiceNo := cdsInvoiceListInternalInvoiceNo.AsInteger;
+            if cdsInvoice_Credited_Komp.Locate('InternalInvoiceNo',
+              cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+            Begin
+              ShowMessage('Info, fakturan är krediterad tidigare av ' +
+                cdsInvoice_CreditedCreatedUser.AsString +
+                '  Se internt fakturanr : ' +
+                cdsInvoice_Credited_KompNewInternalInvoiceNo.AsString);
+            End;
+          End;
 
+          Credit_Int_Inv_No := CreateCreditInvoiceByCopyDebitInvoice
+            (cdsInvoiceListINVOICE_NO.AsInteger,
+            cdsInvoiceListInternalInvoiceNo.AsInteger, DatumString,
+            cdsInvoiceListInvoiceType.AsInteger);
 
-   Credit_Int_Inv_No  := CreateCreditInvoiceByCopyDebitInvoice(cdsInvoiceListINVOICE_NO.AsInteger, cdsInvoiceListInternalInvoiceNo.AsInteger, DatumString, cdsInvoiceListInvoiceType.AsInteger) ;
+          // End
+          // else
+          // ShowMessage('Preliminära fakturor kan inte krediteras.') ;
 
-//  End
-//  else
-//   ShowMessage('Preliminära fakturor kan inte krediteras.') ;
+        Finally
 
- Finally
+          cdsInvoiceLO.Filtered := False;
+          cdsInvoiceLO.Active := False;
+          cdsInvoiceDetail.Filtered := False;
+          cdsInvoiceDetail.Filter := '';
+          cdsInvoiceDetail.Active := False;
+          cdsInvoice_Credited.Active := False;
+          cdsInvoiceNumber.Active := False;
+          cdsInvoiceShipTo.Active := False;
 
-  cdsInvoiceLO.Filtered       := False ;
-  cdsInvoiceLO.Active         := False ;
-  cdsInvoiceDetail.Filtered   := False ;
-  cdsInvoiceDetail.Filter     := '';
-  cdsInvoiceDetail.Active     := False ;
-  cdsInvoice_Credited.Active  := False ;
-  cdsInvoiceNumber.Active     := False ;
-  cdsInvoiceShipTo.Active     := False ;
+          if Credit_Int_Inv_No > 0 then
+          Begin
+            OpenInvoice(Credit_Int_Inv_No, -1, -1);
+          End;
+        End;
 
-  if Credit_Int_Inv_No > 0 then
-  Begin
-   OpenInvoice(Credit_Int_Inv_No, -1, -1) ;
-  End ; 
- End ;
-
- End
-  else
-   ShowMessage('Kan inte kreditera en kreditfaktura.') ;
- End ;
- End ;// with
+      End
+      else
+        ShowMessage('Kan inte kreditera en kreditfaktura.');
+    End;
+  End; // with
 end;
 
-procedure TfrmInvoiceList.GetMarkedInvoices ;
- Var y, i, RecIDX   : Integer ;
- Save_Cursor        : TCursor;
- ColIdx             : Integer ;
- InternalInvoiceNo  : Integer ;
- Duplicate          : Boolean ;
+procedure TfrmInvoiceList.GetMarkedInvoices;
+Var
+  y, i, RecIDX: Integer;
+  Save_Cursor: TCursor;
+  ColIdx: Integer;
+  InternalInvoiceNo: Integer;
+  Duplicate: Boolean;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- with dmVidaInvoice do
- Begin
-  lbLO_To_Invoice.Items.Clear ;
-  grdFakturaDBBandedTableView1.BeginUpdate ;
-  grdFakturaDBBandedTableView1.DataController.BeginLocate ;
-  Try
-   For I := 0 to grdFakturaDBBandedTableView1.Controller.SelectedRecordCount - 1 do
-   Begin
-    RecIDx      := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i].RecordIndex ;
-    ColIdx      := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName('InternalInvoiceNo').Index;
-    InternalInvoiceNo   := grdFakturaDBBandedTableView1.DataController.Values[RecIdx, ColIdx];
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  with dmVidaInvoice do
+  Begin
+    lbLO_To_Invoice.Items.Clear;
+    grdFakturaDBBandedTableView1.BeginUpdate;
+    grdFakturaDBBandedTableView1.DataController.BeginLocate;
+    Try
+      For i := 0 to grdFakturaDBBandedTableView1.Controller.
+        SelectedRecordCount - 1 do
+      Begin
+        RecIDX := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i]
+          .RecordIndex;
+        ColIdx := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName
+          ('InternalInvoiceNo').Index;
+        InternalInvoiceNo := grdFakturaDBBandedTableView1.DataController.Values
+          [RecIDX, ColIdx];
 
-    Duplicate := False ;
-    For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
-    Begin
-     if IntToStr(InternalInvoiceNo) = lbLO_To_Invoice.Items[y] then
-     Duplicate := True
-     else
-     Duplicate := False ;
-    End ;
-    if Duplicate = False then
-    Begin
-     lbLO_To_Invoice.Items.Add(IntToStr(InternalInvoiceNo)) ;
-    End ;
+        Duplicate := False;
+        For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
+        Begin
+          if inttostr(InternalInvoiceNo) = lbLO_To_Invoice.Items[y] then
+            Duplicate := True
+          else
+            Duplicate := False;
+        End;
+        if Duplicate = False then
+        Begin
+          lbLO_To_Invoice.Items.Add(inttostr(InternalInvoiceNo));
+        End;
 
-   End ;//for y
+      End; // for y
 
- Finally
-  grdFakturaDBBandedTableView1.DataController.EndLocate ;
-  grdFakturaDBBandedTableView1.EndUpdate ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+    Finally
+      grdFakturaDBBandedTableView1.DataController.EndLocate;
+      grdFakturaDBBandedTableView1.EndUpdate;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
 
- End ;//with
+  End; // with
 end;
-
 
 procedure TfrmInvoiceList.acGroupedInvoiceExecute(Sender: TObject);
 Var
-    Roll_Back     : Boolean ;
-    Save_Cursor   : TCursor;
-    InvoiceGroupNo, x : Integer ;
+  Roll_Back: Boolean;
+  Save_Cursor: TCursor;
+  InvoiceGroupNo, x: Integer;
 begin
- if MessageDlg('Vill skapa samlingsfaktura? ',
- mtConfirmation, [mbYes, mbNo, mbCancel], 0) = mrYes then
- with dmVidaInvoice do
- begin
-  Roll_Back:= False ;
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-  grdFakturaDBBandedTableView1.DataController.DataSet.DisableControls ;
-  Try
-  GetMarkedInvoices ;
+  if MessageDlg('Vill skapa samlingsfaktura? ', mtConfirmation,
+    [mbYes, mbNo, mbCancel], 0) = mrYes then
+    with dmVidaInvoice do
+    begin
+      Roll_Back := False;
+      Save_Cursor := Screen.Cursor;
+      Screen.Cursor := crSQLWait; { Show hourglass cursor }
+      grdFakturaDBBandedTableView1.DataController.DataSet.DisableControls;
+      Try
+        GetMarkedInvoices;
 
-{  lbLO_To_Invoice.Items.Clear ;
-  DataSource.DataSet.DisableControls;
-//Insert LO # to ListBox list
-  for x := 0 to (SelectedCount - 1) do
-  begin
-   Duplicate := False ;
-//  DataSource.DataSet.Bookmark := SelectedRows[x]; //1st variant
-   DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
+        { lbLO_To_Invoice.Items.Clear ;
+          DataSource.DataSet.DisableControls;
+          //Insert LO # to ListBox list
+          for x := 0 to (SelectedCount - 1) do
+          begin
+          Duplicate := False ;
+          //  DataSource.DataSet.Bookmark := SelectedRows[x]; //1st variant
+          DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
 
-   For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
-   Begin
-    if cdsInvoiceListINVOICE_NO.AsString = lbLO_To_Invoice.Items[y] then
-    Duplicate := True ;
-   End ;
-   if Duplicate = False then
-   Begin
-    lbLO_To_Invoice.Items.Add(cdsInvoiceListInternalInvoiceNo.AsString) ;
-   End ;
-  end; //for.. }
+          For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
+          Begin
+          if cdsInvoiceListINVOICE_NO.AsString = lbLO_To_Invoice.Items[y] then
+          Duplicate := True ;
+          End ;
+          if Duplicate = False then
+          Begin
+          lbLO_To_Invoice.Items.Add(cdsInvoiceListInternalInvoiceNo.AsString) ;
+          End ;
+          end; //for.. }
 
-  if lbLO_To_Invoice.Items.Count < 1 then
-   Begin
-    ShowMessage('Minst en faktura måste väljas.') ;
-    Exit ;
-   End ;
+        if lbLO_To_Invoice.Items.Count < 1 then
+        Begin
+          ShowMessage('Minst en faktura måste väljas.');
+          Exit;
+        End;
 
+        Try
+          InvoiceGroupNo := dmsConnector.NextMaxNo('InvoiceGroup');
+          // dmsConnector.NextIDinTable('InvoiceGroup') ;
+          dmsConnector.StartTransaction;
+          Try
+            cds_InvoiceInGroup.Active := True;
+            cds_InvoiceGroup.Active := True;
+            cds_InvoiceGroup.Insert;
+            cds_InvoiceGroupInvoiceGroupNo.AsInteger := InvoiceGroupNo;
+            // dmsConnector.NextMaxNo('InvoiceGroup');//dmsConnector.NextIDinTable('InvoiceGroup') ;
+            cds_InvoiceGroupCreatedUser.AsInteger := thisuser.userid;
+            cds_InvoiceGroupModifiedUser.AsInteger := thisuser.userid;
+            cds_InvoiceGroupCreatedDate.AsSQLTimeStamp :=
+              DateTimeToSQLTimeStamp(now);
+            cds_InvoiceGroupModifiedDate.AsSQLTimeStamp :=
+              DateTimeToSQLTimeStamp(now);
+            // cds_InvoiceGroupNote.AsVariant:= '' ;
+            cds_InvoiceGroup.Post;
 
+            For x := 0 to lbLO_To_Invoice.Items.Count - 1 do
+            Begin
+              cds_InvoiceInGroup.Insert;
+              cds_InvoiceInGroupInvoiceGroupNo.AsInteger :=
+                cds_InvoiceGroupInvoiceGroupNo.AsInteger;
+              cds_InvoiceInGroupInternalInvoiceNo.AsInteger :=
+                StrToInt(lbLO_To_Invoice.Items[x]);
+              cds_InvoiceInGroup.Post;
+            End;
 
-   Try
-   InvoiceGroupNo := dmsConnector.NextMaxNo('InvoiceGroup') ;//dmsConnector.NextIDinTable('InvoiceGroup') ;
-   dmsConnector.StartTransaction;
-   Try
-   cds_InvoiceInGroup.Active  := True ;
-   cds_InvoiceGroup.Active    := True ;
-   cds_InvoiceGroup.Insert ;
-   cds_InvoiceGroupInvoiceGroupNo.AsInteger     := InvoiceGroupNo ;//dmsConnector.NextMaxNo('InvoiceGroup');//dmsConnector.NextIDinTable('InvoiceGroup') ;
-   cds_InvoiceGroupCreatedUser.AsInteger        := ThisUser.UserID ;
-   cds_InvoiceGroupModifiedUser.AsInteger       := ThisUser.UserID ;
-   cds_InvoiceGroupCreatedDate.AsSQLTimeStamp   := DateTimeToSQLTimeStamp(Now) ;
-   cds_InvoiceGroupModifiedDate.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-//   cds_InvoiceGroupNote.AsVariant:= '' ;
-   cds_InvoiceGroup.Post ;
+            if cds_InvoiceGroup.ChangeCount > 0 then
+              Roll_Back := cds_InvoiceGroup.ApplyUpdates(0) > 0;
+            if Roll_Back = False then
+              cds_InvoiceGroup.CommitUpdates;
 
-   For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
-   Begin
-    cds_InvoiceInGroup.Insert ;
-    cds_InvoiceInGroupInvoiceGroupNo.AsInteger    := cds_InvoiceGroupInvoiceGroupNo.AsInteger ;
-    cds_InvoiceInGroupInternalInvoiceNo.AsInteger := StrToInt(lbLO_To_Invoice.Items[x]) ;
-    cds_InvoiceInGroup.Post;
-   End ;
+            if cds_InvoiceInGroup.ChangeCount > 0 then
+              Roll_Back := cds_InvoiceInGroup.ApplyUpdates(0) > 0;
+            if Roll_Back = False then
+              cds_InvoiceInGroup.CommitUpdates;
 
-   if cds_InvoiceGroup.ChangeCount > 0 then
-    Roll_Back:=  cds_InvoiceGroup.ApplyUpdates(0) > 0 ;
-    if Roll_Back = False then cds_InvoiceGroup.CommitUpdates ;
+            Try
+              sp_vida_Populate_SamFaktura.ParamByName('@InvGroupNo').AsInteger
+                := InvoiceGroupNo;
+              sp_vida_Populate_SamFaktura.ExecProc;
+            except
+              On E: Exception do
+              Begin
+                dmsSystem.FDoLog(E.Message);
+                // ShowMessage(E.Message);
+                Raise;
+              End;
+            end;
 
-   if cds_InvoiceInGroup.ChangeCount > 0 then
-    Roll_Back:= cds_InvoiceInGroup.ApplyUpdates(0) > 0 ;
-    if Roll_Back = False then cds_InvoiceInGroup.CommitUpdates ;
+            if Roll_Back then
+            Begin
+              dmsConnector.Rollback;
+              ShowMessage('Error skapa samlingsfaktura, rolling back.');
+            End
+            else
+            Begin
+              dmsConnector.Commit;
+              if MessageDlg('SamlingsfakturaNr ' +
+                cds_InvoiceGroupInvoiceGroupNo.AsString +
+                ' skapad. Vill du skriva ut?', mtConfirmation, [mbYes, mbNo], 0)
+                = mrYes then
+                printSamlingsFaktura(InvoiceGroupNo);
+            End;
 
-   Try
-   sp_vida_Populate_SamFaktura.ParamByName('@InvGroupNo').AsInteger:= InvoiceGroupNo ;
-   sp_vida_Populate_SamFaktura.ExecProc ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
+          except
+            dmsConnector.Rollback;
+            raise;
+          end;
+        Finally
+          cds_InvoiceInGroup.Active := False;
+          cds_InvoiceGroup.Active := False;
+        End;
 
-
-   if Roll_Back then
-   Begin
-    dmsConnector.Rollback ;
-    ShowMessage('Error skapa samlingsfaktura, rolling back.') ;
-   End
-   else
-   Begin
-    dmsConnector.Commit ;
-    if MessageDlg('SamlingsfakturaNr ' + cds_InvoiceGroupInvoiceGroupNo.AsString + ' skapad. Vill du skriva ut?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-     printSamlingsFaktura (InvoiceGroupNo) ;
-   End ;
-
-   except
-    dmsConnector.Rollback ;
-    raise;
-   end;
-   Finally
-    cds_InvoiceInGroup.Active:= False ;
-    cds_InvoiceGroup.Active:= False ;
-   End ;
-
-
-   Finally
-    grdFakturaDBBandedTableView1.DataController.DataSet.EnableControls ;
-    grdFakturaDBBandedTableView1.Controller.ClearSelection ;
-    Screen.Cursor := Save_Cursor;  { Always restore to normal }
-   End ;
- End ; //with
+      Finally
+        grdFakturaDBBandedTableView1.DataController.DataSet.EnableControls;
+        grdFakturaDBBandedTableView1.Controller.ClearSelection;
+        Screen.Cursor := Save_Cursor; { Always restore to normal }
+      End;
+    End; // with
 end;
 
 procedure TfrmInvoiceList.acAttestInvoiceExecute(Sender: TObject);
-Var x                 : Integer ;
-    Save_Cursor       : TCursor;
-    frmAttestInvoice  : TfrmAttestInvoice;
+Var
+  x: Integer;
+  Save_Cursor: TCursor;
+  frmAttestInvoice: TfrmAttestInvoice;
 begin
- with dmVidaInvoice do
- Begin
-  mt_AttestRow.Active   := False ;
-  mt_AttestRow.Active   := True ;
-  mt_InvDtl_Att.Active  := False ;
-  mt_InvDtl_Att.Active  := True ;
-  
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//ta bort next och prior, ladda inte allt, går det att undvika
- frmAttestInvoice:= TfrmAttestInvoice.Create(Nil);
-// cdsInvoiceShipToAddress.DataSource:= dsrcInvoiceHead_II ;
- Try
-
-//  if peInvoiceType.ItemIndex = 3 then
-//   frmAttestInvoice.LCustomer.Caption:= 'Leverantör:'
-//    else
-//     frmAttestInvoice.LCustomer.Caption:= 'Kund:' ;
-  if cdsInvoiceListInvoiceType.AsInteger = 3 then
-   frmAttestInvoice.LCustomer.Caption:= 'Leverantör:'
-    else
-     frmAttestInvoice.LCustomer.Caption:= 'Kund:' ;
-
-  frmAttestInvoice.cbInvoiceType.ItemIndex  := cdsInvoiceListInvoiceType.AsInteger ;
-//  frmAttestInvoice.cbInvoiceType.ReadOnly   := True ;
-  mt_AttestRow.Active                   := True ;
-  mt_InvDtl_Att.Active                  := True ;
-  cdsInvoiceShipTo.Active               := True ;
-  frmAttestInvoice.TabControl1.Tabs.Clear ;
-
-//  sq_InvoiceHead_II.ParamByName('InvoiceType').AsInteger:= peInvoiceType.ItemIndex ;
-  cdsInvoiceHead_II.Active:= False ;
-  OpenInvoiceHeaderForAttest(cdsInvoiceListInternalInvoiceNo.AsInteger, cdsInvoiceListInvoiceType.AsInteger {peInvoiceType.ItemIndex}) ;
-  cdsInvoiceHead_II.Active:= True ;
-//  cdsInvoiceHead_II.Filter:= 'InvoiceType = '+IntToStr(peInvoiceType.ItemIndex) ;
-//  cdsInvoiceHead_II.Filtered:= True ;
-//  if cdsInvoiceHead_II.FindKey([cdsInvoiceListInternalInvoiceNo.AsInteger]) then
-  if cdsInvoiceHead_II.RecordCount > 0 then
+  with dmVidaInvoice do
   Begin
-  cdsInvoiceLO.Close ;
-  cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceHead_IIInternalInvoiceNo.AsInteger ;
+    mt_AttestRow.Active := False;
+    mt_AttestRow.Active := True;
+    mt_InvDtl_Att.Active := False;
+    mt_InvDtl_Att.Active := True;
 
+    Save_Cursor := Screen.Cursor;
+    Screen.Cursor := crSQLWait; { Show hourglass cursor }
+    // ta bort next och prior, ladda inte allt, går det att undvika
+    frmAttestInvoice := TfrmAttestInvoice.Create(Nil);
+    // cdsInvoiceShipToAddress.DataSource:= dsrcInvoiceHead_II ;
+    Try
 
-  cdsInvoiceLO.Active:= True ;
+      // if peInvoiceType.ItemIndex = 3 then
+      // frmAttestInvoice.LCustomer.Caption:= 'Leverantör:'
+      // else
+      // frmAttestInvoice.LCustomer.Caption:= 'Kund:' ;
+      if cdsInvoiceListInvoiceType.AsInteger = 3 then
+        frmAttestInvoice.LCustomer.Caption := 'Leverantör:'
+      else
+        frmAttestInvoice.LCustomer.Caption := 'Kund:';
 
-  cdsInvoiceLO.First ;
-  While not cdsInvoiceLO.Eof do
-  Begin
-   frmAttestInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-   cdsInvoiceLO.Next ;
-  End ;
+      frmAttestInvoice.cbInvoiceType.ItemIndex :=
+        cdsInvoiceListInvoiceType.AsInteger;
+      // frmAttestInvoice.cbInvoiceType.ReadOnly   := True ;
+      mt_AttestRow.Active := True;
+      mt_InvDtl_Att.Active := True;
+      cdsInvoiceShipTo.Active := True;
+      frmAttestInvoice.TabControl1.Tabs.Clear;
 
-  cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHead_IIInternalInvoiceNo.AsString+
-  ' AND ShippingPlanNo = '+frmAttestInvoice.TabControl1.Tabs[0] ;
-  cdsInvoiceLO.Filtered:= True ;
+      // sq_InvoiceHead_II.ParamByName('InvoiceType').AsInteger:= peInvoiceType.ItemIndex ;
+      cdsInvoiceHead_II.Active := False;
+      OpenInvoiceHeaderForAttest(cdsInvoiceListInternalInvoiceNo.AsInteger,
+        cdsInvoiceListInvoiceType.AsInteger { peInvoiceType.ItemIndex } );
+      cdsInvoiceHead_II.Active := True;
+      // cdsInvoiceHead_II.Filter:= 'InvoiceType = '+IntToStr(peInvoiceType.ItemIndex) ;
+      // cdsInvoiceHead_II.Filtered:= True ;
+      // if cdsInvoiceHead_II.FindKey([cdsInvoiceListInternalInvoiceNo.AsInteger]) then
+      if cdsInvoiceHead_II.RecordCount > 0 then
+      Begin
+        cdsInvoiceLO.Close;
+        cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger :=
+          cdsInvoiceHead_IIInternalInvoiceNo.AsInteger;
 
+        cdsInvoiceLO.Active := True;
 
+        cdsInvoiceLO.First;
+        While not cdsInvoiceLO.Eof do
+        Begin
+          frmAttestInvoice.TabControl1.Tabs.Add
+            (cdsInvoiceLOShippingPlanNo.AsString);
+          cdsInvoiceLO.Next;
+        End;
 
-  dmVidaInvoice.cds_Att_Ext_ServicesII.Active:= False ;
-  dmVidaInvoice.cds_Att_Ext_ServicesII.ParamByName('InternalInvoiceNo').AsInteger:= dmVidaInvoice.cdsInvoiceHead_IIInternalInvoiceNo.AsInteger ;
-//  dmVidaInvoice.cds_Att_Ext_ServicesII.ParamByName('ShippingPlanNo').AsInteger:= 0 ;  
-  dmVidaInvoice.cds_Att_Ext_ServicesII.Active:= True ;
+        cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
+          cdsInvoiceHead_IIInternalInvoiceNo.AsString + ' AND ShippingPlanNo = '
+          + frmAttestInvoice.TabControl1.Tabs[0];
+        cdsInvoiceLO.Filtered := True;
 
-  dmVidaInvoice.cds_InvDtl_Att.Close ;
-  dmVidaInvoice.cds_InvDtl_Att.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceHead_IIInternalInvoiceNo.AsInteger ;
-//  dmVidaInvoice.sq_InvDtl_Att.ParamByName('ShippingPlanNo').AsInteger:= StrToInt(frmAttestInvoice.TabControl1.Tabs[frmAttestInvoice.TabControl1.TabIndex]) ;
-//  dmVidaInvoice.sq_InvDtl_Att.ParamByName('Sequensno').AsInteger:=
-//  dmVidaInvoice.cds_Att_Ext_ServicesIISequensNo.AsInteger ;
-  cds_InvDtl_Att.Active:= True ;
-  While not cds_InvDtl_Att.Eof do
-  Begin
-   mt_InvDtl_Att.Insert ;
-   For x := 0 to 15 do
-   mt_InvDtl_Att.Fields.Fields[x].AsVariant:= cds_InvDtl_Att.Fields.Fields[x].AsVariant ;
-   mt_InvDtl_AttSequensNo.AsInteger:= 0 ;
-   mt_InvDtl_AttChecked.AsInteger:= 0 ;
-   mt_InvDtl_Att.Post ;
-   cds_InvDtl_Att.next ;
-  End ;
+        dmVidaInvoice.cds_Att_Ext_ServicesII.Active := False;
+        dmVidaInvoice.cds_Att_Ext_ServicesII.ParamByName('InternalInvoiceNo')
+          .AsInteger :=
+          dmVidaInvoice.cdsInvoiceHead_IIInternalInvoiceNo.AsInteger;
+        // dmVidaInvoice.cds_Att_Ext_ServicesII.ParamByName('ShippingPlanNo').AsInteger:= 0 ;
+        dmVidaInvoice.cds_Att_Ext_ServicesII.Active := True;
 
-  sq_GetAttestRow.ParamByName('InternalInvoiceNo').AsInteger:= cdsInvoiceHead_IIInternalInvoiceNo.AsInteger ;
-  sq_GetAttestRow.Open ;
-  While not sq_GetAttestRow.Eof do
-  Begin
-   mt_AttestRow.Insert ;
-   For x := 0 to 3 do
-    mt_AttestRow.Fields.Fields[x].AsVariant:= sq_GetAttestRow.Fields.Fields[x].AsVariant ;
-    mt_AttestRow.Post ;
-   sq_GetAttestRow.Next ;
-  End ;
+        dmVidaInvoice.cds_InvDtl_Att.Close;
+        dmVidaInvoice.cds_InvDtl_Att.ParamByName('InternalInvoiceNo').AsInteger
+          := cdsInvoiceHead_IIInternalInvoiceNo.AsInteger;
+        // dmVidaInvoice.sq_InvDtl_Att.ParamByName('ShippingPlanNo').AsInteger:= StrToInt(frmAttestInvoice.TabControl1.Tabs[frmAttestInvoice.TabControl1.TabIndex]) ;
+        // dmVidaInvoice.sq_InvDtl_Att.ParamByName('Sequensno').AsInteger:=
+        // dmVidaInvoice.cds_Att_Ext_ServicesIISequensNo.AsInteger ;
+        cds_InvDtl_Att.Active := True;
+        While not cds_InvDtl_Att.Eof do
+        Begin
+          mt_InvDtl_Att.Insert;
+          For x := 0 to 15 do
+            mt_InvDtl_Att.Fields.Fields[x].AsVariant :=
+              cds_InvDtl_Att.Fields.Fields[x].AsVariant;
+          mt_InvDtl_AttSequensNo.AsInteger := 0;
+          mt_InvDtl_AttChecked.AsInteger := 0;
+          mt_InvDtl_Att.Post;
+          cds_InvDtl_Att.Next;
+        End;
 
-  sq_GetAttestRow.Close ;
+        sq_GetAttestRow.ParamByName('InternalInvoiceNo').AsInteger :=
+          cdsInvoiceHead_IIInternalInvoiceNo.AsInteger;
+        sq_GetAttestRow.Open;
+        While not sq_GetAttestRow.Eof do
+        Begin
+          mt_AttestRow.Insert;
+          For x := 0 to 3 do
+            mt_AttestRow.Fields.Fields[x].AsVariant :=
+              sq_GetAttestRow.Fields.Fields[x].AsVariant;
+          mt_AttestRow.Post;
+          sq_GetAttestRow.Next;
+        End;
 
+        sq_GetAttestRow.Close;
 
-  frmAttestInvoice.ShowModal ;
+        frmAttestInvoice.ShowModal;
 
-  End
-   else
-    ShowMessage('Kan inte fokusera internal fakturanr '+cdsInvoiceListInternalInvoiceNo.AsString) ;
+      End
+      else
+        ShowMessage('Kan inte fokusera internal fakturanr ' +
+          cdsInvoiceListInternalInvoiceNo.AsString);
 
- Finally
-  fInternalInvoiceNo                  := -1 ;
-//  cdsInvoiceShipToAddress.DataSource  := dsrcInvoiceHead ;
+    Finally
+      fInternalInvoiceNo := -1;
+      // cdsInvoiceShipToAddress.DataSource  := dsrcInvoiceHead ;
 
-  cdsInvoiceLO.Filtered               := False ;
-  cdsInvoiceLO.Active                 := False ;
-  cds_InvDtl_Att.Active               := False ;
-  cdsInvoiceShipTo.Active             := False ;
-  mt_InvDtl_Att.Active                := False ;
-  mt_AttestRow.Active                 := False ;
-  FreeAndNil(frmAttestInvoice) ;
-  Screen.Cursor                       := Save_Cursor;  { Always restore to normal }
- End ;
+      cdsInvoiceLO.Filtered := False;
+      cdsInvoiceLO.Active := False;
+      cds_InvDtl_Att.Active := False;
+      cdsInvoiceShipTo.Active := False;
+      mt_InvDtl_Att.Active := False;
+      mt_AttestRow.Active := False;
+      FreeAndNil(frmAttestInvoice);
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
 
- End ; // with dmVidaInvoice do
+  End; // with dmVidaInvoice do
 end;
 
-
-procedure TfrmInvoiceList.acDeleteInvoiceWithNumberExecute(
-  Sender: TObject);
-var frmConfirmCodeDialog: TfrmConfirmCodeDialog;
+procedure TfrmInvoiceList.acDeleteInvoiceWithNumberExecute(Sender: TObject);
+var
+  frmConfirmCodeDialog: TfrmConfirmCodeDialog;
 begin
- if (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger = 3135)
- or (dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 3) then
- Begin
- if MessageDlg('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-     Exit ;
-
- frmConfirmCodeDialog:= TfrmConfirmCodeDialog.Create(Nil) ;
- Try
- if frmConfirmCodeDialog.ShowModal = mrOk then
- Begin
-  if Trim(frmConfirmCodeDialog.eConfirmationCode.Text) = '19vida100' then
+  if (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger = 3135) or
+    (dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 3) then
   Begin
-   if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
-   Begin
-    if MessageDlg('Fakturan har ett nummer tilldelat, vill du ta bort det och fakturan?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    DeleteInvoiceNoAndInvoice(Sender) ;
-   End
-   else
-    DeleteInvoiceNoAndInvoice(Sender) ;
-  End
-   else
-    ShowMessage('Wrong confirmation code, please ask your supervisor for help.') ;
- End ;
- Finally
-  FreeAndNil(frmConfirmCodeDialog) ;//.Free ;
- End ;
- End
- else
- ShowMessage('Endast VIDA_NUM fakturor kan tas bort.') ;
-end;
+    if MessageDlg
+      ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+      Exit;
 
+    frmConfirmCodeDialog := TfrmConfirmCodeDialog.Create(Nil);
+    Try
+      if frmConfirmCodeDialog.ShowModal = mrOk then
+      Begin
+        if Trim(frmConfirmCodeDialog.eConfirmationCode.Text) = '19vida100' then
+        Begin
+          if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
+          Begin
+            if MessageDlg
+              ('Fakturan har ett nummer tilldelat, vill du ta bort det och fakturan?',
+              mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+              DeleteInvoiceNoAndInvoice(Sender);
+          End
+          else
+            DeleteInvoiceNoAndInvoice(Sender);
+        End
+        else
+          ShowMessage
+            ('Wrong confirmation code, please ask your supervisor for help.');
+      End;
+    Finally
+      FreeAndNil(frmConfirmCodeDialog); // .Free ;
+    End;
+  End
+  else
+    ShowMessage('Endast VIDA_NUM fakturor kan tas bort.');
+end;
 
 procedure TfrmInvoiceList.acPrintClientsInvoiceExecute(Sender: TObject);
-Var FormCRPrintReport       : TFormCRPrintReport;
-    A                       : array of variant;
-    RoleType                : Integer ;
+Var
+  FormCRPrintReport: TFormCRPrintReport;
+  A: array of variant;
+  RoleType: Integer;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRPrintReport:= TFormCRPrintReport.Create(Nil);
- RoleType:= 1 ;
- Try
-  SetLength(A, 1) ;
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-//const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
-  FormCRPrintReport.CreateCo(1, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, A) ;
- Finally
-  FreeAndNil(FormCRPrintReport) ; //.Free ;
- End ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+  RoleType := 1;
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
+    FormCRPrintReport.CreateCo(1,
+      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, A);
+  Finally
+    FreeAndNil(FormCRPrintReport); // .Free ;
+  End;
 end;
 
 procedure TfrmInvoiceList.acCancelProformaInvoiceExecute(Sender: TObject);
-var frmConfirmCodeDialog: TfrmConfirmCodeDialog;
+var
+  frmConfirmCodeDialog: TfrmConfirmCodeDialog;
 begin
- if dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 2 then
- Begin
- if MessageDlg('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-     Exit ;
-
- frmConfirmCodeDialog:= TfrmConfirmCodeDialog.Create(Nil) ;
- Try
- if frmConfirmCodeDialog.ShowModal = mrOk then
- Begin
-  if Trim(frmConfirmCodeDialog.eConfirmationCode.Text) = '19vida100' then
+  if dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 2 then
   Begin
-   if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
-   Begin
-    if MessageDlg('Vill du ta makulera fakturan och ta bort (avaktivera) paketen från proforma lagret?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    DeleteInvoiceNoAndInvoice(Sender) ;
-   End
-   else
-    DeleteInvoiceNoAndInvoice(Sender) ;
-  End
-   else
-    ShowMessage('Wrong confirmation code, please ask your supervisor for help.') ;
- End ;
- Finally
-  FreeAndNil(frmConfirmCodeDialog) ;//.Free ;
- End ;
- End
- else
- ShowMessage('Endast Proforma fakturor kan ångras.') ;
-end;
+    if MessageDlg
+      ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+      Exit;
 
+    frmConfirmCodeDialog := TfrmConfirmCodeDialog.Create(Nil);
+    Try
+      if frmConfirmCodeDialog.ShowModal = mrOk then
+      Begin
+        if Trim(frmConfirmCodeDialog.eConfirmationCode.Text) = '19vida100' then
+        Begin
+          if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
+          Begin
+            if MessageDlg
+              ('Vill du ta makulera fakturan och ta bort (avaktivera) paketen från proforma lagret?',
+              mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+              DeleteInvoiceNoAndInvoice(Sender);
+          End
+          else
+            DeleteInvoiceNoAndInvoice(Sender);
+        End
+        else
+          ShowMessage
+            ('Wrong confirmation code, please ask your supervisor for help.');
+      End;
+    Finally
+      FreeAndNil(frmConfirmCodeDialog); // .Free ;
+    End;
+  End
+  else
+    ShowMessage('Endast Proforma fakturor kan ångras.');
+end;
 
 procedure TfrmInvoiceList.acCancelProformaInvoiceUpdate(Sender: TObject);
 begin
-  acCancelProformaInvoice.Enabled := (dmVidaInvoice.cdsInvoiceList.Active) and (dmVidaInvoice.cdsInvoiceList.RecordCount > 0)
-  and (dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 2) ;
+  acCancelProformaInvoice.Enabled := (dmVidaInvoice.cdsInvoiceList.Active) and
+    (dmVidaInvoice.cdsInvoiceList.RecordCount > 0) and
+    (dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 2);
 end;
 
 procedure TfrmInvoiceList.acClientPackageSpecificationExecute(Sender: TObject);
-Var FormCRPrintReport   : TFormCRPrintReport;
-    A                   : array of variant;
-    RoleType                : Integer ;
+Var
+  FormCRPrintReport: TFormCRPrintReport;
+  A: array of variant;
+  RoleType: Integer;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRPrintReport:= TFormCRPrintReport.Create(Nil);
- RoleType                := 1 ;
- Try
-  SetLength(A, 1);
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRPrintReport.CreateCo(1,dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cPkgSpec, A) ;
- Finally
-  FreeAndNil(FormCRPrintReport) ;//.Free ;
- End ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+  RoleType := 1;
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRPrintReport.CreateCo(1,
+      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cPkgSpec, A);
+  Finally
+    FreeAndNil(FormCRPrintReport); // .Free ;
+  End;
 end;
 
 procedure TfrmInvoiceList.acFakturaSvenskExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_NOTE.RPT', A) ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_NOTE.RPT', A);
 
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_NOTE.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_NOTE.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskLangdExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_längd_NOTE.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_längd_NOTE.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
-
 
 procedure TfrmInvoiceList.acSpecificationSvenskExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
-
 
 procedure TfrmInvoiceList.acSpecificationEngelskExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_VER2.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ; 
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_VER2.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
-
-procedure TfrmInvoiceList.acSpecificationEngelskMedProducentExecute(
-  Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+procedure TfrmInvoiceList.acSpecificationEngelskMedProducentExecute
+  (Sender: TObject);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
-if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_PROD_VER2.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ; 
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_PROD_VER2.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
-
-procedure TfrmInvoiceList.acSpecifikationEngelskAktuellDimensionExecute(Sender: TObject);
-  Var FormCRViewReport : TFormCRViewReport ;
-       A                 : array of variant ;
+procedure TfrmInvoiceList.acSpecifikationEngelskAktuellDimensionExecute
+  (Sender: TObject);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPEC_ACT_VER2.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPEC_ACT_VER2.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
-
 
 procedure TfrmInvoiceList.acTrpBrevExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- dmsContact.InsertUserIssueReport (ThisUser.UserID, dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('TRP_BREV.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  dmsContact.InsertUserIssueReport(thisuser.userid,
+    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
-
-procedure TfrmInvoiceList.acSpecifikatinUtanPaketNrExecute(
-  Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+procedure TfrmInvoiceList.acSpecifikatinUtanPaketNrExecute(Sender: TObject);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPEC_NOPKGNO.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPEC_NOPKGNO.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acSpecifikationIdahoStyleExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_IDAHO_VER2.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ; 
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_IDAHO_VER2.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskAgustExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_IDAHO_NOTE.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_IDAHO_NOTE.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
-
 
 procedure TfrmInvoiceList.acFakturaEngelskLengthPlusNM3Execute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_längd_plus_NM3_NOTE.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_längd_plus_NM3_NOTE.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
-procedure TfrmInvoiceList.acFakturaEngelskLangdPerPakettypExecute(Sender: TObject);
- Var FormCRViewReport : TFormCRViewReport ;
-      A                 : array of variant ;
+procedure TfrmInvoiceList.acFakturaEngelskLangdPerPakettypExecute
+  (Sender: TObject);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_PKTTYP_NOTE.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_PKTTYP_NOTE.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
-
 
 procedure TfrmInvoiceList.acFakturaSvenskUtanMoms_DKExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_u_moms_NOTE_dk.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_u_moms_NOTE_dk.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelsk_DKExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('FAKTURA_ENG_NOTE_dk.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('FAKTURA_ENG_NOTE_dk.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acSpecifikationSvensk_DKExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2_dk.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2_dk.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acSpecifikatikonEngelsk_DKExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo('SPECIFICATION_VER2_dk.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_VER2_dk.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfrmInvoiceList.acCreditInvoiceUpdate(Sender: TObject);
 begin
- With dmVidaInvoice do
- Begin
-  acCreditInvoice.Enabled:=  ((cdsInvoiceListInvoiceType.AsInteger = 0)
-  or ((cdsInvoiceListInvoiceType.AsInteger >= 4)
-  and (cdsInvoiceListInvoiceType.AsInteger <= 8)))
-  and (cdsInvoiceListINVOICE_NO.AsInteger > 0) ;
- End ;
+  With dmVidaInvoice do
+  Begin
+    acCreditInvoice.Enabled := ((cdsInvoiceListInvoiceType.AsInteger = 0) or
+      ((cdsInvoiceListInvoiceType.AsInteger >= 4) and
+      (cdsInvoiceListInvoiceType.AsInteger <= 8))) and
+      (cdsInvoiceListINVOICE_NO.AsInteger > 0);
+  End;
 end;
 
 procedure TfrmInvoiceList.acTrpBrvTestUpdate(Sender: TObject);
 begin
- acTrpBrvTest.Enabled:= ThisUser.UserID = 8 ;
+  acTrpBrvTest.Enabled := thisuser.userid = 8;
 end;
 
 procedure TfrmInvoiceList.acUpgradeProductCodeInfoExecute(Sender: TObject);
 begin
- with dmsSystem do
- Begin
-  Generate_Vis_Upd_ProdCodeInfo(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, 1);
- End;
+  with dmsSystem do
+  Begin
+    Generate_Vis_Upd_ProdCodeInfo
+      (dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, 1);
+  End;
 end;
 
-procedure TfrmInvoiceList.acUpgradeProductCodeInfoNoStatExecute(
-  Sender: TObject);
+procedure TfrmInvoiceList.acUpgradeProductCodeInfoNoStatExecute
+  (Sender: TObject);
 begin
- with dmsSystem do
- Begin
-  Generate_Vis_Upd_ProdCodeInfo(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, 0);
- End;
+  with dmsSystem do
+  Begin
+    Generate_Vis_Upd_ProdCodeInfo
+      (dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, 0);
+  End;
 end;
 
 procedure TfrmInvoiceList.acAttestInvoiceUpdate(Sender: TObject);
 begin
- acAttestInvoice.Enabled:=
-  ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0) or (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull = False))
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acAttestInvoice.Enabled :=
+    ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0) or
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull = False)) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
-procedure TfrmInvoiceList.SaveInternalInvoiceNoToExportInvoiceData ;
+procedure TfrmInvoiceList.SaveInternalInvoiceNoToExportInvoiceData;
 Begin
- mtSelectedInvoices.Active  := False ;
- mtSelectedInvoices.Active  := True ;
- Try
- SelectMarkedInvoices ;
- //DeleteOldMarkedInvoices ;
-  dmVidaInvoice.DEL_ExportInvoiceData ;
-  dmVidaInvoice.STORE_ExportInvoiceData(mtSelectedInvoices) ;
- Finally
-  mtSelectedInvoices.Active  := False ;
- End;
+  mtSelectedInvoices.Active := False;
+  mtSelectedInvoices.Active := True;
+  Try
+    SelectMarkedInvoices;
+    // DeleteOldMarkedInvoices ;
+    dmVidaInvoice.DEL_ExportInvoiceData;
+    dmVidaInvoice.STORE_ExportInvoiceData(mtSelectedInvoices);
+  Finally
+    mtSelectedInvoices.Active := False;
+  End;
 End;
 
 procedure TfrmInvoiceList.acAustraliaExportExecute(Sender: TObject);
-var fAccInv: TfAccInv;
+var
+  fAccInv: TfAccInv;
 begin
- if MessageDlg('Exportera, vill du fortsätta?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
- fAccInv:= TfAccInv.Create(nil) ;
- Try
+  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+    0) = mrYes then
+  Begin
+    fAccInv := TfAccInv.Create(nil);
+    Try
 
-  SaveInternalInvoiceNoToExportInvoiceData ;
+      SaveInternalInvoiceNoToExportInvoiceData;
 
-  fAccInv.IntInvNo          := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  fAccInv.teInvoiceNo.Text  := dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString ;
-  fAccInv.CustomerNo        := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger ;
-  fAccInv.AgentNo           := dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger ;
-  fAccInv.ExportNo          := 2 ; //2 = Australien
-  fAccInv.acRefreshExecute(Sender) ;
-  fAccInv.ShowModal ;
- Finally
-  FreeAndNil(fAccInv) ;
- End ;
- End;
+      fAccInv.IntInvNo :=
+        dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      fAccInv.teInvoiceNo.Text :=
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString;
+      fAccInv.CustomerNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+      fAccInv.AgentNo := dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger;
+      fAccInv.ExportNo := 2; // 2 = Australien
+      fAccInv.acRefreshExecute(Sender);
+      fAccInv.ShowModal;
+    Finally
+      FreeAndNil(fAccInv);
+    End;
+  End;
 end;
 
 procedure TfrmInvoiceList.acDeleteInvoiceUpdate(Sender: TObject);
 begin
- acDeleteInvoice.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- AND ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger < 1) or (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull))
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acDeleteInvoice.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) AND
+    ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger < 1) or
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull)) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
 procedure TfrmInvoiceList.acGroupedInvoiceUpdate(Sender: TObject);
 begin
- acGroupedInvoice.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.Controller.SelectedRecordCount > 0)
-// and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0)
- AND ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0) AND (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull = False)) ;
+  acGroupedInvoice.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.Controller.SelectedRecordCount > 0)
+  // and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0)
+    AND ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0) AND
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull = False));
 end;
 
 procedure TfrmInvoiceList.acOpenInvoiceUpdate(Sender: TObject);
 begin
- acOpenInvoice.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acOpenInvoice.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
-procedure TfrmInvoiceList.acPrintClientInvoiceAndSpecificationExecute(Sender: TObject);
-Var FormCRPrintReport       : TFormCRPrintReport;
-    A                       : array of variant;
-    RoleType                : Integer ;
+procedure TfrmInvoiceList.acPrintClientInvoiceAndSpecificationExecute
+  (Sender: TObject);
+Var
+  FormCRPrintReport: TFormCRPrintReport;
+  A: array of variant;
+  RoleType: Integer;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRPrintReport:= TFormCRPrintReport.Create(Nil);
- RoleType                := 1;
- Try
-  SetLength(A, 1);
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-//const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
-  FormCRPrintReport.CreateCo(0, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,     RoleType, cFaktura, A) ;
-  FormCRPrintReport.CreateCo(0,dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,     RoleType, cPkgSpec, A) ;
- Finally
-  FreeAndNil(FormCRPrintReport) ;//.Free ;
- End ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+  RoleType := 1;
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
+    FormCRPrintReport.CreateCo(0,
+      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, A);
+    FormCRPrintReport.CreateCo(0,
+      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cPkgSpec, A);
+  Finally
+    FreeAndNil(FormCRPrintReport); // .Free ;
+  End;
 end;
 
 procedure TfrmInvoiceList.acEmailFakturaAndSpecExecute(Sender: TObject);
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddress           : String ;
-    x                       : Integer ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddress: String;
+  x: Integer;
 begin
- GetMarkedInvoices ;
- For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
- Begin
-  EmailFakturaAndSpecExecute(StrToInt(lbLO_To_Invoice.Items[x])) ;
- End ;
+  GetMarkedInvoices;
+  For x := 0 to lbLO_To_Invoice.Items.Count - 1 do
+  Begin
+    EmailFakturaAndSpecExecute(StrToInt(lbLO_To_Invoice.Items[x]));
+  End;
 
-(* MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
- if Length(MailToAddress) = 0 then
- Begin
-  MailToAddress:= 'ange@adress.nu' ;
-  ShowMessage('Emailadress saknas för klienten, ange adressen i mailet(outlook)') ;
- End ;
- if Length(MailToAddress) > 0 then
- Begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
- SetLength(Attach, 2);
- Attach[0]        := ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
- Try
-  dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString
-  +' - Invoice/package specification. InvoiceNo: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
-  'Faktura och paketspecifikation bifogad. '
-  +LF+''
-  +'Invoice and package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-  MailToAddress,
-  Attach) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
-   *)
+  (* MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
+    if Length(MailToAddress) = 0 then
+    Begin
+    MailToAddress:= 'ange@adress.nu' ;
+    ShowMessage('Emailadress saknas för klienten, ange adressen i mailet(outlook)') ;
+    End ;
+    if Length(MailToAddress) > 0 then
+    Begin
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+    FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
+    Try
+    SetLength(A, 1);
+    A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
+    FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+    FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+    Finally
+    FreeAndNil(FormCRExportOneReport) ;//.Free ;
+    End ;
+    SetLength(Attach, 2);
+    Attach[0]        := ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+    Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+    dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
+    Try
+    dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString
+    +' - Invoice/package specification. InvoiceNo: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    'Faktura och paketspecifikation bifogad. '
+    +LF+''
+    +'Invoice and package specification attached. '
+    +LF+''
+    +LF+''
+    +LF+'MVH/Best Regards, '
+    +LF+''
+    +dmsContact.GetFirstAndLastName(ThisUser.UserID),
+    dmsSystem.Get_Dir('MyEmailAddress'),
+    MailToAddress,
+    Attach) ;
+    Finally
+    FreeAndNil(dm_SendMapiMail) ;
+    End ;
+    End
+    else
+    ShowMessage('Emailadress saknas för klienten!') ;
+  *)
 end;
 
 procedure TfrmInvoiceList.acPrintTRPOrderExecute(Sender: TObject);
-var FormCRPrintOneReport  : TFormCRPrintOneReport;
-    A : array of variant;
+var
+  FormCRPrintOneReport: TFormCRPrintOneReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- dmsContact.InsertUserIssueReport (ThisUser.UserID, dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  dmsContact.InsertUserIssueReport(thisuser.userid,
+    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
- FormCRPrintOneReport:= TFormCRPrintOneReport.Create(Nil);
- Try
-//CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+  FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+  Try
+    // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
 
-  SetLength(A, 1);
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
 
- Finally
-  FreeAndNil(FormCRPrintOneReport)  ;
- End ;
+  Finally
+    FreeAndNil(FormCRPrintOneReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acPrintTrpOrderAndSpecExecute(Sender: TObject);
 begin
- acPrintTRPOrderExecute(Sender) ;
- acClientPackageSpecificationExecute(Sender) ;
+  acPrintTRPOrderExecute(Sender);
+  acClientPackageSpecificationExecute(Sender);
 end;
 
 procedure TfrmInvoiceList.Timer1Timer(Sender: TObject);
 begin
- nfSearchLO.SetFocus ;
- nfSearchLO.SelectAll ;
- Timer1.Enabled:= False ;
+  nfSearchLO.Setfocus;
+  nfSearchLO.SelectAll;
+  Timer1.Enabled := False;
 end;
 
 procedure TfrmInvoiceList.acExportInvoiceSpecExecute(Sender: TObject);
 begin
- dmVidaInvoice.ExportInvoiceSpecWoodxExecute(
- dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
- dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
- dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+  dmVidaInvoice.ExportInvoiceSpecWoodxExecute
+    (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
 
-{ dm_ImportWoodx:= Tdm_ImportWoodx.Create(nil);
- Try
- With dm_ImportWoodx do
- Begin
-//  DeliveryMessageNumber:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsString ;
-  Try
-   ExportDeliveryWoodMessage(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
-   ExportToWoodx ;
-  Except
-  End ;
- End ;
- Finally
-  FreeAndNil(dm_ImportWoodx) ;
- End ; }
+  { dm_ImportWoodx:= Tdm_ImportWoodx.Create(nil);
+    Try
+    With dm_ImportWoodx do
+    Begin
+    //  DeliveryMessageNumber:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsString ;
+    Try
+    ExportDeliveryWoodMessage(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
+    ExportToWoodx ;
+    Except
+    End ;
+    End ;
+    Finally
+    FreeAndNil(dm_ImportWoodx) ;
+    End ; }
 end;
 
-Procedure TfrmInvoiceList.ExportToWoodx ;
-//Var DeliveryMessageNumber : String ;
+Procedure TfrmInvoiceList.ExportToWoodx;
+// Var DeliveryMessageNumber : String ;
 begin
- XMLImportExport:= TXMLImportExport.Create(nil);
- try
-  XMLImportExport.InvoiceNo             := dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger ;
-  XMLImportExport.InternalInvoiceNo     := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  XMLImportExport.CustomerNo            := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger ;  
-  XMLImportExport.tsImport.TabVisible   := False ;
-   if XMLImportExport.ShowModal = mrOK then
-   Begin
-//    DeliveryMessageNumber:= XMLImportExport.DeliveryMessageNumber ;
-   End ;
- finally
-  FreeAndNil(XMLImportExport) ;
- end;
+  XMLImportExport := TXMLImportExport.Create(nil);
+  try
+    XMLImportExport.InvoiceNo :=
+      dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger;
+    XMLImportExport.InternalInvoiceNo :=
+      dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    XMLImportExport.CustomerNo := dmVidaInvoice.cdsInvoiceListCustomerNo.
+      AsInteger;
+    XMLImportExport.tsImport.TabVisible := False;
+    if XMLImportExport.ShowModal = mrOk then
+    Begin
+      // DeliveryMessageNumber:= XMLImportExport.DeliveryMessageNumber ;
+    End;
+  finally
+    FreeAndNil(XMLImportExport);
+  end;
 end;
 
 procedure TfrmInvoiceList.acEmailaTrpBrevExecute(Sender: TObject);
-Var x                       : Integer ;
+Var
+  x: Integer;
 begin
- GetMarkedInvoices ;
- For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
- Begin
-  EmailaTrpBrevExecute(StrToInt(lbLO_To_Invoice.Items[x])) ;
- End ;
-(*
-// MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
- MailToAddress:= dmsContact.GetEmailAddressForSpeditorByLO(dmVidaInvoice.cdsInvoiceListLO.AsInteger) ;
- if Length(MailToAddress) = 0 then
- Begin
-  MailToAddress:= 'ange@adress.nu' ;
-  ShowMessage('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)') ;
- End ;
- if Length(MailToAddress) > 0 then
- Begin
+  GetMarkedInvoices;
+  For x := 0 to lbLO_To_Invoice.Items.Count - 1 do
+  Begin
+    EmailaTrpBrevExecute(StrToInt(lbLO_To_Invoice.Items[x]));
+  End;
+  (*
+    // MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
+    MailToAddress:= dmsContact.GetEmailAddressForSpeditorByLO(dmVidaInvoice.cdsInvoiceListLO.AsInteger) ;
+    if Length(MailToAddress) = 0 then
+    Begin
+    MailToAddress:= 'ange@adress.nu' ;
+    ShowMessage('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)') ;
+    End ;
+    if Length(MailToAddress) > 0 then
+    Begin
 
 
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+    FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
+    Try
+    SetLength(A, 1);
 
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cTrpBrev, A, ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
+    A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
+    FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cTrpBrev, A, ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+    FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+    Finally
+    FreeAndNil(FormCRExportOneReport) ;//.Free ;
+    End ;
 
 
 
- SetLength(Attach, 2);
- Attach[0]        := ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
- Try
-  dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
-  'Transportbrev/Paketspecifikation bifogad. '
-  +LF+''
-  +'Transport letter/Package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-  MailToAddress,
-  Attach) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
-   *)
+    SetLength(Attach, 2);
+    Attach[0]        := ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+    Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+    dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
+    Try
+    dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    'Transportbrev/Paketspecifikation bifogad. '
+    +LF+''
+    +'Transport letter/Package specification attached. '
+    +LF+''
+    +LF+''
+    +LF+'MVH/Best Regards, '
+    +LF+''
+    +dmsContact.GetFirstAndLastName(ThisUser.UserID),
+    dmsSystem.Get_Dir('MyEmailAddress'),
+    MailToAddress,
+    Attach) ;
+    Finally
+    FreeAndNil(dm_SendMapiMail) ;
+    End ;
+    End
+    else
+    ShowMessage('Emailadress saknas för klienten!') ;
+  *)
 end;
 
-procedure TfrmInvoiceList.EmailFakturaAndSpecExecute(const InternalInvoiceNo : Integer) ;
+procedure TfrmInvoiceList.EmailFakturaAndSpecExecute(const InternalInvoiceNo
+  : Integer);
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddressAgent,
-    MailToAddressKund,    
-    MailToAddress           : String ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddressAgent, MailToAddressKund, MailToAddress: String;
 begin
- if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
- Begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
+    InternalInvoiceNo, []) then
+  Begin
 
-{ if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
- (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
- MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger)
- else
- MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ; }
+    { if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
+      (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
+      MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger)
+      else
+      MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ; }
 
- if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
- (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
- MailToAddressAgent := dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger) ;
+    if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
+      (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
+      MailToAddressAgent := dmsContact.GetEmailAddress
+        (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger);
 
- MailToAddressKund  := dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
+    MailToAddressKund := dmsContact.GetEmailAddress
+      (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger);
 
- if (Length(MailToAddressAgent) > 0) and (Length(MailToAddressKund) > 0) then
- MailToAddress := MailToAddressAgent + MailToAddressKund
- else
- if (Length(MailToAddressAgent) > 0) then
- MailToAddress := MailToAddressAgent
- else
- if (Length(MailToAddressKund) > 0) then
- MailToAddress := MailToAddressKund ;
+    if (Length(MailToAddressAgent) > 0) and (Length(MailToAddressKund) > 0) then
+      MailToAddress := MailToAddressAgent + MailToAddressKund
+    else if (Length(MailToAddressAgent) > 0) then
+      MailToAddress := MailToAddressAgent
+    else if (Length(MailToAddressKund) > 0) then
+      MailToAddress := MailToAddressKund;
 
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Emailadress saknas för klienten, ange adressen i mailet(outlook)');
+    End;
+    if Length(MailToAddress) > 0 then
+    Begin
 
- if Length(MailToAddress) = 0 then
- Begin
-  MailToAddress := 'ange@adress.nu' ;
-  ShowMessage('Emailadress saknas för klienten, ange adressen i mailet(outlook)') ;
- End ;
- if Length(MailToAddress) > 0 then
- Begin
+      if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+        Exit;
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A,
+          ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A,
+          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
 
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
-
- SetLength(Attach, 2);
- Attach[0]        := ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
- Try
-  dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString
-  +' - Invoice/package specification. InvoiceNo: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
-  'Faktura och paketspecifikation bifogad. '
-  +LF+''
-  +'Invoice and package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-  MailToAddress,
-  Attach, False) ;
-  dmVidaInvoice.MailaCopyToVIDASTORE(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
- End ;//if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
+      SetLength(Attach, 2);
+      Attach[0] := ExcelDir + 'InvoiceNo ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      Attach[1] := ExcelDir + 'Specification ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
+          dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString +
+          ' - Invoice/package specification. InvoiceNo: ' +
+          dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+          'Faktura och paketspecifikation bifogad. ' + LF + '' +
+          'Invoice and package specification attached. ' + LF + '' + LF + '' +
+          LF + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (thisuser.userid), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+          Attach, False);
+        dmVidaInvoice.MailaCopyToVIDASTORE
+          (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+          dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
+          dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
-procedure TfrmInvoiceList.EmailaTrpBrevExecute(const InternalInvoiceNo : Integer) ;
+procedure TfrmInvoiceList.EmailaTrpBrevExecute(const InternalInvoiceNo
+  : Integer);
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddress           : String ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddress: String;
 begin
- if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
- Begin
- MailToAddress:= dmsContact.GetEmailAddressForSpeditorByLO(dmVidaInvoice.cdsInvoiceListLO.AsInteger) ;
- if Length(MailToAddress) = 0 then
- Begin
-  MailToAddress:= 'ange@adress.nu' ;
-  ShowMessage('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)') ;
- End ;
- if Length(MailToAddress) > 0 then
- Begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
+    InternalInvoiceNo, []) then
+  Begin
+    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+      (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+    End;
+    if Length(MailToAddress) > 0 then
+    Begin
 
+      if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+        Exit;
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
 
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cTrpBrev, A,
+          ExcelDir + 'Transportbrev ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A,
+          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
 
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cTrpBrev, A, ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
-
-
-
- SetLength(Attach, 2);
- Attach[0]        := ExcelDir + 'Transportbrev '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
- dm_SendMapiMail  := Tdm_SendMapiMail.Create(nil);
- Try
-  dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
-  'Transportbrev/Paketspecifikation bifogad. '
-  +LF+''
-  +'Transport letter/Package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-  MailToAddress,
-  Attach, False) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
- End ;//if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
+      SetLength(Attach, 2);
+      Attach[0] := ExcelDir + 'Transportbrev ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      Attach[1] := ExcelDir + 'Specification ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
+          dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+          'Transportbrev/Paketspecifikation bifogad. ' + LF + '' +
+          'Transport letter/Package specification attached. ' + LF + '' + LF +
+          '' + LF + 'MVH/Best Regards, ' + LF + '' +
+          dmsContact.GetFirstAndLastName(thisuser.userid),
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
 procedure TfrmInvoiceList.acExportInvoiceSpecUpdate(Sender: TObject);
 begin
- acExportInvoiceSpec.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acExportInvoiceSpec.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
 procedure TfrmInvoiceList.acSpecSV_GroupByLoadNoExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  FormCRViewReport.CreateCo('SPECIFICATION_SV_GrpLast_VER2.rpt', A) ;
-  if FormCRViewReport.ReportFound then
-  Begin
-   FormCRViewReport.ShowModal ;
-  End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo('SPECIFICATION_SV_GrpLast_VER2.rpt', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmInvoiceList.acFakturaSvenskUpdate(Sender: TObject);
 begin
- acFakturaSvensk.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaSvensk.Enabled := (thisuser.userid = 8) or (thisuser.userid = 4);
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskUpdate(Sender: TObject);
 begin
- acFakturaEngelsk.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelsk.Enabled := (thisuser.userid = 8) or (thisuser.userid = 4);
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskLangdUpdate(Sender: TObject);
 begin
- acFakturaEngelskLangd.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelskLangd.Enabled := (thisuser.userid = 8) or
+    (thisuser.userid = 4);
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelskAgustUpdate(Sender: TObject);
 begin
- acFakturaEngelskAgust.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelskAgust.Enabled := (thisuser.userid = 8) or
+    (thisuser.userid = 4);
 end;
 
-procedure TfrmInvoiceList.acFakturaEngelskLengthPlusNM3Update(
-  Sender: TObject);
+procedure TfrmInvoiceList.acFakturaEngelskLengthPlusNM3Update(Sender: TObject);
 begin
- acFakturaEngelskLengthPlusNM3.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelskLengthPlusNM3.Enabled := (thisuser.userid = 8) or
+    (thisuser.userid = 4);
 end;
 
-procedure TfrmInvoiceList.acFakturaEngelskLangdPerPakettypUpdate(
-  Sender: TObject);
+procedure TfrmInvoiceList.acFakturaEngelskLangdPerPakettypUpdate
+  (Sender: TObject);
 begin
- acFakturaEngelskLangdPerPakettyp.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelskLangdPerPakettyp.Enabled := (thisuser.userid = 8) or
+    (thisuser.userid = 4);
 end;
 
-procedure TfrmInvoiceList.acFakturaSvenskUtanMoms_DKUpdate(
-  Sender: TObject);
+procedure TfrmInvoiceList.acFakturaSvenskUtanMoms_DKUpdate(Sender: TObject);
 begin
- acFakturaSvenskUtanMoms_DK.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaSvenskUtanMoms_DK.Enabled := (thisuser.userid = 8) or
+    (thisuser.userid = 4);
 end;
 
 procedure TfrmInvoiceList.acFakturaEngelsk_DKUpdate(Sender: TObject);
 begin
- acFakturaEngelsk_DK.Enabled:= (ThisUser.UserID = 8) or (ThisUser.UserID = 4) ;
+  acFakturaEngelsk_DK.Enabled := (thisuser.userid = 8) or (thisuser.userid = 4);
 end;
 
 procedure TfrmInvoiceList.acPreViewInvoiceExecute(Sender: TObject);
 var
-  ReportName : String ;
-  promptUser: OleVariant; numberOfCopy: OleVariant; collated: OleVariant;
-  PrinterSetup : Integer ;
-  FormCRViewReport : TFormCRViewReport ;
-  A                 : array of variant ;
+  ReportName: String;
+  promptUser: OleVariant;
+  numberOfCopy: OleVariant;
+  collated: OleVariant;
+  PrinterSetup: Integer;
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- dmsContact.GetClientDocPrefs ( dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura {DocTyp}, ReportName, numberOfCopy, promptUser, collated, PrinterSetup) ;
- if (Length(ReportName) < 4) then
- Begin
-  ShowMessage('Rapporten finns inte upplagd på klienten') ;
-  Exit ;
- End ; //if
+  dmsContact.GetClientDocPrefs(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    cFaktura { DocTyp } , ReportName, numberOfCopy, promptUser, collated,
+    PrinterSetup);
+  if (Length(ReportName) < 4) then
+  Begin
+    ShowMessage('Rapporten finns inte upplagd på klienten');
+    Exit;
+  End; // if
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo(ReportName, A) ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo(ReportName, A);
 
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
-
-
 procedure TfrmInvoiceList.acPreviewPkgSpecExecute(Sender: TObject);
 var
-  ReportName        : String ;
-  promptUser        : OleVariant;
-  numberOfCopy      : OleVariant;
-  collated          : OleVariant;
-  PrinterSetup      : Integer ;
-  FormCRViewReport  : TFormCRViewReport ;
-  Save_Cursor       : TCursor;
-  A                 : array of variant ;
+  ReportName: String;
+  promptUser: OleVariant;
+  numberOfCopy: OleVariant;
+  collated: OleVariant;
+  PrinterSetup: Integer;
+  FormCRViewReport: TFormCRViewReport;
+  Save_Cursor: TCursor;
+  A: array of variant;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
- Try
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  Try
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+      Exit;
 
- dmsContact.GetClientDocPrefs ( dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec {DocTyp}, ReportName, numberOfCopy,
- promptUser, collated, PrinterSetup) ;
- if (Length(ReportName) < 4) then
- Begin
-  ShowMessage('Rapporten finns inte upplagd på klienten') ;
-  Exit ;
- End ; //if
+    dmsContact.GetClientDocPrefs
+      (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec { DocTyp } ,
+      ReportName, numberOfCopy, promptUser, collated, PrinterSetup);
+    if (Length(ReportName) < 4) then
+    Begin
+      ShowMessage('Rapporten finns inte upplagd på klienten');
+      Exit;
+    End; // if
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo(ReportName, A) ;
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo(ReportName, A);
 
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+      if FormCRViewReport.ReportFound then
+      Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 
 end;
 
 procedure TfrmInvoiceList.acPrintCreditInvoicesExecute(Sender: TObject);
-Var FormCRPrintReport       : TFormCRPrintReport;
-    IntInvNo, Client        : array of variant;
-    x, RoleType             : Integer ;
+Var
+  FormCRPrintReport: TFormCRPrintReport;
+  IntInvNo, Client: array of variant;
+  x, RoleType: Integer;
 begin
- x := 0 ;
- if MessageDlg('Vill du skriva ut alla kreditfakturor gjorda under 2008?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- With dmVidaInvoice do
- Begin
-  sq_CreditInv.Open ;
-  Try
-  sq_CreditInv.First ;
-  While not sq_CreditInv.Eof do
-  Begin
-    SetLength(IntInvNo, x + 1) ;
-    SetLength(Client, x + 1) ;
-    IntInvNo[x] := sq_CreditInvInternalInvoiceNo.AsInteger ;
-    Client[x]   := sq_CreditInvCustomerNo.AsInteger ;
-    x := succ(x) ;
-  sq_CreditInv.Next ;
-  End ;//While
-  Finally
-   sq_CreditInv.Close ;
-  End ;
+  x := 0;
+  if MessageDlg('Vill du skriva ut alla kreditfakturor gjorda under 2008?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    With dmVidaInvoice do
+    Begin
+      sq_CreditInv.Open;
+      Try
+        sq_CreditInv.First;
+        While not sq_CreditInv.Eof do
+        Begin
+          SetLength(IntInvNo, x + 1);
+          SetLength(Client, x + 1);
+          IntInvNo[x] := sq_CreditInvInternalInvoiceNo.AsInteger;
+          Client[x] := sq_CreditInvCustomerNo.AsInteger;
+          x := succ(x);
+          sq_CreditInv.Next;
+        End; // While
+      Finally
+        sq_CreditInv.Close;
+      End;
 
-  if High(IntInvNo) > 0 then
-  Begin
-   FormCRPrintReport:= TFormCRPrintReport.Create(Nil);
-   RoleType:= 1 ;
-   Try
-    FormCRPrintReport.CreateCoForPrintMany(1, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, IntInvNo, Client) ;
-   Finally
-    FreeAndNil(FormCRPrintReport) ; //.Free ;
-   End ;
-  End ;
+      if High(IntInvNo) > 0 then
+      Begin
+        FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+        RoleType := 1;
+        Try
+          FormCRPrintReport.CreateCoForPrintMany(1,
+            dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType,
+            cFaktura, IntInvNo, Client);
+        Finally
+          FreeAndNil(FormCRPrintReport); // .Free ;
+        End;
+      End;
 
- End ;//With
+    End; // With
 end;
 
 procedure TfrmInvoiceList.acPrintMenyExecute(Sender: TObject);
 begin
- pmPrint.Popup(300,200) ;
+  pmPrint.Popup(300, 200);
 end;
 
 procedure TfrmInvoiceList.acKundSpecifikaExecute(Sender: TObject);
-var fAddKundSpecifika: TfAddKundSpecifika;
+var
+  fAddKundSpecifika: TfAddKundSpecifika;
 begin
- with dmVidaInvoice do
- Begin
-  dmsSystem.Open_ClientPrefDocs ;
-  fAddKundSpecifika:= TfAddKundSpecifika.Create(nil) ;
-  try
-   if fAddKundSpecifika.ShowModal = mrOK then
-    PrintKundSpecifikFaktura(dmsSystem.cdsClientPrefDocsRAPPORT.AsString) ;
-  finally
-   FreeAndNil(fAddKundSpecifika) ;
-   dmsSystem.Close_ClientPrefDocs ;
-  end;
- End ;//With
+  with dmVidaInvoice do
+  Begin
+    dmsSystem.Open_ClientPrefDocs;
+    fAddKundSpecifika := TfAddKundSpecifika.Create(nil);
+    try
+      if fAddKundSpecifika.ShowModal = mrOk then
+        PrintKundSpecifikFaktura(dmsSystem.cdsClientPrefDocsRAPPORT.AsString);
+    finally
+      FreeAndNil(fAddKundSpecifika);
+      dmsSystem.Close_ClientPrefDocs;
+    end;
+  End; // With
 end;
 
-procedure TfrmInvoiceList.PrintKundSpecifikFaktura(const RapportNamn : String);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                 : array of variant ;
+procedure TfrmInvoiceList.PrintKundSpecifikFaktura(const RapportNamn: String);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then exit ;
+  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    Exit;
 
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]  := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
- FormCRViewReport.CreateCo(RapportNamn, A) ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    FormCRViewReport.CreateCo(RapportNamn, A);
 
- if FormCRViewReport.ReportFound then
- Begin
+    if FormCRViewReport.ReportFound then
+    Begin
 
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport)  ;
- End ;
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 
 end;
 
 (*
-procedure TfrmInvoiceList.RefreshInvoiceList (Sender: TObject;const SalesOrgNo : String;const InvoiceNo, InvoiceNoII, LONo, InternalInvoiceNo : Integer) ;
-Var
- Save_Cursor  : TCursor;
- InvoiceType  : Integer ;
-begin
-// with daMoLM1 do
- with  dmVidaInvoice do
- Begin
+  procedure TfrmInvoiceList.RefreshInvoiceList (Sender: TObject;const SalesOrgNo : String;const InvoiceNo, InvoiceNoII, LONo, InternalInvoiceNo : Integer) ;
+  Var
+  Save_Cursor  : TCursor;
+  InvoiceType  : Integer ;
+  begin
+  // with daMoLM1 do
+  with  dmVidaInvoice do
+  Begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
   grdFakturaDBBandedTableView1.BeginUpdate ;
-//  grdInvoice.DataSource.DataSet.DisableControls ;
+  //  grdInvoice.DataSource.DataSet.DisableControls ;
   Try
 
 
   if cds_PropsInv.State = dsBrowse then
-   cds_PropsInv.Edit ;
+  cds_PropsInv.Edit ;
 
   if Length(icBetalStatus.Text) = 0 then
-   cds_PropsInvStatus.Clear ;
+  cds_PropsInvStatus.Clear ;
 
   if Length(lcSaljgrupp.Text) = 0 then
-   cds_PropsInvSalesPersonNo.Clear ;
+  cds_PropsInvSalesPersonNo.Clear ;
 
   if Length(lcSR.Text) = 0 then
-   cds_PropsInvSalesRegionNo.Clear ;
+  cds_PropsInvSalesRegionNo.Clear ;
 
   if Length(lcKund.Text) = 0 then
-   cds_PropsInvClientNo.Clear ;
+  cds_PropsInvClientNo.Clear ;
 
   if Length(cbTyp.Text) = 0 then
-   cds_PropsInvBarCodeNo.Clear ;
+  cds_PropsInvBarCodeNo.Clear ;
 
   if Length(cbKonto.Text) = 0 then
-   cds_PropsInvBookingTypeNo.Clear ;
+  cds_PropsInvBookingTypeNo.Clear ;
 
   if Length(cbVaruSlag.Text) = 0 then
-   cds_PropsInvCopyPcs.Clear ;
+  cds_PropsInvCopyPcs.Clear ;
 
   if Length(icTransferredStatus.Text) = 0 then
-   cds_PropsInvGradeStampNo.Clear ;
+  cds_PropsInvGradeStampNo.Clear ;
 
   if cds_PropsInv.State in [dsEdit, dsInsert] then
-   cds_PropsInv.Post ;
+  cds_PropsInv.Post ;
 
 
   cdsInvoiceList.Active:= False ;
@@ -2605,19 +2777,19 @@ begin
 
   cdsInvoiceList.SQL.Add('inos.InvoiceNo AS INVOICE_NO,') ;
 
-   cdsInvoiceList.SQL.Add('CASE') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 0 THEN '+'''VIDA (VWK1)''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 1 THEN '+'''PROFORMA, fakturera senare''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 2 THEN '+'''PROFORMA, flytta paket''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 3 THEN '+'''INKÖP''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 4 THEN '+'''USA (VWK2)''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 5 THEN '+'''FW (VWK4)''') ;
-   cdsInvoiceList.SQL.Add('END AS INVOICE_TYPE,') ;
+  cdsInvoiceList.SQL.Add('CASE') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 0 THEN '+'''VIDA (VWK1)''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 1 THEN '+'''PROFORMA, fakturera senare''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 2 THEN '+'''PROFORMA, flytta paket''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 3 THEN '+'''INKÖP''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 4 THEN '+'''USA (VWK2)''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 5 THEN '+'''FW (VWK4)''') ;
+  cdsInvoiceList.SQL.Add('END AS INVOICE_TYPE,') ;
 
-   cdsInvoiceList.SQL.Add('CASE') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 0 THEN '+'''DEBIT''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 1 THEN '+'''CREDIT''') ;
-   cdsInvoiceList.SQL.Add('END AS INVOICE_KONTO,') ;
+  cdsInvoiceList.SQL.Add('CASE') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 0 THEN '+'''DEBIT''') ;
+  cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 1 THEN '+'''CREDIT''') ;
+  cdsInvoiceList.SQL.Add('END AS INVOICE_KONTO,') ;
 
   cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)') ;
   cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C') ;
@@ -2663,13 +2835,13 @@ begin
   cdsInvoiceList.SQL.Add('ELSE 0 END AS momsvarde,') ;
 
 
-//Belopp Valuta
+  //Belopp Valuta
   cdsInvoiceList.SQL.Add('(Select SUM(invd.ProductValue) from dbo.InvoiceDetail invd') ;
   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
   cdsInvoiceList.SQL.Add('AND ((invd.ArticleNo = 1 or invd.ArticleNo = 3) OR (TypeOfRow = 2))) AS Produktvarde,') ; // Produktvärde
 
-//Belopp SEK
+  //Belopp SEK
   cdsInvoiceList.SQL.Add('(Select SUM(invd.ProductValue) from dbo.InvoiceDetail invd') ;
   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
@@ -2720,144 +2892,144 @@ begin
   cdsInvoiceList.SQL.Add('AND EX.ValidFrom <= IH.InvoiceDate') ;
   cdsInvoiceList.SQL.Add('group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS FraktValutaSEK,') ;
 
-   cdsInvoiceList.SQL.Add('IH.AgentName AS AGENT, ') ;
+  cdsInvoiceList.SQL.Add('IH.AgentName AS AGENT, ') ;
 
-   cdsInvoiceList.SQL.Add('isnull(IH.Trading,0) AS TRADING,') ;
+  cdsInvoiceList.SQL.Add('isnull(IH.Trading,0) AS TRADING,') ;
 
-   cdsInvoiceList.SQL.Add('IH.SalesOrgNo AS FörsäljOrgNr,') ;
+  cdsInvoiceList.SQL.Add('IH.SalesOrgNo AS FörsäljOrgNr,') ;
 
-   cdsInvoiceList.SQL.Add('CASE WHEN [dbo].[IsoWk](IH.InvoiceDate) < 10 THEN 	CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
-   cdsInvoiceList.SQL.Add(QuotedStr('-0') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2))') ;
-   cdsInvoiceList.SQL.Add('ELSE CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
-   cdsInvoiceList.SQL.Add(QuotedStr('-') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2)) END AS VECKA,') ;
+  cdsInvoiceList.SQL.Add('CASE WHEN [dbo].[IsoWk](IH.InvoiceDate) < 10 THEN 	CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
+  cdsInvoiceList.SQL.Add(QuotedStr('-0') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2))') ;
+  cdsInvoiceList.SQL.Add('ELSE CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
+  cdsInvoiceList.SQL.Add(QuotedStr('-') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2)) END AS VECKA,') ;
 
-   cdsInvoiceList.SQL.Add('IH.CountryName AS LAND,') ;
-   cdsInvoiceList.SQL.Add('SR.ClientName AS FörsäljReg,') ;
-   cdsInvoiceList.SQL.Add('SalesGroupName AS SäljGrupp, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo AS LO,') ;
-   cdsInvoiceList.SQL.Add('IH.ST_CityName AS LevORT, IL.Reference AS ErReferens, IL.OrderNoText AS Ordernr, IH.DueDate, IH.AgentNo,') ;
-   cdsInvoiceList.SQL.Add('IH.StickyNote AS Postit, Inos.Prefix AS PO_prefix, IH.VAT_OnInvoice AS Skatteupplag,') ;
+  cdsInvoiceList.SQL.Add('IH.CountryName AS LAND,') ;
+  cdsInvoiceList.SQL.Add('SR.ClientName AS FörsäljReg,') ;
+  cdsInvoiceList.SQL.Add('SalesGroupName AS SäljGrupp, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo AS LO,') ;
+  cdsInvoiceList.SQL.Add('IH.ST_CityName AS LevORT, IL.Reference AS ErReferens, IL.OrderNoText AS Ordernr, IH.DueDate, IH.AgentNo,') ;
+  cdsInvoiceList.SQL.Add('IH.StickyNote AS Postit, Inos.Prefix AS PO_prefix, IH.VAT_OnInvoice AS Skatteupplag,') ;
 
-   cdsInvoiceList.SQL.Add('(Select Top 1 invd.Konto from dbo.InvoiceDetail invd') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo') ;
-   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
-   cdsInvoiceList.SQL.Add('AND fsa.ArticleGroupNo = 0) AS Varukonto,') ;
+  cdsInvoiceList.SQL.Add('(Select Top 1 invd.Konto from dbo.InvoiceDetail invd') ;
+  cdsInvoiceList.SQL.Add('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo') ;
+  cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
+  cdsInvoiceList.SQL.Add('AND fsa.ArticleGroupNo = 0) AS Varukonto,') ;
 
-   cdsInvoiceList.SQL.Add('(Select Top 1 invd.Konto from dbo.InvoiceDetail invd') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo') ;
-   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
-   cdsInvoiceList.SQL.Add('AND fsa.ArticleGroupNo = 1) AS Fraktkonto,') ;
+  cdsInvoiceList.SQL.Add('(Select Top 1 invd.Konto from dbo.InvoiceDetail invd') ;
+  cdsInvoiceList.SQL.Add('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo') ;
+  cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo') ;
+  cdsInvoiceList.SQL.Add('AND fsa.ArticleGroupNo = 1) AS Fraktkonto,') ;
 
-   cdsInvoiceList.SQL.Add('(Select Top 1 invd.moms_konto from dbo.InvoiceDetail invd') ;
-   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo) AS Momskonto,') ;
+  cdsInvoiceList.SQL.Add('(Select Top 1 invd.moms_konto from dbo.InvoiceDetail invd') ;
+  cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo) AS Momskonto,') ;
 
-   cdsInvoiceList.SQL.Add('(Select Top 1 invd.VatCode from dbo.InvoiceDetail invd') ;
-   cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo) AS Momskod,') ;
+  cdsInvoiceList.SQL.Add('(Select Top 1 invd.VatCode from dbo.InvoiceDetail invd') ;
+  cdsInvoiceList.SQL.Add('WHERE invd.InternalInvoiceNo = ih.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('AND invd.ShippingPlanNo = IL.ShippingPlanNo) AS Momskod,') ;
 
-   cdsInvoiceList.SQL.Add('IH.IntraStatCountryNo, ISC.CountryName AS Statistikland, IH.DelKredit, IH.IncludeFreightCostInPrice') ;
+  cdsInvoiceList.SQL.Add('IH.IntraStatCountryNo, ISC.CountryName AS Statistikland, IH.DelKredit, IH.IncludeFreightCostInPrice') ;
 
-   cdsInvoiceList.SQL.Add('FROM dbo.InvoiceHeader IH') ;
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.Country ISC on ISC.CountryNo = IH.IntraStatCountryNo') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.InvoiceLO IL ON IL.InternalInvoiceNo = IH.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('FROM dbo.InvoiceHeader IH') ;
+  cdsInvoiceList.SQL.Add('Left Outer Join dbo.Country ISC on ISC.CountryNo = IH.IntraStatCountryNo') ;
+  cdsInvoiceList.SQL.Add('Inner Join dbo.InvoiceLO IL ON IL.InternalInvoiceNo = IH.InternalInvoiceNo') ;
 
-   cdsInvoiceList.SQL.Add('Inner join dbo.Client SR ON SR.ClientNo = IH.SupplierNo') ;
+  cdsInvoiceList.SQL.Add('Inner join dbo.Client SR ON SR.ClientNo = IH.SupplierNo') ;
 
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.SalesManGroupRow smg') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.SalesManGroup sm on sm.SalesGroupNo = smg.SalesGroupNo') ;
-   cdsInvoiceList.SQL.Add('on smg.UserID = IH.ResponsibleSeller') ;
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.InvoiceNos inos on inos.InternalInvoiceNo = IH.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('Left Outer Join dbo.SalesManGroupRow smg') ;
+  cdsInvoiceList.SQL.Add('Inner Join dbo.SalesManGroup sm on sm.SalesGroupNo = smg.SalesGroupNo') ;
+  cdsInvoiceList.SQL.Add('on smg.UserID = IH.ResponsibleSeller') ;
+  cdsInvoiceList.SQL.Add('Left Outer Join dbo.InvoiceNos inos on inos.InternalInvoiceNo = IH.InternalInvoiceNo') ;
 
-   cdsInvoiceList.SQL.Add('WHERE 1=1') ;
+  cdsInvoiceList.SQL.Add('WHERE 1=1') ;
 
-   if (not cds_PropsInvClientNo.IsNull) and (cds_PropsInvClientNo.AsInteger > 0) then
-   Begin
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   cdsInvoiceList.SQL.Add('AND IH.CustomerNo = ' + cds_PropsInvClientNo.AsString) ;
-   End ;
+  if (not cds_PropsInvClientNo.IsNull) and (cds_PropsInvClientNo.AsInteger > 0) then
+  Begin
+  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+  cdsInvoiceList.SQL.Add('AND IH.CustomerNo = ' + cds_PropsInvClientNo.AsString) ;
+  End ;
 
-   if Length(SalesOrgNo) > 0 then
-   cdsInvoiceList.SQL.Add('AND IH.SalesOrgNo LIKE ' + QuotedStr('%' + teSaleOrgNr.Text + '%') ) ;
+  if Length(SalesOrgNo) > 0 then
+  cdsInvoiceList.SQL.Add('AND IH.SalesOrgNo LIKE ' + QuotedStr('%' + teSaleOrgNr.Text + '%') ) ;
 
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if (cds_PropsINVSalesPersonNo.AsInteger > 0) and (InvoiceNo = -1) and (LONo = -1) then
-    cdsInvoiceList.SQL.Add('AND smg.SalesGroupNo = ' + cds_PropsINVSalesPersonNo.AsString) ;
-   End ;
+  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+  Begin
+  if (cds_PropsINVSalesPersonNo.AsInteger > 0) and (InvoiceNo = -1) and (LONo = -1) then
+  cdsInvoiceList.SQL.Add('AND smg.SalesGroupNo = ' + cds_PropsINVSalesPersonNo.AsString) ;
+  End ;
 
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsInvLengthFormatNo.AsInteger = 1 then
-     cdsInvoiceList.SQL.Add('AND ((IH.DelKredit = 0) or (IH.DelKredit is null))') ;
-   End ;
+  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+  Begin
+  if cds_PropsInvLengthFormatNo.AsInteger = 1 then
+  cdsInvoiceList.SQL.Add('AND ((IH.DelKredit = 0) or (IH.DelKredit is null))') ;
+  End ;
 
-   if cds_PropsInvLengthOption.AsInteger = 1 then
-   Begin
-    cdsInvoiceList.SQL.Add('AND exists (Select  inos2.InternalInvoiceNo FROM ') ;
-    cdsInvoiceList.SQL.Add('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)') ;
-   End ;
+  if cds_PropsInvLengthOption.AsInteger = 1 then
+  Begin
+  cdsInvoiceList.SQL.Add('AND exists (Select  inos2.InternalInvoiceNo FROM ') ;
+  cdsInvoiceList.SQL.Add('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)') ;
+  End ;
 
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsINVSalesRegionNo.AsInteger > 0 then
-    cdsInvoiceList.SQL.Add('AND IH.SupplierNo = ' + cds_PropsINVSalesRegionNo.AsString) ;
-   End ;
+  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+  Begin
+  if cds_PropsINVSalesRegionNo.AsInteger > 0 then
+  cdsInvoiceList.SQL.Add('AND IH.SupplierNo = ' + cds_PropsINVSalesRegionNo.AsString) ;
+  End ;
 
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsInvFilterOrderDate.AsInteger = 1 then
-    Begin
-     cdsInvoiceList.SQL.Add('AND IH.InvoiceDate >= ' + QuotedStr(DateTimeToStr(deStartPeriod.Date)) ) ;
-     cdsInvoiceList.SQL.Add('AND IH.InvoiceDate <= ' + QuotedStr(DateTimeToStr(deEndPeriod.Date)) ) ;
-    End ;
-   End ;
-
-
-   if InvoiceNo > -1 then
-   Begin
-    cdsInvoiceList.SQL.Add('AND inos.InvoiceNo = ' + IntToStr(InvoiceNo)) ;
-   End ;
+  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+  Begin
+  if cds_PropsInvFilterOrderDate.AsInteger = 1 then
+  Begin
+  cdsInvoiceList.SQL.Add('AND IH.InvoiceDate >= ' + QuotedStr(DateTimeToStr(deStartPeriod.Date)) ) ;
+  cdsInvoiceList.SQL.Add('AND IH.InvoiceDate <= ' + QuotedStr(DateTimeToStr(deEndPeriod.Date)) ) ;
+  End ;
+  End ;
 
 
-   if LONo <> -1 then
-    cdsInvoiceList.SQL.Add('AND IL.ShippingPlanNo = ' + IntToStr(LONo)) ;
+  if InvoiceNo > -1 then
+  Begin
+  cdsInvoiceList.SQL.Add('AND inos.InvoiceNo = ' + IntToStr(InvoiceNo)) ;
+  End ;
 
 
-   if InternalInvoiceNo  <> -1 then
-    cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo = ' + IntToStr(InternalInvoiceNo)) ;
+  if LONo <> -1 then
+  cdsInvoiceList.SQL.Add('AND IL.ShippingPlanNo = ' + IntToStr(LONo)) ;
 
 
-   cdsInvoiceList.SQL.Add(GetSQLofComboFilter(0, 'IH.InvoiceType', ccbInvoiceType)) ;
+  if InternalInvoiceNo  <> -1 then
+  cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo = ' + IntToStr(InternalInvoiceNo)) ;
+
+
+  cdsInvoiceList.SQL.Add(GetSQLofComboFilter(0, 'IH.InvoiceType', ccbInvoiceType)) ;
 
   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
   Begin
   Case cbTyp.ItemIndex of
-   0 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 0 ') ;
-   1 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 1 ') ;
-// 2 visa både snabb och normala
+  0 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 0 ') ;
+  1 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 1 ') ;
+  // 2 visa både snabb och normala
   End ;
   End ;
 
   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
   Begin
   Case cbKonto.ItemIndex of
-   0 : cdsInvoiceList.SQL.Add('AND IH.Tot_Inv_Inc_Freight_Extras > 0 ') ;
-   1 : cdsInvoiceList.SQL.Add('AND IH.Tot_Inv_Inc_Freight_Extras < 0 ') ;
-// 2 : visa både debit och credit
+  0 : cdsInvoiceList.SQL.Add('AND IH.Tot_Inv_Inc_Freight_Extras > 0 ') ;
+  1 : cdsInvoiceList.SQL.Add('AND IH.Tot_Inv_Inc_Freight_Extras < 0 ') ;
+  // 2 : visa både debit och credit
   End ;
   End ;
 
   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
   Begin
-   if (cds_PropsINVCopyPcs.AsInteger = 1) or (cds_PropsINVCopyPcs.AsInteger = 3) then
-   Begin
-    cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo in (Select InvD.InternalInvoiceNo FROM') ;
-    cdsInvoiceList.SQL.Add('dbo.InvoiceDetail InvD') ;
-    cdsInvoiceList.SQL.Add('Where InvD.InternalInvoiceNo = IH.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('AND InvD.ArticleNo = ' + IntToStr(cds_PropsINVCopyPcs.AsInteger) + ')') ;
-   End ;
+  if (cds_PropsINVCopyPcs.AsInteger = 1) or (cds_PropsINVCopyPcs.AsInteger = 3) then
+  Begin
+  cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo in (Select InvD.InternalInvoiceNo FROM') ;
+  cdsInvoiceList.SQL.Add('dbo.InvoiceDetail InvD') ;
+  cdsInvoiceList.SQL.Add('Where InvD.InternalInvoiceNo = IH.InternalInvoiceNo') ;
+  cdsInvoiceList.SQL.Add('AND InvD.ArticleNo = ' + IntToStr(cds_PropsINVCopyPcs.AsInteger) + ')') ;
+  End ;
   End ;
 
 
@@ -2865,639 +3037,685 @@ begin
   Begin
   if cds_PropsINVStatus.AsInteger = 1 then //DEL OCH OBETALDA
   Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo not IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
+  cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo not IN') ;
+  cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
   End
   else
   if cds_PropsINVStatus.AsInteger = 2 then //ENDAST DEL BETALDA
   Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 0 AND AmountPaid > 0)') ;
+  cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
+  cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 0 AND AmountPaid > 0)') ;
   End
   else
   if cds_PropsINVStatus.AsInteger = 3 then //FULL BETALDA
   Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
+  cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
+  cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
   End ;
   End ;//if  (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-//  ShowMessage('DisplayName = ' + ccbInvoiceType.Properties.Items.Items.DisplayName) ;
+  //  ShowMessage('DisplayName = ' + ccbInvoiceType.Properties.Items.Items.DisplayName) ;
 
 
 
-// if cbOpenQuery.Checked = False then
- if NoOfCheckedRowsComboFilter(ccbInvoiceType, InvoiceType) = 1 then
- Begin
- if cds_PropsINVGradeStampNo.AsInteger = 1 then
+  // if cbOpenQuery.Checked = False then
+  if NoOfCheckedRowsComboFilter(ccbInvoiceType, InvoiceType) = 1 then
+  Begin
+  if cds_PropsINVGradeStampNo.AsInteger = 1 then
   //EJ Överförda
- Begin
- Case InvoiceType of
-    0 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    4 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    5 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
+  Begin
+  Case InvoiceType of
+  0 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
+  4 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
+  5 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
 
-   End ; //Case
- End //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 1 then
- else
- //Överförda
- if cds_PropsINVGradeStampNo.AsInteger = 2 then
- Begin
- Case InvoiceType of
-    0 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    4 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    5 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
+  End ; //Case
+  End //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 1 then
+  else
+  //Överförda
+  if cds_PropsINVGradeStampNo.AsInteger = 2 then
+  Begin
+  Case InvoiceType of
+  0 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
+  4 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
+  5 : Begin
+  cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
+  cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
+  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
+  End ;
 
-   End ; //Case
- End ; //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 2 then
- End ;//
+  End ; //Case
+  End ; //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 2 then
+  End ;//
 
-   cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
-//  if ThisUser.UserID = 8 then cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
+  cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
+  //  if ThisUser.UserID = 8 then cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
 
   cdsInvoiceList.Active:= True ;
 
-   Finally
-//    grdInvoice.DataSource.DataSet.EnableControls ;
-    grdFakturaDBBandedTableView1.EndUpdate ;
-    Screen.Cursor := Save_Cursor;  { Always restore to normal }
-   End ;
- End ; // with
-end;
+  Finally
+  //    grdInvoice.DataSource.DataSet.EnableControls ;
+  grdFakturaDBBandedTableView1.EndUpdate ;
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+  End ;
+  End ; // with
+  end;
 *)
 
-Function TfrmInvoiceList.GetSQLofComboFilter(const dType : Byte;const Kolumn : String;combo : TcxCheckComboBox) : String ;
+Function TfrmInvoiceList.GetSQLofComboFilter(const dType: Byte;
+  const Kolumn: String; combo: TcxCheckComboBox): String;
 Var
-    APCheckStates : ^TcxCheckStates;
-    AddORToSQL    : Boolean ;
-    x             : Integer ;
+  APCheckStates: ^TcxCheckStates;
+  AddORToSQL: Boolean;
+  x: Integer;
 Begin
- AddORToSQL:= False ;
- Result:= '' ;
+  AddORToSQL := False;
+  Result := '';
   New(APCheckStates);
   try
-    with Combo do
+    with combo do
     begin
-     CalculateCheckStates(Value, Properties.Items,Properties.EditValueFormat , APCheckStates^);
-     if Properties.Items.Count > 0 then
-     Begin
-      for x := 0 to Properties.Items.Count - 1 do
+      CalculateCheckStates(Value, Properties.Items, Properties.EditValueFormat,
+        APCheckStates^);
+      if Properties.Items.Count > 0 then
       Begin
-       if APCheckStates^[x] = cbsChecked then
-       Begin
-        if AddORToSQL then
-         Result:= Result + ' OR '
-          else
-           Result:= ' AND (' ;
-        if dType = 0 then
-         Result:= Result + ' ' + Kolumn + ' = ' + QuotedStr(Properties.Items[x].ShortDescription)
-          else
-           Result:= Result + ' ' + Kolumn + ' = ' + ReplaceCommas(Properties.Items[x].ShortDescription) ;
+        for x := 0 to Properties.Items.Count - 1 do
+        Begin
+          if APCheckStates^[x] = cbsChecked then
+          Begin
+            if AddORToSQL then
+              Result := Result + ' OR '
+            else
+              Result := ' AND (';
+            if dType = 0 then
+              Result := Result + ' ' + Kolumn + ' = ' +
+                QuotedStr(Properties.Items[x].ShortDescription)
+            else
+              Result := Result + ' ' + Kolumn + ' = ' +
+                ReplaceCommas(Properties.Items[x].ShortDescription);
 
-        AddORToSQL:= True ;
-       End ;//if..
-      End ;//for..
-      if Length(Result) > 0 then
-      Result:= Result +' ) ' ;
-     End ;
-    end;//With
+            AddORToSQL := True;
+          End; // if..
+        End; // for..
+        if Length(Result) > 0 then
+          Result := Result + ' ) ';
+      End;
+    end; // With
   finally
     Dispose(APCheckStates)
   end;
-End ;
+End;
 
-procedure TfrmInvoiceList.grdFakturaDBBandedTableView1DblClick(
-  Sender: TObject);
+procedure TfrmInvoiceList.grdFakturaDBBandedTableView1DblClick(Sender: TObject);
 begin
- acOpenInvoiceExecute(Sender) ;
+  acOpenInvoiceExecute(Sender);
 end;
 
 procedure TfrmInvoiceList.acDelKreditExecute(Sender: TObject);
-Var Credit_Int_Inv_No : Integer ;
-    Year, Month, Day  : Word ;
-    DatumString       : String ;
+Var
+  Credit_Int_Inv_No: Integer;
+  Year, Month, Day: Word;
+  DatumString: String;
 begin
- with dmVidaInvoice do
- Begin
-  DecodeDate(SQLTimeStampToDateTime(cdsInvoiceListINV_DATE.AsSQLTimeStamp), Year, Month, Day) ;
-  DatumString := Copy(IntToStr(Year),3,2) ;
-  if Month < 10 then
-   DatumString  := DatumString + '0' + IntToStr(Month)
-    else
-     DatumString  := DatumString + IntToStr(Month) ;
-
-  if Day < 10 then
-   DatumString  := DatumString + '0' + IntToStr(Day)
-    else
-     DatumString  := DatumString + IntToStr(Day) ;
-
-  amt_Credit.Active := True ;
-  Try
-
- if GetMarkedInvoiceAndLOToCredit then
- Begin
- Credit_Int_Inv_No:= 0 ;
- if MessageDlg('Vill du delkreditera faktura nr '+
- cdsInvoiceListINVOICE_NO.AsString+' ?',
-    mtConfirmation, [mbYes, mbNo, mbCancel], 0) = mrYes then
- Begin
- if cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
- Begin
- Try
-  cdsInvoice_Credited.ParamByName('InternalInvoiceNo').AsInteger  := cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  cdsInvoice_Credited.Active:= True ;
-
-  sq_InvoiceNos.ParamByName('InternalInvoiceNo').AsInteger :=  cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  sq_InvoiceNos.Active  := True ;
-//  cdsInvoiceNumber.Active:= True ;
-// if cdsInvoiceNumber.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
- if not sq_InvoiceNos.Eof then
-
+  with dmVidaInvoice do
   Begin
-   fInternalInvoiceNo := cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   if cdsInvoice_Credited.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
-   Begin
-    ShowMessage('Info, fakturan är krediterad tidigare av ' + cdsInvoice_CreditedCreatedUser.AsString + '  Se internt fakturanr : ' + cdsInvoice_CreditedNewInternalInvoiceNo.AsString) ;
-   End ;
-   Credit_Int_Inv_No  := CreateDELCreditInvoiceByCopyDebitInvoice(cdsInvoiceListINVOICE_NO.AsInteger, cdsInvoiceListInternalInvoiceNo.AsInteger, DatumString) ;
-  End
-  else
-   ShowMessage('Preliminära fakturor kan inte krediteras.') ;
+    DecodeDate(SQLTimeStampToDateTime(cdsInvoiceListINV_DATE.AsSQLTimeStamp),
+      Year, Month, Day);
+    DatumString := Copy(inttostr(Year), 3, 2);
+    if Month < 10 then
+      DatumString := DatumString + '0' + inttostr(Month)
+    else
+      DatumString := DatumString + inttostr(Month);
 
- Finally
+    if Day < 10 then
+      DatumString := DatumString + '0' + inttostr(Day)
+    else
+      DatumString := DatumString + inttostr(Day);
 
-  cdsInvoiceLO.Filtered       := False ;
-  cdsInvoiceLO.Active         := False ;
-  cdsInvoiceDetail.Filtered   := False ;
-  cdsInvoiceDetail.Filter     := '';
-  cdsInvoiceDetail.Active     := False ;
-  cdsInvoice_Credited.Active  := False ;
-  cdsInvoiceNumber.Active     := False ;
-  sq_InvoiceNos.Active  := True ;
-  cdsInvoiceShipTo.Active     := False ;
-  if Credit_Int_Inv_No > 0 then
-  Begin
-   OpenInvoice(Credit_Int_Inv_No, cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger, cdsInvoiceHeadDelKredit.AsInteger) ;
-  End ;
- End ;
+    amt_Credit.Active := True;
+    Try
 
- End
-  else
-   ShowMessage('Kan inte kreditera en kreditfaktura.') ;
- End ;
+      if GetMarkedInvoiceAndLOToCredit then
+      Begin
+        Credit_Int_Inv_No := 0;
+        if MessageDlg('Vill du delkreditera faktura nr ' +
+          cdsInvoiceListINVOICE_NO.AsString + ' ?', mtConfirmation,
+          [mbYes, mbNo, mbCancel], 0) = mrYes then
+        Begin
+          if cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
+          Begin
+            Try
+              cdsInvoice_Credited.ParamByName('InternalInvoiceNo').AsInteger :=
+                cdsInvoiceListInternalInvoiceNo.AsInteger;
+              cdsInvoice_Credited.Active := True;
 
-  End //if GetMarkedInvoiceAndLOToCredit
-   else
-    ShowMessage('Endast EN faktura kan krediteras, du kan däremot välja flera lastordernr från ett fakturanr.') ;
-  Finally
-   amt_Credit.Active := False ;
-  End ;
- End ;// with
+              sq_InvoiceNos.ParamByName('InternalInvoiceNo').AsInteger :=
+                cdsInvoiceListInternalInvoiceNo.AsInteger;
+              sq_InvoiceNos.Active := True;
+              // cdsInvoiceNumber.Active:= True ;
+              // if cdsInvoiceNumber.Locate('InternalInvoiceNo',cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+              if not sq_InvoiceNos.Eof then
+
+              Begin
+                fInternalInvoiceNo := cdsInvoiceListInternalInvoiceNo.AsInteger;
+                if cdsInvoice_Credited.Locate('InternalInvoiceNo',
+                  cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
+                Begin
+                  ShowMessage('Info, fakturan är krediterad tidigare av ' +
+                    cdsInvoice_CreditedCreatedUser.AsString +
+                    '  Se internt fakturanr : ' +
+                    cdsInvoice_CreditedNewInternalInvoiceNo.AsString);
+                End;
+                Credit_Int_Inv_No := CreateDELCreditInvoiceByCopyDebitInvoice
+                  (cdsInvoiceListINVOICE_NO.AsInteger,
+                  cdsInvoiceListInternalInvoiceNo.AsInteger, DatumString);
+              End
+              else
+                ShowMessage('Preliminära fakturor kan inte krediteras.');
+
+            Finally
+
+              cdsInvoiceLO.Filtered := False;
+              cdsInvoiceLO.Active := False;
+              cdsInvoiceDetail.Filtered := False;
+              cdsInvoiceDetail.Filter := '';
+              cdsInvoiceDetail.Active := False;
+              cdsInvoice_Credited.Active := False;
+              cdsInvoiceNumber.Active := False;
+              sq_InvoiceNos.Active := True;
+              cdsInvoiceShipTo.Active := False;
+              if Credit_Int_Inv_No > 0 then
+              Begin
+                OpenInvoice(Credit_Int_Inv_No,
+                  cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger,
+                  cdsInvoiceHeadDelKredit.AsInteger);
+              End;
+            End;
+
+          End
+          else
+            ShowMessage('Kan inte kreditera en kreditfaktura.');
+        End;
+
+      End // if GetMarkedInvoiceAndLOToCredit
+      else
+        ShowMessage
+          ('Endast EN faktura kan krediteras, du kan däremot välja flera lastordernr från ett fakturanr.');
+    Finally
+      amt_Credit.Active := False;
+    End;
+  End; // with
 end;
 
-procedure TfrmInvoiceList.OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst, DelKredit  : Integer) ;
-Var frmInvoice  : TfrmInvoice ;
-    Save_Cursor : TCursor;
+procedure TfrmInvoiceList.OpenInvoice(const IntInvNo, IntInvNoToAttestAgainst,
+  DelKredit: Integer);
+Var
+  frmInvoice: TfrmInvoice;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-  frmInvoice:= TfrmInvoice.Create(NIL);
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceShipTo.Active:= True ;
-   frmInvoice.TabControl1.Tabs.Clear ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= False ;
-   cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-//   cdsInvoiceHead.Open ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= True ;
-
-   if (IntInvNoToAttestAgainst > 0) and (DelKredit > 0) then
-   Begin
-    cdsInvoiceHead.Edit ;
-    cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger := IntInvNoToAttestAgainst ;
-    cdsInvoiceHeadDelKredit.AsInteger               := DelKredit ;
-    cdsInvoiceHead.Post ;
-   End ;
-
-
-   cdsInvoiceLO.Active:= False ;
-//   sq_InvoiceLO.Close ;
-   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//  cdsInvoiceLO.Active:= False ;
-//  cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString ;
-//  cdsInvoiceLO.Filtered:= True ;
-
-   cdsInvoiceLO.Active:= True ;
-
-   cds_PIP.Active:= False ;
-   cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
-   cds_PIP.Active:= True ;
-
-   cds_IH_SpecLoad.Active:= False ;
-   cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cds_IH_SpecLoad.Active:= True ;
-   if cds_IH_SpecLoad.RecordCount = 0 then
-   Begin
-    cds_IH_SpecLoad.Insert ;
-    cds_IH_SpecLoad.Post ;
-   End ;
-
-
-  cdsInvoiceLO.First ;
-  While not cdsInvoiceLO.Eof do
-  Begin
-   frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-   cdsInvoiceLO.Next ;
-  End ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
-  if frmInvoice.TabControl1.Tabs.Count > 0 then
-  Begin
-   cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = ' + frmInvoice.TabControl1.Tabs[0] ;
-   cdsInvoiceLO.Filtered:= True ;
-   cdsInvoiceDetail.Close ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = '+frmInvoice.TabControl1.Tabs[0] ;
-   cdsInvoiceDetail.Filtered:= True ;
-   cdsInvoiceDetail.Active:= True ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
-
-//   frmInvoice.CreateParams(Params.WndParent  := Self ;
-//   frmInvoice.PopupParent := Self;
-   frmInvoice.ShowModal ;
-
-   if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
-    dmVidaInvoice.cds_IH_SpecLoad.Post ;
-   if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
-    dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
-   End ;
-  End
-  else
-  Begin
-   Exit ;
-  End ;
-
- Finally
-  fInternalInvoiceNo        := -1 ;
-  cdsInvoiceDetail.Close ;
-  cdsInvoiceLO.Filtered     := False ;
-  cdsInvoiceLO.Active       := False ;
-  cdsInvoiceDetail.Filtered := False ;
-  cdsInvoiceDetail.Filter   := '';
-  cdsInvoiceDetail.Active   := False ;
-  cdsInvoiceShipTo.Active   := False ;
-  FreeAndNil(frmInvoice) ;
- End ;
- End ; // with
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-End ;
-
-Function TfrmInvoiceList.GetMarkedInvoiceAndLOToCredit : Boolean ;
- Var y, i, RecIDX   : Integer ;
- Save_Cursor        : TCursor;
- ColIdx             : Integer ;
- InternalInvoiceNo,
- IntInvNo,
- LONo               : Integer ;
- Duplicate          : Boolean ;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- with dmVidaInvoice do
- Begin
-  Result  := True ;
-  lbLO_To_Invoice.Items.Clear ;
-  grdFakturaDBBandedTableView1.BeginUpdate ;
-  grdFakturaDBBandedTableView1.DataController.BeginLocate ;
-  Try
-   For I := 0 to grdFakturaDBBandedTableView1.Controller.SelectedRecordCount - 1 do
-   Begin
-    RecIDx            := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i].RecordIndex ;
-    ColIdx            := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName('InternalInvoiceNo').Index;
-    InternalInvoiceNo := grdFakturaDBBandedTableView1.DataController.Values[RecIdx, ColIdx];
-
-    ColIdx      := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName('LO').Index;
-    LONo        := grdFakturaDBBandedTableView1.DataController.Values[RecIdx, ColIdx];
-    if I = 0 then
-     IntInvNo :=  InternalInvoiceNo ;
-
-    if IntInvNo <> InternalInvoiceNo then
+    with dmVidaInvoice do
     Begin
-     Result := False ;
-    End ;
+      frmInvoice := TfrmInvoice.Create(NIL);
+      Try
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceShipTo.Active := True;
+        frmInvoice.TabControl1.Tabs.Clear;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := False;
+        cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        // cdsInvoiceHead.Open ;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := True;
 
-    amt_Credit.Insert ;
-    amt_CreditLONo.AsInteger      := LONo ;
-    amt_CreditIntInvNo.AsInteger  := InternalInvoiceNo ;
-    amt_Credit.Post ;
+        if (IntInvNoToAttestAgainst > 0) and (DelKredit > 0) then
+        Begin
+          cdsInvoiceHead.Edit;
+          cdsInvoiceHeadIntInvNoToAttestAgainst.AsInteger :=
+            IntInvNoToAttestAgainst;
+          cdsInvoiceHeadDelKredit.AsInteger := DelKredit;
+          cdsInvoiceHead.Post;
+        End;
 
-   End ;//for y
+        cdsInvoiceLO.Active := False;
+        // sq_InvoiceLO.Close ;
+        cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        // cdsInvoiceLO.Active:= False ;
+        // cdsInvoiceLO.Filter:= 'InternalInvoiceNo = '+cdsInvoiceHeadInternalInvoiceNo.AsString ;
+        // cdsInvoiceLO.Filtered:= True ;
 
- Finally
-  grdFakturaDBBandedTableView1.DataController.EndLocate ;
-  grdFakturaDBBandedTableView1.EndUpdate ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+        cdsInvoiceLO.Active := True;
 
- End ;//with
+        cds_PIP.Active := False;
+        cds_PIP.ParamByName('OwnerNo').AsInteger :=
+          cdsInvoiceHeadSupplierNo.AsInteger;
+        cds_PIP.Active := True;
+
+        cds_IH_SpecLoad.Active := False;
+        cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        cds_IH_SpecLoad.Active := True;
+        if cds_IH_SpecLoad.RecordCount = 0 then
+        Begin
+          cds_IH_SpecLoad.Insert;
+          cds_IH_SpecLoad.Post;
+        End;
+
+        cdsInvoiceLO.First;
+        While not cdsInvoiceLO.Eof do
+        Begin
+          frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString);
+          cdsInvoiceLO.Next;
+        End;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+
+        if frmInvoice.TabControl1.Tabs.Count > 0 then
+        Begin
+          cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
+            cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = '
+            + frmInvoice.TabControl1.Tabs[0];
+          cdsInvoiceLO.Filtered := True;
+          cdsInvoiceDetail.Close;
+          cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger
+            := IntInvNo;
+          cdsInvoiceDetail.Filter := 'InternalInvoiceNo = ' +
+            cdsInvoiceHeadInternalInvoiceNo.AsString + ' AND ShippingPlanNo = '
+            + frmInvoice.TabControl1.Tabs[0];
+          cdsInvoiceDetail.Filtered := True;
+          cdsInvoiceDetail.Active := True;
+          Screen.Cursor := crSQLWait; { Show hourglass cursor }
+
+          // frmInvoice.CreateParams(Params.WndParent  := Self ;
+          // frmInvoice.PopupParent := Self;
+          frmInvoice.ShowModal;
+
+          if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
+            dmVidaInvoice.cds_IH_SpecLoad.Post;
+          if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+          Begin
+            dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0);
+            dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates;
+          End;
+        End
+        else
+        Begin
+          Exit;
+        End;
+
+      Finally
+        fInternalInvoiceNo := -1;
+        cdsInvoiceDetail.Close;
+        cdsInvoiceLO.Filtered := False;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceDetail.Filtered := False;
+        cdsInvoiceDetail.Filter := '';
+        cdsInvoiceDetail.Active := False;
+        cdsInvoiceShipTo.Active := False;
+        FreeAndNil(frmInvoice);
+      End;
+    End; // with
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+End;
+
+Function TfrmInvoiceList.GetMarkedInvoiceAndLOToCredit: Boolean;
+Var
+  y, i, RecIDX: Integer;
+  Save_Cursor: TCursor;
+  ColIdx: Integer;
+  InternalInvoiceNo, IntInvNo, LONo: Integer;
+  Duplicate: Boolean;
+begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  with dmVidaInvoice do
+  Begin
+    Result := True;
+    lbLO_To_Invoice.Items.Clear;
+    grdFakturaDBBandedTableView1.BeginUpdate;
+    grdFakturaDBBandedTableView1.DataController.BeginLocate;
+    Try
+      For i := 0 to grdFakturaDBBandedTableView1.Controller.
+        SelectedRecordCount - 1 do
+      Begin
+        RecIDX := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i]
+          .RecordIndex;
+        ColIdx := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName
+          ('InternalInvoiceNo').Index;
+        InternalInvoiceNo := grdFakturaDBBandedTableView1.DataController.Values
+          [RecIDX, ColIdx];
+
+        ColIdx := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName
+          ('LO').Index;
+        LONo := grdFakturaDBBandedTableView1.DataController.Values
+          [RecIDX, ColIdx];
+        if i = 0 then
+          IntInvNo := InternalInvoiceNo;
+
+        if IntInvNo <> InternalInvoiceNo then
+        Begin
+          Result := False;
+        End;
+
+        amt_Credit.Insert;
+        amt_CreditLONo.AsInteger := LONo;
+        amt_CreditIntInvNo.AsInteger := InternalInvoiceNo;
+        amt_Credit.Post;
+
+      End; // for y
+
+    Finally
+      grdFakturaDBBandedTableView1.DataController.EndLocate;
+      grdFakturaDBBandedTableView1.EndUpdate;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
+
+  End; // with
 end;
 
 procedure TfrmInvoiceList.nfSearchInvoiceNoIIKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  RefreshInvoiceList(Sender, '',  '', StrToIntDef(Trim(nfSearchInvoiceNo.Text),0), StrToIntDef(Trim(nfSearchInvoiceNoII.Text),0), -1, -1);
-  cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(Trim(nfSearchInvoiceNo.Text),0), []) ;
- End ; //with
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
+  Begin
+    RefreshInvoiceList(Sender, '', '', StrToIntDef(Trim(nfSearchInvoiceNo.Text),
+      0), StrToIntDef(Trim(nfSearchInvoiceNoII.Text), 0), -1, -1);
+    cdsInvoiceList.Locate('INVOICE_NO',
+      StrToIntDef(Trim(nfSearchInvoiceNo.Text), 0), []);
+  End; // with
 end;
 
 procedure TfrmInvoiceList.acSaveExecute(Sender: TObject);
 begin
- With dmVidaInvoice do
- Begin
-  if cdsInvoiceList.State in [dsEdit] then
-   cdsInvoiceList.Post ;
-  if cdsInvoiceList.ChangeCount > 0 then
+  With dmVidaInvoice do
   Begin
-   cdsInvoiceList.ApplyUpdates(0) ;
-   cdsInvoiceList.CommitUpdates ;
-  End ;
- End ;
+    if cdsInvoiceList.State in [dsEdit] then
+      cdsInvoiceList.Post;
+    if cdsInvoiceList.ChangeCount > 0 then
+    Begin
+      cdsInvoiceList.ApplyUpdates(0);
+      cdsInvoiceList.CommitUpdates;
+    End;
+  End;
 end;
 
-procedure TfrmInvoiceList.acEMailaKundOchAgentFakturaOchSpecExecute(
-  Sender: TObject);
-Var x : Integer ;
+procedure TfrmInvoiceList.acEMailaKundOchAgentFakturaOchSpecExecute
+  (Sender: TObject);
+Var
+  x: Integer;
 begin
- GetMarkedInvoices ;
- For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
- Begin
-  EMailaKundOchAgentFakturaOchSpecExecute(StrToInt(lbLO_To_Invoice.Items[x])) ;
- End ;
+  GetMarkedInvoices;
+  For x := 0 to lbLO_To_Invoice.Items.Count - 1 do
+  Begin
+    EMailaKundOchAgentFakturaOchSpecExecute(StrToInt(lbLO_To_Invoice.Items[x]));
+  End;
 end;
 
-procedure TfrmInvoiceList.EMailaKundOchAgentFakturaOchSpecExecute(InternalInvoiceNo : Integer) ;
+procedure TfrmInvoiceList.EMailaKundOchAgentFakturaOchSpecExecute
+  (InternalInvoiceNo: Integer);
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddress,
-    AgentMailToAddress,
-    InvoiceNo               : String ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddress, AgentMailToAddress, InvoiceNo: String;
 begin
- if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
- Begin
- InvoiceNo:= intToStr(dmVidaInvoice.GetInvoiceNo(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger, dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger)) ;
- MailToAddress      := dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ;
- AgentMailToAddress := dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger) ;
- if Length(AgentMailToAddress) > 0 then
-  MailToAddress := MailToAddress + ';' + AgentMailToAddress ;
- if Length(MailToAddress) > 0 then
- Begin
- if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then exit ;
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]:= dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-// const ClientNo, DocTyp : Integer;const A: array of variant);
-//  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-//  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
+    InternalInvoiceNo, []) then
+  Begin
+    InvoiceNo := inttostr(dmVidaInvoice.GetInvoiceNo
+      (dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
+      dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger));
+    MailToAddress := dmsContact.GetEmailAddress
+      (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger);
+    AgentMailToAddress := dmsContact.GetEmailAddress
+      (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger);
+    if Length(AgentMailToAddress) > 0 then
+      MailToAddress := MailToAddress + ';' + AgentMailToAddress;
+    if Length(MailToAddress) > 0 then
+    Begin
+      if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
+        Exit;
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        // const ClientNo, DocTyp : Integer;const A: array of variant);
+        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
 
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
-//ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A,
+          ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A,
+          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
+          AsString);
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
+      // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
 
- SetLength(Attach, 2);
+      SetLength(Attach, 2);
 
- Attach[0]:= ExcelDir + 'InvoiceNo ' + InvoiceNo+'.pdf' ;
- Attach[1]:= ExcelDir + 'Specification ' + InvoiceNo+'.pdf' ;
+      Attach[0] := ExcelDir + 'InvoiceNo ' + InvoiceNo + '.pdf';
+      Attach[1] := ExcelDir + 'Specification ' + InvoiceNo + '.pdf';
 
-// Attach[0]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'InvoiceNo '+InvoiceNo+'.pdf' ;
-// Attach[1]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'Specification '+InvoiceNo+'.pdf' ;
- dm_SendMapiMail         := Tdm_SendMapiMail.Create(nil);
- Try
-  dm_SendMapiMail.SendMail('Faktura/paketspecifikation. Fakturanr: '+InvoiceNo
-  +' - Invoice/package specification. InvoiceNo: '+InvoiceNo,
-  'Faktura och paketspecifikation bifogad. '
-  +LF+''
-  +'Invoice and package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-  MailToAddress,
-//  'lars.makiaho@falubo.se', //getinvoice emailaddress
+      // Attach[0]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'InvoiceNo '+InvoiceNo+'.pdf' ;
+      // Attach[1]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'Specification '+InvoiceNo+'.pdf' ;
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Faktura/paketspecifikation. Fakturanr: ' +
+          InvoiceNo + ' - Invoice/package specification. InvoiceNo: ' +
+          InvoiceNo, 'Faktura och paketspecifikation bifogad. ' + LF + '' +
+          'Invoice and package specification attached. ' + LF + '' + LF + '' +
+          LF + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (thisuser.userid), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
 
-  Attach, False) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End //if Length(MailToAddress) > 0 then
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
- End ;// if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then   
+          Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End // if Length(MailToAddress) > 0 then
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
 procedure TfrmInvoiceList.acTransferInvoicesExecute(Sender: TObject);
 begin
- if MessageDlg('Vill du överföra markerade fakturor?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
-  mtSelectedInvoices.Active := False ;
-  mtSelectedInvoices.Active := True ;
-  Try
-  SelectMarkedInvoices ;
-  TransferSelectedInvoicesToXOR ;
-  Finally
-   mtSelectedInvoices.Active  := False ;
-  End ;
- End ;
-end;
-
-procedure TfrmInvoiceList.SelectMarkedInvoices ;
- Var i, RecIDX      : Integer ;
- RecID              : Variant ;
- ColIdx             : Integer ;
- InternalInvoiceNo  : Integer ;
- ADATASET           : TDATASET;
- Save_Cursor        : TCursor;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
-  grdFakturaDBBandedTableView1.BeginUpdate ;
-  grdFakturaDBBandedTableView1.DataController.BeginLocate ;
-  Try
-   ADataSet := grdFakturaDBBandedTableView1.DataController.DataSource.DataSet ;
-   For I := 0 to grdFakturaDBBandedTableView1.Controller.SelectedRecordCount - 1 do
-   Begin
-    RecIDx      := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i].RecordIndex ;
-//    RecID       := grdFakturaDBBandedTableView1.DataController.GetRecordId(RecIdx) ;
-
-//    RecIDx      := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i].RecordIndex ;
-    ColIdx      := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName('InternalInvoiceNo').Index;
-    InternalInvoiceNo   := grdFakturaDBBandedTableView1.DataController.Values[RecIdx, ColIdx];
-
-    if ADataSet.Locate('InternalInvoiceNo',InternalInvoiceNo,[]) then
-    Begin
-//     if not mtSelectedInvoices.Locate('InvoiceNo', ADataSet.FieldByName('INVOICE_NO').AsInteger, []) then
-     if not mtSelectedInvoices.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
-     Begin
-      mtSelectedInvoices.Insert ;
-      mtSelectedInvoicesInvoiceNo.AsInteger         := ADataSet.FieldByName('INVOICE_NO').AsInteger ;
-      mtSelectedInvoicesInternalInvoiceNo.AsInteger := ADataSet.FieldByName('InternalInvoiceNo').AsInteger ;
-      mtSelectedInvoicesCustomerNo.AsInteger        := ADataSet.FieldByName('CustomerNo').AsInteger ;
-      mtSelectedInvoicesInvoiceType.AsInteger       := ADataSet.FieldByName('InvoiceType').AsInteger ;
-      mtSelectedInvoices.Post ;
-     End ;//if..
-    End ; //if..
-   End ;
-
-
-  grdFakturaDBBandedTableView1.Controller.ClearSelection ;
- Finally
-  grdFakturaDBBandedTableView1.DataController.EndLocate ;
-  grdFakturaDBBandedTableView1.EndUpdate ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-end;
-
-procedure TfrmInvoiceList.TransferSelectedInvoicesToXOR ;
-Var
-    Save_Cursor : TCursor;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-  mt_VerLogg.Active := True ;
-  Try
-  mtSelectedInvoices.First ;
-  While not mtSelectedInvoices.Eof do
+  if MessageDlg('Vill du överföra markerade fakturor?', mtConfirmation,
+    [mbYes, mbNo], 0) = mrYes then
   Begin
-//   TransferInvoiceToXor(False, mtSelectedInvoicesInvoiceNo.AsInteger, mtSelectedInvoicesInternalInvoiceNo.AsInteger) ;
-   InsertVerifikatLogg (False, mtSelectedInvoicesInvoiceNo.AsInteger, mtSelectedInvoicesInternalInvoiceNo.AsInteger,
-   cdsInvoiceListCustomerNo.AsInteger, cdsInvoiceListInvoiceType.AsInteger) ;
-   mtSelectedInvoices.Next ;
-  End ;
-  Finally
-   mt_VerLogg.Active  := False ;
-  End ;
- End ;//With
+    mtSelectedInvoices.Active := False;
+    mtSelectedInvoices.Active := True;
+    Try
+      SelectMarkedInvoices;
+      TransferSelectedInvoicesToXOR;
+    Finally
+      mtSelectedInvoices.Active := False;
+    End;
+  End;
+end;
 
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+procedure TfrmInvoiceList.SelectMarkedInvoices;
+Var
+  i, RecIDX: Integer;
+  RecID: variant;
+  ColIdx: Integer;
+  InternalInvoiceNo: Integer;
+  ADATASET: TDataSet;
+  Save_Cursor: TCursor;
+begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+
+  grdFakturaDBBandedTableView1.BeginUpdate;
+  grdFakturaDBBandedTableView1.DataController.BeginLocate;
+  Try
+    ADATASET := grdFakturaDBBandedTableView1.DataController.DataSource.DataSet;
+    For i := 0 to grdFakturaDBBandedTableView1.Controller.
+      SelectedRecordCount - 1 do
+    Begin
+      RecIDX := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i]
+        .RecordIndex;
+      // RecID       := grdFakturaDBBandedTableView1.DataController.GetRecordId(RecIdx) ;
+
+      // RecIDx      := grdFakturaDBBandedTableView1.Controller.SelectedRecords[i].RecordIndex ;
+      ColIdx := grdFakturaDBBandedTableView1.DataController.GetItemByFieldName
+        ('InternalInvoiceNo').Index;
+      InternalInvoiceNo := grdFakturaDBBandedTableView1.DataController.Values
+        [RecIDX, ColIdx];
+
+      if ADATASET.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
+      Begin
+        // if not mtSelectedInvoices.Locate('InvoiceNo', ADataSet.FieldByName('INVOICE_NO').AsInteger, []) then
+        if not mtSelectedInvoices.Locate('InternalInvoiceNo',
+          InternalInvoiceNo, []) then
+        Begin
+          mtSelectedInvoices.Insert;
+          mtSelectedInvoicesInvoiceNo.AsInteger :=
+            ADATASET.FieldByName('INVOICE_NO').AsInteger;
+          mtSelectedInvoicesInternalInvoiceNo.AsInteger :=
+            ADATASET.FieldByName('InternalInvoiceNo').AsInteger;
+          mtSelectedInvoicesCustomerNo.AsInteger :=
+            ADATASET.FieldByName('CustomerNo').AsInteger;
+          mtSelectedInvoicesInvoiceType.AsInteger :=
+            ADATASET.FieldByName('InvoiceType').AsInteger;
+          mtSelectedInvoices.Post;
+        End; // if..
+      End; // if..
+    End;
+
+    grdFakturaDBBandedTableView1.Controller.ClearSelection;
+  Finally
+    grdFakturaDBBandedTableView1.DataController.EndLocate;
+    grdFakturaDBBandedTableView1.EndUpdate;
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+end;
+
+procedure TfrmInvoiceList.TransferSelectedInvoicesToXOR;
+Var
+  Save_Cursor: TCursor;
+begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
+    with dmVidaInvoice do
+    Begin
+      mt_VerLogg.Active := True;
+      Try
+        mtSelectedInvoices.First;
+        While not mtSelectedInvoices.Eof do
+        Begin
+          // TransferInvoiceToXor(False, mtSelectedInvoicesInvoiceNo.AsInteger, mtSelectedInvoicesInternalInvoiceNo.AsInteger) ;
+          InsertVerifikatLogg(False, mtSelectedInvoicesInvoiceNo.AsInteger,
+            mtSelectedInvoicesInternalInvoiceNo.AsInteger,
+            cdsInvoiceListCustomerNo.AsInteger,
+            cdsInvoiceListInvoiceType.AsInteger);
+          mtSelectedInvoices.Next;
+        End;
+      Finally
+        mt_VerLogg.Active := False;
+      End;
+    End; // With
+
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 end;
 
 (*
-procedure TfrmInvoiceList.TransferInvoiceToXor(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
-Var Object2, Object5                    : String ;
-    ResKontraSerie                      : String ;
-    KundResKontra                       : String ;
-    Forsaljningskonto                   : String ;
-    Frakt_konto                         : String ;
-    Moms_konto                          : String ;
-    Rounding_Konto                      : String ;
-    Provision_Konto                     : String ;
-    KassaRabattKonto                    : String ;
-    Debit_Credit                        : String ;
-    AgentNo                             : Integer ;
-    Region, Currency                    : String ;
-    CountryNo                           : Integer ;
-    Trading                             : Integer ;
-    VaruGrupp                           : Integer ;
-    PO_CountryNo                        : Integer ;
+  procedure TfrmInvoiceList.TransferInvoiceToXor(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
+  Var Object2, Object5                    : String ;
+  ResKontraSerie                      : String ;
+  KundResKontra                       : String ;
+  Forsaljningskonto                   : String ;
+  Frakt_konto                         : String ;
+  Moms_konto                          : String ;
+  Rounding_Konto                      : String ;
+  Provision_Konto                     : String ;
+  KassaRabattKonto                    : String ;
+  Debit_Credit                        : String ;
+  AgentNo                             : Integer ;
+  Region, Currency                    : String ;
+  CountryNo                           : Integer ;
+  Trading                             : Integer ;
+  VaruGrupp                           : Integer ;
+  PO_CountryNo                        : Integer ;
 
-    InvoiceTotal_SEK,
-//    InvVal_No_moms_freight_SEK,
-    ForsaljningsKonto_SEK,
-    moms_sek,
-    moms_for,
-    Rounding_SEK,
-    TotalInvoiceValueNoRounding_SEK,
-    Provision_SEK,
-    KassaRabatt_SEK,
-    frakt_SEK                           : Double ;
+  InvoiceTotal_SEK,
+  //    InvVal_No_moms_freight_SEK,
+  ForsaljningsKonto_SEK,
+  moms_sek,
+  moms_for,
+  Rounding_SEK,
+  TotalInvoiceValueNoRounding_SEK,
+  Provision_SEK,
+  KassaRabatt_SEK,
+  frakt_SEK                           : Double ;
 
-    RInvoiceTotal_SEK,
-    Rmoms_sek,
-    RForsaljningsKonto_SEK,
-    Rfrakt_SEK                          : Double ;
+  RInvoiceTotal_SEK,
+  Rmoms_sek,
+  RForsaljningsKonto_SEK,
+  Rfrakt_SEK                          : Double ;
 
 
 
-    InvoiceTotal_For,
-//    InvVal_No_moms_freight_For,
-    ForsaljningsKonto_For,
-    Rounding_For,
-    Provision_For,
-    TotalInvoiceValueNoRounding_For,
-    KassaRabatt_For,
-    frakt_for                           : Double ;
+  InvoiceTotal_For,
+  //    InvVal_No_moms_freight_For,
+  ForsaljningsKonto_For,
+  Rounding_For,
+  Provision_For,
+  TotalInvoiceValueNoRounding_For,
+  KassaRabatt_For,
+  frakt_for                           : Double ;
 
-    SkatteUpplag                        : Integer ;
-    InvoiceDate, DueDate                : TSQLTimeStamp ;
-    InvoiceDateAsDateTime,
-    DueDateAsDateTime                   : TDateTime ;
-    Vatcode                             : Integer ;
-    InvoiceType                         : Integer ;
-    Moms_20Percent                      : Double ;
-    SalesmanGroupNo                     : Integer ;
-    SalesRegionNo                       : Integer ;
-    xorID, XorID_KundNamn               : String ;
-    Volume                              : Double ;
-    fShowInvTrfLog                      : TfShowInvTrfLog ;
-//begin TransferInvoiceToXor
-begin
- with dmVidaInvoice do
- Begin
+  SkatteUpplag                        : Integer ;
+  InvoiceDate, DueDate                : TSQLTimeStamp ;
+  InvoiceDateAsDateTime,
+  DueDateAsDateTime                   : TDateTime ;
+  Vatcode                             : Integer ;
+  InvoiceType                         : Integer ;
+  Moms_20Percent                      : Double ;
+  SalesmanGroupNo                     : Integer ;
+  SalesRegionNo                       : Integer ;
+  xorID, XorID_KundNamn               : String ;
+  Volume                              : Double ;
+  fShowInvTrfLog                      : TfShowInvTrfLog ;
+  //begin TransferInvoiceToXor
+  begin
+  with dmVidaInvoice do
+  Begin
   if cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
   Begin
   Try
@@ -3515,286 +3733,286 @@ begin
   frakt_SEK       := 0 ;
   frakt_for       := 0 ;
 
-    RInvoiceTotal_SEK     := 0 ;
-    Rmoms_sek     := 0 ;
-    RForsaljningsKonto_SEK     := 0 ;
-    Rfrakt_SEK                           := 0 ;
+  RInvoiceTotal_SEK     := 0 ;
+  Rmoms_sek     := 0 ;
+  RForsaljningsKonto_SEK     := 0 ;
+  Rfrakt_SEK                           := 0 ;
 
-//  ShowMessage('InternalInvoiceNo = '+inttostr(InternalInvoiceNo));
+  //  ShowMessage('InternalInvoiceNo = '+inttostr(InternalInvoiceNo));
   sp_InvTotals.Active := False ;
   sp_InvTotals.ParamByName('@IntInvNo').AsInteger:= InternalInvoiceNo ;
   sp_InvTotals.Active := True ;
-//  ShowMessage('1: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
+  //  ShowMessage('1: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
   if not sp_InvTotals.Eof then
   Begin
 
-   Provision_Konto                     := '' ;
-   Forsaljningskonto                   := cdsInvoiceListVarukonto.AsString ;
-   Frakt_konto                         := sp_InvTotalsFraktKonto.AsString ;//cdsInvoiceListFraktkonto.AsString ;
-   Moms_konto                          := cdsInvoiceListMomskonto.AsString ;
-   Vatcode                             := cdsInvoiceListMomskod.AsInteger ;
-   Debit_Credit                        := cdsInvoiceListINVOICE_KONTO.AsString ;
+  Provision_Konto                     := '' ;
+  Forsaljningskonto                   := cdsInvoiceListVarukonto.AsString ;
+  Frakt_konto                         := sp_InvTotalsFraktKonto.AsString ;//cdsInvoiceListFraktkonto.AsString ;
+  Moms_konto                          := cdsInvoiceListMomskonto.AsString ;
+  Vatcode                             := cdsInvoiceListMomskod.AsInteger ;
+  Debit_Credit                        := cdsInvoiceListINVOICE_KONTO.AsString ;
 
   //Om volymen är 0 eller null sätt volymen till 1, för att ekonomin kräver det!
-   if (sp_InvTotalsNM3.IsNull = False) and (sp_InvTotalsNM3.AsFloat > 0) then
-   Volume:= sp_InvTotalsNM3.AsFloat
-   else
-   Volume:= 1 ;
+  if (sp_InvTotalsNM3.IsNull = False) and (sp_InvTotalsNM3.AsFloat > 0) then
+  Volume:= sp_InvTotalsNM3.AsFloat
+  else
+  Volume:= 1 ;
 
-//   ShowMessage('2: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
-   SalesRegionNo                    := sp_InvTotalsSupplierNo.AsInteger ;
-   SalesmanGroupNo                  := sp_InvTotalsSalesGroupNo.AsInteger ;
-   Trading                          := sp_InvTotalsTrading.AsInteger ;
-   KassaRabatt_For                  := sp_InvTotalsKassaRabatt_For.AsFloat ;
-   KassaRabatt_SEK                  := sp_InvTotalsKassaRabatt_SEK.AsFloat ;
-   Provision_For                    := sp_InvTotalsCommission_for.AsFloat ;
-   Provision_SEK                    := sp_InvTotalsCommission_SEK.AsFloat ;
+  //   ShowMessage('2: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
+  SalesRegionNo                    := sp_InvTotalsSupplierNo.AsInteger ;
+  SalesmanGroupNo                  := sp_InvTotalsSalesGroupNo.AsInteger ;
+  Trading                          := sp_InvTotalsTrading.AsInteger ;
+  KassaRabatt_For                  := sp_InvTotalsKassaRabatt_For.AsFloat ;
+  KassaRabatt_SEK                  := sp_InvTotalsKassaRabatt_SEK.AsFloat ;
+  Provision_For                    := sp_InvTotalsCommission_for.AsFloat ;
+  Provision_SEK                    := sp_InvTotalsCommission_SEK.AsFloat ;
 
-   TotalInvoiceValueNoRounding_For  := sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat ;
-   TotalInvoiceValueNoRounding_SEK  := sp_InvTotalsTotalInvoiceValueNoRounding_SEK.AsFloat ;
+  TotalInvoiceValueNoRounding_For  := sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat ;
+  TotalInvoiceValueNoRounding_SEK  := sp_InvTotalsTotalInvoiceValueNoRounding_SEK.AsFloat ;
 
-   //FAKTURATOTAL I SEK
-   InvoiceTotal_SEK                 := sp_InvTotalsInvoiceTotal_SEK.AsFloat ;
+  //FAKTURATOTAL I SEK
+  InvoiceTotal_SEK                 := sp_InvTotalsInvoiceTotal_SEK.AsFloat ;
 
-   //FAKTURA BELOPP SEK UTAN moms_sek OCH FRAKT
-//   InvVal_No_moms_freight_SEK       := sp_InvTotalsInvValnofreight_SEK.AsFloat ;
+  //FAKTURA BELOPP SEK UTAN moms_sek OCH FRAKT
+  //   InvVal_No_moms_freight_SEK       := sp_InvTotalsInvValnofreight_SEK.AsFloat ;
 
-   //FAKTURATOTAL I UTLÄNDSVALUTA
-   InvoiceTotal_For                 := sp_InvTotalsInvoiceTotal.AsFloat ;
-   //FAKTURA BELOPP I UTLÄNDSVALUTA UTAN moms_sek OCH FRAKT
-//   InvVal_No_moms_freight_For       := sp_InvTotalsInvValnofreight.AsFloat ;
+  //FAKTURATOTAL I UTLÄNDSVALUTA
+  InvoiceTotal_For                 := sp_InvTotalsInvoiceTotal.AsFloat ;
+  //FAKTURA BELOPP I UTLÄNDSVALUTA UTAN moms_sek OCH FRAKT
+  //   InvVal_No_moms_freight_For       := sp_InvTotalsInvValnofreight.AsFloat ;
 
-   //MOMSBELOPP SEK
-   moms_sek                             := sp_InvTotalsVAT_SEK.AsFloat ;
+  //MOMSBELOPP SEK
+  moms_sek                             := sp_InvTotalsVAT_SEK.AsFloat ;
 
-   //MOMSBELOPP FOR
-   moms_for                             := sp_InvTotalsVAT_FOR.AsFloat ;
+  //MOMSBELOPP FOR
+  moms_for                             := sp_InvTotalsVAT_FOR.AsFloat ;
 
   //DEBIT ELLER KREDIT INVOICE TYPE
-   if InvoiceTotal_SEK > 0 then
-    InvoiceType:= 1 //Debit
-     else
-      InvoiceType:= 2 ;//Credit
+  if InvoiceTotal_SEK > 0 then
+  InvoiceType:= 1 //Debit
+  else
+  InvoiceType:= 2 ;//Credit
 
-   AgentNo:= sp_InvTotalsAgentNo.AsInteger ;
+  AgentNo:= sp_InvTotalsAgentNo.AsInteger ;
   //XorID_KundNamn LÄGGS I FREETEXT BÅDE I HUVUD OCH RAD I VERIFIKATIONEN
-   XorID_KundNamn := sp_InvTotalsidXOR.AsString+':'+sp_InvTotalsCustomerName.AsString ;
-   xorID          := sp_InvTotalsidXOR.AsString ;
-   //TEX EU REGION
-   Region         := sp_InvTotalsRegion.AsString ;
-   Currency       := sp_InvTotalsCurr.AsString ;
-   //LANDNR FRÅN FAKTURAADRESS
-   CountryNo      := sp_InvTotalsCountryNo.AsInteger ;
+  XorID_KundNamn := sp_InvTotalsidXOR.AsString+':'+sp_InvTotalsCustomerName.AsString ;
+  xorID          := sp_InvTotalsidXOR.AsString ;
+  //TEX EU REGION
+  Region         := sp_InvTotalsRegion.AsString ;
+  Currency       := sp_InvTotalsCurr.AsString ;
+  //LANDNR FRÅN FAKTURAADRESS
+  CountryNo      := sp_InvTotalsCountryNo.AsInteger ;
 
-   VaruGrupp      := sp_InvTotalsVaruGrupp.AsInteger ;
-   PO_CountryNo   := sp_InvTotalsPO_CountryNo.AsInteger ;
+  VaruGrupp      := sp_InvTotalsVaruGrupp.AsInteger ;
+  PO_CountryNo   := sp_InvTotalsPO_CountryNo.AsInteger ;
 
-   //0 = INGET SKATTEUPPLAG, 1 = SKATTEUPPLAG
-   SkatteUpplag:= sp_InvTotalsSkatteUpplag.AsInteger ;
-   //FAKTURADATUM
-   InvoiceDate            := sp_InvTotalsInvoiceDate.AsSQLTimeStamp ;
-   InvoiceDateAsDateTime  := SQLTimeStampToDateTime(InvoiceDate) ;
-   InvoiceDateAsDateTime  := RecodeTime(InvoiceDateAsDateTime, 0, 0, 0, 0) ;
-   InvoiceDate            := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime) ;
-//   RecodeTime(const AValue: TDateTime; const AHour, AMinute, ASecond, AMilliSecond: Word): TDateTime;
-   //FÖRFALLODATUM
-   DueDate            := sp_InvTotalsDueDate.AsSQLTimeStamp ;
-   DueDateAsDateTime  := SQLTimeStampToDateTime(DueDate) ;
-   DueDateAsDateTime  := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0) ;
-   DueDate            := DateTimeToSQLTimeStamp(DueDateAsDateTime) ;
+  //0 = INGET SKATTEUPPLAG, 1 = SKATTEUPPLAG
+  SkatteUpplag:= sp_InvTotalsSkatteUpplag.AsInteger ;
+  //FAKTURADATUM
+  InvoiceDate            := sp_InvTotalsInvoiceDate.AsSQLTimeStamp ;
+  InvoiceDateAsDateTime  := SQLTimeStampToDateTime(InvoiceDate) ;
+  InvoiceDateAsDateTime  := RecodeTime(InvoiceDateAsDateTime, 0, 0, 0, 0) ;
+  InvoiceDate            := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime) ;
+  //   RecodeTime(const AValue: TDateTime; const AHour, AMinute, ASecond, AMilliSecond: Word): TDateTime;
+  //FÖRFALLODATUM
+  DueDate            := sp_InvTotalsDueDate.AsSQLTimeStamp ;
+  DueDateAsDateTime  := SQLTimeStampToDateTime(DueDate) ;
+  DueDateAsDateTime  := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0) ;
+  DueDate            := DateTimeToSQLTimeStamp(DueDateAsDateTime) ;
 
-{   if ThisUser.UserID = 8 then
-   Begin
-    ShowMessage('Fakturadatum = ' + SqlTimeStampToStr);
-   End ; }
-
-
+  {   if ThisUser.UserID = 8 then
+  Begin
+  ShowMessage('Fakturadatum = ' + SqlTimeStampToStr);
+  End ; }
 
 
 
-//   Diff := InvoiceTotal_SEK (Rounding_SEK + TotalInvoiceValueNoRounding_SEK
-//   InvoiceTotal_SEK
 
 
-//Okt 24 2005 borttaget från nedan formel KassaRabatt_For + Provision_For +
-//   ForsaljningsKonto_For:= InvoiceTotal_For - (frakt_for + moms_for + Rounding_For) ;
-//Okt 24 2005 borttaget från nedan formel KassaRabatt_SEK + Provision_SEK ?
-//   ForsaljningsKonto_SEK:= InvoiceTotal_SEK - (frakt_SEK + moms_sek + Rounding_SEK ) ;
-
-   //FRAKTBELOPP I SEK
-   frakt_SEK              := sp_InvTotalsFRAKT_SEK.AsFloat ;
-   //FRAKTBELOPP I UTLÄNDSVALUTA
-   frakt_for              := sp_InvTotalsFRAKT_CURR.AsFloat ;
-
-   ForsaljningsKonto_For  :=  sp_InvTotalsProduktvardeFOR.AsFloat ;
-   ForsaljningsKonto_SEK  :=  sp_InvTotalsProduktvardeSEK.AsFloat ;
+  //   Diff := InvoiceTotal_SEK (Rounding_SEK + TotalInvoiceValueNoRounding_SEK
+  //   InvoiceTotal_SEK
 
 
-   //ÖRESUTJÄMNING BARA SEK förs över till XOR
-//   Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + TotalInvoiceValueNoRounding_SEK) ;
-   //Ändrat 9/11 2010
+  //Okt 24 2005 borttaget från nedan formel KassaRabatt_For + Provision_For +
+  //   ForsaljningsKonto_For:= InvoiceTotal_For - (frakt_for + moms_for + Rounding_For) ;
+  //Okt 24 2005 borttaget från nedan formel KassaRabatt_SEK + Provision_SEK ?
+  //   ForsaljningsKonto_SEK:= InvoiceTotal_SEK - (frakt_SEK + moms_sek + Rounding_SEK ) ;
 
-   if Debit_Credit = 'DEBIT' then
-   Begin
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1 ;
+  //FRAKTBELOPP I SEK
+  frakt_SEK              := sp_InvTotalsFRAKT_SEK.AsFloat ;
+  //FRAKTBELOPP I UTLÄNDSVALUTA
+  frakt_for              := sp_InvTotalsFRAKT_CURR.AsFloat ;
 
-     if frakt_for > 0 then
-      frakt_for := frakt_for * -1 ;
-    End ;
-
-    if frakt_SEK < 0 then
-     Rfrakt_SEK := frakt_SEK * -1
-      else
-       Rfrakt_SEK := frakt_SEK ;
-
-    Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + Rfrakt_SEK + ForsaljningsKonto_SEK) ;
-   End
-   else   //CREDIT
-   Begin
-   //************************************************************************//
-   // only for rounding
-   //************************************************************************//
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      Rfrakt_SEK := frakt_SEK * -1
-       else
-        Rfrakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK < 0 then
-      Rfrakt_SEK := frakt_SEK * -1
-       else
-        Rfrakt_SEK := frakt_SEK ;
-    End ;
-
-    if ForsaljningsKonto_SEK > 0 then
-     RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK * -1
-      else
-       RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK ;
-
-    if moms_sek > 0 then
-     Rmoms_sek := moms_sek * -1
-      else
-       Rmoms_sek := moms_sek ;
-
-    if InvoiceTotal_SEK > 0 then
-     RInvoiceTotal_SEK  := InvoiceTotal_SEK * -1
-      else
-       RInvoiceTotal_SEK  := InvoiceTotal_SEK ;
-
-    Rounding_SEK       := RInvoiceTotal_SEK - (Rmoms_sek + Rfrakt_SEK + RForsaljningsKonto_SEK) ;
-   End ;   //**
+  ForsaljningsKonto_For  :=  sp_InvTotalsProduktvardeFOR.AsFloat ;
+  ForsaljningsKonto_SEK  :=  sp_InvTotalsProduktvardeSEK.AsFloat ;
 
 
-   if Debit_Credit = 'DEBIT' then
-   Begin
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK < 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End ;
-   End
-   else
-   Begin //Credit
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 0 then
-    Begin
-     if frakt_SEK < 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End ;
-   End ;
-   //OBJECT 5 ÄR MOTPART
-   Object5:= sp_InvTotalsO5.AsString ;
+  //ÖRESUTJÄMNING BARA SEK förs över till XOR
+  //   Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + TotalInvoiceValueNoRounding_SEK) ;
+  //Ändrat 9/11 2010
 
-   if Length(Trim(Object5)) = 0 then
-   Begin
-    ShowMessage('Motpart (Object5) saknas för kund '+sp_InvTotalsCustomerName.AsString) ;
-    Exit ;
-   End ;
+  if Debit_Credit = 'DEBIT' then
+  Begin
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1 ;
 
-   //Sätt object2 till blank till att börja med...
-    Object2:= '' ;
+  if frakt_for > 0 then
+  frakt_for := frakt_for * -1 ;
+  End ;
+
+  if frakt_SEK < 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+
+  Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + Rfrakt_SEK + ForsaljningsKonto_SEK) ;
+  End
+  else   //CREDIT
+  Begin
+  //************************************************************************//
+  // only for rounding
+  //************************************************************************//
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK < 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+  End ;
+
+  if ForsaljningsKonto_SEK > 0 then
+  RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK * -1
+  else
+  RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK ;
+
+  if moms_sek > 0 then
+  Rmoms_sek := moms_sek * -1
+  else
+  Rmoms_sek := moms_sek ;
+
+  if InvoiceTotal_SEK > 0 then
+  RInvoiceTotal_SEK  := InvoiceTotal_SEK * -1
+  else
+  RInvoiceTotal_SEK  := InvoiceTotal_SEK ;
+
+  Rounding_SEK       := RInvoiceTotal_SEK - (Rmoms_sek + Rfrakt_SEK + RForsaljningsKonto_SEK) ;
+  End ;   //**
+
+
+  if Debit_Credit = 'DEBIT' then
+  Begin
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK < 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End ;
+  End
+  else
+  Begin //Credit
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 0 then
+  Begin
+  if frakt_SEK < 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End ;
+  End ;
+  //OBJECT 5 ÄR MOTPART
+  Object5:= sp_InvTotalsO5.AsString ;
+
+  if Length(Trim(Object5)) = 0 then
+  Begin
+  ShowMessage('Motpart (Object5) saknas för kund '+sp_InvTotalsCustomerName.AsString) ;
+  Exit ;
+  End ;
+
+  //Sätt object2 till blank till att börja med...
+  Object2:= '' ;
 
   if SalesmanGroupNo = 1 then //Danmark
-   Object2:= '990' ;
+  Object2:= '990' ;
 
   if cdsInvoiceListInvoiceType.AsInteger = 0 then
   Begin
-   if Object5 = '99' then //Om extern kund
-    ResKontraSerie:= 'VWK1'
-     else
-      ResKontraSerie:= 'VWK1' ;
+  if Object5 = '99' then //Om extern kund
+  ResKontraSerie:= 'VWK1'
+  else
+  ResKontraSerie:= 'VWK1' ;
   End
-   else //Om det är en USA faktura skall serien vara VWK2
-     if cdsInvoiceListInvoiceType.AsInteger = 4 then
-      ResKontraSerie:= 'VWK2'
-       else //Irland
-        if cdsInvoiceListInvoiceType.AsInteger = 5 then
-         ResKontraSerie:= 'VWK4' ;
+  else //Om det är en USA faktura skall serien vara VWK2
+  if cdsInvoiceListInvoiceType.AsInteger = 4 then
+  ResKontraSerie:= 'VWK2'
+  else //Irland
+  if cdsInvoiceListInvoiceType.AsInteger = 5 then
+  ResKontraSerie:= 'VWK4' ;
 
   if Length(Trim(ResKontraSerie)) = 0 then
-   Begin
-    ShowMessage('Reskontraserie kan inte bestämmas för fakturanr '+IntToStr(InvoiceNo)) ;
-    Exit ;
-   End ;
+  Begin
+  ShowMessage('Reskontraserie kan inte bestämmas för fakturanr '+IntToStr(InvoiceNo)) ;
+  Exit ;
+  End ;
 
 
-//sq_invoiceTrf KOLLAR OM FAKTURANNUMRET REDAN FINNS I XOR
+  //sq_invoiceTrf KOLLAR OM FAKTURANNUMRET REDAN FINNS I XOR
   sq_invoiceTrf.ParamByName('Invno').AsInteger      := InvoiceNo ;
   sq_invoiceTrf.ParamByName('enumerator').AsString  := ResKontraSerie ;
   sq_invoiceTrf.Open ;
   if sq_invoiceTrf.FieldByName('Invno').AsInteger > 1 then
   Begin
-   ShowMessage('Faktura nr '+inttostr(InvoiceNo)+' är redan i loggen.') ;
-   sq_invoiceTrf.Close ;
-   Exit ;
+  ShowMessage('Faktura nr '+inttostr(InvoiceNo)+' är redan i loggen.') ;
+  sq_invoiceTrf.Close ;
+  Exit ;
   End ;
   sq_invoiceTrf.Close ;
 
 
-//Räkna om bara om valutan är SEK
-{   if (Currency = 'SEK') and (moms_sek <> 0) then
-    moms_sek := InvoiceTotal_SEK * Moms_20Percent ;
-   if Currency = 'SEK' then
-    InvVal_No_moms_freight_SEK:= InvoiceTotal_SEK - (moms_sek + frakt_SEK) ; }
+  //Räkna om bara om valutan är SEK
+  {   if (Currency = 'SEK') and (moms_sek <> 0) then
+  moms_sek := InvoiceTotal_SEK * Moms_20Percent ;
+  if Currency = 'SEK' then
+  InvVal_No_moms_freight_SEK:= InvoiceTotal_SEK - (moms_sek + frakt_SEK) ; }
 
-//Kundreskontra
-   if Object5 = '99' then //99 = extern kund
-   Begin
-    if CountryNo = 9 then //CountryNo 9 = Sverige
-     KundResKontra:= '1510' //Kundfordring Sverige externa kunder
-      else
-       KundResKontra:= '1512' ; //Kundfordring utländska externa kunder
-   End
-    else //Intern kund
-    Begin
-     if Object5 = '22' then
-      KundResKontra:= '1562' //Kundfordring koncern Vida Wood UK
-       else
-        KundResKontra:= '1560' ; //Kundfordring koncern Sverige
-    End ;
+  //Kundreskontra
+  if Object5 = '99' then //99 = extern kund
+  Begin
+  if CountryNo = 9 then //CountryNo 9 = Sverige
+  KundResKontra:= '1510' //Kundfordring Sverige externa kunder
+  else
+  KundResKontra:= '1512' ; //Kundfordring utländska externa kunder
+  End
+  else //Intern kund
+  Begin
+  if Object5 = '22' then
+  KundResKontra:= '1562' //Kundfordring koncern Vida Wood UK
+  else
+  KundResKontra:= '1560' ; //Kundfordring koncern Sverige
+  End ;
 
 
 
@@ -3803,308 +4021,308 @@ begin
   if Length(Trim(Object2)) = 0 then
   Object2:= '980' ;
 
-   if Length(Trim(xorID)) = 0 then
-   Begin
-    ShowMessage('Fakturanr '+IntToStr(InvoiceNo)+ ' kan inte överföras, för att kund '+Trim(sp_InvTotalsCustomerName.AsString)+' har inget xorID i rolltypen kund') ;
-    Exit ;
-   End ;
+  if Length(Trim(xorID)) = 0 then
+  Begin
+  ShowMessage('Fakturanr '+IntToStr(InvoiceNo)+ ' kan inte överföras, för att kund '+Trim(sp_InvTotalsCustomerName.AsString)+' har inget xorID i rolltypen kund') ;
+  Exit ;
+  End ;
 
-   cdsInvTrfLoggInvoiceNo.AsInteger                     := InvoiceNo ;
-   cdsInvTrfLoggInternalInvoiceNo.AsInteger             := InternalInvoiceNo ;
-   cdsInvTrfLoggObject2.AsString                        := Object2 ;
-   cdsInvTrfLoggObject5.AsString                        := Object5 ;
-   cdsInvTrfLoggResKontraSerie.AsString                 := ResKontraSerie ;
-   cdsInvTrfLoggKundResKontra.AsString                  := KundResKontra ;
-   cdsInvTrfLoggForsaljningskonto.AsString              := Forsaljningskonto ;
-   cdsInvTrfLoggFrakt_konto.AsString                    := Frakt_konto ;
-   cdsInvTrfLoggMoms_konto.AsString                     := Moms_konto ;
-   cdsInvTrfLoggRounding_Konto.AsString                 := Rounding_Konto ;
-   cdsInvTrfLoggProvision_Konto.AsString                := Provision_Konto ;
-   cdsInvTrfLoggKassaRabattKonto.AsString               := KassaRabattKonto ;
-   cdsInvTrfLoggAgentNo.AsInteger                       := AgentNo ;
-   cdsInvTrfLoggRegion.AsString                         := Region ;
-   cdsInvTrfLoggCurrency.AsString                       := Currency ;
-   cdsInvTrfLoggCountryNo.AsInteger                     := CountryNo ;
-   cdsInvTrfLoggSkatteUpplag.AsInteger                  := SkatteUpplag ;
-   cdsInvTrfLoggInvoiceTotal_SEK.AsFloat                := InvoiceTotal_SEK ;
-   cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat           := ForsaljningsKonto_SEK ;
-   cdsInvTrfLoggmoms_sek.AsFloat                        := moms_sek ;
-   cdsInvTrfLoggmoms_for.AsFloat                        := moms_For ;
-   cdsInvTrfLoggmoms.AsFloat                            := moms_sek ;
-   cdsInvTrfLoggRounding_SEK.AsFloat                    := Rounding_SEK ;
-   cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat := TotalInvoiceValueNoRounding_SEK ;
-   cdsInvTrfLoggProvision_SEK.AsFloat                   := Provision_SEK ;
-   cdsInvTrfLoggKassaRabatt_SEK.AsFloat                 := KassaRabatt_SEK ;
-   cdsInvTrfLoggfrakt_SEK.AsFloat                       := frakt_SEK ;
-   cdsInvTrfLoggInvoiceTotal_For.AsFloat                := InvoiceTotal_For ;
-   cdsInvTrfLoggForsaljningsKonto_For.AsFloat           := ForsaljningsKonto_For ;
-   cdsInvTrfLoggRounding_For.AsFloat                    := Rounding_For ;
-   cdsInvTrfLoggProvision_For.AsFloat                   := Provision_For ;
-   cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat := TotalInvoiceValueNoRounding_For ;
-   cdsInvTrfLoggKassaRabatt_For.AsFloat                 := KassaRabatt_For ;
-   cdsInvTrfLoggfrakt_for.AsFloat                       := frakt_for ;
-   cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp              := InvoiceDate ;
-   cdsInvTrfLoggVatcode.AsInteger                       := Vatcode ;
-   cdsInvTrfLoggInvoiceType.AsInteger                   := InvoiceType ;
-   cdsInvTrfLoggEventDate.AsSQLTimeStamp                := DateTimeToSQLTimeStamp(Now) ;
-   cdsInvTrfLoggUserId.AsInteger                        := ThisUser.UserID ;
-   cdsInvTrfLoggXorID_KundNamn.AsString                 := XorID_KundNamn ;
-   cdsInvTrfLoggTrading.AsInteger                       := Trading ;
-   cdsInvTrfLoggVaruGrupp.AsInteger                     := VaruGrupp ;
-   cdsInvTrfLoggPO_Country.AsInteger                    := PO_CountryNo ;
+  cdsInvTrfLoggInvoiceNo.AsInteger                     := InvoiceNo ;
+  cdsInvTrfLoggInternalInvoiceNo.AsInteger             := InternalInvoiceNo ;
+  cdsInvTrfLoggObject2.AsString                        := Object2 ;
+  cdsInvTrfLoggObject5.AsString                        := Object5 ;
+  cdsInvTrfLoggResKontraSerie.AsString                 := ResKontraSerie ;
+  cdsInvTrfLoggKundResKontra.AsString                  := KundResKontra ;
+  cdsInvTrfLoggForsaljningskonto.AsString              := Forsaljningskonto ;
+  cdsInvTrfLoggFrakt_konto.AsString                    := Frakt_konto ;
+  cdsInvTrfLoggMoms_konto.AsString                     := Moms_konto ;
+  cdsInvTrfLoggRounding_Konto.AsString                 := Rounding_Konto ;
+  cdsInvTrfLoggProvision_Konto.AsString                := Provision_Konto ;
+  cdsInvTrfLoggKassaRabattKonto.AsString               := KassaRabattKonto ;
+  cdsInvTrfLoggAgentNo.AsInteger                       := AgentNo ;
+  cdsInvTrfLoggRegion.AsString                         := Region ;
+  cdsInvTrfLoggCurrency.AsString                       := Currency ;
+  cdsInvTrfLoggCountryNo.AsInteger                     := CountryNo ;
+  cdsInvTrfLoggSkatteUpplag.AsInteger                  := SkatteUpplag ;
+  cdsInvTrfLoggInvoiceTotal_SEK.AsFloat                := InvoiceTotal_SEK ;
+  cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat           := ForsaljningsKonto_SEK ;
+  cdsInvTrfLoggmoms_sek.AsFloat                        := moms_sek ;
+  cdsInvTrfLoggmoms_for.AsFloat                        := moms_For ;
+  cdsInvTrfLoggmoms.AsFloat                            := moms_sek ;
+  cdsInvTrfLoggRounding_SEK.AsFloat                    := Rounding_SEK ;
+  cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat := TotalInvoiceValueNoRounding_SEK ;
+  cdsInvTrfLoggProvision_SEK.AsFloat                   := Provision_SEK ;
+  cdsInvTrfLoggKassaRabatt_SEK.AsFloat                 := KassaRabatt_SEK ;
+  cdsInvTrfLoggfrakt_SEK.AsFloat                       := frakt_SEK ;
+  cdsInvTrfLoggInvoiceTotal_For.AsFloat                := InvoiceTotal_For ;
+  cdsInvTrfLoggForsaljningsKonto_For.AsFloat           := ForsaljningsKonto_For ;
+  cdsInvTrfLoggRounding_For.AsFloat                    := Rounding_For ;
+  cdsInvTrfLoggProvision_For.AsFloat                   := Provision_For ;
+  cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat := TotalInvoiceValueNoRounding_For ;
+  cdsInvTrfLoggKassaRabatt_For.AsFloat                 := KassaRabatt_For ;
+  cdsInvTrfLoggfrakt_for.AsFloat                       := frakt_for ;
+  cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp              := InvoiceDate ;
+  cdsInvTrfLoggVatcode.AsInteger                       := Vatcode ;
+  cdsInvTrfLoggInvoiceType.AsInteger                   := InvoiceType ;
+  cdsInvTrfLoggEventDate.AsSQLTimeStamp                := DateTimeToSQLTimeStamp(Now) ;
+  cdsInvTrfLoggUserId.AsInteger                        := ThisUser.UserID ;
+  cdsInvTrfLoggXorID_KundNamn.AsString                 := XorID_KundNamn ;
+  cdsInvTrfLoggTrading.AsInteger                       := Trading ;
+  cdsInvTrfLoggVaruGrupp.AsInteger                     := VaruGrupp ;
+  cdsInvTrfLoggPO_Country.AsInteger                    := PO_CountryNo ;
 
-   cdsInvTrfLogg.Post ;
-   if Test = False then
-   Begin
-    if cdsInvTrfLogg.ChangeCount > 0 then
-     cdsInvTrfLogg.ApplyUpdates(0) ;
-    cdsInvTrfLogg.Active:= False ;
-   End
-   else
-   Begin
-    fShowInvTrfLog:= TfShowInvTrfLog.Create(nil) ;
-    try
-      fShowInvTrfLog.ShowModal ;
-      Exit ;
-    finally
-      FreeAndNil(fShowInvTrfLog) ;
-      cdsInvTrfLogg.Active:= False ;
-    end;
-   End ;
+  cdsInvTrfLogg.Post ;
+  if Test = False then
+  Begin
+  if cdsInvTrfLogg.ChangeCount > 0 then
+  cdsInvTrfLogg.ApplyUpdates(0) ;
+  cdsInvTrfLogg.Active:= False ;
+  End
+  else
+  Begin
+  fShowInvTrfLog:= TfShowInvTrfLog.Create(nil) ;
+  try
+  fShowInvTrfLog.ShowModal ;
+  Exit ;
+  finally
+  FreeAndNil(fShowInvTrfLog) ;
+  cdsInvTrfLogg.Active:= False ;
+  end;
+  End ;
 
-//   ShowMessage('cdsInvTrfLogg.Post') ;
+  //   ShowMessage('cdsInvTrfLogg.Post') ;
 
-{   if (Round(rounding_SEK*100)/100) <> 0 then
-   Begin
-    ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)+' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)) ;
-   End ;
+  {   if (Round(rounding_SEK*100)/100) <> 0 then
+  Begin
+  ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)+' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)) ;
+  End ;
 
-   if RoundTo(rounding_SEK,-2) <> 0 then
-   Begin
-    ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)
-    +' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)
-    +' RoundTo = '+FloatToStr(RoundTo(rounding_SEK,-2))) ;
-   End ;
+  if RoundTo(rounding_SEK,-2) <> 0 then
+  Begin
+  ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)
+  +' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)
+  +' RoundTo = '+FloatToStr(RoundTo(rounding_SEK,-2))) ;
+  End ;
 
-   if ((Currency <> 'SEK') AND (rounding_For <> 0)) then
-   Begin
-    ShowMessage('rounding_For = '+FloatToStr(rounding_For)) ;
-   End ; }
+  if ((Currency <> 'SEK') AND (rounding_For <> 0)) then
+  Begin
+  ShowMessage('rounding_For = '+FloatToStr(rounding_For)) ;
+  End ; }
 
-   if Thisuser.UserID = 8 then  Exit ;
+  if Thisuser.UserID = 8 then  Exit ;
 
 
-//Skapa verifikationshuvudet
-   EXEC_sp_VIS_xp_voulogwrite ('VWAB',
-   3{logtype},
-   InvoiceDate,
-   ResKontraSerie,
-   InvoiceNo,
-   Copy(XorID_KundNamn, 1,80) //FreeText
-   ) ;
-//   ShowMessage('EXEC_sp_VIS_xp_voulogwrite');
+  //Skapa verifikationshuvudet
+  EXEC_sp_VIS_xp_voulogwrite ('VWAB',
+  3{logtype},
+  InvoiceDate,
+  ResKontraSerie,
+  InvoiceNo,
+  Copy(XorID_KundNamn, 1,80) //FreeText
+  ) ;
+  //   ShowMessage('EXEC_sp_VIS_xp_voulogwrite');
 
-//Skapa KUNDFORDRINGSKONTO verifikationsrad
-   if InvoiceTotal_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   KundResKontra,//account tex 1560
-   InvoiceDate, //logdate
-   Currency, //currency
-   InvoiceTotal_SEK,
-   InvoiceTotal_For,
-//   -1*InvVal_No_moms_freight_SEK, //amount : double;
-//   -1*InvVal_No_moms_freight_For, //foramount : double;
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
+  //Skapa KUNDFORDRINGSKONTO verifikationsrad
+  if InvoiceTotal_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  KundResKontra,//account tex 1560
+  InvoiceDate, //logdate
+  Currency, //currency
+  InvoiceTotal_SEK,
+  InvoiceTotal_For,
+  //   -1*InvVal_No_moms_freight_SEK, //amount : double;
+  //   -1*InvVal_No_moms_freight_For, //foramount : double;
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('EXEC_xp_vourowlogwrite');
-//Skapa varvärde verifikationsrad för Försäljningskonto 30xx
-   if ForsaljningsKonto_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Forsaljningskonto ,//account tex 3020
-   InvoiceDate, //logdate
-   Currency, //currency
-//   InvoiceTotal_SEK,
-//   InvoiceTotal_For,
-//Tog bort *-1 på nedan 2 rader
-   ForsaljningsKonto_SEK, //SEK amount : double;
-   ForsaljningsKonto_For, //foramount : double;
-   vatcode,//skall ha en vatcode
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-        ) ;
+  //   ShowMessage('EXEC_xp_vourowlogwrite');
+  //Skapa varvärde verifikationsrad för Försäljningskonto 30xx
+  if ForsaljningsKonto_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Forsaljningskonto ,//account tex 3020
+  InvoiceDate, //logdate
+  Currency, //currency
+  //   InvoiceTotal_SEK,
+  //   InvoiceTotal_For,
+  //Tog bort *-1 på nedan 2 rader
+  ForsaljningsKonto_SEK, //SEK amount : double;
+  ForsaljningsKonto_For, //foramount : double;
+  vatcode,//skall ha en vatcode
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('2 EXEC_xp_vourowlogwrite');
-//Skapa frakt verifikationsrad
-//här!
-   if Frakt_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Frakt_Konto ,//account tex 2610
-   InvoiceDate, //logdate
-   Currency, //currency
-   frakt_SEK, //SEK amount : double;
-   frakt_For, //foramount : double;
-   vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
+  //   ShowMessage('2 EXEC_xp_vourowlogwrite');
+  //Skapa frakt verifikationsrad
+  //här!
+  if Frakt_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Frakt_Konto ,//account tex 2610
+  InvoiceDate, //logdate
+  Currency, //currency
+  frakt_SEK, //SEK amount : double;
+  frakt_For, //foramount : double;
+  vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('3 EXEC_xp_vourowlogwrite');
+  //   ShowMessage('3 EXEC_xp_vourowlogwrite');
   //Skapa moms_sek verifikationsrad
-   if moms_sek <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   moms_Konto ,//account tex 2610
-   InvoiceDate, //logdate
-   Currency, //currency
-   -1*moms_sek, //Sek amount : double;
-   -1*moms_for, //foramount : double;
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
-//   ShowMessage('4 EXEC_xp_vourowlogwrite');
+  if moms_sek <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  moms_Konto ,//account tex 2610
+  InvoiceDate, //logdate
+  Currency, //currency
+  -1*moms_sek, //Sek amount : double;
+  -1*moms_for, //foramount : double;
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
+  //   ShowMessage('4 EXEC_xp_vourowlogwrite');
 
   //Skapa Öresutjämnings verifikationsrad
-{   if  ((Currency = 'SEK') AND (rounding_SEK <> 0))
-   OR ((Currency <> 'SEK') AND (rounding_For <> 0)) then }
-   if RoundTo(rounding_SEK,-2) <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Rounding_Konto ,//account tex 3740
-   InvoiceDate, //logdate
-   Currency, //currency
-   -1*RoundTo(rounding_SEK,-2), //amount : double;
-   0, //-1*rounding_For, OBS bara SEK avrundningsvärdet skall överföras till xor!!
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-   ) ;
+  {   if  ((Currency = 'SEK') AND (rounding_SEK <> 0))
+  OR ((Currency <> 'SEK') AND (rounding_For <> 0)) then }
+  if RoundTo(rounding_SEK,-2) <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Rounding_Konto ,//account tex 3740
+  InvoiceDate, //logdate
+  Currency, //currency
+  -1*RoundTo(rounding_SEK,-2), //amount : double;
+  0, //-1*rounding_For, OBS bara SEK avrundningsvärdet skall överföras till xor!!
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('5 EXEC_xp_vourowlogwrite');
+  //   ShowMessage('5 EXEC_xp_vourowlogwrite');
 
 
-//Skapa Reskontra
-   EXEC_xp_ldglogwrite ('VWAB',
-   sp_InvTotalsidXOR.AsString,
-   InvoiceType,
-   ResKontraSerie,
-   InvoiceNo,
-   0,   //seq
-   IntToStr(InvoiceNo),
-   InvoiceDate,
-   InvoiceDate,
-   DueDate,
-   Currency,
-   InvoiceTotal_SEK,
-   InvoiceTotal_For,
-   moms_sek,
-   vatcode,
-   KundResKontra,
-   'MJ',
-   logno,
-   vouno,
-   serie,
-   Object2, Object5 ) ;
+  //Skapa Reskontra
+  EXEC_xp_ldglogwrite ('VWAB',
+  sp_InvTotalsidXOR.AsString,
+  InvoiceType,
+  ResKontraSerie,
+  InvoiceNo,
+  0,   //seq
+  IntToStr(InvoiceNo),
+  InvoiceDate,
+  InvoiceDate,
+  DueDate,
+  Currency,
+  InvoiceTotal_SEK,
+  InvoiceTotal_For,
+  moms_sek,
+  vatcode,
+  KundResKontra,
+  'MJ',
+  logno,
+  vouno,
+  serie,
+  Object2, Object5 ) ;
 
-//   ShowMessage('2 EXEC_xp_ldglogwrite');
+  //   ShowMessage('2 EXEC_xp_ldglogwrite');
 
-{const cid, person : String;
-const stype : Integer;  //invoiceType
-const enum : String;
-const invno, seq : Integer ;
-const org : String;
-const bookdate, invdate, duedate : TSQLTimeStamp;
-const currency : String;
-const amount, foramount, moms_sek : Double;
-const vatcode : Integer;
-const account : String;
-const approval1 : String;
-const logno, vouno : Integer;
-const serie : String) ;  }
+  {const cid, person : String;
+  const stype : Integer;  //invoiceType
+  const enum : String;
+  const invno, seq : Integer ;
+  const org : String;
+  const bookdate, invdate, duedate : TSQLTimeStamp;
+  const currency : String;
+  const amount, foramount, moms_sek : Double;
+  const vatcode : Integer;
+  const account : String;
+  const approval1 : String;
+  const logno, vouno : Integer;
+  const serie : String) ;  }
   End
-   else
-    ShowMessage('Fakturan har inga värden.') ;
+  else
+  ShowMessage('Fakturan har inga värden.') ;
   Finally
-   sp_InvTotals.Active := False ;
+  sp_InvTotals.Active := False ;
   End ;
   End //  if cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
-   else
-    ShowMessage('Problem lokalisera faktura...') ;  
- End ; //With
-end;
+  else
+  ShowMessage('Problem lokalisera faktura...') ;
+  End ; //With
+  end;
 
-procedure TfrmInvoiceList.TransferInvoiceToXorOLD(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
-Var Object2, Object5                    : String ;
-    ResKontraSerie                      : String ;
-    KundResKontra                       : String ;
-    Forsaljningskonto                   : String ;
-    Frakt_konto                         : String ;
-    Moms_konto                          : String ;
-    Rounding_Konto                      : String ;
-    Provision_Konto                     : String ;
-    KassaRabattKonto                    : String ;
-    Debit_Credit                        : String ;
-    AgentNo                             : Integer ;
-    Region, Currency                    : String ;
-    CountryNo                           : Integer ;
-    Trading                             : Integer ;
-    VaruGrupp                           : Integer ;
-    PO_CountryNo                        : Integer ;
+  procedure TfrmInvoiceList.TransferInvoiceToXorOLD(const Test : Boolean;const InvoiceNo, InternalInvoiceNo : Integer);
+  Var Object2, Object5                    : String ;
+  ResKontraSerie                      : String ;
+  KundResKontra                       : String ;
+  Forsaljningskonto                   : String ;
+  Frakt_konto                         : String ;
+  Moms_konto                          : String ;
+  Rounding_Konto                      : String ;
+  Provision_Konto                     : String ;
+  KassaRabattKonto                    : String ;
+  Debit_Credit                        : String ;
+  AgentNo                             : Integer ;
+  Region, Currency                    : String ;
+  CountryNo                           : Integer ;
+  Trading                             : Integer ;
+  VaruGrupp                           : Integer ;
+  PO_CountryNo                        : Integer ;
 
-    InvoiceTotal_SEK,
-//    InvVal_No_moms_freight_SEK,
-    ForsaljningsKonto_SEK,
-    moms_sek,
-    moms_for,
-    Rounding_SEK,
-    TotalInvoiceValueNoRounding_SEK,
-    Provision_SEK,
-    KassaRabatt_SEK,
-    frakt_SEK                           : Double ;
+  InvoiceTotal_SEK,
+  //    InvVal_No_moms_freight_SEK,
+  ForsaljningsKonto_SEK,
+  moms_sek,
+  moms_for,
+  Rounding_SEK,
+  TotalInvoiceValueNoRounding_SEK,
+  Provision_SEK,
+  KassaRabatt_SEK,
+  frakt_SEK                           : Double ;
 
-    RInvoiceTotal_SEK,
-    Rmoms_sek,
-    RForsaljningsKonto_SEK,
-    Rfrakt_SEK                          : Double ;
+  RInvoiceTotal_SEK,
+  Rmoms_sek,
+  RForsaljningsKonto_SEK,
+  Rfrakt_SEK                          : Double ;
 
 
 
-    InvoiceTotal_For,
-//    InvVal_No_moms_freight_For,
-    ForsaljningsKonto_For,
-    Rounding_For,
-    Provision_For,
-    TotalInvoiceValueNoRounding_For,
-    KassaRabatt_For,
-    frakt_for                           : Double ;
+  InvoiceTotal_For,
+  //    InvVal_No_moms_freight_For,
+  ForsaljningsKonto_For,
+  Rounding_For,
+  Provision_For,
+  TotalInvoiceValueNoRounding_For,
+  KassaRabatt_For,
+  frakt_for                           : Double ;
 
-    SkatteUpplag                        : Integer ;
-    InvoiceDate, DueDate                : TSQLTimeStamp ;
-    InvoiceDateAsDateTime,
-    DueDateAsDateTime                   : TDateTime ;
-    Vatcode                             : Integer ;
-    InvoiceType                         : Integer ;
-    Moms_20Percent                      : Double ;
-    SalesmanGroupNo                     : Integer ;
-    SalesRegionNo                       : Integer ;
-    xorID, XorID_KundNamn               : String ;
-    Volume                              : Double ;
-    fShowInvTrfLog                      : TfShowInvTrfLog ;
-//begin TransferInvoiceToXor
-begin
- with dmVidaInvoice do
- Begin
+  SkatteUpplag                        : Integer ;
+  InvoiceDate, DueDate                : TSQLTimeStamp ;
+  InvoiceDateAsDateTime,
+  DueDateAsDateTime                   : TDateTime ;
+  Vatcode                             : Integer ;
+  InvoiceType                         : Integer ;
+  Moms_20Percent                      : Double ;
+  SalesmanGroupNo                     : Integer ;
+  SalesRegionNo                       : Integer ;
+  xorID, XorID_KundNamn               : String ;
+  Volume                              : Double ;
+  fShowInvTrfLog                      : TfShowInvTrfLog ;
+  //begin TransferInvoiceToXor
+  begin
+  with dmVidaInvoice do
+  Begin
   if cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
   Begin
   Try
@@ -4122,290 +4340,290 @@ begin
   frakt_SEK       := 0 ;
   frakt_for       := 0 ;
 
-    RInvoiceTotal_SEK     := 0 ;
-    Rmoms_sek     := 0 ;
-    RForsaljningsKonto_SEK     := 0 ;
-    Rfrakt_SEK                           := 0 ;
+  RInvoiceTotal_SEK     := 0 ;
+  Rmoms_sek     := 0 ;
+  RForsaljningsKonto_SEK     := 0 ;
+  Rfrakt_SEK                           := 0 ;
 
-//  ShowMessage('InternalInvoiceNo = '+inttostr(InternalInvoiceNo));
+  //  ShowMessage('InternalInvoiceNo = '+inttostr(InternalInvoiceNo));
   sp_InvTotals.Active := False ;
   sp_InvTotals.ParamByName('@IntInvNo').AsInteger:= InternalInvoiceNo ;
   sp_InvTotals.Active := True ;
-//  ShowMessage('1: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
+  //  ShowMessage('1: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
   if not sp_InvTotals.Eof then
   Begin
 
-   Provision_Konto                     := '' ;
-   Forsaljningskonto                   := cdsInvoiceListVarukonto.AsString ;
-   Frakt_konto                         := sp_InvTotalsFraktKonto.AsString ;//cdsInvoiceListFraktkonto.AsString ;
-   Moms_konto                          := cdsInvoiceListMomskonto.AsString ;
-   Vatcode                             := cdsInvoiceListMomskod.AsInteger ;
-   Debit_Credit                        := cdsInvoiceListINVOICE_KONTO.AsString ;
+  Provision_Konto                     := '' ;
+  Forsaljningskonto                   := cdsInvoiceListVarukonto.AsString ;
+  Frakt_konto                         := sp_InvTotalsFraktKonto.AsString ;//cdsInvoiceListFraktkonto.AsString ;
+  Moms_konto                          := cdsInvoiceListMomskonto.AsString ;
+  Vatcode                             := cdsInvoiceListMomskod.AsInteger ;
+  Debit_Credit                        := cdsInvoiceListINVOICE_KONTO.AsString ;
 
   //Om volymen är 0 eller null sätt volymen till 1, för att ekonomin kräver det!
-   if (sp_InvTotalsNM3.IsNull = False) and (sp_InvTotalsNM3.AsFloat > 0) then
-   Volume:= sp_InvTotalsNM3.AsFloat
-   else
-   Volume:= 1 ;
+  if (sp_InvTotalsNM3.IsNull = False) and (sp_InvTotalsNM3.AsFloat > 0) then
+  Volume:= sp_InvTotalsNM3.AsFloat
+  else
+  Volume:= 1 ;
 
-//   ShowMessage('2: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
-   SalesRegionNo                    := sp_InvTotalsSupplierNo.AsInteger ;
-   SalesmanGroupNo                  := sp_InvTotalsSalesGroupNo.AsInteger ;
-   Trading                          := sp_InvTotalsTrading.AsInteger ;
-   KassaRabatt_For                  := sp_InvTotalsKassaRabatt_For.AsFloat ;
-   KassaRabatt_SEK                  := sp_InvTotalsKassaRabatt_SEK.AsFloat ;
-   Provision_For                    := sp_InvTotalsCommission_for.AsFloat ;
-   Provision_SEK                    := sp_InvTotalsCommission_SEK.AsFloat ;
+  //   ShowMessage('2: sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat = '+sp_InvTotalsTotalInvoiceValueNoRounding_For.AsString) ;
+  SalesRegionNo                    := sp_InvTotalsSupplierNo.AsInteger ;
+  SalesmanGroupNo                  := sp_InvTotalsSalesGroupNo.AsInteger ;
+  Trading                          := sp_InvTotalsTrading.AsInteger ;
+  KassaRabatt_For                  := sp_InvTotalsKassaRabatt_For.AsFloat ;
+  KassaRabatt_SEK                  := sp_InvTotalsKassaRabatt_SEK.AsFloat ;
+  Provision_For                    := sp_InvTotalsCommission_for.AsFloat ;
+  Provision_SEK                    := sp_InvTotalsCommission_SEK.AsFloat ;
 
-   TotalInvoiceValueNoRounding_For  := sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat ;
-   TotalInvoiceValueNoRounding_SEK  := sp_InvTotalsTotalInvoiceValueNoRounding_SEK.AsFloat ;
+  TotalInvoiceValueNoRounding_For  := sp_InvTotalsTotalInvoiceValueNoRounding_For.AsFloat ;
+  TotalInvoiceValueNoRounding_SEK  := sp_InvTotalsTotalInvoiceValueNoRounding_SEK.AsFloat ;
 
-   //FAKTURATOTAL I SEK
-   InvoiceTotal_SEK                 := sp_InvTotalsInvoiceTotal_SEK.AsFloat ;
+  //FAKTURATOTAL I SEK
+  InvoiceTotal_SEK                 := sp_InvTotalsInvoiceTotal_SEK.AsFloat ;
 
-   //FAKTURA BELOPP SEK UTAN moms_sek OCH FRAKT
-//   InvVal_No_moms_freight_SEK       := sp_InvTotalsInvValnofreight_SEK.AsFloat ;
+  //FAKTURA BELOPP SEK UTAN moms_sek OCH FRAKT
+  //   InvVal_No_moms_freight_SEK       := sp_InvTotalsInvValnofreight_SEK.AsFloat ;
 
-   //FAKTURATOTAL I UTLÄNDSVALUTA
-   InvoiceTotal_For                 := sp_InvTotalsInvoiceTotal.AsFloat ;
-   //FAKTURA BELOPP I UTLÄNDSVALUTA UTAN moms_sek OCH FRAKT
-//   InvVal_No_moms_freight_For       := sp_InvTotalsInvValnofreight.AsFloat ;
+  //FAKTURATOTAL I UTLÄNDSVALUTA
+  InvoiceTotal_For                 := sp_InvTotalsInvoiceTotal.AsFloat ;
+  //FAKTURA BELOPP I UTLÄNDSVALUTA UTAN moms_sek OCH FRAKT
+  //   InvVal_No_moms_freight_For       := sp_InvTotalsInvValnofreight.AsFloat ;
 
-   //MOMSBELOPP SEK
-   moms_sek                             := sp_InvTotalsVAT_SEK.AsFloat ;
+  //MOMSBELOPP SEK
+  moms_sek                             := sp_InvTotalsVAT_SEK.AsFloat ;
 
-   //MOMSBELOPP FOR
-   moms_for                             := sp_InvTotalsVAT_FOR.AsFloat ;
+  //MOMSBELOPP FOR
+  moms_for                             := sp_InvTotalsVAT_FOR.AsFloat ;
 
   //DEBIT ELLER KREDIT INVOICE TYPE
-   if InvoiceTotal_SEK > 0 then
-    InvoiceType:= 1 //Debit
-     else
-      InvoiceType:= 2 ;//Credit
+  if InvoiceTotal_SEK > 0 then
+  InvoiceType:= 1 //Debit
+  else
+  InvoiceType:= 2 ;//Credit
 
 
-   AgentNo:= sp_InvTotalsAgentNo.AsInteger ;
+  AgentNo:= sp_InvTotalsAgentNo.AsInteger ;
   //XorID_KundNamn LÄGGS I FREETEXT BÅDE I HUVUD OCH RAD I VERIFIKATIONEN
-   XorID_KundNamn := sp_InvTotalsidXOR.AsString+':'+sp_InvTotalsCustomerName.AsString ;
-   xorID          := sp_InvTotalsidXOR.AsString ;
-   //TEX EU REGION
-   Region         := sp_InvTotalsRegion.AsString ;
-   Currency       := sp_InvTotalsCurr.AsString ;
-   //LANDNR FRÅN FAKTURAADRESS
-   CountryNo      := sp_InvTotalsCountryNo.AsInteger ;
+  XorID_KundNamn := sp_InvTotalsidXOR.AsString+':'+sp_InvTotalsCustomerName.AsString ;
+  xorID          := sp_InvTotalsidXOR.AsString ;
+  //TEX EU REGION
+  Region         := sp_InvTotalsRegion.AsString ;
+  Currency       := sp_InvTotalsCurr.AsString ;
+  //LANDNR FRÅN FAKTURAADRESS
+  CountryNo      := sp_InvTotalsCountryNo.AsInteger ;
 
-   VaruGrupp      := sp_InvTotalsVaruGrupp.AsInteger ;
-   PO_CountryNo   := sp_InvTotalsPO_CountryNo.AsInteger ;
+  VaruGrupp      := sp_InvTotalsVaruGrupp.AsInteger ;
+  PO_CountryNo   := sp_InvTotalsPO_CountryNo.AsInteger ;
 
-   //0 = INGET SKATTEUPPLAG, 1 = SKATTEUPPLAG
-   SkatteUpplag:= sp_InvTotalsSkatteUpplag.AsInteger ;
-   //FAKTURADATUM
-   InvoiceDate            := sp_InvTotalsInvoiceDate.AsSQLTimeStamp ;
-   InvoiceDateAsDateTime  := SQLTimeStampToDateTime(InvoiceDate) ;
-   InvoiceDateAsDateTime  := RecodeTime(InvoiceDateAsDateTime, 0, 0, 0, 0) ;
-   InvoiceDate            := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime) ;
-//   RecodeTime(const AValue: TDateTime; const AHour, AMinute, ASecond, AMilliSecond: Word): TDateTime;
-   //FÖRFALLODATUM
-   DueDate            := sp_InvTotalsDueDate.AsSQLTimeStamp ;
-   DueDateAsDateTime  := SQLTimeStampToDateTime(DueDate) ;
-   DueDateAsDateTime  := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0) ;
-   DueDate            := DateTimeToSQLTimeStamp(DueDateAsDateTime) ;
+  //0 = INGET SKATTEUPPLAG, 1 = SKATTEUPPLAG
+  SkatteUpplag:= sp_InvTotalsSkatteUpplag.AsInteger ;
+  //FAKTURADATUM
+  InvoiceDate            := sp_InvTotalsInvoiceDate.AsSQLTimeStamp ;
+  InvoiceDateAsDateTime  := SQLTimeStampToDateTime(InvoiceDate) ;
+  InvoiceDateAsDateTime  := RecodeTime(InvoiceDateAsDateTime, 0, 0, 0, 0) ;
+  InvoiceDate            := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime) ;
+  //   RecodeTime(const AValue: TDateTime; const AHour, AMinute, ASecond, AMilliSecond: Word): TDateTime;
+  //FÖRFALLODATUM
+  DueDate            := sp_InvTotalsDueDate.AsSQLTimeStamp ;
+  DueDateAsDateTime  := SQLTimeStampToDateTime(DueDate) ;
+  DueDateAsDateTime  := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0) ;
+  DueDate            := DateTimeToSQLTimeStamp(DueDateAsDateTime) ;
 
-{   if ThisUser.UserID = 8 then
-   Begin
-    ShowMessage('Fakturadatum = ' + SqlTimeStampToStr);
-   End ; }
-
-
-
-
-
-//   Diff := InvoiceTotal_SEK (Rounding_SEK + TotalInvoiceValueNoRounding_SEK
-//   InvoiceTotal_SEK
-
-
-//Okt 24 2005 borttaget från nedan formel KassaRabatt_For + Provision_For +
-//   ForsaljningsKonto_For:= InvoiceTotal_For - (frakt_for + moms_for + Rounding_For) ;
-//Okt 24 2005 borttaget från nedan formel KassaRabatt_SEK + Provision_SEK ?
-//   ForsaljningsKonto_SEK:= InvoiceTotal_SEK - (frakt_SEK + moms_sek + Rounding_SEK ) ;
-
-   //FRAKTBELOPP I SEK
-   frakt_SEK              := sp_InvTotalsFRAKT_SEK.AsFloat ;
-   //FRAKTBELOPP I UTLÄNDSVALUTA
-   frakt_for              := sp_InvTotalsFRAKT_CURR.AsFloat ;
+  {   if ThisUser.UserID = 8 then
+  Begin
+  ShowMessage('Fakturadatum = ' + SqlTimeStampToStr);
+  End ; }
 
 
 
 
-   ForsaljningsKonto_For  :=  sp_InvTotalsProduktvardeFOR.AsFloat ;
-   ForsaljningsKonto_SEK  :=  sp_InvTotalsProduktvardeSEK.AsFloat ;
+
+  //   Diff := InvoiceTotal_SEK (Rounding_SEK + TotalInvoiceValueNoRounding_SEK
+  //   InvoiceTotal_SEK
 
 
-   //ÖRESUTJÄMNING BARA SEK förs över till XOR
-//   Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + TotalInvoiceValueNoRounding_SEK) ;
-   //Ändrat 9/11 2010
+  //Okt 24 2005 borttaget från nedan formel KassaRabatt_For + Provision_For +
+  //   ForsaljningsKonto_For:= InvoiceTotal_For - (frakt_for + moms_for + Rounding_For) ;
+  //Okt 24 2005 borttaget från nedan formel KassaRabatt_SEK + Provision_SEK ?
+  //   ForsaljningsKonto_SEK:= InvoiceTotal_SEK - (frakt_SEK + moms_sek + Rounding_SEK ) ;
 
-   if Debit_Credit = 'DEBIT' then
-   Begin
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1 ;
-
-     if frakt_for > 0 then
-      frakt_for := frakt_for * -1 ;
-    End ;
-
-    if frakt_SEK < 0 then
-     Rfrakt_SEK := frakt_SEK * -1
-      else
-       Rfrakt_SEK := frakt_SEK ;
-
-    Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + Rfrakt_SEK + ForsaljningsKonto_SEK) ;
-   End
-   else   //CREDIT
-   Begin
-   //************************************************************************//
-   // only for rounding
-   //************************************************************************//
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      Rfrakt_SEK := frakt_SEK * -1
-       else
-        Rfrakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK < 0 then
-      Rfrakt_SEK := frakt_SEK * -1
-       else
-        Rfrakt_SEK := frakt_SEK ;
-    End ;
-
-    if ForsaljningsKonto_SEK > 0 then
-     RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK * -1
-      else
-       RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK ;
-
-    if moms_sek > 0 then
-     Rmoms_sek := moms_sek * -1
-      else
-       Rmoms_sek := moms_sek ;
-
-    if InvoiceTotal_SEK > 0 then
-     RInvoiceTotal_SEK  := InvoiceTotal_SEK * -1
-      else
-       RInvoiceTotal_SEK  := InvoiceTotal_SEK ;
-
-    Rounding_SEK       := RInvoiceTotal_SEK - (Rmoms_sek + Rfrakt_SEK + RForsaljningsKonto_SEK) ;
-   End ;   //**
+  //FRAKTBELOPP I SEK
+  frakt_SEK              := sp_InvTotalsFRAKT_SEK.AsFloat ;
+  //FRAKTBELOPP I UTLÄNDSVALUTA
+  frakt_for              := sp_InvTotalsFRAKT_CURR.AsFloat ;
 
 
-   if Debit_Credit = 'DEBIT' then
-   Begin
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK < 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End ;
-   End
-   else
-   Begin //Credit
-    if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 0 then
-    Begin
-     if frakt_SEK < 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End
-    else
-    Begin
-     if frakt_SEK > 0 then
-      frakt_SEK := frakt_SEK * -1
-       else
-        frakt_SEK := frakt_SEK ;
-    End ;
-   End ;
-   //OBJECT 5 ÄR MOTPART
-   Object5:= sp_InvTotalsO5.AsString ;
 
-   if Length(Trim(Object5)) = 0 then
-   Begin
-    ShowMessage('Motpart (Object5) saknas för kund '+sp_InvTotalsCustomerName.AsString) ;
-    Exit ;
-   End ;
 
-   //Sätt object2 till blank till att börja med...
-    Object2:= '' ;
+  ForsaljningsKonto_For  :=  sp_InvTotalsProduktvardeFOR.AsFloat ;
+  ForsaljningsKonto_SEK  :=  sp_InvTotalsProduktvardeSEK.AsFloat ;
+
+
+  //ÖRESUTJÄMNING BARA SEK förs över till XOR
+  //   Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + TotalInvoiceValueNoRounding_SEK) ;
+  //Ändrat 9/11 2010
+
+  if Debit_Credit = 'DEBIT' then
+  Begin
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1 ;
+
+  if frakt_for > 0 then
+  frakt_for := frakt_for * -1 ;
+  End ;
+
+  if frakt_SEK < 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+
+  Rounding_SEK       := InvoiceTotal_SEK - (moms_sek + Rfrakt_SEK + ForsaljningsKonto_SEK) ;
+  End
+  else   //CREDIT
+  Begin
+  //************************************************************************//
+  // only for rounding
+  //************************************************************************//
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK < 0 then
+  Rfrakt_SEK := frakt_SEK * -1
+  else
+  Rfrakt_SEK := frakt_SEK ;
+  End ;
+
+  if ForsaljningsKonto_SEK > 0 then
+  RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK * -1
+  else
+  RForsaljningsKonto_SEK  := ForsaljningsKonto_SEK ;
+
+  if moms_sek > 0 then
+  Rmoms_sek := moms_sek * -1
+  else
+  Rmoms_sek := moms_sek ;
+
+  if InvoiceTotal_SEK > 0 then
+  RInvoiceTotal_SEK  := InvoiceTotal_SEK * -1
+  else
+  RInvoiceTotal_SEK  := InvoiceTotal_SEK ;
+
+  Rounding_SEK       := RInvoiceTotal_SEK - (Rmoms_sek + Rfrakt_SEK + RForsaljningsKonto_SEK) ;
+  End ;   //**
+
+
+  if Debit_Credit = 'DEBIT' then
+  Begin
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 1 then
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK < 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End ;
+  End
+  else
+  Begin //Credit
+  if cdsInvoiceListIncludeFreightCostInPrice.AsInteger = 0 then
+  Begin
+  if frakt_SEK < 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End
+  else
+  Begin
+  if frakt_SEK > 0 then
+  frakt_SEK := frakt_SEK * -1
+  else
+  frakt_SEK := frakt_SEK ;
+  End ;
+  End ;
+  //OBJECT 5 ÄR MOTPART
+  Object5:= sp_InvTotalsO5.AsString ;
+
+  if Length(Trim(Object5)) = 0 then
+  Begin
+  ShowMessage('Motpart (Object5) saknas för kund '+sp_InvTotalsCustomerName.AsString) ;
+  Exit ;
+  End ;
+
+  //Sätt object2 till blank till att börja med...
+  Object2:= '' ;
 
   if SalesmanGroupNo = 1 then //Danmark
-   Object2:= '990' ;
+  Object2:= '990' ;
 
   if cdsInvoiceListInvoiceType.AsInteger = 0 then
   Begin
-   if Object5 = '99' then //Om extern kund
-    ResKontraSerie:= 'VWK1'
-     else
-      ResKontraSerie:= 'VWK1' ;
+  if Object5 = '99' then //Om extern kund
+  ResKontraSerie:= 'VWK1'
+  else
+  ResKontraSerie:= 'VWK1' ;
   End
-   else //Om det är en USA faktura skall serien vara VWK2
-     if cdsInvoiceListInvoiceType.AsInteger = 4 then
-      ResKontraSerie:= 'VWK2'
-       else //Irland
-        if cdsInvoiceListInvoiceType.AsInteger = 5 then
-         ResKontraSerie:= 'VWK4' ;
+  else //Om det är en USA faktura skall serien vara VWK2
+  if cdsInvoiceListInvoiceType.AsInteger = 4 then
+  ResKontraSerie:= 'VWK2'
+  else //Irland
+  if cdsInvoiceListInvoiceType.AsInteger = 5 then
+  ResKontraSerie:= 'VWK4' ;
 
   if Length(Trim(ResKontraSerie)) = 0 then
-   Begin
-    ShowMessage('Reskontraserie kan inte bestämmas för fakturanr '+IntToStr(InvoiceNo)) ;
-    Exit ;
-   End ;
+  Begin
+  ShowMessage('Reskontraserie kan inte bestämmas för fakturanr '+IntToStr(InvoiceNo)) ;
+  Exit ;
+  End ;
 
 
-//sq_invoiceTrf KOLLAR OM FAKTURANNUMRET REDAN FINNS I XOR
+  //sq_invoiceTrf KOLLAR OM FAKTURANNUMRET REDAN FINNS I XOR
   sq_invoiceTrf.ParamByName('Invno').AsInteger      := InvoiceNo ;
   sq_invoiceTrf.ParamByName('enumerator').AsString  := ResKontraSerie ;
   sq_invoiceTrf.Open ;
   if sq_invoiceTrf.FieldByName('Invno').AsInteger > 1 then
   Begin
-   ShowMessage('Faktura nr '+inttostr(InvoiceNo)+' är redan i loggen.') ;
-   sq_invoiceTrf.Close ;
-   Exit ;
+  ShowMessage('Faktura nr '+inttostr(InvoiceNo)+' är redan i loggen.') ;
+  sq_invoiceTrf.Close ;
+  Exit ;
   End ;
   sq_invoiceTrf.Close ;
 
 
-//Räkna om bara om valutan är SEK
-{   if (Currency = 'SEK') and (moms_sek <> 0) then
-    moms_sek := InvoiceTotal_SEK * Moms_20Percent ;
-   if Currency = 'SEK' then
-    InvVal_No_moms_freight_SEK:= InvoiceTotal_SEK - (moms_sek + frakt_SEK) ; }
+  //Räkna om bara om valutan är SEK
+  {   if (Currency = 'SEK') and (moms_sek <> 0) then
+  moms_sek := InvoiceTotal_SEK * Moms_20Percent ;
+  if Currency = 'SEK' then
+  InvVal_No_moms_freight_SEK:= InvoiceTotal_SEK - (moms_sek + frakt_SEK) ; }
 
-//Kundreskontra
-   if Object5 = '99' then //99 = extern kund
-   Begin
-    if CountryNo = 9 then //CountryNo 9 = Sverige
-     KundResKontra:= '1510' //Kundfordring Sverige externa kunder
-      else
-       KundResKontra:= '1512' ; //Kundfordring utländska externa kunder
-   End
-    else //Intern kund
-    Begin
-     if Object5 = '22' then
-      KundResKontra:= '1562' //Kundfordring koncern Vida Wood UK
-       else
-        KundResKontra:= '1560' ; //Kundfordring koncern Sverige
-    End ;
+  //Kundreskontra
+  if Object5 = '99' then //99 = extern kund
+  Begin
+  if CountryNo = 9 then //CountryNo 9 = Sverige
+  KundResKontra:= '1510' //Kundfordring Sverige externa kunder
+  else
+  KundResKontra:= '1512' ; //Kundfordring utländska externa kunder
+  End
+  else //Intern kund
+  Begin
+  if Object5 = '22' then
+  KundResKontra:= '1562' //Kundfordring koncern Vida Wood UK
+  else
+  KundResKontra:= '1560' ; //Kundfordring koncern Sverige
+  End ;
 
 
 
@@ -4415,1731 +4633,1845 @@ begin
   if Length(Trim(Object2)) = 0 then
   Object2:= '980' ;
 
-   if Length(Trim(xorID)) = 0 then
-   Begin
-    ShowMessage('Fakturanr '+IntToStr(InvoiceNo)+ ' kan inte överföras, för att kund '+Trim(sp_InvTotalsCustomerName.AsString)+' har inget xorID i rolltypen kund') ;
-    Exit ;
-   End ;
+  if Length(Trim(xorID)) = 0 then
+  Begin
+  ShowMessage('Fakturanr '+IntToStr(InvoiceNo)+ ' kan inte överföras, för att kund '+Trim(sp_InvTotalsCustomerName.AsString)+' har inget xorID i rolltypen kund') ;
+  Exit ;
+  End ;
 
-   cdsInvTrfLoggInvoiceNo.AsInteger                     := InvoiceNo ;
-   cdsInvTrfLoggInternalInvoiceNo.AsInteger             := InternalInvoiceNo ;
-   cdsInvTrfLoggObject2.AsString                        := Object2 ;
-   cdsInvTrfLoggObject5.AsString                        := Object5 ;
-   cdsInvTrfLoggResKontraSerie.AsString                 := ResKontraSerie ;
-   cdsInvTrfLoggKundResKontra.AsString                  := KundResKontra ;
-   cdsInvTrfLoggForsaljningskonto.AsString              := Forsaljningskonto ;
-   cdsInvTrfLoggFrakt_konto.AsString                    := Frakt_konto ;
-   cdsInvTrfLoggMoms_konto.AsString                     := Moms_konto ;
-   cdsInvTrfLoggRounding_Konto.AsString                 := Rounding_Konto ;
-   cdsInvTrfLoggProvision_Konto.AsString                := Provision_Konto ;
-   cdsInvTrfLoggKassaRabattKonto.AsString               := KassaRabattKonto ;
-   cdsInvTrfLoggAgentNo.AsInteger                       := AgentNo ;
-   cdsInvTrfLoggRegion.AsString                         := Region ;
-   cdsInvTrfLoggCurrency.AsString                       := Currency ;
-   cdsInvTrfLoggCountryNo.AsInteger                     := CountryNo ;
-   cdsInvTrfLoggSkatteUpplag.AsInteger                  := SkatteUpplag ;
-   cdsInvTrfLoggInvoiceTotal_SEK.AsFloat                := InvoiceTotal_SEK ;
-   cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat           := ForsaljningsKonto_SEK ;
-   cdsInvTrfLoggmoms_sek.AsFloat                        := moms_sek ;
-   cdsInvTrfLoggmoms_for.AsFloat                        := moms_For ;
-   cdsInvTrfLoggmoms.AsFloat                            := moms_sek ;
-   cdsInvTrfLoggRounding_SEK.AsFloat                    := Rounding_SEK ;
-   cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat := TotalInvoiceValueNoRounding_SEK ;
-   cdsInvTrfLoggProvision_SEK.AsFloat                   := Provision_SEK ;
-   cdsInvTrfLoggKassaRabatt_SEK.AsFloat                 := KassaRabatt_SEK ;
-   cdsInvTrfLoggfrakt_SEK.AsFloat                       := frakt_SEK ;
-   cdsInvTrfLoggInvoiceTotal_For.AsFloat                := InvoiceTotal_For ;
-   cdsInvTrfLoggForsaljningsKonto_For.AsFloat           := ForsaljningsKonto_For ;
-   cdsInvTrfLoggRounding_For.AsFloat                    := Rounding_For ;
-   cdsInvTrfLoggProvision_For.AsFloat                   := Provision_For ;
-   cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat := TotalInvoiceValueNoRounding_For ;
-   cdsInvTrfLoggKassaRabatt_For.AsFloat                 := KassaRabatt_For ;
-   cdsInvTrfLoggfrakt_for.AsFloat                       := frakt_for ;
-   cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp              := InvoiceDate ;
-   cdsInvTrfLoggVatcode.AsInteger                       := Vatcode ;
-   cdsInvTrfLoggInvoiceType.AsInteger                   := InvoiceType ;
-   cdsInvTrfLoggEventDate.AsSQLTimeStamp                := DateTimeToSQLTimeStamp(Now) ;
-   cdsInvTrfLoggUserId.AsInteger                        := ThisUser.UserID ;
-   cdsInvTrfLoggXorID_KundNamn.AsString                 := XorID_KundNamn ;
-   cdsInvTrfLoggTrading.AsInteger                       := Trading ;
-   cdsInvTrfLoggVaruGrupp.AsInteger                     := VaruGrupp ;
-   cdsInvTrfLoggPO_Country.AsInteger                    := PO_CountryNo ;
+  cdsInvTrfLoggInvoiceNo.AsInteger                     := InvoiceNo ;
+  cdsInvTrfLoggInternalInvoiceNo.AsInteger             := InternalInvoiceNo ;
+  cdsInvTrfLoggObject2.AsString                        := Object2 ;
+  cdsInvTrfLoggObject5.AsString                        := Object5 ;
+  cdsInvTrfLoggResKontraSerie.AsString                 := ResKontraSerie ;
+  cdsInvTrfLoggKundResKontra.AsString                  := KundResKontra ;
+  cdsInvTrfLoggForsaljningskonto.AsString              := Forsaljningskonto ;
+  cdsInvTrfLoggFrakt_konto.AsString                    := Frakt_konto ;
+  cdsInvTrfLoggMoms_konto.AsString                     := Moms_konto ;
+  cdsInvTrfLoggRounding_Konto.AsString                 := Rounding_Konto ;
+  cdsInvTrfLoggProvision_Konto.AsString                := Provision_Konto ;
+  cdsInvTrfLoggKassaRabattKonto.AsString               := KassaRabattKonto ;
+  cdsInvTrfLoggAgentNo.AsInteger                       := AgentNo ;
+  cdsInvTrfLoggRegion.AsString                         := Region ;
+  cdsInvTrfLoggCurrency.AsString                       := Currency ;
+  cdsInvTrfLoggCountryNo.AsInteger                     := CountryNo ;
+  cdsInvTrfLoggSkatteUpplag.AsInteger                  := SkatteUpplag ;
+  cdsInvTrfLoggInvoiceTotal_SEK.AsFloat                := InvoiceTotal_SEK ;
+  cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat           := ForsaljningsKonto_SEK ;
+  cdsInvTrfLoggmoms_sek.AsFloat                        := moms_sek ;
+  cdsInvTrfLoggmoms_for.AsFloat                        := moms_For ;
+  cdsInvTrfLoggmoms.AsFloat                            := moms_sek ;
+  cdsInvTrfLoggRounding_SEK.AsFloat                    := Rounding_SEK ;
+  cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat := TotalInvoiceValueNoRounding_SEK ;
+  cdsInvTrfLoggProvision_SEK.AsFloat                   := Provision_SEK ;
+  cdsInvTrfLoggKassaRabatt_SEK.AsFloat                 := KassaRabatt_SEK ;
+  cdsInvTrfLoggfrakt_SEK.AsFloat                       := frakt_SEK ;
+  cdsInvTrfLoggInvoiceTotal_For.AsFloat                := InvoiceTotal_For ;
+  cdsInvTrfLoggForsaljningsKonto_For.AsFloat           := ForsaljningsKonto_For ;
+  cdsInvTrfLoggRounding_For.AsFloat                    := Rounding_For ;
+  cdsInvTrfLoggProvision_For.AsFloat                   := Provision_For ;
+  cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat := TotalInvoiceValueNoRounding_For ;
+  cdsInvTrfLoggKassaRabatt_For.AsFloat                 := KassaRabatt_For ;
+  cdsInvTrfLoggfrakt_for.AsFloat                       := frakt_for ;
+  cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp              := InvoiceDate ;
+  cdsInvTrfLoggVatcode.AsInteger                       := Vatcode ;
+  cdsInvTrfLoggInvoiceType.AsInteger                   := InvoiceType ;
+  cdsInvTrfLoggEventDate.AsSQLTimeStamp                := DateTimeToSQLTimeStamp(Now) ;
+  cdsInvTrfLoggUserId.AsInteger                        := ThisUser.UserID ;
+  cdsInvTrfLoggXorID_KundNamn.AsString                 := XorID_KundNamn ;
+  cdsInvTrfLoggTrading.AsInteger                       := Trading ;
+  cdsInvTrfLoggVaruGrupp.AsInteger                     := VaruGrupp ;
+  cdsInvTrfLoggPO_Country.AsInteger                    := PO_CountryNo ;
 
-   cdsInvTrfLogg.Post ;
-   if Test = False then
-   Begin
-    if cdsInvTrfLogg.ChangeCount > 0 then
-     cdsInvTrfLogg.ApplyUpdates(0) ;
-    cdsInvTrfLogg.Active:= False ;
-   End
-   else
-   Begin
-    fShowInvTrfLog:= TfShowInvTrfLog.Create(nil) ;
-    try
-      fShowInvTrfLog.ShowModal ;
-      Exit ;
-    finally
-      FreeAndNil(fShowInvTrfLog) ;
-      cdsInvTrfLogg.Active:= False ;
-    end;
-   End ;
+  cdsInvTrfLogg.Post ;
+  if Test = False then
+  Begin
+  if cdsInvTrfLogg.ChangeCount > 0 then
+  cdsInvTrfLogg.ApplyUpdates(0) ;
+  cdsInvTrfLogg.Active:= False ;
+  End
+  else
+  Begin
+  fShowInvTrfLog:= TfShowInvTrfLog.Create(nil) ;
+  try
+  fShowInvTrfLog.ShowModal ;
+  Exit ;
+  finally
+  FreeAndNil(fShowInvTrfLog) ;
+  cdsInvTrfLogg.Active:= False ;
+  end;
+  End ;
 
-//   ShowMessage('cdsInvTrfLogg.Post') ;
+  //   ShowMessage('cdsInvTrfLogg.Post') ;
 
-{   if (Round(rounding_SEK*100)/100) <> 0 then
-   Begin
-    ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)+' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)) ;
-   End ;
+  {   if (Round(rounding_SEK*100)/100) <> 0 then
+  Begin
+  ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)+' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)) ;
+  End ;
 
-   if RoundTo(rounding_SEK,-2) <> 0 then
-   Begin
-    ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)
-    +' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)
-    +' RoundTo = '+FloatToStr(RoundTo(rounding_SEK,-2))) ;
-   End ;
+  if RoundTo(rounding_SEK,-2) <> 0 then
+  Begin
+  ShowMessage('rounding_SEK = '+FloatToStr(rounding_SEK)
+  +' Rounded = '+FloatToStr(Round(rounding_SEK*100)/100)
+  +' RoundTo = '+FloatToStr(RoundTo(rounding_SEK,-2))) ;
+  End ;
 
-   if ((Currency <> 'SEK') AND (rounding_For <> 0)) then
-   Begin
-    ShowMessage('rounding_For = '+FloatToStr(rounding_For)) ;
-   End ; }
+  if ((Currency <> 'SEK') AND (rounding_For <> 0)) then
+  Begin
+  ShowMessage('rounding_For = '+FloatToStr(rounding_For)) ;
+  End ; }
 
-   if Thisuser.UserID = 8 then  Exit ;
+  if Thisuser.UserID = 8 then  Exit ;
 
 
-//Skapa verifikationshuvudet
-   EXEC_sp_VIS_xp_voulogwrite ('VWAB',
-   3{logtype},
-   InvoiceDate,
-   ResKontraSerie,
-   InvoiceNo,
-   Copy(XorID_KundNamn, 1,80) //FreeText
-   ) ;
-//   ShowMessage('EXEC_sp_VIS_xp_voulogwrite');
+  //Skapa verifikationshuvudet
+  EXEC_sp_VIS_xp_voulogwrite ('VWAB',
+  3{logtype},
+  InvoiceDate,
+  ResKontraSerie,
+  InvoiceNo,
+  Copy(XorID_KundNamn, 1,80) //FreeText
+  ) ;
+  //   ShowMessage('EXEC_sp_VIS_xp_voulogwrite');
 
-//Skapa KUNDFORDRINGSKONTO verifikationsrad
-   if InvoiceTotal_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   KundResKontra,//account tex 1560
-   InvoiceDate, //logdate
-   Currency, //currency
-   InvoiceTotal_SEK,
-   InvoiceTotal_For,
-//   -1*InvVal_No_moms_freight_SEK, //amount : double;
-//   -1*InvVal_No_moms_freight_For, //foramount : double;
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
+  //Skapa KUNDFORDRINGSKONTO verifikationsrad
+  if InvoiceTotal_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  KundResKontra,//account tex 1560
+  InvoiceDate, //logdate
+  Currency, //currency
+  InvoiceTotal_SEK,
+  InvoiceTotal_For,
+  //   -1*InvVal_No_moms_freight_SEK, //amount : double;
+  //   -1*InvVal_No_moms_freight_For, //foramount : double;
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('EXEC_xp_vourowlogwrite');
-//Skapa varvärde verifikationsrad för Försäljningskonto 30xx
-   if ForsaljningsKonto_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Forsaljningskonto ,//account tex 3020
-   InvoiceDate, //logdate
-   Currency, //currency
-//   InvoiceTotal_SEK,
-//   InvoiceTotal_For,
-   -1 * ForsaljningsKonto_SEK, //SEK amount : double;
-   -1 * ForsaljningsKonto_For, //foramount : double;
-   vatcode,//skall ha en vatcode
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-        ) ;
+  //   ShowMessage('EXEC_xp_vourowlogwrite');
+  //Skapa varvärde verifikationsrad för Försäljningskonto 30xx
+  if ForsaljningsKonto_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Forsaljningskonto ,//account tex 3020
+  InvoiceDate, //logdate
+  Currency, //currency
+  //   InvoiceTotal_SEK,
+  //   InvoiceTotal_For,
+  -1 * ForsaljningsKonto_SEK, //SEK amount : double;
+  -1 * ForsaljningsKonto_For, //foramount : double;
+  vatcode,//skall ha en vatcode
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('2 EXEC_xp_vourowlogwrite');
-//Skapa frakt verifikationsrad
-//här!
-   if Frakt_SEK <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Frakt_Konto ,//account tex 2610
-   InvoiceDate, //logdate
-   Currency, //currency
-   frakt_SEK, //SEK amount : double;
-   frakt_For, //foramount : double;
-   vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
+  //   ShowMessage('2 EXEC_xp_vourowlogwrite');
+  //Skapa frakt verifikationsrad
+  //här!
+  if Frakt_SEK <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Frakt_Konto ,//account tex 2610
+  InvoiceDate, //logdate
+  Currency, //currency
+  frakt_SEK, //SEK amount : double;
+  frakt_For, //foramount : double;
+  vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('3 EXEC_xp_vourowlogwrite');
+  //   ShowMessage('3 EXEC_xp_vourowlogwrite');
   //Skapa moms_sek verifikationsrad
-   if moms_sek <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   moms_Konto ,//account tex 2610
-   InvoiceDate, //logdate
-   Currency, //currency
-   -1*moms_sek, //Sek amount : double;
-   -1*moms_for, //foramount : double;
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-    ) ;
-//   ShowMessage('4 EXEC_xp_vourowlogwrite');
+  if moms_sek <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  moms_Konto ,//account tex 2610
+  InvoiceDate, //logdate
+  Currency, //currency
+  -1*moms_sek, //Sek amount : double;
+  -1*moms_for, //foramount : double;
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
+  //   ShowMessage('4 EXEC_xp_vourowlogwrite');
 
   //Skapa Öresutjämnings verifikationsrad
-{   if  ((Currency = 'SEK') AND (rounding_SEK <> 0))
-   OR ((Currency <> 'SEK') AND (rounding_For <> 0)) then }
-   if RoundTo(rounding_SEK,-2) <> 0 then
-   EXEC_xp_vourowlogwrite (logno,
-   Rounding_Konto ,//account tex 3740
-   InvoiceDate, //logdate
-   Currency, //currency
-   -1*RoundTo(rounding_SEK,-2), //amount : double;
-   0, //-1*rounding_For, OBS bara SEK avrundningsvärdet skall överföras till xor!!
-   0, //vatcode,
-   sp_InvTotalsidXOR.AsString, //Creator
-   Object2, Object5,
-   Volume,
-   Copy(XorID_KundNamn,1,30) //FreeText
-   ) ;
+  {   if  ((Currency = 'SEK') AND (rounding_SEK <> 0))
+  OR ((Currency <> 'SEK') AND (rounding_For <> 0)) then }
+  if RoundTo(rounding_SEK,-2) <> 0 then
+  EXEC_xp_vourowlogwrite (logno,
+  Rounding_Konto ,//account tex 3740
+  InvoiceDate, //logdate
+  Currency, //currency
+  -1*RoundTo(rounding_SEK,-2), //amount : double;
+  0, //-1*rounding_For, OBS bara SEK avrundningsvärdet skall överföras till xor!!
+  0, //vatcode,
+  sp_InvTotalsidXOR.AsString, //Creator
+  Object2, Object5,
+  Volume,
+  Copy(XorID_KundNamn,1,30) //FreeText
+  ) ;
 
-//   ShowMessage('5 EXEC_xp_vourowlogwrite');
+  //   ShowMessage('5 EXEC_xp_vourowlogwrite');
 
 
 
-//Skapa Reskontra
-   EXEC_xp_ldglogwrite ('VWAB',
-   sp_InvTotalsidXOR.AsString,
-   InvoiceType,
-   ResKontraSerie,
-   InvoiceNo,
-   0,   //seq
-   IntToStr(InvoiceNo),
-   InvoiceDate,
-   InvoiceDate,
-   DueDate,
-   Currency,
-   InvoiceTotal_SEK,
-   InvoiceTotal_For,
-   moms_sek,
-   vatcode,
-   KundResKontra,
-   'MJ',
-   logno,
-   vouno,
-   serie,
-   Object2, Object5 ) ;
+  //Skapa Reskontra
+  EXEC_xp_ldglogwrite ('VWAB',
+  sp_InvTotalsidXOR.AsString,
+  InvoiceType,
+  ResKontraSerie,
+  InvoiceNo,
+  0,   //seq
+  IntToStr(InvoiceNo),
+  InvoiceDate,
+  InvoiceDate,
+  DueDate,
+  Currency,
+  InvoiceTotal_SEK,
+  InvoiceTotal_For,
+  moms_sek,
+  vatcode,
+  KundResKontra,
+  'MJ',
+  logno,
+  vouno,
+  serie,
+  Object2, Object5 ) ;
 
-//   ShowMessage('2 EXEC_xp_ldglogwrite');
+  //   ShowMessage('2 EXEC_xp_ldglogwrite');
 
-{const cid, person : String;
-const stype : Integer;  //invoiceType
-const enum : String;
-const invno, seq : Integer ;
-const org : String;
-const bookdate, invdate, duedate : TSQLTimeStamp;
-const currency : String;
-const amount, foramount, moms_sek : Double;
-const vatcode : Integer;
-const account : String;
-const approval1 : String;
-const logno, vouno : Integer;
-const serie : String) ;  }
+  {const cid, person : String;
+  const stype : Integer;  //invoiceType
+  const enum : String;
+  const invno, seq : Integer ;
+  const org : String;
+  const bookdate, invdate, duedate : TSQLTimeStamp;
+  const currency : String;
+  const amount, foramount, moms_sek : Double;
+  const vatcode : Integer;
+  const account : String;
+  const approval1 : String;
+  const logno, vouno : Integer;
+  const serie : String) ;  }
   End
-   else
-    ShowMessage('Fakturan har inga värden.') ;
+  else
+  ShowMessage('Fakturan har inga värden.') ;
   Finally
-   sp_InvTotals.Active := False ;
+  sp_InvTotals.Active := False ;
   End ;
   End //  if cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
-   else
-    ShowMessage('Problem lokalisera faktura...') ;
- End ; //With
-end;
+  else
+  ShowMessage('Problem lokalisera faktura...') ;
+  End ; //With
+  end;
 *)
 
-Function TfrmInvoiceList.NoOfCheckedRowsComboFilter(combo : TcxCheckComboBox;var InvoiceType  : Integer) : Integer ;
+Function TfrmInvoiceList.NoOfCheckedRowsComboFilter(combo: TcxCheckComboBox;
+  var InvoiceType: Integer): Integer;
 Var
-    APCheckStates : ^TcxCheckStates;
-    x             : Integer ;
+  APCheckStates: ^TcxCheckStates;
+  x: Integer;
 Begin
- Result:= 0 ;
- New(APCheckStates);
+  Result := 0;
+  New(APCheckStates);
   try
-    with Combo do
+    with combo do
     begin
-     CalculateCheckStates(Value, Properties.Items,Properties.EditValueFormat , APCheckStates^);
-     if Properties.Items.Count > 0 then
-     Begin
-      for x := 0 to Properties.Items.Count - 1 do
+      CalculateCheckStates(Value, Properties.Items, Properties.EditValueFormat,
+        APCheckStates^);
+      if Properties.Items.Count > 0 then
       Begin
-       if APCheckStates^[x] = cbsChecked then
-       Begin
-        Result  := Result + 1 ;
-        InvoiceType := StrToIntDef(Properties.Items[x].ShortDescription,-1) ;
-       End ;//if..
-      End ;//for..
-     End ;
-    end;//With
+        for x := 0 to Properties.Items.Count - 1 do
+        Begin
+          if APCheckStates^[x] = cbsChecked then
+          Begin
+            Result := Result + 1;
+            InvoiceType :=
+              StrToIntDef(Properties.Items[x].ShortDescription, -1);
+          End; // if..
+        End; // for..
+      End;
+    end; // With
   finally
     Dispose(APCheckStates)
   end;
-End ;
+End;
 
 procedure TfrmInvoiceList.acTransferInvoicesUpdate(Sender: TObject);
 begin
- With dmVidaInvoice do
- Begin
-//  acTransferInvoices.Enabled := (icTransferredStatus.ItemIndex = 1)
-//  and (cdsInvoiceList.Active) and (cdsInvoiceList.RecordCount > 0) and (cdsInvoiceListINVOICE_NO.AsInteger > 0) ;
- End ;//With.. 
+  With dmVidaInvoice do
+  Begin
+    // acTransferInvoices.Enabled := (icTransferredStatus.ItemIndex = 1)
+    // and (cdsInvoiceList.Active) and (cdsInvoiceList.RecordCount > 0) and (cdsInvoiceListINVOICE_NO.AsInteger > 0) ;
+  End; // With..
 end;
 
 procedure TfrmInvoiceList.acSaveMallExecute(Sender: TObject);
-//Var x                 : Integer ;
-//    fSokAvropMall     : TfSokAvropMall;
+// Var x                 : Integer ;
+// fSokAvropMall     : TfSokAvropMall;
 begin
-// with dmVidaInvoice do
-// Begin
-//  cds_PropsInvInv.Active:= False ;
-//  cds_PropsInv.ParamByName('UserID').AsInteger  := ThisUser.UserID ;
-//  cds_PropsInv.ParamByName('Name').AsString     := 'frmInvoiceList' ;
-//  cds_PropsInv.Active:= True ;
-// fSokAvropMall:= TfSokAvropMall.Create(nil) ;
-// Try
-//  if (fSokAvropMall.ShowModal = mrOK) and
+  // with dmVidaInvoice do
+  // Begin
+  // cds_PropsInvInv.Active:= False ;
+  // cds_PropsInv.ParamByName('UserID').AsInteger  := ThisUser.UserID ;
+  // cds_PropsInv.ParamByName('Name').AsString     := 'frmInvoiceList' ;
+  // cds_PropsInv.Active:= True ;
+  // fSokAvropMall:= TfSokAvropMall.Create(nil) ;
+  // Try
+  // if (fSokAvropMall.ShowModal = mrOK) and
   if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '') then
   Begin
-   if MessageDlg('Vill du spara aktuella inställningar som mall ' + cds_PropsInvForm.AsString + '?',
-   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  Begin
+    if MessageDlg('Vill du spara aktuella inställningar som mall ' +
+      cds_PropsInvForm.AsString + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    then
+    Begin
 
-   dmsSystem.StoreGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString, grdFakturaDBBandedTableView1) ;
+      dmsSystem.StoreGridLayout_Special(thisuser.userid, Self.Name,
+        cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString,
+        grdFakturaDBBandedTableView1);
 
-   if cds_PropsInv.State in [dsBrowse] then
-    cds_PropsInv.Edit ;
+      if cds_PropsInv.State in [dsBrowse] then
+        cds_PropsInv.Edit;
 
-   cds_PropsInv.Post ;
-   if cds_PropsInv.ChangeCount > 0 then
-   Begin
-    cds_PropsInv.ApplyUpdates(0) ;
-    cds_PropsInv.CommitUpdates ;
-   End ;
-  End ;//if MessageDlg('Vill du spara aktuella inställningar som mall ' + cds_PropsInvName.AsString + '?',
+      cds_PropsInv.Post;
+      if cds_PropsInv.ChangeCount > 0 then
+      Begin
+        cds_PropsInv.ApplyUpdates(0);
+        cds_PropsInv.CommitUpdates;
+      End;
+    End; // if MessageDlg('Vill du spara aktuella inställningar som mall ' + cds_PropsInvName.AsString + '?',
 
-  End //if fSokAvropMall.ShowModal = mrOK then
-   else
+  End // if fSokAvropMall.ShowModal = mrOK then
+  else
     ShowMessage('Finns ingen mall att spara, använd "Spara mall som"');
-//  Finally
-//   FreeAndNil(fSokAvropMall) ;
-//  End ;
-// End ;//With...
+  // Finally
+  // FreeAndNil(fSokAvropMall) ;
+  // End ;
+  // End ;//With...
 end;
 
 procedure TfrmInvoiceList.acSaveMallAsExecute(Sender: TObject);
-Var fEntryField       : TfEntryField;
-    Props             : Array of variant ;
-    I                 : Integer ;
+Var
+  fEntryField: TfEntryField;
+  Props: Array of variant;
+  i: Integer;
 
-Procedure CopyOldProps ;
-Var i : Integer ;
-Begin
-  SetLength(Props, cds_PropsInv.FieldCount) ;
-  for i:= 0 to cds_PropsInv.FieldCount-1 do
+  Procedure CopyOldProps;
+  Var
+    i: Integer;
   Begin
-   Props[i]:= cds_PropsInv.Fields[i].Value ;
-  End ;
-End ;
+    SetLength(Props, cds_PropsInv.FieldCount);
+    for i := 0 to cds_PropsInv.FieldCount - 1 do
+    Begin
+      Props[i] := cds_PropsInv.Fields[i].Value;
+    End;
+  End;
 
 begin
- fEntryField:= TfEntryField.Create(nil) ;
- Try
-  fEntryField.Caption         := 'Spara mall' ;
-  fEntryField.Label1.Caption  := 'Mall namn:' ;
-  fEntryField.eNoofpkgs.Properties.EditMask := '' ;
-  if fEntryField.ShowModal = mrOK then
-  Begin
-   if MessageDlg('Vill göra en ny mall? ' + fEntryField.eNoofpkgs.Text + '?',
-   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   Begin
-    if (cds_PropsInv.Active) and (cds_PropsInv.RecordCount > 0) then
+  fEntryField := TfEntryField.Create(nil);
+  Try
+    fEntryField.Caption := 'Spara mall';
+    fEntryField.Label1.Caption := 'Mall namn:';
+    fEntryField.eNoofpkgs.Properties.EditMask := '';
+    if fEntryField.ShowModal = mrOk then
     Begin
-     CopyOldProps ;
-     cds_PropsInv.Insert ;
-     For i := 0 to cds_PropsInv.FieldCount-1 do
-     cds_PropsInv.Fields[i].Value := Props[i] ;
-     cds_PropsInvForm.AsString := fEntryField.eNoofpkgs.Text ;
-    End
-    else
-    Begin
-     if not cds_PropsInv.Active then cds_PropsInv.Active  := True ;
-     cds_PropsInv.Insert ;
-     cds_PropsInvForm.AsString := fEntryField.eNoofpkgs.Text ;
-     cds_PropsInvBarCodeNo.AsInteger      := 0 ;
-     cds_PropsInvBookingTypeNo.AsInteger  := 2 ;
-     cds_PropsInvCopyPcs.AsInteger        := 3 ;
-     cds_PropsInvStatus.AsInteger         := 0 ;
-     cds_PropsInvGradeStampNo.AsInteger   := 0 ;
-    End ;
+      if MessageDlg('Vill göra en ny mall? ' + fEntryField.eNoofpkgs.Text + '?',
+        mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      Begin
+        if (cds_PropsInv.Active) and (cds_PropsInv.RecordCount > 0) then
+        Begin
+          CopyOldProps;
+          cds_PropsInv.Insert;
+          For i := 0 to cds_PropsInv.FieldCount - 1 do
+            cds_PropsInv.Fields[i].Value := Props[i];
+          cds_PropsInvForm.AsString := fEntryField.eNoofpkgs.Text;
+        End
+        else
+        Begin
+          if not cds_PropsInv.Active then
+            cds_PropsInv.Active := True;
+          cds_PropsInv.Insert;
+          cds_PropsInvForm.AsString := fEntryField.eNoofpkgs.Text;
+          cds_PropsInvBarCodeNo.AsInteger := 0;
+          cds_PropsInvBookingTypeNo.AsInteger := 2;
+          cds_PropsInvCopyPcs.AsInteger := 3;
+          cds_PropsInvStatus.AsInteger := 0;
+          cds_PropsInvGradeStampNo.AsInteger := 0;
+        End;
 
+        dmsSystem.StoreGridLayout_Special(thisuser.userid, Self.Name,
+          cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString,
+          grdFakturaDBBandedTableView1);
 
+        cds_PropsInv.Post;
+        if cds_PropsInv.ChangeCount > 0 then
+        Begin
+          cds_PropsInv.ApplyUpdates(0);
+          cds_PropsInv.CommitUpdates;
+        End;
+      End; // if MessageDlg('Vill du spara aktuella inställningar som mall ' + cds_PropsInvName.AsString + '?',
 
-
-    dmsSystem.StoreGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString, grdFakturaDBBandedTableView1) ;
-
-
-    cds_PropsInv.Post ;
-    if cds_PropsInv.ChangeCount > 0 then
-    Begin
-     cds_PropsInv.ApplyUpdates(0) ;
-     cds_PropsInv.CommitUpdates ;
-    End ;
-   End ;//if MessageDlg('Vill du spara aktuella inställningar som mall ' + cds_PropsInvName.AsString + '?',
-
-  End ;//if fEntryField.ShowModal = mrOK then
+    End; // if fEntryField.ShowModal = mrOK then
   Finally
-   FreeAndNil(fEntryField) ;
-  End ;
+    FreeAndNil(fEntryField);
+  End;
 
-// End ;//With...
+  // End ;//With...
 end;
 
 procedure TfrmInvoiceList.acOpenMallExecute(Sender: TObject);
 begin
- OpenMall ;
+  OpenMall;
 end;
 
-Function TfrmInvoiceList.OpenMall : Boolean ;
+Function TfrmInvoiceList.OpenMall: Boolean;
 Var
-    fSokAvropMall     : TfSokAvropMall;
+  fSokAvropMall: TfSokAvropMall;
 begin
- Result := False ;
-// With dmVidaInvoice do
-// Begin
-  cds_mall.Active:= False ;
-  cds_mall.ParamByName('UserID').AsInteger       := ThisUser.UserID ;
-  cds_mall.ParamByName('Name').AsString          := 'frmInvoiceList' ;
-  cds_mall.ParamByName('LOObjectType').AsInteger := 0 ;
-  cds_mall.Active:= True ;
-  fSokAvropMall:= TfSokAvropMall.Create(nil) ;
+  Result := False;
+  // With dmVidaInvoice do
+  // Begin
+  cds_mall.Active := False;
+  cds_mall.ParamByName('UserID').AsInteger := thisuser.userid;
+  cds_mall.ParamByName('Name').AsString := 'frmInvoiceList';
+  cds_mall.ParamByName('LOObjectType').AsInteger := 0;
+  cds_mall.Active := True;
+  fSokAvropMall := TfSokAvropMall.Create(nil);
   Try
-   fSokAvropMall.ds_mall.DataSet  := cds_mall ;
-   if (fSokAvropMall.ShowModal = mrOK) and (cds_mall.RecordCount > 0) AND (cds_mallName.AsString > '') then
-   Begin
-    cds_PropsInv.Active:= False ;
-    cds_PropsInv.ParamByName('UserID').AsInteger       := ThisUser.UserID ;
-    cds_PropsInv.ParamByName('Name').AsString          := cds_mallName.AsString ;
-    cds_PropsInv.ParamByName('Form').AsString          := cds_mallForm.AsString ;// cds_mallName.AsString ;
-    cds_PropsInv.ParamByName('LOObjectType').AsInteger := 0 ;
-    cds_PropsInv.Active:= True ;
-
-    if cds_PropsInv.RecordCount > 0 then
+    fSokAvropMall.ds_mall.DataSet := cds_mall;
+    if (fSokAvropMall.ShowModal = mrOk) and (cds_mall.RecordCount > 0) AND
+      (cds_mallName.AsString > '') then
     Begin
-     Result  := True ;
-     Application.ProcessMessages ;
-//     dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_mallName.AsString + '/' + cds_mallForm.AsString, grdFakturaDBBandedTableView1) ;
-     dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString, grdFakturaDBBandedTableView1) ;
-    End ;
+      cds_PropsInv.Active := False;
+      cds_PropsInv.ParamByName('UserID').AsInteger := thisuser.userid;
+      cds_PropsInv.ParamByName('Name').AsString := cds_mallName.AsString;
+      cds_PropsInv.ParamByName('Form').AsString := cds_mallForm.AsString;
+      // cds_mallName.AsString ;
+      cds_PropsInv.ParamByName('LOObjectType').AsInteger := 0;
+      cds_PropsInv.Active := True;
 
-//   if cds_PropsInv.State in [dsEdit, dsInsert] then
-//  cds_PropsInv.Post ;
+      if cds_PropsInv.RecordCount > 0 then
+      Begin
+        Result := True;
+        Application.ProcessMessages;
+        // dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_mallName.AsString + '/' + cds_mallForm.AsString, grdFakturaDBBandedTableView1) ;
+        dmsSystem.LoadGridLayout_Special(thisuser.userid, Self.Name,
+          cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString,
+          grdFakturaDBBandedTableView1);
+      End;
 
- End ;//If ShowModal..
+      // if cds_PropsInv.State in [dsEdit, dsInsert] then
+      // cds_PropsInv.Post ;
+
+    End; // If ShowModal..
   Finally
-   FreeAndNil(fSokAvropMall) ;
-//   cds_PropsInv.Active:= False ;
-  End ;
-// End ;//With dm_SokFormular do
+    FreeAndNil(fSokAvropMall);
+    // cds_PropsInv.Active:= False ;
+  End;
+  // End ;//With dm_SokFormular do
 end;
 
 procedure TfrmInvoiceList.OpenStandardMall(Sender: TObject);
 begin
-// With dmVidaInvoice do
-// Begin
-  cds_mall.Active:= False ;
-  cds_mall.ParamByName('UserID').AsInteger       := ThisUser.UserID ;
-  cds_mall.ParamByName('Name').AsString          := 'frmInvoiceList' ;
-  cds_mall.ParamByName('LOObjectType').AsInteger := 1 ;
-  cds_mall.Active:= True ;
+  // With dmVidaInvoice do
+  // Begin
+  cds_mall.Active := False;
+  cds_mall.ParamByName('UserID').AsInteger := thisuser.userid;
+  cds_mall.ParamByName('Name').AsString := 'frmInvoiceList';
+  cds_mall.ParamByName('LOObjectType').AsInteger := 1;
+  cds_mall.Active := True;
 
   if (cds_mall.RecordCount > 0) AND (cds_mallName.AsString > '') then
   Begin
-  cds_PropsInv.Active:= False ;
-  cds_PropsInv.ParamByName('UserID').AsInteger       := ThisUser.UserID ;
-  cds_PropsInv.ParamByName('Name').AsString          := cds_mallName.AsString ;
-  cds_PropsInv.ParamByName('Form').AsString          := cds_mallForm.AsString ;// cds_mallName.AsString ;
-  cds_PropsInv.ParamByName('LOObjectType').AsInteger := 1 ;
-  cds_PropsInv.Active:= True ;
-//  cds_PropsInv.Filter:= 'LOObjectType = 1' ;
-//  cds_PropsInv.Filtered:= True ;
-  Try
-   if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '') then
-   Begin
-    cds_PropsInv.Edit ;
-    cds_PropsInvLengthFormatNo.AsInteger  := 0 ;
-    cds_PropsInvStartPeriod.AsDateTime    := Date - 1;
-    cds_PropsInvEndPeriod.AsDateTime      := Date ;
-//    cds_PropsInvLengthOption.AsInteger    := 0 ;
-    Application.ProcessMessages ;
-//    dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString, grdFakturaDBBandedTableView1) ;
-    dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString+'/'+cds_PropsInvForm.AsString, grdFakturaDBBandedTableView1) ;
+    cds_PropsInv.Active := False;
+    cds_PropsInv.ParamByName('UserID').AsInteger := thisuser.userid;
+    cds_PropsInv.ParamByName('Name').AsString := cds_mallName.AsString;
+    cds_PropsInv.ParamByName('Form').AsString := cds_mallForm.AsString;
+    // cds_mallName.AsString ;
+    cds_PropsInv.ParamByName('LOObjectType').AsInteger := 1;
+    cds_PropsInv.Active := True;
+    // cds_PropsInv.Filter:= 'LOObjectType = 1' ;
+    // cds_PropsInv.Filtered:= True ;
+    Try
+      if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '')
+      then
+      Begin
+        cds_PropsInv.Edit;
+        cds_PropsInvLengthFormatNo.AsInteger := 0;
+        cds_PropsInvStartPeriod.AsDateTime := Date - 1;
+        cds_PropsInvEndPeriod.AsDateTime := Date;
+        // cds_PropsInvLengthOption.AsInteger    := 0 ;
+        Application.ProcessMessages;
+        // dmsSystem.LoadGridLayout_Special(ThisUser.UserID, Self.Name, cds_PropsInvName.AsString, grdFakturaDBBandedTableView1) ;
+        dmsSystem.LoadGridLayout_Special(thisuser.userid, Self.Name,
+          cds_PropsInvName.AsString + '/' + cds_PropsInvForm.AsString,
+          grdFakturaDBBandedTableView1);
 
-    if cds_PropsInv.State in [dsEdit, dsInsert] then
-      cds_PropsInv.Post ;
+        if cds_PropsInv.State in [dsEdit, dsInsert] then
+          cds_PropsInv.Post;
 
-   End ;//if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '') then
-  Finally
-//   cds_PropsInv.Filtered:= False ;
-//   cds_PropsInv.Active:= False ;
-  End ;
-  End //if (fSokAvropMall.ShowModal = mrOK) and (cds_mall.RecordCount > 0) AND (cds_mallName.AsString > '') then
-   else
-    Begin
-     ShowMessage('Du har ingen mall angiven som standard eller inga mallar alls, öppna och sätt en mall som standard eller skapa en ny mall') ;
-     if cds_PropsInv.Active then cds_PropsInv.Active:= False ;
-    End ;
-// End ;//With dm_SokFormular do
+      End; // if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '') then
+    Finally
+      // cds_PropsInv.Filtered:= False ;
+      // cds_PropsInv.Active:= False ;
+    End;
+  End // if (fSokAvropMall.ShowModal = mrOK) and (cds_mall.RecordCount > 0) AND (cds_mallName.AsString > '') then
+  else
+  Begin
+    ShowMessage
+      ('Du har ingen mall angiven som standard eller inga mallar alls, öppna och sätt en mall som standard eller skapa en ny mall');
+    if cds_PropsInv.Active then
+      cds_PropsInv.Active := False;
+  End;
+  // End ;//With dm_SokFormular do
 end;
-
 
 procedure TfrmInvoiceList.ccKontraktnrKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  if Length(Trim(ccKontraktnr.Text)) > 0 then
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
   Begin
-    RefreshInvoiceList(Sender, Trim(ccKontraktnr.Text), '', -1, -1, -1, -1);
-  //  cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(teSaleOrgNr.Text,0), []) ;
-    TimerKontraktnr.Enabled  := True ;
-  End;
- End ; //with
+    if Length(Trim(ccKontraktnr.Text)) > 0 then
+    Begin
+      RefreshInvoiceList(Sender, Trim(ccKontraktnr.Text), '', -1, -1, -1, -1);
+      // cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(teSaleOrgNr.Text,0), []) ;
+      TimerKontraktnr.Enabled := True;
+    End;
+  End; // with
 end;
 
 procedure TfrmInvoiceList.cds_PropsInvAfterInsert(DataSet: TDataSet);
 begin
- cds_PropsInvUserID.AsInteger        := ThisUser.UserID ;
- cds_PropsInvName.AsString           := 'frmInvoiceList' ;
- cds_PropsInvLOObjectType.AsInteger  := 0 ;
+  cds_PropsInvUserID.AsInteger := thisuser.userid;
+  cds_PropsInvName.AsString := 'frmInvoiceList';
+  cds_PropsInvLOObjectType.AsInteger := 0;
 end;
 
 procedure TfrmInvoiceList.cds_PropsInvClientNoChange(Sender: TField);
 begin
- if cds_PropsInvClientNo.AsInteger > 0 then
-  LoadKontraktnr (cds_PropsInvClientNo.AsInteger) ;
+  if cds_PropsInvClientNo.AsInteger > 0 then
+    LoadKontraktnr(cds_PropsInvClientNo.AsInteger);
 end;
 
-procedure TfrmInvoiceList.LoadKontraktnr(const ClientNo : Integer) ;
+procedure TfrmInvoiceList.LoadKontraktnr(const ClientNo: Integer);
 Begin
   with dmsSystem do
   Begin
-    ccKontraktnr.Properties.Items.Clear ;
-    sp_Kontraktsnr.ParamByName('@CustomerNo').AsInteger := ClientNo ;
+    ccKontraktnr.Properties.Items.Clear;
+    sp_Kontraktsnr.ParamByName('@CustomerNo').AsInteger := ClientNo;
     Try
-    sp_Kontraktsnr.Active := True ;
+      sp_Kontraktsnr.Active := True;
 
-    while not sp_Kontraktsnr.Eof do
-    Begin
-      ccKontraktnr.Properties.Items.Add(sp_Kontraktsnr.FieldByName('OrderNoText').AsString) ;
-      sp_Kontraktsnr.Next ;
-    End;
+      while not sp_Kontraktsnr.Eof do
+      Begin
+        ccKontraktnr.Properties.Items.Add
+          (sp_Kontraktsnr.FieldByName('OrderNoText').AsString);
+        sp_Kontraktsnr.Next;
+      End;
 
     Finally
-     sp_Kontraktsnr.Active  := False ;
+      sp_Kontraktsnr.Active := False;
     End;
   End;
 End;
 
 procedure TfrmInvoiceList.acSetMallAsStrdExecute(Sender: TObject);
 begin
- dmsSystem.Set_SetMallAsStd(cds_PropsInvName.AsString,  cds_PropsInvForm  .AsString) ;
+  dmsSystem.Set_SetMallAsStd(cds_PropsInvName.AsString,
+    cds_PropsInvForm.AsString);
 end;
 
 procedure TfrmInvoiceList.Timer2Timer(Sender: TObject);
 begin
- nfSearchLastNr.SetFocus ;
- nfSearchLastNr.SelectAll ;
- Timer2.Enabled:= False ;
+  nfSearchLastNr.Setfocus;
+  nfSearchLastNr.SelectAll;
+  Timer2.Enabled := False;
 end;
 
 procedure TfrmInvoiceList.Timer3Timer(Sender: TObject);
 begin
- nfSearchInvoiceNo.SetFocus ;
- nfSearchInvoiceNo.SelectAll ;
- Timer3.Enabled:= False ;
+  nfSearchInvoiceNo.Setfocus;
+  nfSearchInvoiceNo.SelectAll;
+  Timer3.Enabled := False;
 end;
 
 procedure TfrmInvoiceList.acGotoLOnrExecute(Sender: TObject);
 begin
- nfSearchLO.SetFocus ;
- nfSearchLO.SelectAll ;
+  nfSearchLO.Setfocus;
+  nfSearchLO.SelectAll;
 end;
 
-procedure TfrmInvoiceList.teSaleOrgNrKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfrmInvoiceList.teSaleOrgNrKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
- if Key <> VK_RETURN then Exit;
- With dmVidaInvoice do
- Begin
-  RefreshInvoiceList(Sender, '', Trim(teSaleOrgNr.Text), -1, -1, -1, -1);
-//  cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(teSaleOrgNr.Text,0), []) ;
-  Timer4.Enabled  := True ;
- End ; //with
+  if Key <> VK_RETURN then
+    Exit;
+  With dmVidaInvoice do
+  Begin
+    RefreshInvoiceList(Sender, '', Trim(teSaleOrgNr.Text), -1, -1, -1, -1);
+    // cdsInvoiceList.Locate('INVOICE_NO', StrToIntDef(teSaleOrgNr.Text,0), []) ;
+    Timer4.Enabled := True;
+  End; // with
 end;
 
 procedure TfrmInvoiceList.Timer4Timer(Sender: TObject);
 begin
- teSaleOrgNr.SetFocus ;
- teSaleOrgNr.SelectAll ;
- Timer4.Enabled:= False ;
+  teSaleOrgNr.Setfocus;
+  teSaleOrgNr.SelectAll;
+  Timer4.Enabled := False;
 end;
 
 procedure TfrmInvoiceList.TimerKontraktnrTimer(Sender: TObject);
 begin
- ccKontraktnr.SetFocus ;
- ccKontraktnr.SelectAll ;
- TimerKontraktnr.Enabled:= False ;
+  ccKontraktnr.Setfocus;
+  ccKontraktnr.SelectAll;
+  TimerKontraktnr.Enabled := False;
 end;
 
-procedure TfrmInvoiceList.cds_PropsInvFilterOrderDateChange(
-  Sender: TField);
+procedure TfrmInvoiceList.cds_PropsInvFilterOrderDateChange(Sender: TField);
 begin
- if cds_PropsInvFilterOrderDate.AsInteger = 1 then
- Begin
-  deStartPeriod.Enabled := True ;
-  deEndPeriod.Enabled   := True ;
- End
- else
- Begin
-  deStartPeriod.Enabled := False ;
-  deEndPeriod.Enabled   := False ;
- End ;
+  if cds_PropsInvFilterOrderDate.AsInteger = 1 then
+  Begin
+    deStartPeriod.Enabled := True;
+    deEndPeriod.Enabled := True;
+  End
+  else
+  Begin
+    deStartPeriod.Enabled := False;
+    deEndPeriod.Enabled := False;
+  End;
 end;
 
 procedure TfrmInvoiceList.acPrintFRInvoiceExecute(Sender: TObject);
-Var dmFR: TdmFR;
+Var
+  dmFR: TdmFR;
 begin
- dmFR:= TdmFR.Create(nil) ;
- Try
- With dmFR do
- Begin
+  dmFR := TdmFR.Create(nil);
   Try
-   sp_vis_FR_Invoice.Active := False ;
-   sp_vis_FR_Invoice.ParamByName('@INVOICENO').AsInteger := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-   sp_vis_FR_Invoice.Active := True ;
+    With dmFR do
+    Begin
+      Try
+        sp_vis_FR_Invoice.Active := False;
+        sp_vis_FR_Invoice.ParamByName('@INVOICENO').AsInteger :=
+          dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        sp_vis_FR_Invoice.Active := True;
 
-   if frxReport1.PrepareReport then
-   frxReport1.ShowReport ;// . Preview  := frxPreview1 ;
+        if frxReport1.PrepareReport then
+          frxReport1.ShowReport; // . Preview  := frxPreview1 ;
+      Finally
+        sp_vis_FR_Invoice.Active := False;
+      End;
+    End; // with dmFR
   Finally
-   sp_vis_FR_Invoice.Active := False ;
-  End ;
- End ;//with dmFR
- Finally
-  FreeAndNil(dmFR) ;
- End ;
+    FreeAndNil(dmFR);
+  End;
 end;
 
 procedure TfrmInvoiceList.acExportXLSExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
-  FileName    : String ;
+  Save_Cursor: TCursor;
+  FileName: String;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- Try
- SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
- SaveDialog2.DefaultExt:= 'xls';
- SaveDialog2.InitialDir:= ExcelDir ;
- if SaveDialog2.Execute then
- Begin
-  FileName:= SaveDialog2.FileName ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-  ExportGridToExcel(FileName, grdFaktura, False, False, True,'xls');
-  ShowMessage('Tabell exporterad till Excel fil ' + FileName);
-  Except
-  End ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+    SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
+    SaveDialog2.DefaultExt := 'xls';
+    SaveDialog2.InitialDir := ExcelDir;
+    if SaveDialog2.Execute then
+    Begin
+      FileName := SaveDialog2.FileName;
+      Try
+        ExportGridToExcel(FileName, grdFaktura, False, False, True, 'xls');
+        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+      Except
+      End;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
 procedure TfrmInvoiceList.acShowVerifikatLoggExecute(Sender: TObject);
-var fVerifikationLogg: TfVerifikationLogg;
+var
+  fVerifikationLogg: TfVerifikationLogg;
 begin
- with dmVidaInvoice do
- Begin
-//  mt_VerLogg.Active := True ;
-  Try
-  InsertVerifikatLogg (True,
-  cdsInvoiceListINVOICE_NO.AsInteger,
-  cdsInvoiceListInternalInvoiceNo.AsInteger,
-  cdsInvoiceListCustomerNo.AsInteger,
-  cdsInvoiceListInvoiceType.AsInteger) ;
-  fVerifikationLogg:= TfVerifikationLogg.Create(nil) ;
-  Try
-  fVerifikationLogg.Caption := 'Verifikatlogg - Fakturanr: ' + cdsInvoiceListINVOICE_NO.AsString ;
-  fVerifikationLogg.ShowModal ;
-  Finally
-   FreeAndNil(fVerifikationLogg) ;
-  End ;
-  Finally
-   mt_VerLogg.Active  := False ;
-  End ;
- End ;//With
+  with dmVidaInvoice do
+  Begin
+    // mt_VerLogg.Active := True ;
+    Try
+      InsertVerifikatLogg(True, cdsInvoiceListINVOICE_NO.AsInteger,
+        cdsInvoiceListInternalInvoiceNo.AsInteger,
+        cdsInvoiceListCustomerNo.AsInteger,
+        cdsInvoiceListInvoiceType.AsInteger);
+      fVerifikationLogg := TfVerifikationLogg.Create(nil);
+      Try
+        fVerifikationLogg.Caption := 'Verifikatlogg - Fakturanr: ' +
+          cdsInvoiceListINVOICE_NO.AsString;
+        fVerifikationLogg.ShowModal;
+      Finally
+        FreeAndNil(fVerifikationLogg);
+      End;
+    Finally
+      mt_VerLogg.Active := False;
+    End;
+  End; // With
 end;
 
 procedure TfrmInvoiceList.acReCalcInvoiceExecute(Sender: TObject);
 begin
- if MessageDlg('Vill du kalkylera om markerade fakturor?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
-  mtSelectedInvoices.Active := False ;
-  mtSelectedInvoices.Active := True ;
-  Try
-  SelectMarkedInvoices ;
-  ReCalcSelectedInvoices ;
-  Finally
-   mtSelectedInvoices.Active  := False ;
-  End ;
- End ;
+  if MessageDlg('Vill du kalkylera om markerade fakturor?', mtConfirmation,
+    [mbYes, mbNo], 0) = mrYes then
+  Begin
+    mtSelectedInvoices.Active := False;
+    mtSelectedInvoices.Active := True;
+    Try
+      SelectMarkedInvoices;
+      ReCalcSelectedInvoices;
+    Finally
+      mtSelectedInvoices.Active := False;
+    End;
+  End;
 
- //Set kontonr, artikelnr mm
- //ReCalc produktvärde utan frakt
- //Then it will be easy to make a pivottable
+  // Set kontonr, artikelnr mm
+  // ReCalc produktvärde utan frakt
+  // Then it will be easy to make a pivottable
 end;
 
-procedure TfrmInvoiceList.ReCalcSelectedInvoices ;
-Var Save_Cursor : TCursor;
-    x, Antal : Integer ;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-//  mt_VerLogg.Active := True ;
-//  Try
-  Antal := mtSelectedInvoices.RecordCount ;
-  x     := 1 ;
-
-  mtSelectedInvoices.First ;
-  While not mtSelectedInvoices.Eof do
-  Begin
-   Application.ProcessMessages ;
-   cxLabel1.Caption  := inttostr(x) + ' av ' + inttostr(antal) ;
-   OpenInvoiceAndReCalc(mtSelectedInvoicesInternalInvoiceNo.AsInteger) ;
-   mtSelectedInvoices.Next ;
-   x := succ(x) ;
-  End ;
-
-//  Finally
-//   mt_VerLogg.Active  := False ;
-//  End ;
- End ;//With
-
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-end;
-
-procedure TfrmInvoiceList.OpenInvoiceAndReCalc(const IntInvNo  : Integer) ;
-Var //frmInvoice  : TfrmInvoice ;
-    Save_Cursor : TCursor;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-//  frmInvoice:= TfrmInvoice.Create(NIL);
-  Try
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//   cdsInvoiceShipTo.Active:= True ;
-//   frmInvoice.TabControl1.Tabs.Clear ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= False ;
-   cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= True ;
-
-   cdsInvoiceLO.Active:= False ;
-   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceLO.Active:= True ;
-
-{   cds_PIP.Active:= False ;
-   cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
-   cds_PIP.Active:= True ;
-
-   cds_IH_SpecLoad.Active:= False ;
-   cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cds_IH_SpecLoad.Active:= True ;
-   if cds_IH_SpecLoad.RecordCount = 0 then
-   Begin
-    cds_IH_SpecLoad.Insert ;
-    cds_IH_SpecLoad.Post ;
-   End ;
- }
-
-  cdsInvoiceLO.First ;
-
-{  While not cdsInvoiceLO.Eof do
-  Begin
-   frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-   cdsInvoiceLO.Next ;
-  End ;
-   Screen.Cursor := crSQLWait;
-   }
-
-//  if frmInvoice.TabControl1.Tabs.Count > 0 then
-  if cdsInvoiceLO.RecordCount > 0 then
-  Begin
-//   cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-//   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
-//   cdsInvoiceLO.Filtered:= True ;
-   cdsInvoiceDetail.Close ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-//   cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-//   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
-//   cdsInvoiceDetail.Filtered:= True ;
-   cdsInvoiceDetail.Active:= True ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
-   CalcAndUpdateNetProductValueInInvoiceDetail ;
-
-   if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
-    dmVidaInvoice.cdsInvoiceDetail.Post ;
-   if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0) ;
-    dmVidaInvoice.cdsInvoiceDetail.CommitUpdates ;
-   End ;
-
-   SummarizeWithOutOpenInvoiceForm ;
-
-   if cdsInvoiceHead.ChangeCount > 0 then
-   Begin
-    cdsInvoiceHead.ApplyUpdates(0) ;
-    cdsInvoiceHead.CommitUpdates ;
-   End ;
-  End ;//if..
-//   frmInvoice.ShowModal ;
-
-//   if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
-//    dmVidaInvoice.cds_IH_SpecLoad.Post ;
-{   if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
-    dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
-   End ;
-  End
-  else
-  Begin
-   Exit ;
-  End ; }
-
- Finally
-  fInternalInvoiceNo        := -1 ;
-  cdsInvoiceDetail.Close ;
-  cdsInvoiceLO.Filtered     := False ;
-  cdsInvoiceLO.Active       := False ;
-  cdsInvoiceDetail.Filtered := False ;
-  cdsInvoiceDetail.Filter   := '';
-  cdsInvoiceDetail.Active   := False ;
-//  cdsInvoiceShipTo.Active   := False ;
-  cdsInvoiceHead.Active     := False ;
-//  frmInvoice.Free ;
- End ;
- End ; // with
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-End ;
-
-procedure TfrmInvoiceList.RefreshInvoiceList (Sender: TObject;const KontraktNr, SalesOrgNo : String;const InvoiceNo, InvoiceNoII, LONo, InternalInvoiceNo : Integer) ;
+procedure TfrmInvoiceList.ReCalcSelectedInvoices;
 Var
- Save_Cursor  : TCursor;
- InvoiceType  : Integer ;
+  Save_Cursor: TCursor;
+  x, Antal: Integer;
 begin
-// with daMoLM1 do
- with  dmVidaInvoice do
- Begin
   Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-  grdFakturaDBBandedTableView1.BeginUpdate ;
-//  grdInvoice.DataSource.DataSet.DisableControls ;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
-
-
-  if cds_PropsInv.State = dsBrowse then
-   cds_PropsInv.Edit ;
-
-  if Length(icBetalStatus.Text) = 0 then
-   cds_PropsInvStatus.Clear ;
-
-  if Length(lcSaljgrupp.Text) = 0 then
-   cds_PropsInvSalesPersonNo.Clear ;
-
-  if Length(lcSR.Text) = 0 then
-   cds_PropsInvSalesRegionNo.Clear ;
-
-  if Length(lcKund.Text) = 0 then
-   cds_PropsInvClientNo.Clear ;
-
-  if Length(cbTyp.Text) = 0 then
-   cds_PropsInvBarCodeNo.Clear ;
-
-  if Length(cbKonto.Text) = 0 then
-   cds_PropsInvBookingTypeNo.Clear ;
-
-  if Length(cbVaruSlag.Text) = 0 then
-   cds_PropsInvCopyPcs.Clear ;
-
-  if Length(icTransferredStatus.Text) = 0 then
-   cds_PropsInvGradeStampNo.Clear ;
-
-  if cds_PropsInv.State in [dsEdit, dsInsert] then
-   cds_PropsInv.Post ;
-
-
-  cdsInvoiceList.Active:= False ;
-  cdsInvoiceList.Close ;
-  cdsInvoiceList.SQL.Clear ;
-
-  cdsInvoiceList.SQL.Add('SELECT Distinct IH.QuickInvoice, IH.InternalInvoiceNo, IH.InvoiceDate AS INV_DATE,') ;
-
-  cdsInvoiceList.SQL.Add('invd.VatCode AS Momskod, invd.Konto AS Varukonto,') ;
-  cdsInvoiceList.SQL.Add('ART.ArticleName, invd.moms_konto AS Momskonto,') ;
-
-  cdsInvoiceList.SQL.Add('(Select TOP 1 invd2.Konto from dbo.InvoiceDetail invd2') ;
-  cdsInvoiceList.SQL.Add('WHERE invd2.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-  cdsInvoiceList.SQL.Add('AND invd2.ShippingPlanNo = IL.ShippingPlanNo') ;
-  cdsInvoiceList.SQL.Add('AND (invd2.ArticleNo = 2 or invd2.ArticleNo = 4)) AS Fraktkonto,') ;
-
-//  cdsInvoiceList.SQL.Add('invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.Konto AS FraktKonto,') ;
-  cdsInvoiceList.SQL.Add('IH.CustomerName AS CUSTOMER, IL.Shipper AS SHIPPER,') ;
-
-  cdsInvoiceList.SQL.Add('inos.InvoiceNo AS INVOICE_NO,') ;
-
-   cdsInvoiceList.SQL.Add('CASE') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 0 THEN '+'''VIDA (VWK1)''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 1 THEN '+'''PROFORMA, fakturera senare''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 2 THEN '+'''PROFORMA, flytta paket''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 3 THEN '+'''INKÖP''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 4 THEN '+'''USA (VWK2)''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 5 THEN '+'''FW (VWK4)''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 6 THEN '+'''AGENT''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 7 THEN '+'''VTA1''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 8 THEN '+'''BKO''') ;
-   cdsInvoiceList.SQL.Add('END AS INVOICE_TYPE,') ;
-
-   cdsInvoiceList.SQL.Add('CASE') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 0 THEN '+'''DEBIT''') ;
-   cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 1 THEN '+'''CREDIT''') ;
-   cdsInvoiceList.SQL.Add('END AS INVOICE_KONTO,') ;
-
-  cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)') ;
-  cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C') ;
-  cdsInvoiceList.SQL.Add('	WHERE') ;
-  cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName') ;
-  cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo') ;
-  cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate') ;
-  cdsInvoiceList.SQL.Add('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS KURS,') ;
-
-  cdsInvoiceList.SQL.Add('IH.CurrencyName	AS CURRENCY,') ;
-
-
-
-   cdsInvoiceList.SQL.Add('IH.AgentName AS AGENT, ') ;
-
-   cdsInvoiceList.SQL.Add('isnull(IH.Trading,0) AS TRADING,') ;
-
-   cdsInvoiceList.SQL.Add('IH.SalesOrgNo AS FörsäljOrgNr,') ;
-
-   cdsInvoiceList.SQL.Add('CASE WHEN [dbo].[IsoWk](IH.InvoiceDate) < 10 THEN 	CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
-   cdsInvoiceList.SQL.Add(QuotedStr('-0') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2))') ;
-   cdsInvoiceList.SQL.Add('ELSE CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ') ;
-   cdsInvoiceList.SQL.Add(QuotedStr('-') + ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2)) END AS VECKA,') ;
-
-   cdsInvoiceList.SQL.Add('IH.CountryName AS LAND,') ;
-   cdsInvoiceList.SQL.Add('SR.ClientName AS FörsäljReg,') ;
-   cdsInvoiceList.SQL.Add('SalesGroupName AS SäljGrupp, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo AS LO,') ;
-   cdsInvoiceList.SQL.Add('IH.ST_CityName AS LevORT, IL.Reference AS ErReferens, IL.OrderNoText AS Ordernr, IH.DueDate, IH.AgentNo,') ;
-   cdsInvoiceList.SQL.Add('IH.StickyNote AS Postit, Inos.Prefix AS PO_prefix, IH.VAT_OnInvoice AS Skatteupplag,') ;
-   cdsInvoiceList.SQL.Add('IH.IntraStatCountryNo, ISC.CountryName AS Statistikland, IH.DelKredit, IH.IncludeFreightCostInPrice,') ;
-
-
-   cdsInvoiceList.SQL.Add('SUM(invd.NoOfPkgs) AS Paket,') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.intNM3) AS NM3_Int,') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.NominalM3) AS NM3_Ext,') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.ActualNetM3) AS AM3,') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.Volume_OrderUnit) AS Kvantitet,') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.ProductValue) AS Produktvarde,') ;
-
-   cdsInvoiceList.SQL.Add('SUM(invd.ProductValue)') ;
-   cdsInvoiceList.SQL.Add('*') ;
-   cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)') ;
-   cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C') ;
-   cdsInvoiceList.SQL.Add('	WHERE') ;
-   cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName') ;
-   cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo') ;
-   cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate') ;
-   cdsInvoiceList.SQL.Add('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS ProduktVardeSEK,') ;
-
-   cdsInvoiceList.SQL.Add('SUM(invd.ProductValueWOFreight) AS ProduktvardeUtanFrakt,') ;
-
-   cdsInvoiceList.SQL.Add('SUM(invd.ProductValueWOFreight)') ;
-   cdsInvoiceList.SQL.Add('*') ;
-   cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)') ;
-   cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C') ;
-   cdsInvoiceList.SQL.Add('	WHERE') ;
-   cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName') ;
-   cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo') ;
-   cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate') ;
-   cdsInvoiceList.SQL.Add('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS ProduktVardeUtanFraktSEK,') ;
-
-//   cdsInvoiceList.SQL.Add('SUM(invd.ProductValue) - SUM(invd.ProductValueWOFreight) AS FraktValuta,') ;
-
-
-   cdsInvoiceList.SQL.Add('(Select abs(SUM(invd2.FreightCostCurr)) from dbo.InvoiceDetail invd2') ;
-   cdsInvoiceList.SQL.Add('WHERE invd2.InternalInvoiceNo = ih.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('AND invd2.ShippingPlanNo = IL.ShippingPlanNo') ;
-   cdsInvoiceList.SQL.Add('AND invd2.ArticleNo = invd.ArticleNo) AS FraktValuta,') ;
-
-   cdsInvoiceList.SQL.Add('(SUM(invd.ProductValue) - SUM(invd.ProductValueWOFreight))') ;
-   cdsInvoiceList.SQL.Add('*') ;
-   cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)') ;
-   cdsInvoiceList.SQL.Add('FROM ExChangeRate EX, Currency C') ;
-   cdsInvoiceList.SQL.Add('WHERE') ;
-   cdsInvoiceList.SQL.Add('C.CurrencyName = IH.CurrencyName') ;
-   cdsInvoiceList.SQL.Add('and EX.CurrencyNo = C.CurrencyNo') ;
-   cdsInvoiceList.SQL.Add('AND EX.ValidFrom <= IH.InvoiceDate') ;
-   cdsInvoiceList.SQL.Add('group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS FraktValutaSEK,') ;
-
-   cdsInvoiceList.SQL.Add('CASE WHEN ih.VAT_OnInvoice = 0 THEN') ;
-   cdsInvoiceList.SQL.Add('SUM(invd.VatValue)') ;
-   cdsInvoiceList.SQL.Add('END AS momsvarde, IH.AddressLine1') ;
-
-
-   cdsInvoiceList.SQL.Add('FROM dbo.InvoiceHeader IH') ;
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.Country ISC on ISC.CountryNo = IH.IntraStatCountryNo') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.InvoiceLO IL ON IL.InternalInvoiceNo = IH.InternalInvoiceNo') ;
-
-   cdsInvoiceList.SQL.Add('Inner join dbo.InvoiceDetail invd on invd.InternalInvoiceNo = IL.InternalInvoiceNo') ;
-   cdsInvoiceList.SQL.Add('and invd.ShippingPlanNo = IL.ShippingPlanNo') ;
-   cdsInvoiceList.SQL.Add('Inner join dbo.FS_Article ART on ART.ArticleNo = invd.ArticleNo') ;
-
-   cdsInvoiceList.SQL.Add('Left Outer join dbo.Client SR ON SR.ClientNo = IH.SupplierNo') ;
-
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.SalesManGroupRow smg') ;
-   cdsInvoiceList.SQL.Add('Inner Join dbo.SalesManGroup sm on sm.SalesGroupNo = smg.SalesGroupNo') ;
-   cdsInvoiceList.SQL.Add('on smg.UserID = IH.ResponsibleSeller') ;
-   cdsInvoiceList.SQL.Add('Left Outer Join dbo.InvoiceNos inos on inos.InternalInvoiceNo = IH.InternalInvoiceNo') ;
-
-   cdsInvoiceList.SQL.Add('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo') ;
-
-//   cdsInvoiceList.SQL.Add('WHERE 1=1') ;
-
-
-    cdsInvoiceList.SQL.Add('WHERE ((fsa.ArticleGroupNo = 0)') ;
-    cdsInvoiceList.SQL.Add('OR ((fsa.ArticleGroupNo = 1)') ;
-
-    cdsInvoiceList.SQL.Add('AND not exists (Select invd3.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('FROM dbo.InvoiceDetail invd3') ;
-    cdsInvoiceList.SQL.Add('WHERE invd3.InternalInvoiceNo = invd.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('AND (fsa.ArticleGroupNo = 0))))') ;
-
-//    cdsInvoiceList.SQL.Add('AND exists (Select  inos2.InternalInvoiceNo FROM') ;
-//    cdsInvoiceList.SQL.Add('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)') ;
-
-{    cdsInvoiceList.SQL.Add('WHERE ((invd.ArticleNo = 1 or invd.ArticleNo = 3) OR') ;
-    cdsInvoiceList.SQL.Add('((invd.ArticleNo = 2 or invd.ArticleNo = 4)') ;
-    cdsInvoiceList.SQL.Add('AND not exists (Select invd3.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('FROM dbo.InvoiceDetail invd3') ;
-    cdsInvoiceList.SQL.Add('WHERE invd3.InternalInvoiceNo = invd.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('AND (invd3.ArticleNo = 1 or invd3.ArticleNo = 3))))') ;
-    }
-
-
-   if (not cds_PropsInvClientNo.IsNull) and (cds_PropsInvClientNo.AsInteger > 0) then
-   Begin
-    if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-    cdsInvoiceList.SQL.Add('AND IH.CustomerNo = ' + cds_PropsInvClientNo.AsString) ;
-   End ;
-
-   if Length(SalesOrgNo) > 0 then
-    cdsInvoiceList.SQL.Add('AND IH.SalesOrgNo LIKE ' + QuotedStr('%' + teSaleOrgNr.Text + '%') ) ;
-
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if (cds_PropsINVSalesPersonNo.AsInteger > 0) and (InvoiceNo = -1) and (LONo = -1) then
-    cdsInvoiceList.SQL.Add('AND smg.SalesGroupNo = ' + cds_PropsINVSalesPersonNo.AsString) ;
-   End ;
-
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsInvLengthFormatNo.AsInteger = 1 then
-     cdsInvoiceList.SQL.Add('AND ((IH.DelKredit = 0) or (IH.DelKredit is null))') ;
-   End ;
-
-   if cds_PropsInvLengthOption.AsInteger = 1 then
-   Begin
-    cdsInvoiceList.SQL.Add('AND exists (Select  inos2.InternalInvoiceNo FROM ') ;
-    cdsInvoiceList.SQL.Add('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)') ;
-   End ;
-
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsINVSalesRegionNo.AsInteger > 0 then
-    cdsInvoiceList.SQL.Add('AND IH.SupplierNo = ' + cds_PropsINVSalesRegionNo.AsString) ;
-   End ;
-
-   if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-   Begin
-    if cds_PropsInvFilterOrderDate.AsInteger = 1 then
+    with dmVidaInvoice do
     Begin
-     cdsInvoiceList.SQL.Add('AND IH.InvoiceDate >= ' + QuotedStr(DateTimeToStr(deStartPeriod.Date)) ) ;
-     cdsInvoiceList.SQL.Add('AND IH.InvoiceDate <= ' + QuotedStr(DateTimeToStr(deEndPeriod.Date)) ) ;
-    End ;
-   End ;
+      // mt_VerLogg.Active := True ;
+      // Try
+      Antal := mtSelectedInvoices.RecordCount;
+      x := 1;
 
+      mtSelectedInvoices.First;
+      While not mtSelectedInvoices.Eof do
+      Begin
+        Application.ProcessMessages;
+        cxLabel1.Caption := inttostr(x) + ' av ' + inttostr(Antal);
+        OpenInvoiceAndReCalc(mtSelectedInvoicesInternalInvoiceNo.AsInteger);
+        mtSelectedInvoices.Next;
+        x := succ(x);
+      End;
 
-   if InvoiceNo > -1 then
-   Begin
-    cdsInvoiceList.SQL.Add('AND inos.InvoiceNo = ' + IntToStr(InvoiceNo)) ;
-   End ;
+      // Finally
+      // mt_VerLogg.Active  := False ;
+      // End ;
+    End; // With
 
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+end;
 
-   if LONo <> -1 then
-    cdsInvoiceList.SQL.Add('AND IL.ShippingPlanNo = ' + IntToStr(LONo)) ;
+procedure TfrmInvoiceList.OpenInvoiceAndReCalc(const IntInvNo: Integer);
+Var // frmInvoice  : TfrmInvoice ;
+  Save_Cursor: TCursor;
+begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
+    with dmVidaInvoice do
+    Begin
+      // frmInvoice:= TfrmInvoice.Create(NIL);
+      Try
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        // cdsInvoiceShipTo.Active:= True ;
+        // frmInvoice.TabControl1.Tabs.Clear ;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := False;
+        cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := True;
 
-    if Length(KontraktNr) > 0 then
-    cdsInvoiceList.SQL.Add('AND IL.OrderNoText = ' + QuotedStr(KontraktNr) ) ;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceLO.Active := True;
 
+        { cds_PIP.Active:= False ;
+          cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
+          cds_PIP.Active:= True ;
 
-   if InternalInvoiceNo  <> -1 then
-    cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo = ' + IntToStr(InternalInvoiceNo)) ;
+          cds_IH_SpecLoad.Active:= False ;
+          cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
+          cds_IH_SpecLoad.Active:= True ;
+          if cds_IH_SpecLoad.RecordCount = 0 then
+          Begin
+          cds_IH_SpecLoad.Insert ;
+          cds_IH_SpecLoad.Post ;
+          End ;
+        }
 
+        cdsInvoiceLO.First;
 
-   cdsInvoiceList.SQL.Add(GetSQLofComboFilter(0, 'IH.InvoiceType', ccbInvoiceType)) ;
+        { While not cdsInvoiceLO.Eof do
+          Begin
+          frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
+          cdsInvoiceLO.Next ;
+          End ;
+          Screen.Cursor := crSQLWait;
+        }
 
-  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+        // if frmInvoice.TabControl1.Tabs.Count > 0 then
+        if cdsInvoiceLO.RecordCount > 0 then
+        Begin
+          // cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
+          // ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
+          // cdsInvoiceLO.Filtered:= True ;
+          cdsInvoiceDetail.Close;
+          cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger
+            := IntInvNo;
+          // cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
+          // ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
+          // cdsInvoiceDetail.Filtered:= True ;
+          cdsInvoiceDetail.Active := True;
+          Screen.Cursor := crSQLWait; { Show hourglass cursor }
+
+          CalcAndUpdateNetProductValueInInvoiceDetail;
+
+          if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
+            dmVidaInvoice.cdsInvoiceDetail.Post;
+          if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
+          Begin
+            dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0);
+            dmVidaInvoice.cdsInvoiceDetail.CommitUpdates;
+          End;
+
+          SummarizeWithOutOpenInvoiceForm;
+
+          if cdsInvoiceHead.ChangeCount > 0 then
+          Begin
+            cdsInvoiceHead.ApplyUpdates(0);
+            cdsInvoiceHead.CommitUpdates;
+          End;
+        End; // if..
+        // frmInvoice.ShowModal ;
+
+        // if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
+        // dmVidaInvoice.cds_IH_SpecLoad.Post ;
+        { if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+          Begin
+          dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
+          dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
+          End ;
+          End
+          else
+          Begin
+          Exit ;
+          End ; }
+
+      Finally
+        fInternalInvoiceNo := -1;
+        cdsInvoiceDetail.Close;
+        cdsInvoiceLO.Filtered := False;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceDetail.Filtered := False;
+        cdsInvoiceDetail.Filter := '';
+        cdsInvoiceDetail.Active := False;
+        // cdsInvoiceShipTo.Active   := False ;
+        cdsInvoiceHead.Active := False;
+        // frmInvoice.Free ;
+      End;
+    End; // with
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+End;
+
+procedure TfrmInvoiceList.RefreshInvoiceList(Sender: TObject;
+  const KontraktNr, SalesOrgNo: String; const InvoiceNo, InvoiceNoII, LONo,
+  InternalInvoiceNo: Integer);
+Var
+  Save_Cursor: TCursor;
+  InvoiceType: Integer;
+begin
+  // with daMoLM1 do
+  with dmVidaInvoice do
   Begin
-  Case cbTyp.ItemIndex of
-   0 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 0 ') ;
-   1 : cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 1 ') ;
-// 2 visa både snabb och normala
-  End ;
-  End ;
+    Save_Cursor := Screen.Cursor;
+    Screen.Cursor := crSQLWait; { Show hourglass cursor }
+    grdFakturaDBBandedTableView1.BeginUpdate;
+    // grdInvoice.DataSource.DataSet.DisableControls ;
+    Try
 
-  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-  Begin
-   Case cbKonto.ItemIndex of
-    0 : cdsInvoiceList.SQL.Add('AND IH.Debit_Credit = 0') ;
-    1 : cdsInvoiceList.SQL.Add('AND IH.Debit_Credit = 1') ;
-//    2 : visa både debit och credit
-   End ;
-  End ;
+      if cds_PropsInv.State = dsBrowse then
+        cds_PropsInv.Edit;
 
-  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-  Begin
-   if (cds_PropsINVCopyPcs.AsInteger = 1) or (cds_PropsINVCopyPcs.AsInteger = 3) then
-   Begin
-    cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo in (Select InvD.InternalInvoiceNo FROM') ;
-    cdsInvoiceList.SQL.Add('dbo.InvoiceDetail InvD') ;
-    cdsInvoiceList.SQL.Add('Where InvD.InternalInvoiceNo = IH.InternalInvoiceNo') ;
-    cdsInvoiceList.SQL.Add('AND InvD.ArticleNo = ' + IntToStr(cds_PropsINVCopyPcs.AsInteger) + ')') ;
-   End ;
-  End ;
+      if Length(icBetalStatus.Text) = 0 then
+        cds_PropsInvStatus.Clear;
 
+      if Length(lcSaljgrupp.Text) = 0 then
+        cds_PropsInvSalesPersonNo.Clear;
 
-  if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-  Begin
-  if cds_PropsINVStatus.AsInteger = 1 then //DEL OCH OBETALDA
-  Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo not IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
-  End
-  else
-  if cds_PropsINVStatus.AsInteger = 2 then //ENDAST DEL BETALDA
-  Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 0 AND AmountPaid > 0)') ;
-  End
-  else
-  if cds_PropsINVStatus.AsInteger = 3 then //FULL BETALDA
-  Begin
-   cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN') ;
-   cdsInvoiceList.SQL.Add('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)') ;
-  End ;
-  End ;//if  (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
-//  ShowMessage('DisplayName = ' + ccbInvoiceType.Properties.Items.Items.DisplayName) ;
+      if Length(lcSR.Text) = 0 then
+        cds_PropsInvSalesRegionNo.Clear;
 
+      if Length(lcKund.Text) = 0 then
+        cds_PropsInvClientNo.Clear;
 
+      if Length(cbTyp.Text) = 0 then
+        cds_PropsInvBarCodeNo.Clear;
 
-// if cbOpenQuery.Checked = False then
- if NoOfCheckedRowsComboFilter(ccbInvoiceType, InvoiceType) = 1 then
- Begin
- if cds_PropsINVGradeStampNo.AsInteger = 1 then
-  //EJ Överförda
- Begin
- Case InvoiceType of
-    0 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    4 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    5 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    8 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VBAB') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
+      if Length(cbKonto.Text) = 0 then
+        cds_PropsInvBookingTypeNo.Clear;
 
+      if Length(cbVaruSlag.Text) = 0 then
+        cds_PropsInvCopyPcs.Clear;
 
-   End ; //Case
- End //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 1 then
- else
- //Överförda
- if cds_PropsINVGradeStampNo.AsInteger = 2 then
- Begin
- Case InvoiceType of
-    0 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK1') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    4 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK2') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
-    5 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VWK4') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
+      if Length(icTransferredStatus.Text) = 0 then
+        cds_PropsInvGradeStampNo.Clear;
 
-    8 : Begin
-         cdsInvoiceList.SQL.Add('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ') ;
-         cdsInvoiceList.SQL.Add('WHERE enumerator = ' + QuotedStr('VBAB') ) ;
-         cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)') ;
-        End ;
+      if cds_PropsInv.State in [dsEdit, dsInsert] then
+        cds_PropsInv.Post;
 
-   End ; //Case
- End ; //if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 2 then
- End ;//
+      cdsInvoiceList.Active := False;
+      cdsInvoiceList.Close;
+      cdsInvoiceList.SQL.Clear;
 
+      cdsInvoiceList.SQL.Add
+        ('SELECT Distinct IH.QuickInvoice, IH.InternalInvoiceNo, IH.InvoiceDate AS INV_DATE,');
 
+      cdsInvoiceList.SQL.Add
+        ('invd.VatCode AS Momskod, invd.Konto AS Varukonto,');
+      cdsInvoiceList.SQL.Add('ART.ArticleName, invd.moms_konto AS Momskonto,');
 
-  cdsInvoiceList.SQL.Add('GROUP BY IH.QuickInvoice, IH.InternalInvoiceNo, IH.InvoiceDate,') ;
-  cdsInvoiceList.SQL.Add('IH.CustomerName, IL.Shipper, inos.InvoiceNo, IH.Debit_Credit,') ;
-  cdsInvoiceList.SQL.Add('IH.InvoiceType, IH.CurrencyName, IL.ShippingPlanNo, IH.AgentName,') ;
-  cdsInvoiceList.SQL.Add('IH.Trading, IH.SalesOrgNo, IH.VAT_OnInvoice, IH.CountryName, SR.ClientName,') ;
-  cdsInvoiceList.SQL.Add('SalesGroupName, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo,') ;
-  cdsInvoiceList.SQL.Add('IH.ST_CityName, IL.Reference, IL.OrderNoText, IH.DueDate, IH.AgentNo,') ;
-  cdsInvoiceList.SQL.Add('IH.StickyNote, Inos.Prefix, IH.IntraStatCountryNo, ISC.CountryName, IH.DelKredit,') ;
-  cdsInvoiceList.SQL.Add('IH.IncludeFreightCostInPrice, invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.ArticleNo, IH.AddressLine1') ;
-//   cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
-//  if ThisUser.UserID = 8 then cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
+      cdsInvoiceList.SQL.Add
+        ('(Select TOP 1 invd2.Konto from dbo.InvoiceDetail invd2');
+      cdsInvoiceList.SQL.Add
+        ('WHERE invd2.InternalInvoiceNo = ih.InternalInvoiceNo');
+      cdsInvoiceList.SQL.Add('AND invd2.ShippingPlanNo = IL.ShippingPlanNo');
+      cdsInvoiceList.SQL.Add
+        ('AND (invd2.ArticleNo = 2 or invd2.ArticleNo = 4)) AS Fraktkonto,');
 
-  cdsInvoiceList.Active:= True ;
+      // cdsInvoiceList.SQL.Add('invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.Konto AS FraktKonto,') ;
+      cdsInvoiceList.SQL.Add
+        ('IH.CustomerName AS CUSTOMER, IL.Shipper AS SHIPPER,');
 
-   Finally
-//    grdInvoice.DataSource.DataSet.EnableControls ;
-    grdFakturaDBBandedTableView1.EndUpdate ;
-    Screen.Cursor := Save_Cursor;  { Always restore to normal }
-   End ;
- End ; // with
+      cdsInvoiceList.SQL.Add('inos.InvoiceNo AS INVOICE_NO,');
+
+      cdsInvoiceList.SQL.Add('CASE');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 0 THEN ' +
+        '''VIDA (VWK1)''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 1 THEN ' +
+        '''PROFORMA, fakturera senare''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 2 THEN ' +
+        '''PROFORMA, flytta paket''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 3 THEN ' + '''INKÖP''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 4 THEN ' +
+        '''USA (VWK2)''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 5 THEN ' + '''FW (VWK4)''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 6 THEN ' + '''AGENT''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 7 THEN ' + '''VTA1''');
+      cdsInvoiceList.SQL.Add('WHEN IH.InvoiceType = 8 THEN ' + '''BKO''');
+      cdsInvoiceList.SQL.Add('END AS INVOICE_TYPE,');
+
+      cdsInvoiceList.SQL.Add('CASE');
+      cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 0 THEN ' + '''DEBIT''');
+      cdsInvoiceList.SQL.Add('WHEN IH.Debit_Credit = 1 THEN ' + '''CREDIT''');
+      cdsInvoiceList.SQL.Add('END AS INVOICE_KONTO,');
+
+      cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)');
+      cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C');
+      cdsInvoiceList.SQL.Add('	WHERE');
+      cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName');
+      cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo');
+      cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate');
+      cdsInvoiceList.SQL.Add
+        ('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS KURS,');
+
+      cdsInvoiceList.SQL.Add('IH.CurrencyName	AS CURRENCY,');
+
+      cdsInvoiceList.SQL.Add('IH.AgentName AS AGENT, ');
+
+      cdsInvoiceList.SQL.Add('isnull(IH.Trading,0) AS TRADING,');
+
+      cdsInvoiceList.SQL.Add('IH.SalesOrgNo AS FörsäljOrgNr,');
+
+      cdsInvoiceList.SQL.Add
+        ('CASE WHEN [dbo].[IsoWk](IH.InvoiceDate) < 10 THEN 	CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ');
+      cdsInvoiceList.SQL.Add(QuotedStr('-0') +
+        ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2))');
+      cdsInvoiceList.SQL.Add
+        ('ELSE CAST(DATEPART (Year, IH.InvoiceDate) AS CHAR(4)) + ');
+      cdsInvoiceList.SQL.Add(QuotedStr('-') +
+        ' + CAST([dbo].[IsoWk] (IH.InvoiceDate) AS CHAR(2)) END AS VECKA,');
+
+      cdsInvoiceList.SQL.Add('IH.CountryName AS LAND,');
+      cdsInvoiceList.SQL.Add('SR.ClientName AS FörsäljReg,');
+      cdsInvoiceList.SQL.Add
+        ('SalesGroupName AS SäljGrupp, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo AS LO,');
+      cdsInvoiceList.SQL.Add
+        ('IH.ST_CityName AS LevORT, IL.Reference AS ErReferens, IL.OrderNoText AS Ordernr, IH.DueDate, IH.AgentNo,');
+      cdsInvoiceList.SQL.Add
+        ('IH.StickyNote AS Postit, Inos.Prefix AS PO_prefix, IH.VAT_OnInvoice AS Skatteupplag,');
+      cdsInvoiceList.SQL.Add
+        ('IH.IntraStatCountryNo, ISC.CountryName AS Statistikland, IH.DelKredit, IH.IncludeFreightCostInPrice,');
+
+      cdsInvoiceList.SQL.Add('SUM(invd.NoOfPkgs) AS Paket,');
+      cdsInvoiceList.SQL.Add('SUM(invd.intNM3) AS NM3_Int,');
+      cdsInvoiceList.SQL.Add('SUM(invd.NominalM3) AS NM3_Ext,');
+      cdsInvoiceList.SQL.Add('SUM(invd.ActualNetM3) AS AM3,');
+      cdsInvoiceList.SQL.Add('SUM(invd.Volume_OrderUnit) AS Kvantitet,');
+      cdsInvoiceList.SQL.Add('SUM(invd.ProductValue) AS Produktvarde,');
+
+      cdsInvoiceList.SQL.Add('SUM(invd.ProductValue)');
+      cdsInvoiceList.SQL.Add('*');
+      cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)');
+      cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C');
+      cdsInvoiceList.SQL.Add('	WHERE');
+      cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName');
+      cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo');
+      cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate');
+      cdsInvoiceList.SQL.Add
+        ('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS ProduktVardeSEK,');
+
+      cdsInvoiceList.SQL.Add
+        ('SUM(invd.ProductValueWOFreight) AS ProduktvardeUtanFrakt,');
+
+      cdsInvoiceList.SQL.Add('SUM(invd.ProductValueWOFreight)');
+      cdsInvoiceList.SQL.Add('*');
+      cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)');
+      cdsInvoiceList.SQL.Add('	FROM ExChangeRate EX, Currency C');
+      cdsInvoiceList.SQL.Add('	WHERE');
+      cdsInvoiceList.SQL.Add('	C.CurrencyName = IH.CurrencyName');
+      cdsInvoiceList.SQL.Add('	and EX.CurrencyNo = C.CurrencyNo');
+      cdsInvoiceList.SQL.Add('	AND EX.ValidFrom <= IH.InvoiceDate');
+      cdsInvoiceList.SQL.Add
+        ('	group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS ProduktVardeUtanFraktSEK,');
+
+      // cdsInvoiceList.SQL.Add('SUM(invd.ProductValue) - SUM(invd.ProductValueWOFreight) AS FraktValuta,') ;
+
+      cdsInvoiceList.SQL.Add
+        ('(Select abs(SUM(invd2.FreightCostCurr)) from dbo.InvoiceDetail invd2');
+      cdsInvoiceList.SQL.Add
+        ('WHERE invd2.InternalInvoiceNo = ih.InternalInvoiceNo');
+      cdsInvoiceList.SQL.Add('AND invd2.ShippingPlanNo = IL.ShippingPlanNo');
+      cdsInvoiceList.SQL.Add
+        ('AND invd2.ArticleNo = invd.ArticleNo) AS FraktValuta,');
+
+      cdsInvoiceList.SQL.Add
+        ('(SUM(invd.ProductValue) - SUM(invd.ProductValueWOFreight))');
+      cdsInvoiceList.SQL.Add('*');
+      cdsInvoiceList.SQL.Add('(Select top 1 IsNull(EX.ExChangeRate, 0)');
+      cdsInvoiceList.SQL.Add('FROM ExChangeRate EX, Currency C');
+      cdsInvoiceList.SQL.Add('WHERE');
+      cdsInvoiceList.SQL.Add('C.CurrencyName = IH.CurrencyName');
+      cdsInvoiceList.SQL.Add('and EX.CurrencyNo = C.CurrencyNo');
+      cdsInvoiceList.SQL.Add('AND EX.ValidFrom <= IH.InvoiceDate');
+      cdsInvoiceList.SQL.Add
+        ('group by EX.ValidFrom, EX.ExChangeRate Order by EX.ValidFrom desc ) AS FraktValutaSEK,');
+
+      cdsInvoiceList.SQL.Add('CASE WHEN ih.VAT_OnInvoice = 0 THEN');
+      cdsInvoiceList.SQL.Add('SUM(invd.VatValue)');
+      cdsInvoiceList.SQL.Add('END AS momsvarde, IH.AddressLine1');
+
+      cdsInvoiceList.SQL.Add('FROM dbo.InvoiceHeader IH');
+      cdsInvoiceList.SQL.Add
+        ('Left Outer Join dbo.Country ISC on ISC.CountryNo = IH.IntraStatCountryNo');
+      cdsInvoiceList.SQL.Add
+        ('Inner Join dbo.InvoiceLO IL ON IL.InternalInvoiceNo = IH.InternalInvoiceNo');
+
+      cdsInvoiceList.SQL.Add
+        ('Inner join dbo.InvoiceDetail invd on invd.InternalInvoiceNo = IL.InternalInvoiceNo');
+      cdsInvoiceList.SQL.Add('and invd.ShippingPlanNo = IL.ShippingPlanNo');
+      cdsInvoiceList.SQL.Add
+        ('Inner join dbo.FS_Article ART on ART.ArticleNo = invd.ArticleNo');
+
+      cdsInvoiceList.SQL.Add
+        ('Left Outer join dbo.Client SR ON SR.ClientNo = IH.SupplierNo');
+
+      cdsInvoiceList.SQL.Add('Left Outer Join dbo.SalesManGroupRow smg');
+      cdsInvoiceList.SQL.Add
+        ('Inner Join dbo.SalesManGroup sm on sm.SalesGroupNo = smg.SalesGroupNo');
+      cdsInvoiceList.SQL.Add('on smg.UserID = IH.ResponsibleSeller');
+      cdsInvoiceList.SQL.Add
+        ('Left Outer Join dbo.InvoiceNos inos on inos.InternalInvoiceNo = IH.InternalInvoiceNo');
+
+      cdsInvoiceList.SQL.Add
+        ('Inner Join dbo.FS_Article fsa on fsa.ArticleNo = invd.ArticleNo');
+
+      // cdsInvoiceList.SQL.Add('WHERE 1=1') ;
+
+      cdsInvoiceList.SQL.Add('WHERE ((fsa.ArticleGroupNo = 0)');
+      cdsInvoiceList.SQL.Add('OR ((fsa.ArticleGroupNo = 1)');
+
+      cdsInvoiceList.SQL.Add('AND not exists (Select invd3.InternalInvoiceNo');
+      cdsInvoiceList.SQL.Add('FROM dbo.InvoiceDetail invd3');
+      cdsInvoiceList.SQL.Add
+        ('WHERE invd3.InternalInvoiceNo = invd.InternalInvoiceNo');
+      cdsInvoiceList.SQL.Add('AND (fsa.ArticleGroupNo = 0))))');
+
+      // cdsInvoiceList.SQL.Add('AND exists (Select  inos2.InternalInvoiceNo FROM') ;
+      // cdsInvoiceList.SQL.Add('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)') ;
+
+      { cdsInvoiceList.SQL.Add('WHERE ((invd.ArticleNo = 1 or invd.ArticleNo = 3) OR') ;
+        cdsInvoiceList.SQL.Add('((invd.ArticleNo = 2 or invd.ArticleNo = 4)') ;
+        cdsInvoiceList.SQL.Add('AND not exists (Select invd3.InternalInvoiceNo') ;
+        cdsInvoiceList.SQL.Add('FROM dbo.InvoiceDetail invd3') ;
+        cdsInvoiceList.SQL.Add('WHERE invd3.InternalInvoiceNo = invd.InternalInvoiceNo') ;
+        cdsInvoiceList.SQL.Add('AND (invd3.ArticleNo = 1 or invd3.ArticleNo = 3))))') ;
+      }
+
+      if (not cds_PropsInvClientNo.IsNull) and
+        (cds_PropsInvClientNo.AsInteger > 0) then
+      Begin
+        if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+          and (InvoiceNo = -1) then
+          cdsInvoiceList.SQL.Add('AND IH.CustomerNo = ' +
+            cds_PropsInvClientNo.AsString);
+      End;
+
+      if Length(SalesOrgNo) > 0 then
+        cdsInvoiceList.SQL.Add('AND IH.SalesOrgNo LIKE ' +
+          QuotedStr('%' + teSaleOrgNr.Text + '%'));
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if (cds_PropsInvSalesPersonNo.AsInteger > 0) and (InvoiceNo = -1) and
+          (LONo = -1) then
+          cdsInvoiceList.SQL.Add('AND smg.SalesGroupNo = ' +
+            cds_PropsInvSalesPersonNo.AsString);
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if cds_PropsInvLengthFormatNo.AsInteger = 1 then
+          cdsInvoiceList.SQL.Add
+            ('AND ((IH.DelKredit = 0) or (IH.DelKredit is null))');
+      End;
+
+      if cds_PropsInvLengthOption.AsInteger = 1 then
+      Begin
+        cdsInvoiceList.SQL.Add
+          ('AND exists (Select  inos2.InternalInvoiceNo FROM ');
+        cdsInvoiceList.SQL.Add
+          ('dbo.InvoiceNos inos2 WHERE inos2.InternalInvoiceNo = IH.InternalInvoiceNo)');
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if cds_PropsInvSalesRegionNo.AsInteger > 0 then
+          cdsInvoiceList.SQL.Add('AND IH.SupplierNo = ' +
+            cds_PropsInvSalesRegionNo.AsString);
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if cds_PropsInvFilterOrderDate.AsInteger = 1 then
+        Begin
+          cdsInvoiceList.SQL.Add('AND IH.InvoiceDate >= ' +
+            QuotedStr(DateTimeToStr(deStartPeriod.Date)));
+          cdsInvoiceList.SQL.Add('AND IH.InvoiceDate <= ' +
+            QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+        End;
+      End;
+
+      if InvoiceNo > -1 then
+      Begin
+        cdsInvoiceList.SQL.Add('AND inos.InvoiceNo = ' + inttostr(InvoiceNo));
+      End;
+
+      if LONo <> -1 then
+        cdsInvoiceList.SQL.Add('AND IL.ShippingPlanNo = ' + inttostr(LONo));
+
+      if Length(KontraktNr) > 0 then
+        cdsInvoiceList.SQL.Add('AND IL.OrderNoText = ' + QuotedStr(KontraktNr));
+
+      if InternalInvoiceNo <> -1 then
+        cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo = ' +
+          inttostr(InternalInvoiceNo));
+
+      cdsInvoiceList.SQL.Add(GetSQLofComboFilter(0, 'IH.InvoiceType',
+        ccbInvoiceType));
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        Case cbTyp.ItemIndex of
+          0:
+            cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 0 ');
+          1:
+            cdsInvoiceList.SQL.Add('AND IH.QuickInvoice = 1 ');
+          // 2 visa både snabb och normala
+        End;
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        Case cbKonto.ItemIndex of
+          0:
+            cdsInvoiceList.SQL.Add('AND IH.Debit_Credit = 0');
+          1:
+            cdsInvoiceList.SQL.Add('AND IH.Debit_Credit = 1');
+          // 2 : visa både debit och credit
+        End;
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if (cds_PropsInvCopyPcs.AsInteger = 1) or
+          (cds_PropsInvCopyPcs.AsInteger = 3) then
+        Begin
+          cdsInvoiceList.SQL.Add
+            ('AND IH.InternalInvoiceNo in (Select InvD.InternalInvoiceNo FROM');
+          cdsInvoiceList.SQL.Add('dbo.InvoiceDetail InvD');
+          cdsInvoiceList.SQL.Add
+            ('Where InvD.InternalInvoiceNo = IH.InternalInvoiceNo');
+          cdsInvoiceList.SQL.Add('AND InvD.ArticleNo = ' +
+            inttostr(cds_PropsInvCopyPcs.AsInteger) + ')');
+        End;
+      End;
+
+      if (Length(SalesOrgNo) = 0) and (InternalInvoiceNo = -1) AND (LONo = -1)
+        and (InvoiceNo = -1) then
+      Begin
+        if cds_PropsInvStatus.AsInteger = 1 then // DEL OCH OBETALDA
+        Begin
+          cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo not IN');
+          cdsInvoiceList.SQL.Add
+            ('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)');
+        End
+        else if cds_PropsInvStatus.AsInteger = 2 then // ENDAST DEL BETALDA
+        Begin
+          cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN');
+          cdsInvoiceList.SQL.Add
+            ('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 0 AND AmountPaid > 0)');
+        End
+        else if cds_PropsInvStatus.AsInteger = 3 then // FULL BETALDA
+        Begin
+          cdsInvoiceList.SQL.Add('AND IH.InternalInvoiceNo IN');
+          cdsInvoiceList.SQL.Add
+            ('(Select  InternalInvoiceNo  FROM dbo.InvoicePayStatus WHERE Paid = 1)');
+        End;
+      End; // if  (InternalInvoiceNo  = -1) AND (LONo = -1) and (InvoiceNo = -1) then
+      // ShowMessage('DisplayName = ' + ccbInvoiceType.Properties.Items.Items.DisplayName) ;
+
+      // if cbOpenQuery.Checked = False then
+      if NoOfCheckedRowsComboFilter(ccbInvoiceType, InvoiceType) = 1 then
+      Begin
+        if cds_PropsInvGradeStampNo.AsInteger = 1 then
+        // EJ Överförda
+        Begin
+          Case InvoiceType of
+            0:
+              Begin
+                cdsInvoiceList.SQL.Add
+                  ('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                  QuotedStr('VWK1'));
+                cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+              End;
+            4:
+              Begin
+                cdsInvoiceList.SQL.Add
+                  ('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                  QuotedStr('VWK2'));
+                cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+              End;
+            5:
+              Begin
+                cdsInvoiceList.SQL.Add
+                  ('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                  QuotedStr('VWK4'));
+                cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+              End;
+            8:
+              Begin
+                cdsInvoiceList.SQL.Add
+                  ('AND INOs.InvoiceNo not in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                  QuotedStr('VBAB'));
+                cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+              End;
+
+          End; // Case
+        End // if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 1 then
+        else
+          // Överförda
+          if cds_PropsInvGradeStampNo.AsInteger = 2 then
+          Begin
+            Case InvoiceType of
+              0:
+                Begin
+                  cdsInvoiceList.SQL.Add
+                    ('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                  cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                    QuotedStr('VWK1'));
+                  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+                End;
+              4:
+                Begin
+                  cdsInvoiceList.SQL.Add
+                    ('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                  cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                    QuotedStr('VWK2'));
+                  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+                End;
+              5:
+                Begin
+                  cdsInvoiceList.SQL.Add
+                    ('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                  cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                    QuotedStr('VWK4'));
+                  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+                End;
+
+              8:
+                Begin
+                  cdsInvoiceList.SQL.Add
+                    ('AND INOs.InvoiceNo in (SELECT invno FROM alvesql14.XOR_VIDA.dbo.ledgerx ');
+                  cdsInvoiceList.SQL.Add('WHERE enumerator = ' +
+                    QuotedStr('VBAB'));
+                  cdsInvoiceList.SQL.Add('AND invno = Inos.InvoiceNo)');
+                End;
+
+            End; // Case
+          End; // if dmVidaInvoice.cds_PropsINVGradeStampNo.AsInteger = 2 then
+      End; //
+
+      cdsInvoiceList.SQL.Add
+        ('GROUP BY IH.QuickInvoice, IH.InternalInvoiceNo, IH.InvoiceDate,');
+      cdsInvoiceList.SQL.Add
+        ('IH.CustomerName, IL.Shipper, inos.InvoiceNo, IH.Debit_Credit,');
+      cdsInvoiceList.SQL.Add
+        ('IH.InvoiceType, IH.CurrencyName, IL.ShippingPlanNo, IH.AgentName,');
+      cdsInvoiceList.SQL.Add
+        ('IH.Trading, IH.SalesOrgNo, IH.VAT_OnInvoice, IH.CountryName, SR.ClientName,');
+      cdsInvoiceList.SQL.Add
+        ('SalesGroupName, IH.CustomerNo, IH.InvoiceType, IL.ShippingPlanNo,');
+      cdsInvoiceList.SQL.Add
+        ('IH.ST_CityName, IL.Reference, IL.OrderNoText, IH.DueDate, IH.AgentNo,');
+      cdsInvoiceList.SQL.Add
+        ('IH.StickyNote, Inos.Prefix, IH.IntraStatCountryNo, ISC.CountryName, IH.DelKredit,');
+      cdsInvoiceList.SQL.Add
+        ('IH.IncludeFreightCostInPrice, invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.ArticleNo, IH.AddressLine1');
+      // cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
+      // if ThisUser.UserID = 8 then cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
+
+      cdsInvoiceList.Active := True;
+
+    Finally
+      // grdInvoice.DataSource.DataSet.EnableControls ;
+      grdFakturaDBBandedTableView1.EndUpdate;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
+  End; // with
 end;
 
 procedure TfrmInvoiceList.acShowVerifikatLoggUpdate(Sender: TObject);
 begin
- acShowVerifikatLogg.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acShowVerifikatLogg.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
 procedure TfrmInvoiceList.acReCalcInvoiceUpdate(Sender: TObject);
 begin
- acReCalcInvoice.Enabled:= (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active)
- and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0) ;
+  acReCalcInvoice.Enabled :=
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.Active) and
+    (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.
+    RecordCount > 0);
 end;
 
 procedure TfrmInvoiceList.acGetKontoNrExecute(Sender: TObject);
 begin
- if MessageDlg('Vill du tilldela kontonr på markerade fakturor?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
-  mtSelectedInvoices.Active := False ;
-  mtSelectedInvoices.Active := True ;
+  if MessageDlg('Vill du tilldela kontonr på markerade fakturor?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  Begin
+    mtSelectedInvoices.Active := False;
+    mtSelectedInvoices.Active := True;
+    Try
+      SelectMarkedInvoices;
+      AssignKontoNrToSelectedInvoices;
+    Finally
+      mtSelectedInvoices.Active := False;
+    End;
+  End;
+end;
+
+procedure TfrmInvoiceList.AssignKontoNrToSelectedInvoices;
+Var
+  Save_Cursor: TCursor;
+begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
-  SelectMarkedInvoices ;
-  AssignKontoNrToSelectedInvoices ;
+    with dmVidaInvoice do
+    Begin
+      // mt_VerLogg.Active := True ;
+      // Try
+      mtSelectedInvoices.First;
+      While not mtSelectedInvoices.Eof do
+      Begin
+        OpenInvoiceAndAssignKontoNr
+          (mtSelectedInvoicesInternalInvoiceNo.AsInteger);
+        mtSelectedInvoices.Next;
+      End;
+      // Finally
+      // mt_VerLogg.Active  := False ;
+      // End ;
+    End; // With
+
   Finally
-   mtSelectedInvoices.Active  := False ;
-  End ;
- End ;
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 end;
 
-procedure TfrmInvoiceList.AssignKontoNrToSelectedInvoices ;
-Var Save_Cursor : TCursor;
+procedure TfrmInvoiceList.OpenInvoiceAndAssignKontoNr(const IntInvNo: Integer);
+Var // frmInvoice  : TfrmInvoice ;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-//  mt_VerLogg.Active := True ;
-//  Try
-  mtSelectedInvoices.First ;
-  While not mtSelectedInvoices.Eof do
-  Begin
-   OpenInvoiceAndAssignKontoNr(mtSelectedInvoicesInternalInvoiceNo.AsInteger) ;
-   mtSelectedInvoices.Next ;
-  End ;
-//  Finally
-//   mt_VerLogg.Active  := False ;
-//  End ;
- End ;//With
-
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-end;
-
-procedure TfrmInvoiceList.OpenInvoiceAndAssignKontoNr(const IntInvNo  : Integer) ;
-Var //frmInvoice  : TfrmInvoice ;
-    Save_Cursor : TCursor;
-begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
- with dmVidaInvoice do
- Begin
-//  frmInvoice:= TfrmInvoice.Create(NIL);
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//   cdsInvoiceShipTo.Active:= True ;
-//   frmInvoice.TabControl1.Tabs.Clear ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= False ;
-   cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-   cdsInvoiceHead.Active:= True ;
+    with dmVidaInvoice do
+    Begin
+      // frmInvoice:= TfrmInvoice.Create(NIL);
+      Try
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        // cdsInvoiceShipTo.Active:= True ;
+        // frmInvoice.TabControl1.Tabs.Clear ;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := False;
+        cdsInvoiceHead.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        cdsInvoiceHead.Active := True;
 
-//   cdsInvoiceLO.Active:= False ;
-//   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-//   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//   cdsInvoiceLO.Active:= True ;
+        // cdsInvoiceLO.Active:= False ;
+        // cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
+        // Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+        // cdsInvoiceLO.Active:= True ;
 
-{   cds_PIP.Active:= False ;
-   cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
-   cds_PIP.Active:= True ;
+        { cds_PIP.Active:= False ;
+          cds_PIP.ParamByName('OwnerNo').AsInteger:= cdsInvoiceHeadSupplierNo.AsInteger ;
+          cds_PIP.Active:= True ;
 
-   cds_IH_SpecLoad.Active:= False ;
-   cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-   cds_IH_SpecLoad.Active:= True ;
-   if cds_IH_SpecLoad.RecordCount = 0 then
-   Begin
-    cds_IH_SpecLoad.Insert ;
-    cds_IH_SpecLoad.Post ;
-   End ; }
+          cds_IH_SpecLoad.Active:= False ;
+          cds_IH_SpecLoad.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
+          cds_IH_SpecLoad.Active:= True ;
+          if cds_IH_SpecLoad.RecordCount = 0 then
+          Begin
+          cds_IH_SpecLoad.Insert ;
+          cds_IH_SpecLoad.Post ;
+          End ; }
 
 
-//  cdsInvoiceLO.First ;
+        // cdsInvoiceLO.First ;
 
-{  While not cdsInvoiceLO.Eof do
-  Begin
-   frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
-   cdsInvoiceLO.Next ;
-  End ;
-   Screen.Cursor := crSQLWait;
-   }
+        { While not cdsInvoiceLO.Eof do
+          Begin
+          frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
+          cdsInvoiceLO.Next ;
+          End ;
+          Screen.Cursor := crSQLWait;
+        }
 
-//  if frmInvoice.TabControl1.Tabs.Count > 0 then
-//  if cdsInvoiceLO.RecordCount > 0 then
-//  Begin
-//   cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-//   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
-//   cdsInvoiceLO.Filtered:= True ;
-   cdsInvoiceDetail.Close ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger:= IntInvNo ;
-//   cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-//   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
-   cdsInvoiceDetail.Filtered:= True ;
-   cdsInvoiceDetail.Active:= True ;
-   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+        // if frmInvoice.TabControl1.Tabs.Count > 0 then
+        // if cdsInvoiceLO.RecordCount > 0 then
+        // Begin
+        // cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
+        // ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
+        // cdsInvoiceLO.Filtered:= True ;
+        cdsInvoiceDetail.Close;
+        cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger := IntInvNo;
+        // cdsInvoiceDetail.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
+        // ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;// frmInvoice.TabControl1.Tabs[0] ;
+        cdsInvoiceDetail.Filtered := True;
+        cdsInvoiceDetail.Active := True;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
-   //CalcAndUpdateNetProductValueInInvoiceDetail ;
+        // CalcAndUpdateNetProductValueInInvoiceDetail ;
 
-   SetKontonr ;
+        SetKontonr;
 
-   if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
-    dmVidaInvoice.cdsInvoiceDetail.Post ;
-   if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0) ;
-    dmVidaInvoice.cdsInvoiceDetail.CommitUpdates ;
-   End ;
+        if dmVidaInvoice.cdsInvoiceDetail.State in [dsEdit, dsInsert] then
+          dmVidaInvoice.cdsInvoiceDetail.Post;
+        if dmVidaInvoice.cdsInvoiceDetail.ChangeCount > 0 then
+        Begin
+          dmVidaInvoice.cdsInvoiceDetail.ApplyUpdates(0);
+          dmVidaInvoice.cdsInvoiceDetail.CommitUpdates;
+        End;
 
-//   SummarizeWithOutOpenInvoiceForm ;
+        // SummarizeWithOutOpenInvoiceForm ;
 
-{   if cdsInvoiceHead.ChangeCount > 0 then
-   Begin
-    cdsInvoiceHead.ApplyUpdates(0) ;
-    cdsInvoiceHead.CommitUpdates ;
-   End ;
-  End ;//if..
-  }
-//   frmInvoice.ShowModal ;
+        { if cdsInvoiceHead.ChangeCount > 0 then
+          Begin
+          cdsInvoiceHead.ApplyUpdates(0) ;
+          cdsInvoiceHead.CommitUpdates ;
+          End ;
+          End ;//if..
+        }
+        // frmInvoice.ShowModal ;
 
-//   if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
-//    dmVidaInvoice.cds_IH_SpecLoad.Post ;
-{   if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
-   Begin
-    dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
-    dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
-   End ;
-  End
-  else
-  Begin
-   Exit ;
-  End ; }
+        // if dmVidaInvoice.cds_IH_SpecLoad.State in [dsEdit, dsInsert] then
+        // dmVidaInvoice.cds_IH_SpecLoad.Post ;
+        { if dmVidaInvoice.cds_IH_SpecLoad.ChangeCount > 0 then
+          Begin
+          dmVidaInvoice.cds_IH_SpecLoad.ApplyUpdates(0) ;
+          dmVidaInvoice.cds_IH_SpecLoad.CommitUpdates ;
+          End ;
+          End
+          else
+          Begin
+          Exit ;
+          End ; }
 
- Finally
-  fInternalInvoiceNo        := -1 ;
-  cdsInvoiceDetail.Close ;
-//  cdsInvoiceLO.Filtered     := False ;
-//  cdsInvoiceLO.Active       := False ;
-  cdsInvoiceDetail.Filtered := False ;
-  cdsInvoiceDetail.Filter   := '';
-  cdsInvoiceDetail.Active   := False ;
-//  cdsInvoiceShipTo.Active   := False ;
-  cdsInvoiceHead.Active     := False ;
-//  frmInvoice.Free ;
- End ;
- End ; // with
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-End ;
+      Finally
+        fInternalInvoiceNo := -1;
+        cdsInvoiceDetail.Close;
+        // cdsInvoiceLO.Filtered     := False ;
+        // cdsInvoiceLO.Active       := False ;
+        cdsInvoiceDetail.Filtered := False;
+        cdsInvoiceDetail.Filter := '';
+        cdsInvoiceDetail.Active := False;
+        // cdsInvoiceShipTo.Active   := False ;
+        cdsInvoiceHead.Active := False;
+        // frmInvoice.Free ;
+      End;
+    End; // with
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+End;
 
 procedure TfrmInvoiceList.acFilterOnLOExecute(Sender: TObject);
 begin
- With dmVidaInvoice do
- Begin
-  nfSearchLO.Text := grdFakturaDBBandedTableView1.DataController.DataSet.FieldByName('LO').AsString ;
+  With dmVidaInvoice do
+  Begin
+    nfSearchLO.Text := grdFakturaDBBandedTableView1.DataController.DataSet.
+      FieldByName('LO').AsString;
 
-  RefreshInvoiceList(Sender, '', '', -1, -1, StrToIntDef(Trim(nfSearchLO.Text),0), -1);
+    RefreshInvoiceList(Sender, '', '', -1, -1,
+      StrToIntDef(Trim(nfSearchLO.Text), 0), -1);
 
-  cdsInvoiceList.Locate('LO', StrToIntDef(Trim(nfSearchLO.Text),0), []) ;
-//  Timer1.Enabled:= True ;
- End ; //with
+    cdsInvoiceList.Locate('LO', StrToIntDef(Trim(nfSearchLO.Text), 0), []);
+    // Timer1.Enabled:= True ;
+  End; // with
 end;
 
 procedure TfrmInvoiceList.acAssignMissingLoadsExecute(Sender: TObject);
 begin
- //Sist markerade raden är senaste fakturan och den som har en eller flera laster
- //Föregående rad är credit
+  // Sist markerade raden är senaste fakturan och den som har en eller flera laster
+  // Föregående rad är credit
 end;
 
 procedure TfrmInvoiceList.acLenaExportExecute(Sender: TObject);
-var fAccInv: TfAccInv;
+var
+  fAccInv: TfAccInv;
 begin
- if MessageDlg('Exportera, vill du fortsätta?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
- fAccInv:= TfAccInv.Create(nil) ;
- Try
-  fAccInv.IntInvNo          := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
-  fAccInv.teInvoiceNo.Text  := dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString ;
-  fAccInv.CustomerNo        := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger ;
-  fAccInv.AgentNo           := dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger ;
-  fAccInv.ExportNo          := 1 ;
-  fAccInv.acRefreshExecute(Sender) ;
-  fAccInv.ShowModal ;
- Finally
-  FreeAndNil(fAccInv) ;
- End ;
- End;
+  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+    0) = mrYes then
+  Begin
+    fAccInv := TfAccInv.Create(nil);
+    Try
+      fAccInv.IntInvNo :=
+        dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      fAccInv.teInvoiceNo.Text :=
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString;
+      fAccInv.CustomerNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+      fAccInv.AgentNo := dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger;
+      fAccInv.ExportNo := 1;
+      fAccInv.acRefreshExecute(Sender);
+      fAccInv.ShowModal;
+    Finally
+      FreeAndNil(fAccInv);
+    End;
+  End;
 end;
 
 procedure TfrmInvoiceList.acSendEDIMessageExecute(Sender: TObject);
 begin
- if MessageDlg('Vill du skicka fakturan som EDI meddelande till kunden?',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
-  dmVidaInvoice.SendInvoiceAsEDI(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger)  ;
- End;
+  if MessageDlg('Vill du skicka fakturan som EDI meddelande till kunden?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  Begin
+    dmVidaInvoice.SendInvoiceAsEDI
+      (dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+  End;
 end;
 
 procedure TfrmInvoiceList.acLindasExportExecute(Sender: TObject);
 begin
- dmVidaInvoice.PrepareLindaExcelFile(dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString, dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-  dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
-// PrepareLindaExcelFile(const InvoiceNo : String;const CustomerNo, InternalInvoiceNo : Integer) ;
+  dmVidaInvoice.PrepareLindaExcelFile
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+  // PrepareLindaExcelFile(const InvoiceNo : String;const CustomerNo, InternalInvoiceNo : Integer) ;
 end;
 
 procedure TfrmInvoiceList.acNewQuickInvoiceExecute(Sender: TObject);
-Var //frmInvoice      : TfrmInvoice ;
-    OpenInternalInvoiceNo,
-    x               : Integer ;
-    fInvoiceWizard  : TfInvoiceWizard;
+Var // frmInvoice      : TfrmInvoice ;
+  OpenInternalInvoiceNo, x: Integer;
+  fInvoiceWizard: TfInvoiceWizard;
 begin
- if MessageDlg('Vill du skapa snabbfaktura? ',
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- with  dmVidaInvoice do
- Begin
- OpenInternalInvoiceNo  := -1 ;
- fInvoiceWizard  := TfInvoiceWizard.Create(nil);
- Try
-//Check and Compare that LO are valid to be invoiced together, if OK then
-//Insert InvoiceHeader
+  if MessageDlg('Vill du skapa snabbfaktura? ', mtConfirmation, [mbYes, mbNo],
+    0) = mrYes then
+    with dmVidaInvoice do
+    Begin
+      OpenInternalInvoiceNo := -1;
+      fInvoiceWizard := TfInvoiceWizard.Create(nil);
+      Try
+        // Check and Compare that LO are valid to be invoiced together, if OK then
+        // Insert InvoiceHeader
 
-  dmsContact.cds_Users.Active := True ;
-//  dmModule1.cdsClient.Active:= True ;
-//  dmModule1.cdsClient.ParamByName('@RoleType').AsInteger:= 1 ;
-//  dmModule1.cdsClient.Active:= True ;
-  dmsContact.cdsDelTerms.Active  := True ;
-  dmsSystem.cds_Currency.Active := True ;
-  dmsSystem.cdsPaymentTerm.Active := True ;
-  if not dmsSystem.cds_Language.Active then
-  dmsSystem.cds_Language.Active:= True ;
+        dmsContact.cds_Users.Active := True;
+        // dmModule1.cdsClient.Active:= True ;
+        // dmModule1.cdsClient.ParamByName('@RoleType').AsInteger:= 1 ;
+        // dmModule1.cdsClient.Active:= True ;
+        dmsContact.cdsDelTerms.Active := True;
+        dmsSystem.cds_Currency.Active := True;
+        dmsSystem.cdsPaymentTerm.Active := True;
+        if not dmsSystem.cds_Language.Active then
+          dmsSystem.cds_Language.Active := True;
 
+        For x := 0 to cdsInvoiceDetail.FieldCount - 1 do
+          cdsInvoiceDetail.Fields.Fields[x].ReadOnly := False;
+        cdsInvoiceDetail.UpdateOptions.ReadOnly := False;
 
-   For x := 0 to cdsInvoiceDetail.FieldCount-1 do
-   cdsInvoiceDetail.Fields.Fields[x].ReadOnly := False ;
-   cdsInvoiceDetail.UpdateOptions.ReadOnly  := False ;
+        cdsInvoiceHead.Active := True;
+        cdsInvoiceLO.Active := True;
+        cdsInvoiceDetail.Active := True;
+        // cdsOneLoad.Active:= True ;
 
-  cdsInvoiceHead.Active   := True ;
-  cdsInvoiceLO.Active     := True ;
-  cdsInvoiceDetail.Active := True ;
-//  cdsOneLoad.Active:= True ;
+        // Insert Invoice Head
+        dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := nil;
+        Try
+          cdsInvoiceHead.Insert;
+          cdsInvoiceHeadResponsibleSeller.AsInteger := thisuser.userid;
+        Finally
+          dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange :=
+            dmVidaInvoice.cdsInvoiceHeadResponsibleSellerChange;
+        End;
+        cdsInvoiceHeadTrading.AsInteger := 0;
+        cdsInvoiceHeadQuickInvoice.AsInteger := 1;
+        cdsInvoiceHeadInternalInvoiceNo.AsInteger :=
+          dmsConnector.NextMaxNo('InvoiceHeader');
 
+        cdsInvoiceHeadDebit_Credit.AsInteger := 0;
 
+        cdsInvoiceHeadInvoiceType.AsInteger := 0;
+        cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+        cdsInvoiceHeadSupplierNo.AsInteger := VIDA_WOOD_COMPANY_NO; // Vida Wood
+        cdsInvoiceHeadCustomerNo.AsInteger := -1;
+        cdsInvoiceHeadAgentNo.AsInteger := -1;
+        cdsInvoiceHeadAgentCommission.AsFloat := 0;
+        // cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
+        cdsInvoiceHeadPaymentTermsNo.AsInteger := -1;
+        cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := -1;
+        cdsInvoiceHeadFreightInDiscount.AsInteger := -1;
+        cdsInvoiceHeadFreightInCommission.AsInteger := -1;
+        cdsInvoiceHeadDiscount1.AsFloat := 1;
+        cdsInvoiceHeadCurrencyName.AsString := '';
 
-//Insert Invoice Head
-  dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := nil ;
-  Try
-  cdsInvoiceHead.Insert ;
-  cdsInvoiceHeadResponsibleSeller.AsInteger                     := ThisUser.UserID ;
-  Finally
-   dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange := dmVidaInvoice.cdsInvoiceHeadResponsibleSellerChange ;
-  End ;
-  cdsInvoiceHeadTrading.AsInteger                               := 0 ;
-  cdsInvoiceHeadQuickInvoice.AsInteger                          := 1 ;
-  cdsInvoiceHeadInternalInvoiceNo.AsInteger                     := dmsConnector.NextMaxNo('InvoiceHeader');
+        cdsInvoiceHeadDeliveryTermsNo.AsInteger := -1;
+        cdsInvoiceHeadDestinationNo.AsInteger := -1;
+        cdsInvoiceHeadStatus.AsInteger := 0;
+        cdsInvoiceHeadVAT_OnInvoice.AsInteger := 0;
 
-  cdsInvoiceHeadDebit_Credit.AsInteger                          := 0 ;
+        cdsInvoiceHeadSpecialMoms.AsInteger := 0;
+        // cdsInvoiceHeadMoms.AsInteger                                  :=
+        { cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
+          cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;
 
-  cdsInvoiceHeadInvoiceType.AsInteger                           := 0 ;
-  cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp                      := DateTimeToSQLTimeStamp(now) ;
-  cdsInvoiceHeadSupplierNo.AsInteger                            := VIDA_WOOD_COMPANY_NO ; //Vida Wood
-  cdsInvoiceHeadCustomerNo.AsInteger                            := -1 ;
-  cdsInvoiceHeadAgentNo.AsInteger                               := -1 ;
-  cdsInvoiceHeadAgentCommission.AsFloat                         := 0 ;
-//  cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
-  cdsInvoiceHeadPaymentTermsNo.AsInteger                        := -1 ;
-  cdsInvoiceHeadCommissionPaidByCustomer.AsInteger              := -1 ;
-  cdsInvoiceHeadFreightInDiscount.AsInteger                     := -1 ;
-  cdsInvoiceHeadFreightInCommission.AsInteger                   := -1 ;
-  cdsInvoiceHeadDiscount1.AsFloat                               := 1 ;
-  cdsInvoiceHeadCurrencyName.AsString                           := '' ;
+          cdsInvoiceHeadCurrencyNo.AsInteger                            := sq_GetInvoiceHeadDataCurrencyNo.AsInteger ;
+          cdsInvoiceHeadIncome_Account.AsString                         := '' ;
+          cdsInvoiceHeadCustomerRecivablesAccount.AsString              := '' ;
+          cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
+          cdsInvoiceHeadCarrierName.AsString                            := sq_GetInvoiceHeadDataCarrierName.AsString ;
+          cdsInvoiceHeadETD.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETD.AsSQLTimeStamp ;
+          cdsInvoiceHeadETA.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETA.AsSQLTimeStamp ;
+          cdsInvoiceHeadDestinationNo.AsInteger                         := sq_GetInvoiceHeadDataDestinationNo.AsInteger ;
+          cdsInvoiceHeadClientBillingAddressNo.AsInteger                := sq_GetInvoiceHeadDataClientBillingAddressNo.AsInteger ;
+          cdsInvoiceHeadAddressName.AsString                            := sq_GetInvoiceHeadDataBILL_ADDRESS_NAME.AsString ;
+          cdsInvoiceHeadAddressLine1.AsString                           := sq_GetInvoiceHeadDataAddressLine1.AsString ;
+          cdsInvoiceHeadAddressLine2.AsString                           := sq_GetInvoiceHeadDataAddressLine2.AsString ;
+          cdsInvoiceHeadAddressLine3.AsString                           := sq_GetInvoiceHeadDataAddressLine3.AsString ;
+          cdsInvoiceHeadAddressLine4.AsString                           := sq_GetInvoiceHeadDataAddressLine4.AsString ;
+          cdsInvoiceHeadStateOrProvince.AsString                        := sq_GetInvoiceHeadDataStateOrProvince.AsString ;
+          cdsInvoiceHeadPostalCode.AsString                             := sq_GetInvoiceHeadDataPostalCode.AsString ;
+          cdsInvoiceHeadCityName.AsString                               := sq_GetInvoiceHeadDataAddressCity.AsString ;
+          cdsInvoiceHeadCountryName.AsString                            := sq_GetInvoiceHeadDataAddressCountry.AsString ;
 
-  cdsInvoiceHeadDeliveryTermsNo.AsInteger                       := -1 ;
-  cdsInvoiceHeadDestinationNo.AsInteger                         := -1 ;
-  cdsInvoiceHeadStatus.AsInteger                                := 0 ;
-  cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
+          cdsInvoiceHeadAgentName.AsString                              := sq_GetInvoiceHeadDataAgentName.AsString ;
+          cdsInvoiceHeadShipper.AsString                                := sq_GetInvoiceHeadDataShipper.AsString ;
+          cdsInvoiceHeadCustomerName.AsString                           := sq_GetInvoiceHeadDataCustomerName.AsString ;
+          cdsInvoiceHeadDeliveryTerm.AsString                           := sq_GetInvoiceHeadDataDeliveryTerm.AsString ;
+          cdsInvoiceHeadPaymentDescription.AsString                     := sq_GetInvoiceHeadDataPayDesc.AsString ;
+        }
+        cdsInvoiceHeadLanguageCode.AsInteger := 1;
+        // cdsInvoiceHeadDestination.AsString                            := sq_GetInvoiceHeadDataDestination.AsString ;
 
-  cdsInvoiceHeadSpecialMoms.AsInteger                           := 0 ;
- // cdsInvoiceHeadMoms.AsInteger                                  :=
-{  cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
-  cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;
+        cdsInvoiceHeadCreatedUser.AsInteger := 2;
+        cdsInvoiceHeadModifiedUser.AsInteger := 2;
+        cdsInvoiceHeadDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+        cdsInvoiceHeadInvoiced.AsInteger := 0;
 
-  cdsInvoiceHeadCurrencyNo.AsInteger                            := sq_GetInvoiceHeadDataCurrencyNo.AsInteger ;
-  cdsInvoiceHeadIncome_Account.AsString                         := '' ;
-  cdsInvoiceHeadCustomerRecivablesAccount.AsString              := '' ;
-  cdsInvoiceHeadVAT_OnInvoice.AsInteger                         := 0 ;
-  cdsInvoiceHeadCarrierName.AsString                            := sq_GetInvoiceHeadDataCarrierName.AsString ;
-  cdsInvoiceHeadETD.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETD.AsSQLTimeStamp ;
-  cdsInvoiceHeadETA.AsSQLTimeStamp                              := sq_GetInvoiceHeadDataETA.AsSQLTimeStamp ;
-  cdsInvoiceHeadDestinationNo.AsInteger                         := sq_GetInvoiceHeadDataDestinationNo.AsInteger ;
-  cdsInvoiceHeadClientBillingAddressNo.AsInteger                := sq_GetInvoiceHeadDataClientBillingAddressNo.AsInteger ;
-  cdsInvoiceHeadAddressName.AsString                            := sq_GetInvoiceHeadDataBILL_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadAddressLine1.AsString                           := sq_GetInvoiceHeadDataAddressLine1.AsString ;
-  cdsInvoiceHeadAddressLine2.AsString                           := sq_GetInvoiceHeadDataAddressLine2.AsString ;
-  cdsInvoiceHeadAddressLine3.AsString                           := sq_GetInvoiceHeadDataAddressLine3.AsString ;
-  cdsInvoiceHeadAddressLine4.AsString                           := sq_GetInvoiceHeadDataAddressLine4.AsString ;
-  cdsInvoiceHeadStateOrProvince.AsString                        := sq_GetInvoiceHeadDataStateOrProvince.AsString ;
-  cdsInvoiceHeadPostalCode.AsString                             := sq_GetInvoiceHeadDataPostalCode.AsString ;
-  cdsInvoiceHeadCityName.AsString                               := sq_GetInvoiceHeadDataAddressCity.AsString ;
-  cdsInvoiceHeadCountryName.AsString                            := sq_GetInvoiceHeadDataAddressCountry.AsString ;
+        { cdsInvoiceHeadST_AddressName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESS_NAME.AsString ;
+          cdsInvoiceHeadST_AddressLine1.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE1.AsString ;
+          cdsInvoiceHeadST_AddressLine2.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE2.AsString ;
+          cdsInvoiceHeadST_AddressLine3.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE3.AsString ;
+          cdsInvoiceHeadST_AddressLine4.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE4.AsString ;
+          cdsInvoiceHeadST_StateOrProvince.AsString                     := sq_GetInvoiceHeadDataAVROP_SHIPTO_PROVINCE.AsString ;
+          cdsInvoiceHeadST_PostalCode.AsString                          := sq_GetInvoiceHeadDataAVROP_SHIPTO_POSTALCODE.AsString ;
+          cdsInvoiceHeadST_CityName.AsString                            := sq_GetInvoiceHeadDataAVROP_SHIPTO_CITY.AsString ;
+          cdsInvoiceHeadST_CountryName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_COUNTRY.AsString ;
 
-  cdsInvoiceHeadAgentName.AsString                              := sq_GetInvoiceHeadDataAgentName.AsString ;
-  cdsInvoiceHeadShipper.AsString                                := sq_GetInvoiceHeadDataShipper.AsString ;
-  cdsInvoiceHeadCustomerName.AsString                           := sq_GetInvoiceHeadDataCustomerName.AsString ;
-  cdsInvoiceHeadDeliveryTerm.AsString                           := sq_GetInvoiceHeadDataDeliveryTerm.AsString ;
-  cdsInvoiceHeadPaymentDescription.AsString                     := sq_GetInvoiceHeadDataPayDesc.AsString ;
-}
-  cdsInvoiceHeadLanguageCode.AsInteger                          := 1 ;
-//  cdsInvoiceHeadDestination.AsString                            := sq_GetInvoiceHeadDataDestination.AsString ;
+          cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString                     := sq_GetInvoiceHeadDataAGENT_ADDRESS_NAME.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE1.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE2.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE3.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE4.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString                  := sq_GetInvoiceHeadDataAGENT_SHIPTO_PROVINCE.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString                := sq_GetInvoiceHeadDataAGENT_SHIPTO_POSTALCODE.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString                      := sq_GetInvoiceHeadDataAGENT_SHIPTO_CITY.AsString ;
+          cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString                   := sq_GetInvoiceHeadDataAGENT_SHIPTO_COUNTRY.AsString ;
+        }
+        cdsInvoiceHead.Post;
 
-  cdsInvoiceHeadCreatedUser.AsInteger                           := 2 ;
-  cdsInvoiceHeadModifiedUser.AsInteger                          := 2 ;
-  cdsInvoiceHeadDateCreated.AsSQLTimeStamp                      := DateTimeToSQLTimeStamp(Now) ;
-  cdsInvoiceHeadInvoiced.AsInteger                              := 0 ;
+        cdsInvoiceLO.Active := False;
+        cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger :=
+          cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+        cdsInvoiceLO.Active := True;
 
-{  cdsInvoiceHeadST_AddressName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadST_AddressLine1.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE1.AsString ;
-  cdsInvoiceHeadST_AddressLine2.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE2.AsString ;
-  cdsInvoiceHeadST_AddressLine3.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE3.AsString ;
-  cdsInvoiceHeadST_AddressLine4.AsString                        := sq_GetInvoiceHeadDataAVROP_SHIPTO_ADDRESSLINE4.AsString ;
-  cdsInvoiceHeadST_StateOrProvince.AsString                     := sq_GetInvoiceHeadDataAVROP_SHIPTO_PROVINCE.AsString ;
-  cdsInvoiceHeadST_PostalCode.AsString                          := sq_GetInvoiceHeadDataAVROP_SHIPTO_POSTALCODE.AsString ;
-  cdsInvoiceHeadST_CityName.AsString                            := sq_GetInvoiceHeadDataAVROP_SHIPTO_CITY.AsString ;
-  cdsInvoiceHeadST_CountryName.AsString                         := sq_GetInvoiceHeadDataAVROP_SHIPTO_COUNTRY.AsString ;
+        cdsInvoiceDetail.Active := False;
+        cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger :=
+          cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+        cdsInvoiceDetail.Active := True;
 
-  cdsInvoiceHeadAGENT_ADDRESS_NAME.AsString                     := sq_GetInvoiceHeadDataAGENT_ADDRESS_NAME.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE1.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE1.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE2.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE2.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE3.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE3.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_ADDRESSLINE4.AsString              := sq_GetInvoiceHeadDataAGENT_SHIPTO_ADDRESSLINE4.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_PROVINCE.AsString                  := sq_GetInvoiceHeadDataAGENT_SHIPTO_PROVINCE.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_POSTALCODE.AsString                := sq_GetInvoiceHeadDataAGENT_SHIPTO_POSTALCODE.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_CITY.AsString                      := sq_GetInvoiceHeadDataAGENT_SHIPTO_CITY.AsString ;
-  cdsInvoiceHeadAGENT_SHIPTO_COUNTRY.AsString                   := sq_GetInvoiceHeadDataAGENT_SHIPTO_COUNTRY.AsString ;
- }
-  cdsInvoiceHead.Post ;
+        cdsInvoiceShipTo.Active := False;
+        cdsInvoiceShipTo.ParamByName('InternalInvoiceNo').AsInteger :=
+          cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+        cdsInvoiceShipTo.Active := True;
 
-   cdsInvoiceLO.Active       := False ;
-   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger  := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
-   cdsInvoiceLO.Active       := True ;
+        // sq_GetInvoiceHeadData.Next ;
 
+        // sq_GetInvoiceHeadData.Close ;
 
-   cdsInvoiceDetail.Active   := False ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger  := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
-   cdsInvoiceDetail.Active   := True ;
+        cdsInvoiceLO.Insert;
+        cdsInvoiceLOInternalInvoiceNo.AsInteger :=
+          cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+        cdsInvoiceLOShippingPlanNo.AsInteger :=
+          dmsConnector.NextMinNo('LO_Neg'); // Mars 18 2006
 
+        cdsInvoiceLOOrderNoText.AsString := '';
+        cdsInvoiceLOReference.AsString := '';
+        cdsInvoiceLOOurReference.AsString := '';
+        cdsInvoiceLOSalesMan.AsString := dmsContact.GetFullUserName
+          (thisuser.userid);
+        cdsInvoiceLOBookingNo.AsInteger := -1;
+        cdsInvoiceLOTotalFreightCost.AsFloat := 0;
+        cdsInvoiceLOFreightCostPerUnit.AsFloat := 0;
+        cdsInvoiceLOInvoiceAdditionAmount.AsFloat := 0;
+        cdsInvoiceLOInvoiceAdditionUnitNo.AsInteger := 0;
+        cdsInvoiceLOInvoiceAdditionDescription.AsString := '';
 
-   cdsInvoiceShipTo.Active   := False ;
-   cdsInvoiceShipTo.ParamByName('InternalInvoiceNo').AsInteger  := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
-   cdsInvoiceShipTo.Active   := True ;
+        cdsInvoiceLOCreatedUser.AsInteger := 2;
+        cdsInvoiceLOModifiedUser.AsInteger := 2;
+        cdsInvoiceLODateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
+        cdsInvoiceLO.Post;
 
-//  sq_GetInvoiceHeadData.Next ;
+        { cdsInvoiceDetail.Insert ;
+          cdsInvoiceDetailReference.AsString                  := '1' ;
+          cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
+          cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
+          //    cdsInvoiceDetailInvoiceDetailNo.AsInteger           := 1 ;
+          cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additonal cost
+          cdsInvoiceDetail.Post ;
+        }
 
- // sq_GetInvoiceHeadData.Close ;
+        { fInvoiceWizard:= TfInvoiceWizard.Create(nil) ;
+          Try
+          fInvoiceWizard.ShowModal ;
+          Finally
+          FreeAndNil(fInvoiceWizard) ;
+          End ; }
 
-    cdsInvoiceLO.Insert ;
-    cdsInvoiceLOInternalInvoiceNo.AsInteger              := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
-    cdsInvoiceLOShippingPlanNo.AsInteger                 := dmsConnector.NextMinNo('LO_Neg') ; //Mars 18 2006
+        if fInvoiceWizard.ShowModal = mrOk then
+        Begin
+          OpenInternalInvoiceNo := cdsInvoiceHeadInternalInvoiceNo.AsInteger;
 
-    cdsInvoiceLOOrderNoText.AsString                     := '' ;
-    cdsInvoiceLOReference.AsString                       := '' ;
-    cdsInvoiceLOOurReference.AsString                    := '' ;
-    cdsInvoiceLOSalesMan.AsString                        := dmsContact.GetFullUserName(ThisUser.UserID) ;
-    cdsInvoiceLOBookingNo.AsInteger                      := -1 ;
-    cdsInvoiceLOTotalFreightCost.AsFloat                 := 0 ;
-    cdsInvoiceLOFreightCostPerUnit.AsFloat               := 0 ;
-    cdsInvoiceLOInvoiceAdditionAmount.AsFloat := 0 ;
-    cdsInvoiceLOInvoiceAdditionUnitNo.AsInteger          := 0 ;
-    cdsInvoiceLOInvoiceAdditionDescription.AsString      := '' ;
+          // frmInvoice:= TfrmInvoice.Create(Nil);
+          Try
+            cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
+              cdsInvoiceHeadInternalInvoiceNo.AsString +
+              ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString;
+            cdsInvoiceLO.Filtered := True;
+            cdsInvoiceDetail.Filter := 'InternalInvoiceNo = ' +
+              cdsInvoiceHeadInternalInvoiceNo.AsString +
+              ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString;
+            cdsInvoiceDetail.Filtered := True;
 
-    cdsInvoiceLOCreatedUser.AsInteger                    := 2 ;
-    cdsInvoiceLOModifiedUser.AsInteger                   := 2 ;
-    cdsInvoiceLODateCreated.AsSQLTimeStamp               := DateTimeToSQLTimeStamp(Now) ;
-    cdsInvoiceLO.Post ;
+            // frmInvoice.TabControl1.Tabs.Clear ;
 
+            // for x := 0 to ListBox1.Count - 1 do
+            // frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
 
-{    cdsInvoiceDetail.Insert ;
-    cdsInvoiceDetailReference.AsString                  := '1' ;
-    cdsInvoiceDetailInternalInvoiceNo.AsInteger         := cdsInvoiceLOInternalInvoiceNo.AsInteger ;
-    cdsInvoiceDetailShippingPlanNo.AsInteger            := cdsInvoiceLOShippingPlanNo.AsInteger ;
-//    cdsInvoiceDetailInvoiceDetailNo.AsInteger           := 1 ;
-    cdsInvoiceDetailTypeOfRow.AsInteger                 := 2 ; //Additonal cost
-    cdsInvoiceDetail.Post ;
-}
+            // frmInvoice.rgDebitCredit.Enabled:= True ;
+            // frmInvoice.ShowModal ;
+          Finally
+            // FreeAndNil(frmInvoice) ;
+            cdsInvoiceLO.Filtered := False;
+            cdsInvoiceLO.Active := False;
+            cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger := -100;
+            cdsInvoiceLO.Active := True;
+            cdsInvoiceLO.Active := False;
 
-{    fInvoiceWizard:= TfInvoiceWizard.Create(nil) ;
-    Try
-     fInvoiceWizard.ShowModal ;
-    Finally
-     FreeAndNil(fInvoiceWizard) ;
-    End ; }
+            cdsInvoiceDetail.Filtered := False;
+            cdsInvoiceDetail.Active := False;
+            cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger := -100;
+            cdsInvoiceDetail.Active := True;
+            cdsInvoiceDetail.Active := False;
 
+            cdsInvoiceShipTo.Active := False;
+            cdsInvoiceShipTo.ParamByName('InternalInvoiceNo').AsInteger := -100;
+            cdsInvoiceShipTo.Active := True;
+            cdsInvoiceShipTo.Active := False;
 
- if fInvoiceWizard.ShowModal = MrOK then
- Begin
-  OpenInternalInvoiceNo := cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
+          End;
 
-//  frmInvoice:= TfrmInvoice.Create(Nil);
-  Try
-   cdsInvoiceLO.Filter:= 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;
-   cdsInvoiceLO.Filtered     := True ;
-   cdsInvoiceDetail.Filter   := 'InternalInvoiceNo = ' + cdsInvoiceHeadInternalInvoiceNo.AsString+
-   ' AND ShippingPlanNo = ' + cdsInvoiceLOShippingPlanNo.AsString ;
-   cdsInvoiceDetail.Filtered := True ;
+          sq_GetLOData.Close;
+        End;
 
-//   frmInvoice.TabControl1.Tabs.Clear ;
+      Finally
+        FreeAndNil(fInvoiceWizard);
+      End;
 
-// for x := 0 to ListBox1.Count - 1 do
-//   frmInvoice.TabControl1.Tabs.Add(cdsInvoiceLOShippingPlanNo.AsString) ;
+      if OpenInternalInvoiceNo > 0 then
+        with dmVidaInvoice do
+          OpenInvoice(OpenInternalInvoiceNo, -1, -1);
 
-//   frmInvoice.rgDebitCredit.Enabled:= True ;
-//  frmInvoice.ShowModal ;
-  Finally
-//   FreeAndNil(frmInvoice) ;
-   cdsInvoiceLO.Filtered     := False ;
-   cdsInvoiceLO.Active       := False ;
-   cdsInvoiceLO.ParamByName('InternalInvoiceNo').AsInteger  := -100 ;
-   cdsInvoiceLO.Active       := True ;
-   cdsInvoiceLO.Active       := False ;
-
-   cdsInvoiceDetail.Filtered := False ;
-   cdsInvoiceDetail.Active   := False ;
-   cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger  := -100 ;
-   cdsInvoiceDetail.Active   := True ;
-   cdsInvoiceDetail.Active   := False ;
-
-
-   cdsInvoiceShipTo.Active   := False ;
-   cdsInvoiceShipTo.ParamByName('InternalInvoiceNo').AsInteger  := -100 ;
-   cdsInvoiceShipTo.Active   := True ;
-   cdsInvoiceShipTo.Active   := False ;
-
-
-
-
-
-  End ;
-
-  sq_GetLOData.Close ;
- End;
-
- Finally
-   FreeAndNil(fInvoiceWizard) ;
- End;
-
- if OpenInternalInvoiceNo > 0 then
-  with dmVidaInvoice do
-   OpenInvoice(OpenInternalInvoiceNo, -1, -1) ;
-
-
- End ; //with dmVidaInvoice do
+    End; // with dmVidaInvoice do
 End;
 
 end.
-
-

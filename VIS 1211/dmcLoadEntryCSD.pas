@@ -3,21 +3,18 @@ unit dmcLoadEntryCSD;
 interface
 
 uses
-  SysUtils, Classes, FMTBcd, DB, SqlExpr, Provider, kbmMemTable, SqlTimSt, Dialogs,
-  VidaType, Controls, Forms, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
+  SysUtils, Classes, FMTBcd, DB, SqlExpr, Provider, kbmMemTable, SqlTimSt,
+  Dialogs,
+  VidaType, Controls, Forms, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
- TAmbiguityEvent = procedure(
-    Sender : TObject;
-    DataSource : TDataSource;
-    var Choice : String3;
-    var SupplierNo : Integer;
-    var ProductNo : Integer;
-    Var ProductLengthNo : Integer;
-    Var NoOfLengths : Integer
-    ) of object;
+  TAmbiguityEvent = procedure(Sender: TObject; DataSource: TDataSource;
+    var Choice: String3; var SupplierNo: Integer; var ProductNo: Integer;
+    Var ProductLengthNo: Integer; Var NoOfLengths: Integer) of object;
 
   TdmLoadEntryCSD = class(TDataModule)
     ds_LoadHead: TDataSource;
@@ -362,11 +359,11 @@ type
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
     procedure dspLORowsGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
-    procedure dsp_LoadPackagesGetTableName(Sender: TObject;
-      DataSet: TDataSet; var TableName: String);
+    procedure dsp_LoadPackagesGetTableName(Sender: TObject; DataSet: TDataSet;
+      var TableName: String);
     procedure ds_LSPDataChange(Sender: TObject; Field: TField);
-    procedure cds_LoadPackages1PostError(DataSet: TDataSet;
-      E: EDatabaseError; var Action: TDataAction);
+    procedure cds_LoadPackages1PostError(DataSet: TDataSet; E: EDatabaseError;
+      var Action: TDataAction);
     procedure dsp_LSPGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
     procedure cds_LoadHeadAfterInsert(DataSet: TDataSet);
@@ -376,60 +373,58 @@ type
     procedure cds_LoadPackagesBeforePost(DataSet: TDataSet);
     procedure cds_LoadHeadPIPNoChange(Sender: TField);
     procedure cds_LoadHeadSupplierNoChange(Sender: TField);
-    procedure cds_LoadPackagesPostError(DataSet: TDataSet;
-      E: EDatabaseError; var Action: TDataAction);
+    procedure cds_LoadPackagesPostError(DataSet: TDataSet; E: EDatabaseError;
+      var Action: TDataAction);
   private
     { Private declarations }
-   FOnAmbiguousPkgNo: TAmbiguityEvent;
-   NewInternalInvoiceNo,
-   NewLoadNo  : Integer ;
-   procedure SetAllPkgsInLoadToNotActiveInInventory (const LoadNo : Integer) ;
-   procedure AddPkgsToTempTable ;
-   function  DuplicatePackageNo(const PackageNo : Integer;const Prefix : String) : Boolean ;
-   function  PkgExistInLoad : Boolean ;
-   function  IS_Load_OK : Word ;
-   procedure SaveLoadPkgs(const WhenPosted : TDateTime;const LoadNo:Integer);
-   function  SaveLoadHeader(const WhenPosted : TDateTime;const LoadNo:Integer) : Boolean ;
-   procedure ModifyLoadHeader(const WhenPosted : TDateTime;const LoadNo:Integer);
-   procedure getPkgsByInvOwner(const PkgNo, InventoryOwner, PIPNo : Integer);
-   function  DeletePackage(LoadNo : Integer)   : Boolean ;
-   function  CheckIfLoadNoIsOK(const LoadNo : Integer) : Boolean ;
-   procedure ProcessPkgAND_Log(const Status, Operation : Integer) ;
-   function  Is_Load_Confirmed(const LoadNo : Integer) : Boolean ;
-   procedure RemovePkgFromLoad(const Status, Operation : Integer) ;
-
+    FOnAmbiguousPkgNo: TAmbiguityEvent;
+    NewInternalInvoiceNo, NewLoadNo: Integer;
+    procedure SetAllPkgsInLoadToNotActiveInInventory(const LoadNo: Integer);
+    procedure AddPkgsToTempTable;
+    function DuplicatePackageNo(const PackageNo: Integer;
+      const Prefix: String): Boolean;
+    function PkgExistInLoad: Boolean;
+    function IS_Load_OK: Word;
+    procedure SaveLoadPkgs(const WhenPosted: TDateTime; const LoadNo: Integer);
+    function SaveLoadHeader(const WhenPosted: TDateTime;
+      const LoadNo: Integer): Boolean;
+    procedure ModifyLoadHeader(const WhenPosted: TDateTime;
+      const LoadNo: Integer);
+    procedure getPkgsByInvOwner(const PkgNo, InventoryOwner, PIPNo: Integer);
+    function DeletePackage(LoadNo: Integer): Boolean;
+    function CheckIfLoadNoIsOK(const LoadNo: Integer): Boolean;
+    procedure ProcessPkgAND_Log(const Status, Operation: Integer);
+    function Is_Load_Confirmed(const LoadNo: Integer): Boolean;
+    procedure RemovePkgFromLoad(const Status, Operation: Integer);
 
   public
     { Public declarations }
-   LoadStatus,
-   InventoryNo,
-//   GlobalLoadDetailNo : Integer ;
-   FSalesRegionNo,
-   LogicalTransferInventoryNo,
-   FCustomerNo        : integer;
-   pIsLoadInvoiced  : Boolean ;
-   function  CreateVerkLoad(const NewLO, OldLO : Integer) : Integer ;
-   function  CreateInternalLO(const OldLONo : Integer) : Integer ;
-   function  VerkLoadExists(const LoadNo : Integer) : Integer ;
-   procedure CreateCreditInvoice ;
-   procedure CreateCreditLoad ;
-   procedure Delete_SortingOrderMarkedPkgs ;
-   procedure csdUnit_OpenLagerLookup ;
-   Function  GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo : Integer) : Integer ;
-   Function  IsLoadMadeInAvrop(const LoadNo : Integer) : Boolean ;
-   Function  DoesLOHavePackages (const LONo : Integer) : Boolean ;
-   function  GetPkgsNos(const packagecodeno : String;const noofpkgs, LogicalInventoryPointNo : Integer) : Integer ;
-   procedure DeleteONELoad(const LoadNo : Integer);
-   function  IS_Packages_OK : Boolean ;
-   Procedure Get_LO_LinesMatched (const PackageNo : Integer;const Supp_Code : String3) ;
-   procedure SaveLOData(LoadNo: Integer);
-   function  PkgNoToSuppCode(
-          const PkgNo,
-          InventoryOwner, PIPNo : Integer;
-          var SupplierNo : Integer;
-          var ProductNo : Integer;
-          Var ProductLengthNo, NoOfLengths : Integer): string3;
-   property OnAmbiguousPkgNo : TAmbiguityEvent read  FOnAmbiguousPkgNo write FOnAmbiguousPkgNo;
+    LoadStatus, InventoryNo,
+    // GlobalLoadDetailNo : Integer ;
+    FSalesRegionNo, LogicalTransferInventoryNo, FCustomerNo: Integer;
+    pIsLoadInvoiced: Boolean;
+    function CreateVerkLoad(const NewLO, OldLO: Integer): Integer;
+    function CreateInternalLO(const OldLONo: Integer): Integer;
+    function VerkLoadExists(const LoadNo: Integer): Integer;
+    procedure CreateCreditInvoice;
+    procedure CreateCreditLoad;
+    procedure Delete_SortingOrderMarkedPkgs;
+    procedure csdUnit_OpenLagerLookup;
+    Function GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo: Integer): Integer;
+    Function IsLoadMadeInAvrop(const LoadNo: Integer): Boolean;
+    Function DoesLOHavePackages(const LONo: Integer): Boolean;
+    function GetPkgsNos(const packagecodeno: String;
+      const noofpkgs, LogicalInventoryPointNo: Integer): Integer;
+    procedure DeleteONELoad(const LoadNo: Integer);
+    function IS_Packages_OK: Boolean;
+    Procedure Get_LO_LinesMatched(const PackageNo: Integer;
+      const Supp_Code: String3);
+    procedure SaveLOData(LoadNo: Integer);
+    function PkgNoToSuppCode(const PkgNo, InventoryOwner, PIPNo: Integer;
+      var SupplierNo: Integer; var ProductNo: Integer;
+      Var ProductLengthNo, NoOfLengths: Integer): String3;
+    property OnAmbiguousPkgNo: TAmbiguityEvent read FOnAmbiguousPkgNo
+      write FOnAmbiguousPkgNo;
   end;
 
 var
@@ -437,941 +432,1004 @@ var
 
 implementation
 
-uses dmsDataConn, VidaConst, VidaUser, recerror, dmsVidaContact, dmsVidaSystem ;
+uses dmsDataConn, VidaConst, VidaUser, recerror, dmsVidaContact, dmsVidaSystem;
 
 {$R *.dfm}
-//Set checkbox on LO Lines when package rows change
-Procedure TdmLoadEntryCSD.Get_LO_LinesMatched (const PackageNo : Integer;const Supp_Code : String3) ;
- Begin
+
+// Set checkbox on LO Lines when package rows change
+Procedure TdmLoadEntryCSD.Get_LO_LinesMatched(const PackageNo: Integer;
+  const Supp_Code: String3);
+Begin
   if (cdsLORows.RecordCount > 0) and (cds_LoadPackages.RecordCount > 0) then
   Begin
-  Try
-
-   cdsLORows.DisableControls ;
-   With dmLoadEntryCSD do
-   Begin
-//Sätt current match till 0, vi vill bara se en LO rad kryssad i match kolumnen
-    if cdsLORows.State in [dsEdit, dsInsert] then cdsLORows.Post ;
-    cdsLORows.Filter:= 'Match = 1' ;
-    cdsLORows.Filtered:= True ;
     Try
-    cdsLORows.First ;
-    While not cdsLORows.Eof do
-    Begin
-     cdsLORows.Edit ;
-     cdsLORowsMATCH.AsInteger:= 0 ;
-     cdsLORows.Post ;
-//     cdsLORows.Next ;
-    End ;
+
+      cdsLORows.DisableControls;
+      With dmLoadEntryCSD do
+      Begin
+        // Sätt current match till 0, vi vill bara se en LO rad kryssad i match kolumnen
+        if cdsLORows.State in [dsEdit, dsInsert] then
+          cdsLORows.Post;
+        cdsLORows.Filter := 'Match = 1';
+        cdsLORows.Filtered := True;
+        Try
+          cdsLORows.First;
+          While not cdsLORows.Eof do
+          Begin
+            cdsLORows.Edit;
+            cdsLORowsMATCH.AsInteger := 0;
+            cdsLORows.Post;
+            // cdsLORows.Next ;
+          End;
+        Finally
+          cdsLORows.Filtered := False;
+        End;
+
+        if cdsLORows.FindKey([cds_LoadPackagesDefaultCustShipObjectNo.AsInteger])
+        then
+        Begin
+          cdsLORows.Edit;
+          cdsLORowsMATCH.AsInteger := 1;
+          cdsLORows.Post;
+        End
+        else
+        Begin
+          cdsLORows.Edit;
+          cdsLORowsMATCH.AsInteger := 0;
+          cdsLORows.Post;
+        End;
+      End; // with
     Finally
-     cdsLORows.Filtered:= False ;
-    End ;
+      cdsLORows.EnableControls;
+    End;
+  End; // if...
+End;
 
-
-      if cdsLORows.FindKey([cds_LoadPackagesDefaultCustShipObjectNo.AsInteger]) then
-      Begin
-       cdsLORows.Edit ;
-       cdsLORowsMATCH.AsInteger:= 1 ;
-       cdsLORows.Post ;
-      End
-      else
-      Begin
-       cdsLORows.Edit ;
-       cdsLORowsMATCH.AsInteger:= 0 ;
-       cdsLORows.Post ;
-      End ;
-   End ; //with
-  Finally
-   cdsLORows.EnableControls ;
-  End ;
- End ;//if... 
-End ;
-
-function TdmLoadEntryCSD.CheckIfLoadNoIsOK(const LoadNo : Integer) : Boolean ;
+function TdmLoadEntryCSD.CheckIfLoadNoIsOK(const LoadNo: Integer): Boolean;
 Begin
- sq_CheckLoadNo.Close ;
- sq_CheckLoadNo.ParamByName('LoadNo').AsInteger:= LoadNo ;
- sq_CheckLoadNo.Open ;
- if sq_CheckLoadNoLoadNo.AsInteger = LoadNo then
- Result := False
- else
- Result := True ;
- sq_CheckLoadNo.Close ;
-End ;
+  sq_CheckLoadNo.Close;
+  sq_CheckLoadNo.ParamByName('LoadNo').AsInteger := LoadNo;
+  sq_CheckLoadNo.Open;
+  if sq_CheckLoadNoLoadNo.AsInteger = LoadNo then
+    Result := False
+  else
+    Result := True;
+  sq_CheckLoadNo.Close;
+End;
 
-procedure TdmLoadEntryCSD.SetAllPkgsInLoadToNotActiveInInventory(const LoadNo : Integer) ;
+procedure TdmLoadEntryCSD.SetAllPkgsInLoadToNotActiveInInventory
+  (const LoadNo: Integer);
 Begin
-   Try
-   sp_SetPkgStatusInLoad.ParamByName('@LoadNo').AsInteger :=  LoadNo ;
-   sp_SetPkgStatusInLoad.ParamByName('@UserID').AsInteger :=  ThisUser.UserID ;
-   sp_SetPkgStatusInLoad.ExecProc ;
-   except
+  Try
+    sp_SetPkgStatusInLoad.ParamByName('@LoadNo').AsInteger := LoadNo;
+    sp_SetPkgStatusInLoad.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+    sp_SetPkgStatusInLoad.ExecProc;
+  except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
 procedure TdmLoadEntryCSD.SaveLOData(LoadNo: Integer);
 // We have been passed data to be saved in the database. The data passed includes the original
 // data(if any) and the modified/new data, so we can handle any concurrency issues that arise.
 var
-  WhenPosted    : TDateTime;
-  NewLoad       : Boolean;
-  Save_Cursor   : TCursor;
+  WhenPosted: TDateTime;
+  NewLoad: Boolean;
+  Save_Cursor: TCursor;
 begin
- NewLoad := False;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
+  NewLoad := False;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
 
-  WhenPosted := Now; // Make sure all records get same time of posting.
-//  dmsConnector.StartTransaction;
-//  try
-    if NewLoad = TRUE then
+    WhenPosted := Now; // Make sure all records get same time of posting.
+    // dmsConnector.StartTransaction;
+    // try
+    if NewLoad = True then
     Begin
-       if SaveLoadHeader(WhenPosted, cds_LoadHeadLoadNo.AsInteger) = False then
-       Begin
-        ShowMessage('A Load No conflict occured, please try save again or close the load form and try again.') ;
-//        dmsConnector.Rollback;
-        cds_LoadHead.Edit ;
-        cds_LoadHeadLoadNo.AsInteger:= 0 ;
-        cds_LoadHead.Post ;
-        Exit ;
-       End ;
+      if SaveLoadHeader(WhenPosted, cds_LoadHeadLoadNo.AsInteger) = False then
+      Begin
+        ShowMessage
+          ('A Load No conflict occured, please try save again or close the load form and try again.');
+        // dmsConnector.Rollback;
+        cds_LoadHead.Edit;
+        cds_LoadHeadLoadNo.AsInteger := 0;
+        cds_LoadHead.Post;
+        Exit;
+      End;
     end
     else
-     begin
-    //Modify Existing load
+    begin
+      // Modify Existing load
       ModifyLoadHeader(WhenPosted, LoadNo);
-     end; //Else
+    end; // Else
 
-//    try
-      // Now write the data to the database
-      if cds_LSP.ChangeCount > 0 then
-      Begin
-       cds_LSP.ApplyUpdates(0) ;
-       cds_LSP.CommitUpdates ;
-      End ;
+    // try
+    // Now write the data to the database
+    if cds_LSP.ChangeCount > 0 then
+    Begin
+      cds_LSP.ApplyUpdates(0);
+      cds_LSP.CommitUpdates;
+    End;
 
-      SaveLoadPkgs  (WhenPosted, LoadNo);
+    SaveLoadPkgs(WhenPosted, LoadNo);
 
-      if cds_LoadPackages.ChangeCount > 0 then
-      Begin
-       cds_LoadPackages.ApplyUpdates(0) ;
-       cds_LoadPackages.CommitUpdates ;
-      End ;
+    if cds_LoadPackages.ChangeCount > 0 then
+    Begin
+      cds_LoadPackages.ApplyUpdates(0);
+      cds_LoadPackages.CommitUpdates;
+    End;
 
+    SetAllPkgsInLoadToNotActiveInInventory(LoadNo);
 
-      SetAllPkgsInLoadToNotActiveInInventory(LoadNo) ;
-
-{      dmsConnector.Commit ;
-    except
+    { dmsConnector.Commit ;
+      except
       on Exception do begin
-        if NewLoad then
-          LoadNo := NEW_ENTRY;
-        raise;
-        end;
+      if NewLoad then
+      LoadNo := NEW_ENTRY;
+      raise;
+      end;
       end;
 
-  except
-    dmsConnector.Rollback ;
-    raise;
-  end; }
+      except
+      dmsConnector.Rollback ;
+      raise;
+      end; }
 
   Finally
-   Screen.Cursor := Save_Cursor ;
-  End ;
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-function TdmLoadEntryCSD.IS_Load_OK : Word ;
+function TdmLoadEntryCSD.IS_Load_OK: Word;
 Begin
- Result := 2 ;
- cds_LoadPackages.First ;
- While not cds_LoadPackages.Eof do
- Begin
-  if ((cds_LoadPackagesPackageOK.AsInteger > 0)
-  and (cds_LoadPackagesPackageOK.AsInteger <> VP_LengthNotInLengthGroup)
-  AND (dmLoadEntryCSD.cds_LoadPackagesPkg_Function.AsInteger <> REMOVE_PKG_FROM_LOAD))
+  Result := 2;
+  cds_LoadPackages.First;
+  While not cds_LoadPackages.Eof do
+  Begin
+    if ((cds_LoadPackagesPackageOK.AsInteger > 0) and
+      (cds_LoadPackagesPackageOK.AsInteger <> VP_LengthNotInLengthGroup) AND
+      (dmLoadEntryCSD.cds_LoadPackagesPkg_Function.AsInteger <>
+      REMOVE_PKG_FROM_LOAD))
 
-  OR (  cds_LoadPackagesDefaultCustShipObjectNo.AsInteger = -1)
+      OR (cds_LoadPackagesDefaultCustShipObjectNo.AsInteger = -1)
 
+      or ((cds_LoadPackagesShippingPlanNo.AsInteger < 1) AND
+      (dmLoadEntryCSD.cds_LoadPackagesPkg_Function.AsInteger <>
+      REMOVE_PKG_FROM_LOAD)) then
+      Result := 1;
+    cds_LoadPackages.Next;
+  End;
+End;
 
-
-  or ((cds_LoadPackagesShippingPlanNo.AsInteger < 1)
-  AND (dmLoadEntryCSD.cds_LoadPackagesPkg_Function.AsInteger <> REMOVE_PKG_FROM_LOAD)) then
-   Result := 1 ;
-  cds_LoadPackages.Next ;
- End ;
-End ;
-
-function TdmLoadEntryCSD.SaveLoadHeader(const WhenPosted : TDateTime;const LoadNo: Integer) : Boolean ;
+function TdmLoadEntryCSD.SaveLoadHeader(const WhenPosted: TDateTime;
+  const LoadNo: Integer): Boolean;
 const
   ALWAYS_ZERO = 0;
 begin
- if cds_LoadHead.State = dsBrowse then
-  cds_LoadHead.Edit ;
-//  cds_LoadHeadLoadNo.AsInteger              := LoadNo ;
-  cds_LoadHeadSupplierNo.AsInteger          := FSalesRegionNo;
-  cds_LoadHeadPackageEntryOption.AsInteger  := 0 ;
-  cds_LoadHeadCreatedUser.AsInteger         := ThisUser.UserID ;
-  cds_LoadHeadModifiedUser.AsInteger        := ThisUser.UserID ;
-  cds_LoadHeadDateCreated.AsSQLTimeStamp    := DateTimeToSqlTimeStamp(Now) ;
-  cds_LoadHeadOriginalSupplierNo.AsInteger  := FSalesRegionNo ;
-  cds_LoadHeadCustomerNo.AsInteger          := FCustomerNo ;
+  if cds_LoadHead.State = dsBrowse then
+    cds_LoadHead.Edit;
+  // cds_LoadHeadLoadNo.AsInteger              := LoadNo ;
+  cds_LoadHeadSupplierNo.AsInteger := FSalesRegionNo;
+  cds_LoadHeadPackageEntryOption.AsInteger := 0;
+  cds_LoadHeadCreatedUser.AsInteger := ThisUser.UserID;
+  cds_LoadHeadModifiedUser.AsInteger := ThisUser.UserID;
+  cds_LoadHeadDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
+  cds_LoadHeadOriginalSupplierNo.AsInteger := FSalesRegionNo;
+  cds_LoadHeadCustomerNo.AsInteger := FCustomerNo;
 
-  cds_LoadHead.Post ;
+  cds_LoadHead.Post;
 
   if cds_LoadHeadSenderLoadStatus.AsInteger <> 0 then
   Begin
-   cds_LoadHead.Edit ;
-   cds_LoadHeadSenderLoadStatus.AsInteger:= IS_Load_OK ;
-   cds_LoadHead.Post ;
-  End ;
+    cds_LoadHead.Edit;
+    cds_LoadHeadSenderLoadStatus.AsInteger := IS_Load_OK;
+    cds_LoadHead.Post;
+  End;
 
-  cds_LoadHead.Edit ;
-  cds_LoadHeadLoadOK.AsInteger:= IS_Load_OK ;
-  cds_LoadHead.Post ;
+  cds_LoadHead.Edit;
+  cds_LoadHeadLoadOK.AsInteger := IS_Load_OK;
+  cds_LoadHead.Post;
 
- if cds_LoadHead.ChangeCount > 0 then
- Begin
-  if cds_LoadHead.ApplyUpdates(0) > 0 then
+  if cds_LoadHead.ChangeCount > 0 then
   Begin
-   Result:= False ;
+    if cds_LoadHead.ApplyUpdates(0) > 0 then
+    Begin
+      Result := False;
+    End
+    else
+      Result := True;
   End
   else
-  Result:= True ;
- End
- else
-  Result:= True ;
+    Result := True;
 end;
 
-procedure TdmLoadEntryCSD.ModifyLoadHeader(const WhenPosted : TDateTime;const LoadNo:Integer) ;
+procedure TdmLoadEntryCSD.ModifyLoadHeader(const WhenPosted: TDateTime;
+  const LoadNo: Integer);
 const
   ALWAYS_ZERO = 0;
 begin
- if cds_LoadHead.State in [dsEdit, dsInsert] then
- cds_LoadHead.Post ;
- cds_LoadHead.Edit ;
- if cds_LoadHeadSenderLoadStatus.AsInteger <> 0 then
-  cds_LoadHeadSenderLoadStatus.AsInteger  := IS_Load_OK ;
+  if cds_LoadHead.State in [dsEdit, dsInsert] then
+    cds_LoadHead.Post;
+  cds_LoadHead.Edit;
+  if cds_LoadHeadSenderLoadStatus.AsInteger <> 0 then
+    cds_LoadHeadSenderLoadStatus.AsInteger := IS_Load_OK;
 
-  cds_LoadHeadLoadOK.AsInteger            := IS_Load_OK ;
-  cds_LoadHeadModifiedUser.AsInteger      := ThisUser.UserID ;
+  cds_LoadHeadLoadOK.AsInteger := IS_Load_OK;
+  cds_LoadHeadModifiedUser.AsInteger := ThisUser.UserID;
 
-  cds_LoadHeadSupplierNo.AsInteger        := FSalesRegionNo ;
+  cds_LoadHeadSupplierNo.AsInteger := FSalesRegionNo;
 
-  cds_LoadHeadOriginalSupplierNo.AsInteger:= FSalesRegionNo ;
-  cds_LoadHeadCustomerNo.AsInteger        := FCustomerNo ;
+  cds_LoadHeadOriginalSupplierNo.AsInteger := FSalesRegionNo;
+  cds_LoadHeadCustomerNo.AsInteger := FCustomerNo;
 
+  cds_LoadHead.Post;
 
-  cds_LoadHead.Post ;
+  if cds_LoadHead.ChangeCount > 0 then
+    if cds_LoadHead.ApplyUpdates(0) > 0 then
+    Begin
 
-
- if cds_LoadHead.ChangeCount > 0 then
- if cds_LoadHead.ApplyUpdates(0) > 0 then
- Begin
-
- End
- else
- cds_LoadHead.CommitUpdates ;
+    End
+    else
+      cds_LoadHead.CommitUpdates;
 end;
 
-procedure TdmLoadEntryCSD.SaveLoadPkgs(const WhenPosted : TDateTime;const LoadNo:Integer);
+procedure TdmLoadEntryCSD.SaveLoadPkgs(const WhenPosted: TDateTime;
+  const LoadNo: Integer);
 var
-  Save_Cursor : TCursor;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- Try
-  Delete_SortingOrderMarkedPkgs ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  Try
+    Delete_SortingOrderMarkedPkgs;
 
-  cds_LoadPackages.Filter   := 'Changed = 1' ;
-  cds_LoadPackages.Filtered := True ;
-  cds_LoadPackages.First ;
-  While cds_LoadPackages.RecordCount > 0 do
-  Begin
-   if cds_LoadPackagesChanged.AsInteger = 1 then
-   Begin
-   if cds_LoadPackagesPkg_State.AsInteger = EXISTING_PACKAGE then
-   Begin
-    Case cds_LoadPackagesPkg_Function.AsInteger of
-        ADD_PKG_TO_LOAD       : Begin
-                                 //No log operations as nothing happened with the package
-                                 // UpdateLoadDtl sätter status och loggen
-//                                 UpdateLoadDtl(Sender, WhenPosted, LoadNo) ;
-//                                 SaveLoadDetailMatch(Sender, WhenPosted, LoadNo) ;
-//                                 SaveLoadDetailPkgLength(Sender, LoadNo) ;
-                                 cds_LoadPackages.Edit ;
-                                 cds_LoadPackagesPkg_State.AsInteger:= EXISTING_PACKAGE ;
-                                 cds_LoadPackagesChanged.AsInteger:= 0 ;
-                                 cds_LoadPackages.Post ;
-                                End ;
-        DELETE_PKG            : Begin
-                                //DeletePackage proc also makes an entry to PackageNumberLog
-                                 DeletePackage(LoadNo) ;
-                                 cds_LoadPackages.Delete ;
-                                End ;
-        REMOVE_PKG_FROM_LOAD  : Begin
-                                //Make an entry to PackageNumberLog and set pkgStatus = 1
-                                 RemovePkgFromLoad(status_Pkg_IN_Inventory, oper_Remove_From_Load) ;
-                                 cds_LoadPackages.Delete ;
-                                End ;
+    cds_LoadPackages.Filter := 'Changed = 1';
+    cds_LoadPackages.Filtered := True;
+    cds_LoadPackages.First;
+    While cds_LoadPackages.RecordCount > 0 do
+    Begin
+      if cds_LoadPackagesChanged.AsInteger = 1 then
+      Begin
+        if cds_LoadPackagesPkg_State.AsInteger = EXISTING_PACKAGE then
+        Begin
+          Case cds_LoadPackagesPkg_Function.AsInteger of
+            ADD_PKG_TO_LOAD:
+              Begin
+                // No log operations as nothing happened with the package
+                // UpdateLoadDtl sätter status och loggen
+                // UpdateLoadDtl(Sender, WhenPosted, LoadNo) ;
+                // SaveLoadDetailMatch(Sender, WhenPosted, LoadNo) ;
+                // SaveLoadDetailPkgLength(Sender, LoadNo) ;
+                cds_LoadPackages.Edit;
+                cds_LoadPackagesPkg_State.AsInteger := EXISTING_PACKAGE;
+                cds_LoadPackagesChanged.AsInteger := 0;
+                cds_LoadPackages.Post;
+              End;
+            DELETE_PKG:
+              Begin
+                // DeletePackage proc also makes an entry to PackageNumberLog
+                DeletePackage(LoadNo);
+                cds_LoadPackages.Delete;
+              End;
+            REMOVE_PKG_FROM_LOAD:
+              Begin
+                // Make an entry to PackageNumberLog and set pkgStatus = 1
+                RemovePkgFromLoad(status_Pkg_IN_Inventory,
+                  oper_Remove_From_Load);
+                cds_LoadPackages.Delete;
+              End;
 
-        CREDIT_PKG_FROM_LOAD  : Begin
-                                //Leave the package in the old load
-                                //Make an entry to PackageNumberLog and set pkgStatus = 1
-                         //        RemovePkgFromLoad(status_Pkg_IN_Inventory, oper_Remove_From_Load) ;
-                                 AddPkgsToTempTable ;
-                                 cds_LoadPackages.Edit ;
-                                 cds_LoadPackagesChanged.AsInteger  := 0 ;
-                                 cds_LoadPackages.Post ;
-//                                 cds_LoadPackages.Delete ;
-                                End ;
-    End ; //case
-   End
-   else //NEW_PACKAGE
-   Begin
-    Case cds_LoadPackagesPkg_Function.AsInteger of
-        ADD_PKG_TO_LOAD       : Begin
-                                //Remove pkg from inventory pkgStatus = 0 and make entry in PackageNumberLog
-                                //SaveLoadDetail makes entry to sp_UpdatePackages and LoadDetailMatch
-//                                 SaveLoadDetail(Sender, WhenPosted, LoadNo) ;
-//                                 SaveLoadDetailPkgLength(Sender, LoadNo) ;
-                                 //Change packageNumber.status and make entry to PackageNumberLog
-                                 ProcessPkgAND_Log(status_Pkg_NOT_IN_Inventory, oper_Add_Pkg_To_Load) ;
+            CREDIT_PKG_FROM_LOAD:
+              Begin
+                // Leave the package in the old load
+                // Make an entry to PackageNumberLog and set pkgStatus = 1
+                // RemovePkgFromLoad(status_Pkg_IN_Inventory, oper_Remove_From_Load) ;
+                AddPkgsToTempTable;
+                cds_LoadPackages.Edit;
+                cds_LoadPackagesChanged.AsInteger := 0;
+                cds_LoadPackages.Post;
+                // cds_LoadPackages.Delete ;
+              End;
+          End; // case
+        End
+        else // NEW_PACKAGE
+        Begin
+          Case cds_LoadPackagesPkg_Function.AsInteger of
+            ADD_PKG_TO_LOAD:
+              Begin
+                // Remove pkg from inventory pkgStatus = 0 and make entry in PackageNumberLog
+                // SaveLoadDetail makes entry to sp_UpdatePackages and LoadDetailMatch
+                // SaveLoadDetail(Sender, WhenPosted, LoadNo) ;
+                // SaveLoadDetailPkgLength(Sender, LoadNo) ;
+                // Change packageNumber.status and make entry to PackageNumberLog
+                ProcessPkgAND_Log(status_Pkg_NOT_IN_Inventory,
+                  oper_Add_Pkg_To_Load);
 
-                                 //Package is now an existing package.
-                                 cds_LoadPackages.Edit ;
-                                 cds_LoadPackagesPkg_State.AsInteger:= EXISTING_PACKAGE ;
-                                 cds_LoadPackagesChanged.AsInteger:= 0 ;
-                                 cds_LoadPackages.Post ;
-                                End ;
-        DELETE_PKG            : Begin
-                                //DeletePackage proc also makes an entry to PackageNumberLog
-                                 DeletePackage(LoadNo) ;
-                                 cds_LoadPackages.Delete ;
-                                End ;
-        REMOVE_PKG_FROM_LOAD  : Begin
-                                 //Do nothing as package is still in inventory
-                                 //no set pkg status is needed as it set to 1 already
-                                 cds_LoadPackages.Delete ;
-                                End ;
-    End ; //case
-   End ;
+                // Package is now an existing package.
+                cds_LoadPackages.Edit;
+                cds_LoadPackagesPkg_State.AsInteger := EXISTING_PACKAGE;
+                cds_LoadPackagesChanged.AsInteger := 0;
+                cds_LoadPackages.Post;
+              End;
+            DELETE_PKG:
+              Begin
+                // DeletePackage proc also makes an entry to PackageNumberLog
+                DeletePackage(LoadNo);
+                cds_LoadPackages.Delete;
+              End;
+            REMOVE_PKG_FROM_LOAD:
+              Begin
+                // Do nothing as package is still in inventory
+                // no set pkg status is needed as it set to 1 already
+                cds_LoadPackages.Delete;
+              End;
+          End; // case
+        End;
 
-   End ;//if..
+      End; // if..
 
-//   cds_LoadPackages.Next ;
-  end; //While
- Finally
-  cds_LoadPackages.Filtered := False ;
-  Screen.Cursor             := Save_Cursor ;
- End ;
+      // cds_LoadPackages.Next ;
+    end; // While
+  Finally
+    cds_LoadPackages.Filtered := False;
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-procedure TdmLoadEntryCSD.Delete_SortingOrderMarkedPkgs ;
+procedure TdmLoadEntryCSD.Delete_SortingOrderMarkedPkgs;
 Begin
- sq_Delete_SortingOrderMarkedPkgs.ParamByName('UserID').AsInteger  := ThisUser.UserID ;
- Try
- sq_Delete_SortingOrderMarkedPkgs.ExecSQL ;
- except
-  On E: Exception do
-  Begin
-   dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-   Raise ;
-  End ;
- end;
-End ;
+  sq_Delete_SortingOrderMarkedPkgs.ParamByName('UserID').AsInteger :=
+    ThisUser.UserID;
+  Try
+    sq_Delete_SortingOrderMarkedPkgs.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
-procedure TdmLoadEntryCSD.AddPkgsToTempTable ;
+procedure TdmLoadEntryCSD.AddPkgsToTempTable;
 Begin
- sq_SortingOrderMarkedPkgs.Active := False ;
- sq_SortingOrderMarkedPkgs.ParamByName('UserID').AsInteger  := ThisUser.UserID ;
- sq_SortingOrderMarkedPkgs.Active := True ;
- Try
- sq_SortingOrderMarkedPkgs.Insert ;
- sq_SortingOrderMarkedPkgs.FieldByName('UserID').AsInteger      := ThisUser.UserID ;
- sq_SortingOrderMarkedPkgs.FieldByName('PackageNo').AsInteger   := cds_LoadPackagesPACKAGENO.AsInteger ;
- sq_SortingOrderMarkedPkgs.FieldByName('SupplierCode').AsString := cds_LoadPackagesSupplierCode.AsString ;
- sq_SortingOrderMarkedPkgs.Post ;
+  sq_SortingOrderMarkedPkgs.Active := False;
+  sq_SortingOrderMarkedPkgs.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  sq_SortingOrderMarkedPkgs.Active := True;
+  Try
+    sq_SortingOrderMarkedPkgs.Insert;
+    sq_SortingOrderMarkedPkgs.FieldByName('UserID').AsInteger :=
+      ThisUser.UserID;
+    sq_SortingOrderMarkedPkgs.FieldByName('PackageNo').AsInteger :=
+      cds_LoadPackagesPACKAGENO.AsInteger;
+    sq_SortingOrderMarkedPkgs.FieldByName('SupplierCode').AsString :=
+      cds_LoadPackagesSupplierCode.AsString;
+    sq_SortingOrderMarkedPkgs.Post;
 
- Finally
-  sq_SortingOrderMarkedPkgs.Active := False ;
- End;
-End ;
+  Finally
+    sq_SortingOrderMarkedPkgs.Active := False;
+  End;
+End;
 
-function TdmLoadEntryCSD.PkgNoToSuppCode(
-  const PkgNo,  InventoryOwner, PIPNo : Integer;
-  var SupplierNo : Integer;
-  Var ProductNo : Integer;
-  Var ProductLengthNo, NoOfLengths : Integer): string3;
+function TdmLoadEntryCSD.PkgNoToSuppCode(const PkgNo, InventoryOwner,
+  PIPNo: Integer; var SupplierNo: Integer; Var ProductNo: Integer;
+  Var ProductLengthNo, NoOfLengths: Integer): String3;
 var
-  SuppCode : string3;
+  SuppCode: String3;
 begin
-  cdsPkgsByInvOwner.Active:= False ;
+  cdsPkgsByInvOwner.Active := False;
   getPkgsByInvOwner(PkgNo, InventoryOwner, PIPNo);
-//  cdsPkgsByInvOwner.SetProvider(provPkgsByInvOwner);
-  cdsPkgsByInvOwner.Active:= True ;
+  // cdsPkgsByInvOwner.SetProvider(provPkgsByInvOwner);
+  cdsPkgsByInvOwner.Active := True;
   case cdsPkgsByInvOwner.RecordCount of
 
-    0 :  begin
-           // There are no packages in inventories owned by the specified owner that
-           // have the specified package number.
-           SuppCode := '';
-           end;
+    0:
+      begin
+        // There are no packages in inventories owned by the specified owner that
+        // have the specified package number.
+        SuppCode := '';
+      end;
 
-    1 :  begin
-           // There is only one package number with the specified package number in
-           // inventories owned by the specified owner, so this must be the one
-           // the user wants.
-           SuppCode   := cdsPkgsByInvOwner.FieldByName('SupplierCode').AsString ;
-           SupplierNo := cdsPkgsByInvOwner.FieldByName('SupplierNo'  ).AsInteger ;
-           ProductNo  := cdsPkgsByInvOwner.FieldByName('ProductNo'  ).AsInteger ;
-           ProductLengthNo:= cdsPkgsByInvOwner.FieldByName('ProductLengthNo'  ).AsInteger ;
-           NoOfLengths:= cdsPkgsByInvOwner.FieldByName('NoOfLengths'  ).AsInteger ;
-           end;
-    else begin
-           // More than one package in inventories owned by the specified owner has
-           // the specified package number. (They must have different suppliers).
-           // Allow the user to specify which one they want.
-           if assigned(FOnAmbiguousPkgNo) then
-             FOnAmbiguousPkgNo(Self,Self.dsrcPkgsByInvOwner,SuppCode,SupplierNo, ProductNo,
-             ProductLengthNo, NoOfLengths);
-           end;
+    1:
+      begin
+        // There is only one package number with the specified package number in
+        // inventories owned by the specified owner, so this must be the one
+        // the user wants.
+        SuppCode := cdsPkgsByInvOwner.FieldByName('SupplierCode').AsString;
+        SupplierNo := cdsPkgsByInvOwner.FieldByName('SupplierNo').AsInteger;
+        ProductNo := cdsPkgsByInvOwner.FieldByName('ProductNo').AsInteger;
+        ProductLengthNo := cdsPkgsByInvOwner.FieldByName('ProductLengthNo')
+          .AsInteger;
+        NoOfLengths := cdsPkgsByInvOwner.FieldByName('NoOfLengths').AsInteger;
+      end;
+  else
+    begin
+      // More than one package in inventories owned by the specified owner has
+      // the specified package number. (They must have different suppliers).
+      // Allow the user to specify which one they want.
+      if assigned(FOnAmbiguousPkgNo) then
+        FOnAmbiguousPkgNo(Self, Self.dsrcPkgsByInvOwner, SuppCode, SupplierNo,
+          ProductNo, ProductLengthNo, NoOfLengths);
     end;
+  end;
 
   Result := SuppCode;
 end;
 
-procedure TdmLoadEntryCSD.getPkgsByInvOwner(const PkgNo, InventoryOwner, PIPNo : Integer);
+procedure TdmLoadEntryCSD.getPkgsByInvOwner(const PkgNo, InventoryOwner,
+  PIPNo: Integer);
 begin
-//  cdsPkgsByInvOwner.Close;
-  cdsPkgsByInvOwner.ParamByName('PkgNo').AsInteger     := PkgNo ;
-  cdsPkgsByInvOwner.ParamByName('InvOwner').AsInteger  := InventoryOwner ;
-  cdsPkgsByInvOwner.ParamByName('PIPNo').AsInteger     := PIPNo ;
-//  cdsPkgsByInvOwner.Open;
+  // cdsPkgsByInvOwner.Close;
+  cdsPkgsByInvOwner.ParamByName('PkgNo').AsInteger := PkgNo;
+  cdsPkgsByInvOwner.ParamByName('InvOwner').AsInteger := InventoryOwner;
+  cdsPkgsByInvOwner.ParamByName('PIPNo').AsInteger := PIPNo;
+  // cdsPkgsByInvOwner.Open;
 end;
 
 procedure TdmLoadEntryCSD.DataModuleCreate(Sender: TObject);
 begin
- //GlobalLoadDetailNo := 1 ;
+  // GlobalLoadDetailNo := 1 ;
 end;
 
-function TdmLoadEntryCSD.DeletePackage(LoadNo : Integer)   : Boolean ;
+function TdmLoadEntryCSD.DeletePackage(LoadNo: Integer): Boolean;
 begin
- Result := False ;
- //Delete Package
- Try
- //Operation is set to 4 in the SP.
- //Kan inte ta bort paket från systemet om paketet finns upptaget på en annan last
- if PkgExistInLoad = False then
- Begin
+  Result := False;
+  // Delete Package
   Try
-  sp_DeletePackage.ParamByName('@PackageNo').AsInteger               := cds_LoadPackagesPackageNo.AsInteger ;
-  sp_DeletePackage.ParamByName('@SupplierCode').AsString             := cds_LoadPackagesSupplierCode.AsString ;
-  sp_DeletePackage.ParamByName('@RegistrationPointNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger ; // -1 ingen mätpunkt
-  sp_DeletePackage.ParamByName('@PackageTypeNo').AsInteger           := cds_LoadPackagesPACKAGETYPENO.AsInteger ;
-  sp_DeletePackage.ParamByName('@LogicalInventoryPointNo').AsInteger := -1 ;
-  sp_DeletePackage.ParamByName('@UserID').AsInteger                  := ThisUser.UserID ;
-  sp_DeletePackage.ExecProc ;
-   except
+    // Operation is set to 4 in the SP.
+    // Kan inte ta bort paket från systemet om paketet finns upptaget på en annan last
+    if PkgExistInLoad = False then
+    Begin
+      Try
+        sp_DeletePackage.ParamByName('@PackageNo').AsInteger :=
+          cds_LoadPackagesPACKAGENO.AsInteger;
+        sp_DeletePackage.ParamByName('@SupplierCode').AsString :=
+          cds_LoadPackagesSupplierCode.AsString;
+        sp_DeletePackage.ParamByName('@RegistrationPointNo').AsInteger :=
+          cds_LoadHeadLoadNo.AsInteger; // -1 ingen mätpunkt
+        sp_DeletePackage.ParamByName('@PackageTypeNo').AsInteger :=
+          cds_LoadPackagesPACKAGETYPENO.AsInteger;
+        sp_DeletePackage.ParamByName('@LogicalInventoryPointNo')
+          .AsInteger := -1;
+        sp_DeletePackage.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+        sp_DeletePackage.ExecProc;
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    End;
+
+  Except
+    Result := False;
+  End;
+end;
+
+procedure TdmLoadEntryCSD.RemovePkgFromLoad(const Status, Operation: Integer);
+Begin
+  Try
+    sp_RemPkgFromLoad.Close;
+    sp_RemPkgFromLoad.ParamByName('@PackageNo').AsInteger :=
+      cds_LoadPackagesPACKAGENO.AsInteger;
+    sp_RemPkgFromLoad.ParamByName('@SupplierCode').AsString :=
+      cds_LoadPackagesSupplierCode.AsString;
+    sp_RemPkgFromLoad.ParamByName('@RegistrationPointNo').AsInteger :=
+      cds_LoadHeadLoadNo.AsInteger; // -1 ingen mätpunkt
+    sp_RemPkgFromLoad.ParamByName('@PackageTypeNo').AsInteger :=
+      cds_LoadPackagesPACKAGETYPENO.AsInteger;
+    sp_RemPkgFromLoad.ParamByName('@LogicalInventoryPointNo').AsInteger :=
+      cds_LoadPackagesLIPNo.AsInteger;
+    sp_RemPkgFromLoad.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+    sp_RemPkgFromLoad.ParamByName('@Status').AsInteger := Status;
+    sp_RemPkgFromLoad.ParamByName('@Operation').AsInteger := Operation;
+    sp_RemPkgFromLoad.ExecProc;
+  except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
- End ;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
- Except
-  Result := False ;
- End ;
-end;
-
-procedure TdmLoadEntryCSD.RemovePkgFromLoad(const Status, Operation : Integer) ;
+procedure TdmLoadEntryCSD.ProcessPkgAND_Log(const Status, Operation: Integer);
 Begin
-      Try 
-      sp_RemPkgFromLoad.Close ;
-      sp_RemPkgFromLoad.ParamByName('@PackageNo').AsInteger                := cds_LoadPackagesPACKAGENO.AsInteger ;
-      sp_RemPkgFromLoad.ParamByName('@SupplierCode').AsString              := cds_LoadPackagesSupplierCode.AsString ;
-      sp_RemPkgFromLoad.ParamByName('@RegistrationPointNo').AsInteger      := cds_LoadHeadLoadNo.AsInteger ; // -1 ingen mätpunkt
-      sp_RemPkgFromLoad.ParamByName('@PackageTypeNo').AsInteger            := cds_LoadPackagesPACKAGETYPENO.AsInteger ;
-      sp_RemPkgFromLoad.ParamByName('@LogicalInventoryPointNo').AsInteger  := cds_LoadPackagesLIPNo.AsInteger ;
-      sp_RemPkgFromLoad.ParamByName('@UserID').AsInteger                   := ThisUser.UserID ;
-      sp_RemPkgFromLoad.ParamByName('@Status').AsInteger                   := Status ;
-      sp_RemPkgFromLoad.ParamByName('@Operation').AsInteger                := Operation ;
-      sp_RemPkgFromLoad.ExecProc ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
+  // Set PackageNumber.Status
+  // Make entry to PackageNumberLog
+  Try
+    sp_ProcessPkgAND_Log.Close;
+    sp_ProcessPkgAND_Log.ParamByName('@PackageNo').AsInteger :=
+      cds_LoadPackagesPACKAGENO.AsInteger;
+    sp_ProcessPkgAND_Log.ParamByName('@SupplierCode').AsString :=
+      cds_LoadPackagesSupplierCode.AsString;
+    sp_ProcessPkgAND_Log.ParamByName('@RegistrationPointNo').AsInteger :=
+      cds_LoadHeadLoadNo.AsInteger; // -1 ingen mätpunkt
+    sp_ProcessPkgAND_Log.ParamByName('@PackageTypeNo').AsInteger :=
+      cds_LoadPackagesPACKAGETYPENO.AsInteger;
+    sp_ProcessPkgAND_Log.ParamByName('@LogicalInventoryPointNo').AsInteger :=
+      cds_LoadPackagesLIPNo.AsInteger;
+    // mtLoadPackagesLOG_INVENTORY_NO.AsInteger ;
+    sp_ProcessPkgAND_Log.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+    sp_ProcessPkgAND_Log.ParamByName('@Status').AsInteger := Status;
+    sp_ProcessPkgAND_Log.ParamByName('@Operation').AsInteger := Operation;
+    sp_ProcessPkgAND_Log.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
-procedure TdmLoadEntryCSD.ProcessPkgAND_Log(const Status, Operation : Integer) ;
-Begin
-//Set PackageNumber.Status
-//Make entry to PackageNumberLog
-      Try
-      sp_ProcessPkgAND_Log.Close ;
-      sp_ProcessPkgAND_Log.ParamByName('@PackageNo').AsInteger               := cds_LoadPackagesPACKAGENO.AsInteger ;
-      sp_ProcessPkgAND_Log.ParamByName('@SupplierCode').AsString             := cds_LoadPackagesSupplierCode.AsString ;
-      sp_ProcessPkgAND_Log.ParamByName('@RegistrationPointNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger ; // -1 ingen mätpunkt
-      sp_ProcessPkgAND_Log.ParamByName('@PackageTypeNo').AsInteger           := cds_LoadPackagesPACKAGETYPENO.AsInteger ;
-      sp_ProcessPkgAND_Log.ParamByName('@LogicalInventoryPointNo').AsInteger := cds_LoadPackagesLIPNo.AsInteger ;// mtLoadPackagesLOG_INVENTORY_NO.AsInteger ;
-      sp_ProcessPkgAND_Log.ParamByName('@UserID').AsInteger                  := ThisUser.UserID ;
-      sp_ProcessPkgAND_Log.ParamByName('@Status').AsInteger                  := Status ;
-      sp_ProcessPkgAND_Log.ParamByName('@Operation').AsInteger               := Operation ;
-      sp_ProcessPkgAND_Log.ExecProc ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
-
-procedure TdmLoadEntryCSD.DeleteONELoad(const LoadNo : Integer);
+procedure TdmLoadEntryCSD.DeleteONELoad(const LoadNo: Integer);
 var
-  Save_Cursor   : TCursor;
+  Save_Cursor: TCursor;
 begin
   Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crHourGlass;    { Show hourglass cursor }
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-  dmsConnector.StartTransaction;
-  Screen.Cursor := crHourGlass;    { Show hourglass cursor }
-  try
-    Try
-    sp_DeleteONELoad.ParamByName('@LoadNo').AsInteger := LoadNo;
-    sp_DeleteONEload.ExecProc;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-    Screen.Cursor := crHourGlass;    { Show hourglass cursor }    
-    dmsConnector.Commit ;
-  except
-    dmsConnector.Rollback ;
-    raise;
-  end;
+    dmsConnector.StartTransaction;
+    Screen.Cursor := crHourGlass; { Show hourglass cursor }
+    try
+      Try
+        sp_DeleteOneLoad.ParamByName('@LoadNo').AsInteger := LoadNo;
+        sp_DeleteOneLoad.ExecProc;
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+      Screen.Cursor := crHourGlass; { Show hourglass cursor }
+      dmsConnector.Commit;
+    except
+      dmsConnector.Rollback;
+      raise;
+    end;
   Finally
-   Screen.Cursor := Save_Cursor ;
-  End ;
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-function TdmLoadEntryCSD.Is_Load_Confirmed (const LoadNo : Integer) : Boolean ;
+function TdmLoadEntryCSD.Is_Load_Confirmed(const LoadNo: Integer): Boolean;
 Begin
-  Result:= False ;
-  dmsSystem.sp_OneLoad.Close ;
+  Result := False;
+  dmsSystem.sp_OneLoad.Close;
   dmsSystem.sp_OneLoad.ParamByName('LoadNo').AsInteger := LoadNo;
-  dmsSystem.sp_OneLoad.Open ;
-  if (dmsSystem.sp_OneLoadConfirmed.AsInteger > 0) or (dmsSystem.sp_OneLoadInvoiced.AsInteger > 0) then
-   Result:= True ;
-  dmsSystem.sp_OneLoad.Close ;
-End ;
+  dmsSystem.sp_OneLoad.Open;
+  if (dmsSystem.sp_OneLoadConfirmed.AsInteger > 0) or
+    (dmsSystem.sp_OneLoadInvoiced.AsInteger > 0) then
+    Result := True;
+  dmsSystem.sp_OneLoad.Close;
+End;
 
-function TdmLoadEntryCSD.IS_Packages_OK : Boolean ;
+function TdmLoadEntryCSD.IS_Packages_OK: Boolean;
 begin
- cds_LoadPackages.DisableControls ;
- Try
-  Result:= True ;
-  cds_LoadPackages.First ;
-  While not cds_LoadPackages.Eof do
-  Begin
-   if cds_LoadPackagesPackageNo.AsInteger < 1 then
+  cds_LoadPackages.DisableControls;
+  Try
+    Result := True;
+    cds_LoadPackages.First;
+    While not cds_LoadPackages.Eof do
     Begin
-     Result:= False ;
-     ShowMessage('Paketnr saknas på rad '+cds_LoadPackagesLoadDetailNo.AsString) ;
-     Exit ;
-    End ;
-   if cds_LoadPackagesSupplierCode.AsString < '0' then
-    Begin
-     Result:= False ;
-     ShowMessage('Leverantörskod saknas på rad '+cds_LoadPackagesLoadDetailNo.AsString) ;
-     Exit ;
-    End ;
-   cds_LoadPackages.Next ;
-  End; //While
- Finally
-  cds_LoadPackages.EnableControls ;
- End ;
+      if cds_LoadPackagesPACKAGENO.AsInteger < 1 then
+      Begin
+        Result := False;
+        ShowMessage('Paketnr saknas på rad ' +
+          cds_LoadPackagesLoadDetailNo.AsString);
+        Exit;
+      End;
+      if cds_LoadPackagesSupplierCode.AsString < '0' then
+      Begin
+        Result := False;
+        ShowMessage('Leverantörskod saknas på rad ' +
+          cds_LoadPackagesLoadDetailNo.AsString);
+        Exit;
+      End;
+      cds_LoadPackages.Next;
+    End; // While
+  Finally
+    cds_LoadPackages.EnableControls;
+  End;
 end;
 
-function TdmLoadEntryCSD.PkgExistInLoad : Boolean ;
+function TdmLoadEntryCSD.PkgExistInLoad: Boolean;
 Begin
- sq_PkgInLoad.ParamByName('PackageNo').AsInteger      := cds_LoadPackagesPACKAGENO.AsInteger ;
- sq_PkgInLoad.ParamByName('SupplierCode').AsString    := cds_LoadPackagesSupplierCode.AsString ;
- sq_PkgInLoad.ParamByName('LoadNo').AsInteger         := cds_LoadHeadLoadNo.AsInteger ;
- sq_PkgInLoad.Open ;
- if not sq_PkgInLoad.Eof then
- Begin
-  cds_LoadPackages.Edit ;
-  cds_LoadPackagesProblemPackageLog.AsString:= 'Pkt finns upptaget i lastnr '
-  +sq_PkgInLoadLastNr.AsString+' LO: '+sq_PkgInLoadLO.AsString ;
-  cds_LoadPackages.Post ;
-  Result:= True ;
- End
-  else
-   Result:= False ;
- sq_PkgInLoad.Close ;
-End ;
-
-function TdmLoadEntryCSD.GetPkgsNos(const packagecodeno : String;const noofpkgs, LogicalInventoryPointNo : Integer) : Integer ;
-Var x : Integer ;
-Begin
- x := 0 ;
- sq_GetPkgNos.ParamByName('packagecodeno').AsString:= Trim(packagecodeno) ;
- sq_GetPkgNos.ParamByName('LogicalInventoryPointNo').AsInteger:= LogicalInventoryPointNo ;
- sq_GetPkgNos.ParamByName('UserID').AsInteger:= ThisUser.UserID ;
- sq_GetPkgNos.Open ;
- if not sq_GetPkgNos.Eof then
- While (not sq_GetPkgNos.Eof) and (noofpkgs > x) do
- begin
-  if cds_LoadPackages.FindKey([sq_GetPkgNospackageno.AsInteger, Trim(sq_GetPkgNossuppliercode.AsString)]) then
+  sq_PkgInLoad.ParamByName('PackageNo').AsInteger :=
+    cds_LoadPackagesPACKAGENO.AsInteger;
+  sq_PkgInLoad.ParamByName('SupplierCode').AsString :=
+    cds_LoadPackagesSupplierCode.AsString;
+  sq_PkgInLoad.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+  sq_PkgInLoad.Open;
+  if not sq_PkgInLoad.Eof then
   Begin
+    cds_LoadPackages.Edit;
+    cds_LoadPackagesProblemPackageLog.AsString := 'Pkt finns upptaget i lastnr '
+      + sq_PkgInLoadLastNr.AsString + ' LO: ' + sq_PkgInLoadLO.AsString;
+    cds_LoadPackages.Post;
+    Result := True;
   End
   else
-  begin
-   mtPkgNos.Insert ;
-   mtPkgNosPackageNo.AsInteger:= sq_GetPkgNospackageno.AsInteger ;
-   mtPkgNosSuppliercode.AsString:= sq_GetPkgNossuppliercode.AsString ;
-   mtPkgNosproductlengthno.AsInteger:= sq_GetPkgNosproductlengthno.AsInteger ;
-   mtPkgNosproductno.AsInteger:= sq_GetPkgNosproductno.AsInteger ;
-   mtPkgNos.Post ;
-   x:= succ(x) ;
-  End ;
-  sq_GetPkgNos.Next ;
- end ;
- sq_GetPkgNos.Close ;
- Result:= x ;
-End ;
+    Result := False;
+  sq_PkgInLoad.Close;
+End;
 
-Function TdmLoadEntryCSD.DoesLOHavePackages (const LONo : Integer) : Boolean ;
+function TdmLoadEntryCSD.GetPkgsNos(const packagecodeno: String;
+  const noofpkgs, LogicalInventoryPointNo: Integer): Integer;
+Var
+  x: Integer;
 Begin
- cds_LoadPackages.Filter:= 'ShippingPlanNo = '+IntToStr(LONo) ;
- cds_LoadPackages.Filtered:= True ;
- Try
-  Result:= cds_LoadPackages.RecordCount > 0 ;
- Finally
-  cds_LoadPackages.Filtered:= False ;
- End ;
-End ;
+  x := 0;
+  sq_GetPkgNos.ParamByName('packagecodeno').AsString := Trim(packagecodeno);
+  sq_GetPkgNos.ParamByName('LogicalInventoryPointNo').AsInteger :=
+    LogicalInventoryPointNo;
+  sq_GetPkgNos.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  sq_GetPkgNos.Open;
+  if not sq_GetPkgNos.Eof then
+    While (not sq_GetPkgNos.Eof) and (noofpkgs > x) do
+    begin
+      if cds_LoadPackages.FindKey([sq_GetPkgNospackageno.AsInteger,
+        Trim(sq_GetPkgNossuppliercode.AsString)]) then
+      Begin
+      End
+      else
+      begin
+        mtPkgNos.Insert;
+        mtPkgNosPackageNo.AsInteger := sq_GetPkgNospackageno.AsInteger;
+        mtPkgNosSupplierCode.AsString := sq_GetPkgNossuppliercode.AsString;
+        mtPkgNosproductlengthno.AsInteger :=
+          sq_GetPkgNosproductlengthno.AsInteger;
+        mtPkgNosproductno.AsInteger := sq_GetPkgNosproductno.AsInteger;
+        mtPkgNos.Post;
+        x := succ(x);
+      End;
+      sq_GetPkgNos.Next;
+    end;
+  sq_GetPkgNos.Close;
+  Result := x;
+End;
 
-//Håller på med packagetypeno osv, se till att inga dubletter skapas!!!
+Function TdmLoadEntryCSD.DoesLOHavePackages(const LONo: Integer): Boolean;
+Begin
+  cds_LoadPackages.Filter := 'ShippingPlanNo = ' + IntToStr(LONo);
+  cds_LoadPackages.Filtered := True;
+  Try
+    Result := cds_LoadPackages.RecordCount > 0;
+  Finally
+    cds_LoadPackages.Filtered := False;
+  End;
+End;
+
+// Håller på med packagetypeno osv, se till att inga dubletter skapas!!!
 procedure TdmLoadEntryCSD.ds_LoadPackages2DataChange(Sender: TObject;
   Field: TField);
 begin
- dmLoadEntryCSD.Get_LO_LinesMatched (cds_LoadpackagesPackageNo.AsInteger, Trim(cds_LoadPackagesSupplierCode.AsString)) ;
+  dmLoadEntryCSD.Get_LO_LinesMatched(cds_LoadPackagesPACKAGENO.AsInteger,
+    Trim(cds_LoadPackagesSupplierCode.AsString));
 end;
 
 procedure TdmLoadEntryCSD.dspLORowsGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName:= 'LoadShippingPlan' ;
+  TableName := 'LoadShippingPlan';
 end;
 
 procedure TdmLoadEntryCSD.dsp_LoadPackagesGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName:= 'LoadDetail' ;
+  TableName := 'LoadDetail';
 end;
 
 procedure TdmLoadEntryCSD.ds_LSPDataChange(Sender: TObject; Field: TField);
 begin
- With dmsContact do
- Begin
-  cdsAddressAndReference.Active:= False ;
-  cdsAddressAndReference.Close ;
-  cdsAddressAndReference.ParamByName('@LO1').AsInteger:= cds_LSPShippingPlanNo.AsInteger ;
-  cdsAddressAndReference.Open ;
-  cdsAddressAndReference.Active:= True ;
- End ; //with
+  With dmsContact do
+  Begin
+    cdsAddressAndReference.Active := False;
+    cdsAddressAndReference.Close;
+    cdsAddressAndReference.ParamByName('@LO1').AsInteger :=
+      cds_LSPShippingPlanNo.AsInteger;
+    cdsAddressAndReference.Open;
+    cdsAddressAndReference.Active := True;
+  End; // with
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadPackages1PostError(DataSet: TDataSet;
   E: EDatabaseError; var Action: TDataAction);
 begin
-  ShowMessage('System Error. Paketnr '+DataSet.FieldByName('PACKAGENO').AsString
-  +'/'+DataSet.FieldByName('SupplierCode').AsString
-  +' är redan inmatat'+' Original Message: ' + E.Message) ;
-  Action:= daAbort ;
+  ShowMessage('System Error. Paketnr ' + DataSet.FieldByName('PACKAGENO')
+    .AsString + '/' + DataSet.FieldByName('SupplierCode').AsString +
+    ' är redan inmatat' + ' Original Message: ' + E.Message);
+  Action := daAbort;
 end;
 
 procedure TdmLoadEntryCSD.dsp_LSPGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName:= 'LoadShippingPlan' ;
+  TableName := 'LoadShippingPlan';
 end;
 
-Function TdmLoadEntryCSD.IsLoadMadeInAvrop(const LoadNo : Integer) : Boolean ;
+Function TdmLoadEntryCSD.IsLoadMadeInAvrop(const LoadNo: Integer): Boolean;
 Begin
- sq_IsLoadMadeInAvrop.ParamByName('LoadNo').AsInteger := LoadNo ;
- sq_IsLoadMadeInAvrop.Open ;
- Try
- if not sq_IsLoadMadeInAvrop.Eof then
- Begin
-  if sq_IsLoadMadeInAvropConfirmed_LoadNo.AsInteger <> sq_IsLoadMadeInAvropNewLoadNo.AsInteger then
-  Result  := False
-   else
-    Result  := True ;
- End
- else
- Result := True ;
- Finally
-  sq_IsLoadMadeInAvrop.Close ;
- End ;
-End ;
+  sq_IsLoadMadeInAvrop.ParamByName('LoadNo').AsInteger := LoadNo;
+  sq_IsLoadMadeInAvrop.Open;
+  Try
+    if not sq_IsLoadMadeInAvrop.Eof then
+    Begin
+      if sq_IsLoadMadeInAvropConfirmed_LoadNo.AsInteger <>
+        sq_IsLoadMadeInAvropNewLoadNo.AsInteger then
+        Result := False
+      else
+        Result := True;
+    End
+    else
+      Result := True;
+  Finally
+    sq_IsLoadMadeInAvrop.Close;
+  End;
+End;
 
 procedure TdmLoadEntryCSD.cds_LoadHeadAfterInsert(DataSet: TDataSet);
 begin
- cds_LoadHeadLoadNo.AsInteger             := dmsConnector.NextMaxNo('Loads') ;
- cds_LoadHeadDateCreated.AsSQLTimeStamp   := DateTimeToSqlTimeStamp(Now) ;
- cds_LoadHeadLoadAR.AsInteger             := 1 ;
- cds_LoadHeadPackageEntryOption.AsInteger := 0 ;
- if CheckIfLoadNoIsOK(cds_LoadHeadLoadNo.AsInteger) = False then
- Begin
-  cds_LoadHeadLoadNo.AsInteger:= dmsConnector.NextMaxNo('Loads') ;
- End ;
+  cds_LoadHeadLoadNo.AsInteger := dmsConnector.NextMaxNo('Loads');
+  cds_LoadHeadDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
+  cds_LoadHeadLoadAR.AsInteger := 1;
+  cds_LoadHeadPackageEntryOption.AsInteger := 0;
+  if CheckIfLoadNoIsOK(cds_LoadHeadLoadNo.AsInteger) = False then
+  Begin
+    cds_LoadHeadLoadNo.AsInteger := dmsConnector.NextMaxNo('Loads');
+  End;
 end;
 
 procedure TdmLoadEntryCSD.cds_LSPAfterInsert(DataSet: TDataSet);
 begin
-   cds_LSPLoadNo.AsInteger            := cds_LoadHeadLoadNo.AsInteger ;
-//   cds_LSPConfirmedByReciever.AsInteger:= 0 ;
-//   cds_LSPConfirmedBySupplier.AsInteger:= 0 ;
-   cds_LSPCreatedUser.AsInteger       := ThisUser.UserID ;
-   cds_LSPModifiedUser.AsInteger      := ThisUser.UserID ;
-   cds_LSPDateCreated.AsSQLTimeStamp  := DateTimeToSqlTimeStamp(Now) ;
+  cds_LSPLoadNo.AsInteger := cds_LoadHeadLoadNo.AsInteger;
+  // cds_LSPConfirmedByReciever.AsInteger:= 0 ;
+  // cds_LSPConfirmedBySupplier.AsInteger:= 0 ;
+  cds_LSPCreatedUser.AsInteger := ThisUser.UserID;
+  cds_LSPModifiedUser.AsInteger := ThisUser.UserID;
+  cds_LSPDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
 end;
 
-procedure TdmLoadEntryCSD.cds_LoadHeadSenderLoadStatusChange(
-  Sender: TField);
+procedure TdmLoadEntryCSD.cds_LoadHeadSenderLoadStatusChange(Sender: TField);
 begin
-{ if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (LoadStatus <> 2) then
- Begin
-  cds_LoadHeadLoadedDate.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
- End ; }
- LoadStatus:= cds_LoadHeadSenderLoadStatus.AsInteger ;
+  { if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (LoadStatus <> 2) then
+    Begin
+    cds_LoadHeadLoadedDate.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
+    End ; }
+  LoadStatus := cds_LoadHeadSenderLoadStatus.AsInteger;
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadPackagesAfterInsert(DataSet: TDataSet);
 begin
- if cds_LoadHeadLoadNo.AsInteger < 1 then
- Begin
-  Abort ;
-  ShowMessage('Spara lasten först.') ;
-  Exit ;
- End ;
- cds_LoadPackagesPkg_State.AsInteger        := NEW_PACKAGE ;
- cds_LoadPackagesPkg_Function.AsInteger     := ADD_PKG_TO_LOAD ;
- cds_LoadPackagesOverrideMatch.AsInteger    := 0 ;
- cds_LoadPackagesChanged.AsInteger          := 1 ;
- cds_LoadPackagesLoadNo.AsInteger           := cds_LoadHeadLoadNo.AsInteger ;
- cds_LoadPackagesCreatedUser.AsInteger      := ThisUser.UserID ;
- cds_LoadPackagesModifiedUser.AsInteger     := ThisUser.UserID ;
- cds_LoadPackagesDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now) ;
- cds_LoadPackagesLoadDetailNo.AsInteger     := dmsConnector.NextSecondMaxNo('Loads',
- cds_LoadHeadLoadNo.AsInteger) ;
+  if cds_LoadHeadLoadNo.AsInteger < 1 then
+  Begin
+    Abort;
+    ShowMessage('Spara lasten först.');
+    Exit;
+  End;
+  cds_LoadPackagesPkg_State.AsInteger := NEW_PACKAGE;
+  cds_LoadPackagesPkg_Function.AsInteger := ADD_PKG_TO_LOAD;
+  cds_LoadPackagesOverrideMatch.AsInteger := 0;
+  cds_LoadPackagesChanged.AsInteger := 1;
+  cds_LoadPackagesLoadNo.AsInteger := cds_LoadHeadLoadNo.AsInteger;
+  cds_LoadPackagesCreatedUser.AsInteger := ThisUser.UserID;
+  cds_LoadPackagesModifiedUser.AsInteger := ThisUser.UserID;
+  cds_LoadPackagesDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
+  cds_LoadPackagesLoadDetailNo.AsInteger := dmsConnector.NextSecondMaxNo
+    ('Loads', cds_LoadHeadLoadNo.AsInteger);
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadPackagesBeforePost(DataSet: TDataSet);
 begin
- if DataSet.FieldByName('PACKAGENO').IsNull then
- Abort ;
-{ if DataSet.FieldByName('LoadDetailNo').AsInteger < 1 then
- Begin
-  DataSet.FieldByName('LoadDetailNo').AsInteger:= GlobalLoadDetailNo ;
-  GlobalLoadDetailNo := Succ(GlobalLoadDetailNo) ;
- End ; }
+  if DataSet.FieldByName('PACKAGENO').IsNull then
+    Abort;
+  { if DataSet.FieldByName('LoadDetailNo').AsInteger < 1 then
+    Begin
+    DataSet.FieldByName('LoadDetailNo').AsInteger:= GlobalLoadDetailNo ;
+    GlobalLoadDetailNo := Succ(GlobalLoadDetailNo) ;
+    End ; }
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadHeadPIPNoChange(Sender: TField);
 begin
-   cds_LIP2.Active  := False ;
-   if not cds_LoadHeadPIP.IsNull then
-   cds_LIP2.ParamByName('PIPNo').AsInteger      := cds_LoadHeadPIPNo.AsInteger
-   else
-   cds_LIP2.ParamByName('PIPNo').AsInteger      := -1 ;
-   cds_LIP2.Active  := True ;
+  cds_LIP2.Active := False;
+  if not cds_LoadHeadPIP.IsNull then
+    cds_LIP2.ParamByName('PIPNo').AsInteger := cds_LoadHeadPIPNo.AsInteger
+  else
+    cds_LIP2.ParamByName('PIPNo').AsInteger := -1;
+  cds_LIP2.Active := True;
 end;
 
-Function TdmLoadEntryCSD.GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo : Integer) : Integer ;
+Function TdmLoadEntryCSD.GetMaxLoadDetailNoMaxLoadDetailNo
+  (const LoadNo: Integer): Integer;
 Begin
- Try
- FD_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger  := LoadNo ;
- FD_GetMaxLoadDetailNo.Open ;
- if not  FD_GetMaxLoadDetailNo.Eof then
-   Result := FD_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
+  Try
+    FD_GetMaxLoadDetailNo.ParamByName('LoadNo').AsInteger := LoadNo;
+    FD_GetMaxLoadDetailNo.Open;
+    if not FD_GetMaxLoadDetailNo.Eof then
+      Result := FD_GetMaxLoadDetailNoMaxLoadDetailNo.AsInteger
     else
-     Result := 0 ;
- Finally
-  FD_GetMaxLoadDetailNo.Close ;
- End ;
-End ;
+      Result := 0;
+  Finally
+    FD_GetMaxLoadDetailNo.Close;
+  End;
+End;
 
-procedure TdmLoadEntryCSD.csdUnit_OpenLagerLookup ;
+procedure TdmLoadEntryCSD.csdUnit_OpenLagerLookup;
 Begin
   With dmLoadEntryCSD do
   Begin
-   cds_PIP2.Active  := False ;
-//   if cds_LSPORDERTYPE.AsString = 'SALES' THEN
-    cds_PIP2.ParamByName('OwnerNo').AsInteger      := cds_LoadHeadSupplierNo.AsInteger ;
-//     else
-//      cds_PIP2.ParamByName('OwnerNo').AsInteger      := cds_LoadHeadCustomerNo.AsInteger ;
-   cds_PIP2.Active  := True ;
+    cds_PIP2.Active := False;
+    // if cds_LSPORDERTYPE.AsString = 'SALES' THEN
+    cds_PIP2.ParamByName('OwnerNo').AsInteger :=
+      cds_LoadHeadSupplierNo.AsInteger;
+    // else
+    // cds_PIP2.ParamByName('OwnerNo').AsInteger      := cds_LoadHeadCustomerNo.AsInteger ;
+    cds_PIP2.Active := True;
 
+    cds_LIP2.Active := False;
+    if not cds_LoadHeadPIPNo.IsNull then
+      cds_LIP2.ParamByName('PIPNo').AsInteger := cds_LoadHeadPIPNo.AsInteger
+    else
+      cds_LIP2.ParamByName('PIPNo').AsInteger := -1;
+    cds_LIP2.Active := True;
 
-   cds_LIP2.Active  := False ;
-   if not cds_LoadHeadPIPNo.IsNull then
-   cds_LIP2.ParamByName('PIPNo').AsInteger      := cds_LoadHeadPIPNo.AsInteger
-   else
-   cds_LIP2.ParamByName('PIPNo').AsInteger      := -1 ;
-   cds_LIP2.Active  := True ;
-
-//   cds_LoadHeadLIP.RefreshLookupList ;
-  End ;
-End ;
+    // cds_LoadHeadLIP.RefreshLookupList ;
+  End;
+End;
 
 procedure TdmLoadEntryCSD.cds_LoadHeadSupplierNoChange(Sender: TField);
 begin
- csdUnit_OpenLagerLookup ;
+  csdUnit_OpenLagerLookup;
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadPackagesPostError(DataSet: TDataSet;
   E: EDatabaseError; var Action: TDataAction);
 begin
-  dmsSystem.FDoLog(E.Message + '  unit: ' + dmLoadEntryCSD.Name) ;
+  dmsSystem.FDoLog(E.Message + '  unit: ' + dmLoadEntryCSD.Name);
 
-  ShowMessage('Paketnumret ' + DataSet.FieldByName('PACKAGENO').AsString + ' är inte unikt i lasten.') ;
+  ShowMessage('Paketnumret ' + DataSet.FieldByName('PACKAGENO').AsString +
+    ' är inte unikt i lasten.');
 
-  Action  := daAbort ;
+  Action := daAbort;
 end;
 
-function TdmLoadEntryCSD.DuplicatePackageNo(const PackageNo : Integer;const Prefix : String) : Boolean ;
-Var TempDataSet: TFDMemTable ;
+function TdmLoadEntryCSD.DuplicatePackageNo(const PackageNo: Integer;
+  const Prefix: String): Boolean;
+Var
+  TempDataSet: TFDMemTable;
 Begin
- TempDataSet := TFDMemTable.Create(nil);
- try
- { clone the real dataset with Reset set to True }
- { so that the current range is not cloned }
-// TempDataSet.CloneCursor(cdsLoads, True);
- TempDataSet.CloneCursor(cds_LoadPackages, False, False);
+  TempDataSet := TFDMemTable.Create(nil);
+  try
+    { clone the real dataset with Reset set to True }
+    { so that the current range is not cloned }
+    // TempDataSet.CloneCursor(cdsLoads, True);
+    TempDataSet.CloneCursor(cds_LoadPackages, False, False);
 
- TempDataSet.Filter := 'PackageNo = ' + inttostr(PackageNo) + ' and SupplierCode = ' + QuotedStr(Prefix) ;
- TempDataSet.Filtered := True ;
- if TempDataSet.RecordCount > 1 then
-  Result  := True
-   else
-    Result  := False ;
+    TempDataSet.Filter := 'PackageNo = ' + IntToStr(PackageNo) +
+      ' and SupplierCode = ' + QuotedStr(Prefix);
+    TempDataSet.Filtered := True;
+    if TempDataSet.RecordCount > 1 then
+      Result := True
+    else
+      Result := False;
 
-{ if TempDataSet.Locate('PackageNo;SupplierCode', VarArrayOf([PackageNo, Prefix]), []) then
-  Result  := True
-   else
-    Result  := False ; }
+    { if TempDataSet.Locate('PackageNo;SupplierCode', VarArrayOf([PackageNo, Prefix]), []) then
+      Result  := True
+      else
+      Result  := False ; }
 
- finally
-  TempDataSet.Filtered := False ;
-  TempDataSet.Free; { free the temporary data set }
- end;
-End ;
+  finally
+    TempDataSet.Filtered := False;
+    TempDataSet.Free; { free the temporary data set }
+  end;
+End;
 
-procedure TdmLoadEntryCSD.CreateCreditLoad ;
+procedure TdmLoadEntryCSD.CreateCreditLoad;
 Begin
- Try
-  sp_Vis_newCreditLoad.ParamByName('@OldLoadNo').AsInteger  := cds_LoadHeadLoadNo.AsInteger ;
-  sp_Vis_newCreditLoad.ParamByName('@UserID').AsInteger     := ThisUser.UserID ;
-  sp_Vis_newCreditLoad.ExecProc ;
-  NewLoadNo := sp_Vis_newCreditLoad.ParamByName('@LoadNo').AsInteger
+  Try
+    sp_Vis_newCreditLoad.ParamByName('@OldLoadNo').AsInteger :=
+      cds_LoadHeadLoadNo.AsInteger;
+    sp_Vis_newCreditLoad.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+    sp_Vis_newCreditLoad.ExecProc;
+    NewLoadNo := sp_Vis_newCreditLoad.ParamByName('@LoadNo').AsInteger
   except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
-procedure TdmLoadEntryCSD.CreateCreditInvoice ;
+procedure TdmLoadEntryCSD.CreateCreditInvoice;
 Begin
- Try
-  sp_Vis_newCreditInvoice.ParamByName('@UserID').AsInteger      := ThisUser.UserID ;
-  sp_Vis_newCreditInvoice.ParamByName('@OldLoadNo').AsInteger   := cds_LoadHeadLoadNo.AsInteger ;
-  sp_Vis_newCreditInvoice.ParamByName('@LoadNo').AsInteger      := NewLoadNo ;
-  sp_Vis_newCreditInvoice.ExecProc ;
-  NewInternalInvoiceNo := sp_Vis_newCreditInvoice.ParamByName('@InternalInvoiceNo').AsInteger
+  Try
+    sp_Vis_newCreditInvoice.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+    sp_Vis_newCreditInvoice.ParamByName('@OldLoadNo').AsInteger :=
+      cds_LoadHeadLoadNo.AsInteger;
+    sp_Vis_newCreditInvoice.ParamByName('@LoadNo').AsInteger := NewLoadNo;
+    sp_Vis_newCreditInvoice.ExecProc;
+    NewInternalInvoiceNo := sp_Vis_newCreditInvoice.ParamByName
+      ('@InternalInvoiceNo').AsInteger
   except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
-function TdmLoadEntryCSD.VerkLoadExists(const LoadNo : Integer) : Integer ;
+function TdmLoadEntryCSD.VerkLoadExists(const LoadNo: Integer): Integer;
 Begin
- sq_VerkLoadExists.ParamByName('NewLoadNo').AsInteger  := LoadNo ; //Lasten vi öppnade
- sq_VerkLoadExists.Active := True ;
-   Try
-     if (not sq_VerkLoadExists.Eof) and (sq_VerkLoadExists.FieldByName('Confirmed_LoadNo').AsInteger <> LoadNo) then
+  sq_VerkLoadExists.ParamByName('NewLoadNo').AsInteger := LoadNo;
+  // Lasten vi öppnade
+  sq_VerkLoadExists.Active := True;
+  Try
+    if (not sq_VerkLoadExists.Eof) and
+      (sq_VerkLoadExists.FieldByName('Confirmed_LoadNo').AsInteger <> LoadNo)
+    then
       Result := sq_VerkLoadExists.FieldByName('Confirmed_LoadNo').AsInteger
-       else
-        Result := -1 ;
-   Finally
-     sq_VerkLoadExists.Active := False ;
-   End;
+    else
+      Result := -1;
+  Finally
+    sq_VerkLoadExists.Active := False;
+  End;
 End;
 
-function TdmLoadEntryCSD.CreateInternalLO(const OldLONo : Integer) : Integer ;
+function TdmLoadEntryCSD.CreateInternalLO(const OldLONo: Integer): Integer;
 Begin
- Try
-  sp_vis_CopyLOToInternalLO.ParamByName('@OldLO').AsInteger       := OldLONo ;
-  sp_vis_CopyLOToInternalLO.ParamByName('@UserID').AsInteger      := ThisUser.UserID ;
-  sp_vis_CopyLOToInternalLO.ExecProc ;
-  Result := sp_vis_CopyLOToInternalLO.ParamByName('@NewLO').AsInteger
+  Try
+    sp_vis_CopyLOToInternalLO.ParamByName('@OldLO').AsInteger := OldLONo;
+    sp_vis_CopyLOToInternalLO.ParamByName('@UserID').AsInteger :=
+      ThisUser.UserID;
+    sp_vis_CopyLOToInternalLO.ExecProc;
+    Result := sp_vis_CopyLOToInternalLO.ParamByName('@NewLO').AsInteger
   except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
-function TdmLoadEntryCSD.CreateVerkLoad(const NewLO, OldLO : Integer) : Integer ;
+function TdmLoadEntryCSD.CreateVerkLoad(const NewLO, OldLO: Integer): Integer;
 Begin
- Try
-  sp_Vis_CopyToInternalLO_Load.ParamByName('@LO').AsInteger           := NewLO ;
-  sp_Vis_CopyToInternalLO_Load.ParamByName('@OldLoadNo').AsInteger    := NewLoadNo ; //"OldLoad" this is the credit load that we copy some parts of
-  sp_Vis_CopyToInternalLO_Load.ParamByName('@UserID').AsInteger       := ThisUser.UserID ;
-  sp_Vis_CopyToInternalLO_Load.ExecProc ;
-  Result := sp_Vis_CopyToInternalLO_Load.ParamByName('@LoadNo').AsInteger
+  Try
+    sp_Vis_CopyToInternalLO_Load.ParamByName('@LO').AsInteger := NewLO;
+    sp_Vis_CopyToInternalLO_Load.ParamByName('@OldLoadNo').AsInteger :=
+      NewLoadNo; // "OldLoad" this is the credit load that we copy some parts of
+    sp_Vis_CopyToInternalLO_Load.ParamByName('@UserID').AsInteger :=
+      ThisUser.UserID;
+    sp_Vis_CopyToInternalLO_Load.ExecProc;
+    Result := sp_Vis_CopyToInternalLO_Load.ParamByName('@LoadNo').AsInteger
   except
     On E: Exception do
     Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-   end;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
 end.

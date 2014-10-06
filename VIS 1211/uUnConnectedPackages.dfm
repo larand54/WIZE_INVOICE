@@ -172,9 +172,9 @@ object fUnConnectedPackages: TfUnConnectedPackages
     Top = 168
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdEjKoppladePaket
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -190,7 +190,6 @@ object fUnConnectedPackages: TfUnConnectedPackages
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

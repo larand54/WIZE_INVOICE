@@ -7,7 +7,19 @@ uses
   Dialogs, cxGraphics, StdCtrls, Buttons, cxLabel, cxControls, cxContainer,
   cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, ExtCtrls, cxLookAndFeels,
-  cxLookAndFeelPainters;
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue;
 
 type
   TfLoadOrderListSetup = class(TForm)
@@ -19,10 +31,10 @@ type
     { Private declarations }
   public
     { Public declarations }
-   Class procedure Execute ;
+    Class procedure Execute;
   end;
 
-//var fLoadOrderListSetup: TfLoadOrderListSetup;
+  // var fLoadOrderListSetup: TfLoadOrderListSetup;
 
 implementation
 
@@ -30,15 +42,16 @@ uses dmcVidaOrder;
 
 {$R *.dfm}
 
-Class procedure TfLoadOrderListSetup.Execute ;
+Class procedure TfLoadOrderListSetup.Execute;
 Begin
- With Self.Create(nil) do begin
-  try
-   ShowModal ;
-  Finally
-   Free ;
-  End
- End ;
-End ;
+  With Self.Create(nil) do
+  begin
+    try
+      ShowModal;
+    Finally
+      Free;
+    End
+  End;
+End;
 
 end.

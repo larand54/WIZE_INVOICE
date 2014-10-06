@@ -14,7 +14,8 @@ uses
   cxSplitter, dxPSGlbl, dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd, dxWrap,
   dxPrnDev, dxPSCompsProvider, dxPSFillPatterns, dxPSEdgePatterns,
   dxPSCore, dxPScxCommon, ExtCtrls, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxDBEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxLookAndFeels, cxLookAndFeelPainters, dxPSPDFExportCore, dxPSPDFExport,
@@ -32,7 +33,9 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, dxPScxGridLnk,
-  dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter, cxNavigator ;
+  dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter, cxNavigator,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TfrmAvrakningar = class(TForm)
@@ -205,151 +208,158 @@ type
     procedure cds_PropsAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
-    procedure SaveUserProps (const Form : String) ;
-    procedure LoadUserProps (const Form : String) ;
-    procedure BuildSQL (Const AvrakningsNr : Integer) ;
-    function  DataSparat : Boolean ;
-    function  GetNextFreeLoadNo : Integer ;
+    procedure SaveUserProps(const Form: String);
+    procedure LoadUserProps(const Form: String);
+    procedure BuildSQL(Const AvrakningsNr: Integer);
+    function DataSparat: Boolean;
+    function GetNextFreeLoadNo: Integer;
   public
     { Public declarations }
     constructor CreateCo(CompanyNo: Integer);
   end;
 
-var frmAvrakningar: TfrmAvrakningar;
+var
+  frmAvrakningar: TfrmAvrakningar;
 
 implementation
 
 uses UnitdmModule1, UnitCRViewReport, VidaUser, dmsVidaContact, VidaConst,
-     uEntryField, dmsDataConn , dmsVidaSystem, uFreightAvrSearch,
+  uEntryField, dmsDataConn, dmsVidaSystem, uFreightAvrSearch,
   dmc_UserProps;
 
 {$R *.dfm}
 
-
-function TfrmAvrakningar.DataSparat : Boolean ;
+function TfrmAvrakningar.DataSparat: Boolean;
 begin
- Result:= True ;
-   With dmModule1 do
-   Begin
+  Result := True;
+  With dmModule1 do
+  Begin
     if cds_LoadFreightCostHeader2.State in [dsEdit, dsInsert] then
-     Result:= False ;
+      Result := False;
     if cds_LoadFreightCostHeader2.ChangeCount > 0 then
-     Result:= False ;
+      Result := False;
 
     if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
-     Result:= False ;
+      Result := False;
     if cds_LoadFreightCostDetails.ChangeCount > 0 then
-     Result:= False ;
-   End ;
+      Result := False;
+  End;
 end;
 
 constructor TfrmAvrakningar.CreateCo(CompanyNo: Integer);
-var x : integer;
+var
+  x: Integer;
 begin
 
-  LoadUserProps(Self.Caption) ;
+  LoadUserProps(Self.Caption);
 
-  cds_Props.Edit ;
+  cds_Props.Edit;
   if cds_PropsStatus.IsNull then
-   cds_PropsStatus.AsInteger  := 0 ;
-  cds_PropsVerkNo.AsInteger := Thisuser.CompanyNo ;
-  cds_Props.Post ;
+    cds_PropsStatus.AsInteger := 0;
+  cds_PropsVerkNo.AsInteger := Thisuser.CompanyNo;
+  cds_Props.Post;
 
   With dmModule1 do
   Begin
-   cds_LoadFreightCostHeader2.Filter    := 'STATUS = ' + cds_PropsStatus.AsString ;
-   cds_LoadFreightCostHeader2.Filtered  := True ;
-  End ;
+    cds_LoadFreightCostHeader2.Filter := 'STATUS = ' + cds_PropsStatus.AsString;
+    cds_LoadFreightCostHeader2.Filtered := True;
+  End;
 end;
 
-procedure TfrmAvrakningar.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfrmAvrakningar.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfrmAvrakningar.FormDestroy(Sender: TObject);
 begin
   With dmModule1 do
   Begin
-   cds_LoadFreightCostHeader2.Active:= False ;
-   cds_LoadFreightCostDetails.Active:= False ;
-  End ;
- frmAvrakningar:= NIL ;
+    cds_LoadFreightCostHeader2.Active := False;
+    cds_LoadFreightCostDetails.Active := False;
+  End;
+  frmAvrakningar := NIL;
 end;
 
-procedure TfrmAvrakningar.BuildSQL (Const AvrakningsNr : Integer) ;
-Var Save_Cursor : TCursor ;
+procedure TfrmAvrakningar.BuildSQL(Const AvrakningsNr: Integer);
+Var
+  Save_Cursor: TCursor;
 begin
- if cds_PropsStatus.IsNull then
- Begin
-  ShowMessage('Välj en status') ;
-  Exit ;
- End ;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;
- Try
-  With dmModule1.cds_LoadFreightCostHeader2 do
+  if cds_PropsStatus.IsNull then
   Begin
-   dmModule1.cds_LoadFreightCostDetails.Active:= False ;
-   dmModule1.cds_LoadFreightCostHeader2.Active:= False ;
-   SQL.Clear ;
-   SQL.Add('Select LFCH.* , C.clientname as SHIPPER, ve.ClientName AS VERK, usr.UserName AS ANVANDARE') ;
-   SQL.Add('FROM') ;
-   SQL.Add('dbo.LoadFreightCostHeader LFCH') ;
-   SQL.Add('Left Outer Join dbo.Client C On C.ClientNo = LFCH.LocalShipperNo') ;
-   SQL.Add('Left Outer Join dbo.Client ve On ve.ClientNo = LFCH.VerkNo') ;
-   SQL.Add('Left Outer Join dbo.Users usr on usr.UserID = LFCH.CreatedUser') ;
+    ShowMessage('Välj en status');
+    Exit;
+  End;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  Try
+    With dmModule1.cds_LoadFreightCostHeader2 do
+    Begin
+      dmModule1.cds_LoadFreightCostDetails.Active := False;
+      dmModule1.cds_LoadFreightCostHeader2.Active := False;
+      SQL.Clear;
+      SQL.Add('Select LFCH.* , C.clientname as SHIPPER, ve.ClientName AS VERK, usr.UserName AS ANVANDARE');
+      SQL.Add('FROM');
+      SQL.Add('dbo.LoadFreightCostHeader LFCH');
+      SQL.Add('Left Outer Join dbo.Client C On C.ClientNo = LFCH.LocalShipperNo');
+      SQL.Add('Left Outer Join dbo.Client ve On ve.ClientNo = LFCH.VerkNo');
+      SQL.Add('Left Outer Join dbo.Users usr on usr.UserID = LFCH.CreatedUser');
 
-   if AvrakningsNr <> -1 then
-    SQL.Add('WHERE LFCH.AvrakningsNo = '+IntToStr(AvrakningsNr))
-    else
-     if cds_PropsVerkNo.AsInteger > 0 then
-      if VIDA_WOOD_COMPANY_NO <> cds_PropsVerkNo.AsInteger then
-       SQL.Add('WHERE LFCH.VerkNo = '+ cds_PropsVerkNo.AsString) ;
+      if AvrakningsNr <> -1 then
+        SQL.Add('WHERE LFCH.AvrakningsNo = ' + IntToStr(AvrakningsNr))
+      else if cds_PropsVerkNo.AsInteger > 0 then
+        if VIDA_WOOD_COMPANY_NO <> cds_PropsVerkNo.AsInteger then
+          SQL.Add('WHERE LFCH.VerkNo = ' + cds_PropsVerkNo.AsString);
 
-//    SQL.SaveToFile('sq_LoadFreightCostHeader2.txt') ;
+      // SQL.SaveToFile('sq_LoadFreightCostHeader2.txt') ;
 
-   if AvrakningsNr <> -1 then
-   dmModule1.cds_LoadFreightCostHeader2.Filtered := False
-   else
-   Begin
-    dmModule1.cds_LoadFreightCostHeader2.Filtered := True ;
-    dmModule1.cds_LoadFreightCostHeader2.Filter   := 'STATUS = ' + cds_PropsStatus.AsString ;
-   End ;
+      if AvrakningsNr <> -1 then
+        dmModule1.cds_LoadFreightCostHeader2.Filtered := False
+      else
+      Begin
+        dmModule1.cds_LoadFreightCostHeader2.Filtered := True;
+        dmModule1.cds_LoadFreightCostHeader2.Filter := 'STATUS = ' +
+          cds_PropsStatus.AsString;
+      End;
 
-   dmModule1.cds_LoadFreightCostHeader2.Active:= True ;
-   dmModule1.cds_LoadFreightCostDetails.Active:= True ;
-  End ; //with
- finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
-End ;
+      dmModule1.cds_LoadFreightCostHeader2.Active := True;
+      dmModule1.cds_LoadFreightCostDetails.Active := True;
+    End; // with
+  finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
+End;
 
 procedure TfrmAvrakningar.FormCreate(Sender: TObject);
 begin
- if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoadsDBTableView1.Name, grdLoadsDBTableView1) = False then ;
- if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdFraktAvrDBTableView1.Name, grdFraktAvrDBTableView1) = False then ;
+  if dmsSystem.LoadGridLayout(Thisuser.UserID,
+    Self.Name + '/' + grdLoadsDBTableView1.Name, grdLoadsDBTableView1) = False
+  then;
+  if dmsSystem.LoadGridLayout(Thisuser.UserID,
+    Self.Name + '/' + grdFraktAvrDBTableView1.Name, grdFraktAvrDBTableView1) = False
+  then;
 end;
 
 procedure TfrmAvrakningar.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- CanClose:= True ;
- if DataSparat = False then
-  if MessageDlg('Ändringar är inte sparade, vill du stänga?',
-   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   Begin
-    CanClose:= True ;
-   End
-   else
-   CanClose:= False ;
- if CanClose then
- Begin
-  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoadsDBTableView1.Name, grdLoadsDBTableView1) ;
-  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdFraktAvrDBTableView1.Name, grdFraktAvrDBTableView1) ;
-  SaveUserProps (Self.Caption) ;
- End ;
+  CanClose := True;
+  if DataSparat = False then
+    if MessageDlg('Ändringar är inte sparade, vill du stänga?', mtConfirmation,
+      [mbYes, mbNo], 0) = mrYes then
+    Begin
+      CanClose := True;
+    End
+    else
+      CanClose := False;
+  if CanClose then
+  Begin
+    dmsSystem.StoreGridLayout(Thisuser.UserID,
+      Self.Name + '/' + grdLoadsDBTableView1.Name, grdLoadsDBTableView1);
+    dmsSystem.StoreGridLayout(Thisuser.UserID,
+      Self.Name + '/' + grdFraktAvrDBTableView1.Name, grdFraktAvrDBTableView1);
+    SaveUserProps(Self.Caption);
+  End;
 end;
 
 procedure TfrmAvrakningar.acSaveExecute(Sender: TObject);
@@ -357,293 +367,307 @@ begin
   if MessageDlg('Är du säker du vill spara de ändringar du gjort?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
-   With dmModule1 do
-   Begin
-    if cds_LoadFreightCostHeader2.State in [dsEdit, dsInsert] then
-     cds_LoadFreightCostHeader2.Post ;
-    if cds_LoadFreightCostHeader2.ChangeCount > 0 then
+    With dmModule1 do
     Begin
-     cds_LoadFreightCostHeader2.ApplyUpdates(0) ;
-     cds_LoadFreightCostHeader2.CommitUpdates ;
-    End ;
-    if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
-     cds_LoadFreightCostDetails.Post ;
-    if cds_LoadFreightCostDetails.ChangeCount > 0 then
-    Begin
-     cds_LoadFreightCostDetails.ApplyUpdates(0) ;
-     cds_LoadFreightCostDetails.CommitUpdates ;
-    End ;
-   End ;
-  End ;
+      if cds_LoadFreightCostHeader2.State in [dsEdit, dsInsert] then
+        cds_LoadFreightCostHeader2.Post;
+      if cds_LoadFreightCostHeader2.ChangeCount > 0 then
+      Begin
+        cds_LoadFreightCostHeader2.ApplyUpdates(0);
+        cds_LoadFreightCostHeader2.CommitUpdates;
+      End;
+      if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
+        cds_LoadFreightCostDetails.Post;
+      if cds_LoadFreightCostDetails.ChangeCount > 0 then
+      Begin
+        cds_LoadFreightCostDetails.ApplyUpdates(0);
+        cds_LoadFreightCostDetails.CommitUpdates;
+      End;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acCancelChangesExecute(Sender: TObject);
 begin
   With dmModule1 do
-   Begin
+  Begin
     if cds_LoadFreightCostHeader2.State in [dsEdit, dsInsert] then
-     cds_LoadFreightCostHeader2.Cancel ;
+      cds_LoadFreightCostHeader2.Cancel;
     if cds_LoadFreightCostHeader2.ChangeCount > 0 then
     Begin
-     cds_LoadFreightCostHeader2.CancelUpdates ;
-    End ;
+      cds_LoadFreightCostHeader2.CancelUpdates;
+    End;
 
     if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
-     cds_LoadFreightCostDetails.Cancel ;
+      cds_LoadFreightCostDetails.Cancel;
     if cds_LoadFreightCostDetails.ChangeCount > 0 then
-     cds_LoadFreightCostDetails.CancelUpdates ;
+      cds_LoadFreightCostDetails.CancelUpdates;
 
-    if (cds_LoadFreightCostDetails.ChangeCount = 0)
-    AND (cds_LoadFreightCostHeader2.ChangeCount = 0) then
+    if (cds_LoadFreightCostDetails.ChangeCount = 0) AND
+      (cds_LoadFreightCostHeader2.ChangeCount = 0) then
     Begin
-     lbApplyChanges.Enabled:= False ;
-     lbCancelChanges.Enabled:= False ;
-    End ;
-   End ;
+      lbApplyChanges.Enabled := False;
+      lbCancelChanges.Enabled := False;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acSaveUpdate(Sender: TObject);
 begin
- acSave.Enabled:= not DataSparat ;
+  acSave.Enabled := not DataSparat;
 end;
 
 procedure TfrmAvrakningar.acCancelChangesUpdate(Sender: TObject);
 begin
- acCancelChanges.Enabled:= not DataSparat ;
+  acCancelChanges.Enabled := not DataSparat;
 end;
 
 procedure TfrmAvrakningar.acPrintLoadsExecute(Sender: TObject);
 begin
- with dmModule1 do
- Begin
-// dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräkningsnr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString) ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add('Avräknad: '+SQLTimeStampToStr('yyyy-mm-dd',cds_LoadFreightCostHeader2AvrakningsDate.AsSQLTimeStamp)) ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Fakturanr: '+cds_LoadFreightCostHeader2ShippersInvoiceNo.AsString) ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Fraktförare: '+cds_LoadFreightCostHeader2SHIPPER.AsString) ;
+  with dmModule1 do
+  Begin
+    // dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add
+      ('Avräkningsnr: ' + cds_LoadFreightCostHeader2AvrakningsNo.AsString);
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Add
+      ('Avräknad: ' + SQLTimeStampToStr('yyyy-mm-dd',
+      cds_LoadFreightCostHeader2AvrakningsDate.AsSQLTimeStamp));
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add
+      ('Fakturanr: ' + cds_LoadFreightCostHeader2ShippersInvoiceNo.AsString);
+    dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add
+      ('Fraktförare: ' + cds_LoadFreightCostHeader2SHIPPER.AsString);
 
-  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
- End ;
+    dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
+  End;
 end;
 
 procedure TfrmAvrakningar.acAddRowExecute(Sender: TObject);
-Var LoadNo : Integer ;
+Var
+  LoadNo: Integer;
 begin
- with dmModule1 do
- Begin
-  LoadNo:= GetNextFreeLoadNo ;
-  if LoadNo < 0 then
-//  if not cds_LoadFreightCostDetails.Locate('LoadNo', -1, []) then
+  with dmModule1 do
   Begin
-   cds_LoadFreightCostDetails.Insert ;
-   cds_LoadFreightCostDetailsLoadNo.AsInteger:= LoadNo ;
-  End
-   else
-    ShowMessage('Fler extrarader kan inte läggas till eftersom max antal extrarader(5) är uppnådd.') ;
- End ;
+    LoadNo := GetNextFreeLoadNo;
+    if LoadNo < 0 then
+    // if not cds_LoadFreightCostDetails.Locate('LoadNo', -1, []) then
+    Begin
+      cds_LoadFreightCostDetails.Insert;
+      cds_LoadFreightCostDetailsLoadNo.AsInteger := LoadNo;
+    End
+    else
+      ShowMessage
+        ('Fler extrarader kan inte läggas till eftersom max antal extrarader(5) är uppnådd.');
+  End;
 end;
 
-function TfrmAvrakningar.GetNextFreeLoadNo : Integer ;
-Var x : Integer ;
+function TfrmAvrakningar.GetNextFreeLoadNo: Integer;
+Var
+  x: Integer;
 begin
- with dmModule1 do
- Begin
-  Result:= 0 ;
-  x:= -1 ;
-  While (Result = 0) and (x > -10) do
+  with dmModule1 do
   Begin
-   if not cds_LoadFreightCostDetails.Locate('LoadNo', x, []) then
-    Result:= x
-     else
-      x:= x-1 ;
-  End ;
- End ;//with 
+    Result := 0;
+    x := -1;
+    While (Result = 0) and (x > -10) do
+    Begin
+      if not cds_LoadFreightCostDetails.Locate('LoadNo', x, []) then
+        Result := x
+      else
+        x := x - 1;
+    End;
+  End; // with
 end;
 
 procedure TfrmAvrakningar.acRemoveRowExecute(Sender: TObject);
 begin
-  if MessageDlg('Är du säker ?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg('Är du säker ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
-   With dmModule1 do
-   Begin
-    cds_LoadFreightCostDetails.Delete ;
-   End ;
-  End ;
+    With dmModule1 do
+    Begin
+      cds_LoadFreightCostDetails.Delete;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfrmAvrakningar.acRemoveAvrExecute(Sender: TObject);
 begin
-  if MessageDlg('Är du säker? du kan även ångra genom att klicka på "ångra ändringar". Klickar du däremot'
-  +' på "spara ändringar" sen går det inte att ångra ändringar. Du måste alltså klicka "spara ändringar" '
-  +' för att spara de ändringar som är gjorda.',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg
+    ('Är du säker? du kan även ångra genom att klicka på "ångra ändringar". Klickar du däremot'
+    + ' på "spara ändringar" sen går det inte att ångra ändringar. Du måste alltså klicka "spara ändringar" '
+    + ' för att spara de ändringar som är gjorda.', mtConfirmation,
+    [mbYes, mbNo], 0) = mrYes then
   Begin
-  With dmModule1 do
-   Begin
-    cds_LoadFreightCostHeader2.Delete ;
-  //  lbApplyChanges.Enabled:= True ;
-   End ;
-  End ;
+    With dmModule1 do
+    Begin
+      cds_LoadFreightCostHeader2.Delete;
+      // lbApplyChanges.Enabled:= True ;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acPrintAvrExecute(Sender: TObject);
-var FormCRViewReport: TFormCRViewReport;
-    A                 : array of variant ;
+var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
-  A[0]  :=  dmModule1.cds_LoadFreightCostHeader2AvrakningsNo.AsInteger ;
- FormCRViewReport.CreateCo('FRAKT_AVRAKNING.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport) ;
- End ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := dmModule1.cds_LoadFreightCostHeader2AvrakningsNo.AsInteger;
+    FormCRViewReport.CreateCo('FRAKT_AVRAKNING.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmAvrakningar.acSearchLastnrExecute(Sender: TObject);
-Var AvrNo  : Integer ;
-    verk   : String;
-    VerkNo : Integer ;
-    fEntryField : TfEntryField ;
+Var
+  AvrNo: Integer;
+  verk: String;
+  VerkNo: Integer;
+  fEntryField: TfEntryField;
 begin
- With dmModule1 do
- Begin
-  fEntryField:= TfEntryField.Create(Nil);
-  fEntryField.Caption:= 'Ange LastNr' ;
-  fEntryField.Label1.Caption:= 'LastNr:' ;
-  Try
-   if fEntryField.ShowModal = mrOK then
-   Begin
-    AvrNo:= GetFraktAvrakningsNoForLoadNo(StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0), Verk, VerkNo) ;
-    if AvrNo > 0 then
-    Begin
-     BuildSQL (AvrNo) ;
-     cds_LoadFreightCostDetails.Locate('LoadNo',StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0), []) ;
-    End
-    else
-    ShowMessage('Hittar ej lastnr.') ;
-   End ;
-  Finally
-   FreeAndNil(fEntryField) ;//.Free ;
-  End ;
- End ;
+  With dmModule1 do
+  Begin
+    fEntryField := TfEntryField.Create(Nil);
+    fEntryField.Caption := 'Ange LastNr';
+    fEntryField.Label1.Caption := 'LastNr:';
+    Try
+      if fEntryField.ShowModal = mrOK then
+      Begin
+        AvrNo := GetFraktAvrakningsNoForLoadNo
+          (StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0), verk, VerkNo);
+        if AvrNo > 0 then
+        Begin
+          BuildSQL(AvrNo);
+          cds_LoadFreightCostDetails.Locate('LoadNo',
+            StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0), []);
+        End
+        else
+          ShowMessage('Hittar ej lastnr.');
+      End;
+    Finally
+      FreeAndNil(fEntryField); // .Free ;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acSearchAvrNrExecute(Sender: TObject);
-Var fEntryField : TfEntryField ;
+Var
+  fEntryField: TfEntryField;
 begin
- With dmModule1 do
- Begin
-  fEntryField:= TfEntryField.Create(Nil);
-  fEntryField.Caption:= 'Ange Avr.Nr' ;
-  fEntryField.Label1.Caption:= 'Avr.Nr:' ;
-  Try
-   if fEntryField.ShowModal = mrOK then
-   Begin
-    BuildSQL (StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0)) ;
-   End ;
-  Finally
-   FreeAndNil(fEntryField) ;//.Free ;
-  End ;
- End ;
+  With dmModule1 do
+  Begin
+    fEntryField := TfEntryField.Create(Nil);
+    fEntryField.Caption := 'Ange Avr.Nr';
+    fEntryField.Label1.Caption := 'Avr.Nr:';
+    Try
+      if fEntryField.ShowModal = mrOK then
+      Begin
+        BuildSQL(StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0));
+      End;
+    Finally
+      FreeAndNil(fEntryField); // .Free ;
+    End;
+  End;
 end;
 
 procedure TfrmAvrakningar.acRefreshExecute(Sender: TObject);
 begin
   With dmModule1 do
-   Begin
-    BuildSQL (-1) ;
-   End ;
+  Begin
+    BuildSQL(-1);
+  End;
 end;
 
 procedure TfrmAvrakningar.acSearchExecute(Sender: TObject);
-Var AvrNr : Integer ;
+Var
+  AvrNr: Integer;
 begin
- AvrNr  := 0 ;
- OpenAvrSearch(AvrNr) ;
- if AvrNr > 0 then
- Begin
-  BuildSQL (AvrNr) ;
-//  cds_LoadFreightCostDetails.Locate('LoadNo',StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0), []) ;
- End ;
+  AvrNr := 0;
+  OpenAvrSearch(AvrNr);
+  if AvrNr > 0 then
+  Begin
+    BuildSQL(AvrNr);
+    // cds_LoadFreightCostDetails.Locate('LoadNo',StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0), []) ;
+  End;
 end;
 
 procedure TfrmAvrakningar.cds_PropsVerkNoChange(Sender: TField);
 begin
-// acRefreshExecute(Sender) ;
+  // acRefreshExecute(Sender) ;
 end;
 
 procedure TfrmAvrakningar.cds_PropsStatusChange(Sender: TField);
 begin
   With dmModule1 do
   Begin
-   if not cds_PropsStatus.IsNull then
-    cds_LoadFreightCostHeader2.Filter:= 'STATUS = ' + cds_PropsStatus.AsString
-     else
-      cds_LoadFreightCostHeader2.Filter:= 'STATUS = -1' ;
-  End ;
+    if not cds_PropsStatus.IsNull then
+      cds_LoadFreightCostHeader2.Filter := 'STATUS = ' +
+        cds_PropsStatus.AsString
+    else
+      cds_LoadFreightCostHeader2.Filter := 'STATUS = -1';
+  End;
 end;
 
-procedure TfrmAvrakningar.LoadUserProps (const Form : String) ;
-Var x : Integer ;
- SalesGroup,
-    ClientNo,
-    MarknadNo,
-    RegionNo : Integer ;
+procedure TfrmAvrakningar.LoadUserProps(const Form: String);
+Var
+  x: Integer;
+  SalesGroup, ClientNo, MarknadNo, RegionNo: Integer;
 Begin
- cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- cds_Props.ParamByName('Form').AsString    := Form ;
- cds_Props.Active:= True ;
- if cds_Props.Eof then
- Begin
-  cds_Props.Insert ;
-  cds_Props.Post ;
- End ;
-End ;
+  cds_Props.ParamByName('UserID').AsInteger := Thisuser.UserID;
+  cds_Props.ParamByName('Form').AsString := Form;
+  cds_Props.Active := True;
+  if cds_Props.Eof then
+  Begin
+    cds_Props.Insert;
+    cds_Props.Post;
+  End;
+End;
 
-procedure TfrmAvrakningar.SaveUserProps (const Form : String) ;
-Var x : Integer ;
+procedure TfrmAvrakningar.SaveUserProps(const Form: String);
+Var
+  x: Integer;
 Begin
-// cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
-// cds_Props.ParamByName('Form').AsString    := Form ;
-// cds_Props.Active:= True ;
- if cds_Props.Eof then
- Begin
-  cds_Props.Insert ;
-  cds_PropsForm.AsString    := Form ;
-  cds_PropsUserID.AsInteger := ThisUser.UserID ;
- End ;
-// else
-//  cds_Props.Edit ;
+  // cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
+  // cds_Props.ParamByName('Form').AsString    := Form ;
+  // cds_Props.Active:= True ;
+  if cds_Props.Eof then
+  Begin
+    cds_Props.Insert;
+    cds_PropsForm.AsString := Form;
+    cds_PropsUserID.AsInteger := Thisuser.UserID;
+  End;
+  // else
+  // cds_Props.Edit ;
 
   if cds_Props.State in [dsEdit, dsInsert] then
-   cds_Props.Post ;
+    cds_Props.Post;
 
   if cds_Props.ChangeCount > 0 then
   Begin
-   cds_Props.ApplyUpdates(0) ;
-   cds_Props.CommitUpdates ;
-  End ;
+    cds_Props.ApplyUpdates(0);
+    cds_Props.CommitUpdates;
+  End;
 
- cds_Props.Active:= False ;
-End ;
+  cds_Props.Active := False;
+End;
 
 procedure TfrmAvrakningar.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
- cds_PropsUserID.AsInteger  := ThisUser.UserID ;
- cds_PropsForm.AsString     := Self.Caption ;
+  cds_PropsUserID.AsInteger := Thisuser.UserID;
+  cds_PropsForm.AsString := Self.Caption;
 end;
 
 end.

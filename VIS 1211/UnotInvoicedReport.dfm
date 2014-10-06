@@ -18,8 +18,6 @@ object fnotInvoicedReport: TfnotInvoicedReport
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object CRViewer91: TCrystalActiveXReportViewer
@@ -54,7 +52,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 96
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -71,7 +69,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 121
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -165,7 +163,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
     Left = 384
     Top = 112
     Bitmap = {
-      494C010107000900040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107000900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1105,8 +1103,8 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')

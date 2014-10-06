@@ -1,6 +1,5 @@
 program VIS;
 
-
 uses
   Forms,
   fMain in 'fMain.pas' {frmMain},
@@ -104,7 +103,6 @@ uses
   uFreightAvrSearch in 'uFreightAvrSearch.pas' {fFreightAvrSearch},
   uSelectLONoByInvoiceSerie in 'uSelectLONoByInvoiceSerie.pas' {fSelectLONoByInvoiceSerie},
   uLoadOrderSearch in 'uLoadOrderSearch.pas' {fLoadOrderSearch},
-  uFtpParam in 'uFtpParam.pas' {fFtpParam},
   uSelectBTHorBTB in 'uSelectBTHorBTB.pas' {fSelectBTHorBTB},
   uSelectFSFileName in 'uSelectFSFileName.pas' {fSelectFSFileName},
   uKundspecifika in 'uKundspecifika.pas' {fKundspecifika},
@@ -156,6 +154,7 @@ uses
   uPrintTest in 'uPrintTest.pas' {fPrintTest};
 
 {$R *.res}
+
 begin
   Application.Initialize;
   Application.Title := 'VIS';
@@ -165,5 +164,6 @@ begin
   Application.CreateForm(TdmsContact, dmsContact);
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(Tdm_UserProps, dm_UserProps);
-  Application.Run ;
+  Application.Run;
+
 end.

@@ -44,7 +44,7 @@ object FormCarrier: TFormCarrier
     ExplicitWidth = 348
     ExplicitHeight = 414
     object grdCarrierDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.dsCarrier
       DataController.KeyFieldNames = 'CarrierNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -147,7 +147,7 @@ object FormCarrier: TFormCarrier
     Left = 152
     Top = 136
     Bitmap = {
-      494C010108000900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101080009000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

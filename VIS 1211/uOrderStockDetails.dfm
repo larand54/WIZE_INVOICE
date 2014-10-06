@@ -58,6 +58,7 @@ object fOrderStockDetails: TfOrderStockDetails
     ExplicitWidth = 1071
     ExplicitHeight = 564
     object grdOrderStockDetailsDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
       Navigator.Buttons.PriorPage.Visible = True
       Navigator.Buttons.Prior.Visible = True
@@ -276,8 +277,10 @@ object fOrderStockDetails: TfOrderStockDetails
     Top = 224
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdOrderStockDetails
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -294,6 +297,7 @@ object fOrderStockDetails: TfOrderStockDetails
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

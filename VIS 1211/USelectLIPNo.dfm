@@ -52,10 +52,6 @@ object fSelectLIPNo: TfSelectLIPNo
     Height = 94
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 16
-    ExplicitTop = 1
-    ExplicitWidth = 626
-    ExplicitHeight = 259
     object cxLabel1: TcxLabel
       Left = 18
       Top = 17
@@ -132,7 +128,7 @@ object fSelectLIPNo: TfSelectLIPNo
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

@@ -3,7 +3,8 @@ unit uAvdelning;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBaseFormA, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Vcl.Menus, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -23,14 +24,19 @@ uses
   cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
   dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, dxPSCore, dxPScxCommon,
+  dxSkinsdxRibbonPainter, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, dxPSCore,
+  dxPScxCommon,
   Vcl.ActnList, Vcl.ImgList, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   Vcl.StdCtrls, cxButtons, Vcl.ExtCtrls, cxContainer, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, SqlTimSt,
-  cxLabel, cxGridCustomPopupMenu, cxGridPopupMenu ;
+  cxLabel, cxGridCustomPopupMenu, cxGridPopupMenu, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, cxNavigator, dxPScxSSLnk, System.Actions;
 
 type
   TfAvdelning = class(TfrmBaseFormA)
@@ -68,56 +74,57 @@ type
     { Public declarations }
   end;
 
-//var fAvdelning: TfAvdelning;
+  // var fAvdelning: TfAvdelning;
 
 implementation
 
 {$R *.dfm}
 
-uses dmcVidaInvoice, vidauser ;
+uses dmcVidaInvoice, vidauser;
 
 procedure TfAvdelning.acAddRecordUpdate(Sender: TObject);
 begin
   inherited;
- acAddRecord.Enabled  := (mtClient.Active) //and (mtClient.RecordCount > 0)
- and (mtClientClientNo.AsInteger > 0) ;
+  acAddRecord.Enabled := (mtClient.Active) // and (mtClient.RecordCount > 0)
+    and (mtClientClientNo.AsInteger > 0);
 end;
 
 procedure TfAvdelning.acRefreshExecute(Sender: TObject);
 begin
   inherited;
- with dmVidaInvoice do
- Begin
-   cds_Avdelning.Active := False ;
-   cds_Avdelning.ParamByName('ClientNo').AsInteger  := mtClientClientNo.AsInteger ;
-   cds_Avdelning.Active := True ;
- End;
+  with dmVidaInvoice do
+  Begin
+    cds_Avdelning.Active := False;
+    cds_Avdelning.ParamByName('ClientNo').AsInteger :=
+      mtClientClientNo.AsInteger;
+    cds_Avdelning.Active := True;
+  End;
 end;
 
 procedure TfAvdelning.cds_AvdelningAfterInsert(DataSet: TDataSet);
 begin
   inherited;
- cds_AvdelningClientNo.AsInteger          := mtClientClientNo.AsInteger ;
- cds_AvdelningCreatedUser.AsInteger       := ThisUser.UserID ;
- cds_AvdelningDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(now) ;
+  cds_AvdelningClientNo.AsInteger := mtClientClientNo.AsInteger;
+  cds_AvdelningCreatedUser.AsInteger := ThisUser.UserID;
+  cds_AvdelningDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
 end;
 
 procedure TfAvdelning.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   inherited;
- mtClient.Active  := False ;
+  mtClient.Active := False;
 end;
 
 procedure TfAvdelning.FormCreate(Sender: TObject);
 begin
   inherited;
- mtClient.Active  := True ;
+  mtClient.Active := True;
 end;
 
 procedure TfAvdelning.mtClientClientNoChange(Sender: TField);
 begin
   inherited;
- acRefreshExecute(Sender) ;
+  acRefreshExecute(Sender);
 end;
 
 end.

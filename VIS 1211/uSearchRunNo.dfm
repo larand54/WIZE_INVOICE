@@ -1,9 +1,9 @@
 object fSearchRunNo: TfSearchRunNo
   Left = 223
   Top = 107
-  Width = 1002
-  Height = 562
   Caption = 'S'#246'k k'#246'rnr'
+  ClientHeight = 524
+  ClientWidth = 986
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object fSearchRunNo: TfSearchRunNo
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 994
+    Width = 986
     Height = 41
     Align = alTop
     TabOrder = 0
@@ -56,10 +56,12 @@ object fSearchRunNo: TfSearchRunNo
   object Panel2: TPanel
     Left = 0
     Top = 41
-    Width = 994
-    Height = 444
+    Width = 986
+    Height = 433
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 994
+    ExplicitHeight = 444
     object Panel3: TPanel
       Left = 1
       Top = 1
@@ -75,7 +77,7 @@ object fSearchRunNo: TfSearchRunNo
         Align = alClient
         TabOrder = 0
         object grdrunNosDBTableView1: TcxGridDBTableView
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_RunNos
           DataController.KeyFieldNames = 'K'#246'rnr'
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -127,7 +129,7 @@ object fSearchRunNo: TfSearchRunNo
         Align = alClient
         TabOrder = 0
         object grdRunProdsDBTableView1: TcxGridDBTableView
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_RunProds
           DataController.KeyFieldNames = 'ProductNo'
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -152,26 +154,30 @@ object fSearchRunNo: TfSearchRunNo
   end
   object Panel4: TPanel
     Left = 0
-    Top = 485
-    Width = 994
+    Top = 474
+    Width = 986
     Height = 50
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 485
+    ExplicitWidth = 994
     object bbOK: TBitBtn
       Left = 384
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object bbCancel: TBitBtn
       Left = 480
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object mtProps: TkbmMemTable
@@ -186,7 +192,7 @@ object fSearchRunNo: TfSearchRunNo
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '5.50'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

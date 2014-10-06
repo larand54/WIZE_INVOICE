@@ -1,24 +1,24 @@
 // =============================================================================
 //
-//  FILE           :  uEncode.pas
+// FILE           :  uEncode.pas
 //
-//  LANGUAGE       :  Delphi / Object Pascal
+// LANGUAGE       :  Delphi / Object Pascal
 //
-//  ENVIRONMENT    :  Target is any 32-bit Windows environment.
-//                    Written & tested using Windows NT 4.0
+// ENVIRONMENT    :  Target is any 32-bit Windows environment.
+// Written & tested using Windows NT 4.0
 //
-//  SYSTEM         :  Vida Information System
+// SYSTEM         :  Vida Information System
 //
-//  PURPOSE        :  Encode / Decode user names & passwords stored in the
-//                    registry.
+// PURPOSE        :  Encode / Decode user names & passwords stored in the
+// registry.
 //
-//  NOTES          :  This unit is copied unchanged from the original
-//                    VidaSys project.
+// NOTES          :  This unit is copied unchanged from the original
+// VidaSys project.
 //
 // -----------------------------------------------------------------------------
-//  DATE        AUTHOR    REF     COMMENTS
+// DATE        AUTHOR    REF     COMMENTS
 // -----------------------------------------------------------------------------
-//              DMc       001
+// DMc       001
 //
 // -----------------------------------------------------------------------------
 unit uEncode;
@@ -29,19 +29,18 @@ uses
   Classes,
   SysUtils;
 
-
 type
   TVDEncode = class(TObject)
   private
-    FRegCode: array [0..15] of String;
-    function GetCharAt(cChar: Char) : integer;
-    function ReadInteger(PStr: PChar; var Value: integer) : integer;
+    FRegCode: array [0 .. 15] of String;
+    function GetCharAt(cChar: Char): integer;
+    function ReadInteger(PStr: PChar; var Value: integer): integer;
   public
     constructor Create;
-    function Encode(Password: String) : String;
-    function IsValid(EncodeStr, Password: String) : Boolean;
-    function DecodeStr(Str, Password: String) : String;
-    function EncodeStr(Str, Password: String) : String;
+    function Encode(Password: String): String;
+    function IsValid(EncodeStr, Password: String): Boolean;
+    function DecodeStr(Str, Password: String): String;
+    function EncodeStr(Str, Password: String): String;
   end;
 
 implementation
@@ -67,39 +66,25 @@ begin
   FRegCode[15] := '9sjeuiqozalxmnvbaq13ospdgkdjxhckaw3dj'
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.GetCharAt(cChar: Char) : integer;
+function TVDEncode.GetCharAt(cChar: Char): integer;
 begin
   Result := 0;
-  if (cChar >= '0')
-     and
-     (cChar <= '9') then
+  if (cChar >= '0') and (cChar <= '9') then
     Result := integer(cChar) - integer('0');
-  if (cChar >= 'A')
-     and
-     (cChar <= 'Z') then
+  if (cChar >= 'A') and (cChar <= 'Z') then
     Result := 10 + (integer(cChar) - integer('A'));
-  if (cChar >= 'a')
-     and
-     (cChar <= 'z') then
+  if (cChar >= 'a') and (cChar <= 'z') then
     Result := 36 + (integer(cChar) - integer('a'))
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.Encode(Password: String) : String;
+function TVDEncode.Encode(Password: String): String;
 var
-  i,
-  Length: integer;
-  nAt,
-  nCol,
-  nRow,
-  nVal,
-  nValCount,
-  nAtCount: integer;
+  i, Length: integer;
+  nAt, nCol, nRow, nVal, nValCount, nAtCount: integer;
   PPassword: PChar;
-  FPassArray: array [0..20] of Char;
+  FPassArray: array [0 .. 20] of Char;
 begin
   Length := StrLen(PChar(Password));
   PPassword := PChar(Password);
@@ -127,20 +112,16 @@ begin
   end;
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.IsValid(EncodeStr, Password: String) : Boolean;
+function TVDEncode.IsValid(EncodeStr, Password: String): Boolean;
 begin
-  Result := StrComp(PChar(Encode(Password)), PChar(EncodeStr)) =
-            0
+  Result := StrComp(PChar(Encode(Password)), PChar(EncodeStr)) = 0
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.ReadInteger(PStr: PChar; var Value: integer) : integer;
+function TVDEncode.ReadInteger(PStr: PChar; var Value: integer): integer;
 var
-  FStrLen,
-  i: integer;
+  FStrLen, i: integer;
   tStr: String;
 begin
   FStrLen := StrLen(PStr);
@@ -148,14 +129,10 @@ begin
   begin
     if PStr[i] = ',' then
       Break;
-    if (PStr[i] >= '0')
-       and
-       (PStr[i] <= '9') then
+    if (PStr[i] >= '0') and (PStr[i] <= '9') then
       tStr := tStr + PStr[i]
   end;
-  if (StrLen(PChar(tStr)) <= 0)
-      or
-     (StrLen(PChar(tStr)) >= 4) then
+  if (StrLen(PChar(tStr)) <= 0) or (StrLen(PChar(tStr)) >= 4) then
     Value := 0
   else
     Value := StrToInt(tStr);
@@ -163,17 +140,12 @@ begin
   Result := i + 1
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.DecodeStr(Str, Password: String) : String;
+function TVDEncode.DecodeStr(Str, Password: String): String;
 var
-  tValue,
-  i,
-  j: integer;
-  PStr,
-  PPassword: PChar;
-  FStrLength,
-  FPassLength: integer;
+  tValue, i, j: integer;
+  PStr, PPassword: PChar;
+  FStrLength, FPassLength: integer;
 begin
   PStr := PChar(Str);
   PPassword := PChar(Password);
@@ -205,16 +177,12 @@ begin
   end;
 end;
 
-
 // -------------------------------------------------------------------------------
-function TVDEncode.EncodeStr(Str, Password: String) : String;
+function TVDEncode.EncodeStr(Str, Password: String): String;
 var
-  i,
-  j: integer;
-  PStr,
-  PPassword: PChar;
-  FStrLength,
-  FPassLength: integer;
+  i, j: integer;
+  PStr, PPassword: PChar;
+  FStrLength, FPassLength: integer;
 begin
   PStr := PChar(Str);
   PPassword := PChar(Password);
@@ -230,14 +198,11 @@ begin
   j := 0;
   for i := 0 to FStrLength - 1 do
   begin
-    Result := Result + IntToStr(integer(PStr[i]) + integer(PPassword[j])) +
-              ',';
+    Result := Result + IntToStr(integer(PStr[i]) + integer(PPassword[j])) + ',';
     j := j + 1;
     if j >= FPassLength then
       j := 0
   end;
 end;
 
-
 end.
-

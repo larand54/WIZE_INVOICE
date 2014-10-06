@@ -19,12 +19,13 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
   TextHeight = 13
   object PanelKontraktHuvud: TPanel
     Left = 0
-    Top = 44
+    Top = 46
     Width = 1007
     Height = 144
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = 44
     object dxPageControl1: TcxPageControl
       Left = 0
       Top = 0
@@ -42,12 +43,16 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       Properties.CustomButtons.Buttons = <>
       Properties.HideTabs = True
       Properties.TabWidth = 150
-      ClientRectBottom = 143
-      ClientRectLeft = 1
-      ClientRectRight = 1006
-      ClientRectTop = 1
+      ClientRectBottom = 140
+      ClientRectLeft = 4
+      ClientRectRight = 1003
+      ClientRectTop = 4
       object dxTSMain: TcxTabSheet
         Caption = 'Load'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 32
           Top = 60
@@ -122,11 +127,13 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
   end
   object Panel35: TPanel
     Left = 0
-    Top = 188
+    Top = 190
     Width = 1007
-    Height = 512
+    Height = 510
     Align = alClient
     TabOrder = 1
+    ExplicitTop = 188
+    ExplicitHeight = 512
     object Panel4: TPanel
       Left = 1
       Top = 1
@@ -259,14 +266,14 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
     Left = 0
     Top = 0
     Width = 1007
-    Height = 44
+    Height = 46
     Align = dalTop
     BarManager = dxBarManager22
   end
   object dxBarManager22: TdxBarManager
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Microsoft Sans Serif'
     Font.Style = []
     Categories.Strings = (
@@ -349,7 +356,7 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
     Left = 216
     Top = 272
     Bitmap = {
-      494C010121002500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010121002500080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000D800000001002000000000000044
       0100000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3063,7 +3070,7 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

@@ -24,15 +24,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TfrmStickyNote.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfrmStickyNote.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfrmStickyNote.FormDestroy(Sender: TObject);
 begin
- frmStickyNote:= nil ;
+  frmStickyNote := nil;
 end;
 
 end.

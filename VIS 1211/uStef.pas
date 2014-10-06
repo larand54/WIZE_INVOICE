@@ -1,12 +1,13 @@
-unit uStef ;
+unit uStef;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, dxBar, dxBarExtItems, StdCtrls,ImgList, OleServer, CRAXDDRT_TLB, OleCtrls,
-  Menus,Buttons, ComCtrls,
-  CrystalActiveXReportViewerLib11_TLB, cxControls, cxContainer, cxEdit,
+  Dialogs, ExtCtrls, dxBar, dxBarExtItems, StdCtrls, ImgList, OleServer,
+  CRAXDRT_TLB, OleCtrls,
+  Menus, Buttons, ComCtrls,
+  CrystalActiveXReportViewerLib11_5_TLB, cxControls, cxContainer, cxEdit,
   cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, ActnList, cxClasses,
   cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
@@ -19,7 +20,9 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxCore, cxDateUtils ;
+  dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxCore, cxDateUtils,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TfStef = class(TForm)
@@ -72,17 +75,15 @@ type
     procedure acPEFCReportExecute(Sender: TObject);
     procedure acExitExecute(Sender: TObject);
     procedure acFSCExecute(Sender: TObject);
-   private
+  private
     { Private declarations }
-    report : IReport ;
-    Vol_By_PkgCode,
-    Vol_By_PkgNo,
-    Vol_By_Length_Gen : Boolean ;
-    OLD_peLengthFormat : Integer ;
-    function  InitiateReport(const ReportName: String) : Boolean ;
+    report: IReport;
+    Vol_By_PkgCode, Vol_By_PkgNo, Vol_By_Length_Gen: Boolean;
+    OLD_peLengthFormat: Integer;
+    function InitiateReport(const ReportName: String): Boolean;
   public
     { Public declarations }
-    Procedure CreateCo(Sender: TObject;CompanyNo: Integer);
+    Procedure CreateCo(Sender: TObject; CompanyNo: Integer);
   end;
 
 var
@@ -90,135 +91,139 @@ var
 
 implementation
 
-uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmsVidaSystem ;
+uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmsVidaSystem;
 
 {$R *.dfm}
 
-function TfStef.InitiateReport(const ReportName: String) : Boolean ;
-  var HostName, Database, UserName, Password, spath: String ;
-  var iSecurity : integer ;
+function TfStef.InitiateReport(const ReportName: String): Boolean;
+var
+  HostName, Database, UserName, Password, spath: String;
+var
+  iSecurity: Integer;
 begin
- dmsSystem.GetLogonParams (HostName, Database, UserName, Password, spath, iSecurity) ;
+  dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath,
+    iSecurity);
 
- Result:= True ;
- if not(FileExists(sPath+ReportName)) then
- Begin
-  ShowMessage('Saknar crystal reports fil.  Sökväg och filnamn : '+sPath+ReportName) ;
-  Result:= False ;
-  Exit ;
- End ;
+  Result := True;
+  if not(FileExists(spath + ReportName)) then
+  Begin
+    ShowMessage('Saknar crystal reports fil.  Sökväg och filnamn : ' + spath +
+      ReportName);
+    Result := False;
+    Exit;
+  End;
 
- report   := Application1.OpenReport(sPath+ReportName, crOpenReportByTempCopy) ;
- report.Database.Tables.Item[1].SetLogOnInfo(HostName, Database, UserName, Password);
- Caption  := sPath+ReportName ;
+  report := Application1.OpenReport(spath + ReportName, crOpenReportByTempCopy);
+  report.Database.Tables.Item[1].SetLogOnInfo(HostName, Database, UserName,
+    Password);
+  Caption := spath + ReportName;
 End;
 
-Procedure TfStef.CreateCo(Sender: TObject;CompanyNo: Integer);
+Procedure TfStef.CreateCo(Sender: TObject; CompanyNo: Integer);
 var
-  Save_Cursor:TCursor;
-  x : Integer ;
+  Save_Cursor: TCursor;
+  x: Integer;
 begin
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crHourGlass;    { Show hourglass cursor }
- Try
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  Try
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
 procedure TfStef.lbExitClick(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
-procedure TfStef.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfStef.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfStef.lbPkgNoReportClick(Sender: TObject);
 begin
- if InitiateReport('INV_BY_PKGNo.RPT') then
- Begin
-  report.ParameterFields.Item[1].AddCurrentValue(ThisUser.UserID);
-  CRViewer91.ReportSource := Report ;
-  CRViewer91.ViewReport ;
- End ;
+  if InitiateReport('INV_BY_PKGNo.RPT') then
+  Begin
+    report.ParameterFields.Item[1].AddCurrentValue(ThisUser.UserID);
+    CRViewer91.ReportSource := report;
+    CRViewer91.ViewReport;
+  End;
 end;
 
 procedure TfStef.FormDestroy(Sender: TObject);
 begin
- fStef:= Nil ;
+  fStef := Nil;
 end;
 
 procedure TfStef.FormShow(Sender: TObject);
 begin
- dtStart.Date := Date ;
- dtStop.Date  := Date ;
+  dtStart.Date := Date;
+  dtStop.Date := Date;
 end;
 
 procedure TfStef.acStefReportExecute(Sender: TObject);
 begin
- if InitiateReport('STEF_I.RPT') then
- Begin
-  report.ParameterFields.Item[1].AddCurrentValue(dtStart.Date);
-  report.ParameterFields.Item[2].AddCurrentValue(dtStop.Date);
-  CRViewer91.ReportSource := Report ;
-  CRViewer91.ViewReport ;
- End ;
+  if InitiateReport('STEF_I.RPT') then
+  Begin
+    report.ParameterFields.Item[1].AddCurrentValue(dtStart.Date);
+    report.ParameterFields.Item[2].AddCurrentValue(dtStop.Date);
+    CRViewer91.ReportSource := report;
+    CRViewer91.ViewReport;
+  End;
 end;
 
 procedure TfStef.acStefPerKontraktReportExecute(Sender: TObject);
 begin
- if InitiateReport('STEF_Per_Kontrakt.RPT') then
- Begin
-  report.ParameterFields.Item[1].AddCurrentValue(dtStart.Date);
-  report.ParameterFields.Item[2].AddCurrentValue(dtStop.Date);
-  CRViewer91.ReportSource := Report ;
-  CRViewer91.ViewReport ;
- End ;
+  if InitiateReport('STEF_Per_Kontrakt.RPT') then
+  Begin
+    report.ParameterFields.Item[1].AddCurrentValue(dtStart.Date);
+    report.ParameterFields.Item[2].AddCurrentValue(dtStop.Date);
+    CRViewer91.ReportSource := report;
+    CRViewer91.ViewReport;
+  End;
 end;
 
 procedure TfStef.acPEFCReportExecute(Sender: TObject);
- var  StartYear, StartMonth, StartDay   : Word ;
-      EndYear, EndMonth, EndDay         : Word ;
+var
+  StartYear, StartMonth, StartDay: Word;
+  EndYear, EndMonth, EndDay: Word;
 begin
- DecodeDate(dtStart.Date, StartYear, StartMonth, StartDay) ;
- DecodeDate(dtStop.Date, EndYear, EndMonth, EndDay) ;
- if InitiateReport('PEFC_Statistik.rpt') then
- Begin
-  report.ParameterFields.Item[1].AddCurrentValue(StartYear);
-  report.ParameterFields.Item[2].AddCurrentValue(StartMonth);
-  report.ParameterFields.Item[3].AddCurrentValue(EndYear);
-  report.ParameterFields.Item[4].AddCurrentValue(EndMonth);
-  CRViewer91.ReportSource := Report ;
-  CRViewer91.ViewReport ;
- End ;
+  DecodeDate(dtStart.Date, StartYear, StartMonth, StartDay);
+  DecodeDate(dtStop.Date, EndYear, EndMonth, EndDay);
+  if InitiateReport('PEFC_Statistik.rpt') then
+  Begin
+    report.ParameterFields.Item[1].AddCurrentValue(StartYear);
+    report.ParameterFields.Item[2].AddCurrentValue(StartMonth);
+    report.ParameterFields.Item[3].AddCurrentValue(EndYear);
+    report.ParameterFields.Item[4].AddCurrentValue(EndMonth);
+    CRViewer91.ReportSource := report;
+    CRViewer91.ViewReport;
+  End;
 end;
 
 procedure TfStef.acExitExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfStef.acFSCExecute(Sender: TObject);
- var  StartYear, StartMonth, StartDay   : Word ;
-      EndYear, EndMonth, EndDay         : Word ;
+var
+  StartYear, StartMonth, StartDay: Word;
+  EndYear, EndMonth, EndDay: Word;
 begin
- DecodeDate(dtStart.Date, StartYear, StartMonth, StartDay) ;
- DecodeDate(dtStop.Date, EndYear, EndMonth, EndDay) ;
- if InitiateReport('FSC_Statistik.rpt') then
- Begin
-  report.ParameterFields.Item[1].AddCurrentValue(StartYear);
-  report.ParameterFields.Item[2].AddCurrentValue(StartMonth);
-  report.ParameterFields.Item[3].AddCurrentValue(EndYear);
-  report.ParameterFields.Item[4].AddCurrentValue(EndMonth);
-  CRViewer91.ReportSource := Report ;
-  CRViewer91.ViewReport ;
- End ;
+  DecodeDate(dtStart.Date, StartYear, StartMonth, StartDay);
+  DecodeDate(dtStop.Date, EndYear, EndMonth, EndDay);
+  if InitiateReport('FSC_Statistik.rpt') then
+  Begin
+    report.ParameterFields.Item[1].AddCurrentValue(StartYear);
+    report.ParameterFields.Item[2].AddCurrentValue(StartMonth);
+    report.ParameterFields.Item[3].AddCurrentValue(EndYear);
+    report.ParameterFields.Item[4].AddCurrentValue(EndMonth);
+    CRViewer91.ReportSource := report;
+    CRViewer91.ViewReport;
+  End;
 end;
 
 end.
-
-

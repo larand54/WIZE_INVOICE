@@ -496,7 +496,7 @@ object frmPackageEntry: TfrmPackageEntry
         Left = 1
         Top = 1
         Width = 449
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -550,7 +550,7 @@ object frmPackageEntry: TfrmPackageEntry
         Left = 1
         Top = 1
         Width = 66
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -559,8 +559,8 @@ object frmPackageEntry: TfrmPackageEntry
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -702,7 +702,7 @@ object frmPackageEntry: TfrmPackageEntry
     Left = 392
     Top = 128
     Bitmap = {
-      494C010107000900040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107000900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1578,7 +1578,7 @@ object frmPackageEntry: TfrmPackageEntry
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

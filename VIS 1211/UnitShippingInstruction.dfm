@@ -115,9 +115,9 @@ inherited frmShippingInstruction: TfrmShippingInstruction
       ExplicitHeight = 67
       inherited dxBarDockControl1: TdxBarDockControl
         Width = 685
-        Height = 44
+        Height = 46
         ExplicitWidth = 685
-        ExplicitHeight = 44
+        ExplicitHeight = 46
       end
     end
     inherited Panel8: TPanel
@@ -174,14 +174,14 @@ inherited frmShippingInstruction: TfrmShippingInstruction
       ExplicitLeft = 1064
       ExplicitHeight = 67
       inherited dxBarDockControl2: TdxBarDockControl
-        Height = 44
-        ExplicitHeight = 44
+        Height = 46
+        ExplicitHeight = 46
       end
     end
   end
   inherited imglistActions: TImageList
     Bitmap = {
-      494C010109000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010109000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

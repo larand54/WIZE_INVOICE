@@ -37,7 +37,7 @@ object fKontoLogik: TfKontoLogik
         Left = 1
         Top = 1
         Width = 431
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -53,7 +53,7 @@ object fKontoLogik: TfKontoLogik
         Left = 1
         Top = 1
         Width = 78
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -416,8 +416,8 @@ object fKontoLogik: TfKontoLogik
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -599,8 +599,10 @@ object fKontoLogik: TfKontoLogik
     Top = 193
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdKontoLogik
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -617,6 +619,7 @@ object fKontoLogik: TfKontoLogik
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

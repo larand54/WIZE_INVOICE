@@ -33,6 +33,7 @@ object frmAttestInvoice: TfrmAttestInvoice
     ParentFont = False
     TabOrder = 0
     Properties.ActivePage = tsInvoiceHead
+    Properties.CustomButtons.Buttons = <>
     Properties.TabWidth = 100
     ClientRectBottom = 128
     ClientRectLeft = 4
@@ -41,6 +42,10 @@ object frmAttestInvoice: TfrmAttestInvoice
     object tsInvoiceHead: TcxTabSheet
       Caption = '&FAKTURA'
       ImageIndex = 16
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         1076
         102)
@@ -373,7 +378,6 @@ object frmAttestInvoice: TfrmAttestInvoice
         Items.Strings = (
           'Deb'
           'Kre')
-        ParentBackground = True
         ParentColor = False
         ParentFont = False
         ReadOnly = True
@@ -598,6 +602,7 @@ object frmAttestInvoice: TfrmAttestInvoice
         Align = alRight
         TabOrder = 0
         object grdLevAdrDBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dmVidaInvoice.dsInvoiceShipToAddress_II
           DataController.KeyFieldNames = 'Reference'
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -1709,6 +1714,7 @@ object frmAttestInvoice: TfrmAttestInvoice
       Align = alClient
       TabOrder = 0
       object grdInvDtlDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
         Navigator.Buttons.First.Visible = True
         Navigator.Buttons.PriorPage.Visible = True
         Navigator.Buttons.Prior.Visible = True
@@ -1876,6 +1882,7 @@ object frmAttestInvoice: TfrmAttestInvoice
       Control = Panel7
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object Panel7: TPanel
       Left = 1
@@ -2116,6 +2123,7 @@ object frmAttestInvoice: TfrmAttestInvoice
         Align = alClient
         TabOrder = 1
         object grdAttDBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
           Navigator.Buttons.First.Visible = True
           Navigator.Buttons.PriorPage.Visible = True
           Navigator.Buttons.Prior.Visible = True
@@ -2549,7 +2557,7 @@ object frmAttestInvoice: TfrmAttestInvoice
     Left = 272
     Top = 432
     Bitmap = {
-      494C01010E0013000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E001300100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

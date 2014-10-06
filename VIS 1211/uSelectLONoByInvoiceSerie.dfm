@@ -1,9 +1,9 @@
 object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
   Left = 229
   Top = 107
-  Width = 436
-  Height = 339
   Caption = 'Multipla fakturanr'
+  ClientHeight = 301
+  ClientWidth = 420
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,44 +17,51 @@ object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 428
+    Width = 420
     Height = 41
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 428
   end
   object Panel2: TPanel
     Left = 0
-    Top = 271
-    Width = 428
+    Top = 260
+    Width = 420
     Height = 41
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 271
+    ExplicitWidth = 428
     object BitBtn1: TBitBtn
       Left = 144
       Top = 8
       Width = 75
       Height = 28
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 224
       Top = 8
       Width = 75
       Height = 28
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object grdSelectLONo: TcxGrid
     Left = 0
     Top = 41
-    Width = 428
-    Height = 230
+    Width = 420
+    Height = 219
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 428
+    ExplicitHeight = 230
     object grdSelectLONoDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.ds_GetLOByInvNo
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>

@@ -1,10 +1,10 @@
 object FormEnterInvoiceNo: TFormEnterInvoiceNo
   Left = 592
   Top = 542
-  Width = 353
-  Height = 165
   ActiveControl = eFakturanr
   Caption = 'Enter Invoice Number'
+  ClientHeight = 127
+  ClientWidth = 337
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,18 @@ object FormEnterInvoiceNo: TFormEnterInvoiceNo
     Top = 96
     Width = 75
     Height = 25
-    TabOrder = 2
     Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
   end
   object BitBtn2: TBitBtn
     Left = 176
     Top = 96
     Width = 75
     Height = 25
-    TabOrder = 3
     Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
   end
   object eFakturanr: TcxMaskEdit
     Left = 104

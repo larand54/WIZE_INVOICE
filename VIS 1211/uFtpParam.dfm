@@ -1,9 +1,9 @@
 object fFtpParam: TfFtpParam
   Left = 258
   Top = 98
-  Width = 1059
-  Height = 847
   Caption = 'FTP setup'
+  ClientHeight = 809
+  ClientWidth = 1043
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,15 @@ object fFtpParam: TfFtpParam
   TextHeight = 13
   object grdFTP: TcxGrid
     Left = 0
-    Top = 44
-    Width = 1051
+    Top = 46
+    Width = 1043
     Height = 221
     Align = alTop
     TabOrder = 0
     LookAndFeel.Kind = lfFlat
     object grdFTPDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
-      NavigatorButtons.Cancel.Visible = True
+      Navigator.Buttons.CustomButtons = <>
+      Navigator.Buttons.Cancel.Visible = True
       DataController.DataSource = dmsSystem.ds_FtpParam
       DataController.KeyFieldNames = 'ConnectionNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -112,15 +112,15 @@ object fFtpParam: TfFtpParam
   object dxBarDockControl1: TdxBarDockControl
     Left = 0
     Top = 0
-    Width = 1051
-    Height = 44
+    Width = 1043
+    Height = 46
     Align = dalTop
     BarManager = dxBarManager1
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 265
-    Width = 1051
+    Top = 267
+    Width = 1043
     Height = 8
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
@@ -130,9 +130,9 @@ object fFtpParam: TfFtpParam
   end
   object Panel1: TPanel
     Left = 0
-    Top = 273
-    Width = 1051
-    Height = 547
+    Top = 275
+    Width = 1043
+    Height = 534
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 7
@@ -278,10 +278,10 @@ object fFtpParam: TfFtpParam
       Width = 321
     end
     object Panel2: TPanel
-      Left = 537
+      Left = 529
       Top = 0
       Width = 514
-      Height = 547
+      Height = 534
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 20
@@ -355,7 +355,7 @@ object fFtpParam: TfFtpParam
         Left = 0
         Top = 288
         Width = 514
-        Height = 259
+        Height = 246
         Align = alClient
         ItemHeight = 13
         Sorted = True
@@ -438,8 +438,8 @@ object fFtpParam: TfFtpParam
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -566,13 +566,5 @@ object fFtpParam: TfFtpParam
   object cxShellBrowserDialog1: TcxShellBrowserDialog
     Left = 472
     Top = 423
-  end
-  object clFTP: TclFtp
-    PassiveMode = True
-    OnSendCommand = clFTPSendCommand
-    OnReceiveResponse = clFTPReceiveResponse
-    OnDirectoryListing = clFTPDirectoryListing
-    Left = 528
-    Top = 178
   end
 end

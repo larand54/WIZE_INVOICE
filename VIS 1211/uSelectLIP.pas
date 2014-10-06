@@ -18,7 +18,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
 
 type
   TfSelectLIP = class(TForm)
@@ -43,53 +44,53 @@ type
     { Private declarations }
   public
     { Public declarations }
-    LO_CUSTOMERNO, LIPNo : Integer ;
-    procedure LoadDefaultLager ;
+    LO_CUSTOMERNO, LIPNo: Integer;
+    procedure LoadDefaultLager;
   end;
 
-//var fSelectLIP: TfSelectLIP;
+  // var fSelectLIP: TfSelectLIP;
 
 implementation
 
-uses dmsVidaContact, VidaUser, VidaConst , dmc_UserProps;
+uses dmsVidaContact, VidaUser, VidaConst, dmc_UserProps;
 
 {$R *.dfm}
 
-procedure TfSelectLIP.LoadDefaultLager ;
-Var y, x, PIPNo : Integer ;
+procedure TfSelectLIP.LoadDefaultLager;
+Var
+  y, x, PIPNo: Integer;
 begin
- mtProps.Active := True ;
- PIPNo          :=  dmsContact.GetPIPNo(LIPNo) ;
+  mtProps.Active := True;
+  PIPNo := dmsContact.GetPIPNo(LIPNo);
 
- dm_UserProps.Refresh_cds_PIP2(LO_CUSTOMERNO, LO_CUSTOMERNO) ;
-// dm_UserProps.SetPIPNo(PIPNo) ;
+  dm_UserProps.Refresh_cds_PIP2(LO_CUSTOMERNO, LO_CUSTOMERNO);
+  // dm_UserProps.SetPIPNo(PIPNo) ;
 
+  dm_UserProps.Refresh_cds_LIP2(PIPNo);
 
- dm_UserProps.Refresh_cds_LIP2(PIPNo) ;
+  if PIPNo > 0 then
+  Begin
+    if mtProps.State in [dsBrowse] then
+      mtProps.Edit;
+    mtPropsPIPNo.AsInteger := PIPNo;
+    mtPropsLIPNo.AsInteger := LIPNo;
+    mtProps.Post;
+  End;
 
- if PIPNo > 0 then
- Begin
-  if mtProps.State in [dsBrowse] then
-  mtProps.Edit ;
-  mtPropsPIPNo.AsInteger  := PIPNo ;
-  mtPropsLIPNo.AsInteger  := LIPNo ;
-  mtProps.Post ;
- End ;
-
- dm_UserProps.SetLIPNo(LIPNo) ;
+  dm_UserProps.SetLIPNo(LIPNo);
 end;
 
 procedure TfSelectLIP.BitBtn1Click(Sender: TObject);
 begin
- if mtPropsLIPNo.AsInteger > 0 then
-  LIPNo:= mtPropsLIPNo.AsInteger
-   else
-    LIPNo:= -1 ;
+  if mtPropsLIPNo.AsInteger > 0 then
+    LIPNo := mtPropsLIPNo.AsInteger
+  else
+    LIPNo := -1;
 end;
 
 procedure TfSelectLIP.mtPropsPIPNoChange(Sender: TField);
 begin
-  dm_UserProps.Refresh_cds_LIP2(mtPropsPIPNo.AsInteger) ;
+  dm_UserProps.Refresh_cds_LIP2(mtPropsPIPNo.AsInteger);
 end;
 
 end.

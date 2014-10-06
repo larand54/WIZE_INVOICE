@@ -6,13 +6,28 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, dxBar, dxBarExtItems, ExtCtrls, ImgList, StdCtrls,
   DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
   FireDAC.DApt, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
   cxDataStorage, cxEdit, cxDBData, cxDropDownEdit, cxContainer, cxTextEdit,
   cxMaskEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox,
   cxGridLevel, cxClasses, cxControls, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookAndFeels, cxLookAndFeelPainters ;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter;
 
 type
   TfrmGenShipCost = class(TForm)
@@ -104,7 +119,7 @@ type
     { Public declarations }
   end;
 
-//var frmGenShipCost: TfrmGenShipCost;
+  // var frmGenShipCost: TfrmGenShipCost;
 
 implementation
 
@@ -114,111 +129,110 @@ uses UnitdmModule1, dmsVidaContact, dmc_UserProps;
 
 procedure TfrmGenShipCost.FormCreate(Sender: TObject);
 begin
-{ dmsContact.LoadRegions(peSalesRegion.Items);
- if peSalesRegion.Items.Count > 0 then
-  peSalesRegion.ItemIndex:= 0 ;
+  { dmsContact.LoadRegions(peSalesRegion.Items);
+    if peSalesRegion.Items.Count > 0 then
+    peSalesRegion.ItemIndex:= 0 ;
 
- With dmModule1 do
- Begin
-  cds_genfreight.Active:= True ;
-  FilterSC(Sender) ;
- End ;
- }
+    With dmModule1 do
+    Begin
+    cds_genfreight.Active:= True ;
+    FilterSC(Sender) ;
+    End ;
+  }
 end;
 
 procedure TfrmGenShipCost.lbExitClick(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfrmGenShipCost.lbNewClick(Sender: TObject);
 begin
- With dmModule1 do
- Begin
-  cds_genfreight.Insert ;
-  cds_genfreighttype.AsString:= pecosttype.Text ;
-  cds_genfreightSalesRegionNo.AsInteger:= integer(peSalesRegion.Properties.Items.Objects[peSalesRegion.ItemIndex]) ;
- End ;
+  With dmModule1 do
+  Begin
+    cds_genfreight.Insert;
+    cds_genfreighttype.AsString := pecosttype.Text;
+    cds_genfreightSalesRegionNo.AsInteger :=
+      integer(peSalesRegion.Properties.Items.Objects[peSalesRegion.ItemIndex]);
+  End;
 end;
 
 procedure TfrmGenShipCost.lbDeleteRowClick(Sender: TObject);
 begin
- With dmModule1 do
- Begin
-  cds_genfreight.Delete ;
- End ;
+  With dmModule1 do
+  Begin
+    cds_genfreight.Delete;
+  End;
 end;
 
 procedure TfrmGenShipCost.lbApplyUpdatesClick(Sender: TObject);
 begin
- With dmModule1 do
- Begin
-  if cds_genfreight.State in [dsEdit, dsInsert] then
-   cds_genfreight.Post ;
-  if cds_genfreight.ChangeCount > 0 then
-   cds_genfreight.ApplyUpdates(0) ;
- End ;
+  With dmModule1 do
+  Begin
+    if cds_genfreight.State in [dsEdit, dsInsert] then
+      cds_genfreight.Post;
+    if cds_genfreight.ChangeCount > 0 then
+      cds_genfreight.ApplyUpdates(0);
+  End;
 end;
 
 procedure TfrmGenShipCost.lbCancelUpdatesClick(Sender: TObject);
 begin
- With dmModule1 do
- Begin
-  if cds_genfreight.State in [dsEdit, dsInsert] then
-   cds_genfreight.Cancel ;
-  if cds_genfreight.ChangeCount > 0 then
-   cds_genfreight.CancelUpdates ;
- End ;
+  With dmModule1 do
+  Begin
+    if cds_genfreight.State in [dsEdit, dsInsert] then
+      cds_genfreight.Cancel;
+    if cds_genfreight.ChangeCount > 0 then
+      cds_genfreight.CancelUpdates;
+  End;
 end;
 
 procedure TfrmGenShipCost.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- With dmModule1 do
- Begin
-  if (cds_genfreight.State in [dsEdit, dsInsert])
-  or (cds_genfreight.changecount > 0) then
-   Begin
-    if MessageDlg('Data är inte sparad.  vill du avsluta?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-     CanClose := True
-     else
-     CanClose:= False ;
-   End
-    else
-     CanClose := True ;
-  if CanClose then
+  With dmModule1 do
   Begin
-   With dmModule1 do
-   Begin
-    cds_genfreight.Filtered:= False ;
-    cds_genfreight.Active:= False ;
-   End ;
-  End ;
- End ;
+    if (cds_genfreight.State in [dsEdit, dsInsert]) or
+      (cds_genfreight.ChangeCount > 0) then
+    Begin
+      if MessageDlg('Data är inte sparad.  vill du avsluta?', mtConfirmation,
+        [mbYes, mbNo], 0) = mrYes then
+        CanClose := True
+      else
+        CanClose := False;
+    End
+    else
+      CanClose := True;
+    if CanClose then
+    Begin
+      With dmModule1 do
+      Begin
+        cds_genfreight.Filtered := False;
+        cds_genfreight.Active := False;
+      End;
+    End;
+  End;
 end;
 
 procedure TfrmGenShipCost.peSalesRegionChange(Sender: TObject);
 begin
- FilterSC(Sender) ;
+  FilterSC(Sender);
 end;
 
 procedure TfrmGenShipCost.FilterSC(Sender: TObject);
 begin
- With dmModule1 do
- Begin
-  cds_genfreight.Filter:= 'SalesRegionNo = ' + cds_PropsSalesRegionNo.AsString
-  +' AND type = ' + QuotedStr(pecosttype.Text) ;
-  cds_genfreight.Filtered:= True ;
- End ;
+  With dmModule1 do
+  Begin
+    cds_genfreight.Filter := 'SalesRegionNo = ' +
+      cds_PropsSalesRegionNo.AsString + ' AND type = ' +
+      QuotedStr(pecosttype.Text);
+    cds_genfreight.Filtered := True;
+  End;
 end;
-
-
-
 
 procedure TfrmGenShipCost.pecosttypeChange(Sender: TObject);
 begin
- FilterSC(Sender) ;
+  FilterSC(Sender);
 end;
 
 end.

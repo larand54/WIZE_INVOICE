@@ -19,7 +19,9 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, cxNavigator;
 
 type
   TfEnterLoadWeight = class(TForm)
@@ -39,7 +41,7 @@ type
     { Public declarations }
   end;
 
-//var fEnterLoadWeight: TfEnterLoadWeight;
+  // var fEnterLoadWeight: TfEnterLoadWeight;
 
 implementation
 
@@ -50,11 +52,11 @@ uses dmsVidaSystem;
 procedure TfEnterLoadWeight.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- with dmsSystem do
- Begin
-  if cds_LoadWeigth.State in [dsEdit] then
-   cds_LoadWeigth.Post ;
- End ;
+  with dmsSystem do
+  Begin
+    if cds_LoadWeigth.State in [dsEdit] then
+      cds_LoadWeigth.Post;
+  End;
 end;
 
 end.

@@ -1,0 +1,8 @@
+Server=alvesql14
+Database=xor_vida
+OSAuthent=No
+MetaDefCatalog=xor_test
+MetaDefSchema=dbo
+User_Name=visimport
+Password=Qwerty88
+DriverID=MSSQL

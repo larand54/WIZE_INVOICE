@@ -19,6 +19,8 @@ object frmInvoiceList: TfrmInvoiceList
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
@@ -49,7 +51,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 1080
-          Height = 44
+          Height = 46
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -65,7 +67,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 70
-          Height = 44
+          Height = 46
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -1354,8 +1356,8 @@ object frmInvoiceList: TfrmInvoiceList
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -2008,7 +2010,7 @@ object frmInvoiceList: TfrmInvoiceList
     Left = 248
     Top = 392
     Bitmap = {
-      494C01010E001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010E001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3289,7 +3291,7 @@ object frmInvoiceList: TfrmInvoiceList
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

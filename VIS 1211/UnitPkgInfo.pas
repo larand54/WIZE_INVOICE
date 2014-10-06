@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ImgList, dxBar, dxBarExtItems,StdCtrls,
+  Dialogs, ExtCtrls, ImgList, dxBar, dxBarExtItems, StdCtrls,
   cxStyles, cxCustomData, cxGraphics, cxFilter, cxData, cxDataStorage,
   cxEdit, DB, cxDBData, cxGridCustomTableView, cxGridTableView,
   cxGridBandedTableView, cxGridDBBandedTableView, cxControls,
@@ -21,7 +21,9 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TfrmPkgInfo = class(TForm)
@@ -138,189 +140,196 @@ type
     procedure TtePkgNoTimer(Sender: TObject);
   private
     { Private declarations }
-    procedure ShowPkgInfo (Sender: TObject) ;
+    procedure ShowPkgInfo(Sender: TObject);
     procedure GetPkg(Sender: TObject);
-    procedure GetPkgLog(Sender : TObject) ;
+    procedure GetPkgLog(Sender: TObject);
   public
     { Public declarations }
-   PackageNo : Integer ;
-   SupplierCode : String ;
+    PackageNo: Integer;
+    SupplierCode: String;
   end;
 
-// var    frmPkgInfo: TfrmPkgInfo;
+  // var    frmPkgInfo: TfrmPkgInfo;
 
 implementation
 
 uses UnitdmModule1, UnitPkgNo, dmsVidaSystem;
 
 {$R *.dfm}
-procedure TfrmPkgInfo.GetPkgLog(Sender : TObject) ;
+
+procedure TfrmPkgInfo.GetPkgLog(Sender: TObject);
 var
-  Save_Cursor : TCursor;
+  Save_Cursor: TCursor;
 Begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- try
- With dmsSystem do
- Begin
-  cds_pkgLog.Active:= False ;
-  cds_pkgLog.ParamByName('@PackageNo').AsInteger    := PackageNo ;
-  cds_pkgLog.ParamByName('@SupplierCode').AsString  := SupplierCode ;
-  cds_pkgLog.Active:= True ;
- End ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  try
+    With dmsSystem do
+    Begin
+      cds_pkgLog.Active := False;
+      cds_pkgLog.ParamByName('@PackageNo').AsInteger := PackageNo;
+      cds_pkgLog.ParamByName('@SupplierCode').AsString := SupplierCode;
+      cds_pkgLog.Active := True;
+    End;
 
- finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
+  finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  end;
 
-End ;
+End;
 
 procedure TfrmPkgInfo.GetPkg(Sender: TObject);
 Var
-    Save_Cursor:TCursor;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
-Try
- with dmModule1 do
- Begin
-  dmsSystem.cds_pkgLog.Active := False ;
-  dmsSystem.cds_pkgLog.ParamByName('@PackageNo').AsInteger   := PackageNo ;
-  dmsSystem.cds_pkgLog.ParamByName('@SupplierCode').AsString := SupplierCode ;
-  dmsSystem.cds_pkgLog.Active := True ;
+  Try
+    with dmModule1 do
+    Begin
+      dmsSystem.cds_pkgLog.Active := False;
+      dmsSystem.cds_pkgLog.ParamByName('@PackageNo').AsInteger := PackageNo;
+      dmsSystem.cds_pkgLog.ParamByName('@SupplierCode').AsString :=
+        SupplierCode;
+      dmsSystem.cds_pkgLog.Active := True;
 
-  cds_PkgInfo.Active:= False ;
-  cds_PkgInfo.ParamByName('PackageNo').AsInteger   := PackageNo ;
-  cds_PkgInfo.ParamByName('SupplierCode').AsString := SupplierCode ;
-  cds_PkgInfo.Active:= True ;
+      cds_PkgInfo.Active := False;
+      cds_PkgInfo.ParamByName('PackageNo').AsInteger := PackageNo;
+      cds_PkgInfo.ParamByName('SupplierCode').AsString := SupplierCode;
+      cds_PkgInfo.Active := True;
 
+      sp_PcsPerLength.ParamByName('@PackageTypeNo').AsInteger :=
+        dmModule1.cds_PkgInfoPACKAGETYPENO.AsInteger;
+      sp_PcsPerLength.ExecProc;
+      ePcsPerACTLength.Text := sp_PcsPerLength.ParamByName
+        ('@PicesPerLength').AsString;
+      ePcsPerNOMLength.Text := sp_PcsPerLength.ParamByName('@NomPicesPerLength')
+        .AsString;
+      sp_PcsPerLength.Close;
 
-  sp_PcsPerLength.ParamByName('@PackageTypeNo').AsInteger:= dmModule1.cds_PkgInfoPACKAGETYPENO.AsInteger ;
-  sp_PcsPerLength.ExecProc ;
-  ePcsPerACTLength.Text   := sp_PcsPerLength.ParamByName('@PicesPerLength').AsString ;
-  ePcsPerNOMLength.Text   := sp_PcsPerLength.ParamByName('@NomPicesPerLength').AsString ;
-  sp_PcsPerLength.Close ;
+      cds_LoadPkgInfo.Active := False;
+      cds_LoadPkgInfo.ParamByName('PKG_NO').AsInteger := PackageNo;
+      cds_LoadPkgInfo.ParamByName('Supp_Code').AsString := SupplierCode;
+      cds_LoadPkgInfo.Active := True;
 
-  cds_LoadPkgInfo.Active:= False ;
-  cds_LoadPkgInfo.ParamByName('PKG_NO').AsInteger   := PackageNo ;
-  cds_LoadPkgInfo.ParamByName('Supp_Code').AsString := SupplierCode ;
-  cds_LoadPkgInfo.Active:= True ;
-
-
- End ;
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
+  End;
 
 end;
 
 procedure TfrmPkgInfo.FormShow(Sender: TObject);
 begin
- if PackageNo > 0 then
- Begin
-  GetPkg(Sender) ;
-  GetPkgLog(Sender) ;
-  Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' + dmModule1.cds_PkgInfoPKG_NO.AsString
-  + '/' + dmModule1.cds_PkgInfoSUPP_CODE.AsString ;
- End ; 
+  if PackageNo > 0 then
+  Begin
+    GetPkg(Sender);
+    GetPkgLog(Sender);
+    Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' +
+      dmModule1.cds_PkgInfoPKG_NO.AsString + '/' +
+      dmModule1.cds_PkgInfoSUPP_CODE.AsString;
+  End;
 end;
 
 procedure TfrmPkgInfo.FormCreate(Sender: TObject);
 begin
- PackageNo := 0 ;
- SupplierCode := '' ;
+  PackageNo := 0;
+  SupplierCode := '';
 end;
 
 procedure TfrmPkgInfo.lbExitClick(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
-procedure TfrmPkgInfo.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfrmPkgInfo.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- with dmModule1 do
- Begin
-//  sq_PkgInfo.Close ;
-  cds_PkgInfo.Active:= False ;
-  cds_LoadPkgInfo.Active:= False ;
- End ;
- CanClose := True ;
+  with dmModule1 do
+  Begin
+    // sq_PkgInfo.Close ;
+    cds_PkgInfo.Active := False;
+    cds_LoadPkgInfo.Active := False;
+  End;
+  CanClose := True;
 end;
 
 procedure TfrmPkgInfo.acPkgInfoExecute(Sender: TObject);
-Var PkgSupplierNo, ProductNo : Integer ;
-    frmPkgNo: TfrmPkgNo;
+Var
+  PkgSupplierNo, ProductNo: Integer;
+  frmPkgNo: TfrmPkgNo;
 begin
- frmPkgNo:= TfrmPkgNo.Create(Nil);
- Try
-  if frmPkgNo.ShowModal = mrOk then
-  Begin
-   PackageNo:= StrToInt(Trim(frmPkgNo.dxMaskPackageNo.Text));
-   SupplierCode:= Trim(frmPkgNo.dxMaskSupplierCode.Text) ;
-   if Length(SupplierCode) = 0 then
-   Begin
-    SupplierCode := dmsSystem.PkgNoToSuppCode_II(PackageNo, PkgSupplierNo, ProductNo);
-    GetPkg(Sender) ;
-    GetPkgLog(Sender) ;
-   End
-   else
-   Begin
-    GetPkg(Sender) ;
-    GetPkgLog(Sender) ;
-   End ;
-    Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' + dmModule1.cds_PkgInfoPKG_NO.AsString
-     + '/' + dmModule1.cds_PkgInfoSUPP_CODE.AsString ;
-  End ;
+  frmPkgNo := TfrmPkgNo.Create(Nil);
+  Try
+    if frmPkgNo.ShowModal = mrOk then
+    Begin
+      PackageNo := StrToInt(Trim(frmPkgNo.dxMaskPackageNo.Text));
+      SupplierCode := Trim(frmPkgNo.dxMaskSupplierCode.Text);
+      if Length(SupplierCode) = 0 then
+      Begin
+        SupplierCode := dmsSystem.PkgNoToSuppCode_II(PackageNo, PkgSupplierNo,
+          ProductNo);
+        GetPkg(Sender);
+        GetPkgLog(Sender);
+      End
+      else
+      Begin
+        GetPkg(Sender);
+        GetPkgLog(Sender);
+      End;
+      Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' +
+        dmModule1.cds_PkgInfoPKG_NO.AsString + '/' +
+        dmModule1.cds_PkgInfoSUPP_CODE.AsString;
+    End;
 
- Finally
-  FreeAndNil(frmPkgNo) ;
- End ;
+  Finally
+    FreeAndNil(frmPkgNo);
+  End;
 end;
-
 
 procedure TfrmPkgInfo.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfrmPkgInfo.tePkgNoKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key <> VK_RETURN then
-  Exit ;
-  ShowPkgInfo(Sender) ;
+    Exit;
+  ShowPkgInfo(Sender);
 end;
 
-procedure TfrmPkgInfo.ShowPkgInfo(Sender: TObject) ;
-Var PkgSupplierNo, ProductNo : Integer ;
+procedure TfrmPkgInfo.ShowPkgInfo(Sender: TObject);
+Var
+  PkgSupplierNo, ProductNo: Integer;
 begin
-   PackageNo    := StrToInt(Trim(tePkgNo.Text));
-   SupplierCode := Trim(tePrefix.Text) ;
-   if Length(SupplierCode) = 0 then
-   Begin
-    SupplierCode := dmsSystem.PkgNoToSuppCode_II(PackageNo, PkgSupplierNo, ProductNo);
-    GetPkg(Sender) ;
-    GetPkgLog(Sender) ;
-   End
-   else
-   Begin
-    GetPkg(Sender) ;
-    GetPkgLog(Sender) ;
-   End ;
+  PackageNo := StrToInt(Trim(tePkgNo.Text));
+  SupplierCode := Trim(tePrefix.Text);
+  if Length(SupplierCode) = 0 then
+  Begin
+    SupplierCode := dmsSystem.PkgNoToSuppCode_II(PackageNo, PkgSupplierNo,
+      ProductNo);
+    GetPkg(Sender);
+    GetPkgLog(Sender);
+  End
+  else
+  Begin
+    GetPkg(Sender);
+    GetPkgLog(Sender);
+  End;
 
- Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' + dmModule1.cds_PkgInfoPKG_NO.AsString
- + '/' + dmModule1.cds_PkgInfoSUPP_CODE.AsString ;
+  Self.Caption := 'PAKETINFORMATION ' + ' Paketnr: ' +
+    dmModule1.cds_PkgInfoPKG_NO.AsString + '/' +
+    dmModule1.cds_PkgInfoSUPP_CODE.AsString;
 
-
- TtePkgNo.Enabled := True ;
+  TtePkgNo.Enabled := True;
 end;
 
 procedure TfrmPkgInfo.TtePkgNoTimer(Sender: TObject);
 begin
- TtePkgNo.Enabled := False ;
- tePkgNo.SetFocus ;
+  TtePkgNo.Enabled := False;
+  tePkgNo.SetFocus;
 end;
 
 end.

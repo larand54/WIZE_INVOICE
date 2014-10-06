@@ -81,6 +81,7 @@ inherited fTradingAnalyze: TfTradingAnalyze
       Align = alClient
       TabOrder = 0
       object grdTradingAnalyzeDBBandedTableView1: TcxGridDBBandedTableView
+        Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmModule1.ds_Vis_GenTradingAnalyze
         DataController.KeyFieldNames = 'PO_Fakturanr;POPrefix'
         DataController.Summary.DefaultGroupSummaryItems = <
@@ -552,8 +553,10 @@ inherited fTradingAnalyze: TfTradingAnalyze
     Top = 187
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdTradingAnalyze
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -570,6 +573,7 @@ inherited fTradingAnalyze: TfTradingAnalyze
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

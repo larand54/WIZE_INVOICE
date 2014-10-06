@@ -19,6 +19,8 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object grdKreditOverdue: TcxGrid
@@ -29,6 +31,7 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
     Align = alClient
     TabOrder = 1
     object grdKreditOverdueDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.ds_CreditAnalys
       DataController.KeyFieldNames = 'clientno'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -182,6 +185,7 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
         Width = 121
         Height = 21
         TabOrder = 0
+        Text = ''
         OnKeyDown = MaskEdit2KeyDown
       end
       object cxLabel1: TcxLabel
@@ -350,7 +354,7 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
     Left = 72
     Top = 88
     Bitmap = {
-      494C01010F0013000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -29,10 +29,8 @@ object FormDelTerms: TFormDelTerms
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -40,10 +38,8 @@ object FormDelTerms: TFormDelTerms
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -58,7 +54,7 @@ object FormDelTerms: TFormDelTerms
     ExplicitWidth = 777
     ExplicitHeight = 395
     object grdDelTermsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsContact.dsDelTerms
       DataController.KeyFieldNames = 'DeliveryTerm_No'
       DataController.Summary.DefaultGroupSummaryItems = <>

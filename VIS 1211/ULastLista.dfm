@@ -17,6 +17,8 @@ object fLastLista: TfLastLista
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -570,6 +572,7 @@ object fLastLista: TfLastLista
     Control = grdLastLista
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object imglistActions: TImageList
     Height = 24
@@ -577,7 +580,7 @@ object fLastLista: TfLastLista
     Left = 480
     Top = 216
     Bitmap = {
-      494C01010D001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010D001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       000000000000000000000000000000000000000000000000000000000000AD7B
       7B00B5848400B5848400B5848400B5848400B5848400B5848400B5848400B584
@@ -1784,7 +1787,7 @@ object fLastLista: TfLastLista
     Left = 424
     Top = 176
     Bitmap = {
-      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C
@@ -1935,7 +1938,7 @@ object fLastLista: TfLastLista
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

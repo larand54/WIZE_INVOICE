@@ -1,29 +1,29 @@
 // =============================================================================
 //
-//  FILE           :  frmDBAdmin.pas
+// FILE           :  frmDBAdmin.pas
 //
-//  LANGUAGE       :  Delphi / Object Pascal
+// LANGUAGE       :  Delphi / Object Pascal
 //
-//  ENVIRONMENT    :  Target is any 32-bit Windows environment.
-//                    Written & tested using Windows NT 4.0
+// ENVIRONMENT    :  Target is any 32-bit Windows environment.
+// Written & tested using Windows NT 4.0
 //
-//  SYSTEM         :  Vida Information System
+// SYSTEM         :  Vida Information System
 //
-//  PURPOSE        :  Defines form to allow user to specify more detailed
-//                    log-on information.
+// PURPOSE        :  Defines form to allow user to specify more detailed
+// log-on information.
 //
-//  NOTES          :  This is a new form, made to look like the similar
-//                    form in the original VidaSys project, but with
-//                    very different code behind it.
+// NOTES          :  This is a new form, made to look like the similar
+// form in the original VidaSys project, but with
+// very different code behind it.
 //
 //
 //
 //
 //
 // -----------------------------------------------------------------------------
-//  DATE        AUTHOR    REF     COMMENTS
+// DATE        AUTHOR    REF     COMMENTS
 // -----------------------------------------------------------------------------
-//              DMc       001
+// DMc       001
 //
 // -----------------------------------------------------------------------------
 unit frmDBAdmin;
@@ -36,7 +36,6 @@ uses
   Controls,
   StdCtrls,
   Windows;
-
 
 type
   TdlgDBAdmin = class(TForm)
@@ -58,20 +57,20 @@ type
     procedure btnOKClick(Sender: TObject);
     procedure RemoveHighlight(Sender: TObject);
   private
-    function getDatabase : String;
-    function getUserKey : String;
-    function getDBUserName : String;
-    function getDBUserPswd : String;
+    function getDatabase: String;
+    function getUserKey: String;
+    function getDBUserName: String;
+    function getDBUserPswd: String;
     procedure setDatabase(const Value: String);
     procedure setUserKey(const Value: String);
     procedure setDBUserName(const Value: String);
     procedure setDBUserPswd(const Value: String);
   public
     { Public declarations }
-    property Database   : String read getDatabase   write setDatabase;
-    property UserKey    : String read getUserKey    write setUserKey;
-    property DBUserName : String read getDBUserName write setDBUserName;
-    property DBUserPswd : String read getDBUserPswd write setDBUserPswd;
+    property Database: String read getDatabase write setDatabase;
+    property UserKey: String read getUserKey write setUserKey;
+    property DBUserName: String read getDBUserName write setDBUserName;
+    property DBUserPswd: String read getDBUserPswd write setDBUserPswd;
   end;
 
 implementation
@@ -83,31 +82,26 @@ uses
   VidaConst,
   VidaUtils;
 
-
 { TdlgDBAdmin }
-function TdlgDBAdmin.getDBUserName : String;
+function TdlgDBAdmin.getDBUserName: String;
 begin
   Result := editUserName.Text
 end;
 
-
-function TdlgDBAdmin.getDBUserPswd : String;
+function TdlgDBAdmin.getDBUserPswd: String;
 begin
   Result := editPassword.Text
 end;
-
 
 procedure TdlgDBAdmin.setDBUserName(const Value: String);
 begin
   editUserName.Text := Value
 end;
 
-
 procedure TdlgDBAdmin.setDBUserPswd(const Value: String);
 begin
   editPassword.Text := Value
 end;
-
 
 procedure TdlgDBAdmin.btnOKClick(Sender: TObject);
 begin
@@ -115,12 +109,11 @@ begin
   ModalResult := mrOk; // This may be revised back to mrNone
   // by the following calls to NonEmpty
   // NB Check fields from bottom of form to the top, to
-  //    ensure the cursor ends up in the top-most required
-  //    field which is empty.
-//  NonEmpty(editRemoteDataBase);
-//  NonEmpty(editUserName)
+  // ensure the cursor ends up in the top-most required
+  // field which is empty.
+  // NonEmpty(editRemoteDataBase);
+  // NonEmpty(editUserName)
 end;
-
 
 procedure TdlgDBAdmin.RemoveHighlight(Sender: TObject);
 // Controls may have their color changed if try to close the dialog box
@@ -131,29 +124,24 @@ begin
     Color := clWindow
 end;
 
-
-function TdlgDBAdmin.getDatabase : String;
+function TdlgDBAdmin.getDatabase: String;
 begin
   Result := editRemoteDataBase.Text
 end;
-
 
 procedure TdlgDBAdmin.setDatabase(const Value: String);
 begin
   editRemoteDataBase.Text := Value
 end;
 
-
-function TdlgDBAdmin.getUserKey : String;
+function TdlgDBAdmin.getUserKey: String;
 begin
   Result := editUserKey.Text
 end;
-
 
 procedure TdlgDBAdmin.setUserKey(const Value: String);
 begin
   editUserKey.Text := Value
 end;
-
 
 end.

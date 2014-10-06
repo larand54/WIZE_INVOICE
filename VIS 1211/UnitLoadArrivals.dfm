@@ -19,6 +19,8 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object grdPkgs: TcxGrid
@@ -210,6 +212,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     Control = grdPkgs
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object grdLoads: TcxGrid
     Left = 0
@@ -503,7 +506,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 736
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -519,7 +522,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 61
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -731,8 +734,8 @@ object frmLoadArrivals: TfrmLoadArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -976,7 +979,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     Left = 400
     Top = 456
     Bitmap = {
-      494C010110001500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010110001500080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000078000000010020000000000000B4
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2509,7 +2512,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     Left = 408
     Top = 400
     Bitmap = {
-      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C
@@ -2774,8 +2777,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     object acSendLoadToHampen: TAction
       Caption = 'S'#228'nd inlev till HTF'
       ImageIndex = 7
-      OnExecute = acSendLoadToHampenExecute
-      OnUpdate = acSendLoadToHampenUpdate
     end
     object acEmailFS: TAction
       Caption = 'Maila f'#246'ljesedel'
@@ -2837,7 +2838,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.12.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

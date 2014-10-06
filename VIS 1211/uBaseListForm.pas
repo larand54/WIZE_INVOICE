@@ -9,7 +9,8 @@ uses
   cxData, cxDataStorage, cxEdit, DB, cxDBData, cxGridLevel,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, VidaUser, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxGridExportLink, cxExport, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -22,7 +23,9 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinsdxBarPainter ;
+  dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, System.Actions;
 
 type
   TfBaseListForm = class(TForm)
@@ -119,34 +122,33 @@ uses dmsDataConn;
 
 procedure TfBaseListForm.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfBaseListForm.acExportXLSExecute(Sender: TObject);
 begin
- //Export
+  // Export
 end;
 
 procedure TfBaseListForm.FormCreate(Sender: TObject);
 begin
- cds_Props.Active:= False ;
- cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- cds_Props.ParamByName('Form').AsString    := Self.Name ;
- cds_Props.Active:= True ;
- if cds_Props.Eof then
-  cds_Props.Insert ;
+  cds_Props.Active := False;
+  cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  cds_Props.ParamByName('Form').AsString := Self.Name;
+  cds_Props.Active := True;
+  if cds_Props.Eof then
+    cds_Props.Insert;
 end;
 
-procedure TfBaseListForm.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfBaseListForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- if cds_Props.State in [dsEdit, dsInsert] then
- cds_Props.Post ;
- if cds_Props.ChangeCount > 0 then
- Begin
-  cds_Props.ApplyUpdates(0) ;
-  cds_Props.CommitUpdates ;
- End ;
+  if cds_Props.State in [dsEdit, dsInsert] then
+    cds_Props.Post;
+  if cds_Props.ChangeCount > 0 then
+  Begin
+    cds_Props.ApplyUpdates(0);
+    cds_Props.CommitUpdates;
+  End;
 end;
 
 end.

@@ -4,8 +4,10 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, Dialogs,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet,
   FireDAC.Comp.Client;
 
 type
@@ -161,19 +163,19 @@ type
     cds_MakeSokAvropShippingPlanNo: TIntegerField;
     cds_MakeSokAvropVoyageNo: TIntegerField;
     cds_MakeSokAvropLand: TStringField;
-    procedure dsp_MakeSokAvropGetTableName(Sender: TObject;
-      DataSet: TDataSet; var TableName: String);
+    procedure dsp_MakeSokAvropGetTableName(Sender: TObject; DataSet: TDataSet;
+      var TableName: String);
     procedure cds_MakeSokAvropBeforePost(DataSet: TDataSet);
     procedure cds_BookingAfterPost(DataSet: TDataSet);
     procedure cds_MakeSokAvropUpdateRecord(ASender: TDataSet;
-  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
-  AOptions: TFDUpdateRowOptions);
+      ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+      AOptions: TFDUpdateRowOptions);
   private
     { Private declarations }
-    procedure SetBookingValuesInIdenticalBookings ;
+    procedure SetBookingValuesInIdenticalBookings;
   public
     { Public declarations }
-//    cdsClone : TClientDataSet ;
+    // cdsClone : TClientDataSet ;
   end;
 
 var
@@ -181,102 +183,108 @@ var
 
 implementation
 
-uses dmsDataConn, recerror, UnitSokAvropFormular, VidaUser ;
+uses dmsDataConn, recerror, UnitSokAvropFormular, VidaUser;
 
 {$R *.dfm}
 
 procedure Tdm_SokFormular.dsp_MakeSokAvropGetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
 begin
- TableName := 'Booking' ;
+  TableName := 'Booking';
 end;
 
-procedure Tdm_SokFormular.SetBookingValuesInIdenticalBookings ;
-Var FDMemTable1  : TFDMemTable ;
+procedure Tdm_SokFormular.SetBookingValuesInIdenticalBookings;
+Var
+  FDMemTable1: TFDMemTable;
 begin
-//LMX1
- cds_MakeSokAvrop.BeforePost := nil ;
- Try
-
- FDMemTable1  := TFDMemTable.Create(nil) ;
- FDMemTable1.CloneCursor(cds_MakeSokAvrop, False, False);
-
-//  cdsClone := TClientDataSet.Create(Nil);
-//  cdsClone.CloneCursor(cds_MakeSokAvrop, False, False);
-
- Try
-  FDMemTable1.SetRange([cds_MakeSokAvropBookingNo.AsInteger],[cds_MakeSokAvropBookingNo.AsInteger]);
+  // LMX1
+  cds_MakeSokAvrop.BeforePost := nil;
   Try
-   FDMemTable1.First ;
-   While not FDMemTable1.Eof do
-   Begin
-    if FDMemTable1.FieldByName('UKEY').AsString <> cds_MakeSokAvropUKEY.AsString then
-    Begin
-     FDMemTable1.Edit ;
-     FDMemTable1.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString:= cds_MakeSokAvropSHIPPINGCOMPANYBOOKINGID.AsString ;
-     if cds_MakeSokAvropSHIPPERSSHIPDATE.IsNull then
-     FDMemTable1.FieldByName('SHIPPERSSHIPDATE').Clear
-     else
-     FDMemTable1.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp:=  cds_MakeSokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp ;
-     FDMemTable1.FieldByName('PreliminaryRequestedPeriod').AsString:=  cds_MakeSokAvropPreliminaryRequestedPeriod.AsString ;
-     FDMemTable1.FieldByName('PANIC_NOTE').AsString:=  cds_MakeSokAvropPANIC_NOTE.AsString ;
-     FDMemTable1.FieldByName('SupplierReference').AsString:=  cds_MakeSokAvropSupplierReference.AsString ;
 
+    FDMemTable1 := TFDMemTable.Create(nil);
+    FDMemTable1.CloneCursor(cds_MakeSokAvrop, False, False);
 
-     FDMemTable1.Post ;
-    End ;
-    FDMemTable1.Next ;
-   End ;//while
+    // cdsClone := TClientDataSet.Create(Nil);
+    // cdsClone.CloneCursor(cds_MakeSokAvrop, False, False);
+
+    Try
+      FDMemTable1.SetRange([cds_MakeSokAvropBookingNo.AsInteger],
+        [cds_MakeSokAvropBookingNo.AsInteger]);
+      Try
+        FDMemTable1.First;
+        While not FDMemTable1.Eof do
+        Begin
+          if FDMemTable1.FieldByName('UKEY').AsString <> cds_MakeSokAvropUKEY.AsString
+          then
+          Begin
+            FDMemTable1.Edit;
+            FDMemTable1.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString :=
+              cds_MakeSokAvropSHIPPINGCOMPANYBOOKINGID.AsString;
+            if cds_MakeSokAvropSHIPPERSSHIPDATE.IsNull then
+              FDMemTable1.FieldByName('SHIPPERSSHIPDATE').Clear
+            else
+              FDMemTable1.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp :=
+                cds_MakeSokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp;
+            FDMemTable1.FieldByName('PreliminaryRequestedPeriod').AsString :=
+              cds_MakeSokAvropPreliminaryRequestedPeriod.AsString;
+            FDMemTable1.FieldByName('PANIC_NOTE').AsString :=
+              cds_MakeSokAvropPANIC_NOTE.AsString;
+            FDMemTable1.FieldByName('SupplierReference').AsString :=
+              cds_MakeSokAvropSupplierReference.AsString;
+
+            FDMemTable1.Post;
+          End;
+          FDMemTable1.Next;
+        End; // while
+      Finally
+        FDMemTable1.CancelRange;
+      End;
+    Finally
+      FDMemTable1.Free;
+    End;
+
   Finally
-   FDMemTable1.CancelRange ;
-  End ;
- Finally
-  FDMemTable1.Free ;
- End ;
-
- Finally
-  cds_MakeSokAvrop.BeforePost  := cds_MakeSokAvropBeforePost ;
- End ;
+    cds_MakeSokAvrop.BeforePost := cds_MakeSokAvropBeforePost;
+  End;
 
 end;
-
 
 procedure Tdm_SokFormular.cds_MakeSokAvropBeforePost(DataSet: TDataSet);
 begin
- SetBookingValuesInIdenticalBookings ;
+  SetBookingValuesInIdenticalBookings;
 end;
 
 procedure Tdm_SokFormular.cds_BookingAfterPost(DataSet: TDataSet);
 begin
-(*
- Try
-  cdsClone.SetRange([cds_SokAvropBOOKINGNO.AsInteger],[cds_SokAvropBOOKINGNO.AsInteger]);
-  Try
-   cdsClone.First ;
-   While not cdsClone.Eof do
-   Begin
+  (*
+    Try
+    cdsClone.SetRange([cds_SokAvropBOOKINGNO.AsInteger],[cds_SokAvropBOOKINGNO.AsInteger]);
+    Try
+    cdsClone.First ;
+    While not cdsClone.Eof do
+    Begin
     if cdsClone.FieldByName('UKEY').AsString <> cds_SokAvropUKEY.AsString then
     Begin
-     cdsClone.Edit ;
-     cdsClone.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString:= cds_SokAvropSHIPPINGCOMPANYBOOKINGID.AsString ;
-     if cds_SokAvropSHIPPERSSHIPDATE.IsNull then
-     cdsClone.FieldByName('SHIPPERSSHIPDATE').Clear
-     else
-     cdsClone.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp:=  cds_SokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp ;
-     cdsClone.FieldByName('PreliminaryRequestedPeriod').AsString:=  cds_SokAvropREADY_DAY.AsString ;
-     cdsClone.FieldByName('PANIC_NOTE').AsString:=  cds_SokAvropPANIC_NOTE.AsString ;
-     cdsClone.FieldByName('SupplierReference').AsString:=  cds_SokAvropSupplierReference.AsString ;
+    cdsClone.Edit ;
+    cdsClone.FieldByName('SHIPPINGCOMPANYBOOKINGID').AsString:= cds_SokAvropSHIPPINGCOMPANYBOOKINGID.AsString ;
+    if cds_SokAvropSHIPPERSSHIPDATE.IsNull then
+    cdsClone.FieldByName('SHIPPERSSHIPDATE').Clear
+    else
+    cdsClone.FieldByName('SHIPPERSSHIPDATE').AsSQLTimeStamp:=  cds_SokAvropSHIPPERSSHIPDATE.AsSQLTimeStamp ;
+    cdsClone.FieldByName('PreliminaryRequestedPeriod').AsString:=  cds_SokAvropREADY_DAY.AsString ;
+    cdsClone.FieldByName('PANIC_NOTE').AsString:=  cds_SokAvropPANIC_NOTE.AsString ;
+    cdsClone.FieldByName('SupplierReference').AsString:=  cds_SokAvropSupplierReference.AsString ;
 
 
-     cdsClone.Post ;
+    cdsClone.Post ;
     End ;
     cdsClone.Next ;
-   End ;//while
-  Finally
-   cdsClone.CancelRange ;
-  End ;
- Finally
- End ;
+    End ;//while
+    Finally
+    cdsClone.CancelRange ;
+    End ;
+    Finally
+    End ;
   *)
 end;
 
@@ -285,8 +293,8 @@ procedure Tdm_SokFormular.cds_MakeSokAvropUpdateRecord(ASender: TDataSet;
   AOptions: TFDUpdateRowOptions);
 begin
   FDUpdateSQL1.ConnectionName := cds_MakeSokAvrop.ConnectionName;
-  FDUpdateSQL1.DataSet := cds_MakeSokAvrop ;
- FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
+  FDUpdateSQL1.DataSet := cds_MakeSokAvrop;
+  FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
 end;
 
 end.

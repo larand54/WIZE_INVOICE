@@ -49,6 +49,7 @@ object fEnterLoadWeight: TfEnterLoadWeight
     Align = alClient
     TabOrder = 2
     object grdLoadWeightDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
       Navigator.Buttons.PriorPage.Visible = True
       Navigator.Buttons.Prior.Visible = True

@@ -1,10 +1,10 @@
 object fEntryPriceField: TfEntryPriceField
   Left = 394
   Top = 226
-  Width = 460
-  Height = 198
   ActiveControl = mePriceField
   Caption = 'Ange nytt pris'
+  ClientHeight = 160
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -34,15 +34,17 @@ object fEntryPriceField: TfEntryPriceField
     Top = 128
     Width = 84
     Height = 33
-    TabOrder = 2
     Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
   end
   object BitBtn2: TBitBtn
     Left = 224
     Top = 128
     Width = 84
     Height = 33
-    TabOrder = 3
     Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
   end
 end

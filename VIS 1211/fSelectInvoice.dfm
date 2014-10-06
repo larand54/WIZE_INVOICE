@@ -29,10 +29,8 @@ object frmSelectInvoice: TfrmSelectInvoice
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object bbCancel: TBitBtn
@@ -40,10 +38,8 @@ object frmSelectInvoice: TfrmSelectInvoice
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -87,8 +83,6 @@ object frmSelectInvoice: TfrmSelectInvoice
       Width = 89
       Height = 49
       Caption = 'Refresh'
-      DoubleBuffered = True
-      ParentDoubleBuffered = False
       TabOrder = 2
       OnClick = bbRefreshClick
     end
@@ -156,23 +150,23 @@ object frmSelectInvoice: TfrmSelectInvoice
     Align = alClient
     TabOrder = 2
     object grdSelectInvoiceDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
-      NavigatorButtons.First.Visible = True
-      NavigatorButtons.PriorPage.Visible = True
-      NavigatorButtons.Prior.Visible = True
-      NavigatorButtons.Next.Visible = True
-      NavigatorButtons.NextPage.Visible = True
-      NavigatorButtons.Last.Visible = True
-      NavigatorButtons.Insert.Visible = True
-      NavigatorButtons.Append.Visible = False
-      NavigatorButtons.Delete.Visible = True
-      NavigatorButtons.Edit.Visible = True
-      NavigatorButtons.Post.Visible = True
-      NavigatorButtons.Cancel.Visible = True
-      NavigatorButtons.Refresh.Visible = True
-      NavigatorButtons.SaveBookmark.Visible = True
-      NavigatorButtons.GotoBookmark.Visible = True
-      NavigatorButtons.Filter.Visible = True
+      Navigator.Buttons.CustomButtons = <>
+      Navigator.Buttons.First.Visible = True
+      Navigator.Buttons.PriorPage.Visible = True
+      Navigator.Buttons.Prior.Visible = True
+      Navigator.Buttons.Next.Visible = True
+      Navigator.Buttons.NextPage.Visible = True
+      Navigator.Buttons.Last.Visible = True
+      Navigator.Buttons.Insert.Visible = True
+      Navigator.Buttons.Append.Visible = False
+      Navigator.Buttons.Delete.Visible = True
+      Navigator.Buttons.Edit.Visible = True
+      Navigator.Buttons.Post.Visible = True
+      Navigator.Buttons.Cancel.Visible = True
+      Navigator.Buttons.Refresh.Visible = True
+      Navigator.Buttons.SaveBookmark.Visible = True
+      Navigator.Buttons.GotoBookmark.Visible = True
+      Navigator.Buttons.Filter.Visible = True
       DataController.DataSource = dsInvoiceList
       DataController.KeyFieldNames = 'Line_ID'
       DataController.Summary.DefaultGroupSummaryItems = <>

@@ -23,7 +23,6 @@ object fReportStatics: TfReportStatics
     Height = 73
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 904
     object lcSalesregion: TcxDBLookupComboBox
       Left = 165
       Top = 27
@@ -92,7 +91,7 @@ object fReportStatics: TfReportStatics
       ExplicitWidth = 250
       ExplicitHeight = 200
       object grdReportStaticsDBTableView1: TcxGridDBTableView
-        NavigatorButtons.ConfirmDelete = False
+        Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
         DataController.KeyFieldNames = 'SalesRegionNo;DocType'
         DataController.Summary.DefaultGroupSummaryItems = <>
@@ -150,12 +149,13 @@ object fReportStatics: TfReportStatics
         end
       end
       object grdReportStaticsDBCardView1: TcxGridDBCardView
-        NavigatorButtons.ConfirmDelete = False
+        Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
         DataController.KeyFieldNames = 'SalesRegionNo;DocType'
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        OptionsView.CardIndent = 7
         object grdReportStaticsDBCardView1SalesRegionNo: TcxGridDBCardViewRow
           DataBinding.FieldName = 'SalesRegionNo'
           Position.BeginsLayer = True

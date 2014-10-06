@@ -1,9 +1,9 @@
 object fAddKundSpecifika: TfAddKundSpecifika
   Left = 197
   Top = 107
-  Width = 849
-  Height = 697
   Caption = 'Kundspecifika rapporter'
+  ClientHeight = 659
+  ClientWidth = 833
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,13 @@ object fAddKundSpecifika: TfAddKundSpecifika
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 841
+    Width = 833
     Height = 73
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 841
     DesignSize = (
-      841
+      833
       73)
     object cxButton1: TcxButton
       Left = 16
@@ -61,13 +62,15 @@ object fAddKundSpecifika: TfAddKundSpecifika
   object grdDocs: TcxGrid
     Left = 0
     Top = 73
-    Width = 841
-    Height = 541
+    Width = 833
+    Height = 530
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfFlat
+    ExplicitWidth = 841
+    ExplicitHeight = 541
     object grdDocsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.dsClientPrefDocs
       DataController.KeyFieldNames = 'ClientNo;RoleType;DocType;ReportNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -154,26 +157,30 @@ object fAddKundSpecifika: TfAddKundSpecifika
   end
   object Panel2: TPanel
     Left = 0
-    Top = 614
-    Width = 841
+    Top = 603
+    Width = 833
     Height = 56
     Align = alBottom
     TabOrder = 2
+    ExplicitTop = 614
+    ExplicitWidth = 841
     object BitBtn1: TBitBtn
       Left = 320
       Top = 8
       Width = 75
       Height = 36
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 416
       Top = 8
       Width = 75
       Height = 36
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object ActionList1: TActionList

@@ -29,18 +29,18 @@ object fConfirm: TfConfirm
       Width = 145
       Height = 105
       Caption = 'Ja'
+      Colors.Default = clGreen
+      Colors.DefaultText = clWhite
+      Colors.Pressed = clBlue
+      Colors.PressedText = clWhite
+      ModalResult = 6
+      TabOrder = 0
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -35
       Font.Name = 'Verdana'
       Font.Style = [fsBold]
-      ModalResult = 6
       ParentFont = False
-      TabOrder = 0
-      Colors.Default = clGreen
-      Colors.DefaultText = clWhite
-      Colors.Pressed = clBlue
-      Colors.PressedText = clWhite
     end
     object cxButton2: TcxButton
       Left = 168
@@ -49,18 +49,18 @@ object fConfirm: TfConfirm
       Height = 105
       Cancel = True
       Caption = 'Nej'
+      Colors.Default = clRed
+      Colors.DefaultText = clWhite
+      Colors.Pressed = clBlue
+      Colors.PressedText = clWhite
+      ModalResult = 7
+      TabOrder = 1
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -35
       Font.Name = 'Verdana'
       Font.Style = [fsBold]
-      ModalResult = 7
       ParentFont = False
-      TabOrder = 1
-      Colors.Default = clRed
-      Colors.DefaultText = clWhite
-      Colors.Pressed = clBlue
-      Colors.PressedText = clWhite
     end
     object cxLabel1: TcxLabel
       Left = 16

@@ -1,9 +1,9 @@
 object fAnkomstRegProgress: TfAnkomstRegProgress
   Left = 276
   Top = 134
-  Width = 529
-  Height = 238
   Caption = 'Progress'
+  ClientHeight = 200
+  ClientWidth = 513
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

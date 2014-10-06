@@ -4,12 +4,12 @@ object frmCredit: TfrmCredit
   Align = alClient
   BorderStyle = bsNone
   Caption = 'KREDIT F'#214'RS'#196'KRING'
-  ClientHeight = 887
-  ClientWidth = 1350
+  ClientHeight = 721
+  ClientWidth = 1097
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -18,23 +18,21 @@ object frmCredit: TfrmCredit
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1350
-    Height = 22
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1097
+    Height = 18
     Align = alTop
     Caption = 'KREDIT F'#214'RS'#196'KRING'
     Color = clMaroon
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
@@ -42,16 +40,13 @@ object frmCredit: TfrmCredit
   end
   object grdKredit: TcxGrid
     Left = 0
-    Top = 92
-    Width = 1350
-    Height = 795
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 75
+    Width = 1097
+    Height = 646
     Align = alClient
-    TabOrder = 3
+    TabOrder = 2
     object grdKreditDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.ds_CreLim
       DataController.KeyFieldNames = 'grpno'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -114,72 +109,48 @@ object frmCredit: TfrmCredit
   end
   object Panel2: TPanel
     Left = 0
-    Top = 22
-    Width = 1350
-    Height = 70
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 18
+    Width = 1097
+    Height = 57
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 6
     object Panel3: TPanel
       Left = 0
       Top = 0
-      Width = 987
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 802
+      Height = 57
       Align = alLeft
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 985
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 800
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel4: TPanel
-      Left = 987
+      Left = 802
       Top = 0
-      Width = 252
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 205
+      Height = 57
       Align = alClient
       TabOrder = 1
     end
     object Panel5: TPanel
-      Left = 1239
+      Left = 1007
       Top = 0
-      Width = 111
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 90
+      Height = 57
       Align = alRight
       TabOrder = 2
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 109
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 88
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -188,8 +159,8 @@ object frmCredit: TfrmCredit
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -374,7 +345,7 @@ object frmCredit: TfrmCredit
     Left = 72
     Top = 168
     Bitmap = {
-      494C010114001800080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101140018000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000090000000010020000000000000D8
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

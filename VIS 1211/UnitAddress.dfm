@@ -29,10 +29,8 @@ object FormAddress: TFormAddress
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -40,10 +38,8 @@ object FormAddress: TFormAddress
       Top = 8
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -58,7 +54,7 @@ object FormAddress: TFormAddress
     ExplicitWidth = 865
     ExplicitHeight = 535
     object grdAdrDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.dsClientAddress
       DataController.KeyFieldNames = 'ADDRESS_NO'
       DataController.Summary.DefaultGroupSummaryItems = <>

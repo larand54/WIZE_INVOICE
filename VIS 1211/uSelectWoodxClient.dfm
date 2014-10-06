@@ -1,10 +1,10 @@
 object fSelectWoodxClient: TfSelectWoodxClient
   Left = 229
   Top = 107
-  Width = 454
-  Height = 229
   ActiveControl = lcVisClientName
   Caption = 'V'#228'lj vis klient'
+  ClientHeight = 191
+  ClientWidth = 438
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -44,26 +44,30 @@ object fSelectWoodxClient: TfSelectWoodxClient
   end
   object Panel1: TPanel
     Left = 0
-    Top = 161
-    Width = 446
+    Top = 150
+    Width = 438
     Height = 41
     Align = alBottom
     TabOrder = 3
+    ExplicitTop = 161
+    ExplicitWidth = 446
     object BitBtn1: TBitBtn
       Left = 128
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 216
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object cxLabel3: TcxLabel

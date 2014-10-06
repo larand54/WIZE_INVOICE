@@ -1,7 +1,7 @@
 unit fMoveInvPkgToInventory;
-//Move packages on inventory to selected inventory
-interface
 
+// Move packages on inventory to selected inventory
+interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
@@ -14,9 +14,11 @@ uses
   cxControls, cxContainer, cxEdit, cxTextEdit, cxStyles, cxCustomData,
   cxGraphics, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid,  
-  ActnList, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
-  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  cxClasses, cxGridCustomView, cxGrid,
+  ActnList, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxDropDownEdit, cxLookupEdit,
   cxDBLookupEdit, cxDBLookupComboBox, cxMaskEdit, cxDBEdit, cxLookAndFeels,
   cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
@@ -31,8 +33,9 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxNavigator,
-  dxSkinsdxBarPainter ;
-
+  dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxBarBuiltInMenu, System.Actions;
 
 type
   TformfMoveInvPkgToInventory = class(TForm)
@@ -120,182 +123,181 @@ type
     procedure acGenInvNoAutomaticallyUpdate(Sender: TObject);
     procedure mtPropsPIPNoChange(Sender: TField);
   private
-    InvoiceNoAssigned : Boolean ;
+    InvoiceNoAssigned: Boolean;
     { Private declarations }
-//    procedure SetConfirmed_Load_Table(Sender: TObject) ;
-    Procedure SetPIPandLIPNo ;
+    // procedure SetConfirmed_Load_Table(Sender: TObject) ;
+    Procedure SetPIPandLIPNo;
     procedure PopulatePackageTableWithPkgNo(Sender: TObject);
-//    function  ChangeInventoryOnPackagesWithPKGNO(Sender: TObject;Var NoOfPkgsMoved : Integer) : Boolean ;
-    procedure Insert_Confirmed_Log_and_Confirmed_Package_Log ;
-    Function  ProformaInvNoExist : Integer ;
+    // function  ChangeInventoryOnPackagesWithPKGNO(Sender: TObject;Var NoOfPkgsMoved : Integer) : Boolean ;
+    procedure Insert_Confirmed_Log_and_Confirmed_Package_Log;
+    Function ProformaInvNoExist: Integer;
   public
     { Public declarations }
-    //AVROP_CUSTOMERNO, LO_SUPPLIERNO,
-    LO_CUSTOMERNO     : Integer ;
-    InternalInvoiceNo : Integer ;
-    LONo              : Integer ;
+    // AVROP_CUSTOMERNO, LO_SUPPLIERNO,
+    LO_CUSTOMERNO: Integer;
+    InternalInvoiceNo: Integer;
+    LONo: Integer;
   end;
 
 implementation
 
-uses dmsDataConn, VidaUser, dmcVidaInvoice, 
-  dmsVidaContact , dmsVidaSystem;
-
+uses dmsDataConn, VidaUser, dmcVidaInvoice,
+  dmsVidaContact, dmsVidaSystem;
 
 {$R *.DFM}
 
-Procedure TformfMoveInvPkgToInventory.SetPIPandLIPNo ;
+Procedure TformfMoveInvPkgToInventory.SetPIPandLIPNo;
 Begin
- mtProps.Edit ;
- GetPIPandLIPNos.ParamByName('ShippingPlanNo').AsInteger  := LONo ;
- GetPIPandLIPNos.Active := True ;
- Try
- if not GetPIPandLIPNos.Eof then
- Begin
-  if not GetPIPandLIPNosShipToCityNo.IsNull then
-   mtPropsPIPNo.AsInteger := GetPIPandLIPNosShipToCityNo.AsInteger ;
-  if not GetPIPandLIPNosShipToLIPNo.IsNull then
-   mtPropsLIPNo.AsInteger := GetPIPandLIPNosShipToLIPNo.AsInteger ;
- End
- Finally
-  GetPIPandLIPNos.Active  := False ;
- End ;
- if mtProps.State in [dsEdit] then
-  mtProps.Post ;
-End ;
+  mtProps.Edit;
+  GetPIPandLIPNos.ParamByName('ShippingPlanNo').AsInteger := LONo;
+  GetPIPandLIPNos.Active := True;
+  Try
+    if not GetPIPandLIPNos.Eof then
+    Begin
+      if not GetPIPandLIPNosShipToCityNo.IsNull then
+        mtPropsPIPNo.AsInteger := GetPIPandLIPNosShipToCityNo.AsInteger;
+      if not GetPIPandLIPNosShipToLIPNo.IsNull then
+        mtPropsLIPNo.AsInteger := GetPIPandLIPNosShipToLIPNo.AsInteger;
+    End
+  Finally
+    GetPIPandLIPNos.Active := False;
+  End;
+  if mtProps.State in [dsEdit] then
+    mtProps.Post;
+End;
 
 procedure TformfMoveInvPkgToInventory.FormShow(Sender: TObject);
-//Var PIPNo, LIPNo : Integer ;
+// Var PIPNo, LIPNo : Integer ;
 begin
-// dxMDRemovedPkgs.Open ;
-// dxMDNewPkgs.Active:= True ;
+  // dxMDRemovedPkgs.Open ;
+  // dxMDNewPkgs.Active:= True ;
 
-// dmArrivingLoads.sq_MovePkgNumber.Close ;
-// dmArrivingLoads.sq_MovePkgNumber.ParamByName('InternalInvoiceNo').AsInteger:= InternalInvoiceNo ;
-// dmArrivingLoads.cdsMovePkgNumber.Active:= True ;
-// if dmArrivingLoads.cdsMovePkgNumber.RecordCount = 0 then
-//  showmessage('0 paket') ;
-
-
-// dm_UserProps.LoadUserProps('TformfMoveInvPkgToInventory', mtUserProp) ;
-
-//LM? dmArrivingLoads.cdsConfirmed_Load.Active:= True ;
-
- PopulatePackageTableWithPkgNo(Sender) ;
-
- mtProps.Active := False ;
- mtProps.Active := True ;
-
- mtProps.Insert ;
- mtPropsOwnerNo.AsInteger := LO_CUSTOMERNO ;
- mtProps.Post ;
+  // dmArrivingLoads.sq_MovePkgNumber.Close ;
+  // dmArrivingLoads.sq_MovePkgNumber.ParamByName('InternalInvoiceNo').AsInteger:= InternalInvoiceNo ;
+  // dmArrivingLoads.cdsMovePkgNumber.Active:= True ;
+  // if dmArrivingLoads.cdsMovePkgNumber.RecordCount = 0 then
+  // showmessage('0 paket') ;
 
 
+  // dm_UserProps.LoadUserProps('TformfMoveInvPkgToInventory', mtUserProp) ;
 
+  // LM? dmArrivingLoads.cdsConfirmed_Load.Active:= True ;
 
- cds_PIP2.Active  := False ;
- cds_PIP2.ParamByName('OwnerNo').AsInteger  := mtPropsOwnerNo.AsInteger ;
- cds_PIP2.Active  := True ;
+  PopulatePackageTableWithPkgNo(Sender);
 
- if (cds_PIP2.Active) and (cds_PIP2.RecordCount > 0) and (cds_PIP2PIPNO.AsInteger > 0) then
- Begin
-  cds_LIP2.Active  := False ;
-  cds_LIP2.ParamByName('PIPNo').AsInteger  :=  cds_PIP2PIPNO.AsInteger ;
-  cds_LIP2.Active  := True ;
- End
- else
- Begin
-  cds_LIP2.Active  := False ;
-  cds_LIP2.ParamByName('PIPNo').AsInteger  :=  -1 ;
-  cds_LIP2.Active  := True ;
- End ;
+  mtProps.Active := False;
+  mtProps.Active := True;
 
- SetPIPandLIPNo ; 
+  mtProps.Insert;
+  mtPropsOwnerNo.AsInteger := LO_CUSTOMERNO;
+  mtProps.Post;
+
+  cds_PIP2.Active := False;
+  cds_PIP2.ParamByName('OwnerNo').AsInteger := mtPropsOwnerNo.AsInteger;
+  cds_PIP2.Active := True;
+
+  if (cds_PIP2.Active) and (cds_PIP2.RecordCount > 0) and
+    (cds_PIP2PIPNO.AsInteger > 0) then
+  Begin
+    cds_LIP2.Active := False;
+    cds_LIP2.ParamByName('PIPNo').AsInteger := cds_PIP2PIPNO.AsInteger;
+    cds_LIP2.Active := True;
+  End
+  else
+  Begin
+    cds_LIP2.Active := False;
+    cds_LIP2.ParamByName('PIPNo').AsInteger := -1;
+    cds_LIP2.Active := True;
+  End;
+
+  SetPIPandLIPNo;
 end;
 
-procedure TformfMoveInvPkgToInventory.PopulatePackageTableWithPkgNo(Sender: TObject);
+procedure TformfMoveInvPkgToInventory.PopulatePackageTableWithPkgNo
+  (Sender: TObject);
 begin
-// With dmVidaInvoice do
-// Begin
-//  dxMDRemovedPkgs.DisableControls ;
+  // With dmVidaInvoice do
+  // Begin
+  // dxMDRemovedPkgs.DisableControls ;
+  cds_GetInvoicedPkgs.DisableControls;
+  Try
+    cds_GetInvoicedPkgs.Active := False;
+    cds_GetInvoicedPkgs.ParamByName('InternalInvoiceNo').AsInteger :=
+      InternalInvoiceNo;
+    // sq_GetInvoicedPkgs.Open ;
+    cds_GetInvoicedPkgs.Active := True;
+    { While not sq_GetInvoicedPkgs.Eof do
+      Begin
+      dxMDRemovedPkgs.Insert ;
+      dxMDRemovedPkgsPackageNo.AsInteger        := sq_GetInvoicedPkgs.FieldByName('PKGNO').AsInteger ;
+      dxMDRemovedPkgsSupplierCode.AsString      := sq_GetInvoicedPkgs.FieldByName('SUPPCODE').AsString ;
+      dxMDRemovedPkgsPackageTypeNo.AsInteger    := sq_GetInvoicedPkgs.FieldByName('PKGTYPENO').AsInteger ;
+      dxMDRemovedPkgsProductDescription.AsString:= sq_GetInvoicedPkgs.FieldByName('DESCRIPTION').AsString ;
+      dxMDRemovedPkgsPieces.AsInteger           := sq_GetInvoicedPkgs.FieldByName('NOOFPCS').AsInteger ;
+      dxMDRemovedPkgsPcsPerLength.AsString      := sq_GetInvoicedPkgs.FieldByName('PCS_PER_LENGTH').AsString ;
+      dxMDRemovedPkgsAktM3.AsFloat              := sq_GetInvoicedPkgs.FieldByName('M3_ACT').AsFloat ;
+      dxMDRemovedPkgsLINEAL_MET.AsFloat         := sq_GetInvoicedPkgs.FieldByName('LINEAL_MET').AsFloat ;
+      dxMDRemovedPkgs.Post ;
+      sq_GetInvoicedPkgs.Next ;
+      End ;
+      sq_GetInvoicedPkgs.Close ; }
+  Finally
+    cds_GetInvoicedPkgs.EnableControls;
+    // dxMDRemovedPkgs.EnableControls ;
+  End;
+  // End ; // with
+end;
+
+
+// Change inventory location of packages removed from load
+(* function TformfMoveInvPkgToInventory.ChangeInventoryOnPackagesWithPKGNO(Sender: TObject;Var NoOfPkgsMoved : Integer) : Boolean ;
+  //Var SupplierCode : String ;
+  Begin
+  Result:= False ;
+  NoOfPkgsMoved:= 0 ;
+  if cds_GetInvoicedPkgs.RecordCount > 0 then
+  Begin
+  with dmArrivingLoads do
+  Begin
   cds_GetInvoicedPkgs.DisableControls ;
   Try
-  cds_GetInvoicedPkgs.Active:= False ;
-  cds_GetInvoicedPkgs.ParamByName('InternalInvoiceNo').AsInteger:= InternalInvoiceNo ;
-//  sq_GetInvoicedPkgs.Open ;
-  cds_GetInvoicedPkgs.Active:= True ;
-{  While not sq_GetInvoicedPkgs.Eof do
-   Begin
-    dxMDRemovedPkgs.Insert ;
-    dxMDRemovedPkgsPackageNo.AsInteger        := sq_GetInvoicedPkgs.FieldByName('PKGNO').AsInteger ;
-    dxMDRemovedPkgsSupplierCode.AsString      := sq_GetInvoicedPkgs.FieldByName('SUPPCODE').AsString ;
-    dxMDRemovedPkgsPackageTypeNo.AsInteger    := sq_GetInvoicedPkgs.FieldByName('PKGTYPENO').AsInteger ;
-    dxMDRemovedPkgsProductDescription.AsString:= sq_GetInvoicedPkgs.FieldByName('DESCRIPTION').AsString ;
-    dxMDRemovedPkgsPieces.AsInteger           := sq_GetInvoicedPkgs.FieldByName('NOOFPCS').AsInteger ;
-    dxMDRemovedPkgsPcsPerLength.AsString      := sq_GetInvoicedPkgs.FieldByName('PCS_PER_LENGTH').AsString ;
-    dxMDRemovedPkgsAktM3.AsFloat              := sq_GetInvoicedPkgs.FieldByName('M3_ACT').AsFloat ;
-    dxMDRemovedPkgsLINEAL_MET.AsFloat         := sq_GetInvoicedPkgs.FieldByName('LINEAL_MET').AsFloat ;
-    dxMDRemovedPkgs.Post ;
-    sq_GetInvoicedPkgs.Next ;
-   End ;
-  sq_GetInvoicedPkgs.Close ; }
-  Finally
-   cds_GetInvoicedPkgs.EnableControls ;
-//   dxMDRemovedPkgs.EnableControls ;
-  End ;
-// End ; // with
-end;
-
-
-//Change inventory location of packages removed from load
-(*function TformfMoveInvPkgToInventory.ChangeInventoryOnPackagesWithPKGNO(Sender: TObject;Var NoOfPkgsMoved : Integer) : Boolean ;
-//Var SupplierCode : String ;
-Begin
- Result:= False ;
- NoOfPkgsMoved:= 0 ;
- if cds_GetInvoicedPkgs.RecordCount > 0 then
- Begin
- with dmArrivingLoads do
- Begin
- cds_GetInvoicedPkgs.DisableControls ;
- Try
- //Change inventory in PACKAGENUMBER
- cds_GetInvoicedPkgs.First ;
- While not dxMDRemovedPkgs.Eof do
- Begin
-//  SupplierCode:= Trim(cds_GetInvoicedPkgsSUPPCODE.AsString) ;
+  //Change inventory in PACKAGENUMBER
+  cds_GetInvoicedPkgs.First ;
+  While not dxMDRemovedPkgs.Eof do
+  Begin
+  //  SupplierCode:= Trim(cds_GetInvoicedPkgsSUPPCODE.AsString) ;
   if cdsMovePkgNumber.Locate('PackageNo;SupplierCode', VarArrayOf([cds_GetInvoicedPkgsPKGNO.AsInteger, cds_GetInvoicedPkgsSUPPCODE.AsString]),[]) then
   Begin
   //Set Package Status to 1 and put into selected Inventory
-   cdsMovePkgNumber.Edit ;
-   Try
-   cdsMovePkgNumberLogicalInventoryPointNo.AsInteger:= integer(cmbLogicalInv.Items.Objects[cmbLogicalInv.ItemIndex]) ;
-   cdsMovePkgNumberStatus.AsInteger:= 1 ;
-   cdsMovePkgNumber.Post ;
-   NoOfPkgsMoved:= Succ(NoOfPkgsMoved) ;
-   Except
-    showMessage('Problem, cannot change packageno ' + cds_GetInvoicedPkgsPKGNO.AsString+' / ' + cds_GetInvoicedPkgsSUPPCODE.AsString) ;
-    Result := True ;
-   End ;
+  cdsMovePkgNumber.Edit ;
+  Try
+  cdsMovePkgNumberLogicalInventoryPointNo.AsInteger:= integer(cmbLogicalInv.Items.Objects[cmbLogicalInv.ItemIndex]) ;
+  cdsMovePkgNumberStatus.AsInteger:= 1 ;
+  cdsMovePkgNumber.Post ;
+  NoOfPkgsMoved:= Succ(NoOfPkgsMoved) ;
+  Except
+  showMessage('Problem, cannot change packageno ' + cds_GetInvoicedPkgsPKGNO.AsString+' / ' + cds_GetInvoicedPkgsSUPPCODE.AsString) ;
+  Result := True ;
+  End ;
 
   End
   else
-   Begin
-    showMessage('Problem, cannot find packageno ' + cds_GetInvoicedPkgsPKGNO.AsString + ' / ' + cds_GetInvoicedPkgsSUPPCODE.AsString) ;
-    Result := True ;
-    Exit ;
-   End ;
+  Begin
+  showMessage('Problem, cannot find packageno ' + cds_GetInvoicedPkgsPKGNO.AsString + ' / ' + cds_GetInvoicedPkgsSUPPCODE.AsString) ;
+  Result := True ;
+  Exit ;
+  End ;
 
   cds_GetInvoicedPkgs.Next ;
- End ;
+  End ;
 
 
   Finally
-   cds_GetInvoicedPkgs.EnableControls ;
+  cds_GetInvoicedPkgs.EnableControls ;
   End ;
- End ; //with
- End ;
-End ; *)
+  End ; //with
+  End ;
+  End ; *)
 
 // Move ALL packages to Vida_Wood Transfer inventory from current Transfer inventory
 procedure TformfMoveInvPkgToInventory.dxBarConfirmLoadClick(Sender: TObject);
@@ -303,365 +305,376 @@ begin
 
 end;
 
-//Get invoiced load not confirmed and confirmed them so no changes can be made to them
-//If load is confirmed already then "sq_GetInvoicedLods" does not return anything
-(*procedure TformfMoveInvPkgToInventory.SetConfirmed_Load_Table(Sender: TObject) ;
-Begin
- With dmVidaInvoice, dmArrivingLoads do
- Begin
- //fixa logg på paketnr här
+// Get invoiced load not confirmed and confirmed them so no changes can be made to them
+// If load is confirmed already then "sq_GetInvoicedLods" does not return anything
+(* procedure TformfMoveInvPkgToInventory.SetConfirmed_Load_Table(Sender: TObject) ;
+  Begin
+  With dmVidaInvoice, dmArrivingLoads do
+  Begin
+  //fixa logg på paketnr här
   sq_GetInvoicedLods.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
   sq_GetInvoicedLods.Open ;
   While not sq_GetInvoicedLods.Eof do
   Begin
-   cdsConfirmed_Load.Insert ;
-   cdsConfirmed_LoadConfirmed_LoadNo.AsInteger            := sq_GetInvoicedLodsLoadNo.AsInteger ;
-   cdsConfirmed_LoadConfirmed_ShippingPlanNo.AsInteger    := sq_GetInvoicedLodsShippingPlanNo.AsInteger ;
-   cdsConfirmed_LoadNewLoadNo.AsInteger                   := sq_GetInvoicedLodsLoadNo.AsInteger ;
-   cdsConfirmed_LoadNewShippingPlanNo.AsInteger           := sq_GetInvoicedLodsShippingPlanNo.AsInteger ;
-   cdsConfirmed_LoadDateCreated.AsSQLTimeStamp            := DateTimeToSQLTimeStamp(Now) ;
-   cdsConfirmed_LoadCreatedUser.AsInteger                 := ThisUser.UserID ;
-   cdsConfirmed_LoadModifiedUser.AsInteger                := ThisUser.UserID ;
-   cdsConfirmed_Load.Post ;
-   sq_GetInvoicedLods.Next ;
+  cdsConfirmed_Load.Insert ;
+  cdsConfirmed_LoadConfirmed_LoadNo.AsInteger            := sq_GetInvoicedLodsLoadNo.AsInteger ;
+  cdsConfirmed_LoadConfirmed_ShippingPlanNo.AsInteger    := sq_GetInvoicedLodsShippingPlanNo.AsInteger ;
+  cdsConfirmed_LoadNewLoadNo.AsInteger                   := sq_GetInvoicedLodsLoadNo.AsInteger ;
+  cdsConfirmed_LoadNewShippingPlanNo.AsInteger           := sq_GetInvoicedLodsShippingPlanNo.AsInteger ;
+  cdsConfirmed_LoadDateCreated.AsSQLTimeStamp            := DateTimeToSQLTimeStamp(Now) ;
+  cdsConfirmed_LoadCreatedUser.AsInteger                 := ThisUser.UserID ;
+  cdsConfirmed_LoadModifiedUser.AsInteger                := ThisUser.UserID ;
+  cdsConfirmed_Load.Post ;
+  sq_GetInvoicedLods.Next ;
   End ;
   sq_GetInvoicedLods.Close ;
- End ; //with
-End ; *)
+  End ; //with
+  End ; *)
 
-//Aktiverar paketet och ger det nytt lagerställe
-procedure TformfMoveInvPkgToInventory.Insert_Confirmed_Log_and_Confirmed_Package_Log ;
+// Aktiverar paketet och ger det nytt lagerställe
+procedure TformfMoveInvPkgToInventory.
+  Insert_Confirmed_Log_and_Confirmed_Package_Log;
 Begin
- Try
- sq_Delete_Delete_Confirmed_Package_Log.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
- sq_Delete_Delete_Confirmed_Package_Log.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-       ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
+  Try
+    sq_Delete_Delete_Confirmed_Package_Log.ParamByName('InternalInvoiceNo')
+      .AsInteger := InternalInvoiceNo;
+    sq_Delete_Delete_Confirmed_Package_Log.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 
- Try
- sq_Insert_Confirmed_Load.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
- sq_Insert_Confirmed_Load.ParamByName('UserID').AsInteger            := ThisUser.UserID ;
- sq_Insert_Confirmed_Load.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-       ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
+  Try
+    sq_Insert_Confirmed_Load.ParamByName('InternalInvoiceNo').AsInteger :=
+      InternalInvoiceNo;
+    sq_Insert_Confirmed_Load.ParamByName('UserID').AsInteger := ThisUser.UserID;
+    sq_Insert_Confirmed_Load.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 
- Try
- sq_Insert_Confirmed_Package_Log.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
- sq_Insert_Confirmed_Package_Log.ParamByName('ToLIPNo').AsInteger           := mtPropsLIPNo.AsInteger ;
- sq_Insert_Confirmed_Package_Log.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-       ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
+  Try
+    sq_Insert_Confirmed_Package_Log.ParamByName('InternalInvoiceNo').AsInteger
+      := InternalInvoiceNo;
+    sq_Insert_Confirmed_Package_Log.ParamByName('ToLIPNo').AsInteger :=
+      mtPropsLIPNo.AsInteger;
+    sq_Insert_Confirmed_Package_Log.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 
- Try    
- sq_ChangeInventory_PackageNumber.ParamByName('InternalInvoiceNo').AsInteger  := InternalInvoiceNo ;
- sq_ChangeInventory_PackageNumber.ParamByName('ToLIPNo').AsInteger            := mtPropsLIPNo.AsInteger ;
- sq_ChangeInventory_PackageNumber.ParamByName('Status').AsInteger             := 1 ; //Aktivera paket i lagret
- sq_ChangeInventory_PackageNumber.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-       ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
+  Try
+    sq_ChangeInventory_PackageNumber.ParamByName('InternalInvoiceNo').AsInteger
+      := InternalInvoiceNo;
+    sq_ChangeInventory_PackageNumber.ParamByName('ToLIPNo').AsInteger :=
+      mtPropsLIPNo.AsInteger;
+    sq_ChangeInventory_PackageNumber.ParamByName('Status').AsInteger := 1;
+    // Aktivera paket i lagret
+    sq_ChangeInventory_PackageNumber.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 
-End ;
+End;
 
 procedure TformfMoveInvPkgToInventory.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-// dxMDNewPkgs.Close ;
-// dxMDRemovedPkgs.Close ;
-//LM? dmArrivingLoads.cdsConfirmed_Load.Active := False ;
-// dmArrivingLoads.cdsMovePkgNumber.Active  := False ;
- cds_GetInvoicedPkgs.Active               := False ;
+  // dxMDNewPkgs.Close ;
+  // dxMDRemovedPkgs.Close ;
+  // LM? dmArrivingLoads.cdsConfirmed_Load.Active := False ;
+  // dmArrivingLoads.cdsMovePkgNumber.Active  := False ;
+  cds_GetInvoicedPkgs.Active := False;
 
- cds_PIP2.Active  := False ;
- CanClose:= True ;
+  cds_PIP2.Active := False;
+  CanClose := True;
 end;
 
-Function TformfMoveInvPkgToInventory.ProformaInvNoExist : Integer ;
+Function TformfMoveInvPkgToInventory.ProformaInvNoExist: Integer;
 Begin
- sq_ProformaInvNo.ParamByName('ProformaInvoiceNo').AsInteger  := mtPropsFakturanr.AsInteger ;
- sq_ProformaInvNo.Open ;
- Try
-  Result:= sq_ProformaInvNoInternalInvoiceNo.AsInteger ;
- Finally
-  sq_ProformaInvNo.Close ;
- End ;
-End ;
-
-procedure TformfMoveInvPkgToInventory.acGenInvNoManuallyExecute(
-  Sender: TObject);
-var myRollBack        : Boolean ;
-    Save_Cursor       : TCursor;
-//    InternalInvoiceNo : Integer ;
-//    NoOfPkgsMoved : Integer ;
-begin
- if mtProps.State in [dsEdit, dsInsert] then
-  mtProps.Post ;
-
- if (mtPropsLIPNo.AsInteger = -1) then
- Begin
-  ShowMessage('Välj ett lager!') ;
-  Exit ;
- End ;
-
- if mtPropsFakturanr.AsInteger > 0 then
- Begin
-//  InternalInvoiceNo:= ProformaInvNoExist ;
-  if ProformaInvNoExist > 0 then
-  Begin
-   ShowMessage('Fakturanr ' + mtPropsFakturanr.AsString + ' är taget, använd ett annat!') ;
-   Exit ;
-  End ; 
-
- if MessageDlg('Vill du flytta paketen till lager '
- + lcPIP.Text + '/' + lcLIP.Text  ,
- mtConfirmation, [mbYes, mbNo], 0) = mrYes then
- Begin
-
-
- With dmVidaInvoice do
- Begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
+  sq_ProformaInvNo.ParamByName('ProformaInvoiceNo').AsInteger :=
+    mtPropsFakturanr.AsInteger;
+  sq_ProformaInvNo.Open;
   Try
-  myRollBack    := False ;
-  //START A TRANSACTION
-  dmsConnector.StartTransaction;
-
-  Try
-   //Make an entry to Confirmed_Load so the load cannot be released again and we know who did it!
-//     if myRollBack = False then
-     Insert_Confirmed_Log_and_Confirmed_Package_Log ;
-//     SetConfirmed_Load_Table(Sender) ;
-//     if dmArrivingLoads.cdsConfirmed_Load.ChangeCount > 0 then
-//     if dmArrivingLoads.cdsConfirmed_Load.ApplyUpdates(0) > 0 then myRollBack := True ;
-
-    // Set Status = 1 on Packages that are moved to an inventory
-//     if  myRollBack = False then
-//     myRollBack := ChangeInventoryOnPackagesWithPKGNO(Sender, NoOfPkgsMoved) ;
-
-{     if dmArrivingLoads.cdsMovePkgNumber.ChangeCount > 0 then
-      Begin
-       if dmArrivingLoads.cdsMovePkgNumber.ApplyUpdates(0) > 0 then  myRollBack := True ;
-      End
-        else myRollBack := True ; }
-
-//     keyviolation on cdsProformaInvNo
-     cdsProformaInvNo.Insert ;
-     cdsProformaInvNoInternalInvoiceNo.AsInteger  := InternalInvoiceNo ;
-
-     cdsProformaInvNoProformaInvoiceNo.AsInteger  := mtPropsFakturanr.AsInteger ;
-     cdsProformaInvNoUserCreated.AsInteger        := ThisUser.UserID ;
-     cdsProformaInvNoUserModified.AsInteger       := ThisUser.UserID ;
-     cdsProformaInvNoDateCreated.AsSQLTimeStamp   := DateTimeToSQLTimeStamp(Now) ;
-     cdsProformaInvNo.Post ;
-
-     PkgLogInvoiced(InternalInvoiceNo, 25) ;
-
-     if cdsProformaInvNo.ChangeCount > 0 then
-     Begin
-      if cdsProformaInvNo.ApplyUpdates(0) > 0 then myRollBack := True
-       else
-        cdsProformaInvNo.CommitUpdates ;
-     End
-      else myRollBack := True ;
-
-
-
-
-   if myRollBack = True then
-   Begin
-    dmsConnector.Rollback ;
-    ShowMessage('Problem att flytta paket, operation rollbacked.') ;
-   End
-   else
-   Begin
-    dmsConnector.Commit ;
-    InvoiceNoAssigned:= True ;
-    ShowMessage('Paket flyttade till lager ' + lcLIP.Text) ;
-   End ;
-
-
-  Except
-   On E: Exception do
-   Begin
-    dmsConnector.Rollback ;
-    dmsSystem.FDoLog(E.Message) ;
-    ShowMessage('Problem att flytta paket, operation rollbacked. ' + E.Message);
-    Raise ;
-   End ;
-  End ;
-
+    Result := sq_ProformaInvNoInternalInvoiceNo.AsInteger;
   Finally
-   Screen.Cursor := Save_Cursor;  { Always restore to normal }
-  End ;
+    sq_ProformaInvNo.Close;
+  End;
+End;
 
- End ;
- End  //if StrToInt(eProformaNo.Text) > 0 then
-  else
-   ShowMessage('Ange Proforma fakturanummer!') ;
- End ;//if..
+procedure TformfMoveInvPkgToInventory.acGenInvNoManuallyExecute
+  (Sender: TObject);
+var
+  myRollBack: Boolean;
+  Save_Cursor: TCursor;
+  // InternalInvoiceNo : Integer ;
+  // NoOfPkgsMoved : Integer ;
+begin
+  if mtProps.State in [dsEdit, dsInsert] then
+    mtProps.Post;
+
+  if (mtPropsLIPNo.AsInteger = -1) then
+  Begin
+    ShowMessage('Välj ett lager!');
+    Exit;
+  End;
+
+  if mtPropsFakturanr.AsInteger > 0 then
+  Begin
+    // InternalInvoiceNo:= ProformaInvNoExist ;
+    if ProformaInvNoExist > 0 then
+    Begin
+      ShowMessage('Fakturanr ' + mtPropsFakturanr.AsString +
+        ' är taget, använd ett annat!');
+      Exit;
+    End;
+
+    if MessageDlg('Vill du flytta paketen till lager ' + lcPIP.Text + '/' +
+      lcLIP.Text, mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    Begin
+
+      With dmVidaInvoice do
+      Begin
+        Save_Cursor := Screen.Cursor;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+
+        Try
+          myRollBack := False;
+          // START A TRANSACTION
+          dmsConnector.StartTransaction;
+
+          Try
+            // Make an entry to Confirmed_Load so the load cannot be released again and we know who did it!
+            // if myRollBack = False then
+            Insert_Confirmed_Log_and_Confirmed_Package_Log;
+            // SetConfirmed_Load_Table(Sender) ;
+            // if dmArrivingLoads.cdsConfirmed_Load.ChangeCount > 0 then
+            // if dmArrivingLoads.cdsConfirmed_Load.ApplyUpdates(0) > 0 then myRollBack := True ;
+
+            // Set Status = 1 on Packages that are moved to an inventory
+            // if  myRollBack = False then
+            // myRollBack := ChangeInventoryOnPackagesWithPKGNO(Sender, NoOfPkgsMoved) ;
+
+            { if dmArrivingLoads.cdsMovePkgNumber.ChangeCount > 0 then
+              Begin
+              if dmArrivingLoads.cdsMovePkgNumber.ApplyUpdates(0) > 0 then  myRollBack := True ;
+              End
+              else myRollBack := True ; }
+
+            // keyviolation on cdsProformaInvNo
+            cdsProformaInvNo.Insert;
+            cdsProformaInvNoInternalInvoiceNo.AsInteger := InternalInvoiceNo;
+
+            cdsProformaInvNoProformaInvoiceNo.AsInteger :=
+              mtPropsFakturanr.AsInteger;
+            cdsProformaInvNoUserCreated.AsInteger := ThisUser.UserID;
+            cdsProformaInvNoUserModified.AsInteger := ThisUser.UserID;
+            cdsProformaInvNoDateCreated.AsSQLTimeStamp :=
+              DateTimeToSQLTimeStamp(Now);
+            cdsProformaInvNo.Post;
+
+            PkgLogInvoiced(InternalInvoiceNo, 25);
+
+            if cdsProformaInvNo.ChangeCount > 0 then
+            Begin
+              if cdsProformaInvNo.ApplyUpdates(0) > 0 then
+                myRollBack := True
+              else
+                cdsProformaInvNo.CommitUpdates;
+            End
+            else
+              myRollBack := True;
+
+            if myRollBack = True then
+            Begin
+              dmsConnector.Rollback;
+              ShowMessage('Problem att flytta paket, operation rollbacked.');
+            End
+            else
+            Begin
+              dmsConnector.Commit;
+              InvoiceNoAssigned := True;
+              ShowMessage('Paket flyttade till lager ' + lcLIP.Text);
+            End;
+
+          Except
+            On E: Exception do
+            Begin
+              dmsConnector.Rollback;
+              dmsSystem.FDoLog(E.Message);
+              ShowMessage('Problem att flytta paket, operation rollbacked. ' +
+                E.Message);
+              Raise;
+            End;
+          End;
+
+        Finally
+          Screen.Cursor := Save_Cursor; { Always restore to normal }
+        End;
+
+      End;
+    End // if StrToInt(eProformaNo.Text) > 0 then
+    else
+      ShowMessage('Ange Proforma fakturanummer!');
+  End; // if..
 end;
 
-procedure TformfMoveInvPkgToInventory.acGenInvNoAutomaticallyExecute(
-  Sender: TObject);
-var myRollBack    : boolean ;
-    Save_Cursor   : TCursor;
-    NoOfPkgsMoved : Integer ;
+procedure TformfMoveInvPkgToInventory.acGenInvNoAutomaticallyExecute
+  (Sender: TObject);
+var
+  myRollBack: Boolean;
+  Save_Cursor: TCursor;
+  NoOfPkgsMoved: Integer;
 begin
 
- if (mtPropsLIPNo.AsInteger < 1) or (mtPropsLIPNo.isNull) then
- Begin
-  ShowMessage('Välj ett lager!') ;
-  Exit ;
- End ;
+  if (mtPropsLIPNo.AsInteger < 1) or (mtPropsLIPNo.IsNull) then
+  Begin
+    ShowMessage('Välj ett lager!');
+    Exit;
+  End;
 
 
-// if StrToIntDef(OvcNumericField1.Text,0) > 0 then
-// Begin
+  // if StrToIntDef(OvcNumericField1.Text,0) > 0 then
+  // Begin
 
- With dmVidaInvoice do
- Begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  With dmVidaInvoice do
+  Begin
+    Save_Cursor := Screen.Cursor;
+    Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
-  Try
-  myRollBack := False ;
+    Try
+      myRollBack := False;
 
-  //START A TRANSACTION
-   dmsConnector.StartTransaction;
+      // START A TRANSACTION
+      dmsConnector.StartTransaction;
 
-  Try
-   //Make an entry to Confirmed_Load so the load cannot be released again and we know who did it!
-//     if myRollBack = False then
-     Insert_Confirmed_Log_and_Confirmed_Package_Log ;
-//     SetConfirmed_Load_Table(Sender) ;
-//     if dmArrivingLoads.cdsConfirmed_Load.ChangeCount > 0 then
-//     if dmArrivingLoads.cdsConfirmed_Load.ApplyUpdates(0) > 0 then myRollBack := True ;
+      Try
+        // Make an entry to Confirmed_Load so the load cannot be released again and we know who did it!
+        // if myRollBack = False then
+        Insert_Confirmed_Log_and_Confirmed_Package_Log;
+        // SetConfirmed_Load_Table(Sender) ;
+        // if dmArrivingLoads.cdsConfirmed_Load.ChangeCount > 0 then
+        // if dmArrivingLoads.cdsConfirmed_Load.ApplyUpdates(0) > 0 then myRollBack := True ;
 
-    // Set Status = 1 on Packages that are moved to an inventory
-//     if  myRollBack = False then
-//     myRollBack := ChangeInventoryOnPackagesWithPKGNO(Sender, NoOfPkgsMoved) ;
+        // Set Status = 1 on Packages that are moved to an inventory
+        // if  myRollBack = False then
+        // myRollBack := ChangeInventoryOnPackagesWithPKGNO(Sender, NoOfPkgsMoved) ;
 
-{     if dmArrivingLoads.cdsMovePkgNumber.ChangeCount > 0 then
-      Begin
-       if dmArrivingLoads.cdsMovePkgNumber.ApplyUpdates(0) > 0 then  myRollBack := True ;
-      End
-        else myRollBack := True ; }
+        { if dmArrivingLoads.cdsMovePkgNumber.ChangeCount > 0 then
+          Begin
+          if dmArrivingLoads.cdsMovePkgNumber.ApplyUpdates(0) > 0 then  myRollBack := True ;
+          End
+          else myRollBack := True ; }
 
-     if myRollBack = False then
-     dmVidaInvoice.NextProformaNo(InternalInvoiceNo) ;
+        if myRollBack = False then
+          dmVidaInvoice.NextProformaNo(InternalInvoiceNo);
 
-{     cdsProformaInvNo.Insert ;
-     cdsProformaInvNoInternalInvoiceNo.AsInteger  := InternalInvoiceNo ;
-     cdsProformaInvNoProformaInvoiceNo.AsInteger  := StrToIntDef(OvcNumericField1.Text,0) ;
-     cdsProformaInvNoUserCreated.AsInteger        := ThisUser.UserID ;
-     cdsProformaInvNoUserModified.AsInteger       := ThisUser.UserID ;
-     cdsProformaInvNoDateCreated.AsSQLTimeStamp   := DateTimeToSQLTimeStamp(Now) ;
-     cdsProformaInvNo.Post ;
+        { cdsProformaInvNo.Insert ;
+          cdsProformaInvNoInternalInvoiceNo.AsInteger  := InternalInvoiceNo ;
+          cdsProformaInvNoProformaInvoiceNo.AsInteger  := StrToIntDef(OvcNumericField1.Text,0) ;
+          cdsProformaInvNoUserCreated.AsInteger        := ThisUser.UserID ;
+          cdsProformaInvNoUserModified.AsInteger       := ThisUser.UserID ;
+          cdsProformaInvNoDateCreated.AsSQLTimeStamp   := DateTimeToSQLTimeStamp(Now) ;
+          cdsProformaInvNo.Post ;
 
-     if cdsProformaInvNo.ChangeCount > 0 then
-     Begin
-      if cdsProformaInvNo.ApplyUpdates(0) > 0 then myRollBack := True ;
-     End
-      else myRollBack := True ; }
+          if cdsProformaInvNo.ChangeCount > 0 then
+          Begin
+          if cdsProformaInvNo.ApplyUpdates(0) > 0 then myRollBack := True ;
+          End
+          else myRollBack := True ; }
 
+        if myRollBack = True then
+        Begin
+          dmsConnector.Rollback;
+          ShowMessage
+            ('Error moving packages to inventory, operation rollbacked.');
+        End
+        else
+        Begin
+          dmsConnector.Commit;
+          InvoiceNoAssigned := True;
+          ShowMessage('Paket flyttade till lager ' + lcLIP.Text);
+          if mtProps.State in [dsBrowse] then
+            mtProps.Edit;
+          mtPropsFakturanr.AsInteger := GetGetProFormInvNo(InternalInvoiceNo);
 
-   if myRollBack = True then
-   Begin
-    dmsConnector.Rollback ;
-    ShowMessage('Error moving packages to inventory, operation rollbacked.') ;
-   End
-   else
-   Begin
-    dmsConnector.Commit ;
-    InvoiceNoAssigned:= True ;
-    ShowMessage('Paket flyttade till lager ' + lcLIP.Text) ;
-    if mtProps.State in [dsBrowse] then
-    mtProps.Edit ;
-    mtPropsFakturanr.AsInteger  := GetGetProFormInvNo(InternalInvoiceNo) ;
+        End;
 
-   End ;
+      Except
+        On E: Exception do
+        Begin
+          dmsConnector.Rollback;
+          dmsSystem.FDoLog(E.Message);
+          ShowMessage('Problem att flytta paket, operation rollbacked. ' +
+            E.Message);
+          Raise;
+        End;
+      End;
 
+    Finally
+      cdsProformaInvNo.Active := False;
+      cdsProformaInvNo.Active := True;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
 
-  Except
-   On E: Exception do
-   Begin
-    dmsConnector.Rollback ;
-    dmsSystem.FDoLog(E.Message) ;
-    ShowMessage('Problem att flytta paket, operation rollbacked. ' + E.Message);
-    Raise ;
-   End ;
-  End ;
-
-  Finally
-   cdsProformaInvNo.Active:= False ;
-   cdsProformaInvNo.Active:= True ;
-   Screen.Cursor := Save_Cursor;  { Always restore to normal }
-  End ;
-
- End ;//with dmVidaInvoice
+  End; // with dmVidaInvoice
 end;
 
 procedure TformfMoveInvPkgToInventory.acCloseExecute(Sender: TObject);
 begin
-  Close ;
+  Close;
 end;
 
 procedure TformfMoveInvPkgToInventory.FormCreate(Sender: TObject);
 begin
- InvoiceNoAssigned:= False ;
+  InvoiceNoAssigned := False;
 end;
 
-procedure TformfMoveInvPkgToInventory.acGenInvNoManuallyUpdate(
-  Sender: TObject);
+procedure TformfMoveInvPkgToInventory.acGenInvNoManuallyUpdate(Sender: TObject);
 begin
- acGenInvNoManually.Enabled := not InvoiceNoAssigned ;
+  acGenInvNoManually.Enabled := not InvoiceNoAssigned;
 end;
 
-procedure TformfMoveInvPkgToInventory.acGenInvNoAutomaticallyUpdate(
-  Sender: TObject);
+procedure TformfMoveInvPkgToInventory.acGenInvNoAutomaticallyUpdate
+  (Sender: TObject);
 begin
- acGenInvNoAutomatically.Enabled := not InvoiceNoAssigned ;
+  acGenInvNoAutomatically.Enabled := not InvoiceNoAssigned;
 end;
 
 procedure TformfMoveInvPkgToInventory.mtPropsPIPNoChange(Sender: TField);
 begin
- if (mtProps.Active) and (mtProps.RecordCount > 0) and (mtPropsPIPNo.AsInteger > 0) then
- Begin
-  cds_LIP2.Active  := False ;
-  cds_LIP2.ParamByName('PIPNo').AsInteger  :=  mtPropsPIPNo.AsInteger ;
-  cds_LIP2.Active  := True ;
- End
- else
- Begin
-  cds_LIP2.Active  := False ;
-  cds_LIP2.ParamByName('PIPNo').AsInteger  :=  -1 ;
-  cds_LIP2.Active  := True ;
- End ;
+  if (mtProps.Active) and (mtProps.RecordCount > 0) and
+    (mtPropsPIPNo.AsInteger > 0) then
+  Begin
+    cds_LIP2.Active := False;
+    cds_LIP2.ParamByName('PIPNo').AsInteger := mtPropsPIPNo.AsInteger;
+    cds_LIP2.Active := True;
+  End
+  else
+  Begin
+    cds_LIP2.Active := False;
+    cds_LIP2.ParamByName('PIPNo').AsInteger := -1;
+    cds_LIP2.Active := True;
+  End;
 end;
 
 End.

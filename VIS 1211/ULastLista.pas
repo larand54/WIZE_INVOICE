@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, dxBar, dxBarExtItems,
-  ImgList, StdCtrls, DB, Menus, SqlTimSt, 
+  ImgList, StdCtrls, DB, Menus, SqlTimSt,
   Buttons, ComCtrls, DateUtils,
   cxControls, cxContainer, cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
@@ -13,7 +13,8 @@ uses
   cxGridTableView, cxGridDBTableView, cxGridLevel, cxClasses,
   cxGridCustomView, cxGrid, cxSplitter,
   cxImageComboBox, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
   FireDAC.DApt, cxDBEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxLookAndFeels,
   cxLookAndFeelPainters, cxLabel, cxGridCustomPopupMenu, cxGridPopupMenu,
@@ -23,12 +24,13 @@ uses
   dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
   dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
-  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White ;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
 
 type
   TfLastLista = class(TForm)
@@ -151,18 +153,20 @@ type
     procedure cds_PropsAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
-    Procedure LoadProps ;
-    Procedure SaveProps ;
-    procedure RefreshLoads ;
-//    procedure SkrivUtLevLaster(Sender: TObject);
-//    procedure SkrivUtLevLasterPKTNR(Sender: TObject);
-    procedure PrintSamlingsspecifikation(Sender: TObject;const SamLastNr : Integer);
-    procedure PrintSamlingsspecifikationPKTNR(Sender: TObject;const SamLastNr : Integer);
-    procedure BuildSQL ;
-    Procedure GetMarkedRows ;
+    Procedure LoadProps;
+    Procedure SaveProps;
+    procedure RefreshLoads;
+    // procedure SkrivUtLevLaster(Sender: TObject);
+    // procedure SkrivUtLevLasterPKTNR(Sender: TObject);
+    procedure PrintSamlingsspecifikation(Sender: TObject;
+      const SamLastNr: Integer);
+    procedure PrintSamlingsspecifikationPKTNR(Sender: TObject;
+      const SamLastNr: Integer);
+    procedure BuildSQL;
+    Procedure GetMarkedRows;
   public
     { Public declarations }
-    Procedure CreateCo ;
+    Procedure CreateCo;
   end;
 
 var
@@ -171,43 +175,44 @@ var
 implementation
 
 uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
-  UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn, VidaConst ,
+  UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn, VidaConst,
   dmsVidaSystem, dmc_UserProps;
 
 {$R *.dfm}
 
-Procedure TfLastLista.LoadProps ;
+Procedure TfLastLista.LoadProps;
 Begin
- cds_Props.Active:= False ;
- cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- cds_Props.ParamByName('Form').AsString    := Self.Name ;
- cds_Props.Active:= True ;
-// if cds_Props.Eof then
-//  cds_Props.Insert ;
-End ;
+  cds_Props.Active := False;
+  cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  cds_Props.ParamByName('Form').AsString := Self.Name;
+  cds_Props.Active := True;
+  // if cds_Props.Eof then
+  // cds_Props.Insert ;
+End;
 
-Procedure TfLastLista.SaveProps ;
+Procedure TfLastLista.SaveProps;
 Begin
- if cds_Props.State in [dsEdit, dsInsert] then
- cds_Props.Post ;
- if cds_Props.ChangeCount > 0 then
- Begin
-  cds_Props.ApplyUpdates(0) ;
-  cds_Props.CommitUpdates ;
- End ;
-End ;
+  if cds_Props.State in [dsEdit, dsInsert] then
+    cds_Props.Post;
+  if cds_Props.ChangeCount > 0 then
+  Begin
+    cds_Props.ApplyUpdates(0);
+    cds_Props.CommitUpdates;
+  End;
+End;
 
-Procedure TfLastLista.CreateCo ;
-Var x : Integer ;
+Procedure TfLastLista.CreateCo;
+Var
+  x: Integer;
 begin
   // Load column widths set last time.
 
-//  dmsContact.Load_Int_and_Lego(peCompany.Items) ;
+  // dmsContact.Load_Int_and_Lego(peCompany.Items) ;
 
   if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
-    lcVerk.Properties.ReadOnly  := False ;
+    lcVerk.Properties.ReadOnly := False;
 
-  LoadProps ;
+  LoadProps;
 
   if cds_Props.RecordCount > 0 then
   Begin
@@ -215,98 +220,100 @@ begin
   End
   else
   Begin
-   cds_Props.Insert ;
-   cds_PropsVerkNo.AsInteger            := ThisUser.CompanyNo ;
-   cds_PropsStartPeriod.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-   cds_Props.Post ;
-  End ;
+    cds_Props.Insert;
+    cds_PropsVerkNo.AsInteger := ThisUser.CompanyNo;
+    cds_PropsStartPeriod.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+    cds_Props.Post;
+  End;
 
 end;
 
-procedure TfLastLista.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfLastLista.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
- Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfLastLista.FormDestroy(Sender: TObject);
 begin
- fLastLista:= NIL;
+  fLastLista := NIL;
 
   if dmsSystem.DeleteAssigned('TfLastLista', 'dmArrivingLoads') = True then
   Begin
-   dmArrivingLoads.Free ;
-   dmArrivingLoads := Nil ;
-  End ;
+    dmArrivingLoads.Free;
+    dmArrivingLoads := Nil;
+  End;
 end;
 
-procedure TfLastLista.RefreshLoads ;
+procedure TfLastLista.RefreshLoads;
 var
-  Save_Cursor:TCursor;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
-// deFOM.Date:= RecodeHour(deFOM.Date,0) ;
-// deFOM.Date:= RecodeMinute(deFOM.Date,0) ;
-// deFOM.Date:= RecodeSecond(deFOM.Date,0) ;
-// ShowMessage('deFOM.Date = '+DateTimeToStr(deFOM.Date)) ;
-// ShowMessage('SQLTimedate'+SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(deFOM.Date))) ;
- With dmArrivingLoads do
- Begin
-  cds_verkLaster.DisableControls ;
-  ds_verkLaster.OnDataChange:= Nil ;
-
-  Screen.Cursor := crHourGlass;    { Show hourglass cursor }
-  try
-
-  if Self.cds_PropsVerkNo.AsInteger > 0 then
+  Save_Cursor := Screen.Cursor;
+  // deFOM.Date:= RecodeHour(deFOM.Date,0) ;
+  // deFOM.Date:= RecodeMinute(deFOM.Date,0) ;
+  // deFOM.Date:= RecodeSecond(deFOM.Date,0) ;
+  // ShowMessage('deFOM.Date = '+DateTimeToStr(deFOM.Date)) ;
+  // ShowMessage('SQLTimedate'+SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',DateTimeToSQLTimeStamp(deFOM.Date))) ;
+  With dmArrivingLoads do
   Begin
-   cds_verkLaster.Active:= False ;
-   BuildSQL ;
-   cds_verkLaster.active:= True ;
-   cds_VerkLastPkgs.Active:= False ;
-   cds_VerkLastPkgs.Close ;
-   cds_VerkLastPkgs.ParamByName('LoadNo').AsInteger := cds_verkLasterLastNr.AsInteger ;
-   cds_VerkLastPkgs.Open ;
-   cds_VerkLastPkgs.Active:= True ;
+    cds_verkLaster.DisableControls;
+    ds_verkLaster.OnDataChange := Nil;
 
+    Screen.Cursor := crHourGlass; { Show hourglass cursor }
+    try
 
-  end ;
- finally
-  cds_verkLaster.EnableControls ;
-  ds_verkLaster.OnDataChange:= dmArrivingLoads.ds_verkLasterDataChange ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
- End ;
+      if Self.cds_PropsVerkNo.AsInteger > 0 then
+      Begin
+        cds_verkLaster.Active := False;
+        BuildSQL;
+        cds_verkLaster.Active := True;
+        cds_VerkLastPkgs.Active := False;
+        cds_VerkLastPkgs.Close;
+        cds_VerkLastPkgs.ParamByName('LoadNo').AsInteger :=
+          cds_verkLasterLastNr.AsInteger;
+        cds_VerkLastPkgs.Open;
+        cds_VerkLastPkgs.Active := True;
+
+      end;
+    finally
+      cds_verkLaster.EnableControls;
+      ds_verkLaster.OnDataChange := dmArrivingLoads.ds_verkLasterDataChange;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    end;
+  End;
 end;
 
 procedure TfLastLista.PackageInfo1Click(Sender: TObject);
-Var frmPkgInfo : TfrmPkgInfo ;
+Var
+  frmPkgInfo: TfrmPkgInfo;
 begin
- frmPkgInfo:= TfrmPkgInfo.Create(Nil);
- Try
-  frmPkgInfo.PackageNo    := dmArrivingLoads.cds_VerkLastPkgsPACKAGE_NO.AsInteger ;
-  frmPkgInfo.SupplierCode := dmArrivingLoads.cds_VerkLastPkgsSupplierCode.AsString ;
-  frmPkgInfo.ShowModal ;
- Finally
-  FreeAndNil(frmPkgInfo) ;
- End ;
+  frmPkgInfo := TfrmPkgInfo.Create(Nil);
+  Try
+    frmPkgInfo.PackageNo := dmArrivingLoads.cds_VerkLastPkgsPACKAGE_NO.
+      AsInteger;
+    frmPkgInfo.SupplierCode :=
+      dmArrivingLoads.cds_VerkLastPkgsSupplierCode.AsString;
+    frmPkgInfo.ShowModal;
+  Finally
+    FreeAndNil(frmPkgInfo);
+  End;
 end;
 
 (*
-procedure TfLastLista.SkrivUtLevLaster(Sender: TObject);
-Var
-    Roll_Back: Boolean ;
-    Save_Cursor:TCursor;
-    Duplicate : Boolean ;
-    samLastnr, y,x : Integer ;
-begin
+  procedure TfLastLista.SkrivUtLevLaster(Sender: TObject);
+  Var
+  Roll_Back: Boolean ;
+  Save_Cursor:TCursor;
+  Duplicate : Boolean ;
+  samLastnr, y,x : Integer ;
+  begin
   inherited;
- Roll_Back:= False ;
+  Roll_Back:= False ;
 
- with grdVerkLast, dmArrivingLoads do
- begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  with grdVerkLast, dmArrivingLoads do
+  begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
 
   Try
 
@@ -314,63 +321,62 @@ begin
 
   lbLO_To_Invoice.Items.Clear ;
   DataSource.DataSet.DisableControls;
-//Insert LO # to ListBox list
+  //Insert LO # to ListBox list
   for x := 0 to (SelectedCount - 1) do
   begin
-   Duplicate := False ;
-   DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
-   For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
-   Begin
-    if cds_verkLasterLASTNR.AsString = lbLO_To_Invoice.Items[y] then
-    Duplicate := True ;
-   End ;
-   if Duplicate = False then
-   Begin
-    lbLO_To_Invoice.Items.Add(cds_verkLasterLASTNR.AsString) ;
-   End ;
+  Duplicate := False ;
+  DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
+  For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
+  Begin
+  if cds_verkLasterLASTNR.AsString = lbLO_To_Invoice.Items[y] then
+  Duplicate := True ;
+  End ;
+  if Duplicate = False then
+  Begin
+  lbLO_To_Invoice.Items.Add(cds_verkLasterLASTNR.AsString) ;
+  End ;
   end; //for..
 
   if lbLO_To_Invoice.Items.Count < 1 then
-   Begin
-    ShowMessage('Måste markera minst en last') ;
-    Exit ;
-   End ;
+  Begin
+  ShowMessage('Måste markera minst en last') ;
+  Exit ;
+  End ;
 
-   samLastnr := ThisUser.UserID ; //dmsConnector.NextMaxNo('SamLastReport') ;
-   sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger:= samLastnr ;
-   sq_deleteSamLaster.ExecSQL(False) ;
-   For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
-   Begin
-    sq_samLast.ParamByName('SamLastNr').AsInteger:= samLastNr ;
-    sq_samLast.ParamByName('LoadNo').AsInteger:= StrToInt(lbLO_To_Invoice.Items[x]) ;
-    sq_samLast.ExecSQL(False) ;
-   End ;
+  samLastnr := ThisUser.UserID ; //dmsConnector.NextMaxNo('SamLastReport') ;
+  sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger:= samLastnr ;
+  sq_deleteSamLaster.ExecSQL(False) ;
+  For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
+  Begin
+  sq_samLast.ParamByName('SamLastNr').AsInteger:= samLastNr ;
+  sq_samLast.ParamByName('LoadNo').AsInteger:= StrToInt(lbLO_To_Invoice.Items[x]) ;
+  sq_samLast.ExecSQL(False) ;
+  End ;
 
-    PrintSamlingsspecifikation(Sender, samLastNr) ;
-   Finally
-    DataSource.DataSet.EnableControls;
-    ClearSelection ;
-    ds_verkLaster.OnDataChange:= dmArrivingLoads.ds_verkLasterDataChange ;
-    Screen.Cursor := Save_Cursor;  { Always restore to normal }
-   End ;
- End ; //with
-end; *)
+  PrintSamlingsspecifikation(Sender, samLastNr) ;
+  Finally
+  DataSource.DataSet.EnableControls;
+  ClearSelection ;
+  ds_verkLaster.OnDataChange:= dmArrivingLoads.ds_verkLasterDataChange ;
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+  End ;
+  End ; //with
+  end; *)
 
-
-(*procedure TfLastLista.SkrivUtLevLasterPKTNR(Sender: TObject);
-Var
-    Roll_Back: Boolean ;
-    Save_Cursor:TCursor;
-    Duplicate : Boolean ;
-    samLastnr, y,x : Integer ;
-begin
+(* procedure TfLastLista.SkrivUtLevLasterPKTNR(Sender: TObject);
+  Var
+  Roll_Back: Boolean ;
+  Save_Cursor:TCursor;
+  Duplicate : Boolean ;
+  samLastnr, y,x : Integer ;
+  begin
   inherited;
- Roll_Back:= False ;
+  Roll_Back:= False ;
 
- with grdVerkLast, dmArrivingLoads do
- begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  with grdVerkLast, dmArrivingLoads do
+  begin
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
 
   Try
 
@@ -378,252 +384,265 @@ begin
 
   lbLO_To_Invoice.Items.Clear ;
   DataSource.DataSet.DisableControls;
-//Insert LO # to ListBox list
+  //Insert LO # to ListBox list
   for x := 0 to (SelectedCount - 1) do
   begin
-   Duplicate := False ;
-   DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
-   For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
-   Begin
-    if cds_verkLasterLASTNR.AsString = lbLO_To_Invoice.Items[y] then
-    Duplicate := True ;
-   End ;
-   if Duplicate = False then
-   Begin
-    lbLO_To_Invoice.Items.Add(cds_verkLasterLASTNR.AsString) ;
-   End ;
+  Duplicate := False ;
+  DataSource.DataSet.GotoBookmark(Pointer(SelectedRows[x])); //2nd variant
+  For y := 0 to lbLO_To_Invoice.Items.Count - 1 do
+  Begin
+  if cds_verkLasterLASTNR.AsString = lbLO_To_Invoice.Items[y] then
+  Duplicate := True ;
+  End ;
+  if Duplicate = False then
+  Begin
+  lbLO_To_Invoice.Items.Add(cds_verkLasterLASTNR.AsString) ;
+  End ;
   end; //for..
 
   if lbLO_To_Invoice.Items.Count < 1 then
-   Begin
-    ShowMessage('Måste markera minst en last') ;
-    Exit ;
-   End ;
+  Begin
+  ShowMessage('Måste markera minst en last') ;
+  Exit ;
+  End ;
 
-   samLastnr := ThisUser.UserID ; //dmsConnector.NextMaxNo('SamLastReport') ;
-   sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger:= samLastnr ;
-   sq_deleteSamLaster.ExecSQL(False) ;
+  samLastnr := ThisUser.UserID ; //dmsConnector.NextMaxNo('SamLastReport') ;
+  sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger:= samLastnr ;
+  sq_deleteSamLaster.ExecSQL(False) ;
 
-   For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
-   Begin
-    sq_samLast.ParamByName('SamLastNr').AsInteger:= samLastNr ;
-    sq_samLast.ParamByName('LoadNo').AsInteger:= StrToInt(lbLO_To_Invoice.Items[x]) ;
-    sq_samLast.ExecSQL(False) ;
-   End ;
+  For x:= 0 to lbLO_To_Invoice.Items.Count-1 do
+  Begin
+  sq_samLast.ParamByName('SamLastNr').AsInteger:= samLastNr ;
+  sq_samLast.ParamByName('LoadNo').AsInteger:= StrToInt(lbLO_To_Invoice.Items[x]) ;
+  sq_samLast.ExecSQL(False) ;
+  End ;
 
-    PrintSamlingsspecifikationPKTNR(Sender, samLastNr) ;
+  PrintSamlingsspecifikationPKTNR(Sender, samLastNr) ;
 
-   Finally
-    DataSource.DataSet.EnableControls;
-    ClearSelection ;
-    ds_verkLaster.OnDataChange:= dmArrivingLoads.ds_verkLasterDataChange ;
-    Screen.Cursor := Save_Cursor;  { Always restore to normal }
-   End ;
- End ; //with
-end; *)
+  Finally
+  DataSource.DataSet.EnableControls;
+  ClearSelection ;
+  ds_verkLaster.OnDataChange:= dmArrivingLoads.ds_verkLasterDataChange ;
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+  End ;
+  End ; //with
+  end; *)
 
-procedure TfLastLista.PrintSamlingsspecifikation(Sender: TObject;const SamLastNr : Integer);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                 : array of variant ;
+procedure TfLastLista.PrintSamlingsspecifikation(Sender: TObject;
+  const SamLastNr: Integer);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmArrivingLoads.cds_verkLasterLASTNR.AsInteger < 1 then exit ;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
-  A[0]  := SamLastNr ;
-  FormCRViewReport.CreateCo('SAM_LAST.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport) ;
- End ;
+  if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
+    exit;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := SamLastNr;
+    FormCRViewReport.CreateCo('SAM_LAST.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
-procedure TfLastLista.PrintSamlingsspecifikationPKTNR(Sender: TObject;const SamLastNr : Integer);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                 : array of variant ;
+procedure TfLastLista.PrintSamlingsspecifikationPKTNR(Sender: TObject;
+  const SamLastNr: Integer);
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
- if dmArrivingLoads.cds_verkLasterLASTNR.AsInteger < 1 then exit ;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
-  A[0]  := SamLastNr ;
-  FormCRViewReport.CreateCo('SAM_LAST_PKTNR.RPT', A) ;
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport) ;
- End ;
+  if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
+    exit;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 1);
+    A[0] := SamLastNr;
+    FormCRViewReport.CreateCo('SAM_LAST_PKTNR.RPT', A);
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfLastLista.bbUppdateraClick(Sender: TObject);
 begin
- RefreshLoads ;
+  RefreshLoads;
 end;
 
 procedure TfLastLista.SkrivSamlingsSpecifikationClick(Sender: TObject);
 begin
- //SkrivUtLevLaster(Sender);
+  // SkrivUtLevLaster(Sender);
 end;
 
 procedure TfLastLista.bbSkrivutClick(Sender: TObject);
 begin
- GetMarkedRows ;
- PrintSamlingsspecifikation(Sender, ThisUser.UserID) ;
-// SkrivUtLevLaster(Sender) ;
+  GetMarkedRows;
+  PrintSamlingsspecifikation(Sender, ThisUser.UserID);
+  // SkrivUtLevLaster(Sender) ;
 end;
 
 procedure TfLastLista.bbCloseClick(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfLastLista.FormCreate(Sender: TObject);
 begin
   if (not Assigned(dmArrivingLoads)) then
   Begin
-   dmArrivingLoads  := TdmArrivingLoads.Create(nil);
-  End ;
- dmsSystem.AssignDMToThisWork('TfLastLista', 'dmArrivingLoads') ;
+    dmArrivingLoads := TdmArrivingLoads.Create(nil);
+  End;
+  dmsSystem.AssignDMToThisWork('TfLastLista', 'dmArrivingLoads');
 
-
- dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/' + grdLastListaDBTableView1.Name, grdLastListaDBTableView1) ;
- dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/' + grdLoadPackagesDBTableView1.Name, grdLoadPackagesDBTableView1) ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLastListaDBTableView1.Name, grdLastListaDBTableView1);
+  dmsSystem.LoadGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLoadPackagesDBTableView1.Name,
+    grdLoadPackagesDBTableView1);
 end;
 
 procedure TfLastLista.bbSkrivUtMedPktNrClick(Sender: TObject);
 begin
- GetMarkedRows ;
- PrintSamlingsspecifikationPKTNR(Sender, ThisUser.UserID) ;
-// SkrivUtLevLasterPKTNR(Sender) ;
+  GetMarkedRows;
+  PrintSamlingsspecifikationPKTNR(Sender, ThisUser.UserID);
+  // SkrivUtLevLasterPKTNR(Sender) ;
 end;
 
-procedure TfLastLista.BuildSQL ;
+procedure TfLastLista.BuildSQL;
 Begin
- With dmArrivingLoads.cds_VerkLaster.SQL do
- Begin
-  Clear ;
-  Add('SELECT distinct') ;
-  Add('L.LoadNo				AS	LASTNR,') ;
-  Add('L.FS				AS	FS,') ;
-  Add('L.LoadedDate			AS	DATUM,') ;
-  Add('L.SenderLoadStatus		AS	STATUS,') ;
-  Add('L.LoadID				AS	LOAD_ID,') ;
-  Add('ShipTo.CityName                 	AS INT_DEST,') ;
-  Add('Loading.CityName                 AS LASTSTALLE,') ;
+  With dmArrivingLoads.cds_verkLaster.SQL do
+  Begin
+    Clear;
+    Add('SELECT distinct');
+    Add('L.LoadNo				AS	LASTNR,');
+    Add('L.FS				AS	FS,');
+    Add('L.LoadedDate			AS	DATUM,');
+    Add('L.SenderLoadStatus		AS	STATUS,');
+    Add('L.LoadID				AS	LOAD_ID,');
+    Add('ShipTo.CityName                 	AS INT_DEST,');
+    Add('Loading.CityName                 AS LASTSTALLE,');
 
-  Add('SUPP.ClientName			AS VERK,') ;
-  Add('CUST.ClientName			AS INT_KUND,') ;
+    Add('SUPP.ClientName			AS VERK,');
+    Add('CUST.ClientName			AS INT_KUND,');
 
-  Add('SUM(P.Totalm3Actual)	AS 	AM3,') ;
-  Add('SUM(P.Totalm3Nominal)		AS 	NM3,') ;
-  Add('SUM(P.TotalNoOfPieces)		AS	Styck,') ;
-  Add('Count(LD.LoadDetailNo) AS Paket') ;
+    Add('SUM(P.Totalm3Actual)	AS 	AM3,');
+    Add('SUM(P.Totalm3Nominal)		AS 	NM3,');
+    Add('SUM(P.TotalNoOfPieces)		AS	Styck,');
+    Add('Count(LD.LoadDetailNo) AS Paket');
 
+    Add('FROM dbo.LoadShippingPlan LSP');
+    Add('INNER JOIN dbo.Loads L  		ON 	L.LoadNo = LSP.LoadNo');
+    Add('INNER JOIN dbo.Loaddetail LD ON LD.LoadNo = LSP.LoadNo');
+    Add('AND LD.ShippingPlanNo = LSP.ShippingPlanNo');
+    Add('INNER JOIN dbo.PackageType P		ON 	P.PackageTypeNo = LD.PackageTypeNo');
+    // Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo') ;
+    Add('INNER JOIN dbo.SupplierShippingPlan       SP   ON  SP.SupplierShipPlanObjectNo = LD.defsspno');
+    Add('					AND     L.supplierno 		= SP.SUPPLIERno');
+    Add('					AND     L.CustomerNo 		= SP.CustomerNo');
 
-  Add('FROM dbo.LoadShippingPlan LSP') ;
-  Add('INNER JOIN dbo.Loads L  		ON 	L.LoadNo = LSP.LoadNo') ;
-  Add('INNER JOIN dbo.Loaddetail LD ON LD.LoadNo = LSP.LoadNo') ;
-  Add('AND LD.ShippingPlanNo = LSP.ShippingPlanNo') ;
-  Add('INNER JOIN dbo.PackageType P		ON 	P.PackageTypeNo = LD.PackageTypeNo') ;
-//  Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo') ;
-  Add('INNER JOIN dbo.SupplierShippingPlan       SP   ON  SP.SupplierShipPlanObjectNo = LD.defsspno') ;
-  Add('					AND     L.supplierno 		= SP.SUPPLIERno') ;
-  Add('					AND     L.CustomerNo 		= SP.CustomerNo') ;
+    Add('LEFT OUTER JOIN dbo.CITY                     Shipto         ON ShipTo.CityNo 	           = SP.ShipToInvPointNo');
+    Add('LEFT OUTER JOIN dbo.CITY                     Loading         ON Loading.CityNo 	           = SP.LoadingLocationNo');
 
-  Add('LEFT OUTER JOIN dbo.CITY                     Shipto         ON ShipTo.CityNo 	           = SP.ShipToInvPointNo') ;
-  Add('LEFT OUTER JOIN dbo.CITY                     Loading         ON Loading.CityNo 	           = SP.LoadingLocationNo') ;
+    Add('INNER JOIN dbo.Client                     SUPP   ON  SUPP.ClientNo            = L.SupplierNo');
+    Add('INNER JOIN dbo.Client                     CUST   ON  CUST.ClientNo            = L.CustomerNo');
 
-  Add('INNER JOIN dbo.Client                     SUPP   ON  SUPP.ClientNo            = L.SupplierNo') ;
-  Add('INNER JOIN dbo.Client                     CUST   ON  CUST.ClientNo            = L.CustomerNo') ;
+    Add('WHERE  L.SupplierNo = ' + Self.cds_PropsVerkNo.AsString);
+    Add('AND L.LoadedDate >= ' +
+      QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+      Self.cds_PropsStartPeriod.AsSQLTimeStamp)));
 
-  Add('WHERE  L.SupplierNo = ' + Self.cds_PropsVerkNo.AsString) ;
-  Add('AND L.LoadedDate >= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', Self.cds_PropsStartPeriod.AsSQLTimeStamp))) ;
+    Add('Group By L.LoadNo, L.FS,');
+    Add('L.LoadedDate,');
+    Add('L.SenderLoadStatus,');
+    Add('L.LoadID,');
+    Add('ShipTo.CityName,');
+    Add('Loading.CityName,');
+    Add('SUPP.ClientName,');
+    Add('CUST.ClientName');
 
-  Add('Group By L.LoadNo, L.FS,') ;
-  Add('L.LoadedDate,') ;
-  Add('L.SenderLoadStatus,') ;
-  Add('L.LoadID,') ;
-  Add('ShipTo.CityName,') ;
-  Add('Loading.CityName,') ;
-  Add('SUPP.ClientName,') ;
-  Add('CUST.ClientName') ;
+    // if ThisUser.UserID = 8 then
+    SaveToFile('sq_VerkLaster.txt');
+  End;
 
-//  if ThisUser.UserID = 8 then
-  SaveToFile('sq_VerkLaster.txt') ;
- End ;
+End;
 
-End ;
-
-procedure TfLastLista.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfLastLista.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/' + grdLastListaDBTableView1.Name, grdLastListaDBTableView1) ;
- dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/' + grdLoadPackagesDBTableView1.Name, grdLoadPackagesDBTableView1) ;
- SaveProps ;
- CanClose:= True ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLastListaDBTableView1.Name, grdLastListaDBTableView1);
+  dmsSystem.StoreGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdLoadPackagesDBTableView1.Name,
+    grdLoadPackagesDBTableView1);
+  SaveProps;
+  CanClose := True;
 end;
 
-Procedure TfLastLista.GetMarkedRows ;
- Var
- i, RecIDX    : Integer ;
- RecID        : Variant ;
- ADATASET     : TDATASET ;
- Save_Cursor  : TCursor ;
- samLastnr    : Integer ;
+Procedure TfLastLista.GetMarkedRows;
+Var
+  i, RecIDX: Integer;
+  RecID: variant;
+  ADATASET: TDataSet;
+  Save_Cursor: TCursor;
+  SamLastNr: Integer;
 begin
- Save_Cursor          := Screen.Cursor;
- Screen.Cursor        := crSQLWait ;    { Show hourglass cursor }
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
- mtMarkedRows.Active := False ;
- mtMarkedRows.Active := True ;
- With dmArrivingLoads do
- Begin
-  samLastnr := ThisUser.UserID ;
-  //Ta bort tidigare genererade data
-  sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger := samLastnr ;
-  sq_deleteSamLaster.ExecSQL ;
-//Välj alla lastrader
-  grdLastListaDBTableView1.BeginUpdate ;
-  grdLastListaDBTableView1.DataController.BeginLocate ;
-  Try
-   ADataSet := grdLastListaDBTableView1.DataController.DataSource.DataSet ;
-   For I := 0 to grdLastListaDBTableView1.Controller.SelectedRecordCount - 1 do
-   Begin
-    RecIDx  := grdLastListaDBTableView1.Controller.SelectedRecords[i].RecordIndex ;
-    RecID   := grdLastListaDBTableView1.DataController.GetRecordId(RecIdx) ;
-    ADataSet.Locate('LastNr',RecID,[]) ;
+  mtMarkedRows.Active := False;
+  mtMarkedRows.Active := True;
+  With dmArrivingLoads do
+  Begin
+    SamLastNr := ThisUser.UserID;
+    // Ta bort tidigare genererade data
+    sq_deleteSamLaster.ParamByName('SamLastNr').AsInteger := SamLastNr;
+    sq_deleteSamLaster.ExecSQL;
+    // Välj alla lastrader
+    grdLastListaDBTableView1.BeginUpdate;
+    grdLastListaDBTableView1.DataController.BeginLocate;
+    Try
+      ADATASET := grdLastListaDBTableView1.DataController.DataSource.DataSet;
+      For i := 0 to grdLastListaDBTableView1.Controller.
+        SelectedRecordCount - 1 do
+      Begin
+        RecIDX := grdLastListaDBTableView1.Controller.SelectedRecords[i]
+          .RecordIndex;
+        RecID := grdLastListaDBTableView1.DataController.GetRecordId(RecIDX);
+        ADATASET.Locate('LastNr', RecID, []);
 
+        sq_samLast.ParamByName('SamLastNr').AsInteger := SamLastNr;
+        sq_samLast.ParamByName('LoadNo').AsInteger :=
+          ADATASET.FieldByName('Lastnr').AsInteger;
+        // sq_samLast.ParamByName('Reference').AsString          := '' ;
+        sq_samLast.ExecSQL;
 
-    sq_samLast.ParamByName('SamLastNr').AsInteger         := samLastNr ;
-    sq_samLast.ParamByName('LoadNo').AsInteger            := ADataSet.FieldByName('Lastnr').AsInteger ;
-//    sq_samLast.ParamByName('Reference').AsString          := '' ;
-    sq_samLast.ExecSQL ;
+        { if not mtMarkedRows.Locate('LoadNo',  ADataSet.FieldByName('Lastnr').AsInteger, []) then
+          Begin
+          mtMarkedRows.Insert ;
+          mtMarkedRowsLoadNo.AsInteger         := ADataSet.FieldByName('Lastnr').AsInteger ;
+          mtMarkedRows.Post ;
+          End ; }
+      End; // For I...
 
-{    if not mtMarkedRows.Locate('LoadNo',  ADataSet.FieldByName('Lastnr').AsInteger, []) then
-    Begin
-     mtMarkedRows.Insert ;
-     mtMarkedRowsLoadNo.AsInteger         := ADataSet.FieldByName('Lastnr').AsInteger ;
-     mtMarkedRows.Post ;
-    End ; }
-   End ; //For I...
-
- Finally
-  grdLastListaDBTableView1.DataController.EndLocate ;
-  grdLastListaDBTableView1.EndUpdate ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
- End ;//with
-End ;
+    Finally
+      grdLastListaDBTableView1.DataController.EndLocate;
+      grdLastListaDBTableView1.EndUpdate;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
+  End; // with
+End;
 
 procedure TfLastLista.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
- cds_PropsUserID.AsInteger  := ThisUser.UserID ;
- cds_PropsForm.AsString     := Self.Name ;
+  cds_PropsUserID.AsInteger := ThisUser.UserID;
+  cds_PropsForm.AsString := Self.Name;
 end;
 
 end.

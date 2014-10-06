@@ -166,10 +166,8 @@ object frmShipToAddress: TfrmShipToAddress
         Width = 75
         Height = 29
         Action = acOKToSelect
-        DoubleBuffered = True
         Kind = bkOK
         NumGlyphs = 2
-        ParentDoubleBuffered = False
         TabOrder = 0
       end
       object bbCancel: TBitBtn
@@ -178,10 +176,8 @@ object frmShipToAddress: TfrmShipToAddress
         Width = 75
         Height = 29
         Caption = 'St'#228'ng'
-        DoubleBuffered = True
         Kind = bkCancel
         NumGlyphs = 2
-        ParentDoubleBuffered = False
         TabOrder = 1
       end
     end
@@ -410,7 +406,6 @@ object frmShipToAddress: TfrmShipToAddress
       Height = 57
       Action = acSearchAddress
       Caption = 'S'#246'k F7'
-      DoubleBuffered = True
       Glyph.Data = {
         36050000424D3605000000000000360400002800000010000000100000000100
         08000000000000010000320B0000320B000000010000000100005A6B7300AD7B
@@ -454,7 +449,6 @@ object frmShipToAddress: TfrmShipToAddress
         20032434373A3A37321342424242421D25030F2D37373737311042424242420D
         2D2D1C162430333429424242424242421E463F0F0316252E0842424242424242
         4227312D21252314424242424242424242420E141B1B42424242}
-      ParentDoubleBuffered = False
       TabOrder = 8
     end
     object EditAddress: TEdit
@@ -506,7 +500,6 @@ object frmShipToAddress: TfrmShipToAddress
       Height = 57
       Action = acClearFields
       Caption = 'Rensa alla f'#228'lt'
-      DoubleBuffered = True
       Glyph.Data = {
         36050000424D3605000000000000360400002800000010000000100000000100
         08000000000000010000EE0E0000EE0E000000010000000100006B6B6B008484
@@ -550,7 +543,6 @@ object frmShipToAddress: TfrmShipToAddress
         0303030303030001000404040404040400030303030303000004040404040404
         0400030303030303000404040404040404040100000000010104040404040404
         0404040404040404040404040404040404040404040404040404}
-      ParentDoubleBuffered = False
       TabOrder = 9
     end
     object lcOrt: TcxDBLookupComboBox
@@ -597,7 +589,7 @@ object frmShipToAddress: TfrmShipToAddress
     ExplicitWidth = 1001
     ExplicitHeight = 347
     object grdSearchResultGridDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsContact.ds_AdrSearch
       DataController.KeyFieldNames = 'AddressNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -830,7 +822,7 @@ object frmShipToAddress: TfrmShipToAddress
     Left = 600
     Top = 64
     Bitmap = {
-      494C010105000900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050009000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

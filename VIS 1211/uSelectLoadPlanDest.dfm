@@ -1,9 +1,9 @@
 object fSelectLoadPlanDest: TfSelectLoadPlanDest
   Left = 229
   Top = 107
-  Width = 962
-  Height = 500
   Caption = 'V'#228'lj lastplan & destination'
+  ClientHeight = 462
+  ClientWidth = 946
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,12 @@ object fSelectLoadPlanDest: TfSelectLoadPlanDest
   object grdLoadPlan: TcxGrid
     Left = 0
     Top = 0
-    Width = 954
-    Height = 426
+    Width = 946
+    Height = 415
     Align = alClient
     TabOrder = 0
     object grdLoadPlanDBBandedTableView1: TcxGridDBBandedTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.ds_LoadPlanDest
       DataController.KeyFieldNames = 'LoadingNo;LoadPlanDestRowNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -116,8 +116,8 @@ object fSelectLoadPlanDest: TfSelectLoadPlanDest
   end
   object Panel1: TPanel
     Left = 0
-    Top = 426
-    Width = 954
+    Top = 415
+    Width = 946
     Height = 47
     Align = alBottom
     TabOrder = 1
@@ -126,16 +126,18 @@ object fSelectLoadPlanDest: TfSelectLoadPlanDest
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object bbCancel: TBitBtn
       Left = 432
       Top = 8
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
 end

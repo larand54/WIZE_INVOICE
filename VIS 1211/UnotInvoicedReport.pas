@@ -1,4 +1,4 @@
-unit UnotInvoicedReport ;
+unit UnotInvoicedReport;
 
 interface
 
@@ -7,12 +7,15 @@ uses
   Dialogs, ExtCtrls, dxBar, dxBarExtItems, StdCtrls,
   ImgList, OleServer, Menus, Buttons, OleCtrls,
   cxControls, cxContainer, cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  cxCalendar,   DateUtils, CrystalActiveXReportViewerLib11_TLB, ActnList,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGraphics,
+  cxCalendar, DateUtils, CrystalActiveXReportViewerLib11_5_TLB, ActnList,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  cxGraphics,
   cxDBEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, DB,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SqlTimSt, cxClasses, cxImageComboBox,
-  cxLookAndFeels, cxLookAndFeelPainters, cxLabel, CRAXDDRT_TLB, dxSkinsCore,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, SqlTimSt, cxClasses,
+  cxImageComboBox,
+  cxLookAndFeels, cxLookAndFeelPainters, cxLabel, CRAXDRT_TLB, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
@@ -23,7 +26,9 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter ;
+  dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
   TfnotInvoicedReport = class(TForm)
@@ -115,14 +120,14 @@ type
 
   private
     { Private declarations }
-    report : IReport ;
-    procedure SaveUserProps (const Form : String) ;
-    procedure LoadUserProps (const Form : String) ;
-    function  InitiateReport(const ReportName: String) : Boolean ;
+    report: IReport;
+    procedure SaveUserProps(const Form: String);
+    procedure LoadUserProps(const Form: String);
+    function InitiateReport(const ReportName: String): Boolean;
 
   public
     { Public declarations }
-    Procedure CreateCo(Sender: TObject;CompanyNo: Integer);
+    Procedure CreateCo(Sender: TObject; CompanyNo: Integer);
   end;
 
 var
@@ -130,191 +135,194 @@ var
 
 implementation
 
-uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst,  dmcVidaSystem ,
+uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmcVidaSystem,
   dmsVidaSystem, dmc_UserProps;
 
 {$R *.dfm}
 
-Procedure TfnotInvoicedReport.CreateCo(Sender: TObject;CompanyNo: Integer);
+Procedure TfnotInvoicedReport.CreateCo(Sender: TObject; CompanyNo: Integer);
 var
-  Save_Cursor:TCursor;
-//  x : Integer ;
+  Save_Cursor: TCursor;
+  // x : Integer ;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- Try
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  Try
 
-  cds_Props.Active:= False ;
-  cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
-  cds_Props.ParamByName('Form').AsString    := Self.Name ;
-  cds_Props.Active:= True ;
-  if cds_Props.Eof then
-   cds_Props.Insert ;
+    cds_Props.Active := False;
+    cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+    cds_Props.ParamByName('Form').AsString := Self.Name;
+    cds_Props.Active := True;
+    if cds_Props.Eof then
+      cds_Props.Insert;
 
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-function TfnotInvoicedReport.InitiateReport(const ReportName: String) : Boolean ;
-  var HostName, Database, UserName, Password, spath: String ;
-      Save_Cursor : TCursor;
-      iSecurity             : integer ;
+function TfnotInvoicedReport.InitiateReport(const ReportName: String): Boolean;
+var
+  HostName, Database, UserName, Password, spath: String;
+  Save_Cursor: TCursor;
+  iSecurity: Integer;
 begin
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
- Try
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
 
- dmsSystem.GetLogonParams (HostName, Database, UserName, Password, spath, iSecurity) ;
- Result:= True ;
- if not(FileExists(sPath+ReportName)) then
- Begin
-  ShowMessage('Saknar crystal reports fil.  Sökväg och filnamn : '+sPath+ReportName) ;
-  Result:= False ;
-  Exit ;
- End ;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- report := Application1.OpenReport(sPath+ReportName, crOpenReportByTempCopy) ;
- report.Database.Tables.Item[1].SetLogOnInfo(HostName, Database, UserName, Password);
- Caption:= sPath+ReportName ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+    dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath,
+      iSecurity);
+    Result := True;
+    if not(FileExists(spath + ReportName)) then
+    Begin
+      ShowMessage('Saknar crystal reports fil.  Sökväg och filnamn : ' + spath +
+        ReportName);
+      Result := False;
+      Exit;
+    End;
+    Screen.Cursor := crSQLWait; { Show hourglass cursor }
+    report := Application1.OpenReport(spath + ReportName,
+      crOpenReportByTempCopy);
+    report.Database.Tables.Item[1].SetLogOnInfo(HostName, Database, UserName,
+      Password);
+    Caption := spath + ReportName;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 End;
 
 procedure TfnotInvoicedReport.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  Action:= caFree ;
+  Action := caFree;
 end;
 
 procedure TfnotInvoicedReport.FormDestroy(Sender: TObject);
 begin
- Report             := Nil ;
- Application1       := Nil ;
- fnotInvoicedReport := Nil ;
+  report := Nil;
+  Application1 := Nil;
+  fnotInvoicedReport := Nil;
 end;
 
 procedure TfnotInvoicedReport.acRefreshExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
- Try
- if not cds_PropsMarketRegionNo.IsNull then
- Begin
-  if not cds_PropsOrderTypeNo.IsNull then
-  Begin
-   if not InitiateReport('NotInv.RPT') then Exit ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  Try
+    if not cds_PropsMarketRegionNo.IsNull then
+    Begin
+      if not cds_PropsOrderTypeNo.IsNull then
+      Begin
+        if not InitiateReport('NotInv.RPT') then
+          Exit;
 
-//  de_TOM.Date:= RecodeHour(de_TOM.Date,23) ;
-//  de_TOM.Date:= RecodeMinute(de_TOM.Date,59) ;
-//  de_TOM.Date:= RecodeSecond(de_TOM.Date,59) ;
+        // de_TOM.Date:= RecodeHour(de_TOM.Date,23) ;
+        // de_TOM.Date:= RecodeMinute(de_TOM.Date,59) ;
+        // de_TOM.Date:= RecodeSecond(de_TOM.Date,59) ;
 
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        report.ParameterFields.Item[1].AddCurrentValue
+          (SQLTimeStampToDateTime(cds_PropsStartPeriod.AsSQLTimeStamp));
+        report.ParameterFields.Item[2].AddCurrentValue
+          (cds_PropsMarketRegionNo.AsInteger);
+        report.ParameterFields.Item[3].AddCurrentValue
+          (cds_PropsOrderTypeNo.AsInteger);
 
-   Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
-   report.ParameterFields.Item[1].AddCurrentValue(SQLTimeStampToDateTime(cds_PropsStartPeriod.AsSQLTimeStamp)) ;
-   report.ParameterFields.Item[2].AddCurrentValue(cds_PropsMarketRegionNo.AsInteger) ;
-   report.ParameterFields.Item[3].AddCurrentValue(cds_PropsOrderTypeNo.AsInteger) ;
-
-   CRViewer91.ReportSource:= Report ;
-   Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
-   CRViewer91.ViewReport ;
-  End
-   else
-    ShowMessage('Välj en ordertyp') ;
- End
-  else
-   ShowMessage('Välj en marknad') ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+        CRViewer91.ReportSource := report;
+        Screen.Cursor := crSQLWait; { Show hourglass cursor }
+        CRViewer91.ViewReport;
+      End
+      else
+        ShowMessage('Välj en ordertyp');
+    End
+    else
+      ShowMessage('Välj en marknad');
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
 procedure TfnotInvoicedReport.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
- SaveUserProps(Self.Caption) ;
+  SaveUserProps(Self.Caption);
 end;
 
 procedure TfnotInvoicedReport.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
-  cds_PropsForm.AsString        := Self.Name ;
-  cds_PropsUserID.AsInteger     := ThisUser.UserID ;
+  cds_PropsForm.AsString := Self.Name;
+  cds_PropsUserID.AsInteger := ThisUser.UserID;
 end;
 
 procedure TfnotInvoicedReport.FormShow(Sender: TObject);
 begin
- LoadUserProps(Self.Caption) ;
+  LoadUserProps(Self.Caption);
 end;
 
 procedure TfnotInvoicedReport.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
-procedure TfnotInvoicedReport.LoadUserProps (const Form : String) ;
-Var x : Integer ;
- SalesGroup,
-    ClientNo,
-    MarknadNo,
-    RegionNo : Integer ;
+procedure TfnotInvoicedReport.LoadUserProps(const Form: String);
+Var
+  x: Integer;
+  SalesGroup, ClientNo, MarknadNo, RegionNo: Integer;
 Begin
 
-{  ClientNo                    :=  ReadInteger ('Avrop', 'ClientNo', 0);
-  MarknadNo                   :=  ReadInteger ('Avrop', 'MarknadNo', 0);
-  RegionNo                    :=  ReadInteger ('Avrop', 'RegionNo', 0);
-  rgOrderType.ItemIndex       :=  ReadInteger ('Avrop', 'OrderType', 0) ;
-  cbFilter.Checked            :=  ReadBool ('Avrop', 'VisaAlla', False) ;
-  cbLoadsNotInvoiced.Checked  :=  ReadBool ('Avrop', 'EjFakt', False) ;
-  SalesGroup                  :=  ReadInteger ('Avrop', 'SalesGroup', 0);}
+  { ClientNo                    :=  ReadInteger ('Avrop', 'ClientNo', 0);
+    MarknadNo                   :=  ReadInteger ('Avrop', 'MarknadNo', 0);
+    RegionNo                    :=  ReadInteger ('Avrop', 'RegionNo', 0);
+    rgOrderType.ItemIndex       :=  ReadInteger ('Avrop', 'OrderType', 0) ;
+    cbFilter.Checked            :=  ReadBool ('Avrop', 'VisaAlla', False) ;
+    cbLoadsNotInvoiced.Checked  :=  ReadBool ('Avrop', 'EjFakt', False) ;
+    SalesGroup                  :=  ReadInteger ('Avrop', 'SalesGroup', 0); }
 
- cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- cds_Props.ParamByName('Form').AsString    := Form ;
- cds_Props.Active:= True ;
- if not cds_Props.Eof then
- Begin
-//  if cds_PropsBookingTypeNo.AsInteger < 1 then
-//  pLoadOrder.Width      := 560
-//  else
-//  pLoadOrder.Width      := cds_PropsBookingTypeNo.AsInteger ;
+  cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  cds_Props.ParamByName('Form').AsString := Form;
+  cds_Props.Active := True;
+  if not cds_Props.Eof then
+  Begin
+    // if cds_PropsBookingTypeNo.AsInteger < 1 then
+    // pLoadOrder.Width      := 560
+    // else
+    // pLoadOrder.Width      := cds_PropsBookingTypeNo.AsInteger ;
 
-  cds_Props.Edit ;
+    cds_Props.Edit;
 
+  End;
+  // Panel1.Height  := Panel1.Height - 1 ;
+End;
 
- End ;
-// Panel1.Height  := Panel1.Height - 1 ;
-End ;
-
-procedure TfnotInvoicedReport.SaveUserProps (const Form : String) ;
-Var x : Integer ;
+procedure TfnotInvoicedReport.SaveUserProps(const Form: String);
+Var
+  x: Integer;
 Begin
- cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID ;
- cds_Props.ParamByName('Form').AsString    := Form ;
- cds_Props.Active:= True ;
- if cds_Props.Eof then
- Begin
-  cds_Props.Insert ;
-  cds_PropsForm.AsString    := Form ;
-  cds_PropsUserID.AsInteger := ThisUser.UserID ;
- End
- else
-  cds_Props.Edit ;
+  cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
+  cds_Props.ParamByName('Form').AsString := Form;
+  cds_Props.Active := True;
+  if cds_Props.Eof then
+  Begin
+    cds_Props.Insert;
+    cds_PropsForm.AsString := Form;
+    cds_PropsUserID.AsInteger := ThisUser.UserID;
+  End
+  else
+    cds_Props.Edit;
 
-//  cds_PropsBookingTypeNo.AsInteger  := pLoadOrder.Width ;
+  // cds_PropsBookingTypeNo.AsInteger  := pLoadOrder.Width ;
 
-
-  cds_Props.Post ;
+  cds_Props.Post;
   if cds_Props.ChangeCount > 0 then
   Begin
-   cds_Props.ApplyUpdates(0) ;
-   cds_Props.CommitUpdates ;
-  End ;
+    cds_Props.ApplyUpdates(0);
+    cds_Props.CommitUpdates;
+  End;
 
- cds_Props.Active:= False ;
-End ;
+  cds_Props.Active := False;
+End;
 
 end.
-
-

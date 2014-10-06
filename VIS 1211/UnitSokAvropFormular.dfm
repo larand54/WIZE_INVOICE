@@ -710,7 +710,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 863
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -747,7 +747,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 83
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -756,8 +756,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default'
@@ -993,7 +993,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     Left = 128
     Top = 488
     Bitmap = {
-      494C01010C001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010C001100080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2409,9 +2409,9 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     object dxComponentPrinter1Link1: TdxGridReportLink
       Active = True
       Component = grdAvropSok
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
+      PrinterPage.GrayShading = True
       PrinterPage.Header = 6350
       PrinterPage.Margins.Bottom = 12700
       PrinterPage.Margins.Left = 12700
@@ -2422,8 +2422,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 41809.766030046300000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 41918.477590324070000000
       OptionsView.Footers = False
       OptionsView.BandHeaders = False
       OptionsView.Caption = False

@@ -41,7 +41,7 @@ object fSamlingsfaktura: TfSamlingsfaktura
         Left = 1
         Top = 1
         Width = 124
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -57,7 +57,7 @@ object fSamlingsfaktura: TfSamlingsfaktura
         Left = 1
         Top = 1
         Width = 630
-        Height = 44
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -310,7 +310,7 @@ object fSamlingsfaktura: TfSamlingsfaktura
     Left = 240
     Top = 152
     Bitmap = {
-      494C010109000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010109000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1211,8 +1211,8 @@ object fSamlingsfaktura: TfSamlingsfaktura
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')

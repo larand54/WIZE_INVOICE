@@ -29,10 +29,8 @@ object frmLanguage: TfrmLanguage
       Top = 13
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
@@ -40,10 +38,8 @@ object frmLanguage: TfrmLanguage
       Top = 13
       Width = 75
       Height = 25
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -57,7 +53,7 @@ object frmLanguage: TfrmLanguage
     ExplicitWidth = 342
     ExplicitHeight = 415
     object grdLangDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.ds_Language
       DataController.KeyFieldNames = 'LanguageNo'
       DataController.Summary.DefaultGroupSummaryItems = <>

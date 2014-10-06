@@ -5,8 +5,9 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, kbmMemTable,
   dxmdaset, SqlTimSt, Dialogs, Controls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client ;
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TdmModule1 = class(TDataModule)
@@ -643,8 +644,7 @@ type
     procedure tblLoadFreightM3_NETChange(Sender: TField);
     procedure tblLoadFreightPRICEChange(Sender: TField);
     procedure tblLoadFreightINVOICEAMOUNTChange(Sender: TField);
-    procedure cds_LoadFreightCostDetails1PricePerM3_NETChange(
-      Sender: TField);
+    procedure cds_LoadFreightCostDetails1PricePerM3_NETChange(Sender: TField);
     procedure cds_LoadFreightCostDetailsBeforePost(DataSet: TDataSet);
     procedure cds_LoadFreightCostDetailsBeforeRefresh(DataSet: TDataSet);
     procedure cds_genfreightAfterInsert(DataSet: TDataSet);
@@ -676,21 +676,23 @@ type
     procedure sp_Vis_GenTradingAnalyzeCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
-//    Function  GetFreightCostOfSelectedRows : Double ;
-    procedure InsPayStatus (const InternalInvoiceNo : Integer) ;
+    // Function  GetFreightCostOfSelectedRows : Double ;
+    procedure InsPayStatus(const InternalInvoiceNo: Integer);
   public
     { Public declarations }
-//    grpNo : Integer ;
-    procedure ApplyUpdatesToInvoicePayStatus ;
-    procedure Close_OrderstockDtl ;
-    procedure Refresh_OrderstockDtl ;
-    function  GetCreditGroupName (const ClientNo : Integer) : String ;
-    procedure DeleteAttest(const SequensNo  : Integer) ;
-    procedure InsertAttestHeader (const Beskrivning : String) ;
-    Function  GetFraktAvrakningsNoForLoadNo (const LoadNo : Integer;Var verk : String;Var VerkNo : Integer) : Integer ;
-    function  GetSupplierNo(const LoadNo : Integer) : Integer ;
-    procedure UpdateLoad(const LocalShippingCompanyNo, LoadNo : Integer) ;
-    procedure UpdateLoadII(const LocalLoadingLocation, LocalDestinationNo, LoadNo : Integer) ;
+    // grpNo : Integer ;
+    procedure ApplyUpdatesToInvoicePayStatus;
+    procedure Close_OrderstockDtl;
+    procedure Refresh_OrderstockDtl;
+    function GetCreditGroupName(const ClientNo: Integer): String;
+    procedure DeleteAttest(const SequensNo: Integer);
+    procedure InsertAttestHeader(const Beskrivning: String);
+    Function GetFraktAvrakningsNoForLoadNo(const LoadNo: Integer;
+      Var verk: String; Var VerkNo: Integer): Integer;
+    function GetSupplierNo(const LoadNo: Integer): Integer;
+    procedure UpdateLoad(const LocalShippingCompanyNo, LoadNo: Integer);
+    procedure UpdateLoadII(const LocalLoadingLocation, LocalDestinationNo,
+      LoadNo: Integer);
   end;
 
 var
@@ -698,575 +700,600 @@ var
 
 implementation
 
-uses dmsDataConn, recerror, VidaUser, dmsVidaContact , dmsVidaSystem;
+uses dmsDataConn, recerror, VidaUser, dmsVidaContact, dmsVidaSystem;
 
 {$R *.dfm}
 
 procedure TdmModule1.tblLoadFreight2CalcFields(DataSet: TDataSet);
 begin
-// tblLoadFreight2TOTAL_AMOUNT.AsFloat :=
-// tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
+  // tblLoadFreight2TOTAL_AMOUNT.AsFloat :=
+  // tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
 end;
 
 procedure TdmModule1.tblLoadFreight2M3_NETChange(Sender: TField);
 begin
-// tblLoadFreight2INVOICEAMOUNT.AsFloat:=
-// tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
-// tblLoadFreight2Checked.AsBoolean:= True ;
+  // tblLoadFreight2INVOICEAMOUNT.AsFloat:=
+  // tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
+  // tblLoadFreight2Checked.AsBoolean:= True ;
 end;
 
 procedure TdmModule1.tblLoadFreight2PRICEChange(Sender: TField);
 begin
-// tblLoadFreight2INVOICEAMOUNT.AsFloat:=
-// tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
-// tblLoadFreight2Checked.AsBoolean:= True ;
+  // tblLoadFreight2INVOICEAMOUNT.AsFloat:=
+  // tblLoadFreight2PRICE.AsFloat * tblLoadFreight2M3_NET.AsFloat ;
+  // tblLoadFreight2Checked.AsBoolean:= True ;
 end;
 
 procedure TdmModule1.tblLoadFreight2AfterInsert(DataSet: TDataSet);
 begin
-// tblLoadFreight2Checked.AsBoolean:= False ;
+  // tblLoadFreight2Checked.AsBoolean:= False ;
 end;
 
 procedure TdmModule1.tblLoadFreight2INVOICEAMOUNTChange(Sender: TField);
 begin
-// tblLoadFreight2Checked.AsBoolean:= True ;
+  // tblLoadFreight2Checked.AsBoolean:= True ;
 end;
 
 procedure TdmModule1.tblLoadFreight2FilterRecord(DataSet: TDataSet;
   var Accept: Boolean);
 begin
-// if tblLoadFreight2Checked.AsBoolean = True then
-//  Accept := True
-//  else
-//  Accept := False ;
+  // if tblLoadFreight2Checked.AsBoolean = True then
+  // Accept := True
+  // else
+  // Accept := False ;
 end;
-
 
 procedure TdmModule1.tblLoadFreightAfterInsert(DataSet: TDataSet);
 begin
- tblLoadFreightChecked.AsBoolean:= False ;
+  tblLoadFreightChecked.AsBoolean := False;
 end;
 
 procedure TdmModule1.tblLoadFreightCalcFields(DataSet: TDataSet);
 begin
- tblLoadFreightTOTAL_AMOUNT.AsFloat := tblLoadFreightPRICE.AsFloat * tblLoadFreightM3_NET.AsFloat ;
+  tblLoadFreightTOTAL_AMOUNT.AsFloat := tblLoadFreightPRICE.AsFloat *
+    tblLoadFreightM3_NET.AsFloat;
 end;
 
 procedure TdmModule1.tblLoadFreightM3_NETChange(Sender: TField);
 begin
- tblLoadFreightINVOICEAMOUNT.AsFloat:=
- tblLoadFreightPRICE.AsFloat * tblLoadFreightM3_NET.AsFloat ;
- tblLoadFreightChecked.AsBoolean:= True ;
+  tblLoadFreightINVOICEAMOUNT.AsFloat := tblLoadFreightPRICE.AsFloat *
+    tblLoadFreightM3_NET.AsFloat;
+  tblLoadFreightChecked.AsBoolean := True;
 end;
 
 procedure TdmModule1.tblLoadFreightPRICEChange(Sender: TField);
 begin
- tblLoadFreightINVOICEAMOUNT.AsFloat:=
- tblLoadFreightPRICE.AsFloat * tblLoadFreightM3_NET.AsFloat ;
- tblLoadFreightChecked.AsBoolean:= True ;
+  tblLoadFreightINVOICEAMOUNT.AsFloat := tblLoadFreightPRICE.AsFloat *
+    tblLoadFreightM3_NET.AsFloat;
+  tblLoadFreightChecked.AsBoolean := True;
 end;
 
 procedure TdmModule1.tblLoadFreightINVOICEAMOUNTChange(Sender: TField);
 begin
- tblLoadFreightChecked.AsBoolean:= True ;
+  tblLoadFreightChecked.AsBoolean := True;
 end;
 
-procedure TdmModule1.cds_LoadFreightCostDetails1PricePerM3_NETChange(
-  Sender: TField);
+procedure TdmModule1.cds_LoadFreightCostDetails1PricePerM3_NETChange
+  (Sender: TField);
 begin
- cds_LoadFreightCostDetailsTotalSUM.AsFloat:=
-  cds_LoadFreightCostDetailsPricePerM3_NET.AsFloat * cds_LoadFreightCostDetailsM3_NET.AsFloat ;
+  cds_LoadFreightCostDetailsTotalSUM.AsFloat :=
+    cds_LoadFreightCostDetailsPricePerM3_NET.AsFloat *
+    cds_LoadFreightCostDetailsM3_NET.AsFloat;
 end;
 
-Function TdmModule1.GetFraktAvrakningsNoForLoadNo (const LoadNo : Integer;Var verk : String;Var VerkNo : Integer) : Integer ;
+Function TdmModule1.GetFraktAvrakningsNoForLoadNo(const LoadNo: Integer;
+  Var verk: String; Var VerkNo: Integer): Integer;
 Begin
- sq_FindAvr.ParamByName('LoadNo').AsInteger:= LoadNo ;
- Try
-  sq_FindAvr.Open ;
-  Result:= sq_FindAvrAvrakningsNo.AsInteger ;
-  Verk := sq_FindAvrVERK.AsString ;
-  VerkNo := sq_FindAvrVerkNo.asInteger ;
- Finally
-  sq_FindAvr.Close ;
- End ;
-End ;
+  sq_FindAvr.ParamByName('LoadNo').AsInteger := LoadNo;
+  Try
+    sq_FindAvr.Open;
+    Result := sq_FindAvrAvrakningsNo.AsInteger;
+    verk := sq_FindAvrVERK.AsString;
+    VerkNo := sq_FindAvrVerkNo.AsInteger;
+  Finally
+    sq_FindAvr.Close;
+  End;
+End;
 
-function TdmModule1.GetSupplierNo(const LoadNo : Integer) : Integer ;
+function TdmModule1.GetSupplierNo(const LoadNo: Integer): Integer;
 Begin
- sqGetSupplierNo.Close ;
- sqGetSupplierNo.ParamByName('LoadNo').AsInteger:= LoadNo ;
- sqGetSupplierNo.Open ;
- if not sqGetSupplierNo.Eof then
-  Result:= sqGetSupplierNoSupplierNo.AsInteger
-   else
-    Result:= -1 ;
- sqGetSupplierNo.Close ;
-End ;
+  sqGetSupplierNo.Close;
+  sqGetSupplierNo.ParamByName('LoadNo').AsInteger := LoadNo;
+  sqGetSupplierNo.Open;
+  if not sqGetSupplierNo.Eof then
+    Result := sqGetSupplierNoSupplierNo.AsInteger
+  else
+    Result := -1;
+  sqGetSupplierNo.Close;
+End;
 
-procedure TdmModule1.UpdateLoad(const LocalShippingCompanyNo, LoadNo : Integer) ;
+procedure TdmModule1.UpdateLoad(const LocalShippingCompanyNo, LoadNo: Integer);
 Begin
- Try
- sq_UpdateLoad.ParamByName('LocalShippingCompanyNo').AsInteger:= LocalShippingCompanyNo ;
- sq_UpdateLoad.ParamByName('LoadNo').AsInteger:= LoadNo ;
- sq_UpdateLoad.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
-
-procedure TdmModule1.UpdateLoadII(const LocalLoadingLocation, LocalDestinationNo, LoadNo : Integer) ;
-Begin
- Try
- sq_UpdLoadII.ParamByName('LocalLoadingLocation').AsInteger := LocalLoadingLocation ;
- sq_UpdLoadII.ParamByName('LocalDestinationNo').AsInteger   := LocalDestinationNo ;
- sq_UpdLoadII.ParamByName('LoadNo').AsInteger               := LoadNo ;
- sq_UpdLoadII.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
-
-procedure TdmModule1.cds_LoadFreightCostDetailsBeforePost(
-  DataSet: TDataSet);
-begin
- cds_LoadFreightCostDetailsModifiedUser.AsInteger       := ThisUser.UserID ;
- cds_LoadFreightCostDetailsDateModified.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-end;
-
-procedure TdmModule1.cds_LoadFreightCostDetailsBeforeRefresh(
-  DataSet: TDataSet);
-begin
- if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
-  cds_LoadFreightCostDetails.Post ;
- if cds_LoadFreightCostDetails.ChangeCount > 0 then
-  if MessageDlg('Vill du spara ändringar i lastrader?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  Try
+    sq_UpdateLoad.ParamByName('LocalShippingCompanyNo').AsInteger :=
+      LocalShippingCompanyNo;
+    sq_UpdateLoad.ParamByName('LoadNo').AsInteger := LoadNo;
+    sq_UpdateLoad.ExecSQL;
+  except
+    On E: Exception do
     Begin
-     cds_LoadFreightCostDetails.ApplyUpdates(0) ;
-     cds_LoadFreightCostDetails.CommitUpdates ;
-    End ;
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+procedure TdmModule1.UpdateLoadII(const LocalLoadingLocation,
+  LocalDestinationNo, LoadNo: Integer);
+Begin
+  Try
+    sq_UpdLoadII.ParamByName('LocalLoadingLocation').AsInteger :=
+      LocalLoadingLocation;
+    sq_UpdLoadII.ParamByName('LocalDestinationNo').AsInteger :=
+      LocalDestinationNo;
+    sq_UpdLoadII.ParamByName('LoadNo').AsInteger := LoadNo;
+    sq_UpdLoadII.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+procedure TdmModule1.cds_LoadFreightCostDetailsBeforePost(DataSet: TDataSet);
+begin
+  cds_LoadFreightCostDetailsModifiedUser.AsInteger := ThisUser.UserID;
+  cds_LoadFreightCostDetailsDateModified.AsSQLTimeStamp :=
+    DateTimeToSQLTimeStamp(Now);
+end;
+
+procedure TdmModule1.cds_LoadFreightCostDetailsBeforeRefresh(DataSet: TDataSet);
+begin
+  if cds_LoadFreightCostDetails.State in [dsEdit, dsInsert] then
+    cds_LoadFreightCostDetails.Post;
+  if cds_LoadFreightCostDetails.ChangeCount > 0 then
+    if MessageDlg('Vill du spara ändringar i lastrader?', mtConfirmation,
+      [mbYes, mbNo], 0) = mrYes then
+    Begin
+      cds_LoadFreightCostDetails.ApplyUpdates(0);
+      cds_LoadFreightCostDetails.CommitUpdates;
+    End;
 end;
 
 procedure TdmModule1.cds_genfreightAfterInsert(DataSet: TDataSet);
 begin
- cds_genfreightDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
- cds_genfreightModifiedUser.AsInteger     := ThisUser.UserID ;
- cds_genfreightscrow.AsInteger            := dmsConnector.NextMaxNo('ShippingCosts') ;
+  cds_genfreightDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cds_genfreightModifiedUser.AsInteger := ThisUser.UserID;
+  cds_genfreightscrow.AsInteger := dmsConnector.NextMaxNo('ShippingCosts');
 end;
 
 procedure TdmModule1.cds_LFBeforePost(DataSet: TDataSet);
 begin
-// if cds_LFFakturanr.AsInteger < 1 then
-// cds_LFBelopp.AsFloat := cds_LFPrisPerAM3SEK.AsFloat * cds_LFAM3.AsFloat ;
+  // if cds_LFFakturanr.AsInteger < 1 then
+  // cds_LFBelopp.AsFloat := cds_LFPrisPerAM3SEK.AsFloat * cds_LFAM3.AsFloat ;
 end;
 
 procedure TdmModule1.cds_LFBeloppChange(Sender: TField);
 begin
-{ cds_LFMarkerad.OnChange  := nil ;
- Try
-  if cds_LFBelopp.AsFloat > 0 then
-  cds_LFMarkerad.AsInteger := 1 ;
-  if cds_LFAM3.AsFloat > 0 then
-  cds_LFPrisPerAM3SEK.AsFloat  := cds_LFBelopp.AsFloat / cds_LFAM3.AsFloat ;
- Finally
-  cds_LFMarkerad.OnChange  := cds_LFMarkeradChange ;
- End ;
- }
+  { cds_LFMarkerad.OnChange  := nil ;
+    Try
+    if cds_LFBelopp.AsFloat > 0 then
+    cds_LFMarkerad.AsInteger := 1 ;
+    if cds_LFAM3.AsFloat > 0 then
+    cds_LFPrisPerAM3SEK.AsFloat  := cds_LFBelopp.AsFloat / cds_LFAM3.AsFloat ;
+    Finally
+    cds_LFMarkerad.OnChange  := cds_LFMarkeradChange ;
+    End ;
+  }
 end;
 
 procedure TdmModule1.cds_LFMarkeradChange(Sender: TField);
 begin
-{ cds_LFBelopp.OnChange  := nil ;
- cds_LF.BeforePost      := nil ;
- Try
- if cds_LFFakturanr.AsInteger > 0 then
- Begin
-  cds_LFBelopp.AsFloat         := cds_LFFreightCost.AsFloat ;
-  if cds_LFAM3.AsFloat > 0 then
-  cds_LFPrisPerAM3SEK.AsFloat  := cds_LFBelopp.AsFloat / cds_LFAM3.AsFloat ;
- End ;
- Finally
-  cds_LF.BeforePost      := cds_LFBeforePost ;
-  cds_LFBelopp.OnChange  := cds_LFBeloppChange ;
- End ; }
+  { cds_LFBelopp.OnChange  := nil ;
+    cds_LF.BeforePost      := nil ;
+    Try
+    if cds_LFFakturanr.AsInteger > 0 then
+    Begin
+    cds_LFBelopp.AsFloat         := cds_LFFreightCost.AsFloat ;
+    if cds_LFAM3.AsFloat > 0 then
+    cds_LFPrisPerAM3SEK.AsFloat  := cds_LFBelopp.AsFloat / cds_LFAM3.AsFloat ;
+    End ;
+    Finally
+    cds_LF.BeforePost      := cds_LFBeforePost ;
+    cds_LFBelopp.OnChange  := cds_LFBeloppChange ;
+    End ; }
 end;
 
 procedure TdmModule1.cds_LoadFCBeforePost(DataSet: TDataSet);
 begin
- if cds_LoadFCPrisPerAM3SEK.AsFloat > 0 then
- cds_LoadFCBelopp.AsFloat := cds_LoadFCPrisPerAM3SEK.AsFloat * cds_LoadFCAM3.AsFloat ;
+  if cds_LoadFCPrisPerAM3SEK.AsFloat > 0 then
+    cds_LoadFCBelopp.AsFloat := cds_LoadFCPrisPerAM3SEK.AsFloat *
+      cds_LoadFCAM3.AsFloat;
 end;
 
 procedure TdmModule1.cds_LoadFCBeloppChange(Sender: TField);
 begin
   if cds_LoadFCBelopp.AsFloat > 0 then
-  cds_LoadFCMarkerad.AsInteger := 1 ;
-//  if cds_LoadFCAM3.AsFloat > 0 then cds_LoadFCPrisPerAM3SEK.AsFloat  := cds_LoadFCBelopp.AsFloat / cds_LoadFCAM3.AsFloat ;
+    cds_LoadFCMarkerad.AsInteger := 1;
+  // if cds_LoadFCAM3.AsFloat > 0 then cds_LoadFCPrisPerAM3SEK.AsFloat  := cds_LoadFCBelopp.AsFloat / cds_LoadFCAM3.AsFloat ;
 end;
 
 (*
-Function TdmModule1.GetFreightCostOfSelectedRows : Double ;
-Var RadNr : Integer ;
-Begin
- Result := 0 ;
- RadNr  := 1 ;
- FDmSelectedRows.First ;
- FD_GetFreightCost.SQL.Clear ;
- FD_GetFreightCost.SQL.Add('Select SUM(invd.ProductValue) AS Frakt from dbo.InvoiceDetail invd') ;
- FD_GetFreightCost.SQL.Add('WHERE invd.InternalInvoiceNo = ' + FDmSelectedRowsInternalInvoiceNo.AsString) ;
- FD_GetFreightCost.SQL.Add('AND invd.TypeOfRow = 3') ;
- While not FDmSelectedRows.Eof do
- Begin
+  Function TdmModule1.GetFreightCostOfSelectedRows : Double ;
+  Var RadNr : Integer ;
+  Begin
+  Result := 0 ;
+  RadNr  := 1 ;
+  FDmSelectedRows.First ;
+  FD_GetFreightCost.SQL.Clear ;
+  FD_GetFreightCost.SQL.Add('Select SUM(invd.ProductValue) AS Frakt from dbo.InvoiceDetail invd') ;
+  FD_GetFreightCost.SQL.Add('WHERE invd.InternalInvoiceNo = ' + FDmSelectedRowsInternalInvoiceNo.AsString) ;
+  FD_GetFreightCost.SQL.Add('AND invd.TypeOfRow = 3') ;
+  While not FDmSelectedRows.Eof do
+  Begin
   with FD_GetFreightCost do
   Begin
-   if RadNr = 1 then
-   SQL.Add('AND (invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString)
-   else
-   SQL.Add('or invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString) ;
+  if RadNr = 1 then
+  SQL.Add('AND (invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString)
+  else
+  SQL.Add('or invd.ShippingPlanNo = ' + FDmSelectedRowsLONo.AsString) ;
   End ;
   RadNr := RadNr + 1 ;
   FDmSelectedRows.Next ;
- End ;
- FD_GetFreightCost.SQL.Add(')') ;
+  End ;
+  FD_GetFreightCost.SQL.Add(')') ;
 
- if RadNr > 1 then
- Begin
+  if RadNr > 1 then
+  Begin
   Try
   FD_GetFreightCost.Active  := True ;
   if not FD_GetFreightCost.Eof then
-   Result := FD_GetFreightCostFrakt.AsFloat
+  Result := FD_GetFreightCostFrakt.AsFloat
   Finally
-   FD_GetFreightCost.Active := False ;
+  FD_GetFreightCost.Active := False ;
   End ;
- End ;
+  End ;
 
-//FD_GetFreightCostFrakt
+  //FD_GetFreightCostFrakt
 
-End ; *)
+  End ; *)
 
-procedure TdmModule1.InsertAttestHeader(const Beskrivning : String) ;
-Var SequensNo         : Integer ;
-    TotalFreightCost  : Double ;
+procedure TdmModule1.InsertAttestHeader(const Beskrivning: String);
+Var
+  SequensNo: Integer;
+  TotalFreightCost: Double;
 Begin
- //TotalFreightCost := GetFreightCostOfSelectedRows ;
+  // TotalFreightCost := GetFreightCostOfSelectedRows ;
 
- FDmSelectedRows.First ;
+  FDmSelectedRows.First;
 
-//START A TRANSACTION
-  dmsConnector.StartTransaction ;
+  // START A TRANSACTION
+  dmsConnector.StartTransaction;
   Try
-  SequensNo := dmsConnector.NextMaxNo('Att_Ext_Services') ;
+    SequensNo := dmsConnector.NextMaxNo('Att_Ext_Services');
 
+    While not FDmSelectedRows.Eof do
+    Begin
+      Try
+        FD_InsAttHead.ParamByName('InternalInvoiceNo').AsInteger :=
+          FDmSelectedRowsInternalInvoiceNo.AsInteger;
+        FD_InsAttHead.ParamByName('ShippingPlanNo').AsInteger :=
+          FDmSelectedRowsLONo.AsInteger;
+        FD_InsAttHead.ParamByName('SHIPPINGCOMPANYNO').AsInteger :=
+          FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger;
+        FD_InsAttHead.ParamByName('CURRENCYNO').AsInteger :=
+          FDmSelectedRowsCURRENCYNO.AsInteger;
 
- While not FDmSelectedRows.Eof do
- Begin
-  Try
-  FD_InsAttHead.ParamByName('InternalInvoiceNo').AsInteger          := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
-  FD_InsAttHead.ParamByName('ShippingPlanNo').AsInteger             := FDmSelectedRowsLONo.AsInteger ;
-  FD_InsAttHead.ParamByName('SHIPPINGCOMPANYNO').AsInteger          := FDmSelectedRowsSHIPPINGCOMPANYNO.AsInteger ;
-  FD_InsAttHead.ParamByName('CURRENCYNO').AsInteger                 := FDmSelectedRowsCURRENCYNO.AsInteger ;
+        FD_InsAttHead.ParamByName('SequensNo').AsInteger := SequensNo;
+        FD_InsAttHead.ParamByName('Supplier_InvoiceNo').AsString :=
+          FDmSelectedRowsSupplier_InvoiceNo.AsString;
+        FD_InsAttHead.ParamByName('Supplier_InvoiceDate').AsSQLTimeStamp :=
+          DateTimeToSQLTimeStamp
+          (FDmSelectedRowsSupplier_InvoiceDate.AsDateTime);
+        FD_InsAttHead.ParamByName('UserID').AsInteger := ThisUser.UserID;
+        FD_InsAttHead.ParamByName('DESC').AsString := Beskrivning;
+        // 'Frakt' ;//FDmSelectedRowsSupplier_InvoiceNo.AsString ;
+        FD_InsAttHead.ParamByName('Amount').AsFloat :=
+          FDmSelectedRowsAmount.AsFloat;
+        FD_InsAttHead.ParamByName('Quick_InvoiceNo').AsInteger :=
+          FDmSelectedRowsFakturanr.AsInteger;
+        FD_InsAttHead.ParamByName('Note').AsString :=
+          FDmSelectedRowsNote.AsString;
+        FD_InsAttHead.ExecSQL;
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          // Raise ;
+        End;
+      end;
+      FDmSelectedRows.Next;
+    End; // While
 
-  FD_InsAttHead.ParamByName('SequensNo').AsInteger                  := SequensNo ;
-  FD_InsAttHead.ParamByName('Supplier_InvoiceNo').AsString          := FDmSelectedRowsSupplier_InvoiceNo.AsString ;
-  FD_InsAttHead.ParamByName('Supplier_InvoiceDate').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(FDmSelectedRowsSupplier_InvoiceDate.AsDateTime) ;
-  FD_InsAttHead.ParamByName('UserID').AsInteger                     := ThisUser.UserID ;
-  FD_InsAttHead.ParamByName('DESC').AsString                        := Beskrivning ;//'Frakt' ;//FDmSelectedRowsSupplier_InvoiceNo.AsString ;
-  FD_InsAttHead.ParamByName('Amount').AsFloat                       := FDmSelectedRowsAmount.AsFloat ;
-  FD_InsAttHead.ParamByName('Quick_InvoiceNo').AsInteger            := FDmSelectedRowsFakturanr.AsInteger ;
-  FD_InsAttHead.ParamByName('Note').AsString                        := FDmSelectedRowsNote.AsString ;
-  FD_InsAttHead.ExecSQL ;
-     except
-      On E: Exception do
+    FDmSelectedRows.First;
+    While not FDmSelectedRows.Eof do
+    Begin
+
+      if Beskrivning = 'Komm' then
       Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-//       Raise ;
-      End ;
-     end;
-  FDmSelectedRows.Next ;
- End ;//While     
-
- FDmSelectedRows.First ;
- While not FDmSelectedRows.Eof do
- Begin
-
- if Beskrivning = 'Komm' then
- Begin
-  Try
-  FD_InsAttestRowKomm.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
-//  FD_InsAttestRowKomm.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
-  FD_InsAttestRowKomm.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-  FD_InsAttestRowKomm.ExecSQL ;
-     except
-      On E: Exception do
+        Try
+          FD_InsAttestRowKomm.ParamByName('InternalInvoiceNo').AsInteger :=
+            FDmSelectedRowsInternalInvoiceNo.AsInteger;
+          // FD_InsAttestRowKomm.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
+          FD_InsAttestRowKomm.ParamByName('SequensNo').AsInteger := SequensNo;
+          FD_InsAttestRowKomm.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+          End;
+        end;
+      End
+      else
       Begin
-       dmsSystem.FDoLog(E.Message) ;
-      End ;
-     end;
-  End
-  else
-  Begin
-  Try
-  FD_InsAttestRow.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
-  FD_InsAttestRow.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
-  FD_InsAttestRow.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-  FD_InsAttestRow.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-      End ;
-     end;
-  End ;
+        Try
+          FD_InsAttestRow.ParamByName('InternalInvoiceNo').AsInteger :=
+            FDmSelectedRowsInternalInvoiceNo.AsInteger;
+          FD_InsAttestRow.ParamByName('ShippingPlanNo').AsInteger :=
+            FDmSelectedRowsLONo.AsInteger;
+          FD_InsAttestRow.ParamByName('SequensNo').AsInteger := SequensNo;
+          FD_InsAttestRow.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+          End;
+        end;
+      End;
 
-  Try
-   FD_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger         := FDmSelectedRowsInternalInvoiceNo.AsInteger ;
-   FD_InsAttLO.ParamByName('ShippingPlanNo').AsInteger            := FDmSelectedRowsLONo.AsInteger ;
-   FD_InsAttLO.ParamByName('SequensNo').AsInteger                 := SequensNo ;
-   FD_InsAttLO.ParamByName('AmountAttested').AsFloat              := FDmSelectedRowsTotalAmount.AsFloat ;
-   FD_InsAttLO.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-//       Raise ;
-      End ;
-     end;
+      Try
+        FD_InsAttLO.ParamByName('InternalInvoiceNo').AsInteger :=
+          FDmSelectedRowsInternalInvoiceNo.AsInteger;
+        FD_InsAttLO.ParamByName('ShippingPlanNo').AsInteger :=
+          FDmSelectedRowsLONo.AsInteger;
+        FD_InsAttLO.ParamByName('SequensNo').AsInteger := SequensNo;
+        FD_InsAttLO.ParamByName('AmountAttested').AsFloat :=
+          FDmSelectedRowsTotalAmount.AsFloat;
+        FD_InsAttLO.ExecSQL;
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          // Raise ;
+        End;
+      end;
 
-  FDmSelectedRows.Next ;
- End ;//While
+      FDmSelectedRows.Next;
+    End; // While
 
- dmsConnector.Commit ;
- Except
-  dmsConnector.Rollback ;
-  Raise ;
- End ;
-End ;
+    dmsConnector.Commit;
+  Except
+    dmsConnector.Rollback;
+    Raise;
+  End;
+End;
 
 procedure TdmModule1.cds_LFFraktChange(Sender: TField);
 begin
- cds_LFConfirmFrakt.OnChange  := nil ;
- Try
- if cds_LFFrakt.AsFloat <> 0 then
- cds_LFConfirmFrakt.AsInteger := 1
- else
- cds_LFConfirmFrakt.AsInteger := 0 ;
- Finally
-  cds_LFConfirmFrakt.OnChange  := cds_LFConfirmFraktChange ;
- End ;
+  cds_LFConfirmFrakt.OnChange := nil;
+  Try
+    if cds_LFFrakt.AsFloat <> 0 then
+      cds_LFConfirmFrakt.AsInteger := 1
+    else
+      cds_LFConfirmFrakt.AsInteger := 0;
+  Finally
+    cds_LFConfirmFrakt.OnChange := cds_LFConfirmFraktChange;
+  End;
 end;
 
 procedure TdmModule1.cds_LFConfirmFraktChange(Sender: TField);
 begin
- cds_LFFrakt.OnChange  := nil ;
- Try
- if cds_LFConfirmFrakt.AsInteger = 1 then
- cds_LFFrakt.AsFloat := cds_LFFraktkostnad_sum.AsFloat
- else
- cds_LFFrakt.AsFloat := 0 ;
- Finally
-  cds_LFFrakt.OnChange := cds_LFFraktChange ;
- End ;
+  cds_LFFrakt.OnChange := nil;
+  Try
+    if cds_LFConfirmFrakt.AsInteger = 1 then
+      cds_LFFrakt.AsFloat := cds_LFFraktkostnad_sum.AsFloat
+    else
+      cds_LFFrakt.AsFloat := 0;
+  Finally
+    cds_LFFrakt.OnChange := cds_LFFraktChange;
+  End;
 end;
 
 procedure TdmModule1.cds_LFConfirmKommChange(Sender: TField);
 begin
- cds_LFKomm.OnChange  := nil ;
- Try
- if cds_LFConfirmKomm.AsInteger = 1 then
- cds_LFKomm.AsFloat := cds_LFKommission_Sum.AsFloat
- else
- cds_LFKomm.AsFloat := 0 ;
-// if cds_LF.State in [dsEdit, dsInsert] then
-//  cds_LF.Post ;
- Finally
-  cds_LFKomm.OnChange := cds_LFKommChange ;
- End ;
+  cds_LFKomm.OnChange := nil;
+  Try
+    if cds_LFConfirmKomm.AsInteger = 1 then
+      cds_LFKomm.AsFloat := cds_LFKommission_Sum.AsFloat
+    else
+      cds_LFKomm.AsFloat := 0;
+    // if cds_LF.State in [dsEdit, dsInsert] then
+    // cds_LF.Post ;
+  Finally
+    cds_LFKomm.OnChange := cds_LFKommChange;
+  End;
 end;
 
 procedure TdmModule1.cds_LFKommChange(Sender: TField);
 begin
- cds_LFConfirmKomm.OnChange  := nil ;
- Try
- if cds_LFKomm.AsFloat <> 0 then
- cds_LFConfirmKomm.AsInteger := 1
- else
- cds_LFConfirmKomm.AsInteger := 0 ;
- Finally
-  cds_LFConfirmKomm.OnChange  := cds_LFConfirmKommChange ;
- End ;
+  cds_LFConfirmKomm.OnChange := nil;
+  Try
+    if cds_LFKomm.AsFloat <> 0 then
+      cds_LFConfirmKomm.AsInteger := 1
+    else
+      cds_LFConfirmKomm.AsInteger := 0;
+  Finally
+    cds_LFConfirmKomm.OnChange := cds_LFConfirmKommChange;
+  End;
 end;
 
-procedure TdmModule1.DeleteAttest(const SequensNo  : Integer) ;
+procedure TdmModule1.DeleteAttest(const SequensNo: Integer);
 Begin
- Try
- adDeleteAttest.ParamByName('SequensNo').AsInteger := SequensNo ;
- adDeleteAttest.ExecSQL ;
-     except
-      On E: Exception do
-      Begin
-       dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-       Raise ;
-      End ;
-     end;
-End ;
+  Try
+    adDeleteAttest.ParamByName('SequensNo').AsInteger := SequensNo;
+    adDeleteAttest.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
-procedure TdmModule1.sp_AttestFreightListConfirmFraktChange(
-  Sender: TField);
+procedure TdmModule1.sp_AttestFreightListConfirmFraktChange(Sender: TField);
 begin
- sp_AttestFreightListFrakt.OnChange  := nil ;
- Try
- if sp_AttestFreightListConfirmFrakt.AsInteger = 1 then
- sp_AttestFreightListFrakt.AsFloat := sp_AttestFreightListFraktkostnad_sum.AsFloat
- else
- sp_AttestFreightListFrakt.AsFloat := 0 ;
- Finally
-  sp_AttestFreightListFrakt.OnChange := sp_AttestFreightListFraktChange ;
- End ;
+  sp_AttestFreightListFrakt.OnChange := nil;
+  Try
+    if sp_AttestFreightListConfirmFrakt.AsInteger = 1 then
+      sp_AttestFreightListFrakt.AsFloat :=
+        sp_AttestFreightListFraktkostnad_sum.AsFloat
+    else
+      sp_AttestFreightListFrakt.AsFloat := 0;
+  Finally
+    sp_AttestFreightListFrakt.OnChange := sp_AttestFreightListFraktChange;
+  End;
 end;
 
 procedure TdmModule1.sp_AttestFreightListFraktChange(Sender: TField);
 begin
- sp_AttestFreightListConfirmFrakt.OnChange  := nil ;
- Try
- if sp_AttestFreightListFrakt.AsFloat <> 0 then
- sp_AttestFreightListConfirmFrakt.AsInteger := 1
- else
- sp_AttestFreightListConfirmFrakt.AsInteger := 0 ;
- Finally
-  sp_AttestFreightListConfirmFrakt.OnChange  := sp_AttestFreightListConfirmFraktChange ;
- End ;
+  sp_AttestFreightListConfirmFrakt.OnChange := nil;
+  Try
+    if sp_AttestFreightListFrakt.AsFloat <> 0 then
+      sp_AttestFreightListConfirmFrakt.AsInteger := 1
+    else
+      sp_AttestFreightListConfirmFrakt.AsInteger := 0;
+  Finally
+    sp_AttestFreightListConfirmFrakt.OnChange :=
+      sp_AttestFreightListConfirmFraktChange;
+  End;
 end;
 
 procedure TdmModule1.sp_LFConfirmFraktChange(Sender: TField);
 begin
- sp_LFFrakt.OnChange  := nil ;
- Try
- if sp_LFConfirmFrakt.AsInteger = 1 then
- sp_LFFrakt.AsFloat := sp_LFFraktkostnad_sum.AsFloat
- else
- sp_LFFrakt.AsFloat := 0 ;
- Finally
-  sp_LFFrakt.OnChange := sp_LFFraktChange ;
- End ;
+  sp_LFFrakt.OnChange := nil;
+  Try
+    if sp_LFConfirmFrakt.AsInteger = 1 then
+      sp_LFFrakt.AsFloat := sp_LFFraktkostnad_sum.AsFloat
+    else
+      sp_LFFrakt.AsFloat := 0;
+  Finally
+    sp_LFFrakt.OnChange := sp_LFFraktChange;
+  End;
 end;
 
 procedure TdmModule1.sp_LFFraktChange(Sender: TField);
 begin
- sp_LFConfirmFrakt.OnChange  := nil ;
- Try
- if sp_LFFrakt.AsFloat <> 0 then
- sp_LFConfirmFrakt.AsInteger := 1
- else
- sp_LFConfirmFrakt.AsInteger := 0 ;
- Finally
-  sp_LFConfirmFrakt.OnChange  := sp_LFConfirmFraktChange ;
- End ;
+  sp_LFConfirmFrakt.OnChange := nil;
+  Try
+    if sp_LFFrakt.AsFloat <> 0 then
+      sp_LFConfirmFrakt.AsInteger := 1
+    else
+      sp_LFConfirmFrakt.AsInteger := 0;
+  Finally
+    sp_LFConfirmFrakt.OnChange := sp_LFConfirmFraktChange;
+  End;
 end;
 
 procedure TdmModule1.sp_AttestKommListConfirmKommChange(Sender: TField);
 begin
- sp_AttestKommListKomm.OnChange  := nil ;
- Try
- if sp_AttestKommListConfirmKomm.AsInteger = 1 then
- sp_AttestKommListKomm.AsFloat := sp_AttestKommListKommission_Sum.AsFloat
- else
- sp_AttestKommListKomm.AsFloat := 0 ;
-// if sp_AttestKommList.State in [dsEdit, dsInsert] then
-//  sp_AttestKommList.Post ;
- Finally
-  sp_AttestKommListKomm.OnChange := sp_AttestKommListKommChange ;
- End ;
+  sp_AttestKommListKomm.OnChange := nil;
+  Try
+    if sp_AttestKommListConfirmKomm.AsInteger = 1 then
+      sp_AttestKommListKomm.AsFloat := sp_AttestKommListKommission_Sum.AsFloat
+    else
+      sp_AttestKommListKomm.AsFloat := 0;
+    // if sp_AttestKommList.State in [dsEdit, dsInsert] then
+    // sp_AttestKommList.Post ;
+  Finally
+    sp_AttestKommListKomm.OnChange := sp_AttestKommListKommChange;
+  End;
 end;
 
-procedure TdmModule1.sp_AttestKommListSingleConfirmKommChange(
-  Sender: TField);
+procedure TdmModule1.sp_AttestKommListSingleConfirmKommChange(Sender: TField);
 begin
- sp_AttestKommListSingleKomm.OnChange  := nil ;
- Try
- if cds_LFConfirmKomm.AsInteger = 1 then
- sp_AttestKommListSingleKomm.AsFloat := sp_AttestKommListSingleKommission_Sum.AsFloat
- else
- sp_AttestKommListSingleKomm.AsFloat := 0 ;
-// if cds_LF.State in [dsEdit, dsInsert] then
-//  cds_LF.Post ;
- Finally
-  sp_AttestKommListSingleKomm.OnChange := sp_AttestKommListSingleKommChange ;
- End ;
+  sp_AttestKommListSingleKomm.OnChange := nil;
+  Try
+    if cds_LFConfirmKomm.AsInteger = 1 then
+      sp_AttestKommListSingleKomm.AsFloat :=
+        sp_AttestKommListSingleKommission_Sum.AsFloat
+    else
+      sp_AttestKommListSingleKomm.AsFloat := 0;
+    // if cds_LF.State in [dsEdit, dsInsert] then
+    // cds_LF.Post ;
+  Finally
+    sp_AttestKommListSingleKomm.OnChange := sp_AttestKommListSingleKommChange;
+  End;
 end;
 
 procedure TdmModule1.sp_AttestKommListKommChange(Sender: TField);
 begin
- sp_AttestKommListConfirmKomm.OnChange  := nil ;
- Try
- if sp_AttestKommListKomm.AsFloat <> 0 then
- sp_AttestKommListConfirmKomm.AsInteger := 1
- else
- sp_AttestKommListConfirmKomm.AsInteger := 0 ;
- Finally
-  sp_AttestKommListConfirmKomm.OnChange  := sp_AttestKommListConfirmKommChange ;
- End ;
+  sp_AttestKommListConfirmKomm.OnChange := nil;
+  Try
+    if sp_AttestKommListKomm.AsFloat <> 0 then
+      sp_AttestKommListConfirmKomm.AsInteger := 1
+    else
+      sp_AttestKommListConfirmKomm.AsInteger := 0;
+  Finally
+    sp_AttestKommListConfirmKomm.OnChange := sp_AttestKommListConfirmKommChange;
+  End;
 end;
 
 procedure TdmModule1.sp_AttestKommListSingleKommChange(Sender: TField);
 begin
- sp_AttestKommListSingleConfirmKomm.OnChange  := nil ;
- Try
- if sp_AttestKommListSingleKomm.AsFloat <> 0 then
- sp_AttestKommListSingleConfirmKomm.AsInteger := 1
- else
- sp_AttestKommListSingleConfirmKomm.AsInteger := 0 ;
- Finally
-  sp_AttestKommListSingleConfirmKomm.OnChange  := sp_AttestKommListSingleConfirmKommChange ;
- End ;
+  sp_AttestKommListSingleConfirmKomm.OnChange := nil;
+  Try
+    if sp_AttestKommListSingleKomm.AsFloat <> 0 then
+      sp_AttestKommListSingleConfirmKomm.AsInteger := 1
+    else
+      sp_AttestKommListSingleConfirmKomm.AsInteger := 0;
+  Finally
+    sp_AttestKommListSingleConfirmKomm.OnChange :=
+      sp_AttestKommListSingleConfirmKommChange;
+  End;
 end;
 
-function TdmModule1.GetCreditGroupName (const ClientNo : Integer) : String ;
+function TdmModule1.GetCreditGroupName(const ClientNo: Integer): String;
 Begin
- sq_GetCreditGroupNamn.ParamByName('ClientNo').AsInteger  := ClientNo ;
- sq_GetCreditGroupNamn.Open ;
- Try
- if not sq_GetCreditGroupNamn.Eof then
-  Result  := sq_GetCreditGroupNamnGruppnamn.AsString
-   else
-    Result  := '' ;
- Finally
-  sq_GetCreditGroupNamn.Close ;
- End ;
-End ;
+  sq_GetCreditGroupNamn.ParamByName('ClientNo').AsInteger := ClientNo;
+  sq_GetCreditGroupNamn.Open;
+  Try
+    if not sq_GetCreditGroupNamn.Eof then
+      Result := sq_GetCreditGroupNamnGruppnamn.AsString
+    else
+      Result := '';
+  Finally
+    sq_GetCreditGroupNamn.Close;
+  End;
+End;
 
 procedure TdmModule1.cds_CreLimAfterInsert(DataSet: TDataSet);
 begin
- cds_CreLimDateCreated.AsSQLTimeStamp   := DateTimeToSQLTimeStamp(Now) ;
- cds_CreLimDateModified.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
- cds_CreLimUserModified.AsInteger       := ThisUser.UserID ; 
+  cds_CreLimDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cds_CreLimDateModified.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cds_CreLimUserModified.AsInteger := ThisUser.UserID;
 end;
 
 procedure TdmModule1.cds_CreLimBeforePost(DataSet: TDataSet);
 begin
-  cds_CreLimDateModified.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-  cds_CreLimUserModified.AsInteger       := ThisUser.UserID ;
+  cds_CreLimDateModified.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cds_CreLimUserModified.AsInteger := ThisUser.UserID;
 end;
 
 procedure TdmModule1.cds_InvoicePayStatusBeforePost(DataSet: TDataSet);
 begin
-// cds_InvoicePayStatusInternalInvoiceNo.AsInteger  := cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger ;
- if cds_InvoicePayStatusDatePaid.IsNull then
-  cds_InvoicePayStatusDatePaid.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
-// if cds_InvoicePayStatusInternalInvoiceNo.IsNull then
-// InsPayStatus (cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger) ;
+  // cds_InvoicePayStatusInternalInvoiceNo.AsInteger  := cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger ;
+  if cds_InvoicePayStatusDatePaid.IsNull then
+    cds_InvoicePayStatusDatePaid.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  // if cds_InvoicePayStatusInternalInvoiceNo.IsNull then
+  // InsPayStatus (cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger) ;
 end;
 
 procedure TdmModule1.cds_InvoicePayStatusUpdateRecord(ASender: TDataSet;
@@ -1274,102 +1301,117 @@ procedure TdmModule1.cds_InvoicePayStatusUpdateRecord(ASender: TDataSet;
   AOptions: TFDUpdateRowOptions);
 begin
   FDUpdateSQL1.ConnectionName := cds_InvoicePayStatus.ConnectionName;
-  FDUpdateSQL1.DataSet := cds_InvoicePayStatus ;
- FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
+  FDUpdateSQL1.DataSet := cds_InvoicePayStatus;
+  FDUpdateSQL1.Apply(ARequest, AAction, AOptions);
 end;
 
 procedure TdmModule1.cds_InvoicePayStatusCalcFields(DataSet: TDataSet);
 begin
- if (cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat -
- cds_InvoicePayStatusAmountPaid.AsFloat < 0)
- and (cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat > 0) then
- cds_InvoicePayStatusAttBetala.AsFloat  := 0
- else
-  cds_InvoicePayStatusAttBetala.AsFloat  :=
- cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat -
- cds_InvoicePayStatusAmountPaid.AsFloat ;
+  if (cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat -
+    cds_InvoicePayStatusAmountPaid.AsFloat < 0) and
+    (cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat > 0) then
+    cds_InvoicePayStatusAttBetala.AsFloat := 0
+  else
+    cds_InvoicePayStatusAttBetala.AsFloat :=
+      cds_InvoicePayStatusBELOP_EXKL_KASSA.AsFloat -
+      cds_InvoicePayStatusAmountPaid.AsFloat;
 end;
 
-procedure TdmModule1.InsPayStatus (const InternalInvoiceNo : Integer) ;
+procedure TdmModule1.InsPayStatus(const InternalInvoiceNo: Integer);
 Begin
- Try
- cds_InvoicePayStatus.OnUpdateRecord  := nil ;
- Try
- sq_InsPayStatus.ParamByName('InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
- sq_InsPayStatus.ParamByName('DatePaid').AsSQLTimeStamp       := cds_InvoicePayStatusDatePaid.AsSQLTimeStamp ;
- sq_InsPayStatus.ParamByName('Paid').AsInteger                := cds_InvoicePayStatusPaid.AsInteger ;
- sq_InsPayStatus.ParamByName('AmountPaid').AsFloat            := cds_InvoicePayStatusAmountPaid.AsFloat ;
- sq_InsPayStatus.ParamByName('Note').AsString                 := cds_InvoicePayStatusNote.AsString ;
- sq_InsPayStatus.ParamByName('UserID').AsInteger              := ThisUser.UserID ;
- sq_InsPayStatus.ExecSQL ;
+  Try
+    cds_InvoicePayStatus.OnUpdateRecord := nil;
+    Try
+      sq_InsPayStatus.ParamByName('InternalInvoiceNo').AsInteger :=
+        InternalInvoiceNo;
+      sq_InsPayStatus.ParamByName('DatePaid').AsSQLTimeStamp :=
+        cds_InvoicePayStatusDatePaid.AsSQLTimeStamp;
+      sq_InsPayStatus.ParamByName('Paid').AsInteger :=
+        cds_InvoicePayStatusPaid.AsInteger;
+      sq_InsPayStatus.ParamByName('AmountPaid').AsFloat :=
+        cds_InvoicePayStatusAmountPaid.AsFloat;
+      sq_InsPayStatus.ParamByName('Note').AsString :=
+        cds_InvoicePayStatusNote.AsString;
+      sq_InsPayStatus.ParamByName('UserID').AsInteger := ThisUser.UserID;
+      sq_InsPayStatus.ExecSQL;
 
- sq_ModInsPayStatus.ParamByName('InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
- sq_ModInsPayStatus.ParamByName('DatePaid').AsSQLTimeStamp       := cds_InvoicePayStatusDatePaid.AsSQLTimeStamp ;
- sq_ModInsPayStatus.ParamByName('Paid').AsInteger                := cds_InvoicePayStatusPaid.AsInteger ;
- sq_ModInsPayStatus.ParamByName('AmountPaid').AsFloat            := cds_InvoicePayStatusAmountPaid.AsFloat ;
- sq_ModInsPayStatus.ParamByName('Note').AsString                 := cds_InvoicePayStatusNote.AsString ;
- sq_ModInsPayStatus.ParamByName('UserID').AsInteger              := ThisUser.UserID ;
- sq_ModInsPayStatus.ExecSQL ;
+      sq_ModInsPayStatus.ParamByName('InternalInvoiceNo').AsInteger :=
+        InternalInvoiceNo;
+      sq_ModInsPayStatus.ParamByName('DatePaid').AsSQLTimeStamp :=
+        cds_InvoicePayStatusDatePaid.AsSQLTimeStamp;
+      sq_ModInsPayStatus.ParamByName('Paid').AsInteger :=
+        cds_InvoicePayStatusPaid.AsInteger;
+      sq_ModInsPayStatus.ParamByName('AmountPaid').AsFloat :=
+        cds_InvoicePayStatusAmountPaid.AsFloat;
+      sq_ModInsPayStatus.ParamByName('Note').AsString :=
+        cds_InvoicePayStatusNote.AsString;
+      sq_ModInsPayStatus.ParamByName('UserID').AsInteger := ThisUser.UserID;
+      sq_ModInsPayStatus.ExecSQL;
 
- except
-  On E: Exception do
-   Begin
-    dmsSystem.FDoLog('InsPayStatus ' + E.Message) ;
-//      ShowMessage(E.Message);
-    Raise ;
-   End ;
-  end;
- Finally
-  cds_InvoicePayStatus.OnUpdateRecord := cds_InvoicePayStatusUpdateRecord ;
- End ;
-End ;
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog('InsPayStatus ' + E.Message);
+        // ShowMessage(E.Message);
+        Raise;
+      End;
+    end;
+  Finally
+    cds_InvoicePayStatus.OnUpdateRecord := cds_InvoicePayStatusUpdateRecord;
+  End;
+End;
 
 procedure TdmModule1.cds_CreGrpCliAfterInsert(DataSet: TDataSet);
 begin
- cds_CreGrpCligrpNo.AsInteger  := cds_CreLimgrpno.AsInteger ;
+  cds_CreGrpCligrpNo.AsInteger := cds_CreLimgrpno.AsInteger;
 end;
 
-procedure TdmModule1.Refresh_OrderstockDtl ;
+procedure TdmModule1.Refresh_OrderstockDtl;
 Begin
- sp_OrderstockDtl.Active  := False ;
- sp_OrderstockDtl.ParamByName('@UserID').AsInteger              := 8 ;//ThisUser.UserID ;
- sp_OrderstockDtl.ParamByName('@DELIVERY_COUNTRY').AsString     := sp_OrderstockLev_Land.AsString ;
- sp_OrderstockDtl.ParamByName('@CURRENCY').AsString             := sp_OrderstockValuta.AsString ;
- sp_OrderstockDtl.ParamByName('@SALES_REGION').AsString         := sp_OrderstockFörsäljningsregion.AsString ;
- sp_OrderstockDtl.Active  := True ;
-End ;
+  sp_OrderstockDtl.Active := False;
+  sp_OrderstockDtl.ParamByName('@UserID').AsInteger := 8; // ThisUser.UserID ;
+  sp_OrderstockDtl.ParamByName('@DELIVERY_COUNTRY').AsString :=
+    sp_OrderstockLev_Land.AsString;
+  sp_OrderstockDtl.ParamByName('@CURRENCY').AsString :=
+    sp_OrderstockValuta.AsString;
+  sp_OrderstockDtl.ParamByName('@SALES_REGION').AsString :=
+    sp_OrderstockFörsäljningsregion.AsString;
+  sp_OrderstockDtl.Active := True;
+End;
 
-procedure TdmModule1.Close_OrderstockDtl ;
+procedure TdmModule1.Close_OrderstockDtl;
 Begin
- sp_OrderstockDtl.Active  := False ;
-End ;
+  sp_OrderstockDtl.Active := False;
+End;
 
 procedure TdmModule1.sp_Vis_GenTradingAnalyzeCalcFields(DataSet: TDataSet);
 begin
- if sp_Vis_GenTradingAnalyzeSales_Belopp_SEK.AsFloat > 0 then
- sp_Vis_GenTradingAnalyzeDiffOfSales.AsFloat  := sp_Vis_GenTradingAnalyzeDiff_SEK.AsFloat / sp_Vis_GenTradingAnalyzeSales_Belopp_SEK.AsFloat * 100
- else
- sp_Vis_GenTradingAnalyzeDiffOfSales.AsFloat  := 0 ;
+  if sp_Vis_GenTradingAnalyzeSales_Belopp_SEK.AsFloat > 0 then
+    sp_Vis_GenTradingAnalyzeDiffOfSales.AsFloat :=
+      sp_Vis_GenTradingAnalyzeDiff_SEK.AsFloat /
+      sp_Vis_GenTradingAnalyzeSales_Belopp_SEK.AsFloat * 100
+  else
+    sp_Vis_GenTradingAnalyzeDiffOfSales.AsFloat := 0;
 end;
 
-procedure TdmModule1.ApplyUpdatesToInvoicePayStatus ;
+procedure TdmModule1.ApplyUpdatesToInvoicePayStatus;
 begin
- cds_InvoicePayStatus.FilterChanges := [rtModified] ;
- Try
- cds_InvoicePayStatus.First ;
- While not cds_InvoicePayStatus.Eof do
- Begin
-  InsPayStatus (cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger) ;
-// if cds_InvoicePayStatusDatePaid.IsNull then
-//  cds_InvoicePayStatusDatePaid.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
-// if cds_InvoicePayStatusInternalInvoiceNo.IsNull then
-// InsPayStatus (cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger) ;
-  cds_InvoicePayStatus.Next ;
- End ;
- Finally
-  cds_InvoicePayStatus.FilterChanges := [rtModified, rtInserted, rtDeleted, rtUnmodified] ;
- End ;
-
+  cds_InvoicePayStatus.FilterChanges := [rtModified];
+  Try
+    cds_InvoicePayStatus.First;
+    While not cds_InvoicePayStatus.Eof do
+    Begin
+      InsPayStatus(cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger);
+      // if cds_InvoicePayStatusDatePaid.IsNull then
+      // cds_InvoicePayStatusDatePaid.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
+      // if cds_InvoicePayStatusInternalInvoiceNo.IsNull then
+      // InsPayStatus (cds_InvoicePayStatusIH_InternalInvoiceNo.AsInteger) ;
+      cds_InvoicePayStatus.Next;
+    End;
+  Finally
+    cds_InvoicePayStatus.FilterChanges := [rtModified, rtInserted, rtDeleted,
+      rtUnmodified];
+  End;
 
 end;
 

@@ -11,9 +11,11 @@ uses
   cxGridDBTableView, cxGrid, ExtCtrls, cxGridBandedTableView,
   cxGridDBBandedTableView, dxPSGlbl, dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd,
   dxWrap, dxPrnDev, dxPSCompsProvider, dxPSFillPatterns, dxPSEdgePatterns,
-  dxPSCore, dxPScxCommon,  FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxContainer,
+  dxPSCore, dxPScxCommon, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  cxContainer,
   cxLabel, cxGridCustomPopupMenu, cxGridPopupMenu, cxGridExportLink,
   cxExport, cxCalc, cxCurrencyEdit, cxCheckBox, dxPSPDFExportCore,
   dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
@@ -30,7 +32,9 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxSkinscxPCPainter, dxPScxGridLnk,
-  dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter ;
+  dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions;
 
 type
   TfOrderStocken = class(TfBaseListForm)
@@ -77,20 +81,21 @@ type
     procedure acSaveGridLayoutExecute(Sender: TObject);
     procedure acShowOSDetailsExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure grdOrderStockDBBandedTableView1DataControllerSummaryAfterSummary(
-      ASender: TcxDataSummary);
+    procedure grdOrderStockDBBandedTableView1DataControllerSummaryAfterSummary
+      (ASender: TcxDataSummary);
   private
     { Private declarations }
-    procedure CalcSummaries ;
+    procedure CalcSummaries;
   public
     { Public declarations }
   end;
 
-var  fOrderStocken: TfOrderStocken;
+var
+  fOrderStocken: TfOrderStocken;
 
 implementation
 
-uses UnitdmModule1, VidaUser , dmsVidaSystem, dmsDataConn,
+uses UnitdmModule1, VidaUser, dmsVidaSystem, dmsDataConn,
   uOrderStockDetails;
 
 {$R *.dfm}
@@ -98,199 +103,202 @@ uses UnitdmModule1, VidaUser , dmsVidaSystem, dmsDataConn,
 procedure TfOrderStocken.acRefreshExecute(Sender: TObject);
 begin
   inherited;
- With dmModule1 do
- Begin
-  sp_Orderstock.DisableControls ;
-  Try
-  sp_Orderstock.Active  := False ;
-  sp_Orderstock.ParamByName('@UserID').AsInteger := 8 ; //ThisUser.UserID ;
-  sp_Orderstock.Active  := True ;
-  Finally
-   sp_Orderstock.EnableControls ;
-  End ;
- End ;
+  With dmModule1 do
+  Begin
+    sp_Orderstock.DisableControls;
+    Try
+      sp_Orderstock.Active := False;
+      sp_Orderstock.ParamByName('@UserID').AsInteger := 8; // ThisUser.UserID ;
+      sp_Orderstock.Active := True;
+    Finally
+      sp_Orderstock.EnableControls;
+    End;
+  End;
 end;
 
-procedure TfOrderStocken.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfOrderStocken.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
- Action := caFree ;
+  Action := caFree;
 end;
 
 procedure TfOrderStocken.acPrintExecute(Sender: TObject);
 begin
   inherited;
- dxComponentPrinter1Link1.ShrinkToPageWidth:= True ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Orderstock') ;
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Orderstock');
 
- dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 procedure TfOrderStocken.FormDestroy(Sender: TObject);
 begin
   inherited;
- fOrderStocken := NIL;
+  fOrderStocken := NIL;
 end;
 
 procedure TfOrderStocken.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
   inherited;
- cds_PropsUserID.AsInteger  := ThisUser.UserID ;
- cds_PropsForm.AsString     := Self.Name ;
+  cds_PropsUserID.AsInteger := ThisUser.UserID;
+  cds_PropsForm.AsString := Self.Name;
 end;
 
 procedure TfOrderStocken.acGenerateOrderstockExecute(Sender: TObject);
 begin
   inherited;
- With dmModule1 do
- Begin
-  Try
-  sp_vis_GenOSRunAll.ParamByName('@UserID').AsInteger := ThisUser.UserID ;
-  sp_vis_GenOSRunAll.ExecProc ;
-  acRefreshExecute(Sender) ;
-  except
-   On E: Exception do
-    Begin
-     dmsSystem.FDoLog(E.Message) ;
-//      ShowMessage(E.Message);
-     Raise ;
-    End ;
-  end;
- End ;
+  With dmModule1 do
+  Begin
+    Try
+      sp_vis_GenOSRunAll.ParamByName('@UserID').AsInteger := ThisUser.UserID;
+      sp_vis_GenOSRunAll.ExecProc;
+      acRefreshExecute(Sender);
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog(E.Message);
+        // ShowMessage(E.Message);
+        Raise;
+      End;
+    end;
+  End;
 end;
 
 procedure TfOrderStocken.acExportXLSExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
-  ExcelDir,
-  FileName    : String ;
+  Save_Cursor: TCursor;
+  ExcelDir, FileName: String;
 begin
   inherited;
- Save_Cursor    := Screen.Cursor;
- Screen.Cursor  := crHourGlass;    { Show hourglass cursor }
- ExcelDir       := dmsSystem.Get_Dir('ExcelDir') ;
- Try
- SaveDialog1.Filter     := 'Excel files (*.xls)|*.xls';
- SaveDialog1.DefaultExt := 'xls';
- SaveDialog1.InitialDir := ExcelDir ;
- if SaveDialog1.Execute then
- Begin
-  FileName:= SaveDialog1.FileName ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
+  ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   Try
-  ExportGridToExcel(FileName, grdOrderStock, False, False, True,'xls');
-  ShowMessage('Tabell exporterad till Excel fil ' + FileName);
-  Except
-  End ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
+    SaveDialog1.Filter := 'Excel files (*.xls)|*.xls';
+    SaveDialog1.DefaultExt := 'xls';
+    SaveDialog1.InitialDir := ExcelDir;
+    if SaveDialog1.Execute then
+    Begin
+      FileName := SaveDialog1.FileName;
+      Try
+        ExportGridToExcel(FileName, grdOrderStock, False, False, True, 'xls');
+        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+      Except
+      End;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-procedure TfOrderStocken.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfOrderStocken.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   inherited;
- dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStock.Name, grdOrderStockDBBandedTableView1) ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStock.Name,
+    grdOrderStockDBBandedTableView1);
 end;
 
 procedure TfOrderStocken.acSaveGridLayoutExecute(Sender: TObject);
 begin
   inherited;
- dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStock.Name, grdOrderStockDBBandedTableView1) ;
+  dmsSystem.StoreGridLayout(ThisUser.UserID, grdOrderStock.Name,
+    grdOrderStockDBBandedTableView1);
 end;
 
 procedure TfOrderStocken.acShowOSDetailsExecute(Sender: TObject);
-Var  fOrderStockDetails: TfOrderStockDetails;
+Var
+  fOrderStockDetails: TfOrderStockDetails;
 begin
   inherited;
- fOrderStockDetails:= TfOrderStockDetails.Create(nil) ;
- Try
- fOrderStockDetails.ShowModal ;
- Finally
-  FreeAndNil(fOrderStockDetails) ;
- End ;
+  fOrderStockDetails := TfOrderStockDetails.Create(nil);
+  Try
+    fOrderStockDetails.ShowModal;
+  Finally
+    FreeAndNil(fOrderStockDetails);
+  End;
 end;
 
 procedure TfOrderStocken.FormShow(Sender: TObject);
 begin
   inherited;
- dmsSystem.LoadGridLayout(ThisUser.UserID, grdOrderStock.Name, grdOrderStockDBBandedTableView1) ;
- CalcSummaries ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID, grdOrderStock.Name,
+    grdOrderStockDBBandedTableView1);
+  CalcSummaries;
 end;
 
-procedure TfOrderStocken.CalcSummaries ;
+procedure TfOrderStocken.CalcSummaries;
 var
-  I               : Integer;
-  InternalValue,
-  NM3             : Variant;
-//  AGroups: TcxDataControllerGroups;
+  I: Integer;
+  InternalValue, NM3: Variant;
+  // AGroups: TcxDataControllerGroups;
 
 begin
   with grdOrderStockDBBandedTableView1.DataController.Summary do
   begin
-   InternalValue  := 0 ;
-   NM3            := 0 ;
+    InternalValue := 0;
+    NM3 := 0;
     for I := 0 to FooterSummaryItems.Count - 1 do
     begin
-      //NM3
-      if TcxGridDBTableSummaryItem(FooterSummaryItems[I]).Column = grdOrderStockDBBandedTableView1OrderstockNM3int then
+      // NM3
+      if TcxGridDBTableSummaryItem(FooterSummaryItems[I]).Column = grdOrderStockDBBandedTableView1OrderstockNM3int
+      then
       begin
         NM3 := FooterSummaryValues[I];
       end;
-      //Internal value
-      if TcxGridDBTableSummaryItem(FooterSummaryItems[I]).Column = grdOrderStockDBBandedTableView1InternalValue then
+      // Internal value
+      if TcxGridDBTableSummaryItem(FooterSummaryItems[I]).Column = grdOrderStockDBBandedTableView1InternalValue
+      then
       begin
         InternalValue := FooterSummaryValues[I];
       end;
     end;
   end;
- //Internal value / NM3
- if (NM3 <> null) and (NM3 > 0) then
- grdOrderStockDBBandedTableView1.DataController.Summary.FooterSummaryValues[7]:= InternalValue / NM3 ;
+  // Internal value / NM3
+  if (NM3 <> null) and (NM3 > 0) then
+    grdOrderStockDBBandedTableView1.DataController.Summary.FooterSummaryValues
+      [7] := InternalValue / NM3;
 
+  (*
+    AGroups := grdOrderStockDBBandedTableView1.DataController.Groups;
 
- (*
- AGroups := grdOrderStockDBBandedTableView1.DataController.Groups;
-
-  with grdOrderStockDBBandedTableView1.DataController.Summary do
-  begin
-   InternalValue  := 0 ;
-   NM3            := 0 ;
+    with grdOrderStockDBBandedTableView1.DataController.Summary do
+    begin
+    InternalValue  := 0 ;
+    NM3            := 0 ;
     for I := 0 to GroupSummaryItems[0].Count - 1 do
     begin
-      //NM3
-      if TcxGridDBTableSummaryItem(GroupSummaryItems[0].Items[I]).Column = grdOrderStockDBBandedTableView1OrderstockNM3int then
-      begin
-//        NM3 := GroupSummaryValues[0,I];
-        NM3 :=         GroupSummaryValues[AGroups.ChildDataGroupIndex[-1, 0], I];
-      end;
-      //Internal value
-      if TcxGridDBTableSummaryItem(GroupSummaryItems[0].Items[I]).Column = grdOrderStockDBBandedTableView1InternalValue then
-      begin
-//        InternalValue := GroupSummaryValues[0,I];
-        InternalValue :=         GroupSummaryValues[AGroups.ChildDataGroupIndex[-1, 0], I];
-      end;
+    //NM3
+    if TcxGridDBTableSummaryItem(GroupSummaryItems[0].Items[I]).Column = grdOrderStockDBBandedTableView1OrderstockNM3int then
+    begin
+    //        NM3 := GroupSummaryValues[0,I];
+    NM3 :=         GroupSummaryValues[AGroups.ChildDataGroupIndex[-1, 0], I];
     end;
-  end;
- //Internal value / NM3
+    //Internal value
+    if TcxGridDBTableSummaryItem(GroupSummaryItems[0].Items[I]).Column = grdOrderStockDBBandedTableView1InternalValue then
+    begin
+    //        InternalValue := GroupSummaryValues[0,I];
+    InternalValue :=         GroupSummaryValues[AGroups.ChildDataGroupIndex[-1, 0], I];
+    end;
+    end;
+    end;
+    //Internal value / NM3
 
 
- if (NM3 <> null) and (NM3 > 0) then
- grdOrderStockDBBandedTableView1.DataController.Summary.GroupSummaryValues[0,0]:= InternalValue / NM3 ;
+    if (NM3 <> null) and (NM3 > 0) then
+    grdOrderStockDBBandedTableView1.DataController.Summary.GroupSummaryValues[0,0]:= InternalValue / NM3 ;
 
-*)
+  *)
 
 end;
 
-procedure TfOrderStocken.grdOrderStockDBBandedTableView1DataControllerSummaryAfterSummary(
-  ASender: TcxDataSummary);
+procedure TfOrderStocken.
+  grdOrderStockDBBandedTableView1DataControllerSummaryAfterSummary
+  (ASender: TcxDataSummary);
 begin
   inherited;
- CalcSummaries ;
+  CalcSummaries;
 end;
 
 end.

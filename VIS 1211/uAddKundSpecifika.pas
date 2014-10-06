@@ -8,7 +8,21 @@ uses
   cxDataStorage, cxEdit, DB, cxDBData, cxDBLookupComboBox, cxSpinEdit,
   cxCheckBox, cxTextEdit, Menus, cxLookAndFeelPainters, Buttons, StdCtrls,
   cxButtons, ActnList, cxGridLevel, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxClasses, cxControls, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxClasses, cxControls, cxGridCustomView, cxGrid,
+  cxLookAndFeels, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, cxNavigator, System.Actions;
 
 type
   TfAddKundSpecifika = class(TForm)
@@ -46,12 +60,12 @@ type
     procedure acTaBortUpdate(Sender: TObject);
   private
     { Private declarations }
-    Function  Saved : Boolean ;
+    Function Saved: Boolean;
   public
     { Public declarations }
   end;
 
-//var fAddKundSpecifika: TfAddKundSpecifika;
+  // var fAddKundSpecifika: TfAddKundSpecifika;
 
 implementation
 
@@ -61,62 +75,62 @@ uses dmsVidaSystem;
 
 procedure TfAddKundSpecifika.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfAddKundSpecifika.acAddKSExecute(Sender: TObject);
 begin
   With dmsSystem do
   Begin
-   cdsClientPrefDocs.Insert ;
-   grdDocs.SetFocus ;
-//   cdsClientPrefDocsDocType.AsInteger:= cKontrakt ;
-  End ;
+    cdsClientPrefDocs.Insert;
+    grdDocs.SetFocus;
+    // cdsClientPrefDocsDocType.AsInteger:= cKontrakt ;
+  End;
 end;
 
 procedure TfAddKundSpecifika.acTaBortExecute(Sender: TObject);
 begin
   With dmsSystem do
   Begin
-   cdsClientPrefDocs.Delete ;
-  End ;
+    cdsClientPrefDocs.Delete;
+  End;
 end;
 
 procedure TfAddKundSpecifika.acSaveExecute(Sender: TObject);
 begin
   With dmsSystem do
   Begin
-   if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
-    cdsClientPrefDocs.Post ;
-   if cdsClientPrefDocs.ChangeCount > 0 then
-    cdsClientPrefDocs.ApplyUpdates(0) ;
-  End ;
+    if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
+      cdsClientPrefDocs.Post;
+    if cdsClientPrefDocs.ChangeCount > 0 then
+      cdsClientPrefDocs.ApplyUpdates(0);
+  End;
 end;
 
-Function TfAddKundSpecifika.Saved : Boolean ;
+Function TfAddKundSpecifika.Saved: Boolean;
 begin
- Result := True ;
+  Result := True;
   With dmsSystem do
   Begin
-   if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
-    Result  := False ;
-   if cdsClientPrefDocs.ChangeCount > 0 then
-    Result  := False ;
-  End ;
+    if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
+      Result := False;
+    if cdsClientPrefDocs.ChangeCount > 0 then
+      Result := False;
+  End;
 end;
 
 procedure TfAddKundSpecifika.acSaveUpdate(Sender: TObject);
 begin
- acSave.Enabled := not Saved ;
+  acSave.Enabled := not Saved;
 end;
 
 procedure TfAddKundSpecifika.acTaBortUpdate(Sender: TObject);
 begin
   With dmsSystem do
   Begin
-   acTaBort.Enabled := (cdsClientPrefDocs.Active) and
-   (cdsClientPrefDocs.RecordCount > 0) ;
-  End ;
+    acTaBort.Enabled := (cdsClientPrefDocs.Active) and
+      (cdsClientPrefDocs.RecordCount > 0);
+  End;
 end;
 
 end.

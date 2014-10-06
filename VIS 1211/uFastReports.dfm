@@ -44,6 +44,7 @@ object dmFR: TdmFR
     Outline = False
     Background = False
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'FastReport PDF export'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -53,6 +54,7 @@ object dmFR: TdmFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    CheckboxAsShape = False
     Left = 232
     Top = 80
   end
@@ -61,7 +63,7 @@ object dmFR: TdmFR
     Top = 32
   end
   object frxReport1: TfrxReport
-    Version = '4.12'
+    Version = '4.15.13'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

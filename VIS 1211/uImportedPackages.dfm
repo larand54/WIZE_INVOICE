@@ -191,6 +191,7 @@ object fImportedPackages: TfImportedPackages
       Align = alClient
       TabOrder = 1
       object grdImpLengthsDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dm_ImportWoodx.ds_ImpLenMap
         DataController.KeyFieldNames = 'Identifier;LengthCategory'
         DataController.Summary.DefaultGroupSummaryItems = <>
@@ -271,6 +272,7 @@ object fImportedPackages: TfImportedPackages
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel6
+    ExplicitWidth = 8
   end
   object Panel7: TPanel
     Left = 0
@@ -314,6 +316,7 @@ object fImportedPackages: TfImportedPackages
       TabOrder = 1
       object grdImpPkgsDBTableView1: TcxGridDBTableView
         PopupMenu = dxBarPopupMenu1
+        Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dm_ImportWoodx.ds_ImpProdMap
         DataController.KeyFieldNames = 'Identifier'
         DataController.Summary.DefaultGroupSummaryItems = <>
@@ -434,6 +437,7 @@ object fImportedPackages: TfImportedPackages
         Align = alClient
         TabOrder = 0
         object grdDelShipDelMsgRefDBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dm_ImportWoodx.ds_DSDMR2
           DataController.KeyFieldNames = 'DeliveryMessageNumber;DeliveryMessageReferenceType'
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -577,6 +581,7 @@ object fImportedPackages: TfImportedPackages
         Align = alBottom
         TabOrder = 7
         object grdPartyIdentifierDBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
           Navigator.Buttons.First.Visible = True
           Navigator.Buttons.PriorPage.Visible = True
           Navigator.Buttons.Prior.Visible = True
@@ -888,7 +893,7 @@ object fImportedPackages: TfImportedPackages
     Left = 432
     Top = 352
     Bitmap = {
-      494C0101160018000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010116001800100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000090000000010020000000000000D8
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000313131005263
@@ -2763,7 +2768,7 @@ object fImportedPackages: TfImportedPackages
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.02.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1
@@ -3040,7 +3045,7 @@ object fImportedPackages: TfImportedPackages
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '7.02.00 Standard Edition'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

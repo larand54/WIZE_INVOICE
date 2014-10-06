@@ -1,10 +1,10 @@
 object fSelectShipper: TfSelectShipper
   Left = 362
   Top = 175
-  Width = 412
-  Height = 154
   ActiveControl = lcShipper
   Caption = 'V'#228'lj fraktf'#246'rare'
+  ClientHeight = 116
+  ClientWidth = 396
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -45,26 +45,30 @@ object fSelectShipper: TfSelectShipper
   end
   object Panel1: TPanel
     Left = 0
-    Top = 77
-    Width = 404
+    Top = 66
+    Width = 396
     Height = 50
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 77
+    ExplicitWidth = 404
     object BitBtn1: TBitBtn
       Left = 114
       Top = 13
       Width = 75
       Height = 25
-      TabOrder = 0
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
       Left = 202
       Top = 13
       Width = 75
       Height = 25
-      TabOrder = 1
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
   object mtShipper: TkbmMemTable
@@ -79,7 +83,7 @@ object fSelectShipper: TfSelectShipper
     LoadedCompletely = False
     SavedCompletely = False
     FilterOptions = []
-    Version = '5.50'
+    Version = '7.63.00 Standard Edition'
     LanguageID = 0
     SortID = 0
     SubLanguageID = 1

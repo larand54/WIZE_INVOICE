@@ -4,9 +4,11 @@ interface
 
 uses
   SysUtils, Classes, FMTBcd, DB, SqlTimSt,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client,
-  FireDAC.Comp.DataSet ;
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet;
 
 type
   Tdm_Booking = class(TDataModule)
@@ -113,7 +115,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure RefreshDocText ;
+    procedure RefreshDocText;
   end;
 
 var
@@ -127,46 +129,46 @@ uses recerror, dmsDataConn, VidaUser, dmsVidaSystem;
 
 procedure Tdm_Booking.cdsVoyageDestinationAfterEdit(DataSet: TDataSet);
 begin
- cdsVoyageDestinationModifiedUser.AsInteger     := ThisUser.UserID ;
- cdsVoyageDestinationDestinationNo.AsInteger    := -1 ;
- cdsVoyageDestinationStatus.AsInteger           := 1 ;
- cdsVoyageDestinationClearedDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
+  cdsVoyageDestinationModifiedUser.AsInteger := ThisUser.UserID;
+  cdsVoyageDestinationDestinationNo.AsInteger := -1;
+  cdsVoyageDestinationStatus.AsInteger := 1;
+  cdsVoyageDestinationClearedDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
 end;
 
 procedure Tdm_Booking.cdsVoyageDestinationAfterInsert(DataSet: TDataSet);
 begin
- cdsVoyageDestinationBookingNo.AsInteger        := cdsBookingBookingNo.AsInteger ;
- cdsVoyageDestinationDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
- cdsVoyageDestinationCreatedUser.AsInteger      := ThisUser.UserID ;
- cdsVoyageDestinationModifiedUser.AsInteger     := ThisUser.UserID ;
- cdsVoyageDestinationDestinationNo.AsInteger    := -1 ;
- cdsVoyageDestinationStatus.AsInteger           := 1 ;
- cdsVoyageDestinationClearedDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now) ;
+  cdsVoyageDestinationBookingNo.AsInteger := cdsBookingBookingNo.AsInteger;
+  cdsVoyageDestinationDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cdsVoyageDestinationCreatedUser.AsInteger := ThisUser.UserID;
+  cdsVoyageDestinationModifiedUser.AsInteger := ThisUser.UserID;
+  cdsVoyageDestinationDestinationNo.AsInteger := -1;
+  cdsVoyageDestinationStatus.AsInteger := 1;
+  cdsVoyageDestinationClearedDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
 end;
 
 procedure Tdm_Booking.cdsVoyageAfterInsert(DataSet: TDataSet);
 begin
- cdsVoyageVoyageNo.AsInteger          := cdsBookingBookingNo.AsInteger ;
- cdsVoyageCreatedUser.AsInteger       := ThisUser.UserID ;
- cdsVoyageModifiedUser.AsInteger      := ThisUser.UserID ;
- cdsVoyageDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
+  cdsVoyageVoyageNo.AsInteger := cdsBookingBookingNo.AsInteger;
+  cdsVoyageCreatedUser.AsInteger := ThisUser.UserID;
+  cdsVoyageModifiedUser.AsInteger := ThisUser.UserID;
+  cdsVoyageDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
 end;
 
-procedure Tdm_Booking.RefreshDocText ;
+procedure Tdm_Booking.RefreshDocText;
 Begin
- cds_DocText.Active := False ;
- cds_DocText.ParamByName('OrderNo').AsInteger  := cdsAvropInfoOrderNo.AsInteger ;
- cds_DocText.Active := True ;
-End ;
+  cds_DocText.Active := False;
+  cds_DocText.ParamByName('OrderNo').AsInteger := cdsAvropInfoOrderNo.AsInteger;
+  cds_DocText.Active := True;
+End;
 
 procedure Tdm_Booking.cdsAvropInfoAfterScroll(DataSet: TDataSet);
 begin
- RefreshDocText ;
+  RefreshDocText;
 end;
 
 procedure Tdm_Booking.cdsBookingBeforePost(DataSet: TDataSet);
 begin
- cdsBookingVoyageNo.AsInteger         := cdsBookingBookingNo.AsInteger ;
+  cdsBookingVoyageNo.AsInteger := cdsBookingBookingNo.AsInteger;
 end;
 
 end.

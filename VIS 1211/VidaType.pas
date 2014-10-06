@@ -1,23 +1,23 @@
-//  ENVIRONMENT    :  Target is any 32-bit Windows environment.
-//                    Written & tested using Windows NT 4.0
+// ENVIRONMENT    :  Target is any 32-bit Windows environment.
+// Written & tested using Windows NT 4.0
 //
-//  SYSTEM         :  Vida Information System
+// SYSTEM         :  Vida Information System
 //
-//  PURPOSE        :  Defines a number of simple types, collected here so
-//                    they can freely be used in multiple units.
+// PURPOSE        :  Defines a number of simple types, collected here so
+// they can freely be used in multiple units.
 //
-//                    Do not put classes in here, just simple types.
+// Do not put classes in here, just simple types.
 //
 //
-//  NOTES          :
+// NOTES          :
 //
 //
 //
 //
 // -----------------------------------------------------------------------------
-//  DATE        AUTHOR    REF     COMMENTS
+// DATE        AUTHOR    REF     COMMENTS
 // -----------------------------------------------------------------------------
-//              DMc       001
+// DMc       001
 //
 // -----------------------------------------------------------------------------
 //
@@ -31,61 +31,37 @@ interface
 
 type
 
-  string3  = string[ 3];
-  string5  = string[ 5];
+  string3 = string[3];
+  string5 = string[5];
   string15 = string[15];
   String20 = string[20];
   String50 = string[50];
 
+  TEditAction = (eaABANDON, // Cancel the edit
+    eaREJECT, // Reject the current value & force user to change it
+    eaACCEPT, eaReserved, // Accept the current value & allow focus to change
+    eaDuplicate, eaAlreadyAvReg);
 
-  TEditAction = (
-    eaABANDON,    // Cancel the edit
-    eaREJECT,     // Reject the current value & force user to change it
-    eaACCEPT,
-    eaReserved,      // Accept the current value & allow focus to change
-    eaDuplicate,
-    eaAlreadyAvReg
-    );
+  TDataCategory = (dcProductSection, dcClientSection, dcOrderSection,
+    dcInventorySection, dcBaseDataSection, dcInternalOrderSection, dcAvropSec,
+    dcARSec, dcSkeppInstrSec, dcKP_ListaSec, dcUtlastningSec, dcFakturaSec,
+    dcAvrakningSec, dcFrakt_AvrakningSec,
 
-  TDataCategory = (
-    dcProductSection,
-    dcClientSection,
-    dcOrderSection,
-    dcInventorySection,
-    dcBaseDataSection,
-    dcInternalOrderSection,
-    dcAvropSec,
-    dcARSec,
-    dcSkeppInstrSec,
-    dcKP_ListaSec,
-    dcUtlastningSec,
-    dcFakturaSec,
-    dcAvrakningSec,
-    dcFrakt_AvrakningSec,
-
-    dcAdd_packagesSec,
-    dcAsk_packagesSec,
-    dcReport_AvropSec,
-    dcEditLoadOrder,
+    dcAdd_packagesSec, dcAsk_packagesSec, dcReport_AvropSec, dcEditLoadOrder,
     dcShowPrice
 
     );
 
+  TAccessLevel = (arNone, arREAD, arMODIFY);
 
-  TAccessLevel = (
-    arNone,
-    arREAD,
-    arMODIFY
-    );
-
-
-  TAccessRights = array [Low(TDataCategory)..High(TDataCategory)] of TAccessLevel;
+  TAccessRights = array [Low(TDataCategory) .. High(TDataCategory)
+    ] of TAccessLevel;
 
   TUserSpec = record
-    UserID       : Integer;
-    CompanyNo    : integer;
-    AccessRights : TAccessRights;
-    end;
+    UserID: Integer;
+    CompanyNo: Integer;
+    AccessRights: TAccessRights;
+  end;
 
 implementation
 

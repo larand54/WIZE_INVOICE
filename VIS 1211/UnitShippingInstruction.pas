@@ -7,12 +7,14 @@ uses
   Dialogs, fDBForm, ActnList, ImgList, ComCtrls, ExtCtrls, ToolWin,
   StdCtrls, SqlTimSt, Menus,
   DateUtils, cxControls, cxContainer, cxEdit, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxGraphics, FMTBcd, DB, 
+  cxDropDownEdit, cxGraphics, FMTBcd, DB,
   cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
   cxClasses, cxGridCustomView, cxGrid, cxLookAndFeelPainters, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet,
   cxButtons, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCalendar,
   cxDBEdit, dxBar, cxLabel, cxGridExportLink, cxLookAndFeels, dxSkinsCore,
   dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
@@ -21,11 +23,14 @@ uses
   dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
   dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
-  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinsdxBarPainter, dxSkinscxPCPainter, cxNavigator ;
+  dxSkinsdxBarPainter, dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, System.Actions;
 
 type
   TfrmShippingInstruction = class(TfrmDBForm)
@@ -94,9 +99,9 @@ type
     { Private declarations }
   public
     { Public declarations }
-     AppName: String ;
+    AppName: String;
     constructor CreateCo(CompanyNo: Integer);
-    destructor  Destroy;
+    destructor Destroy;
   end;
 
 var
@@ -104,20 +109,22 @@ var
 
 implementation
 
-uses  VidaConst,   VidaUser,  VidaUtils,
-  UnitCRViewReport , dmsVidaContact, dmsDataConn, dmsVidaSystem;
+uses VidaConst, VidaUser, VidaUtils,
+  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem;
 
 {$R *.dfm}
 
 constructor TfrmShippingInstruction.CreateCo(CompanyNo: Integer);
 
 begin
-  inherited ; // Create(AOwner);
+  inherited; // Create(AOwner);
   // Load column widths set last time.
- dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name+'/'+grdShippingInstruct.Name, grdShippingInstructDBTableView1)  ;
+  dmsSystem.LoadGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdShippingInstruct.Name,
+    grdShippingInstructDBTableView1);
 
   // Populate the combo box with names of suppliers from the database
-//  dmsContact.LoadCarriers(cbCarrier.Properties.Items);
+  // dmsContact.LoadCarriers(cbCarrier.Properties.Items);
 end;
 
 destructor TfrmShippingInstruction.Destroy;
@@ -126,167 +133,177 @@ begin
 
 end;
 
-procedure TfrmShippingInstruction.toolbtnRefreshClick(Sender: TObject) ;
+procedure TfrmShippingInstruction.toolbtnRefreshClick(Sender: TObject);
 var
-  Save_Cursor:TCursor;
+  Save_Cursor: TCursor;
 begin
- inherited;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  inherited;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
- Try
+  Try
 
-//  StartDate.Datetime:= RecodeHour(StartDate.Date,0) ;
-//  StartDate.Datetime:= RecodeMinute(StartDate.Date,0) ;
-//  StartDate.Datetime:= RecodeSecond(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeHour(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeMinute(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeSecond(StartDate.Date,0) ;
 
-//  EndDate.Datetime:= RecodeHour(EndDate.Date,23) ;
-//  EndDate.Datetime:= RecodeMinute(EndDate.Date,59) ;
-//  EndDate.Datetime:= RecodeSecond(EndDate.Date,59) ;
+    // EndDate.Datetime:= RecodeHour(EndDate.Date,23) ;
+    // EndDate.Datetime:= RecodeMinute(EndDate.Date,59) ;
+    // EndDate.Datetime:= RecodeSecond(EndDate.Date,59) ;
 
-//  with dmcPayment do
-//  Begin
-   cdsShippingInstruction.Active:= False ;
-   cdsShippingInstruction.ParamByName('@StartDate').AsSQLTimeStamp := DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime) ;
-   cdsShippingInstruction.ParamByName('@EndDate').AsSQLTimeStamp   := DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime) ;
-   cdsShippingInstruction.ParamByName('@CarrierNo').AsInteger      := cds_PropsGradeStampNo.AsInteger ;
-   cdsShippingInstruction.Active:= True ;
-//  End ;
+    // with dmcPayment do
+    // Begin
+    cdsShippingInstruction.Active := False;
+    cdsShippingInstruction.ParamByName('@StartDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime);
+    cdsShippingInstruction.ParamByName('@EndDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime);
+    cdsShippingInstruction.ParamByName('@CarrierNo').AsInteger :=
+      cds_PropsGradeStampNo.AsInteger;
+    cdsShippingInstruction.Active := True;
+    // End ;
 
- Finally
-  Screen.Cursor:= Save_Cursor ;
- End ;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
-procedure TfrmShippingInstruction.acCustomizegrdShipInstructExecute(
-  Sender: TObject);
+procedure TfrmShippingInstruction.acCustomizegrdShipInstructExecute
+  (Sender: TObject);
 begin
   inherited;
   if grdShippingInstruct.FocusedView is TcxCustomGridTableView then
-    with TcxCustomGridTableController(grdShippingInstruct.FocusedView.Controller) do
-      begin
-        Customization := True;
-        CustomizationForm.AlphaBlendValue := 255;
-        CustomizationForm.AlphaBlend := True;
-      end;
+    with TcxCustomGridTableController
+      (grdShippingInstruct.FocusedView.Controller) do
+    begin
+      Customization := True;
+      CustomizationForm.AlphaBlendValue := 255;
+      CustomizationForm.AlphaBlend := True;
+    end;
 end;
 
 procedure TfrmShippingInstruction.FormDestroy(Sender: TObject);
 begin
- frmShippingInstruction:= Nil ;
+  frmShippingInstruction := Nil;
   inherited;
 end;
 
 procedure TfrmShippingInstruction.acRefreshExecute(Sender: TObject);
-var 
-  Save_Cursor:TCursor;
+var
+  Save_Cursor: TCursor;
 begin
- inherited;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+  inherited;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
- Try
+  Try
 
-//  StartDate.Datetime:= RecodeHour(StartDate.Date,0) ;
-//  StartDate.Datetime:= RecodeMinute(StartDate.Date,0) ;
-//  StartDate.Datetime:= RecodeSecond(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeHour(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeMinute(StartDate.Date,0) ;
+    // StartDate.Datetime:= RecodeSecond(StartDate.Date,0) ;
 
-//  EndDate.Datetime:= RecodeHour(EndDate.Date,23) ;
-//  EndDate.Datetime:= RecodeMinute(EndDate.Date,59) ;
-//  EndDate.Datetime:= RecodeSecond(EndDate.Date,59) ;
+    // EndDate.Datetime:= RecodeHour(EndDate.Date,23) ;
+    // EndDate.Datetime:= RecodeMinute(EndDate.Date,59) ;
+    // EndDate.Datetime:= RecodeSecond(EndDate.Date,59) ;
 
-//  with dmcPayment do
-//  Begin
-   cdsShippingInstruction.Active:= False ;
-   cdsShippingInstruction.ParamByName('@StartDate').AsSQLTimeStamp := DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime) ;
-   cdsShippingInstruction.ParamByName('@EndDate').AsSQLTimeStamp   := DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime) ;
-   cdsShippingInstruction.ParamByName('@CarrierNo').AsInteger      := cds_PropsGradeStampNo.AsInteger ;
-   cdsShippingInstruction.Active:= True ;
-//  End ;
+    // with dmcPayment do
+    // Begin
+    cdsShippingInstruction.Active := False;
+    cdsShippingInstruction.ParamByName('@StartDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsStartPeriod.AsDateTime);
+    cdsShippingInstruction.ParamByName('@EndDate').AsSQLTimeStamp :=
+      DateTimeToSQLTimeStamp(cds_PropsEndPeriod.AsDateTime);
+    cdsShippingInstruction.ParamByName('@CarrierNo').AsInteger :=
+      cds_PropsGradeStampNo.AsInteger;
+    cdsShippingInstruction.Active := True;
+    // End ;
 
- Finally
-  Screen.Cursor:= Save_Cursor ;
- End ;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
 end;
 
 procedure TfrmShippingInstruction.acPrintExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-     A                 : array of variant ;
+Var
+  FormCRViewReport: TFormCRViewReport;
+  A: array of variant;
 begin
   inherited;
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
-  SetLength(A, 3);
-  A[0]  := cds_PropsStartPeriod.AsDateTime ;
-  A[1]  := cds_PropsEndPeriod.AsDateTime ;
-  A[2]  := cds_PropsGradeStampNo.AsInteger ;
- FormCRViewReport.CreateCo('SHIPPING_INSTRUCT.RPT', A) ;
+  FormCRViewReport := TFormCRViewReport.Create(Nil);
+  Try
+    SetLength(A, 3);
+    A[0] := cds_PropsStartPeriod.AsDateTime;
+    A[1] := cds_PropsEndPeriod.AsDateTime;
+    A[2] := cds_PropsGradeStampNo.AsInteger;
+    FormCRViewReport.CreateCo('SHIPPING_INSTRUCT.RPT', A);
 
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-   FreeAndNil(FormCRViewReport)  ;
- End ;
+    if FormCRViewReport.ReportFound then
+    Begin
+      FormCRViewReport.ShowModal;
+    End;
+  Finally
+    FreeAndNil(FormCRViewReport);
+  End;
 end;
 
 procedure TfrmShippingInstruction.FormShow(Sender: TObject);
 begin
   inherited;
-  LoadUserProps(Self.Caption) ;
-  deStartPeriod.SetFocus ;
+  LoadUserProps(Self.Caption);
+  deStartPeriod.SetFocus;
 end;
 
 procedure TfrmShippingInstruction.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
   inherited;
-  SaveUserProps(Self.Caption) ;
-  dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name+'/'+grdShippingInstruct.Name, grdShippingInstructDBTableView1) ;
-  CanClose:= True ;
+  SaveUserProps(Self.Caption);
+  dmsSystem.StoreGridLayout(ThisUser.UserID,
+    Self.Name + '/' + grdShippingInstruct.Name,
+    grdShippingInstructDBTableView1);
+  CanClose := True;
 end;
 
 procedure TfrmShippingInstruction.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   inherited;
- Action:= CaFree ;
+  Action := CaFree;
 end;
 
 procedure TfrmShippingInstruction.acExportToExcelExecute(Sender: TObject);
 var
-  Save_Cursor : TCursor;
-  FileName    : String ;
-  ExcelDir    : String ;
+  Save_Cursor: TCursor;
+  FileName: String;
+  ExcelDir: String;
 begin
   inherited;
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crHourGlass;    { Show hourglass cursor }
- Try
- SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
- SaveDialog2.DefaultExt:= 'xls';
- SaveDialog2.InitialDir:= ExcelDir ;
- if SaveDialog2.Execute then
- Begin
-  FileName:= SaveDialog2.FileName ;
-
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-  ExportGridToExcel(FileName, grdShippingInstruct, False, False, True,'xls');
-  ShowMessage('Tabell exporterad till Excel fil ' + FileName);
-  Except
-  End ;
- End ;
- Finally
-  Screen.Cursor := Save_Cursor ;
- End ;
-end;
+    SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
+    SaveDialog2.DefaultExt := 'xls';
+    SaveDialog2.InitialDir := ExcelDir;
+    if SaveDialog2.Execute then
+    Begin
+      FileName := SaveDialog2.FileName;
 
+      Try
+        ExportGridToExcel(FileName, grdShippingInstruct, False, False,
+          True, 'xls');
+        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+      Except
+      End;
+    End;
+  Finally
+    Screen.Cursor := Save_Cursor;
+  End;
+end;
 
 procedure TfrmShippingInstruction.atExitExecute(Sender: TObject);
 begin
   inherited;
- Close ;
+  Close;
 end;
 
 end.

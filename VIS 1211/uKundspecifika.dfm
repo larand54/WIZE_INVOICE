@@ -1,9 +1,9 @@
 object fKundspecifika: TfKundspecifika
   Left = 437
   Top = 139
-  Width = 723
-  Height = 706
   Caption = 'Crystal rapporter'
+  ClientHeight = 668
+  ClientWidth = 707
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,12 +19,13 @@ object fKundspecifika: TfKundspecifika
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 715
+    Width = 707
     Height = 56
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 715
     DesignSize = (
-      715
+      707
       56)
     object cxButton1: TcxButton
       Left = 16
@@ -63,12 +64,14 @@ object fKundspecifika: TfKundspecifika
   object grdKundspecifika: TcxGrid
     Left = 0
     Top = 56
-    Width = 715
-    Height = 623
+    Width = 707
+    Height = 612
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 715
+    ExplicitHeight = 623
     object grdKundspecifikaDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmsSystem.dsRptNames
       DataController.KeyFieldNames = 'ReportNo'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -82,8 +85,11 @@ object fKundspecifika: TfKundspecifika
       object grdKundspecifikaDBTableView1DocTypeName: TcxGridDBColumn
         DataBinding.FieldName = 'DocTypeName'
         PropertiesClassName = 'TcxLookupComboBoxProperties'
-        Properties.ListColumns = <>
-        Properties.ListFieldIndex = -1
+        Properties.KeyFieldNames = 'DocType'
+        Properties.ListColumns = <
+          item
+            FieldName = 'ReportType'
+          end>
         Width = 126
       end
       object grdKundspecifikaDBTableView1DocType: TcxGridDBColumn

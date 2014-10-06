@@ -1,4 +1,4 @@
-unit uCity ;
+unit uCity;
 
 interface
 
@@ -7,9 +7,22 @@ uses
   Dialogs, cxStyles, cxCustomData, cxGraphics, cxFilter, cxData,
   cxDataStorage, cxEdit, DB, cxDBData, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGrid, ExtCtrls, StdCtrls, Buttons, 
+  cxGridDBTableView, cxGrid, ExtCtrls, StdCtrls, Buttons,
   ActnList, DBActns, dxBar, dxBarExtItems, cxMaskEdit, Menus,
-  cxLookAndFeels, cxLookAndFeelPainters, cxCheckBox;
+  cxLookAndFeels, cxLookAndFeelPainters, cxCheckBox, dxSkinsCore, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
+  dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
+  dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
+  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions;
 
 type
   TfCity = class(TForm)
@@ -52,12 +65,12 @@ type
     procedure acCancelChangesUpdate(Sender: TObject);
   private
     { Private declarations }
-    function  DataSparat : Boolean ;
+    function DataSparat: Boolean;
   public
     { Public declarations }
   end;
 
-//var fCity: TfCity;
+  // var fCity: TfCity;
 
 implementation
 
@@ -67,102 +80,99 @@ uses dmsDataConn, dmsVidaSystem, dmsVidaContact;
 
 procedure TfCity.bbOKClick(Sender: TObject);
 begin
- With dmsContact do
- Begin
-  if FD_City.State in [dsEdit, dsInsert] then
-   FD_City.Post ;
-  if FD_City.ChangeCount > 0 then
+  With dmsContact do
   Begin
-   FD_City.ApplyUpdates(0) ;
-   FD_City.CommitUpdates ;
-  End ; 
- End ;
+    if FD_City.State in [dsEdit, dsInsert] then
+      FD_City.Post;
+    if FD_City.ChangeCount > 0 then
+    Begin
+      FD_City.ApplyUpdates(0);
+      FD_City.CommitUpdates;
+    End;
+  End;
 
 end;
 
-function TfCity.DataSparat : Boolean ;
+function TfCity.DataSparat: Boolean;
 Begin
- Result:= True ;
- With dmsContact do
- Begin
-  if FD_City.State in [dsEdit, dsInsert] then
-   Result:= False ;
-  if FD_City.UpdatesPending then
-   Result:= False ;
- End ;
-End ;
-
+  Result := True;
+  With dmsContact do
+  Begin
+    if FD_City.State in [dsEdit, dsInsert] then
+      Result := False;
+    if FD_City.UpdatesPending then
+      Result := False;
+  End;
+End;
 
 procedure TfCity.acExitExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
-procedure TfCity.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfCity.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
- if DataSparat = False then
-  if MessageDlg('Ändringar är inte sparad, vill du spara?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   acSaveExecute (Sender)
-   else
-    acCancelChangesExecute(Sender) ;
- CanClose:= True ;
+  if DataSparat = False then
+    if MessageDlg('Ändringar är inte sparad, vill du spara?', mtConfirmation,
+      [mbYes, mbNo], 0) = mrYes then
+      acSaveExecute(Sender)
+    else
+      acCancelChangesExecute(Sender);
+  CanClose := True;
 end;
 
 procedure TfCity.Delete_UTExecute(Sender: TObject);
 begin
- With dmsContact do
- Begin
-  if MessageDlg('Är du säker?',
-     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-   FD_City.Delete ;
- End ;
+  With dmsContact do
+  Begin
+    if MessageDlg('Är du säker?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      FD_City.Delete;
+  End;
 end;
 
 procedure TfCity.acSaveExecute(Sender: TObject);
 begin
- With dmsContact do
- Begin
-  if FD_City.State in [dsInsert, dsEdit] then
-   FD_City.Post ;
-
-  if FD_City.ChangeCount > 0 then
+  With dmsContact do
   Begin
-   FD_City.ApplyUpdates(0) ;
-   FD_City.CommitUpdates ;
-  End ; 
- End ;
+    if FD_City.State in [dsInsert, dsEdit] then
+      FD_City.Post;
+
+    if FD_City.ChangeCount > 0 then
+    Begin
+      FD_City.ApplyUpdates(0);
+      FD_City.CommitUpdates;
+    End;
+  End;
 end;
 
 procedure TfCity.acCancelChangesExecute(Sender: TObject);
 begin
- With dmsContact do
- Begin
-  if FD_City.State in [dsEdit, dsInsert] then
-   FD_City.Cancel ;
-  if FD_City.ChangeCount > 0 then
-   FD_City.CancelUpdates ;
- End ;
+  With dmsContact do
+  Begin
+    if FD_City.State in [dsEdit, dsInsert] then
+      FD_City.Cancel;
+    if FD_City.ChangeCount > 0 then
+      FD_City.CancelUpdates;
+  End;
 end;
 
 procedure TfCity.acNewCityExecute(Sender: TObject);
 begin
- With dmsContact do
- Begin
-  FD_City.Insert ;
-  cxGrid1.SetFocus ;
- End ;
+  With dmsContact do
+  Begin
+    FD_City.Insert;
+    cxGrid1.SetFocus;
+  End;
 end;
 
 procedure TfCity.acSaveUpdate(Sender: TObject);
 begin
- acSave.Enabled:= not DataSparat ;
+  acSave.Enabled := not DataSparat;
 end;
 
 procedure TfCity.acCancelChangesUpdate(Sender: TObject);
 begin
- acCancelChanges.Enabled:= not DataSparat ;
+  acCancelChanges.Enabled := not DataSparat;
 end;
 
 end.

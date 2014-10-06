@@ -31,10 +31,8 @@ object frmPackagePicker: TfrmPackagePicker
       Top = 1
       Width = 72
       Height = 39
-      DoubleBuffered = True
       Kind = bkOK
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 0
       OnClick = btnOKClick
     end
@@ -43,10 +41,8 @@ object frmPackagePicker: TfrmPackagePicker
       Top = 1
       Width = 72
       Height = 39
-      DoubleBuffered = True
       Kind = bkCancel
       NumGlyphs = 2
-      ParentDoubleBuffered = False
       TabOrder = 1
     end
   end
@@ -69,7 +65,7 @@ object frmPackagePicker: TfrmPackagePicker
       ExplicitWidth = 764
       ExplicitHeight = 152
       object grdPackages: TcxGridDBTableView
-        NavigatorButtons.ConfirmDelete = False
+        Navigator.Buttons.CustomButtons = <>
         DataController.KeyFieldNames = 'PackageNo;SupplierCode'
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>

@@ -39,7 +39,7 @@ object frmDBForm: TfrmDBForm
         Left = 1
         Top = 1
         Width = 366
-        Height = 40
+        Height = 42
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -63,7 +63,7 @@ object frmDBForm: TfrmDBForm
         Left = 1
         Top = 1
         Width = 68
-        Height = 40
+        Height = 42
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -75,7 +75,7 @@ object frmDBForm: TfrmDBForm
     Left = 480
     Top = 216
     Bitmap = {
-      494C01010A000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A000D00080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1279,8 +1279,8 @@ object frmDBForm: TfrmDBForm
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')

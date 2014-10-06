@@ -27,7 +27,9 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
-  dxSkinsdxRibbonPainter, cxNavigator;
+  dxSkinsdxRibbonPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  System.Actions;
 
 type
   TfVerifikationLogg = class(TForm)
@@ -64,7 +66,7 @@ type
     { Public declarations }
   end;
 
-//var fVerifikationLogg: TfVerifikationLogg;
+  // var fVerifikationLogg: TfVerifikationLogg;
 
 implementation
 
@@ -74,17 +76,17 @@ uses dmsDataConn, dmcVidaInvoice;
 
 procedure TfVerifikationLogg.acCloseExecute(Sender: TObject);
 begin
- Close ;
+  Close;
 end;
 
 procedure TfVerifikationLogg.acPrintExecute(Sender: TObject);
 begin
- dxComponentPrinter1Link1.ShrinkToPageWidth:= True ;
-// dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
- dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add(self.Caption) ;
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+  // dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add(self.Caption);
 
- dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 end.

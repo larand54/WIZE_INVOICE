@@ -1,10 +1,10 @@
 object fShowMemo: TfShowMemo
   Left = 229
   Top = 107
-  Width = 507
-  Height = 500
   ActiveControl = BitBtn1
   Caption = 'Info'
+  ClientHeight = 462
+  ClientWidth = 491
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,24 +21,29 @@ object fShowMemo: TfShowMemo
     Align = alClient
     Properties.ScrollBars = ssVertical
     TabOrder = 0
-    Height = 432
-    Width = 499
+    ExplicitWidth = 499
+    ExplicitHeight = 432
+    Height = 421
+    Width = 491
   end
   object Panel1: TPanel
     Left = 0
-    Top = 432
-    Width = 499
+    Top = 421
+    Width = 491
     Height = 41
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 432
+    ExplicitWidth = 499
     object BitBtn1: TBitBtn
       Left = 197
       Top = 5
       Width = 78
       Height = 28
       Caption = '&St'#228'ng'
-      TabOrder = 0
       Kind = bkClose
+      NumGlyphs = 2
+      TabOrder = 0
     end
   end
 end

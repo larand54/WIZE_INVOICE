@@ -3,7 +3,8 @@ unit uUnConnectedPackages;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinBlack, dxSkinBlue,
   dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
@@ -25,7 +26,9 @@ uses
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, dxPSCore, Vcl.ActnList, Vcl.StdCtrls, cxButtons,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, Vcl.ExtCtrls, dxPScxCommon;
+  cxClasses, cxGridCustomView, cxGrid, Vcl.ExtCtrls, dxPScxCommon,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxPScxSSLnk, System.Actions;
 
 type
   TfUnConnectedPackages = class(TForm)
@@ -62,7 +65,7 @@ type
     { Public declarations }
   end;
 
-//var fUnConnectedPackages: TfUnConnectedPackages;
+  // var fUnConnectedPackages: TfUnConnectedPackages;
 
 implementation
 
@@ -72,11 +75,12 @@ uses dmcVidaInvoice;
 
 procedure TfUnConnectedPackages.acPrintExecute(Sender: TObject);
 begin
-// dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear ;
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear ;
+  // dxComponentPrinter1.PrintTitle:= 'AvräkningNr: '+cds_LoadFreightCostHeader2AvrakningsNo.AsString ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
 
-  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Ej kopplade paket') ;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add
+    ('Ej kopplade paket');
 
   dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;

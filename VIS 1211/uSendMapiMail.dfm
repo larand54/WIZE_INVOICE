@@ -2,8 +2,8 @@ object dm_SendMapiMail: Tdm_SendMapiMail
   OldCreateOrder = False
   Height = 249
   Width = 410
-  object MapiSession: TRwMapiSession
-    LogonInfo.UseExtendedMapi = True
+  object MapiSession: TRwMAPISession
+    LogonInfo.UseExtendedMAPI = True
     LogonInfo.Shared = False
     LogonInfo.ProfileRequired = False
     LogonInfo.ForceDownload = False

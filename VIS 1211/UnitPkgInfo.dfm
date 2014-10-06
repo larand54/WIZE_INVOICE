@@ -22,18 +22,19 @@ object frmPkgInfo: TfrmPkgInfo
     Left = 0
     Top = 0
     Width = 962
-    Height = 44
+    Height = 46
     Align = dalTop
     BarManager = dxBarManager1
   end
   object Panel1: TPanel
     Left = 0
-    Top = 44
+    Top = 46
     Width = 962
     Height = 219
     Align = alTop
     BevelOuter = bvLowered
     TabOrder = 1
+    ExplicitTop = 44
     object Label1: TLabel
       Left = 392
       Top = 117
@@ -397,12 +398,13 @@ object frmPkgInfo: TfrmPkgInfo
   end
   object Panel3: TPanel
     Left = 0
-    Top = 263
+    Top = 265
     Width = 962
     Height = 241
     Align = alTop
     Caption = 'Panel3'
     TabOrder = 2
+    ExplicitTop = 263
     object grdPkgInfo: TcxGrid
       Left = 1
       Top = 20
@@ -602,11 +604,13 @@ object frmPkgInfo: TfrmPkgInfo
   end
   object Panel4: TPanel
     Left = 0
-    Top = 512
+    Top = 514
     Width = 962
-    Height = 178
+    Height = 176
     Align = alClient
     TabOrder = 7
+    ExplicitTop = 512
+    ExplicitHeight = 178
     object Panel5: TPanel
       Left = 1
       Top = 1
@@ -712,7 +716,7 @@ object frmPkgInfo: TfrmPkgInfo
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 504
+    Top = 506
     Width = 962
     Height = 8
     HotZoneClassName = 'TcxMediaPlayer8Style'
@@ -720,12 +724,14 @@ object frmPkgInfo: TfrmPkgInfo
     Control = Panel3
     Color = clMaroon
     ParentColor = False
+    ExplicitTop = 504
+    ExplicitWidth = 8
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -791,7 +797,7 @@ object frmPkgInfo: TfrmPkgInfo
     Left = 248
     Top = 96
     Bitmap = {
-      494C010103000500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000001800000001002000000000000024
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

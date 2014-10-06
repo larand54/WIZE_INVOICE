@@ -22,7 +22,6 @@ object frmGenShipCost: TfrmGenShipCost
     Height = 50
     Align = dalTop
     BarManager = dxBarManager1
-    ExplicitWidth = 600
   end
   object Panel1: TPanel
     Left = 0
@@ -95,7 +94,7 @@ object frmGenShipCost: TfrmGenShipCost
     TabOrder = 2
     ExplicitWidth = 600
     object grdGenFraktKostUSADBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.ds_genfreight
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
@@ -215,7 +214,7 @@ object frmGenShipCost: TfrmGenShipCost
     Left = 384
     Top = 136
     Bitmap = {
-      494C010105000900080018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050009000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

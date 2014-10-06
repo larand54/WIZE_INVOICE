@@ -68,10 +68,8 @@ object fUserPreference: TfUserPreference
     Top = 288
     Width = 81
     Height = 33
-    DoubleBuffered = True
     Kind = bkOK
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 5
   end
   object bbCancel: TBitBtn
@@ -79,10 +77,8 @@ object fUserPreference: TfUserPreference
     Top = 288
     Width = 75
     Height = 33
-    DoubleBuffered = True
     Kind = bkCancel
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 6
   end
   object beFragaAvropDir: TcxDBButtonEdit

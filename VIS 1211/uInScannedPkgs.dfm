@@ -1,9 +1,9 @@
 object fInScannedPkgs: TfInScannedPkgs
   Left = 229
   Top = 107
-  Width = 463
-  Height = 379
   Caption = 'Skapade laster'
+  ClientHeight = 341
+  ClientWidth = 447
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,10 +19,11 @@ object fInScannedPkgs: TfInScannedPkgs
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 455
+    Width = 447
     Height = 41
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 455
     object cxButton1: TcxButton
       Left = 8
       Top = 8
@@ -43,12 +44,14 @@ object fInScannedPkgs: TfInScannedPkgs
   object grdCreatedLoads: TcxGrid
     Left = 0
     Top = 41
-    Width = 455
-    Height = 311
+    Width = 447
+    Height = 300
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 455
+    ExplicitHeight = 311
     object grdCreatedLoadsDBTableView1: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsImportedLoads
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>

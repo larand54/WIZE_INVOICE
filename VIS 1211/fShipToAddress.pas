@@ -12,7 +12,21 @@ uses
   cxGridDBTableView, cxGridLevel, cxClasses, cxControls, cxGridCustomView,
   cxGrid, cxLabel, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxDBEdit, dxBar,
-  dxBarExtItems, cxLookAndFeels, cxLookAndFeelPainters;
+  dxBarExtItems, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore,
+  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter,
+  System.Actions;
 
 type
   TfrmShipToAddress = class(TForm)
@@ -138,8 +152,7 @@ type
       Shift: TShiftState);
     procedure acCloseExecute(Sender: TObject);
     procedure dbeditPhone1KeyPress(Sender: TObject; var Key: Char);
-    procedure lcLandKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure lcLandKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure acSearchAddressExecute(Sender: TObject);
     procedure acClearFieldsExecute(Sender: TObject);
     procedure acOKToSelectUpdate(Sender: TObject);
@@ -148,15 +161,16 @@ type
     procedure dblookcombCountryKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
-//    FFiltered: Boolean;
-//    FAddressNo : Integer ;
-    function  IsDataSaved : Boolean ;
-    procedure SearchAddress (const AddressNo : Integer) ;
+    // FFiltered: Boolean;
+    // FAddressNo : Integer ;
+    function IsDataSaved: Boolean;
+    procedure SearchAddress(const AddressNo: Integer);
   public
 
   end;
 
-  procedure OpenShipToAddressForm(Var AddressName : String; Var AddressNo : Integer);
+procedure OpenShipToAddressForm(Var AddressName: String;
+  Var AddressNo: Integer);
 
 var
   frmShipToAddress: TfrmShipToAddress;
@@ -164,385 +178,396 @@ var
 implementation
 
 {$R *.dfm}
-uses dmsVidaContact, VidaUser , uCountry, uCity;//fDataSetEdit, uGetTable, uRecUsed, SDEngine;
 
-//---------------------------------------------------------------
-procedure OpenShipToAddressForm(Var AddressName : String; Var AddressNo : Integer);
+uses dmsVidaContact, VidaUser, uCountry, uCity;
+// fDataSetEdit, uGetTable, uRecUsed, SDEngine;
+
+// ---------------------------------------------------------------
+procedure OpenShipToAddressForm(Var AddressName: String;
+  Var AddressNo: Integer);
 begin
   with TfrmShipToAddress.Create(NIL) do
   begin
-   if AddressNo > 0 then
-    SearchAddress (AddressNo) ;
+    if AddressNo > 0 then
+      SearchAddress(AddressNo);
     if ShowModal = mrOK then
-     Begin
-      AddressNo   := dmsContact.cds_AdrSearchAddressNo.AsInteger ;
-      AddressName := dmsContact.cds_AdrSearchAddressName.AsString ;
-     End
-      else
-       Begin
-        AddressNo   := -1 ;
-        AddressName := '-' ;
-       End ;
+    Begin
+      AddressNo := dmsContact.cds_AdrSearchAddressNo.AsInteger;
+      AddressName := dmsContact.cds_AdrSearchAddressName.AsString;
+    End
+    else
+    Begin
+      AddressNo := -1;
+      AddressName := '-';
+    End;
     Free;
   end;
 end;
 
-//---------------------------------------------------------------
+// ---------------------------------------------------------------
 procedure TfrmShipToAddress.FormCreate(Sender: TObject);
 begin
   inherited;
   dxMemData1.Open;
   dxMemData1.Append;
-//  FDataSetCount := 1;
-//  FDatasets[1] := dmContact.dataShipToAddress;
+  // FDataSetCount := 1;
+  // FDatasets[1] := dmContact.dataShipToAddress;
 
-//  FFiltered := dmsContact.cds_AdrSearch.Filtered;
-//  dmsContact.cds_AdrSearch.Filtered := False;
+  // FFiltered := dmsContact.cds_AdrSearch.Filtered;
+  // dmsContact.cds_AdrSearch.Filtered := False;
 
-//  dbgridShiptoAddress.DataBinding.DataSource := dmsContact.ds_AdrSearch ;
+  // dbgridShiptoAddress.DataBinding.DataSource := dmsContact.ds_AdrSearch ;
 
-  dbeditAddressName.DataBinding.DataSource      := dmsContact.ds_AdrSearch;
-  dbeditAddrLine1.DataBinding.DataSource        := dmsContact.ds_AdrSearch ;
-  dbeditAddrLine2.DataBinding.DataSource        := dmsContact.ds_AdrSearch ;
-  dbeditAddrLine3.DataBinding.DataSource        := dmsContact.ds_AdrSearch ;
-  dbeditAddrLine4.DataBinding.DataSource        := dmsContact.ds_AdrSearch ;
-  dblookcombCity.DataBinding.DataSource         := dmsContact.ds_AdrSearch ;
-  dblookcombCity.Properties.ListSource          := dmsContact.ds_City;
-  dbeditStateOrProvince.DataBinding.DataSource  := dmsContact.ds_AdrSearch ;
-  dblookcombCountry.DataBinding.DataSource      := dmsContact.ds_AdrSearch ;
-  dblookcombCountry.Properties.ListSource       := dmsContact.ds_Country;
-  dbeditPhone1.DataBinding.DataSource           := dmsContact.ds_AdrSearch ;
-  dbeditPhone2.DataBinding.DataSource           := dmsContact.ds_AdrSearch ;
-  dbeditPhone3.DataBinding.DataSource           := dmsContact.ds_AdrSearch ;
-  dbeditFax.DataBinding.DataSource              := dmsContact.ds_AdrSearch ;
-  dbeditPostalCode.DataBinding.DataSource       := dmsContact.ds_AdrSearch ;
+  dbeditAddressName.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditAddrLine1.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditAddrLine2.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditAddrLine3.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditAddrLine4.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dblookcombCity.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dblookcombCity.Properties.ListSource := dmsContact.ds_City;
+  dbeditStateOrProvince.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dblookcombCountry.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dblookcombCountry.Properties.ListSource := dmsContact.ds_Country;
+  dbeditPhone1.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditPhone2.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditPhone3.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditFax.DataBinding.DataSource := dmsContact.ds_AdrSearch;
+  dbeditPostalCode.DataBinding.DataSource := dmsContact.ds_AdrSearch;
 
-  eEmail.DataBinding.DataSource                 := dmsContact.ds_AdrSearch ;
+  eEmail.DataBinding.DataSource := dmsContact.ds_AdrSearch;
 
- // dbgridShipToAddress.LoadFromIniFile(
-//    ChangeFileExt(pplication.ExeName, '.'+IntToStr(dmContact.UserID)));
+  // dbgridShipToAddress.LoadFromIniFile(
+  // ChangeFileExt(pplication.ExeName, '.'+IntToStr(dmContact.UserID)));
 
-//  dbgridShipToAddress.OptionsDB := dbgridShipToAddress.OptionsDB + [edgoLoadAllRecords];
-//  dbgridShipToAddress.OptionsDB := dbgridShipToAddress.OptionsDB - [edgoLoadAllRecords];
-//  dbgridShipToAddress.OptionsBehavior := dbgridShipToAddress.OptionsBehavior + [edgoAutoSort];
-  //dbgridShipToAddressCity.Sorted := csUp;
+  // dbgridShipToAddress.OptionsDB := dbgridShipToAddress.OptionsDB + [edgoLoadAllRecords];
+  // dbgridShipToAddress.OptionsDB := dbgridShipToAddress.OptionsDB - [edgoLoadAllRecords];
+  // dbgridShipToAddress.OptionsBehavior := dbgridShipToAddress.OptionsBehavior + [edgoAutoSort];
+  // dbgridShipToAddressCity.Sorted := csUp;
 end;
 
-//---------------------------------------------------------------
+// ---------------------------------------------------------------
 procedure TfrmShipToAddress.atAddExecute(Sender: TObject);
 begin
-//  dbgridShipToAddress.DataSource.DataSet.Append;
- if dmsContact.cds_AdrSearch.Active = False then
-  dmsContact.cds_AdrSearch.Active:= True ;
-  dmsContact.cds_AdrSearch.Insert ;
-  dbeditAddressName.SetFocus ;
+  // dbgridShipToAddress.DataSource.DataSet.Append;
+  if dmsContact.cds_AdrSearch.Active = False then
+    dmsContact.cds_AdrSearch.Active := True;
+  dmsContact.cds_AdrSearch.Insert;
+  dbeditAddressName.SetFocus;
 end;
 
-//---------------------------------------------------------------
+// ---------------------------------------------------------------
 procedure TfrmShipToAddress.atDeleteExecute(Sender: TObject);
 begin
-{  if IsUsed_ShiptoAddress(dbgridShipToAddress.DataSource.DataSet.FieldByName('AddressNo').AsInteger) then
-  begin
+  { if IsUsed_ShiptoAddress(dbgridShipToAddress.DataSource.DataSet.FieldByName('AddressNo').AsInteger) then
+    begin
     ShowMessage('Cannot delete because the record have dependencies, you must remove those first.');
     Exit;
-  end;
-  DeleteRecord(dbgridShipToAddress.DataSource.DataSet); }
- if MessageDlg('Är du säker?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    end;
+    DeleteRecord(dbgridShipToAddress.DataSource.DataSet); }
+  if MessageDlg('Är du säker?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
-   With dmsContact do
-   Begin
-    Try
-     sqAdrDepend.ParamByName('AddressNo').AsInteger:= cds_AdrSearchAddressNo.AsInteger ;
-     sqAdrDepend.Open ;
-     Try
-      if sqAdrDependAddressNo.AsInteger > 0 then
-      Begin
-       sqDelCompAdr.ParamByName('AddressNo').AsInteger:= cds_AdrSearchAddressNo.AsInteger ;
-       sqDelCompAdr.ExecSQL ;
+    With dmsContact do
+    Begin
+      Try
+        sqAdrDepend.ParamByName('AddressNo').AsInteger :=
+          cds_AdrSearchAddressNo.AsInteger;
+        sqAdrDepend.Open;
+        Try
+          if sqAdrDependAddressNo.AsInteger > 0 then
+          Begin
+            sqDelCompAdr.ParamByName('AddressNo').AsInteger :=
+              cds_AdrSearchAddressNo.AsInteger;
+            sqDelCompAdr.ExecSQL;
 
-       cds_AdrSearch.Delete ;
-       if cds_AdrSearch.ChangeCount > 0 then
-       Begin
-        cds_AdrSearch.ApplyUpdates(0) ;
-        cds_AdrSearch.CommitUpdates ;
-       End ;
+            cds_AdrSearch.Delete;
+            if cds_AdrSearch.ChangeCount > 0 then
+            Begin
+              cds_AdrSearch.ApplyUpdates(0);
+              cds_AdrSearch.CommitUpdates;
+            End;
 
-//       cds_CompAdr.Active:= False ;
-//       cds_CompAdr.Active:= True ;
-       cds_Comp_DelAdr.Active:= False ;
-       cds_Comp_DelAdr.Active:= True ;
-      End
-       else
-        ShowMessage('Adressen används, kan inte ta bort.') ;
-     Finally
-      sqAdrDepend.close ;
-     End ;
-    Except
-    End ;
-   End ;
-  End ; 
+            // cds_CompAdr.Active:= False ;
+            // cds_CompAdr.Active:= True ;
+            cds_Comp_DelAdr.Active := False;
+            cds_Comp_DelAdr.Active := True;
+          End
+          else
+            ShowMessage('Adressen används, kan inte ta bort.');
+        Finally
+          sqAdrDepend.close;
+        End;
+      Except
+      End;
+    End;
+  End;
 end;
 
-//---------------------------------------------------------------
+// ---------------------------------------------------------------
 procedure TfrmShipToAddress.atDeleteUpdate(Sender: TObject);
 begin
-//  atDelete.Enabled := not (dbgridShipToAddress.DataSource.DataSet.Eof and dbgridShipToAddress.DataSource.DataSet.Bof);
+  // atDelete.Enabled := not (dbgridShipToAddress.DataSource.DataSet.Eof and dbgridShipToAddress.DataSource.DataSet.Bof);
 end;
 
-//------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 procedure TfrmShipToAddress.atSaveExecute(Sender: TObject);
 begin
   With dmsContact do
   Begin
-   if cds_AdrSearch.State in [dsInsert, dsEdit] then
-    cds_AdrSearch.Post ;
-   if cds_AdrSearch.ChangeCount > 0 then
-   Begin
-    cds_AdrSearch.ApplyUpdates(0) ;
-    cds_AdrSearch.CommitUpdates ;
-   End ;
-  End ;
+    if cds_AdrSearch.State in [dsInsert, dsEdit] then
+      cds_AdrSearch.Post;
+    if cds_AdrSearch.ChangeCount > 0 then
+    Begin
+      cds_AdrSearch.ApplyUpdates(0);
+      cds_AdrSearch.CommitUpdates;
+    End;
+  End;
 end;
 
-//------------------------------------------------------------------------
+// ------------------------------------------------------------------------
 procedure TfrmShipToAddress.atSaveUpdate(Sender: TObject);
 begin
- atSave.Enabled := (dmsContact.cds_AdrSearch.Active)
- and ((dmsContact.cds_AdrSearch.ChangeCount > 0)
- or (dmsContact.cds_AdrSearch.State in [dsInsert, dsEdit])) ;
+  atSave.Enabled := (dmsContact.cds_AdrSearch.Active) and
+    ((dmsContact.cds_AdrSearch.ChangeCount > 0) or
+    (dmsContact.cds_AdrSearch.State in [dsInsert, dsEdit]));
 end;
-
 
 procedure TfrmShipToAddress.btnFindClick(Sender: TObject);
 begin
- SearchAddress(-1) ;
+  SearchAddress(-1);
 end;
 
-procedure TfrmShipToAddress.SearchAddress (const AddressNo : Integer) ;
+procedure TfrmShipToAddress.SearchAddress(const AddressNo: Integer);
 var
   CityNo, CountryNo: Integer;
-  Save_Cursor : TCursor;
+  Save_Cursor: TCursor;
 begin
- Save_Cursor := Screen.Cursor;
- Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- dmsContact.cds_AdrSearch.DisableControls ;
- Try
-  if dxMemData1.State in [dsInsert, dsEdit] then
-  dxMemData1.Post ;
+  Save_Cursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+  dmsContact.cds_AdrSearch.DisableControls;
+  Try
+    if dxMemData1.State in [dsInsert, dsEdit] then
+      dxMemData1.Post;
 
-  if dxMemData1.FieldByName('CityNo').IsNull or (trim(lcOrt.Text) = '')  then
-    CityNo := (-1)
-  else
-    CityNo := dxMemData1.fieldByName('CityNo').AsInteger;
+    if dxMemData1.FieldByName('CityNo').IsNull or (trim(lcOrt.Text) = '') then
+      CityNo := (-1)
+    else
+      CityNo := dxMemData1.FieldByName('CityNo').AsInteger;
 
-  if dxMemData1.FieldByName('CountryNo').IsNull or (trim(lcLand.Text) = '') then
-   CountryNo := (-1)
-  else
-    CountryNo := dxMemData1.fieldByName('CountryNo').AsInteger;
+    if dxMemData1.FieldByName('CountryNo').IsNull or (trim(lcLand.Text) = '')
+    then
+      CountryNo := (-1)
+    else
+      CountryNo := dxMemData1.FieldByName('CountryNo').AsInteger;
 
-  with   dmsContact.cds_AdrSearch do
-  begin
-//  	Active := false;
-    dmsContact.cds_AdrSearch.Active := False;
-		sql.Clear;
-    sql.Add('SELECT * FROM Address WHERE AddressType > 0 ') ;//WHERE AddressType = 2 ');
-    if trim(EditAddress.Text) <> '' then
-      sql.Add(' and ( Addressname like ''%' + trim(EditAddress.Text) + '%'')');
-    if trim(EditAddLine.Text) <> '' then
-       sql.Add(' and ( (AddressLine1 like ''%' + trim(EditAddLine.Text)
-        + '%'') or ( AddressLine2 like ''%' + trim(EditAddLine.Text)
-        +  '%'') or (AddressLine3 like ''%' + Trim(EditAddLine.Text) + '%'')) ' );
-    if trim(EditPhone.Text) <> '' then
-       sql.Add(' and ( Phone1 like ''%' + Trim(EditPhone.Text) + '%'')' );
-    if trim(EditState.Text) <> '' then
-       sql.Add(' and (StateOrProvince like ''%' + trim(EditState.Text) + '%'')' );
-    if trim(EditFax.Text) <> '' then
-       sql.Add(' and (fax like ''%' + trim(EditFax.Text) + '%'')');
-    if trim(EditPostal.Text) <> '' then
-    	sql.Add(' and ( PostalCode like ''%' + trim(EditPostal.Text) + '%'')');
+    with dmsContact.cds_AdrSearch do
+    begin
+      // Active := false;
+      dmsContact.cds_AdrSearch.Active := False;
+      sql.Clear;
+      sql.Add('SELECT * FROM Address WHERE AddressType > 0 ');
+      // WHERE AddressType = 2 ');
+      if trim(EditAddress.Text) <> '' then
+        sql.Add(' and ( Addressname like ''%' + trim(EditAddress.Text)
+          + '%'')');
+      if trim(EditAddLine.Text) <> '' then
+        sql.Add(' and ( (AddressLine1 like ''%' + trim(EditAddLine.Text) +
+          '%'') or ( AddressLine2 like ''%' + trim(EditAddLine.Text) +
+          '%'') or (AddressLine3 like ''%' + trim(EditAddLine.Text) + '%'')) ');
+      if trim(EditPhone.Text) <> '' then
+        sql.Add(' and ( Phone1 like ''%' + trim(EditPhone.Text) + '%'')');
+      if trim(EditState.Text) <> '' then
+        sql.Add(' and (StateOrProvince like ''%' + trim(EditState.Text)
+          + '%'')');
+      if trim(EditFax.Text) <> '' then
+        sql.Add(' and (fax like ''%' + trim(EditFax.Text) + '%'')');
+      if trim(EditPostal.Text) <> '' then
+        sql.Add(' and ( PostalCode like ''%' + trim(EditPostal.Text) + '%'')');
 
-    if CityNo >= 0 then
-      sql.Add(' and ( cityNo = ' + IntToStr(CityNO) + ')');
-    if CountryNo >= 0 then
-    	sql.Add(' and (CountryNo =' + inttostr(CountryNo) + ')' );
+      if CityNo >= 0 then
+        sql.Add(' and ( cityNo = ' + IntToStr(CityNo) + ')');
+      if CountryNo >= 0 then
+        sql.Add(' and (CountryNo =' + IntToStr(CountryNo) + ')');
 
-    if AddressNo >= 0 then
-      sql.Add(' and ( AddressNo = ' + IntToStr(AddressNo) + ')');
+      if AddressNo >= 0 then
+        sql.Add(' and ( AddressNo = ' + IntToStr(AddressNo) + ')');
 
-    sql.Add('ORDER BY AddressName ');
-//    sql.Savetofile('cds_AdrSearch.txt') ;
-    dmsContact.cds_AdrSearch.Active := true;
+      sql.Add('ORDER BY AddressName ');
+      // sql.Savetofile('cds_AdrSearch.txt') ;
+      dmsContact.cds_AdrSearch.Active := True;
+    end;
+  finally
+    dmsContact.cds_AdrSearch.EnableControls;
+    Screen.Cursor := Save_Cursor; { Always restore to normal }
   end;
- finally
-  dmsContact.cds_AdrSearch.EnableControls ;
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- end;
 end;
 
-function TfrmShipToAddress.IsDataSaved : Boolean ;
+function TfrmShipToAddress.IsDataSaved: Boolean;
 begin
- Result := True ;
+  Result := True;
   With dmsContact do
   Begin
-   if cds_AdrSearch.State in [dsInsert, dsEdit] then
-    Result:= False ;
-   if cds_AdrSearch.ChangeCount > 0 then
-    Result:= False ;
-  End ;
+    if cds_AdrSearch.State in [dsInsert, dsEdit] then
+      Result := False;
+    if cds_AdrSearch.ChangeCount > 0 then
+      Result := False;
+  End;
 end;
-
 
 procedure TfrmShipToAddress.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
   inherited;
- CanClose:= True ;
- if IsDataSaved = False then
-  if MessageDlg('Data är inte sparad, vill du stänga?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  begin
-   With dmsContact do
-   Begin
-    if cds_AdrSearch.State in [dsInsert, dsEdit] then
-     cds_AdrSearch.Cancel ;
-    if cds_AdrSearch.ChangeCount > 0 then
-     cds_AdrSearch.CancelUpdates ;
-    CanClose:= True ;
-   End ;
-  End
-   else
-     CanClose:= False ;
+  CanClose := True;
+  if IsDataSaved = False then
+    if MessageDlg('Data är inte sparad, vill du stänga?', mtConfirmation,
+      [mbYes, mbNo], 0) = mrYes then
+    begin
+      With dmsContact do
+      Begin
+        if cds_AdrSearch.State in [dsInsert, dsEdit] then
+          cds_AdrSearch.Cancel;
+        if cds_AdrSearch.ChangeCount > 0 then
+          cds_AdrSearch.CancelUpdates;
+        CanClose := True;
+      End;
+    End
+    else
+      CanClose := False;
 
 end;
 
 procedure TfrmShipToAddress.FormDestroy(Sender: TObject);
 begin
   inherited;
-  dmsContact.cds_AdrSearch.Active := False ;
+  dmsContact.cds_AdrSearch.Active := False;
 end;
 
-procedure TfrmShipToAddress.dblookcombCityKeyDown(Sender: TObject;                                         
+procedure TfrmShipToAddress.dblookcombCityKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
-Var fCity : TfCity ;
+Var
+  fCity: TfCity;
 begin
-//  OpenDataSetEdit(Key, tbCity);
- if Key = VK_INSERT then //VK_F2 then
- Begin
-  fCity:= TfCity.Create(Nil) ;
-  Try
-  fCity.ShowModal ;
-
-  With dmsContact do
+  // OpenDataSetEdit(Key, tbCity);
+  if Key = VK_INSERT then // VK_F2 then
   Begin
-   if cds_AdrSearch.State in [dsBrowse] then
-    cds_AdrSearch.Edit ;
-   cds_AdrSearchCityNo.AsInteger  := dmsContact.FD_CityCityNo.AsInteger ;
-  End ;//With
+    fCity := TfCity.Create(Nil);
+    Try
+      fCity.ShowModal;
 
-  Finally
-   FreeAndNil(fCity) ;
-  End ;
- End ;
+      With dmsContact do
+      Begin
+        if cds_AdrSearch.State in [dsBrowse] then
+          cds_AdrSearch.Edit;
+        cds_AdrSearchCityNo.AsInteger := dmsContact.FD_CityCityNo.AsInteger;
+      End; // With
+
+    Finally
+      FreeAndNil(fCity);
+    End;
+  End;
 
 end;
 
 procedure TfrmShipToAddress.acCloseExecute(Sender: TObject);
 begin
   inherited;
- Close ;
+  close;
 end;
 
 procedure TfrmShipToAddress.dbeditPhone1KeyPress(Sender: TObject;
   var Key: Char);
 begin
   if ((Key > '9') or (Key < '0')) and (Key <> ' ') then
-     Key := #0;
+    Key := #0;
 end;
 
 procedure TfrmShipToAddress.lcLandKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
-Var fCountry : TfCountry ;
+Var
+  fCountry: TfCountry;
 begin
-//  OpenDataSetEdit(Key, tbCountry);
- if Key = VK_INSERT then //VK_F2 then
- Begin
-  fCountry := TfCountry.Create(Nil);
-  Try
-   fCountry.ShowModal ;
-  Finally
-   FreeAndNil(fCountry) ;
-  End ;
- End ;
+  // OpenDataSetEdit(Key, tbCountry);
+  if Key = VK_INSERT then // VK_F2 then
+  Begin
+    fCountry := TfCountry.Create(Nil);
+    Try
+      fCountry.ShowModal;
+    Finally
+      FreeAndNil(fCountry);
+    End;
+  End;
 end;
 
 procedure TfrmShipToAddress.acSearchAddressExecute(Sender: TObject);
 begin
-  SearchAddress(-1) ;
-  if (dmsContact.cds_AdrSearch.Active) and (dmsContact.cds_AdrSearch.RecordCount > 0) then
-   grdSearchResultGrid.SetFocus ;
+  SearchAddress(-1);
+  if (dmsContact.cds_AdrSearch.Active) and
+    (dmsContact.cds_AdrSearch.RecordCount > 0) then
+    grdSearchResultGrid.SetFocus;
 end;
 
 procedure TfrmShipToAddress.acClearFieldsExecute(Sender: TObject);
 begin
- EditAddress.Text:= '' ;
- EditAddLine.Text:= '' ;
- EditPhone.Text:= '' ;
- EditState.Text:= '' ;
- EditFax.Text:= '' ;
- EditPostal.Text:= '' ;
- dxMemData1.Active:= False ;
- dxMemData1.Active:= True ;
+  EditAddress.Text := '';
+  EditAddLine.Text := '';
+  EditPhone.Text := '';
+  EditState.Text := '';
+  EditFax.Text := '';
+  EditPostal.Text := '';
+  dxMemData1.Active := False;
+  dxMemData1.Active := True;
 end;
 
 procedure TfrmShipToAddress.acOKToSelectUpdate(Sender: TObject);
 begin
- acOKToSelect.Enabled := (dmsContact.cds_AdrSearch.Active)
- and (dmsContact.cds_AdrSearch.RecordCount > 0) ;
+  acOKToSelect.Enabled := (dmsContact.cds_AdrSearch.Active) and
+    (dmsContact.cds_AdrSearch.RecordCount > 0);
 end;
 
 procedure TfrmShipToAddress.acCancelChangesExecute(Sender: TObject);
 begin
   With dmsContact do
   Begin
-   if cds_AdrSearch.State in [dsInsert, dsEdit] then
-    cds_AdrSearch.Cancel ;
-   if cds_AdrSearch.ChangeCount > 0 then
-   Begin
-    cds_AdrSearch.CancelUpdates ;
-   End ;
-  End ;
+    if cds_AdrSearch.State in [dsInsert, dsEdit] then
+      cds_AdrSearch.Cancel;
+    if cds_AdrSearch.ChangeCount > 0 then
+    Begin
+      cds_AdrSearch.CancelUpdates;
+    End;
+  End;
 end;
 
 procedure TfrmShipToAddress.acCancelChangesUpdate(Sender: TObject);
 begin
- acCancelChanges.Enabled := (dmsContact.cds_AdrSearch.Active)
- and ((dmsContact.cds_AdrSearch.ChangeCount > 0)
- or (dmsContact.cds_AdrSearch.State in [dsInsert, dsEdit])) ;
+  acCancelChanges.Enabled := (dmsContact.cds_AdrSearch.Active) and
+    ((dmsContact.cds_AdrSearch.ChangeCount > 0) or
+    (dmsContact.cds_AdrSearch.State in [dsInsert, dsEdit]));
 end;
 
 procedure TfrmShipToAddress.dblookcombCountryKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
-Var fCountry : TfCountry ;
+Var
+  fCountry: TfCountry;
 begin
-//  OpenDataSetEdit(Key, tbCountry);
- if Key = VK_INSERT then //VK_F2 then
- Begin
-  fCountry := TfCountry.Create(Nil);
-  Try
-   fCountry.ShowModal ;
-
-  With dmsContact do
+  // OpenDataSetEdit(Key, tbCountry);
+  if Key = VK_INSERT then // VK_F2 then
   Begin
-   if cds_AdrSearch.State in [dsBrowse] then
-    cds_AdrSearch.Edit ;
-   cds_AdrSearchCountryNo.AsInteger  := dmsContact.cds_CountryCountryNo.AsInteger ;
-  End ;//With
+    fCountry := TfCountry.Create(Nil);
+    Try
+      fCountry.ShowModal;
 
-  Finally
-   FreeAndNil(fCountry) ;
-  End ;
- End ;
+      With dmsContact do
+      Begin
+        if cds_AdrSearch.State in [dsBrowse] then
+          cds_AdrSearch.Edit;
+        cds_AdrSearchCountryNo.AsInteger :=
+          dmsContact.cds_CountryCountryNo.AsInteger;
+      End; // With
+
+    Finally
+      FreeAndNil(fCountry);
+    End;
+  End;
 end;
 
 End.
