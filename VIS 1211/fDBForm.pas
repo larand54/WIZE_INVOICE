@@ -80,7 +80,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
 

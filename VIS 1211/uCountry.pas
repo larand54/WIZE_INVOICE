@@ -22,7 +22,8 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions;
+  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfCountry = class(TForm)
@@ -58,6 +59,7 @@ type
     StngF121: TMenuItem;
     SparaF31: TMenuItem;
     abortF51: TMenuItem;
+    siLangLinked_fCountry: TsiLangLinked;
     procedure bbOKClick(Sender: TObject);
     procedure acExitExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

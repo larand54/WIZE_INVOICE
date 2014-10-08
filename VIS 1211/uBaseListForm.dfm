@@ -64,7 +64,6 @@ object fBaseListForm: TfBaseListForm
       Height = 59
       Align = alClient
       TabOrder = 2
-      ExplicitWidth = 321
     end
   end
   object Panel5: TPanel
@@ -74,8 +73,6 @@ object fBaseListForm: TfBaseListForm
     Height = 559
     Align = alClient
     TabOrder = 5
-    ExplicitWidth = 944
-    ExplicitHeight = 570
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET

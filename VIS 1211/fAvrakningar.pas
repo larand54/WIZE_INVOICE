@@ -31,7 +31,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmGjordaAvrakningar = class(TForm)
@@ -197,6 +197,7 @@ type
     lcVerk: TcxDBLookupComboBox;
     icStatus: TcxDBImageComboBox;
     grdAvrRowsDBTableView1AR_AV: TcxGridDBColumn;
+    siLangLinked_frmGjordaAvrakningar: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure Paymentrecieved1Click(Sender: TObject);

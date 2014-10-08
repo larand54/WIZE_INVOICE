@@ -23,7 +23,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   cxNavigator, dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfSamlingsfaktura = class(TForm)
@@ -86,6 +86,7 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarLargeButton3: TdxBarLargeButton;
     dxBarLargeButton4: TdxBarLargeButton;
+    siLangLinked_fSamlingsfaktura: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

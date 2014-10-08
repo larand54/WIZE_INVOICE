@@ -31,7 +31,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, dxCore,
   cxDateUtils, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 Const
   CM_MOVEIT = WM_USER + 1;
@@ -202,6 +202,7 @@ type
     cds_LIP2: TFDQuery;
     cds_LIP2LIPNo: TIntegerField;
     cds_LIP2LIPName: TStringField;
+    siLangLinked_frmPackageEntry: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure grdPkgsTaBortChangeNodeEx(Sender: TObject);
 

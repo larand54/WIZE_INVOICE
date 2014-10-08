@@ -29,7 +29,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, cxGridCustomLayoutView, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013White, cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfShowInvTrfLog = class(TForm)
@@ -92,6 +92,7 @@ type
     ImageList1: TImageList;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1Bold: TcxStyle;
+    siLangLinked_fShowInvTrfLog: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
   private

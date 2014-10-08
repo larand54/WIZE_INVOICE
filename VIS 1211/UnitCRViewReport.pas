@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, OleCtrls, OleServer,
-  StdCtrls, Vcl.ExtCtrls;
+  StdCtrls, Vcl.ExtCtrls, siComp, siLngLnk;
 
 type
   TFormCRViewReport = class(TForm)

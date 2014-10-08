@@ -29,7 +29,8 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   cxPCdxBarPopupMenu, dxSkinsdxBarPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxBarBuiltInMenu, cxNavigator, System.Actions;
+  dxSkinOffice2013White, dxBarBuiltInMenu, cxNavigator, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmAttestInvoice = class(TForm)
@@ -282,6 +283,7 @@ type
     grdLevAdrDBTableView1Reference: TcxGridDBColumn;
     grdLevAdrDBTableView1AddressName: TcxGridDBColumn;
     grdLevAdrDBTableView1ADDR: TcxGridDBColumn;
+    siLangLinked_frmAttestInvoice: TsiLangLinked;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);

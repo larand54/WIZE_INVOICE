@@ -102,7 +102,8 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, cxGridCustomPopupMenu, cxGridPopupMenu,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions,
+  siComp, siLngLnk;
 
 Const
   CM_MOVEIT = WM_USER + 1;

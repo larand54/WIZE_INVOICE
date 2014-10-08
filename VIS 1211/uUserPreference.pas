@@ -18,7 +18,8 @@ uses
   dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
-  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, cxClasses;
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, cxClasses,
+  siComp, siLngLnk;
 
 type
   TfUserPreference = class(TForm)
@@ -36,6 +37,7 @@ type
     teMyEmailAddress: TcxDBTextEdit;
     Label4: TLabel;
     beWoodXDir: TcxDBButtonEdit;
+    siLangLinked_fUserPreference: TsiLangLinked;
     procedure beFragaAvropDirPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure cxDBButtonEdit1PropertiesButtonClick(Sender: TObject;

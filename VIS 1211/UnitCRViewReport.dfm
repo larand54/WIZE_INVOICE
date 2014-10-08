@@ -22,5 +22,7 @@ object FormCRViewReport: TFormCRViewReport
     Height = 689
     Align = alClient
     TabOrder = 0
+    ExplicitLeft = 32
+    ExplicitTop = -8
   end
 end

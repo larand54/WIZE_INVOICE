@@ -33,7 +33,8 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmLoadArrivals = class(TForm)
@@ -293,6 +294,7 @@ type
     acEmailFS: TAction;
     grdLoadsDBTableView1ClientName: TcxGridDBColumn;
     grdLoadsDBTableView1BookingType: TcxGridDBColumn;
+    siLangLinked_frmLoadArrivals: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);

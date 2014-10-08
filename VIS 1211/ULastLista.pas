@@ -30,7 +30,8 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  siComp, siLngLnk;
 
 type
   TfLastLista = class(TForm)
@@ -140,6 +141,7 @@ type
     grdLastListaDBTableView1Paket: TcxGridDBColumn;
     cxGridPopupMenu1: TcxGridPopupMenu;
     cxGridPopupMenu2: TcxGridPopupMenu;
+    siLangLinked_fLastLista: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure PackageInfo1Click(Sender: TObject);

@@ -21,7 +21,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfSokAvropMall = class(TForm)
@@ -43,6 +44,7 @@ type
     grdMallDBTableView1LOObjectType: TcxGridDBColumn;
     BitBtn2: TBitBtn;
     ds_mall: TDataSource;
+    siLangLinked_fSokAvropMall: TsiLangLinked;
     procedure acNewExecute(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

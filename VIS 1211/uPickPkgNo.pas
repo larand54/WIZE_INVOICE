@@ -31,7 +31,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter,
   cxGridCustomPopupMenu, cxGridPopupMenu, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013White, System.Actions, siComp, siLngLnk;
 
 const
   ProductAndLength = 1;
@@ -115,6 +115,7 @@ type
     sq_PaketListaLagergrupp: TStringField;
     grdPickPkgNosDBTableView1Lagergrupp: TcxGridDBColumn;
     cxGridPopupMenu1: TcxGridPopupMenu;
+    siLangLinked_fPickPkgNo: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ds_SelectedPkgNoDataChange(Sender: TObject; Field: TField);

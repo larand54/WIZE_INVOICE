@@ -29,7 +29,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013White, cxNavigator, System.Actions, siComp, siLngLnk;
 
 Const
   CM_MOVEIT = WM_USER + 1;
@@ -106,6 +106,7 @@ type
     cxLabel1: TcxLabel;
     acAvdelning: TAction;
     dxBarLargeButton7: TdxBarLargeButton;
+    siLangLinked_fKontoLogik: TsiLangLinked;
     procedure acExitExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);

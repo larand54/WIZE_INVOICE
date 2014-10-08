@@ -37,7 +37,7 @@ uses
   cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmInvoice = class(TForm)
@@ -467,6 +467,7 @@ type
     cxDBLabelCustomerGLNNo: TcxDBLabel;
     acPreviewKlientPkgSpec: TAction;
     Frhandsgranskaklientspecifikation1: TMenuItem;
+    siLangLinked_frmInvoice: TsiLangLinked;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);

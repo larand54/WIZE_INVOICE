@@ -21,7 +21,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TFormPaymentTerms = class(TForm)
@@ -39,6 +39,7 @@ type
     grdPayTermsDBTableView1CommissionPaidByCustomer: TcxGridDBColumn;
     grdPayTermsDBTableView1Description: TcxGridDBColumn;
     grdPayTermsDBTableView1LanguageCode: TcxGridDBColumn;
+    siLangLinked_FormPaymentTerms: TsiLangLinked;
   private
     { Private declarations }
   public

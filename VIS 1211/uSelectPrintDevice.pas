@@ -18,7 +18,8 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  siComp, siLngLnk;
 
 type
   TfSelectPrintDevice = class(TForm)
@@ -27,6 +28,7 @@ type
     bAngra: TcxButton;
     seNoOfCopies: TcxDBSpinEdit;
     cxLabel1: TcxLabel;
+    siLangLinked_fSelectPrintDevice: TsiLangLinked;
     procedure bSkrivareClick(Sender: TObject);
     procedure bBildskarmClick(Sender: TObject);
     procedure bAngraClick(Sender: TObject);

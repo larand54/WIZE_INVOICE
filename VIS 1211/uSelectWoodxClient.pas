@@ -20,7 +20,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, siComp, siLngLnk;
 
 type
   TfSelectWoodxClient = class(TForm)
@@ -33,6 +33,7 @@ type
     cxLabel3: TcxLabel;
     cxLabel1: TcxLabel;
     cxLabel2: TcxLabel;
+    siLangLinked_fSelectWoodxClient: TsiLangLinked;
   private
     { Private declarations }
   public

@@ -151,7 +151,9 @@ uses
   PreviewForm in 'PreviewForm.pas' {Form2},
   PrintUnit in 'PrintUnit.pas',
   uUnConnectedPackages in 'uUnConnectedPackages.pas' {fUnConnectedPackages},
-  uPrintTest in 'uPrintTest.pas' {fPrintTest};
+  uPrintTest in 'uPrintTest.pas' {fPrintTest},
+  udmLanguage in 'udmLanguage.pas' {dmLanguage: TDataModule},
+  ufrmChangeLanguage in 'ufrmChangeLanguage.pas' {frmChangeLanguage};
 
 {$R *.res}
 
@@ -164,6 +166,8 @@ begin
   Application.CreateForm(TdmsContact, dmsContact);
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(Tdm_UserProps, dm_UserProps);
+  Application.CreateForm(TdmLanguage, dmLanguage);
+  Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
   Application.Run;
 
 end.

@@ -28,7 +28,8 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridLevel,
   cxClasses, cxGridCustomView, cxGrid, Vcl.ExtCtrls, dxPScxCommon,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxPScxSSLnk, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxPScxSSLnk, System.Actions,
+  siComp, siLngLnk;
 
 type
   TfUnConnectedPackages = class(TForm)
@@ -58,6 +59,7 @@ type
     dxComponentPrinter1: TdxComponentPrinter;
     cxButton2: TcxButton;
     dxComponentPrinter1Link1: TdxGridReportLink;
+    siLangLinked_fUnConnectedPackages: TsiLangLinked;
     procedure acPrintExecute(Sender: TObject);
   private
     { Private declarations }

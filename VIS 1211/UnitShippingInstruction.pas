@@ -30,7 +30,7 @@ uses
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinsdxBarPainter, dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013White, System.Actions, siComp, siLngLnk;
 
 type
   TfrmShippingInstruction = class(TfrmDBForm)
@@ -85,6 +85,7 @@ type
     cxLabel2: TcxLabel;
     acExportToExcel: TAction;
     SaveDialog2: TSaveDialog;
+    siLangLinked1: TsiLangLinked;
     procedure toolbtnRefreshClick(Sender: TObject);
     procedure acCustomizegrdShipInstructExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -110,7 +111,7 @@ var
 implementation
 
 uses VidaConst, VidaUser, VidaUtils,
-  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem;
+  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

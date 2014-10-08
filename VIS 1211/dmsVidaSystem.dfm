@@ -2563,6 +2563,11 @@ object dmsSystem: TdmsSystem
       FieldName = 'intsec'
       Origin = 'intsec'
     end
+    object sq_dbPropsLangPath: TStringField
+      FieldName = 'LangPath'
+      Origin = 'LangPath'
+      Size = 255
+    end
   end
   object sq_GetLoadPlanPkgs: TFDQuery
     CachedUpdates = True

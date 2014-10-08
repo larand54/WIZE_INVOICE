@@ -23,7 +23,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfLOLengths = class(TForm)
@@ -54,6 +55,7 @@ type
     sq_PGLengths: TSQLQuery;
     sq_PGLengthsActualLengthMM: TFloatField;
     sq_PGLengthsProductLengthNo: TIntegerField;
+    siLangLinked_fLOLengths: TsiLangLinked;
     procedure acAddLengthExecute(Sender: TObject);
     procedure acRemoveLengthExecute(Sender: TObject);
     procedure acRemoveLengthUpdate(Sender: TObject);

@@ -35,7 +35,8 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmAvrakningar = class(TForm)
@@ -185,6 +186,7 @@ type
     cds_PropsAgentNamn: TStringField;
     lcVerk: TcxDBLookupComboBox;
     icStatus: TcxDBImageComboBox;
+    siLangLinked_frmAvrakningar: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);

@@ -35,7 +35,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu, cxNavigator,
   dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  dxBarBuiltInMenu, System.Actions;
+  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk;
 
 type
   TformfMoveInvPkgToInventory = class(TForm)
@@ -112,6 +112,7 @@ type
     GetPIPandLIPNos: TFDQuery;
     GetPIPandLIPNosShipToCityNo: TIntegerField;
     GetPIPandLIPNosShipToLIPNo: TIntegerField;
+    siLangLinked_formfMoveInvPkgToInventory: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure dxBarConfirmLoadClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

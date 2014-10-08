@@ -30,7 +30,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  dxBarBuiltInMenu, System.Actions;
+  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk;
 
 type
   TfLoadEntrySSP = class(TForm)
@@ -345,6 +345,7 @@ type
     grdLORowsDBBandedTableView1Paketstorlek: TcxGridDBBandedColumn;
     grdPkgsDBBandedTableView1Paketstorlek: TcxGridDBBandedColumn;
     grdPkgsDBBandedTableView1Certfiering: TcxGridDBBandedColumn;
+    siLangLinked_fLoadEntrySSP: TsiLangLinked;
 
     procedure lbRemovePackageClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

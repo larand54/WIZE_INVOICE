@@ -22,7 +22,8 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions;
+  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfCity = class(TForm)
@@ -54,6 +55,7 @@ type
     abortF51: TMenuItem;
     ds_city: TDataSource;
     cxGrid1DBTableView1ImpVerk: TcxGridDBColumn;
+    siLangLinked_fCity: TsiLangLinked;
     procedure bbOKClick(Sender: TObject);
     procedure acExitExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

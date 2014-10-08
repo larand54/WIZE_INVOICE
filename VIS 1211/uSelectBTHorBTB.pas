@@ -18,13 +18,15 @@ uses
   dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
-  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue;
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, siComp,
+  siLngLnk;
 
 type
   TfSelectBTHorBTB = class(TForm)
     cgSelectSupplier: TcxRadioGroup;
     Panel1: TPanel;
     BitBtn1: TBitBtn;
+    siLangLinked_fSelectBTHorBTB: TsiLangLinked;
   private
     { Private declarations }
   public

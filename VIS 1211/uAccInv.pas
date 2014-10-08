@@ -35,7 +35,7 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxSkinscxPCPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxSkinsdxRibbonPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013White, System.Actions, siComp, siLngLnk;
 
 type
   TfAccInv = class(TForm)
@@ -85,6 +85,7 @@ type
     dxBarLargeButton6: TdxBarLargeButton;
     cxLabel1: TcxLabel;
     sp_ExportInvoiceData: TFDStoredProc;
+    siLangLinked_fAccInv: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);

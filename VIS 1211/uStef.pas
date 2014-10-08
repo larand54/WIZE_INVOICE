@@ -22,7 +22,8 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxCore, cxDateUtils,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfStef = class(TForm)
@@ -65,6 +66,7 @@ type
     dxBarLargeButton9: TdxBarLargeButton;
     acFSC: TAction;
     dxBarLargeButton10: TdxBarLargeButton;
+    siLangLinked_fStef: TsiLangLinked;
     procedure lbExitClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lbPkgNoReportClick(Sender: TObject);

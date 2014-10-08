@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ExtCtrls;
+  Dialogs, StdCtrls, Buttons, ExtCtrls, siComp, siLngLnk;
 
 type
   TfSelectFSFileName = class(TForm)
@@ -12,6 +12,7 @@ type
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     LBFSFiles: TListBox;
+    siLangLinked_fSelectFSFileName: TsiLangLinked;
   private
     { Private declarations }
   public

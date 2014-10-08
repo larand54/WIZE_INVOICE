@@ -29,7 +29,7 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxSkinscxPCPainter, ComCtrls, dxCore,
   cxDateUtils, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfPayControl = class(TfBaseListForm)
@@ -73,6 +73,7 @@ type
     dxBarLargeButton7: TdxBarLargeButton;
     dxBarLargeButton8: TdxBarLargeButton;
     dxBarLargeButton9: TdxBarLargeButton;
+    siLangLinked1: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
     procedure acCancelChangesExecute(Sender: TObject);
@@ -103,7 +104,8 @@ var
 
 implementation
 
-uses UnitdmModule1, dmsVidaSystem, VidaUser, dmcVidaInvoice, fInvoice;
+uses UnitdmModule1, dmsVidaSystem, VidaUser, dmcVidaInvoice, fInvoice,
+  udmLanguage;
 
 {$R *.dfm}
 

@@ -26,7 +26,7 @@ uses
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, System.Actions;
+  cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfFreightAvrSearch = class(TForm)
@@ -55,6 +55,7 @@ type
     cds_SearchOrderAvrNr: TIntegerField;
     cds_SearchOrderVerk: TStringField;
     cds_SearchOrderSpeditör: TStringField;
+    siLangLinked_fFreightAvrSearch: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure atOKExecute(Sender: TObject);
     procedure atOKUpdate(Sender: TObject);

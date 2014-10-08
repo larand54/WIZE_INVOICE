@@ -3,7 +3,7 @@ unit uConfirmCodeDialog;
 interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls;
+  Buttons, ExtCtrls, siComp, siLngLnk;
 
 type
   TfrmConfirmCodeDialog = class(TForm)
@@ -12,6 +12,7 @@ type
     Bevel1: TBevel;
     eConfirmationCode: TEdit;
     Label1: TLabel;
+    siLangLinked_frmConfirmCodeDialog: TsiLangLinked;
   private
     { Private declarations }
   public

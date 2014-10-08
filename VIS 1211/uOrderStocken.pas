@@ -34,7 +34,8 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxSkinscxPCPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions,
+  siComp, siLngLnk;
 
 type
   TfOrderStocken = class(TfBaseListForm)
@@ -70,6 +71,7 @@ type
     dxBarLargeButton7: TdxBarLargeButton;
     dxBarLargeButton8: TdxBarLargeButton;
     grdOrderStockDBBandedTableView1InternalValue: TcxGridDBBandedColumn;
+    siLangLinked1: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acPrintExecute(Sender: TObject);
@@ -96,7 +98,7 @@ var
 implementation
 
 uses UnitdmModule1, VidaUser, dmsVidaSystem, dmsDataConn,
-  uOrderStockDetails;
+  uOrderStockDetails, udmLanguage;
 
 {$R *.dfm}
 

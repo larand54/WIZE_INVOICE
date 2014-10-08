@@ -22,7 +22,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator;
+  dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfSelectLoadPlanDest = class(TForm)
@@ -40,6 +40,7 @@ type
     grdLoadPlanDBBandedTableView1LAGER: TcxGridDBBandedColumn;
     grdLoadPlanDBBandedTableView1BT: TcxGridDBBandedColumn;
     grdLoadPlanDBBandedTableView1ETD: TcxGridDBBandedColumn;
+    siLangLinked_fSelectLoadPlanDest: TsiLangLinked;
   private
     { Private declarations }
   public

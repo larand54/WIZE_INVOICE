@@ -17,7 +17,7 @@ uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, siComp, siLngLnk;
 
 type
   TfrmPkgNo = class(TForm)
@@ -28,6 +28,7 @@ type
     Label2: TLabel;
     dxMaskPackageNo: TcxTextEdit;
     dxMaskSupplierCode: TcxMaskEdit;
+    siLangLinked_frmPkgNo: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure CancelBtnClick(Sender: TObject);
   private

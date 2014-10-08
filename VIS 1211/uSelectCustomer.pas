@@ -25,7 +25,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfrmSelectCustomer = class(TForm)
@@ -42,6 +42,7 @@ type
     sq_AllClients: TFDQuery;
     cds_ClientsClientNo: TIntegerField;
     cds_ClientsClientName: TStringField;
+    siLangLinked_frmSelectCustomer: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
   private

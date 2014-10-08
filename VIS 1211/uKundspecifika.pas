@@ -22,7 +22,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, System.Actions;
+  dxSkinscxPCPainter, cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfKundspecifika = class(TForm)
@@ -44,6 +44,7 @@ type
     acTaBort: TAction;
     acSave: TAction;
     acClose: TAction;
+    siLangLinked_fKundspecifika: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acAddReportExecute(Sender: TObject);
     procedure acTaBortExecute(Sender: TObject);

@@ -6,12 +6,13 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, uHYModuleManager, uHYIntf,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, siComp, siLngLnk;
 
 type
   TForm2 = class(TForm)
     HostPanel: TPanel;
     HYModuleManager1: THYModuleManager;
+    siLangLinked_Form2: TsiLangLinked;
 
     procedure FormDestroy(Sender: TObject);
   private

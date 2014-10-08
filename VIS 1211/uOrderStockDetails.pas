@@ -29,7 +29,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, dxPScxCommon, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, System.Actions;
+  cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfOrderStockDetails = class(TForm)
@@ -66,6 +66,7 @@ type
     cxButton2: TcxButton;
     dxComponentPrinter1: TdxComponentPrinter;
     dxComponentPrinter1Link1: TdxGridReportLink;
+    siLangLinked_fOrderStockDetails: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acSaveLayoutExecute(Sender: TObject);

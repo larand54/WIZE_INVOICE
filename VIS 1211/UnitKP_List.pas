@@ -31,7 +31,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmKP_List = class(TfrmDBForm)
@@ -110,6 +110,7 @@ type
     lcAgent: TcxDBLookupComboBox;
     cxLabel3: TcxLabel;
     cds_PropsAgent: TStringField;
+    siLangLinked1: TsiLangLinked;
     procedure acCustomizegrdKP_ListExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);
@@ -135,7 +136,7 @@ var
 implementation
 
 uses VidaConst, VidaUser, VidaUtils,
-  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem;
+  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

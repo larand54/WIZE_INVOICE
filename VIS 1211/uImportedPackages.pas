@@ -26,7 +26,7 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013White, cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfImportedPackages = class(TForm)
@@ -209,6 +209,7 @@ type
     cxLabel7: TcxLabel;
     cxLabel8: TcxLabel;
     cxLabel9: TcxLabel;
+    siLangLinked_fImportedPackages: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acCloseExecute(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);

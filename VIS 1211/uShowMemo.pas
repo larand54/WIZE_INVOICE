@@ -18,13 +18,14 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, siComp, siLngLnk;
 
 type
   TfShowMemo = class(TForm)
     cxMemo1: TcxMemo;
     Panel1: TPanel;
     BitBtn1: TBitBtn;
+    siLangLinked_fShowMemo: TsiLangLinked;
   private
     { Private declarations }
   public

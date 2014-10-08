@@ -35,7 +35,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxPScxEditorProducers,
   dxPScxExtEditorProducers, dxSkinsdxRibbonPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013White, cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfTradingAnalyze = class(TfBaseListForm)
@@ -95,6 +95,7 @@ type
     grdTradingAnalyzeDBBandedTableView1DiffOfSales: TcxGridDBBandedColumn;
     acOpenSalesInvoice: TAction;
     dxBarLargeButton7: TdxBarLargeButton;
+    siLangLinked1: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -120,7 +121,8 @@ var
 
 implementation
 
-uses UnitdmModule1, VidaUser, dmsVidaSystem, dmcVidaInvoice, fInvoice;
+uses UnitdmModule1, VidaUser, dmsVidaSystem, dmcVidaInvoice, fInvoice,
+  udmLanguage;
 
 {$R *.dfm}
 

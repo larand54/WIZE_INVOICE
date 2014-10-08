@@ -19,7 +19,8 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  siComp, siLngLnk;
 
 type
   TfSelectLIP = class(TForm)
@@ -38,6 +39,7 @@ type
     dsProps: TDataSource;
     lcPIP: TcxDBLookupComboBox;
     lcLIP: TcxDBLookupComboBox;
+    siLangLinked_fSelectLIP: TsiLangLinked;
     procedure BitBtn1Click(Sender: TObject);
     procedure mtPropsPIPNoChange(Sender: TField);
   private

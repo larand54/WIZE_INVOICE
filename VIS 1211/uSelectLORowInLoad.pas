@@ -23,7 +23,7 @@ uses
   cxGridBandedTableView, cxGridDBBandedTableView, cxClasses, cxGridCustomView,
   cxGrid, Vcl.ExtCtrls, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator;
+  cxNavigator, siComp, siLngLnk;
 
 type
   TfSelectLORowInLoad = class(TForm)
@@ -87,6 +87,7 @@ type
     cxStyleHeader: TcxStyle;
     cxStyleContent: TcxStyle;
     cxStyleContentOdd: TcxStyle;
+    siLangLinked_fSelectLORowInLoad: TsiLangLinked;
     procedure grdLORowsDBBandedTableView1MATCHPropertiesChange(Sender: TObject);
   private
     { Private declarations }

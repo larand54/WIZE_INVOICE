@@ -427,6 +427,7 @@ type
     sp_GetOrderData: TFDStoredProc;
     mtSelectedPkgNoLagergrupp: TStringField;
     sq_dbPropsintsec: TIntegerField;
+    sq_dbPropsLangPath: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);
@@ -581,6 +582,7 @@ type
       const Form: String): String;
     function Get_Dir(const pFieldName: String): String;
     function Get_SystemDir(const Form, pFieldName: String): String;
+    function GetLangPath(): String;
 
     property OnAmbiguousPkgNo: TAmbiguityEvent read FOnAmbiguousPkgNo
       write FOnAmbiguousPkgNo;
@@ -761,6 +763,21 @@ Begin
     Result := False;
   sq_dbProps.Close;
 End;
+
+function TdmsSystem.GetLangPath: String;
+begin
+  sq_dbProps.Open;
+  Try
+    if not sq_dbProps.Eof then
+    Begin
+      Result := sq_dbPropsLangPath.AsString;
+    End
+    else
+      Result := '';
+  Finally
+    sq_dbProps.Close;
+  End;
+end;
 
 procedure TdmsSystem.GetLastUsedLoadNo(Strings: TStrings);
 Begin
@@ -2247,8 +2264,8 @@ begin
 end;
 
 Function TdmsSystem.GetCurrentStyckInPackage(const PackageNo: Integer;
-  const Prefix: String; Var PackageTypeNo, ProductNo: Integer; Var ALMM: Double)
-  : Integer;
+  const Prefix: String; Var PackageTypeNo, ProductNo: Integer;
+  Var ALMM: Double): Integer;
 Begin
   sq_GetPackagetypeTotalPcs.ParamByName('PackageNo').AsInteger := PackageNo;
   sq_GetPackagetypeTotalPcs.ParamByName('SupplierCode').AsString := Prefix;

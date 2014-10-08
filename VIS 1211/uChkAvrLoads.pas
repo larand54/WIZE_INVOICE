@@ -28,7 +28,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, Vcl.ComCtrls, dxCore, cxDateUtils,
-  dxSkinsdxBarPainter, System.Actions;
+  dxSkinsdxBarPainter, System.Actions, siComp, siLngLnk;
 
 type
   TfChkAvrLoads = class(TForm)
@@ -189,6 +189,7 @@ type
     Label4: TLabel;
     Label5: TLabel;
     BitBtn1: TBitBtn;
+    siLangLinked_fChkAvrLoads: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);

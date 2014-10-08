@@ -27,7 +27,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfTradingLinkMult = class(TForm)
@@ -52,6 +53,7 @@ type
     sq_POorderInfoKontrakt: TStringField;
     sq_POorderInfoLeverantr: TStringField;
     sq_POorderInfoAvropsnr: TIntegerField;
+    siLangLinked_fTradingLinkMult: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private

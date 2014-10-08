@@ -63,7 +63,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter, cxCheckListBox,
   cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 Const
   CM_MOVEIT = WM_USER + 1;
@@ -417,6 +417,7 @@ type
     acSetKLU: TAction;
     cxButton1: TcxButton;
     acClearFilter: TAction;
+    siLangLinked_frmLoadOrder: TsiLangLinked;
 
     procedure atAcceptLoadOrderExecute(Sender: TObject);
     procedure atRejectLoadOrderExecute(Sender: TObject);

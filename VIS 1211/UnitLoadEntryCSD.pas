@@ -34,7 +34,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  dxBarBuiltInMenu, System.Actions;
+  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk;
 
 type
   TfLoadEntryCSD = class(TForm)
@@ -282,6 +282,7 @@ type
     acCreditPackages: TAction;
     dxBarButton2: TdxBarButton;
     cxStyleFuchsia: TcxStyle;
+    siLangLinked_fLoadEntryCSD: TsiLangLinked;
 
     procedure lbRemoveLONumberClick(Sender: TObject);
     procedure lbRemovePackageClick(Sender: TObject);

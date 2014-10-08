@@ -23,7 +23,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfSearchRunNo = class(TForm)
@@ -72,6 +73,7 @@ type
     dsProps: TDataSource;
     deStartPeriod: TcxDBDateEdit;
     deEndPeriod: TcxDBDateEdit;
+    siLangLinked_fSearchRunNo: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure ds_RunNosDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);

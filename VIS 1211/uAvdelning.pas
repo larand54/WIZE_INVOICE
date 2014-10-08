@@ -36,7 +36,8 @@ uses
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, SqlTimSt,
   cxLabel, cxGridCustomPopupMenu, cxGridPopupMenu, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator, dxPScxSSLnk, System.Actions;
+  dxSkinOffice2013White, cxNavigator, dxPScxSSLnk, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfAvdelning = class(TfrmBaseFormA)
@@ -62,6 +63,7 @@ type
     cds_SR: TFDQuery;
     cds_SRClientName: TStringField;
     cds_SRClientNo: TIntegerField;
+    siLangLinked_fAvdelning: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -80,7 +82,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmcVidaInvoice, vidauser;
+uses dmcVidaInvoice, vidauser, udmLanguage;
 
 procedure TfAvdelning.acAddRecordUpdate(Sender: TObject);
 begin

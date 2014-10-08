@@ -21,7 +21,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TFormAddress = class(TForm)
@@ -41,6 +41,7 @@ type
     grdAdrDBTableView1POSTALCODE: TcxGridDBColumn;
     grdAdrDBTableView1CITY: TcxGridDBColumn;
     grdAdrDBTableView1COUNTRY: TcxGridDBColumn;
+    siLangLinked_FormAddress: TsiLangLinked;
   private
     { Private declarations }
   public

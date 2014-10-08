@@ -19,7 +19,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfAddSpecialLengths = class(TForm)
@@ -33,6 +33,7 @@ type
     BitBtn3: TBitBtn;
     BitBtn4: TBitBtn;
     eLength: TcxMaskEdit;
+    siLangLinked_fAddSpecialLengths: TsiLangLinked;
     procedure acAddLengthExecute(Sender: TObject);
     procedure acRemoveLengthExecute(Sender: TObject);
   private

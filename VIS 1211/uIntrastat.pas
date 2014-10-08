@@ -36,7 +36,7 @@ uses
   dxSkinscxPCPainter, dxPScxGridLnk, dxPScxGridLayoutViewLnk, dxPScxSSLnk,
   dxSkinsdxRibbonPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfIntrastat = class(TfBaseListForm)
@@ -58,6 +58,7 @@ type
     cxLabel2: TcxLabel;
     Label4: TLabel;
     lcSR: TcxDBLookupComboBox;
+    siLangLinked1: TsiLangLinked;
     procedure acRefreshExecute(Sender: TObject);
     procedure cds_PropsAfterInsert(DataSet: TDataSet);
     procedure FormDestroy(Sender: TObject);
@@ -74,7 +75,7 @@ var
 
 implementation
 
-uses UnitdmModule1, VidaUser, dmsVidaSystem;
+uses UnitdmModule1, VidaUser, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

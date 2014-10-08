@@ -25,7 +25,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, System.Actions;
+  cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfrmCreditLimitAnalys = class(TForm)
@@ -76,6 +76,7 @@ type
     dxBarManager1Bar2: TdxBar;
     cxMaskEdit1: TcxMaskEdit;
     cbExlK2: TcxCheckBox;
+    siLangLinked_frmCreditLimitAnalys: TsiLangLinked;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

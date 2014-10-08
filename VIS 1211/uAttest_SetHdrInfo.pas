@@ -22,7 +22,8 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinMetropolis, dxSkinMetropolisDark,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  siComp, siLngLnk;
 
 type
   TfAttest_SetHdrInfo = class(TForm)
@@ -42,6 +43,7 @@ type
     lcShipper: TcxDBLookupComboBox;
     dsMemSped: TDataSource;
     cxLabel5: TcxLabel;
+    siLangLinked_fAttest_SetHdrInfo: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure BitBtn2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);

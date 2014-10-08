@@ -21,7 +21,8 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfInScannedPkgs = class(TForm)
@@ -37,6 +38,7 @@ type
     ActionList1: TActionList;
     acOpen: TAction;
     acClose: TAction;
+    siLangLinked_fInScannedPkgs: TsiLangLinked;
     procedure acOpenExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

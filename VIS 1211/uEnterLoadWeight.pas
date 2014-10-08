@@ -21,7 +21,7 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, cxNavigator;
+  dxSkinOffice2013White, cxNavigator, siComp, siLngLnk;
 
 type
   TfEnterLoadWeight = class(TForm)
@@ -34,6 +34,7 @@ type
     grdLoadWeightDBTableView1LoadNo: TcxGridDBColumn;
     grdLoadWeightDBTableView1Reference: TcxGridDBColumn;
     grdLoadWeightDBTableView1LoadWeightKG: TcxGridDBColumn;
+    siLangLinked_fEnterLoadWeight: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }

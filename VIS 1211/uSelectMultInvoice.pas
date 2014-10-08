@@ -21,7 +21,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator;
+  dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfSelectMultInvoice = class(TForm)
@@ -33,6 +33,7 @@ type
     grdMultInvoiceDBTableView1Fakturnr: TcxGridDBColumn;
     grdMultInvoiceDBTableView1LO: TcxGridDBColumn;
     grdMultInvoiceDBTableView1Fakturadatum: TcxGridDBColumn;
+    siLangLinked_fSelectMultInvoice: TsiLangLinked;
   private
     { Private declarations }
   public

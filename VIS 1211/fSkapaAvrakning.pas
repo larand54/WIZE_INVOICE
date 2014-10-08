@@ -31,7 +31,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmSkapaAvrakning = class(TForm)
@@ -175,6 +175,7 @@ type
     ds_Props: TDataSource;
     lcVerk: TcxDBLookupComboBox;
     cxDBImageComboBox1: TcxDBImageComboBox;
+    siLangLinked_frmSkapaAvrakning: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure miPackageInfoClick(Sender: TObject);

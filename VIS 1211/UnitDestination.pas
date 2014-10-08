@@ -21,7 +21,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator;
+  dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TFormDestination = class(TForm)
@@ -32,6 +32,7 @@ type
     grdOrtLevel1: TcxGridLevel;
     grdOrt: TcxGrid;
     grdOrtDBTableView1CityName: TcxGridDBColumn;
+    siLangLinked_FormDestination: TsiLangLinked;
   private
     { Private declarations }
   public

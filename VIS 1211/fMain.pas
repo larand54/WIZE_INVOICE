@@ -42,7 +42,8 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxRibbonPainter, dxSkinsdxBarPainter,
   dxBarApplicationMenu, dxScreenTip, Vcl.Menus, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions;
+  dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmMain = class(TForm)
@@ -94,14 +95,12 @@ type
     bbPktNrPositioner: TdxBarButton;
     bbPaketNrPos_INI: TdxBarButton;
     bbAndraPkt: TdxBarButton;
-    dxBarButton4: TdxBarButton;
+    dxBbtnChLang: TdxBarButton;
     dxBarButton5: TdxBarButton;
     cxShellBrowserDialog1: TcxShellBrowserDialog;
     cxPropertiesStore1: TcxPropertiesStore;
     acBytAnvandare: TAction;
     Timer1: TTimer;
-    acFTPSetup: TAction;
-    dxBarButton6: TdxBarButton;
     acReportNames: TAction;
     dxBarButton7: TdxBarButton;
     dxBarScreenTipRepository1: TdxBarScreenTipRepository;
@@ -182,6 +181,11 @@ type
     dxBarLargeButton25: TdxBarLargeButton;
     acSTEF: TAction;
     dxBarButton18: TdxBarButton;
+    siLangLinked_frmMain: TsiLangLinked;
+    acChangeLanguage: TAction;
+    dxBSIChangeLang: TdxBarSubItem;
+    dxBarSubItem5: TdxBarSubItem;
+    dxBarButton4: TdxBarButton;
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
     procedure atAboutExecute(Sender: TObject);
@@ -230,6 +234,8 @@ type
     procedure rg_ReportOptionsClick(Sender: TObject);
     procedure rg_PrintSetUpClick(Sender: TObject);
     procedure dxBarButton18Click(Sender: TObject);
+    procedure acChangeLanguageExecute(Sender: TObject);
+    procedure dxBSIChangeLangClick(Sender: TObject);
   private
     a: String;
     function GetLastNrToUnLock: Integer;
@@ -281,7 +287,7 @@ uses
   uKundspecifika, uKontoLogik, uOrderStocken, uIntrastat,
   uTradingAnalyze, uFreightExternLoad, uPayControl,
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
-  PrintUnit, PreviewForm, uPrintTest;
+  PrintUnit, PreviewForm, uPrintTest, udmLanguage, ufrmChangeLanguage;
 
 {$R *.DFM}
 
@@ -531,6 +537,11 @@ begin
   Finally
     FreeAndNil(fPrintTest);
   End;
+end;
+
+procedure TfrmMain.dxBSIChangeLangClick(Sender: TObject);
+begin
+
 end;
 
 // initialization
@@ -1480,6 +1491,22 @@ begin
   End;
 end;
 
+procedure TfrmMain.acChangeLanguageExecute(Sender: TObject);
+var
+  frm: TfrmChangeLanguage;
+begin
+  try
+    frm := TfrmChangeLanguage.Create(nil);
+    if (frm <> nil) then
+    begin
+      if (frm.ShowModal = mrOk) then
+        dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);
+    end;
+  finally
+    FreeAndNil(frm);
+  end;
+end;
+
 procedure TfrmMain.acCreditAnalysisExecute(Sender: TObject);
 begin
   // if ThisUser.CanView[dcFrakt_AvrakningSec] then
@@ -1506,6 +1533,7 @@ begin
   End;
 end;
 
+// LG_lang
 function TfrmMain.GetLastNrToUnLock: Integer;
 var
   fEntryField: TfEntryField;

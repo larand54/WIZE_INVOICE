@@ -30,7 +30,8 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions;
+  dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfPickVPPkgs = class(TForm)
@@ -76,6 +77,7 @@ type
     cxButton1: TcxButton;
     cxButton2: TcxButton;
     rgUrvalPaket: TcxRadioGroup;
+    siLangLinked_fPickVPPkgs: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ds_SelectedPkgNoDataChange(Sender: TObject; Field: TField);

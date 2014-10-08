@@ -32,7 +32,8 @@ uses
   dxPScxGridLnk, dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions;
+  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmLockLoads = class(TfrmBaseFormA)
@@ -42,6 +43,7 @@ type
     cxGrid1DBTableView1LoadNo: TcxGridDBColumn;
     cxGrid1DBTableView1ResUserName: TcxGridDBColumn;
     cxGrid1DBTableView1DateCreated: TcxGridDBColumn;
+    siLangLinked_frmLockLoads: TsiLangLinked;
   private
     { Private declarations }
   public
@@ -52,7 +54,7 @@ type
 
 implementation
 
-uses dmsDataConn;
+uses dmsDataConn, udmLanguage;
 
 {$R *.dfm}
 

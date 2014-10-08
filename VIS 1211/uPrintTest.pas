@@ -19,7 +19,7 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, Vcl.ExtCtrls, Vcl.StdCtrls, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White;
+  dxSkinOffice2013White, siComp, siLngLnk;
 
 type
   TfPrintTest = class(TForm)
@@ -48,6 +48,7 @@ type
     bt_ClearParams: TButton;
     chkSecurity: TCheckBox;
     DelphiHostPanel: TPanel;
+    siLangLinked_fPrintTest: TsiLangLinked;
     procedure cxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure bt_ClearParamsClick(Sender: TObject);

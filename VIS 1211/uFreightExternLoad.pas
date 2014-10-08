@@ -41,7 +41,7 @@ uses
   dxSkinsdxRibbonPainter, Vcl.ComCtrls, dxCore, cxDateUtils, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmFreightExternLoad = class(TForm)
@@ -220,6 +220,7 @@ type
     acSaveChanges: TAction;
     DataSource1: TDataSource;
     grd_Att_Ext_ServicesIIDBTableView1Klient: TcxGridDBColumn;
+    siLangLinked_frmFreightExternLoad: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure nfSearchFakturaNrKeyDown(Sender: TObject; var Key: Word;

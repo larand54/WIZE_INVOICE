@@ -3,7 +3,7 @@ unit uChangeLogins;
 interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls;
+  Buttons, ExtCtrls, siComp, siLngLnk;
 
 type
   TOKHelpBottomDlg = class(TForm)
@@ -15,6 +15,7 @@ type
     Button2: TButton;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    siLangLinked_OKHelpBottomDlg: TsiLangLinked;
     procedure HelpBtnClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);

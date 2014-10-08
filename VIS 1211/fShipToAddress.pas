@@ -26,7 +26,7 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmShipToAddress = class(TForm)
@@ -139,6 +139,7 @@ type
     acOKToSelect: TAction;
     acCancelChanges: TAction;
     dxBarLargeButton5: TdxBarLargeButton;
+    siLangLinked_frmShipToAddress: TsiLangLinked;
     procedure atAddExecute(Sender: TObject);
     procedure atDeleteExecute(Sender: TObject);
     procedure atDeleteUpdate(Sender: TObject);

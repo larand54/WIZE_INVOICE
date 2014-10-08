@@ -21,7 +21,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfrmLanguage = class(TForm)
@@ -32,6 +32,7 @@ type
     grdLangLevel1: TcxGridLevel;
     grdLang: TcxGrid;
     grdLangDBTableView1LanguageName: TcxGridDBColumn;
+    siLangLinked_frmLanguage: TsiLangLinked;
   private
     { Private declarations }
   public

@@ -29,7 +29,7 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfVerifikationLogg = class(TForm)
@@ -58,6 +58,7 @@ type
     grdVerifikationLoggDBTableView1VatCode: TcxGridDBColumn;
     grdVerifikationLoggDBTableView1Avdelning: TcxGridDBColumn;
     grdVerifikationLoggDBTableView1Volym: TcxGridDBColumn;
+    siLangLinked_fVerifikationLogg: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
   private

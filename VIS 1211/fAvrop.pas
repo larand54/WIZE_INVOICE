@@ -37,7 +37,8 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmAvrop = class(TForm)
@@ -388,6 +389,7 @@ type
     mtOrdersOrderNo: TIntegerField;
     cxButton5: TcxButton;
     acMovePkgsToInvAndDeleteLoad: TAction;
+    siLangLinked_frmAvrop: TsiLangLinked;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);

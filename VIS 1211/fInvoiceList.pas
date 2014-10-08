@@ -35,7 +35,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmInvoiceList = class(TForm)
@@ -370,6 +370,7 @@ type
     cxLabel1: TcxLabel;
     acAustraliaExport: TAction;
     dxBarButton49: TdxBarButton;
+    siLangLinked_frmInvoiceList: TsiLangLinked;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;

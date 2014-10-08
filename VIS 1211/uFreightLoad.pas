@@ -36,7 +36,8 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, dxPScxGridLnk,
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, cxNavigator, System.Actions,
+  siComp, siLngLnk;
 
 type
   TfrmFreightLoad = class(TForm)
@@ -181,6 +182,7 @@ type
     cds_Shippers: TFDStoredProc;
     cds_ShippersClientNo: TIntegerField;
     cds_ShippersClientName: TStringField;
+    siLangLinked_frmFreightLoad: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure OpenLoad1Click(Sender: TObject);

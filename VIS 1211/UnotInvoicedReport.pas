@@ -28,7 +28,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfnotInvoicedReport = class(TForm)
@@ -110,6 +111,7 @@ type
     icOrderTypeNo: TcxDBImageComboBox;
     Label3: TLabel;
     cxLabel1: TcxLabel;
+    siLangLinked_fnotInvoicedReport: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);

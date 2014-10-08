@@ -27,7 +27,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  dxBarBuiltInMenu, System.Actions;
+  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk;
 
 type
   TfInvoiceWizard = class(TForm)
@@ -193,6 +193,7 @@ type
     Label2: TLabel;
     lcIntraStatCountryNo: TcxDBLookupComboBox;
     Label3: TLabel;
+    siLangLinked_fInvoiceWizard: TsiLangLinked;
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure pgPriceListGuidePageChanging(Sender: TObject;
       NewPage: TcxTabSheet; var AllowChange: Boolean);

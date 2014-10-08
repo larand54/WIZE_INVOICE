@@ -23,7 +23,7 @@ uses
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter,
-  System.Actions;
+  System.Actions, siComp, siLngLnk;
 
 type
   TfrmCreditGrpClients = class(TForm)
@@ -54,6 +54,7 @@ type
     StngF121: TMenuItem;
     abortkundF51: TMenuItem;
     SparaF31: TMenuItem;
+    siLangLinked_frmCreditGrpClients: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acAddKundExecute(Sender: TObject);

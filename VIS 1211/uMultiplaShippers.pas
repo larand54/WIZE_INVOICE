@@ -21,7 +21,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfMultiplaShippers = class(TForm)
@@ -38,6 +38,7 @@ type
     grdSpedsInvoiceDBTableView1ShippersInvoiceNo: TcxGridDBColumn;
     grdSpedsInvoiceDBTableView1ShipperNo: TcxGridDBColumn;
     grdSpedsInvoiceDBTableView1AvrakningsNr: TcxGridDBColumn;
+    siLangLinked_fMultiplaShippers: TsiLangLinked;
     procedure bTaBortRadClick(Sender: TObject);
     procedure bbOKClick(Sender: TObject);
   private

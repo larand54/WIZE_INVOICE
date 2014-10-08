@@ -24,7 +24,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, System.Actions;
+  cxNavigator, System.Actions, siComp, siLngLnk;
 
 type
   TfrmCredit = class(TForm)
@@ -86,6 +86,7 @@ type
     dxBarDockControl2: TdxBarDockControl;
     dxBarManager1Bar2: TdxBar;
     SparaF32: TMenuItem;
+    siLangLinked_frmCredit: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);

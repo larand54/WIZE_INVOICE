@@ -33,7 +33,8 @@ uses
   dxPScxEditorProducers, dxPScxExtEditorProducers, dxSkinsdxBarPainter,
   dxSkinsdxRibbonPainter, dxPScxSSLnk, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions;
+  cxNavigator, cxGridCustomPopupMenu, cxGridPopupMenu, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfArticle = class(TfrmBaseFormA)
@@ -53,6 +54,7 @@ type
     Panel4: TPanel;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    siLangLinked_fArticle: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
     procedure acCancelChangesExecute(Sender: TObject);
@@ -68,7 +70,7 @@ type
 
 implementation
 
-uses dmsVidaSystem;
+uses dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

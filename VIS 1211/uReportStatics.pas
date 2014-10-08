@@ -27,7 +27,8 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, System.Actions, cxGridCustomLayoutView;
+  dxSkinscxPCPainter, cxNavigator, System.Actions, cxGridCustomLayoutView,
+  siComp, siLngLnk;
 
 type
   TfReportStatics = class(TForm)
@@ -71,6 +72,7 @@ type
     grdReportStaticsDBTableView1Vat_BankInfo: TcxGridDBColumn;
     grdReportStaticsDBTableView1AccountNo: TcxGridDBColumn;
     grdReportStaticsDBTableView1Giro: TcxGridDBColumn;
+    siLangLinked_fReportStatics: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure acNewRSExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);

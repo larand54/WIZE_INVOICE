@@ -32,7 +32,8 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   dxSkinsdxBarPainter, cxNavigator, Vcl.ComCtrls, dxCore, cxDateUtils,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
+  siLngLnk;
 
 type
   TfrmPortArrivals = class(TForm)
@@ -229,6 +230,7 @@ type
     cxGridPopupMenu2: TcxGridPopupMenu;
     acSamlingsFSPerRef: TAction;
     dxBarButton12: TdxBarButton;
+    siLangLinked_frmPortArrivals: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);

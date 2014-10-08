@@ -26,7 +26,7 @@ uses
   cxDropDownEdit, cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxLabel,
   Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White;
+  dxSkinOffice2013White, siComp, siLngLnk;
 
 type
   TfSelectLIPNo = class(TForm)
@@ -59,6 +59,7 @@ type
     cds_LIPPIPNo: TIntegerField;
     cxButton1: TcxButton;
     cxButton2: TcxButton;
+    siLangLinked_fSelectLIPNo: TsiLangLinked;
     procedure lcPIPEnter(Sender: TObject);
     procedure lcPIPExit(Sender: TObject);
     procedure lcLIPEnter(Sender: TObject);

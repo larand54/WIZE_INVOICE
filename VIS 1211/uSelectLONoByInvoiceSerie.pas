@@ -21,7 +21,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator;
+  dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TfSelectLONoByInvoiceSerie = class(TForm)
@@ -37,6 +37,7 @@ type
     grdSelectLONoDBTableView1Fakturanr: TcxGridDBColumn;
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    siLangLinked_fSelectLONoByInvoiceSerie: TsiLangLinked;
   private
     { Private declarations }
   public

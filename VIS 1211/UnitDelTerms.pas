@@ -21,7 +21,7 @@ uses
   dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
   dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
-  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator;
+  dxSkinXmas2008Blue, dxSkinscxPCPainter, cxNavigator, siComp, siLngLnk;
 
 type
   TFormDelTerms = class(TForm)
@@ -33,6 +33,7 @@ type
     grdDelTerms: TcxGrid;
     grdDelTermsDBTableView1DeliveryTerm: TcxGridDBColumn;
     grdDelTermsDBTableView1Description: TcxGridDBColumn;
+    siLangLinked_FormDelTerms: TsiLangLinked;
   private
     { Private declarations }
   public

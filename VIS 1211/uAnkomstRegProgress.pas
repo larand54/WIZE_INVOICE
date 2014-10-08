@@ -17,13 +17,15 @@ uses
   dxSkinOffice2013White, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic,
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
-  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue;
+  dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, siComp,
+  siLngLnk;
 
 type
   TfAnkomstRegProgress = class(TForm)
     cxDBLabel1: TcxDBLabel;
     cxLabel1: TcxLabel;
     cxLabel2: TcxLabel;
+    siLangLinked_fAnkomstRegProgress: TsiLangLinked;
   private
     { Private declarations }
   public
