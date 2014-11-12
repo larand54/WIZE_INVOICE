@@ -167,7 +167,7 @@ begin
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(Tdm_UserProps, dm_UserProps);
   Application.CreateForm(TdmLanguage, dmLanguage);
-  Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
+ // Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
   Application.Run;
 
 end.

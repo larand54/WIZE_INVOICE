@@ -1,6 +1,6 @@
 Server=vis.vida.se
 Database=Vis_Vida
-OSAuthent=No
+OSAuthent=Yes
 MetaDefCatalog=vis_vida
 MetaDefSchema=dbo
 User_Name=Lars
