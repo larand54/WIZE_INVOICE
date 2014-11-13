@@ -137,10 +137,6 @@ uses
   uLockedLoads in 'uLockedLoads.pas' {frmLockLoads},
   uReportStatics in 'uReportStatics.pas' {fReportStatics},
   uStef in 'uStef.pas' {fStef},
-  DeliveryMessageWoodV2R31 in '..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas',
-  MainU in '..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\MainU.pas' {XMLImportExport},
-  PackageExportU in '..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageExportU.pas',
-  PackageImportU in '..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageImportU.pas',
   uSelectLORowInLoad in 'uSelectLORowInLoad.pas' {fSelectLORowInLoad},
   uconfirm in 'uconfirm.pas' {fConfirm},
   uEnterLoadWeight in 'uEnterLoadWeight.pas' {fEnterLoadWeight},
@@ -153,7 +149,11 @@ uses
   uUnConnectedPackages in 'uUnConnectedPackages.pas' {fUnConnectedPackages},
   uPrintTest in 'uPrintTest.pas' {fPrintTest},
   udmLanguage in 'udmLanguage.pas' {dmLanguage: TDataModule},
-  ufrmChangeLanguage in 'ufrmChangeLanguage.pas' {frmChangeLanguage};
+  ufrmChangeLanguage in 'ufrmChangeLanguage.pas' {frmChangeLanguage},
+  MainU in 'Aug 31B dbExpress\MainU.pas' {XMLImportExport},
+  DeliveryMessageWoodV2R31 in 'Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas',
+  PackageExportU in 'Aug 31B dbExpress\PackageExportU.pas',
+  PackageImportU in 'Aug 31B dbExpress\PackageImportU.pas';
 
 {$R *.res}
 
@@ -167,7 +167,8 @@ begin
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(Tdm_UserProps, dm_UserProps);
   Application.CreateForm(TdmLanguage, dmLanguage);
- // Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
+  Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
+  Application.CreateForm(TXMLImportExport, XMLImportExport);
   Application.Run;
 
 end.

@@ -1,0 +1,37 @@
+SELECT IH.InternalInvoiceNo AS INT_INVNO, IH.InvoiceDate AS INV_DATE, IH.AgentName AS AGENT, IL.Shipper AS SHIPPER,
+IH.CustomerName AS CUSTOMER, IL.ShippingPlanNo AS LO,
+INO.InvoiceNo AS INVOICE_NO,
+'NORMAL'AS INVOICE_TYPE,
+CASE
+WHEN IH.Debit_Credit = 0 THEN 'DEBIT'
+WHEN IH.Debit_Credit = 1 THEN 'CREDIT'
+END AS INVOICE_KONTO,
+IH.Inv_Value_To_Be_Paid AS TO_BE_PAID,
+IH.CurrencyName	AS CURRENCY,
+IH.CustomerNo,
+SUM(PT.totalm3Nominal) as NM3, SUM(PT.totalm3Actual) as AM3,
+dpi.KUND_NM3, dpi.KONT_UNIT,
+SR.ClientName AS FörsäljReg, sm.SalesGroupName AS SäljGrupp
+FROM dbo.InvoiceHeader IH
+Inner join dbo.Client SR ON SR.ClientNo = IH.SupplierNo
+Left Outer Join dbo.SalesManGroupRow smg 
+Inner Join dbo.SalesManGroup sm on sm.SalesGroupNo = smg.SalesGroupNo
+on smg.UserID = IH.ResponsibleSeller
+Inner Join dbo.InvoiceLO IL ON IL.InternalInvoiceNo = IH.InternalInvoiceNo
+Left Outer Join dbo.DelVolInvoice dpi on dpi.InternalInvoiceNo = IH.InternalInvoiceNo
+LEFT OUTER JOIN dbo.Invoiced_Load ILD 
+INNER JOIN dbo.Loaddetail LD ON LD.LoadNo = ILD.LoadNo AND
+                      LD.ShippingPlanNo = ILD.SHIPPINGPLANNO
+INNER JOIN dbo.PackageType PT ON PT.PackageTypeNo = LD.PackageTypeNo
+ON ILD.InternalInvoiceNo = IL.InternalInvoiceNo
+                     AND ILD.ShippingPlanNo = IL.SHIPPINGPLANNO
+Inner Join dbo.InvoiceNumber INo ON INo.InternalInvoiceNo = IH.InternalInvoiceNo
+WHERE IH.InvoiceType = 0
+AND IH.InvoiceDate >= '2004-01-01'
+Group by IH.InternalInvoiceNo, IH.InvoiceDate, IH.AgentName, IL.Shipper,
+IH.CustomerName, IL.ShippingPlanNo, SR.ClientName, sm.SalesGroupName, 
+INO.InvoiceNo,
+IH.Debit_Credit,
+IH.Inv_Value_To_Be_Paid,
+IH.CurrencyName, IH.CustomerNo, dpi.KUND_NM3, dpi.KONT_UNIT
+ORDER BY InvoiceDate desc

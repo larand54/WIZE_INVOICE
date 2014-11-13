@@ -21,16 +21,16 @@ object frmMain: TfrmMain
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 159
+    Top = 147
     Width = 1226
-    Height = 552
+    Height = 564
     Align = alClient
     TabOrder = 0
     object panelBase: TPanel
       Left = 1
       Top = 1
       Width = 1224
-      Height = 550
+      Height = 562
       Align = alClient
       BevelOuter = bvLowered
       TabOrder = 0
@@ -40,7 +40,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 1226
-    Height = 159
+    Height = 147
     ApplicationButton.Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
       2000000000000009000000000000000000000000000000000000000000000000
@@ -432,7 +432,7 @@ object frmMain: TfrmMain
     Left = 744
     Top = 288
     Bitmap = {
-      494C010122002500180018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101220038001C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000D800000001002000000000000044
       010000000000000000000000000000000000000000000000000000426B000000
       000000426B000000000000000000004A73000000000000426B0000426B00004A
@@ -3115,8 +3115,8 @@ object frmMain: TfrmMain
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default'

@@ -7,7 +7,7 @@ uses
   Dialogs, ExtCtrls, dxBar, dxBarExtItems, StdCtrls,
   ImgList, OleServer, Menus, Buttons, OleCtrls,
   cxControls, cxContainer, cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit,
-  cxCalendar, DateUtils, CrystalActiveXReportViewerLib11_5_TLB, ActnList,
+  cxCalendar, DateUtils, ActnList,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
@@ -29,7 +29,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk, CrystalActiveXReportViewerLib11_TLB;
 
 type
   TfnotInvoicedReport = class(TForm)

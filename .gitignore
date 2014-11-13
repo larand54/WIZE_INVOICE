@@ -1,0 +1,23 @@
+*.~
+*.exe
+*.dcu
+*~*
+*.res
+*.scs
+.gitignore*
+*.dll
+*.bak
+*.identcache
+*.drc
+*.tvsconfig
+*.a
+*.map
+*.local
+*.*.local
+VIS\ 1211/EXE/
+VIS\ 1211/FTP klient/
+VIS\ 1211/Backup/
+VIS\ 1211/_history/
+VIS\ 1211/out/
+VIS\ 1211/lang/
+VIS\ 1211/ModelSupport_VIS/

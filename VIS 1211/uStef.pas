@@ -7,7 +7,7 @@ uses
   Dialogs, ExtCtrls, dxBar, dxBarExtItems, StdCtrls, ImgList, OleServer,
   CRAXDRT_TLB, OleCtrls,
   Menus, Buttons, ComCtrls,
-  CrystalActiveXReportViewerLib11_5_TLB, cxControls, cxContainer, cxEdit,
+  cxControls, cxContainer, cxEdit,
   cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar, ActnList, cxClasses,
   cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack,
   dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
@@ -23,7 +23,7 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxCore, cxDateUtils,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk, CrystalActiveXReportViewerLib11_TLB;
 
 type
   TfStef = class(TForm)

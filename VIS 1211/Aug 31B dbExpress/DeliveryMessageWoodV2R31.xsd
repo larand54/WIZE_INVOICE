@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="V2R31_20060317">
+	<xs:annotation>
+		<xs:documentation>Copyright 2000 – 2006 papiNet G.I.E (“papiNet”), International Digital Enterprise Alliance, Inc. (“IDEAlliance”), and American Forest and Paper Association, Inc. (“AFandPA”), collectively “Copyright Owner”. All rights reserved by the Copyright Owner under the laws of the United States, Belgium, the European Economic Community, and all states, domestic and foreign.  For support, more information, or to report implementation bugs, please contact papiNet at www.papiNet.org.	</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="papiNetCommonDefsV2R31.xsd"/>
+	<xs:element name="DeliveryMessageWood">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DeliveryMessageWoodHeader"/>
+				<xs:element ref="DeliveryMessageShipment" maxOccurs="unbounded"/>
+				<xs:element ref="DeliveryMessageWoodSummary" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="DeliveryMessageType" type="deliveryMessageType.Wood" use="required"/>
+			<xs:attribute name="DeliveryMessageStatusType" type="deliveryMessageStatusType" use="required"/>
+			<xs:attribute name="Reissued" type="yesNo" default="No"/>
+			<xs:attribute name="Language" type="languageType" default="eng"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryMessageWoodHeader">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DeliveryMessageNumber"/>
+				<xs:element ref="TransactionHistoryNumber" minOccurs="0"/>
+				<xs:element ref="DeliveryMessageDate"/>
+				<xs:element ref="DeliveryMessageReference" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DocumentReferenceInformation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="BuyerParty"/>
+				<xs:element ref="BillToParty" minOccurs="0"/>
+				<xs:element ref="SupplierParty"/>
+				<xs:element ref="OtherParty" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SenderParty" minOccurs="0"/>
+				<xs:element ref="ReceiverParty" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ShipToInformation" maxOccurs="unbounded"/>
+				<xs:element ref="CountryOfOrigin" minOccurs="0"/>
+				<xs:element ref="CountryOfDestination" minOccurs="0"/>
+				<xs:element ref="CountryOfConsumption" minOccurs="0"/>
+				<xs:element ref="Insurance" minOccurs="0"/>
+				<xs:element ref="AdditionalText" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DocumentInformation" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryMessageProductGroup">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ProductGroupID" minOccurs="0"/>
+				<xs:element ref="DeliveryShipmentLineItem" maxOccurs="unbounded"/>
+				<xs:element ref="ProductGroupSummary" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryMessageShipment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ShipmentID" minOccurs="0"/>
+				<xs:element ref="DeliveryMessageProductGroup" maxOccurs="unbounded"/>
+				<xs:element ref="ShipmentSummary" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryShipmentLineItem">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DeliveryShipmentLineItemNumber"/>
+				<xs:element ref="PurchaseOrderInformation" minOccurs="0"/>
+				<xs:element ref="PurchaseOrderLineItemNumber" minOccurs="0"/>
+				<xs:element ref="DeliveryMessageReference" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="DocumentReferenceInformation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CountryOfOrigin" minOccurs="0"/>
+				<xs:element ref="CountryOfDestination" minOccurs="0"/>
+				<xs:element ref="CountryOfConsumption" minOccurs="0"/>
+				<xs:element ref="TotalNumberOfUnits" minOccurs="0"/>
+				<xs:element ref="DeliveryDateWindow" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="MillProductionInformation" minOccurs="0"/>
+				<xs:element ref="QuantityOrderedInformation" minOccurs="0"/>
+				<xs:element ref="TransportLoadingCharacteristics" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="TransportUnloadingCharacteristics" minOccurs="0"/>
+				<xs:element ref="TransportOtherInstructions" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="SafetyAndEnvironmentalInformation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="BillToParty" minOccurs="0"/>
+				<xs:element ref="Product" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="PackageInformation" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="TransportPackageInformation" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ProductSummary" minOccurs="0"/>
+				<xs:element ref="LengthSpecification" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="QuantityDeviation" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeliveryMessageWoodSummary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="TotalNumberOfShipments"/>
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="TotalQuantity"/>
+					<xs:element ref="TotalInformationalQuantity" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:element ref="ProductSummary" minOccurs="0"/>
+				<xs:element ref="LengthSpecification" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="QuantityDeviation" minOccurs="0"/>
+				<xs:element ref="CustomsTotals" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="CustomsStampInformation" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="TermsAndDisclaimers" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
