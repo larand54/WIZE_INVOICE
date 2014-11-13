@@ -517,12 +517,6 @@
         <DCCReference Include="uStef.pas">
             <Form>fStef</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas"/>
-        <DCCReference Include="..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\MainU.pas">
-            <Form>XMLImportExport</Form>
-        </DCCReference>
-        <DCCReference Include="..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageExportU.pas"/>
-        <DCCReference Include="..\..\Bangheng Software Technology\Woodx\Aug 31B dbExpress\PackageImportU.pas"/>
         <DCCReference Include="uSelectLORowInLoad.pas">
             <Form>fSelectLORowInLoad</Form>
         </DCCReference>
@@ -565,6 +559,13 @@
             <Form>frmChangeLanguage</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Aug 31B dbExpress\MainU.pas">
+            <Form>XMLImportExport</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas"/>
+        <DCCReference Include="Aug 31B dbExpress\PackageExportU.pas"/>
+        <DCCReference Include="Aug 31B dbExpress\PackageImportU.pas"/>
         <None Include="VIS.todo"/>
         <None Include="ModelSupport_VIS\default.txaPackage"/>
         <None Include="ModelSupport_VIS\default.txvpck"/>

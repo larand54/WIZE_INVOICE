@@ -52,7 +52,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 96
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -69,7 +69,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 121
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -163,7 +163,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
     Left = 384
     Top = 112
     Bitmap = {
-      494C0101070009000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010107001000100018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000003000000001002000000000000048
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1103,8 +1103,8 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default')

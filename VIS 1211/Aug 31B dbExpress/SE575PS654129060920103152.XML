@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="SEPackXSL2.xsl" type="text/xsl"?>
+<DeliveryMessageWood DeliveryMessageType="PackingSpecification" DeliveryMessageStatusType="Original">
+    <DeliveryMessageWoodHeader>
+        <DeliveryMessageNumber>654129</DeliveryMessageNumber>
+        <DeliveryMessageDate>
+            <Date>
+                <Year>2006</Year>
+                <Month>09</Month>
+                <Day>20</Day>
+            </Date>
+        </DeliveryMessageDate>
+        <DeliveryMessageReference DeliveryMessageReferenceType="LoadingOrderNumber">654129</DeliveryMessageReference>
+        <DeliveryMessageReference DeliveryMessageReferenceType="OrderNumber">J3376</DeliveryMessageReference>
+        <DeliveryMessageReference DeliveryMessageReferenceType="InvoiceNumber">652312653000</DeliveryMessageReference>
+        <BuyerParty>
+            <PartyIdentifier PartyIdentifierType="AssignedBySeller">SE575</PartyIdentifier>
+            <PartyIdentifier PartyIdentifierType="VATIdentificationNumber">SE556620108201</PartyIdentifier>
+            <NameAddress>
+                <Name1>WOOD SUPPORT AB</Name1>
+                <Country ISOCountryCode="SE">SWEDEN</Country>
+            </NameAddress>
+        </BuyerParty>
+        <SupplierParty>
+            <PartyIdentifier PartyIdentifierType="AssignedBySeller">00075560274903</PartyIdentifier>
+            <PartyIdentifier PartyIdentifierType="VATIdentificationNumber">SE556027490301</PartyIdentifier>
+            <NameAddress>
+                <Name1>STORA ENSO TIMBER AB</Name1>
+                <Name2>GRUVÖN SÅGVERK</Name2>
+                <Address2>P.O.BOX 4</Address2>
+                <City>GRUMS</City>
+                <PostalCode>664 21</PostalCode>
+                <Country ISOCountryCode="SE">SWEDEN</Country>
+            </NameAddress>
+        </SupplierParty>
+        <OtherParty PartyType="Seller">
+            <PartyIdentifier PartyIdentifierType="AssignedBySeller">00075560274903</PartyIdentifier>
+            <PartyIdentifier PartyIdentifierType="VATIdentificationNumber">SE556027490301</PartyIdentifier>
+            <NameAddress>
+                <Name1>STORA ENSO TIMBER AB</Name1>
+                <Name2>GRUVÖN SÅGVERK</Name2>
+                <Address2>P.O.BOX 4</Address2>
+                <City>GRUMS</City>
+                <PostalCode>664 21</PostalCode>
+                <Country ISOCountryCode="SE">SWEDEN</Country>
+            </NameAddress>
+        </OtherParty>
+        <ShipToInformation>
+            <ShipToCharacteristics>
+                <ShipToParty PartyType="Consignee">
+                    <PartyIdentifier PartyIdentifierType="AssignedBySeller">SE575</PartyIdentifier>
+                    <PartyIdentifier PartyIdentifierType="VATIdentificationNumber">SE556620108201</PartyIdentifier>
+                    <NameAddress>
+                        <Name1>WOOD SUPPORT AB</Name1>
+                        <Country ISOCountryCode="SE">SWEDEN</Country>
+                    </NameAddress>
+                </ShipToParty>
+                <TermsOfDelivery>
+                    <IncotermsLocation Incoterms="FCA" IncotermsVersion="2000">GRUVÖN</IncotermsLocation>
+                </TermsOfDelivery>
+            </ShipToCharacteristics>
+            <DeliverySchedule>
+                <DeliveryLineNumber>1</DeliveryLineNumber>
+                <Quantity QuantityType="ActualVolume">
+                    <Value UOM="CubicMeter">39.95</Value>
+                </Quantity>
+                <InformationalQuantity QuantityType="Count">
+                    <Value UOM="Package">10</Value>
+                </InformationalQuantity>
+                <InformationalQuantity QuantityType="Count">
+                    <Value UOM="Package">10</Value>
+                </InformationalQuantity>
+                <InformationalQuantity QuantityType="Count">
+                    <Value UOM="Piece">3167</Value>
+                </InformationalQuantity>
+                <InformationalQuantity QuantityType="Volume">
+                    <Value UOM="CubicMeter">42.05</Value>
+                </InformationalQuantity>
+                <InformationalQuantity QuantityType="RunningLength">
+                    <Value UOM="Meter">11932.50</Value>
+                </InformationalQuantity>
+                <DeliveryLeg>
+                    <DeliveryLegSequenceNumber>1</DeliveryLegSequenceNumber>
+                    <DeliveryOrigin>
+                        <Date>
+                            <Year>2006</Year>
+                            <Month>09</Month>
+                            <Day>13</Day>
+                        </Date>
+                        <LocationParty PartyType="PlaceOfLoading">
+                            <NameAddress>
+                                <Name1>Grums</Name1>
+                            </NameAddress>
+                        </LocationParty>
+                    </DeliveryOrigin>
+                    <TransportVehicleCharacteristics>
+                        <TransportVehicleIdentifier TransportVehicleIdentifierType="LicencePlateNumber">UPM 311</TransportVehicleIdentifier>
+                    </TransportVehicleCharacteristics>
+                </DeliveryLeg>
+            </DeliverySchedule>
+        </ShipToInformation>
+        <CountryOfOrigin>
+            <Country ISOCountryCode="SE">SWEDEN</Country>
+        </CountryOfOrigin>
+        <CountryOfDestination>
+            <Country ISOCountryCode="SE">SWEDEN</Country>
+        </CountryOfDestination>
+    </DeliveryMessageWoodHeader>
+    <DeliveryMessageShipment>
+        <DeliveryMessageProductGroup>
+            <ProductGroupID>WW J SIXT/D PLANED 31740114</ProductGroupID>
+            <DeliveryShipmentLineItem>
+                <DeliveryShipmentLineItemNumber>1</DeliveryShipmentLineItemNumber>
+                <DeliveryMessageReference DeliveryMessageReferenceType="ContractNumber">6560791</DeliveryMessageReference>
+                <DeliveryMessageReference DeliveryMessageReferenceType="LoadingOrderNumber">654129</DeliveryMessageReference>
+                <DeliveryMessageReference DeliveryMessageReferenceType="LoadingOrderLineNumber">025</DeliveryMessageReference>
+                <DeliveryMessageReference DeliveryMessageReferenceType="InvoiceNumber">652312653000</DeliveryMessageReference>
+                <DeliveryMessageReference DeliveryMessageReferenceType="OrderNumber">J3376</DeliveryMessageReference>
+                <Product>
+                    <ProductIdentifier Agency="Supplier" ProductIdentifierType="PartNumber">WhiteWood 46*72 S4S SE J SIXT/D</ProductIdentifier>
+                    <WoodProducts>
+                        <WoodTimbersDimensionalLumberBoards>
+                            <SoftwoodLumber>
+                                <SoftwoodLumberCharacteristics>
+                                    <LumberSpecies SpeciesType="WhiteWood"></LumberSpecies>
+                                    <LumberGrade GradeAgency="Supplier">
+                                        <GradeName>J SIXT/D</GradeName>
+                                        <GradeCode>731</GradeCode>
+                                    </LumberGrade>
+                                    <Width ActualNominal="Actual">
+                                        <Value UOM="Millimeter">72.00</Value>
+                                    </Width>
+                                    <Thickness ActualNominal="Actual">
+                                        <Value UOM="Millimeter">46.50</Value>
+                                    </Thickness>
+                                    <MoistureContent MoistureContentPercentage="Other">
+                                        <AdditionalText>SHIPPING DRY</AdditionalText>
+                                    </MoistureContent>
+                                    <ManufacturingProcess ManufacturingProcessType="Planed"></ManufacturingProcess>
+                                    <ManufacturingProcess ManufacturingProcessType="HeatTreated"></ManufacturingProcess>
+                                    <PatternProfile>
+                                        <PatternProfileCode>31740114</PatternProfileCode>
+                                        <AdditionalText>S4S SE</AdditionalText>
+                                    </PatternProfile>
+                                    <ExLog>
+                                        <Value UOM="Piece">0</Value>
+                                    </ExLog>
+                                    <ShippingMark>SIXTHS/K</ShippingMark>
+                                </SoftwoodLumberCharacteristics>
+                                <Packaging>
+                                    <ProductPackaging>
+                                        <Wrap WrapType="PlasticBag"></Wrap>
+                                        <PackageType>TruckPackage</PackageType>
+                                    </ProductPackaging>
+                                </Packaging>
+                            </SoftwoodLumber>
+                        </WoodTimbersDimensionalLumberBoards>
+                    </WoodProducts>
+                </Product>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971662</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009716629006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">3.91</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1168.50</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">43</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3300</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">126</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">77</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4200</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">62</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4500</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">14</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971667</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009716679006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">4.15</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1240.50</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">10</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3300</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">87</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">72</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4200</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">153</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971679</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009716799006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">4.05</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1208.40</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">15</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3300</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">104</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">108</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4200</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">95</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971693</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009716939006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">4.29</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1282.50</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3300</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">43</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">104</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4200</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">175</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971699</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009716999006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">4.25</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1268.10</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">8</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3300</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">46</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">111</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>4200</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">157</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971703</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009717039006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">4.05</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1208.70</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">26</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3600</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">79</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">217</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971712</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009717129006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">3.94</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1178.40</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">55</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3600</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">93</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">174</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971719</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009717199006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">3.98</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1188.90</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">43</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3600</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">94</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">185</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971730</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009717309006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">322</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">3.94</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1177.20</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">322</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">55</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3600</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">97</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">170</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+                <TransportPackageInformation PackageType="TruckPackage">
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Primary">971738</Identifier>
+                    <Identifier IdentifierCodeType="Supplier" IdentifierType="Barcode">00009717389006</Identifier>
+                    <ItemCount>
+                        <Value UOM="Piece">269</Value>
+                    </ItemCount>
+                    <Quantity QuantityType="ActualVolume">
+                        <Value UOM="CubicMeter">3.38</Value>
+                    </Quantity>
+                    <InformationalQuantity QuantityType="RunningLength">
+                        <Value UOM="Meter">1011.30</Value>
+                    </InformationalQuantity>
+                    <InformationalQuantity QuantityType="Count">
+                        <Value UOM="Piece">269</Value>
+                    </InformationalQuantity>
+                    <WoodItem>
+                        <LengthSpecification>
+                            <LengthCategory>3000</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">27</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3600</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">45</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                        <LengthSpecification>
+                            <LengthCategory>3900</LengthCategory>
+                            <TotalNumberOfUnits>
+                                <Value UOM="Piece">197</Value>
+                            </TotalNumberOfUnits>
+                        </LengthSpecification>
+                    </WoodItem>
+                </TransportPackageInformation>
+            </DeliveryShipmentLineItem>
+            <ProductGroupSummary>
+                <TotalQuantity QuantityType="ActualVolume">
+                    <Value UOM="CubicMeter">39.95</Value>
+                </TotalQuantity>
+                <TotalInformationalQuantity QuantityType="Count">
+                    <Value UOM="Package">10</Value>
+                </TotalInformationalQuantity>
+                <TotalInformationalQuantity QuantityType="Count">
+                    <Value UOM="Piece">3167</Value>
+                </TotalInformationalQuantity>
+                <TotalInformationalQuantity QuantityType="Volume">
+                    <Value UOM="CubicMeter">0.00</Value>
+                </TotalInformationalQuantity>
+                <TotalInformationalQuantity QuantityType="RunningLength">
+                    <Value UOM="Meter">11932.50</Value>
+                </TotalInformationalQuantity>
+                <LengthSpecification>
+                    <LengthCategory>3000</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">282</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+                <LengthSpecification>
+                    <LengthCategory>3300</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">406</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+                <LengthSpecification>
+                    <LengthCategory>3600</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">408</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+                <LengthSpecification>
+                    <LengthCategory>3900</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">1415</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+                <LengthSpecification>
+                    <LengthCategory>4200</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">642</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+                <LengthSpecification>
+                    <LengthCategory>4500</LengthCategory>
+                    <TotalNumberOfUnits>
+                        <Value UOM="Piece">14</Value>
+                    </TotalNumberOfUnits>
+                </LengthSpecification>
+            </ProductGroupSummary>
+        </DeliveryMessageProductGroup>
+    </DeliveryMessageShipment>
+    <DeliveryMessageWoodSummary>
+        <TotalNumberOfShipments>1</TotalNumberOfShipments>
+        <TotalQuantity QuantityType="ActualVolume">
+            <Value UOM="CubicMeter">39.95</Value>
+        </TotalQuantity>
+        <TotalInformationalQuantity QuantityType="Count">
+            <Value UOM="Package">10</Value>
+        </TotalInformationalQuantity>
+        <TotalInformationalQuantity QuantityType="Count">
+            <Value UOM="Piece">3167</Value>
+        </TotalInformationalQuantity>
+        <TotalInformationalQuantity QuantityType="Volume">
+            <Value UOM="CubicMeter">42.05</Value>
+        </TotalInformationalQuantity>
+        <TotalInformationalQuantity QuantityType="RunningLength">
+            <Value UOM="Meter">11932.50</Value>
+        </TotalInformationalQuantity>
+        <LengthSpecification>
+            <LengthCategory>3000</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">282</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+        <LengthSpecification>
+            <LengthCategory>3300</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">406</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+        <LengthSpecification>
+            <LengthCategory>3600</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">408</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+        <LengthSpecification>
+            <LengthCategory>3900</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">1415</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+        <LengthSpecification>
+            <LengthCategory>4200</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">642</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+        <LengthSpecification>
+            <LengthCategory>4500</LengthCategory>
+            <TotalNumberOfUnits>
+                <Value UOM="Piece">14</Value>
+            </TotalNumberOfUnits>
+        </LengthSpecification>
+    </DeliveryMessageWoodSummary>
+</DeliveryMessageWood>
