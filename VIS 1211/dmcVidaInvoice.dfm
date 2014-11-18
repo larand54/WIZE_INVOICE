@@ -16648,7 +16648,7 @@ object dmVidaInvoice: TdmVidaInvoice
       'sr.PartyIdentifierType1'#9'AS PartyIdentifierType1'
       'FROM dbo.Client sr ')
     Left = 224
-    Top = 88
+    Top = 32
     object cds_ClientGLNNoPartyIdentifier1: TStringField
       FieldName = 'PartyIdentifier1'
       Origin = 'PartyIdentifier1'
