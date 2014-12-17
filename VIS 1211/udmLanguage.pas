@@ -33,7 +33,8 @@ var
 begin
   path := dmsSystem.GetLangPath();
   assert(path <> '','Path to languagefiles not defined in database');
-  siLangDispatcher1.FileName := Path;
+//  siLangDispatcher1.FileName := Path;
+siLangDispatcher1.FileName := Path + '\' + siLangDispatcher1.FileName;
 end;
 
 procedure TdmLanguage.siLangDispatcher1LanguageChanged(Sender: TObject);

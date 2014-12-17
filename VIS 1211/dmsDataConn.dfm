@@ -1824,13 +1824,11 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=vis.vida.se'
+      'Server=alvesql03'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
-      'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
@@ -2017,7 +2015,7 @@ object dmsConnector: TdmsConnector
   end
   object FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink
     Left = 464
-    Top = 240
+    Top = 184
   end
   object sp_UpdateMaxSecByLoad: TFDStoredProc
     Connection = FDConnection1
