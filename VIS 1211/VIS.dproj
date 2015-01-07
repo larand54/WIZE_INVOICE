@@ -71,6 +71,7 @@
         <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UsePackage>vclimg;dxCoreRS20;cxLibraryRS20;dxGDIPlusRS20;dxThemeRS20;cxPageControlRS20;cxDataRS20;cxEditorsRS20;dxComnRS20;cxSpreadSheetRS20;dxPSCoreRS20;dxPScxSSLnkRS20;dxLayoutControlRS20;dxSpreadSheetRS20;dxPSdxSpreadSheetLnkRS20;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Icon_MainIcon>VIS_Icon.ico</Icon_MainIcon>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
@@ -79,6 +80,7 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_UsePackage>vclimg;dxCoreRS20;cxLibraryRS20;dxGDIPlusRS20;dxThemeRS20;cxPageControlRS20;cxDataRS20;cxEditorsRS20;dxComnRS20;cxSpreadSheetRS20;dxPSCoreRS20;dxPScxSSLnkRS20;dxLayoutControlRS20;dxSpreadSheetRS20;dxPSdxSpreadSheetLnkRS20;$(DCC_UsePackage)</DCC_UsePackage>
         <Icon_MainIcon>VIS_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -925,21 +927,19 @@
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxPivotGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressPivotGrid by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxTLLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressQuantumTreeList by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxVGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressVerticalGrid by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSTeeChartRS20.bpl">ExpressPrinting System ReportLink for TeeChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSLnksRS20.bpl">ExpressPrinting System ReportLinks (Standard) by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxFCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressFlowChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxDBOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressDBOrgChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressOrgChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSDBTeeChartRS20.bpl">ExpressPrinting System ReportLink for DBTeeChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dxPScxPCProdRS20.bpl">ExpressPrinting System ContainerProducer for ExpressPageControl by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxCommonRS20.bpl">ExpressPrinting System Cross Platform Library by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxExtCommonRS20.bpl">ExpressPrinting System Extended Cross Platform Library by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxPivotGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressPivotGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSSLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressSpreadSheet by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxTLLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressQuantumTreeList by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxVGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressVerticalGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxDBOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressDBOrgChart by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxFCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressFlowChart by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressOrgChart by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxSpreadSheetLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressSpreadSheet by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\RemObjects Software\Hydra for Delphi\Dcu\D20\win32\Hydra_IDE_D20.bpl">RemObjects Hydra - IDE Integration</Excluded_Packages>

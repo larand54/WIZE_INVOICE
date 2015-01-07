@@ -85,6 +85,7 @@ type
     cxLabel1: TcxLabel;
     sp_ExportInvoiceData: TFDStoredProc;
     siLangLinked_fAccInv: TsiLangLinked;
+    dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);

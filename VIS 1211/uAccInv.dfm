@@ -279,10 +279,11 @@ object fAccInv: TfAccInv
     end
   end
   object dxComponentPrinter1: TdxComponentPrinter
+    CurrentLink = dxComponentPrinter1Link1
     Version = 0
     Left = 152
     Top = 160
-    object TdxSpreadSheetBookReportLink
+    object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
       PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
