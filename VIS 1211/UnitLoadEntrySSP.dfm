@@ -53,28 +53,26 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 212
-    ClientRectLeft = 4
-    ClientRectRight = 1111
+    ClientRectBottom = 216
+    ClientRectRight = 1115
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'Leveranshuvud'
       object Splitter1: TSplitter
         Left = 0
-        Top = 139
-        Width = 1107
+        Top = 143
+        Width = 1115
         Height = 3
         Cursor = crVSplit
         Align = alBottom
         Color = clBlack
         ParentColor = False
         ExplicitTop = 145
-        ExplicitWidth = 1115
       end
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1107
+        Width = 1115
         Height = 74
         Align = alTop
         BevelOuter = bvNone
@@ -323,8 +321,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 142
-        Width = 1107
+        Top = 146
+        Width = 1115
         Height = 46
         Align = alBottom
         TabOrder = 1
@@ -366,8 +364,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       object grdLO: TcxGrid
         Left = 0
         Top = 74
-        Width = 1107
-        Height = 65
+        Width = 1115
+        Height = 69
         Align = alClient
         TabOrder = 2
         object grdLODBTableView1: TcxGridDBTableView
@@ -554,10 +552,6 @@ object fLoadEntrySSP: TfLoadEntrySSP
     end
     object tsLoadNote: TcxTabSheet
       Caption = 'Notering'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
@@ -565,8 +559,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntrySSP.ds_LoadHead
         TabOrder = 0
-        Height = 188
-        Width = 1107
+        Height = 192
+        Width = 1115
       end
     end
   end
@@ -589,7 +583,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 1019
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -621,7 +615,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 64
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -702,7 +696,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Properties.ValueUnchecked = 0
           Properties.OnChange = grdLORowsDBBandedTableView1MATCHPropertiesChange
           Options.Filtering = False
-          Width = 58
+          Width = 29
           Position.BandIndex = 0
           Position.ColIndex = 0
           Position.RowIndex = 0
@@ -1144,6 +1138,13 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Width = 101
           Position.BandIndex = 1
           Position.ColIndex = 10
+          Position.RowIndex = 0
+        end
+        object grdLORowsDBBandedTableView1ShippingPlanStatus: TcxGridDBBandedColumn
+          DataBinding.FieldName = 'ShippingPlanStatus'
+          Width = 40
+          Position.BandIndex = 0
+          Position.ColIndex = 1
           Position.RowIndex = 0
         end
       end
@@ -1755,7 +1756,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False
@@ -2197,7 +2198,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Left = 664
     Top = 512
     Bitmap = {
-      494C01010B000D000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3099,7 +3100,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Left = 144
     Top = 336
     Bitmap = {
-      494C0101030005000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       00009C9C9C006B6B6B00525252004A4A4A004A4A4A004A4A4A00525252009C9C

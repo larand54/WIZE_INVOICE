@@ -652,7 +652,7 @@ Procedure TdmcOrder.SetLOStatus(const sspNo, Status: Integer);
 Begin
 
   Try
-    sp_SetLOStatus.ParamByName('@sspNo').AsInteger := sspNo;
+    sp_SetLOStatus.ParamByName('@sspNo').AsInteger  := sspNo;
     sp_SetLOStatus.ParamByName('@Status').AsInteger := Status;
     sp_SetLOStatus.ExecProc;
   except

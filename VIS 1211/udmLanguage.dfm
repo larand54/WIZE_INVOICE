@@ -93,7 +93,7 @@ object dmLanguage: TdmLanguage
     Language = 'Origin'
     FileName = 'VISK.sib'
     OnLanguageChanged = siLangDispatcher1LanguageChanged
-    Left = 80
+    Left = 96
     Top = 16
   end
 end

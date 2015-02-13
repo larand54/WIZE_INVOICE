@@ -95,7 +95,7 @@ object frmChangeLanguage: TfrmChangeLanguage
       'KeyField'
       'ListField')
     Left = 116
-    Top = 65535
+    Top = 7
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660072006D004300680061006E00670065004C006100

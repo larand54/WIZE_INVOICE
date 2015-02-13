@@ -39,6 +39,7 @@ const
   AddLOPkgsWithMatchingProduct = 3;
   ShowAllAddLOPkgs = 4;
   ShowTM = 5;
+  ShowLIP = 6 ;
 
 type
 
@@ -116,6 +117,24 @@ type
     grdPickPkgNosDBTableView1Lagergrupp: TcxGridDBColumn;
     cxGridPopupMenu1: TcxGridPopupMenu;
     siLangLinked_fPickPkgNo: TsiLangLinked;
+    acSelectMarkedRows: TAction;
+    mtPkgNos: TFDMemTable;
+    mtPkgNosPackageNo: TIntegerField;
+    mtPkgNosPrefix: TStringField;
+    cxButton8: TcxButton;
+    cxLabel2: TcxLabel;
+    lcLIP: TcxDBLookupComboBox;
+    cds_LIP2: TFDQuery;
+    cds_LIP2LIPNo: TIntegerField;
+    cds_LIP2LIPName: TStringField;
+    ds_LIP2: TDataSource;
+    mtProps: TFDMemTable;
+    mtPropsPIPNo: TIntegerField;
+    mtPropsLIPNo: TIntegerField;
+    mtPropsLIP: TStringField;
+    dsProps: TDataSource;
+    cxButton9: TcxButton;
+    acShowMatchingLIP: TAction;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ds_SelectedPkgNoDataChange(Sender: TObject; Field: TField);
@@ -131,9 +150,12 @@ type
     procedure mtProductProductNoChange(Sender: TField);
     procedure acShowPkgsWithSameActDimOnlyExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure acSelectMarkedRowsExecute(Sender: TObject);
+    procedure acShowMatchingLIPExecute(Sender: TObject);
   private
     { Private declarations }
     ButtonDown: Integer;
+    procedure CheckSelectedPackages ;
     procedure BuildSQL;
     procedure Refresh;
   public
@@ -159,15 +181,18 @@ begin
     cbFilterOnLength.Checked := False
   else
     cbFilterOnLength.Checked := True;
+
+  cds_LIP2.ParamByName('PIPNo').AsInteger := PIPNo ;
+  mtProps.Active  := True ;
+
   Refresh;
   lcProductDisplayName.Visible := False;
   if ObjectType = 0 then
   Begin
-    mtProduct.Active := False;
-    cds_ProdInLager.ParamByName('PIPNo').AsInteger := PIPNo;
-    mtProduct.Active := True;
-    lcProductDisplayName.Visible := True;
-
+    mtProduct.Active                                := False  ;
+    cds_ProdInLager.ParamByName('PIPNo').AsInteger  := PIPNo  ;
+    mtProduct.Active                                := True ;
+    lcProductDisplayName.Visible                    := True ;
   End;
   if dmsSystem.LoadGridLayout(ThisUser.UserID,
     Self.Name + '/' + grdPickPkgNos.Name, grdPickPkgNosDBTableView1) = False
@@ -420,6 +445,51 @@ Begin
 
               Add('AND pn.PackageNo not in (Select pgrm.PackageNo From dbo.Pkgs_ResModul pgrm WHERE ');
               Add('pgrm.SupplierCode = pn.SupplierCode)');
+            End
+            else
+            // if lbShowLIP.Down then
+            if ButtonDown = ShowLIP then
+            Begin
+              cxLabel_Val.Caption := 'Urval Lagergrupp';
+              Clear;
+              Add('Select pn.PackageNo, pn.SupplierCode AS LEVKOD,');
+              Add('pt.productno,');
+              Add('ptl.PcsPerLength,');
+              Add('pt.Totalm3Actual AS AM3,');
+              Add('pt.TotalNoOfPieces AS STYCK,');
+              Add('pn.DateCreated,');
+              Add('(Select Count(PackageTypeNo) From PackageTypeDetail WHERE PackageTypeNo = pt.PackageTypeNo) AS NOOFLENGTHS,');
+              Add('p.ProductDisplayName AS Produkt,');
+              Add('CASE');
+              Add('WHEN htf.Status = 1 THEN ' + QuotedStr('Modtaget'));
+              Add('WHEN htf.Status = 2 THEN ' +
+                QuotedStr('Klar til produktion'));
+              Add('WHEN htf.Status = 3 THEN ' + QuotedStr('Produktionsdato'));
+              Add('WHEN htf.Status = 4 THEN ' + QuotedStr('Klar til afgang'));
+              Add('WHEN htf.Status = 5 THEN ' + QuotedStr('Udleverat'));
+              Add('End AS StatusHTF, LIP.LogicalInventoryName AS Lagergrupp');
+              Add('From dbo.packagenumber pn');
+              Add('Inner Join dbo.packagetype pt on pt.packagetypeno = pn.packagetypeno');
+              Add('Inner Join dbo.product p on p.productno = pt.productno');
+              Add('Inner Join dbo.productGroup pg on pg.productGroupno = p.productGroupno');
+              Add('Inner Join dbo.PackageTypeLengths ptl on ptl.packagetypeno = pn.packagetypeno');
+              Add('Inner Join dbo.LogicalInventoryPoint LIP on LIP.LogicalInventoryPointNo = pn.LogicalInventoryPointNo');
+              Add('Left Outer Join dbo.PackageStatusHTF htf on htf.Paketnr = pn.PackageNo');
+              Add('and htf.prefix = pn.suppliercode');
+              Add('WHERE');
+              Add('pn.Status = 1');
+   //           Add('AND LIP.PhysicalInventoryPointNo = ' + intToStr(PIPNo)) ;
+              Add('AND LIP.LogicalInventoryPointNo = ' + mtPropsLIPNo.AsString) ;
+  {
+                Add('AND pg.ActualThicknessMM in (Select pg2.ActualThicknessMM ');
+                 Add('FROM dbo.productGroup pg2');
+                 Add('Inner Join dbo.product p2 on p2.productGroupno = pg2.productGroupno');
+                 Add('WHERE p2.productno = ' + intToStr(ProductNo));
+                 Add('AND pg2.ActualWidthMM = pg.ActualWidthMM)');
+ }
+
+              Add('AND pn.PackageNo not in (Select pgrm.PackageNo From dbo.Pkgs_ResModul pgrm WHERE ');
+              Add('pgrm.SupplierCode = pn.SupplierCode)');
             End;
     // if ThisUser.UserID = 8 then SaveToFile('sq_PaketLista.TXT') ;
   End; // With
@@ -545,6 +615,12 @@ begin
   End;
 End;
 
+procedure TfPickPkgNo.acShowMatchingLIPExecute(Sender: TObject);
+begin
+  ButtonDown := ShowLIP;
+  Refresh;
+end;
+
 procedure TfPickPkgNo.acShowMatchingProductAndLengthExecute(Sender: TObject);
 begin
   ButtonDown := ProductAndLength;
@@ -555,6 +631,79 @@ procedure TfPickPkgNo.acShowMatchingProductExecute(Sender: TObject);
 begin
   ButtonDown := MatchingProduct;
   Refresh;
+end;
+
+procedure TfPickPkgNo.CheckSelectedPackages ;
+ Var
+ PackageNo,
+ i,
+ RecIDX,
+ ColIdx         : Integer ;
+ Save_Cursor    : TCursor ;
+ Prefix         : String ;
+ RecID          : Variant ;
+ ADATASET       : TDATASET;
+begin
+ Save_Cursor    := Screen.Cursor;
+ Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
+// With dmInventory do
+// Begin
+
+//  mtSelectedPkgNo.DisableControls ;
+  grdPickPkgNosDBTableView1.BeginUpdate ;
+  grdPickPkgNosDBTableView1.DataController.BeginLocate ;
+
+  Try
+  ADataSet := grdPickPkgNosDBTableView1.DataController.DataSource.DataSet ;
+   For I := 0 to grdPickPkgNosDBTableView1.Controller.SelectedRecordCount - 1 do
+   Begin
+    RecIDx  := grdPickPkgNosDBTableView1.Controller.SelectedRecords[i].RecordIndex ;
+    RecID   := grdPickPkgNosDBTableView1.DataController.GetRecordId(RecIdx) ;
+    ADataSet.Locate('PAKETNR;LEVKOD', RecID,[]) ;
+
+    mtPkgNos.Insert ;
+    mtPkgNosPackageNo.AsInteger := ADataSet.FieldByName('PAKETNR').AsInteger ;
+    mtPkgNosPrefix.AsString     := ADataSet.FieldByName('LEVKOD').AsString ;
+
+    mtPkgNos.Post ;
+   End ;//for
+
+ Finally
+  //mtSelectedPkgNo.EnableControls ;
+  grdPickPkgNosDBTableView1.DataController.EndLocate ;
+  grdPickPkgNosDBTableView1.EndUpdate ;
+
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+ End ;
+// End ;//with
+end;
+
+procedure TfPickPkgNo.acSelectMarkedRowsExecute(Sender: TObject);
+begin
+ mtPkgNos.Active  := False ;
+ mtPkgNos.Active  := True ;
+ CheckSelectedPackages ;
+
+ dmsSystem.mtSelectedPkgNo.DisableControls ;
+ Try
+
+ mtPkgNos.First ;
+ while not mtPkgNos.Eof do
+ Begin
+  if dmsSystem.mtSelectedPkgNo.Locate('PAKETNR;LEVKOD', VarArrayof([mtPkgNosPackageNo.AsInteger, mtPkgNosPrefix.AsString]), []) then
+  Begin
+   if dmsSystem.mtSelectedPkgNoMARKERAD.AsInteger = 0 then
+   Begin
+     dmsSystem.mtSelectedPkgNo.Edit ;
+     dmsSystem.mtSelectedPkgNoMARKERAD.AsInteger := 1 ;
+     dmsSystem.mtSelectedPkgNo.Post ;
+   End;
+  End;
+  mtPkgNos.Next ;
+ End;
+ Finally
+   dmsSystem.mtSelectedPkgNo.EnableControls ;
+ End;
 end;
 
 procedure TfPickPkgNo.acShowAddLOPkgsWithMatchingProductExecute
@@ -572,8 +721,8 @@ end;
 
 procedure TfPickPkgNo.mtProductProductNoChange(Sender: TField);
 begin
-  ProductNo := mtProductProductNo.AsInteger;
-  LabelProduct.Caption := lcProductDisplayName.Text;
+  ProductNo             := mtProductProductNo.AsInteger;
+  LabelProduct.Caption  := lcProductDisplayName.Text;
   Refresh;
 end;
 

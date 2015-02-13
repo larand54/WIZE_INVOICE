@@ -68,7 +68,6 @@ type
     SkrivutF81: TMenuItem;
     UppdateraF61: TMenuItem;
     dxComponentPrinter1: TdxComponentPrinter;
-    dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
     cds_ExportTyp1: TFDQuery;
     cds_ExportTyp1PackageNo: TStringField;
     cds_ExportTyp1NomThick: TFloatField;
@@ -86,6 +85,7 @@ type
     cxLabel1: TcxLabel;
     sp_ExportInvoiceData: TFDStoredProc;
     siLangLinked_fAccInv: TsiLangLinked;
+    dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
