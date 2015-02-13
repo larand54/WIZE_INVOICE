@@ -151,6 +151,7 @@ type
     dxBarLargeButton2: TdxBarLargeButton;
     dxBarLargeButton3: TdxBarLargeButton;
     dxBarLargeButton4: TdxBarLargeButton;
+    siLangLinked1: TsiLangLinked;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cds_PropsAfterInsert(DataSet: TDataSet);
@@ -197,7 +198,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Dialogs, dmsDataConn, dmc_UserProps, dmsVidaContact, VidaUser;
+  Dialogs, dmsDataConn, dmc_UserProps, dmsVidaContact, VidaUser, udmLanguage;
 
 
 // -------------------------------------------------------------------

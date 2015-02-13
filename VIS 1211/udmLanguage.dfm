@@ -8,16 +8,14 @@ object dmLanguage: TdmLanguage
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
-      'Base'
+      'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     ExcludedProperties.Strings = (
       'Category'
       'SecondaryShortCuts'
@@ -86,15 +84,14 @@ object dmLanguage: TdmLanguage
       65000D000A00}
   end
   object siLangDispatcher1: TsiLangDispatcher
-    ActiveLanguage = 2
+    ActiveLanguage = 1
     NumOfLanguages = 3
     LangNames.Strings = (
-      'Base'
+      'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     FileName = 'VISK.sib'
-    DefaultLanguage = 2
     OnLanguageChanged = siLangDispatcher1LanguageChanged
     Left = 80
     Top = 16

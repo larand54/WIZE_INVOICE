@@ -23,7 +23,7 @@ uses
 type
   TfWait = class(TForm)
     cxLabel1: TcxLabel;
-    siLangLinked_fWait: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
   private
     { Private declarations }
   public
@@ -35,5 +35,7 @@ type
 implementation
 
 {$R *.dfm}
+
+uses udmLanguage;
 
 end.

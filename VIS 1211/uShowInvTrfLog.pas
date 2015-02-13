@@ -92,7 +92,8 @@ type
     ImageList1: TImageList;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1Bold: TcxStyle;
-    siLangLinked_fShowInvTrfLog: TsiLangLinked;
+    siLabel1: TsiLabel;
+    siLangLinked1: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
   private
@@ -105,7 +106,7 @@ type
 
 implementation
 
-uses dmcVidaInvoice;
+uses dmcVidaInvoice, udmLanguage;
 
 {$R *.dfm}
 

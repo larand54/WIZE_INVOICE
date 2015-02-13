@@ -59,7 +59,7 @@ type
     dxComponentPrinter1: TdxComponentPrinter;
     cxButton2: TcxButton;
     dxComponentPrinter1Link1: TdxGridReportLink;
-    siLangLinked_fUnConnectedPackages: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
     procedure acPrintExecute(Sender: TObject);
   private
     { Private declarations }
@@ -73,7 +73,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmcVidaInvoice;
+uses dmcVidaInvoice, udmLanguage;
 
 procedure TfUnConnectedPackages.acPrintExecute(Sender: TObject);
 begin

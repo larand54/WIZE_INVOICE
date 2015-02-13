@@ -37,7 +37,7 @@ type
     teMyEmailAddress: TcxDBTextEdit;
     Label4: TLabel;
     beWoodXDir: TcxDBButtonEdit;
-    siLangLinked_fUserPreference: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
     procedure beFragaAvropDirPropertiesButtonClick(Sender: TObject;
       AButtonIndex: Integer);
     procedure cxDBButtonEdit1PropertiesButtonClick(Sender: TObject;
@@ -58,7 +58,7 @@ type
 
 implementation
 
-uses dmsDataConn, VidaUser, dmsVidaSystem;
+uses dmsDataConn, VidaUser, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

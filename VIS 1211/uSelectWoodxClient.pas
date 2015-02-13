@@ -44,7 +44,7 @@ type
 
 implementation
 
-uses dmc_ImportWoodx;
+uses dmc_ImportWoodx, udmLanguage;
 
 {$R *.dfm}
 
