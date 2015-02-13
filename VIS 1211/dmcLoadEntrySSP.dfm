@@ -674,6 +674,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     end
   end
   object cdsLORows: TFDQuery
+    Active = True
     OnCalcFields = cdsLORowsCalcFields
     CachedUpdates = True
     Indexes = <
@@ -688,6 +689,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT'
+      'SSP.ShippingPlanStatus,'
       'L.LoadNo,'
       'LS.ShippingPlanNo,'
       'LS.LoadingLocationNo,'
@@ -1073,6 +1075,11 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       FieldKind = fkCalculated
       FieldName = 'PkgDiff'
       Calculated = True
+    end
+    object cdsLORowsShippingPlanStatus: TIntegerField
+      DisplayLabel = 'Status'
+      FieldName = 'ShippingPlanStatus'
+      Origin = 'ShippingPlanStatus'
     end
   end
   object sq_GetLO_Records: TFDQuery

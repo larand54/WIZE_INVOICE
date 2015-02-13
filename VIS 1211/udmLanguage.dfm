@@ -89,9 +89,9 @@ object dmLanguage: TdmLanguage
       'Swedish'
       'English')
     Language = 'English'
-    FileName = 'VISK.sib'
+    FileName = 'VISIIX.sib'
     OnLanguageChanged = siLangDispatcher1LanguageChanged
-    Left = 80
+    Left = 96
     Top = 16
   end
 end

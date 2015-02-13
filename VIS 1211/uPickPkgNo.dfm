@@ -20,11 +20,13 @@ object fPickPkgNo: TfPickPkgNo
   TextHeight = 13
   object grdPickPkgNos: TcxGrid
     Left = 0
-    Top = 209
+    Top = 249
     Width = 1043
-    Height = 395
+    Height = 355
     Align = alClient
     TabOrder = 0
+    ExplicitTop = 209
+    ExplicitHeight = 395
     object grdPickPkgNosDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.Cancel.Visible = True
@@ -54,6 +56,8 @@ object fPickPkgNo: TfPickPkgNo
       DataController.Summary.SummaryGroups = <>
       OptionsData.Deleting = False
       OptionsData.Inserting = False
+      OptionsSelection.CellSelect = False
+      OptionsSelection.MultiSelect = True
       OptionsView.ColumnAutoWidth = True
       OptionsView.Footer = True
       OptionsView.GroupByBox = False
@@ -174,7 +178,7 @@ object fPickPkgNo: TfPickPkgNo
     Left = 0
     Top = 113
     Width = 1043
-    Height = 96
+    Height = 136
     Align = alTop
     TabOrder = 2
     object LabelProduct: TLabel
@@ -325,6 +329,30 @@ object fPickPkgNo: TfPickPkgNo
       Action = acUnmarkAll
       TabOrder = 4
     end
+    object cxButton8: TcxButton
+      Left = 184
+      Top = 8
+      Width = 121
+      Height = 65
+      Action = acSelectMarkedRows
+      TabOrder = 5
+    end
+    object cxLabel2: TcxLabel
+      Left = 400
+      Top = 100
+      Caption = 'Lagergrupp:'
+    end
+    object lcLIP: TcxDBLookupComboBox
+      Left = 464
+      Top = 96
+      DataBinding.DataField = 'LIP'
+      DataBinding.DataSource = dsProps
+      Properties.ImmediatePost = True
+      Properties.ListColumns = <>
+      Properties.ListOptions.ShowHeader = False
+      TabOrder = 7
+      Width = 145
+    end
   end
   object Panel3: TPanel
     Left = 0
@@ -397,6 +425,14 @@ object fPickPkgNo: TfPickPkgNo
       Style.TextStyle = [fsBold]
       Style.IsFontAssigned = True
     end
+    object cxButton9: TcxButton
+      Left = 656
+      Top = 24
+      Width = 161
+      Height = 57
+      Action = acShowMatchingLIP
+      TabOrder = 7
+    end
   end
   object ds_SelectedPkgNo: TDataSource
     DataSet = dmsSystem.mtSelectedPkgNo
@@ -438,6 +474,14 @@ object fPickPkgNo: TfPickPkgNo
     object acShowPkgsWithSameActDimOnly: TAction
       Caption = 'Urval TM'
       OnExecute = acShowPkgsWithSameActDimOnlyExecute
+    end
+    object acSelectMarkedRows: TAction
+      Caption = 'V'#228'lj markerade rader'
+      OnExecute = acSelectMarkedRowsExecute
+    end
+    object acShowMatchingLIP: TAction
+      Caption = 'Urval lagergrupp'
+      OnExecute = acShowMatchingLIPExecute
     end
   end
   object mtProduct: TkbmMemTable
@@ -529,7 +573,7 @@ object fPickPkgNo: TfPickPkgNo
       'AND pt.productno = 13260'
       '')
     Left = 472
-    Top = 376
+    Top = 416
     object sq_PaketListaPackageNo: TIntegerField
       FieldName = 'PackageNo'
       Origin = 'PackageNo'
@@ -606,7 +650,7 @@ object fPickPkgNo: TfPickPkgNo
       'Order By pr.ProductDisplayName'
       '')
     Left = 472
-    Top = 440
+    Top = 480
     ParamData = <
       item
         Name = 'PIPNO'
@@ -675,8 +719,8 @@ object fPickPkgNo: TfPickPkgNo
       'DataField'
       'KeyField'
       'ListField')
-    Left = 512
-    Top = 336
+    Left = 576
+    Top = 384
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066005000690063006B0050006B0067004E006F000100
@@ -944,5 +988,91 @@ object fPickPkgNo: TfPickPkgNo
       010001000D000A004C006100620065006C004C004F004E007200010044004500
       4600410055004C0054005F004300480041005200530045005400010001000D00
       0A00}
+  end
+  object mtPkgNos: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 576
+    Top = 440
+    object mtPkgNosPackageNo: TIntegerField
+      FieldName = 'PackageNo'
+    end
+    object mtPkgNosPrefix: TStringField
+      FieldName = 'Prefix'
+      Size = 3
+    end
+  end
+  object cds_LIP2: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'SELECT  Distinct LogicalInventoryPointNo AS LIPNo, LogicalInvent' +
+        'oryName AS LIPName'
+      'FROM dbo.LOGICALINVENTORYPOINT'
+      'WHERE'
+      'PhysicalInventoryPointNo = :PIPNo'
+      'AND SequenceNo = 1'
+      ''
+      'Order By LogicalInventoryName ')
+    Left = 744
+    Top = 296
+    ParamData = <
+      item
+        Name = 'PIPNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cds_LIP2LIPNo: TIntegerField
+      FieldName = 'LIPNo'
+      Origin = 'LIPNo'
+      Required = True
+    end
+    object cds_LIP2LIPName: TStringField
+      FieldName = 'LIPName'
+      Origin = 'LIPName'
+      Size = 50
+    end
+  end
+  object ds_LIP2: TDataSource
+    DataSet = cds_LIP2
+    Left = 744
+    Top = 352
+  end
+  object mtProps: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 824
+    Top = 296
+    object mtPropsPIPNo: TIntegerField
+      FieldName = 'PIPNo'
+    end
+    object mtPropsLIPNo: TIntegerField
+      FieldName = 'LIPNo'
+    end
+    object mtPropsLIP: TStringField
+      FieldKind = fkLookup
+      FieldName = 'LIP'
+      LookupDataSet = cds_LIP2
+      LookupKeyFields = 'LIPNo'
+      LookupResultField = 'LIPName'
+      KeyFields = 'LIPNo'
+      Size = 50
+      Lookup = True
+    end
+  end
+  object dsProps: TDataSource
+    DataSet = mtProps
+    Left = 824
+    Top = 351
   end
 end

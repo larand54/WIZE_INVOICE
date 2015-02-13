@@ -884,7 +884,7 @@ Begin
     if not sp_GetLegoOfLL.Eof then
       Result := sp_GetLegoOfLL.FieldByName('ClientNo').AsInteger
     else
-      Result := -1;
+      Result := 741 ;// -1;
   Finally
     sp_GetLegoOfLL.Active := False;
   End;
