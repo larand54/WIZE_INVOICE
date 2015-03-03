@@ -421,9 +421,8 @@ Begin
     cds_LoadFC.SQL.Add('INNER JOIN dbo.Loads L2 ON L2.LoadNo = LSP2.LoadNo');
     cds_LoadFC.SQL.Add('WHERE L2.FS = L.FS');
     cds_LoadFC.SQL.Add('AND LSP2.ShippingPlanNo = LSP.ShippingPlanNo');
-    if cds_PropsVerkNo.AsInteger = VIDA_WOOD_COMPANY_NO then
-      cds_LoadFC.SQL.Add('AND CLL2.ClientNo = ' +
-        IntToStr(VIDA_WOOD_COMPANY_NO))
+    if dmsContact.ThisUserIsRoleType(cds_PropsVerkNo.AsInteger, cSalesRegion) then //= VIDA_WOOD_COMPANY_NO then
+      cds_LoadFC.SQL.Add('AND CLL2.ClientNo = ' + IntToStr(cds_PropsVerkNo.AsInteger))
     else
       cds_LoadFC.SQL.Add('AND CLL2.ClientNo = ' + cds_PropsVerkNo.AsString);
 
@@ -471,8 +470,9 @@ Begin
       ('  				and CL.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
     cds_LoadFC.SQL.Add('where');
 
-    if cds_PropsVerkNo.AsInteger = VIDA_WOOD_COMPANY_NO then
-      cds_LoadFC.SQL.Add('CLL.ClientNo = ' + IntToStr(VIDA_WOOD_COMPANY_NO))
+//    if cds_PropsVerkNo.AsInteger = VIDA_WOOD_COMPANY_NO then
+    if dmsContact.ThisUserIsRoleType(cds_PropsVerkNo.AsInteger, cSalesRegion) then
+      cds_LoadFC.SQL.Add('CLL.ClientNo = ' + IntToStr(cds_PropsVerkNo.AsInteger))
     else
       cds_LoadFC.SQL.Add('CLL.ClientNo = ' + cds_PropsVerkNo.AsString);
 

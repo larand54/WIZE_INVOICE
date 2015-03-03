@@ -331,6 +331,9 @@ type
     sq_GetEmailAdr_Utlastad: TFDQuery;
     sq_GetEmailAdr_UtlastadEmailAddress: TStringField;
     sp_GetLegoOfLL: TFDStoredProc;
+    sq_GetSRNo: TFDQuery;
+    sq_GetSRNoSalesRegionNo: TIntegerField;
+    sp_GetCountryOfSR: TFDStoredProc;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;
@@ -348,11 +351,14 @@ type
     function FinnsAddressName(const AddressNo: Integer;
       const AddressName: String): Boolean;
     Function IsClientRoleType(const ClientNo, RoleType: Integer): Boolean;
-    function ThisUserIsRoleType(const ClientNo, RoleType: Integer): Boolean;
+
     // function  WhoBelongsToLoadingLocation(const LoadingLocationNo : Integer) : Integer ;
 
   public
-    function GetLocalSupplierNo(const LoadingLocationNo: Integer): Integer;
+    function GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
+    function ThisUserIsRoleType(const ClientNo, RoleType: Integer): Boolean;
+    function  GetSalesRegionNo (const CompanyNo : Integer) : Integer ;
+    function  GetLocalSupplierNo(const LoadingLocationNo: Integer): Integer;
     procedure Refresh_sp_AttLev(const RoleType: Integer);
     Function GetMaxLIPNoOfPIPNo(const PIPNo: Integer): Integer;
     Function ClientInterVerk(const CompanyNo: Integer): Boolean;
@@ -393,6 +399,33 @@ uses dmsDataConn, VidaConst, VidaUser, dmsVidaSystem;
 
 {$R *.dfm}
 { TdmsContact }
+
+function TdmsContact.GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
+Begin
+ if sp_GetCountryOfSR.Active then
+  sp_GetCountryOfSR.Active := False ;
+ sp_GetCountryOfSR.ParamByName('@SalesRegionNo').AsInteger  :=  SalesRegionNo ;
+ sp_GetCountryOfSR.Active := True ;
+ if not sp_GetCountryOfSR.Eof then
+  Result :=   sp_GetCountryOfSR.FieldByName('StatistikLandNr').AsInteger
+   else
+    Result  := -1 ;
+ sp_GetCountryOfSR.Active := False ;
+end;
+
+function TdmsContact.GetSalesRegionNo (const CompanyNo : Integer) : Integer ;
+Begin
+ sq_GetSRNo.ParamByName('ClientNo').AsInteger:= CompanyNo ;
+ Try
+ sq_GetSRNo.Open ;
+ if not sq_GetSRNo.Eof then
+  Result:= sq_GetSRNoSalesRegionNo.AsInteger
+   else
+    Result:= -1 ;
+ Finally
+  sq_GetSRNo.Close ;
+ End ;
+End ;
 
 procedure TdmsContact.provSawMillLoadOrders1111GetTableName(Sender: TObject;
   DataSet: TDataSet; var TableName: String);
@@ -860,11 +893,11 @@ End;
 
 procedure TdmsContact.cds_CompAdrAfterInsert(DataSet: TDataSet);
 begin
-  cds_CompAdrAddressNo.AsInteger := -1;
-  cds_CompAdrAddressType.AsInteger := 1; // AddressType ;
-  cds_CompAdrClientNo.AsInteger := 1; // cdsClientClientNo.AsInteger ;
-  cds_CompAdrModifiedUser.AsInteger := ThisUser.UserID;
-  cds_CompAdrCreatedUser.AsInteger := ThisUser.UserID;
+  cds_CompAdrAddressNo.AsInteger        := -1;
+  cds_CompAdrAddressType.AsInteger      := 1; // AddressType ;
+  cds_CompAdrClientNo.AsInteger         := 1; // cdsClientClientNo.AsInteger ;
+  cds_CompAdrModifiedUser.AsInteger     := ThisUser.UserID;
+  cds_CompAdrCreatedUser.AsInteger      := ThisUser.UserID;
   cds_CompAdrDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Date);
 end;
 
@@ -884,7 +917,7 @@ Begin
     if not sp_GetLegoOfLL.Eof then
       Result := sp_GetLegoOfLL.FieldByName('ClientNo').AsInteger
     else
-      Result := 741 ;// -1;
+      Result := ThisUser.CompanyNo ;
   Finally
     sp_GetLegoOfLL.Active := False;
   End;

@@ -492,13 +492,13 @@ End;
 
 procedure TdaMoLM1.cds_KontoLogikAfterInsert(DataSet: TDataSet);
 begin
-  cds_KontoLogikDateCreated.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+  cds_KontoLogikDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now);
   cds_KontoLogikDateModified.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
-  cds_KontoLogikCreatedUser.AsInteger := ThisUser.UserID;
-  cds_KontoLogikModifiedUser.AsInteger := ThisUser.UserID;
-  cds_KontoLogikTrading.AsInteger := 0;
-  cds_KontoLogikSalesregionNo.AsInteger := VIDA_WOOD_COMPANY_NO;
-  cds_KontoLogikMoms.AsInteger := 0;
+  cds_KontoLogikCreatedUser.AsInteger       := ThisUser.UserID;
+  cds_KontoLogikModifiedUser.AsInteger      := ThisUser.UserID;
+  cds_KontoLogikTrading.AsInteger           := 0;
+  cds_KontoLogikSalesregionNo.AsInteger     := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  cds_KontoLogikMoms.AsInteger              := 0;
 end;
 
 procedure TdaMoLM1.cds_KontoLogikBeforePost(DataSet: TDataSet);

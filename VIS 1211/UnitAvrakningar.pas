@@ -310,7 +310,7 @@ begin
       if AvrakningsNr <> -1 then
         SQL.Add('WHERE LFCH.AvrakningsNo = ' + IntToStr(AvrakningsNr))
       else if cds_PropsVerkNo.AsInteger > 0 then
-        if VIDA_WOOD_COMPANY_NO <> cds_PropsVerkNo.AsInteger then
+        if dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) <> cds_PropsVerkNo.AsInteger then // VIDA_WOOD_COMPANY_NO            f <> cds_PropsVerkNo.AsInteger then
           SQL.Add('WHERE LFCH.VerkNo = ' + cds_PropsVerkNo.AsString);
 
       // SQL.SaveToFile('sq_LoadFreightCostHeader2.txt') ;

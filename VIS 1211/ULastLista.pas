@@ -211,7 +211,7 @@ begin
 
   // dmsContact.Load_Int_and_Lego(peCompany.Items) ;
 
-  if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+  if  dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then // = VIDA_WOOD_COMPANY_NO then
     lcVerk.Properties.ReadOnly := False;
 
   LoadProps;
@@ -223,7 +223,7 @@ begin
   else
   Begin
     cds_Props.Insert;
-    cds_PropsVerkNo.AsInteger := ThisUser.CompanyNo;
+    cds_PropsVerkNo.AsInteger           := ThisUser.CompanyNo;
     cds_PropsStartPeriod.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
     cds_Props.Post;
   End;

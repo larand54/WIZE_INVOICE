@@ -138,6 +138,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
+
   public
     { Public declarations }
     procedure SetLIPNo(const LIPNo: Integer);
@@ -274,10 +275,10 @@ Begin
 
     if mtuserprop.FieldByName('RoleType').AsInteger = cLego then
     Begin
-      mtuserprop.FieldByName('OwnerNo').AsInteger := VIDA_WOOD_COMPANY_NO;
+      mtuserprop.FieldByName('OwnerNo').AsInteger := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;// VIDA_WOOD_COMPANY_NO;
       mtuserprop.FieldByName('PIPNo').AsInteger :=
         dmsContact.GetPIPByClientNoPIPNO(ThisUser.CompanyNo);
-      mtuserprop.FieldByName('SalesRegionNo').AsInteger := VIDA_WOOD_COMPANY_NO;
+      mtuserprop.FieldByName('SalesRegionNo').AsInteger := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ; //VIDA_WOOD_COMPANY_NO;
     End
     else
     Begin
@@ -437,6 +438,7 @@ Begin
   cds_Props.Active := False;
 End;
 
+
 procedure Tdm_UserProps.DataModuleCreate(Sender: TObject);
 begin
   cdsBarCodes.Active := True;
@@ -453,6 +455,7 @@ begin
     cdsGradeStampsAct.AsInteger          := 0 ;
     cdsGradeStamps.Post ; }
 
+  cds_Verk.ParamByName('SalesRegionNo').AsInteger := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
   cds_Verk.Active := True;
   cds_Verk.InsertRecord([0, 'Ingen ändring', 'Ingen ändring']);
 

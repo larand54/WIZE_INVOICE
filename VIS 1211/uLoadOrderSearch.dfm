@@ -1173,7 +1173,6 @@
     Top = 96
   end
   object cds_SearchOrder: TFDQuery
-    Active = True
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       

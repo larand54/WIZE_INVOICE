@@ -17,6 +17,8 @@ object fLastLista: TfLastLista
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -570,6 +572,7 @@ object fLastLista: TfLastLista
     Control = grdLastLista
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object imglistActions: TImageList
     Height = 24

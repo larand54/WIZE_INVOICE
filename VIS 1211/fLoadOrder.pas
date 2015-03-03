@@ -457,7 +457,6 @@ type
     procedure acCollapseAllExecute(Sender: TObject);
     procedure acExportToXLSExecute(Sender: TObject);
     procedure acSearchLoadNoExecute(Sender: TObject);
-    procedure bbGoToLoadClick(Sender: TObject);
     procedure acAddToLastLoadListExecute(Sender: TObject);
     procedure acSpec_ALLA_LasterExecute(Sender: TObject);
     procedure dxBarButton18Click(Sender: TObject);
@@ -482,7 +481,6 @@ type
     procedure acShowPriceListUpdate(Sender: TObject);
     procedure acPrintLOStatusExecute(Sender: TObject);
     procedure acPrintMarkedLOsExecute(Sender: TObject);
-    procedure acSkapaPaketKoderExecute(Sender: TObject);
     procedure acLOLengthsExecute(Sender: TObject);
     procedure acLOLengthsUpdate(Sender: TObject);
     procedure acLoadOrderListSetupExecute(Sender: TObject);
@@ -553,8 +551,10 @@ type
     procedure OpenNormalLoad(Sender: TObject);
     procedure BuildVIDAWOODGetOne_LO_SQL(Sender: TObject);
 
-    procedure CreateLoadAndEntryTo_Load_Imp(const L_SupplierNo, LONo,
-      TempLoadNo: Integer; const Fil, Mapp: String);
+    {
+      procedure CreateLoadAndEntryTo_Load_Imp(const L_SupplierNo, LONo,
+          TempLoadNo: Integer; const Fil, Mapp: String);
+  }
     procedure AddMarkedLOToFile(Sender: TObject; const Mapp: String;
       const NewFile: Boolean);
     procedure GetLO(const LONo: Integer; Sender: TObject);
@@ -620,7 +620,8 @@ uses
   UnitLoadEntrySSP, UnitBookingForm, dmsVidaContact, dmcVidaSystem,
   dmcLoadEntrySSP, dmc_ArrivingLoads, dmsDataConn, uEntryField,
   dmsVidaSystem, UnitCRPrintReport,
-  uLOLengths, uLoadOrderListSetup, uInScannedPkgs, dmBooking,
+  //uLOLengths,
+  uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
   uSelectFSFileName, dmc_UserProps, udmLanguage;
 
@@ -1846,7 +1847,7 @@ begin
   if (StrToIntDef(Trim(teSearchLONo.Text), 0) > 0) or
     (Length(Trim(teReferens.Text)) > 0) then
   Begin
-    if ThisUser.CompanyNo = 741 then
+    if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
       BuildVIDAWOODGetOne_LO_SQL(Sender)
     else
       BuildGetOne_LO_SQL(Sender);
@@ -1872,7 +1873,7 @@ begin
         teSearchLONo.Text := IntToStr(ShippingPlanNo);
         dmcOrder.cdsSawmillLoadOrders.Active := False;
 
-        if ThisUser.CompanyNo = 741 then
+        if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
           BuildVIDAWOODGetOne_LO_SQL(Sender)
         else
           BuildGetOne_LO_SQL(Sender);
@@ -1923,11 +1924,11 @@ begin
           dmcOrder.cds_PropsOrderTypeNo.AsInteger := 1;
           dmcOrder.cds_Props.Post;
         End;
-        ClientNo := 741; // ThisUser.CompanyNo ;// 741 ;
-        LEGO := True;
+        ClientNo  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+        LEGO      := True;
       End
       else if (dmsContact.ClientInterVerk(ThisUser.CompanyNo)) or
-        (ThisUser.CompanyNo = 741) then
+        (dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion)) then
         ClientNo := dmcOrder.cds_PropsVerkNo.AsInteger;
 
       cdsSawmillLoadOrders.SQL.Clear;
@@ -2440,27 +2441,7 @@ begin
       dmcOrder.cds_Props.Post;
       // End ;
 
-      { if (dmsContact.IsClientLego(ThisUser.CompanyNo) = cLego)
-        and (dmsContact.ClientInterVerk(ThisUser.CompanyNo) = False) then
-        Begin
-        if LO_LoadingLocationIsLegoLoadingLocation(StrToIntDef(teSearchLONo.Text,0), ThisUser.CompanyNo) then
-        Begin
-        dmcOrder.cds_Props.Edit ;
-        dmcOrder.cds_PropsOrderTypeNo.AsInteger  := 0 ;
-        dmcOrder.cds_Props.Post ;
-        End
-        else
-        Begin
-        dmcOrder.cds_Props.Edit ;
-        dmcOrder.cds_PropsOrderTypeNo.AsInteger  := 1 ;
-        dmcOrder.cds_Props.Post ;
-        End ;
-        ClientNo := 741 ;
-        LEGO     := True ;
-        End
-        else
-        if (dmsContact.ClientInterVerk(ThisUser.CompanyNo) ) or (ThisUser.CompanyNo = 741) then
-        ClientNo  := dmcOrder.cds_PropsVerkNo.AsInteger ; }
+
 
       cdsSawmillLoadOrders.SQL.Clear;
 
@@ -3629,7 +3610,7 @@ begin
         Begin
           teSearchLONo.Text := IntToStr(LONo);
 
-          if ThisUser.CompanyNo = 741 then
+          if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
             BuildVIDAWOODGetOne_LO_SQL(Sender)
           else
             BuildGetOne_LO_SQL(Sender);
@@ -3655,49 +3636,6 @@ begin
       FreeAndNil(fEntryField); // .Free ;
     End;
   End;
-end;
-
-procedure TfrmLoadOrder.bbGoToLoadClick(Sender: TObject);
-Var
-  LoadNo, LONo: Integer;
-begin
-  (* With dmcOrder do
-    Begin
-    //  if bcLastLoadNoOpen.Items.Count > 0 then
-    if cbLastOpenLoads.Properties.Items.Count > 0 then
-    Begin
-    LONo:= 0 ;
-    LoadNo:= StrToIntDef(Trim(Copy(cbLastOpenLoads.Properties.Items[cbLastOpenLoads.ItemIndex],1,5)),0) ;
-
-    if LoadNo > 0 then
-    Begin
-    LONo:= GetLONoForLoadNo (LoadNo) ;
-    if LONo > 0 then
-    Begin
-    teSearchLONo.Text:= IntToStr(LONo) ;
-
-    if ThisUser.CompanyNo = 741 then
-    BuildVIDAWOODGetOne_LO_SQL(Sender)
-    else
-    BuildGetOne_LO_SQL (Sender) ;
-
-    dmcOrder.cdsSawmillLoadOrders.Active:= False ;
-    CheckIfChangesUnSaved(Sender) ;
-    RefreshLoadOrders(Sender);
-    SearchOneLO:= True ;
-    ShowLoadsForLO(cdsSawmillLoadOrdersLONumber.AsInteger);
-    //     cdsLoadsForLO.Locate('LoadNo',LoadNo,[]) ;
-
-    if dmcOrder.FindLoadRecord(LoadNo) then ;
-
-    grdFS.SetFocus ;
-    //     teSearchLONo.Text:= '' ;
-    //     teSearchLONo.SetFocus ;
-    End ;
-    End ;
-    End ;
-    End ; //with
-  *)
 end;
 
 procedure TfrmLoadOrder.acAddToLastLoadListExecute(Sender: TObject);
@@ -4395,79 +4333,38 @@ begin
   End; // with
 end;
 
-procedure TfrmLoadOrder.acSkapaPaketKoderExecute(Sender: TObject);
-Var
-  InfoList: TStrings;
-  Save_Cursor: TCursor;
-  SupplierShipPlanObjectNo: Integer;
-begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait; { Show hourglass cursor }
-  InfoList := TStringList.Create;
-  Try
-    with dmcOrder do
-    Begin
-      SupplierShipPlanObjectNo :=
-        cdsSawmillLoadOrdersSupplierShipPlanObjectNo.AsInteger;
-      SkapaPaketKoder(InfoList);
-      if cdsSawmillLoadOrders.FindKey([SupplierShipPlanObjectNo]) then;
-
-      if cdsBooking.State = dsEdit then
-        cdsBooking.Post;
-      if cdsSawmillLoadOrders.State = dsEdit then
-        cdsSawmillLoadOrders.Post;
-
-      if cdsSawmillLoadOrders.ChangeCount > 0 then
-      Begin
-        cdsSawmillLoadOrders.ApplyUpdates(0);
-        cdsSawmillLoadOrders.CommitUpdates;
-      End;
-
-      if cdsBooking.ChangeCount > 0 then
-      Begin
-        cdsBooking.ApplyUpdates(0);
-        cdsBooking.CommitUpdates;
-      End;
-
-      if InfoList.Count > 0 then
-      Begin
-        dmsSystem.ShowMemo(InfoList);
-      End;
-    End; // With
-  finally
-    InfoList.Free;
-    Screen.Cursor := Save_Cursor; { Always restore to normal }
-  end;
-end;
-
 procedure TfrmLoadOrder.acLOLengthsExecute(Sender: TObject);
-var
-  fLOLengths: TfLOLengths;
+{
+  var
+    fLOLengths: TfLOLengths;
+}
 begin
-  With dmcOrder do
-  Begin
-    fLOLengths := TfLOLengths.Create(nil);
-    Try
-      fLOLengths.PkgCodePPZeroGroupNo :=
-        cdsSawmillLoadOrdersPkgCodePPNo.AsInteger;
-      cds_LOLengths.Active := False;
-      cds_LOLengths.ParamByName('SupplierShipPlanObjectNo').AsInteger :=
-        cdsSawmillLoadOrdersSupplierShipPlanObjectNo.AsInteger;
-      cds_LOLengths.Active := True;
-      // cds_LOLengths.Filter:= 'SupplierShipPlanObjectNo = ' + cds_LOSupplierShipPlanObjectNo.AsString ;
-      fLOLengths.ShowModal;
-      if cds_LOLengths.State in [dsEdit, dsInsert] then
-        cds_LOLengths.Post;
-      if cds_LOLengths.ChangeCount > 0 then
-      Begin
-        cds_LOLengths.ApplyUpdates(0);
-        cds_LOLengths.CommitUpdates;
+{
+    With dmcOrder do
+    Begin
+      fLOLengths := TfLOLengths.Create(nil);
+      Try
+        fLOLengths.PkgCodePPZeroGroupNo :=
+          cdsSawmillLoadOrdersPkgCodePPNo.AsInteger;
+        cds_LOLengths.Active := False;
+        cds_LOLengths.ParamByName('SupplierShipPlanObjectNo').AsInteger :=
+          cdsSawmillLoadOrdersSupplierShipPlanObjectNo.AsInteger;
+        cds_LOLengths.Active := True;
+        // cds_LOLengths.Filter:= 'SupplierShipPlanObjectNo = ' + cds_LOSupplierShipPlanObjectNo.AsString ;
+        fLOLengths.ShowModal;
+        if cds_LOLengths.State in [dsEdit, dsInsert] then
+          cds_LOLengths.Post;
+        if cds_LOLengths.ChangeCount > 0 then
+        Begin
+          cds_LOLengths.ApplyUpdates(0);
+          cds_LOLengths.CommitUpdates;
+        End;
+      Finally
+        cds_LOLengths.Active := False;
+        // FreeAndNil(fLOLengths) ;
       End;
-    Finally
-      cds_LOLengths.Active := False;
-      // FreeAndNil(fLOLengths) ;
     End;
-  End;
+}
 end;
 
 procedure TfrmLoadOrder.acLOLengthsUpdate(Sender: TObject);
@@ -4912,142 +4809,140 @@ begin
 end;
 
 // Läser in en fil och skapar en last
-procedure TfrmLoadOrder.CreateLoadAndEntryTo_Load_Imp(const L_SupplierNo, LONo,
-  TempLoadNo: Integer; const Fil, Mapp: String);
-Var
-  S: TStringList;
-  SPN, EgnaPaket, LoadID, FS, Prefix: String;
-  x, PkgNo, NewLoadNo, SupplierNo, ProductNo: Integer;
-  AntalPaket: Integer;
+{
+  procedure TfrmLoadOrder.CreateLoadAndEntryTo_Load_Imp(const L_SupplierNo, LONo,
+    TempLoadNo: Integer; const Fil, Mapp: String);
+  Var
+    S: TStringList;
+    SPN, EgnaPaket, LoadID, FS, Prefix: String;
+    x, PkgNo, NewLoadNo, SupplierNo, ProductNo: Integer;
+    AntalPaket: Integer;
 
-  procedure DeleteTempPkg;
-  Begin
-    with dmsSystem do
+    procedure DeleteTempPkg;
     Begin
-      Try
-        sq_DelTempPkg.ParamByName('UserID').AsInteger := ThisUser.UserID;
-        sq_DelTempPkg.ExecSQL;
-      except
-        On E: Exception do
-        Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    End;
-  End;
-
-  procedure AddPkgToTempTable;
-  Begin
-    with dmsSystem do
-    Begin
-      Try
-        if dmcOrder.PkgStatus(L_SupplierNo, PkgNo, Prefix) = False then
-          Prefix := '???';
-
-        sq_InsTempPkg.ParamByName('UserID').AsInteger := ThisUser.UserID;
-        sq_InsTempPkg.ParamByName('PackageNo').AsInteger := PkgNo;
-        sq_InsTempPkg.ParamByName('SupplierCode').AsString := Prefix;
-        // sq_InsTempPkg.ParamByName('SupplierNo').AsInteger   := L_SupplierNo ;
-        sq_InsTempPkg.ExecSQL;
-      except
-        On E: Exception do
-        Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    End;
-  End;
-
-// CreateLoadAndEntryTo_Load_Imp
-Begin
-  // Mapp := dmsSystem.Get_A_Value_From_UserDir('LastOrder.txt', 'ExportDir') ;
-  S := TStringList.Create;
-
-  Try
-    DeleteTempPkg;
-    S.LoadFromFile(Mapp + Fil);
-    if S.Count > 0 then
-      EgnaPaket := S.Strings[0];
-    if S.Count > 1 then
-      LoadID := S.Strings[1];
-    if S.Count > 2 then
-      FS := S.Strings[2];
-    AntalPaket := S.Count - 3;
-    For x := 3 to S.Count - 1 do
-    Begin
-      if Length(S.Strings[x]) > 10 then
+      with dmsSystem do
       Begin
-        Prefix := dmsContact.GetSuppliercodeByPktLevKod
-          (Copy(S.Strings[x], 12, 2));
-        PkgNo := StrToIntDef(Copy(S.Strings[x], 14, 6), 0);
-        if Prefix = 'BTH' then
-        Begin
-          // Om "BTH" inte finns i lagret som en produkt i LO then använd "BH1"
-          Prefix := dmcOrder.CheckIfChangeToPrefix_BH1(PkgNo, L_SupplierNo,
-            L_SupplierNo, LONo, Prefix);
-        End;
-      End // if Length(S.Strings[x]) > 10 then
-      else
+        Try
+          sq_DelTempPkg.ParamByName('UserID').AsInteger := ThisUser.UserID;
+          sq_DelTempPkg.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+      End;
+    End;
+
+    procedure AddPkgToTempTable;
+    Begin
+      with dmsSystem do
       Begin
-        SPN := '';
-        SPN := S.Strings[x];
-        if Length(SPN) = 8 then // Första 2 siffror är prefixet.
+        Try
+          if dmcOrder.PkgStatus(L_SupplierNo, PkgNo, Prefix) = False then
+            Prefix := '???';
+
+          sq_InsTempPkg.ParamByName('UserID').AsInteger := ThisUser.UserID;
+          sq_InsTempPkg.ParamByName('PackageNo').AsInteger := PkgNo;
+          sq_InsTempPkg.ParamByName('SupplierCode').AsString := Prefix;
+          // sq_InsTempPkg.ParamByName('SupplierNo').AsInteger   := L_SupplierNo ;
+          sq_InsTempPkg.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+      End;
+    End;
+
+  // CreateLoadAndEntryTo_Load_Imp
+  Begin
+    // Mapp := dmsSystem.Get_A_Value_From_UserDir('LastOrder.txt', 'ExportDir') ;
+    S := TStringList.Create;
+
+    Try
+      DeleteTempPkg;
+      S.LoadFromFile(Mapp + Fil);
+      if S.Count > 0 then
+        EgnaPaket := S.Strings[0];
+      if S.Count > 1 then
+        LoadID := S.Strings[1];
+      if S.Count > 2 then
+        FS := S.Strings[2];
+      AntalPaket := S.Count - 3;
+      For x := 3 to S.Count - 1 do
+      Begin
+        if Length(S.Strings[x]) > 10 then
         Begin
-          Prefix := dmsContact.GetSuppliercodeByPktLevKod(Copy(SPN, 1, 2));
-          PkgNo := StrToIntDef(Copy(SPN, 3, 6), 0);
-          // Prefix := dmcOrder.CheckIfChangeToPrefix_BH1(PkgNo, L_SupplierNo, L_SupplierNo, LONo, Prefix) ;
-        End
+          Prefix := dmsContact.GetSuppliercodeByPktLevKod
+            (Copy(S.Strings[x], 12, 2));
+          PkgNo := StrToIntDef(Copy(S.Strings[x], 14, 6), 0);
+          if Prefix = 'BTH' then
+          Begin
+            // Om "BTH" inte finns i lagret som en produkt i LO then använd "BH1"
+            Prefix := dmcOrder.CheckIfChangeToPrefix_BH1(PkgNo, L_SupplierNo,
+              L_SupplierNo, LONo, Prefix);
+          End;
+        End // if Length(S.Strings[x]) > 10 then
         else
         Begin
-          PkgNo := StrToIntDef(SPN, 0);
-          // Paket produkt måste finnas i LO rad
-          Prefix := dmsSystem.PkgNoToSuppCodeImportedPkg(PkgNo, L_SupplierNo,
-            L_SupplierNo, LONo, SupplierNo, ProductNo);
-          // Om inte Paket produkt finns i LO rad then hämta in paketnr som matchar.
-          if Length(Prefix) = 0 then
+          SPN := '';
+          SPN := S.Strings[x];
+          if Length(SPN) = 8 then // Första 2 siffror är prefixet.
+          Begin
+            Prefix := dmsContact.GetSuppliercodeByPktLevKod(Copy(SPN, 1, 2));
+            PkgNo := StrToIntDef(Copy(SPN, 3, 6), 0);
+            // Prefix := dmcOrder.CheckIfChangeToPrefix_BH1(PkgNo, L_SupplierNo, L_SupplierNo, LONo, Prefix) ;
+          End
+          else
+          Begin
+            PkgNo := StrToIntDef(SPN, 0);
+            // Paket produkt måste finnas i LO rad
             Prefix := dmsSystem.PkgNoToSuppCodeImportedPkg(PkgNo, L_SupplierNo,
-              L_SupplierNo, -1, SupplierNo, ProductNo);
-          // Prefix := dmsContact.GetClientCode(L_SupplierNo) ;
-        End;
-        // if EgnaPaket = '1' then
-        // Prefix:= dmsContact.GetPrefixByClientNo(L_SupplierNo)
-        // else
-      End; // Else
-      if Length(Prefix) = 0 then
-        Prefix := '???';
-      if (PkgNo > 0) AND (Length(Prefix) > 0) then
-        AddPkgToTempTable;
-    End; // For x
+              L_SupplierNo, LONo, SupplierNo, ProductNo);
+            // Om inte Paket produkt finns i LO rad then hämta in paketnr som matchar.
+            if Length(Prefix) = 0 then
+              Prefix := dmsSystem.PkgNoToSuppCodeImportedPkg(PkgNo, L_SupplierNo,
+                L_SupplierNo, -1, SupplierNo, ProductNo);
+            // Prefix := dmsContact.GetClientCode(L_SupplierNo) ;
+          End;
+          // if EgnaPaket = '1' then
+          // Prefix:= dmsContact.GetPrefixByClientNo(L_SupplierNo)
+          // else
+        End; // Else
+        if Length(Prefix) = 0 then
+          Prefix := '???';
+        if (PkgNo > 0) AND (Length(Prefix) > 0) then
+          AddPkgToTempTable;
+      End; // For x
 
-    dmsConnector.StartTransaction;
-    try
-      NewLoadNo := dmsSystem.NewLoad(L_SupplierNo, ThisUser.UserID, LONo,
-        LoadID, FS);
-      dmsSystem.InsLoad_Imp(TempLoadNo, NewLoadNo, LONo, AntalPaket);
-      { mtImportedLoads.Insert ;
-        mtImportedLoadsLoadNo.AsInteger      := NewLoadNo ;
-        mtImportedLoadsLONo.AsInteger        := LONo ;
-        mtImportedLoadsAntalPaket.AsInteger  := AntalPaket ;
-        mtImportedLoads.Post ; }
+      dmsConnector.StartTransaction;
+      try
+        NewLoadNo := dmsSystem.NewLoad(L_SupplierNo, ThisUser.UserID, LONo,
+          LoadID, FS);
+        dmsSystem.InsLoad_Imp(TempLoadNo, NewLoadNo, LONo, AntalPaket);
 
-      dmsConnector.Commit;
-    except
-      dmsConnector.Rollback;
-      raise;
-    end;
 
-    dmsSystem.cds_Load_Imp.Active := False;
-    dmsSystem.cds_Load_Imp.ParamByName('UserID').AsInteger := ThisUser.UserID;
-    dmsSystem.cds_Load_Imp.Active := True;
+        dmsConnector.Commit;
+      except
+        dmsConnector.Rollback;
+        raise;
+      end;
 
-  Finally
-    S.Free;
+      dmsSystem.cds_Load_Imp.Active := False;
+      dmsSystem.cds_Load_Imp.ParamByName('UserID').AsInteger := ThisUser.UserID;
+      dmsSystem.cds_Load_Imp.Active := True;
+
+    Finally
+      S.Free;
+    End;
   End;
-End;
+}
 
 procedure TfrmLoadOrder.acOpenFSExecute(Sender: TObject);
 begin
@@ -5354,7 +5249,7 @@ begin
     // dmcOrder.SupplierNo är valt företag i droplistan
     // Endast vidawood användare kan välja ett annat än sitt eget företag
     // Väljer en vida wood användare ett annat företag används LO.supplierNo som supplier till last form.
-    if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+    if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then // = VIDA_WOOD_COMPANY_NO then
       LSupplierNo := grdLODBTableView1.DataController.DataSet.FieldByName
         ('Supplier').AsInteger
     else // dmcOrder.SupplierNo kan vara tex en lego

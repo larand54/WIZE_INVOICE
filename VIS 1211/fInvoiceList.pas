@@ -847,25 +847,25 @@ begin
 
       cdsInvoiceHeadDebit_Credit.AsInteger := 0;
 
-      cdsInvoiceHeadInvoiceType.AsInteger := 0;
-      cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
-      cdsInvoiceHeadSupplierNo.AsInteger := VIDA_WOOD_COMPANY_NO; // Vida Wood
-      cdsInvoiceHeadCustomerNo.AsInteger := -1;
-      cdsInvoiceHeadAgentNo.AsInteger := -1;
-      cdsInvoiceHeadAgentCommission.AsFloat := 0;
+      cdsInvoiceHeadInvoiceType.AsInteger         := 0;
+      cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp    := DateTimeToSQLTimeStamp(now);
+      cdsInvoiceHeadSupplierNo.AsInteger          := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ; // Vida Wood
+      cdsInvoiceHeadCustomerNo.AsInteger          := -1;
+      cdsInvoiceHeadAgentNo.AsInteger             := -1;
+      cdsInvoiceHeadAgentCommission.AsFloat       := 0;
       // cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
-      cdsInvoiceHeadPaymentTermsNo.AsInteger := -1;
-      cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := -1;
-      cdsInvoiceHeadFreightInDiscount.AsInteger := -1;
-      cdsInvoiceHeadFreightInCommission.AsInteger := -1;
-      cdsInvoiceHeadDiscount1.AsFloat := 1;
-      cdsInvoiceHeadCurrencyName.AsString := '';
+      cdsInvoiceHeadPaymentTermsNo.AsInteger            := -1;
+      cdsInvoiceHeadCommissionPaidByCustomer.AsInteger  := -1;
+      cdsInvoiceHeadFreightInDiscount.AsInteger         := -1;
+      cdsInvoiceHeadFreightInCommission.AsInteger       := -1;
+      cdsInvoiceHeadDiscount1.AsFloat                   := 1;
+      cdsInvoiceHeadCurrencyName.AsString               := '';
 
-      cdsInvoiceHeadDeliveryTermsNo.AsInteger := -1;
-      cdsInvoiceHeadDestinationNo.AsInteger := -1;
-      cdsInvoiceHeadStatus.AsInteger := 0;
-      cdsInvoiceHeadVAT_OnInvoice.AsInteger := 0;
-      cdsInvoiceHeadSpecialMoms.AsInteger := 0;
+      cdsInvoiceHeadDeliveryTermsNo.AsInteger           := -1;
+      cdsInvoiceHeadDestinationNo.AsInteger             := -1;
+      cdsInvoiceHeadStatus.AsInteger                    := 0;
+      cdsInvoiceHeadVAT_OnInvoice.AsInteger             := 0;
+      cdsInvoiceHeadSpecialMoms.AsInteger               := 0;
       { cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
         cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;
 
@@ -6279,28 +6279,28 @@ begin
         cdsInvoiceHeadInternalInvoiceNo.AsInteger :=
           dmsConnector.NextMaxNo('InvoiceHeader');
 
-        cdsInvoiceHeadDebit_Credit.AsInteger := 0;
+        cdsInvoiceHeadDebit_Credit.AsInteger              := 0;
 
-        cdsInvoiceHeadInvoiceType.AsInteger := 0;
-        cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(now);
-        cdsInvoiceHeadSupplierNo.AsInteger := VIDA_WOOD_COMPANY_NO; // Vida Wood
-        cdsInvoiceHeadCustomerNo.AsInteger := -1;
-        cdsInvoiceHeadAgentNo.AsInteger := -1;
-        cdsInvoiceHeadAgentCommission.AsFloat := 0;
+        cdsInvoiceHeadInvoiceType.AsInteger               := 0;
+        cdsInvoiceHeadInvoiceDate.AsSQLTimeStamp          := DateTimeToSQLTimeStamp(now);
+        cdsInvoiceHeadSupplierNo.AsInteger                := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+        cdsInvoiceHeadCustomerNo.AsInteger                := -1;
+        cdsInvoiceHeadAgentNo.AsInteger                   := -1;
+        cdsInvoiceHeadAgentCommission.AsFloat             := 0;
         // cdsInvoiceHeadSendInvoiceToAgent.AsInteger                    := -1 ;
-        cdsInvoiceHeadPaymentTermsNo.AsInteger := -1;
-        cdsInvoiceHeadCommissionPaidByCustomer.AsInteger := -1;
-        cdsInvoiceHeadFreightInDiscount.AsInteger := -1;
-        cdsInvoiceHeadFreightInCommission.AsInteger := -1;
-        cdsInvoiceHeadDiscount1.AsFloat := 1;
-        cdsInvoiceHeadCurrencyName.AsString := '';
+        cdsInvoiceHeadPaymentTermsNo.AsInteger            := -1;
+        cdsInvoiceHeadCommissionPaidByCustomer.AsInteger  := -1;
+        cdsInvoiceHeadFreightInDiscount.AsInteger         := -1;
+        cdsInvoiceHeadFreightInCommission.AsInteger       := -1;
+        cdsInvoiceHeadDiscount1.AsFloat                   := 1;
+        cdsInvoiceHeadCurrencyName.AsString               := '';
 
-        cdsInvoiceHeadDeliveryTermsNo.AsInteger := -1;
-        cdsInvoiceHeadDestinationNo.AsInteger := -1;
-        cdsInvoiceHeadStatus.AsInteger := 0;
-        cdsInvoiceHeadVAT_OnInvoice.AsInteger := 0;
+        cdsInvoiceHeadDeliveryTermsNo.AsInteger           := -1;
+        cdsInvoiceHeadDestinationNo.AsInteger             := -1;
+        cdsInvoiceHeadStatus.AsInteger                    := 0;
+        cdsInvoiceHeadVAT_OnInvoice.AsInteger             := 0;
 
-        cdsInvoiceHeadSpecialMoms.AsInteger := 0;
+        cdsInvoiceHeadSpecialMoms.AsInteger               := 0;
         // cdsInvoiceHeadMoms.AsInteger                                  :=
         { cdsInvoiceHeadInvoiceText.AsVariant                           := sq_GetInvoiceHeadDataInvoiceText.AsVariant ;
           cdsInvoiceHeadPaymentText.AsVariant                           := sq_GetInvoiceHeadDataPaymentText.AsVariant ;

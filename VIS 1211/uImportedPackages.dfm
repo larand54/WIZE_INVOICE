@@ -137,7 +137,7 @@ object fImportedPackages: TfImportedPackages
         Left = 1
         Top = 1
         Width = 333
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -153,7 +153,7 @@ object fImportedPackages: TfImportedPackages
         Left = 1
         Top = 1
         Width = 63
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -766,8 +766,8 @@ object fImportedPackages: TfImportedPackages
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default'

@@ -57,7 +57,7 @@ begin
       promptUser, collated, PrinterSetup);
     if (numberOfCopy < 1) or (Length(ReportName) < 4) then
     Begin
-      ShowMessage('Rapporten finns inte upplagd på klienten');
+      ShowMessage('Rapporten ' + ReportName + ' finns inte upplagd på klienten');
       ReportFound := False;
       Exit;
     End;

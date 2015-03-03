@@ -4859,26 +4859,13 @@ Begin
     cds_PropsVerkNo.AsInteger := ThisUser.CompanyNo;
     cds_PropsForm.AsString := Form;
 
-    { if mtPropsRoleType.AsInteger = cLego then
-      Begin
-      mtPropsOwnerNo.AsInteger     :=  VIDA_WOOD_COMPANY_NO ;
-      mtPropsPIPNo.AsInteger       :=  dmsContact.GetPIPByClientNoPIPNO(ThisUser.CompanyNo) ;
-      End
-      else
-      mtPropsOwnerNo.AsInteger      :=  ThisUser.CompanyNo ; }
-
     cds_PropsLengthVolUnitNo.AsInteger := 0;
     cds_PropsBookingTypeNo.AsInteger := 0;
     cds_PropsBarCodeNo.AsInteger := 0;
-    // cds_PropsInputOption.AsInteger  :=  0 ;
-    // cds_PropsRegDate.AsDateTime     :=  Now ;
+
     cds_PropsCopyPcs.AsInteger := 0;
 
-    // cds_PropsRunNo.AsInteger        :=  -1 ;
-    // cds_PropsProducerNo.AsInteger   :=  ThisUser.CompanyNo ;
-    // cds_PropsAutoColWidth.AsInteger :=  1 ;
-    // cds_PropsSupplierCode.AsString  := dmsContact.GetClientCode(ThisUser.CompanyNo) ;
-    // cds_PropsLengthGroupNo.AsInteger:= -1 ;
+
     cds_Props.Post;
   End;
   // cds_Props.Active:= False ;
@@ -5050,6 +5037,7 @@ Function TdmVidaInvoice.GetCountryRegion(const SalesRegionNo,
 Var
   Region: String;
 
+
   Function IsEUCountry: Integer;
   Begin
     Try
@@ -5071,44 +5059,32 @@ Var
 
 // GetCountryRegion
 Begin
-  if SalesRegionNo = VIDA_DANMARK then
-  Begin
-    if CountryNo = DENMARK then
-      Result := DENMARK
-    else if CountryNo = Sweden then
-      Result := Sweden
-    else
-    Begin
-      Result := IsEUCountry;
-      if Result = -1 then
-        Result := 366; // Export
-    End;
-  End // if SalesRegionNo = VIDA_DANMARK then
-  else if ((SalesRegionNo = VIDA_WOOD_COMPANY_NO) or
-    (SalesRegionNo = VIDA_BORGSTENA_BOTLR)) then
-  Begin
-    if CountryNo = Sweden then
-      Result := Sweden
-    else
-    Begin
-      Result := IsEUCountry;
-      if Result = -1 then
-        Result := 366; // Export
-    End;
-  End // if SalesRegionNo = VIDA_WOOD_COMPANY_NO then
-  else
-  // Andra Försäljningsregioner
-  Begin
-    if CountryNo = Sweden then
-      Result := Sweden
-    else
-    Begin
-      Result := IsEUCountry;
-      if Result = -1 then
-        Result := 366; // Export
-    End;
-  End; // if SalesRegionNo = VIDA_WOOD_COMPANY_NO then
+ //CountryNo := dmsContact.GetCountryOfSalesRegion(SalesRegionNo) ;
 
+    if SalesRegionNo = VIDA_DANMARK then
+    Begin
+      if CountryNo = DENMARK then
+        Result := DENMARK
+      else if CountryNo = Sweden then
+        Result := Sweden
+      else
+      Begin
+        Result := IsEUCountry;
+        if Result = -1 then
+          Result := 366; // Export
+      End;
+    End // if SalesRegionNo = VIDA_DANMARK then
+    else
+    Begin
+      if CountryNo = Sweden then
+        Result := Sweden
+      else
+      Begin
+        Result := IsEUCountry;
+        if Result = -1 then
+          Result := 366; // Export
+      End;
+    End ;
 End;
 
 function TdmVidaInvoice.CreateDELCreditInvoiceByCopyDebitInvoice
@@ -6858,7 +6834,10 @@ Begin
     // varchar 8
     sp_xp_ldglogwrite.ParamByName('@logno').AsInteger := logno; // int
     sp_xp_ldglogwrite.ParamByName('@vouno').AsInteger := vouno; // int
+
+    if (ThisUser.UserName = 'larmak') or (ThisUser.UserName = 'Lars') then
     dmsSystem.FDoLog('#2: Serie = ' + serie);
+
     sp_xp_ldglogwrite.ParamByName('@serie').AsString := serie; // varchar 8
     sp_xp_ldglogwrite.ParamByName('@o2').AsString := Object2; // varchar 8
     sp_xp_ldglogwrite.ParamByName('@o5').AsString := Object5; // varchar 8
@@ -6920,9 +6899,12 @@ Begin
     logno := sp_VIS_xp_voulogwrite.ParamByName('@logno').AsInteger;
     serie := sp_VIS_xp_voulogwrite.ParamByName('@serie').AsString;
 
-    dmsSystem.FDoLog('#2: Serie = ' + serie);
-    dmsSystem.FDoLog('    Vouno = ' + IntToStr(vouno));
-    dmsSystem.FDoLog('    logno = ' + IntToStr(logno));
+    if (ThisUser.UserName = 'larmak') or (ThisUser.UserName = 'Lars') then
+    Begin
+      dmsSystem.FDoLog('#2: Serie = ' + serie);
+      dmsSystem.FDoLog('    Vouno = ' + IntToStr(vouno));
+      dmsSystem.FDoLog('    logno = ' + IntToStr(logno));
+    End;
 
     if (ThisUser.UserName = 'larmak') or (ThisUser.UserName = 'Lars') then
       showmessage('#2 EXEC_sp_VIS_xp_voulogwrite: Serie = ' + serie +
@@ -7373,17 +7355,17 @@ begin
       cdsInvTrfLogg.Insert;
 
       xorID := '';
-      Moms_20Percent := 0.20;
-      Moms_konto := '2610';
-      Rounding_SEK := 0;
-      Rounding_For := 0;
-      Rounding_Konto := '3740';
+      Moms_20Percent  := 0.20;
+      Moms_konto      := '2610';
+      Rounding_SEK    := 0;
+      Rounding_For    := 0;
+      Rounding_Konto  := '3740';
 
       Total_frakt_SEK := 0;
       Total_frakt_FOR := 0;
 
-      Debet := 0;
-      Kredit := 0;
+      Debet           := 0;
+      Kredit          := 0;
 
       sp_InvTotals.Active := False;
       sp_InvTotals.ParamByName('@IntInvNo').AsInteger := InternalInvoiceNo;
@@ -7487,6 +7469,8 @@ begin
 
         // OBJECT 5 ÄR MOTPART
         Object5 := sp_InvTotalsO5.AsString;
+
+     //   KundResKontra :=  GetKundResKontra(Object5, sp_InvTotalsCountryNo.AsInteger) ;
         // Kundreskontra
         if Object5 = '99' then // 99 = extern kund
         Begin
@@ -8209,7 +8193,7 @@ begin
           ResKontraSerie, InvoiceNo, 0, // seq
           IntToStr(InvoiceNo), InvoiceDate, InvoiceDate, duedate, currency,
           InvoiceTotal_SEK, InvoiceTotal_For, moms_sek, vatcode, KundResKontra,
-          'MJ', logno, vouno, serie, Object2, Object5);
+          'MJ', logno, vouno, serie, Object2, Object5) ;
 
       End // sp_InvTotals
       else

@@ -280,26 +280,7 @@ begin
   cds_PropsVerkNo.AsInteger := ThisUser.CompanyNo;
   cds_Props.Post;
 
-  { bcCompany.Properties.OnChange:= nil ;
-    Try
-    dmsContact.LoadSuppliers(bcCompany.Properties.Items);
 
-    if Thisuser.CompanyNo = VIDA_WOOD_COMPANY_NO then bcCompany.Enabled:= True ;
-
-    For x:= 0 to bcCompany.Properties.Items.Count -1 do
-    if ThisUser.CompanyNo = integer(bcCompany.Properties.Items.Objects[x]) then
-    Begin
-    bcCompany.ItemIndex:= x ;
-    fSupplierNo:= integer(bcCompany.Properties.Items.Objects[x]);
-    End ;
-
-    if Thisuser.CompanyNo = VIDA_WOOD_COMPANY_NO then
-    bcCompany.Properties.Items.Insert(0, 'ALLA');
-
-    Finally
-    bcCompany.Properties.OnChange:= bcCompanyPropertiesChange ;
-    End ;
-  }
 end;
 
 // droplista
@@ -676,88 +657,6 @@ begin
   End; // With dm_Avrakning do
 End;
 
-(* procedure TfrmSkapaAvrakning.Build_LegoLoads_SQL(Sender: TObject);
-  begin
-  With dm_Avrakning do
-  Begin
-  cdsArrivingLoads.Close ;
-  cdsArrivingLoads.SQL.Clear ;
-  cdsArrivingLoads.SQL.Add('SELECT DISTINCT') ;
-  cdsArrivingLoads.SQL.Add('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,') ;
-  cdsArrivingLoads.SQL.Add('isNull(IName.CityName, '+QuotedStr('')+')		AS	INVPOINTNAME,') ;
-
-  cdsArrivingLoads.SQL.Add('(SELECT US.INITIALS  FROM dbo.Confirmed_Load   CL, dbo.Users	US') ;
-  cdsArrivingLoads.SQL.Add('WHERE CL.Confirmed_LoadNo = LSP.LoadNo AND CL.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo') ;
-  cdsArrivingLoads.SQL.Add('AND US.UserID = cl.CreatedUser) AS INITIALS,') ;
-
-  cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,') ;
-  cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,') ;
-  cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,') ;
-  cdsArrivingLoads.SQL.Add('Mill.ClientCode                         AS      SUPPCODE,') ;
-  cdsArrivingLoads.SQL.Add('Cust.ClientCode                         AS      INT_CUSTOMER,') ;
-  cdsArrivingLoads.SQL.Add('Cust.ClientNo                         AS      CUSTOMERNO,') ;
-  cdsArrivingLoads.SQL.Add('Mill.ClientNo                      AS       SUPPLIER_NO,') ;
-  cdsArrivingLoads.SQL.Add('0                        AS      SKATTE_UPPLAG,') ;
-  cdsArrivingLoads.SQL.Add('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo') ;
-  cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,') ;
-  cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1') ;
-  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2') ;
-  cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad') ;
-
-
-  cdsArrivingLoads.SQL.Add('FROM  dbo.Client_LoadingLocation     CLL 	') ;
-
-  cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName			ON	CLL.PhyInvPointNameNo = IName.CityNo') ;
-
-  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.SupplierShippingPlan       SSP   	ON	CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
-  cdsArrivingLoads.SQL.Add('Left Outer Join dbo.Orders O ON O.OrderNo = SSP.OrderNo') ;
-  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
-  cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
-
-  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add(' AND     L.supplierno 		= SSP.SUPPLIERno') ;
-  cdsArrivingLoads.SQL.Add(' AND     L.CustomerNo 		= SSP.CustomerNo') ;
-  cdsArrivingLoads.SQL.Add(' INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= SSP.SupplierNo') ;
-  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= SSP.CustomerNo') ;
-  cdsArrivingLoads.SQL.Add(' WHERE') ;
-
-  //if Inlaster köp then
-  cdsArrivingLoads.SQL.Add('CLL.ClientNo = '+IntToStr(fSupplierNo)) ; // to get list of loads to pay
-  cdsArrivingLoads.SQL.Add('AND L.SenderLoadStatus = 2') ; // to get list of loads to pay
-  cdsArrivingLoads.SQL.Add('AND L.LoadedDate > '+QuotedStr('2006-12-31 00:00:00.000')) ;
-
-  cdsArrivingLoads.SQL.Add('AND Cust.ClientNo <> '+IntToStr(fSupplierNo)) ;
-
-
-
-  cdsArrivingLoads.SQL.Add('AND L.LOADNO IN (SELECT Confirmed_LoadNo FROM dbo.Confirmed_Load )') ;
-
-  cdsArrivingLoads.SQL.Add('AND') ;
-  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('NOT IN (SELECT LoadNo') ;
-  cdsArrivingLoads.SQL.Add('FROM dbo.LoadRemAvr)') ;
-
-
-  cdsArrivingLoads.SQL.Add('AND') ;
-  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL, dbo.LastAvrHdr PH') ;
-  cdsArrivingLoads.SQL.Add('WHERE') ;
-  cdsArrivingLoads.SQL.Add('PH.PaymentNo = PL.PaymentNo') ;
-  cdsArrivingLoads.SQL.Add('AND (PH.SupplierNo = '+IntToStr(fSupplierNo)) ;
-  cdsArrivingLoads.SQL.Add('OR PH.SupplierNo = 741))') ;
-
-  cdsArrivingLoads.SQL.Add('AND') ;
-  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
-  cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo') ;
-  cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)') ;
-
-
-  //  if ThisUser.UserID = 8 then  cdsArrivingLoads.SQL.SaveToFile('LegoLoads.txt');
-  End ; //With dm_Avrakning do
-  End ; *)
 
 procedure TfrmSkapaAvrakning.Build_PurchaseLoads_SQL(Sender: TObject);
 begin
@@ -1127,15 +1026,15 @@ Begin
       cds_IntOrderHead.Insert;
       cds_IntOrderHeadOrderNo.AsInteger :=
         dmsConnector.NextMaxNo('InternalOrderHead');
-      cds_IntOrderHeadShippingPlanNo.AsInteger := New_LO_No;
-      cds_IntOrderHeadCustomerNo.AsInteger := cds_SSPCustomerNo.AsInteger;
+      cds_IntOrderHeadShippingPlanNo.AsInteger          := New_LO_No;
+      cds_IntOrderHeadCustomerNo.AsInteger              := cds_SSPCustomerNo.AsInteger;
       cds_IntOrderHeadDefaultShipToInvPointNo.AsInteger :=
         cds_SSPShipToInvPointNo.AsInteger;
-      cds_IntOrderHeadStatus.AsInteger := 1;
-      cds_IntOrderHeadOrderNoText.AsString := IntToStr(New_LO_No);
-      cds_IntOrderHeadLanguageCode.AsInteger := 1;
-      cds_IntOrderHeadOrderType.AsInteger := 0;
-      cds_IntOrderHeadSalesRegionNo.AsInteger := VIDA_WOOD_COMPANY_NO;
+      cds_IntOrderHeadStatus.AsInteger                  := 1;
+      cds_IntOrderHeadOrderNoText.AsString              := IntToStr(New_LO_No);
+      cds_IntOrderHeadLanguageCode.AsInteger            := 1;
+      cds_IntOrderHeadOrderType.AsInteger               := 0;
+      cds_IntOrderHeadSalesRegionNo.AsInteger           := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
       cds_IntOrderHead.Post;
     End;
 
@@ -2095,9 +1994,7 @@ begin
       cdsPaymentLoads.Active := True;
       Try
         cdsPayHead.Active := False;
-        // if (peMomsFilter.ItemIndex = 2) then//inköp
-        // sq_PayHead.ParamByName('SupplierNo').AsInteger   := 741 //fSupplierNo ;
-        // else
+
         if cds_PropsStatus.AsInteger in [0, 1, 3] then
           cdsPayHead.ParamByName('SupplierNo').AsInteger :=
             cds_PropsVerkNo.AsInteger
@@ -2105,10 +2002,7 @@ begin
           cdsPayHead.ParamByName('SupplierNo').AsInteger :=
             VIDA_WOOD_COMPANY_NO;
 
-        // if (peMomsFilter.ItemIndex < 2) then
-        // cdsPayHead.ParamByName('CustomerNo').AsInteger   := 741 //cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-        // else
-        // Är det ett köp är customer det verk som är valt i droplistan.
+
         if cds_PropsStatus.AsInteger = 2 then
           cdsPayHead.ParamByName('CustomerNo').AsInteger :=
             cds_PropsVerkNo.AsInteger

@@ -559,7 +559,7 @@ begin
       sq_UpdateLoadDtlVal.ParamByName('PaymentType').AsInteger := 0;
       sq_UpdateLoadDtlVal.ParamByName('LoadDtlValPaymentNo').AsInteger :=
         cdsPaymentHeadPaymentNo.AsInteger;
-      if cds_PropsVerkNo.AsInteger = 741 then
+      if cds_PropsVerkNo.AsInteger = ThisUser.CompanyNo then
         SupplierNo := cdsPaymentHeadCustomerNo.AsInteger
       else
         SupplierNo := cds_PropsVerkNo.AsInteger;
@@ -799,7 +799,7 @@ Begin
           mtLoadNosLoadNo.AsInteger := LoadNo;
           mtLoadNosPaymentType.AsInteger := PaymentType;
           mtLoadNosPaymentNo.AsInteger := cdsPaymentHeadPaymentNo.AsInteger;
-          if cds_PropsVerkNo.AsInteger = 741 then
+          if cds_PropsVerkNo.AsInteger = ThisUser.CompanyNo then
             mtLoadNosSupplierNo.AsInteger := cdsPaymentHeadCustomerNo.AsInteger
           else
             mtLoadNosSupplierNo.AsInteger := cdsPaymentHeadSupplierNo.AsInteger;
@@ -900,7 +900,7 @@ Begin
       if mtLoadNosPaymentType.AsInteger = 1 then
       Begin
         // om det är ett inköp är vw leverantör, då måste vi byts ut supplierno mot köparens
-        if cds_PropsVerkNo.AsInteger = 741 then
+        if cds_PropsVerkNo.AsInteger = ThisUser.CompanyNo then
           SupplierNo := cdsPaymentHeadCustomerNo.AsInteger
         else
           SupplierNo := cds_PropsVerkNo.AsInteger;

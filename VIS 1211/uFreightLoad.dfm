@@ -23,16 +23,16 @@ object frmFreightLoad: TfrmFreightLoad
     Left = 0
     Top = 0
     Width = 1009
-    Height = 46
+    Height = 44
     Align = dalTop
     AllowDocking = False
     BarManager = dxBarManager1
   end
   object grdLoads: TcxGrid
     Left = 0
-    Top = 109
+    Top = 107
     Width = 1009
-    Height = 513
+    Height = 515
     Align = alClient
     PopupMenu = pmGrdLoads
     TabOrder = 1
@@ -173,7 +173,7 @@ object frmFreightLoad: TfrmFreightLoad
   end
   object Panel1: TPanel
     Left = 0
-    Top = 46
+    Top = 44
     Width = 1009
     Height = 63
     Align = alTop
@@ -320,8 +320,8 @@ object frmFreightLoad: TfrmFreightLoad
     AllowReset = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False
     Categories.Strings = (
@@ -1444,7 +1444,6 @@ object frmFreightLoad: TfrmFreightLoad
     Top = 192
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdLoads
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 1
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -1458,7 +1457,6 @@ object frmFreightLoad: TfrmFreightLoad
       PrinterPage.PageSize.Y = 279400
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

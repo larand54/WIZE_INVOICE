@@ -101,7 +101,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
         Left = 1
         Top = 1
         Width = 676
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -117,7 +117,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
         Left = 1
         Top = 1
         Width = 63
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -519,7 +519,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object ActionList1: TActionList
     Images = imglistActions
     Left = 480
-    Top = 256
+    Top = 280
     object acCreatePayments: TAction
       Caption = 'Skapa avr'#228'kning'
       ImageIndex = 14
@@ -588,8 +588,8 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -2825,7 +2825,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object ds_Props: TDataSource
     DataSet = cds_Props
     Left = 560
-    Top = 120
+    Top = 144
   end
   object siLangLinked_frmSkapaAvrakning: TsiLangLinked
     Version = '7.2'
@@ -2872,8 +2872,8 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
       'DataField'
       'KeyField'
       'ListField')
-    Left = 496
-    Top = 296
+    Left = 480
+    Top = 336
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660072006D0053006B00610070006100410076007200
