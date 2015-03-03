@@ -1883,20 +1883,18 @@ Begin
         cds_LoadDtlValNM3.AsFloat := cds_LoadRowm3Nominal.AsFloat;
         cds_LoadDtlValPrice.AsFloat := Price;
         if Update_OldPrice then
-          cds_LoadDtlValOldPrice.AsFloat := Price;
-        cds_LoadDtlValSubsum.AsFloat := Price * cds_LoadRowm3Nominal.AsFloat;
-        cds_LoadDtlValPaymentNo.AsInteger := PaymentNo; // -1 som default
-        cds_LoadDtlValPaymentType.AsInteger := PaymentType; // 0 som default
+          cds_LoadDtlValOldPrice.AsFloat      := Price;
+        cds_LoadDtlValSubsum.AsFloat          := Price * cds_LoadRowm3Nominal.AsFloat;
+        cds_LoadDtlValPaymentNo.AsInteger     := PaymentNo; // -1 som default
+        cds_LoadDtlValPaymentType.AsInteger   := PaymentType; // 0 som default
         cds_LoadDtlValPackageTypeNo.AsInteger :=
           cds_LoadRowPackageTypeNo.AsInteger;
-        // if Inkop = True then
-        // cds_LoadDtlValSupplierNo.AsInteger := 741
-        // else
+  
 
-        cds_LoadDtlValSupplierNo.AsInteger := SupplierNo;
+        cds_LoadDtlValSupplierNo.AsInteger      := SupplierNo;
         cds_LoadDtlValLoadedDate.AsSQLTimeStamp :=
           cds_LoadRowLoadedDate.AsSQLTimeStamp;
-        cds_LoadDtlValVerk_FS.AsString := cds_LoadRowFS.AsString;
+        cds_LoadDtlValVerk_FS.AsString          := cds_LoadRowFS.AsString;
         cds_LoadDtlVal.Post;
 
         cds_LoadRow.Next;

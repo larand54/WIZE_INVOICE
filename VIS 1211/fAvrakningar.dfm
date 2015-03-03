@@ -18,6 +18,8 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel3: TPanel
@@ -634,7 +636,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         Left = 0
         Top = 0
         Width = 757
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -944,7 +946,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     Left = 232
     Top = 152
     Bitmap = {
-      494C01010A000D000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010A000D00040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000001094CE001094CE001094CE001094CE001094CE000000
@@ -1355,8 +1357,8 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -1586,7 +1588,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     Left = 264
     Top = 152
     Bitmap = {
-      494C0101110015000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010111001500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000078000000010020000000000000B4
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

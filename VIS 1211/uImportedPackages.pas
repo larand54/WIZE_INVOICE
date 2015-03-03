@@ -492,7 +492,7 @@ begin
         // Create internal LO (SP "vis_VP_IntLO")
         // LONo  := dmsProduct.Create_VP_IntLO(mtUserPropOwnerNo.AsInteger,
         // dmsContact.GetSalesRegionNo(mtUserPropOwnerNo.AsInteger),
-        // 741, {SalesRegionNo,}
+        // 7 4 1, {SalesRegionNo,}
         // mtVisKlientClientNo.AsInteger, {SupplierNo}
         // mtUserPropPIPNo.AsInteger
         // ) ;

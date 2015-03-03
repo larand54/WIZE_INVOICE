@@ -94,7 +94,6 @@ uses
   uChkAvrLoads in 'uChkAvrLoads.pas' {fChkAvrLoads},
   uInvoiceWizard in 'uInvoiceWizard.pas' {fInvoiceWizard},
   uShowMemo in 'uShowMemo.pas' {fShowMemo},
-  uLOLengths in 'uLOLengths.pas' {fLOLengths},
   uLoadOrderListSetup in 'uLoadOrderListSetup.pas' {fLoadOrderListSetup},
   uTradingLinkMult in 'uTradingLinkMult.pas' {fTradingLinkMult},
   dmcVidaLO in 'dmcVidaLO.pas' {dmcLO: TDataModule},
@@ -165,7 +164,6 @@ begin
   Application.CreateForm(TdmsSystem, dmsSystem);
   Application.CreateForm(TdmsContact, dmsContact);
   Application.CreateForm(TdmModule1, dmModule1);
-  Application.CreateForm(Tdm_UserProps, dm_UserProps);
   Application.CreateForm(TdmLanguage, dmLanguage);
   Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
   Application.CreateForm(TXMLImportExport, XMLImportExport);

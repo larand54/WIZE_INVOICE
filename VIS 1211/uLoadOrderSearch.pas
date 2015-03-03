@@ -113,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser;
+uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser, dmsVidaContact;
 
 // -----------------------------------------------------------------------
 function OpenLoadOrderSearch(var LONr: Integer): Boolean;
@@ -325,7 +325,7 @@ begin
       if Length(Trim(SlutKund)) > 0 then
         SQL.Add('Where SlutKund.ClientName Like ' + QuotedStr(pSlutKund));
 
-      if ThisUser.CompanyNo <> 741 then
+      if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
         SQL.Add('AND ssp.SupplierNo = ' + IntToStr(ThisUser.CompanyNo));
 
       // sql.SaveToFile('cds_SearchOrder.txt');

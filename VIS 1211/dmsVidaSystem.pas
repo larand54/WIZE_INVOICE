@@ -1541,7 +1541,7 @@ Begin
     Result := cds_ProdLength.FieldByName('NomLength').AsFloat
   else
   Begin
-    if ClientNo = 741 then
+    if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
       Result := ALMM
     else
       Result := 0;

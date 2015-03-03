@@ -3244,7 +3244,7 @@ object dmcOrder: TdmcOrder
   object cdsLoadsForLO_forVW: TFDStoredProc
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'vida_LoadsForLO_X'
-    Left = 408
+    Left = 384
     Top = 152
     ParamData = <
       item
@@ -3628,8 +3628,8 @@ object dmcOrder: TdmcOrder
         'No'
       'FROM SupplierShippingPlan'
       'WHERE SupplierShipPlanObjectNo = :SupplierShipPlanObjectNo')
-    Left = 160
-    Top = 24
+    Left = 200
+    Top = 8
   end
   object sp_SetLOStatus: TFDStoredProc
     Connection = dmsConnector.FDConnection1

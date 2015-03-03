@@ -1913,7 +1913,6 @@ object frmLoadOrder: TfrmLoadOrder
       Category = 0
       Hint = #214'ppna'
       Visible = ivAlways
-      OnClick = bbGoToLoadClick
     end
     object dxBarControlContainerItem2: TdxBarControlContainerItem
       Caption = 'New Item'
@@ -5448,7 +5447,6 @@ object frmLoadOrder: TfrmLoadOrder
       Caption = 'Skapa koder Shift+F2'
       ImageIndex = 32
       ShortCut = 8305
-      OnExecute = acSkapaPaketKoderExecute
     end
     object acLOLengths: TAction
       Caption = 'LO L'#228'ngder'
@@ -6719,6 +6717,7 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -6732,7 +6731,8 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 41962.244717106490000000
+      ReportDocument.CreationDate = 42036.064050439820000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

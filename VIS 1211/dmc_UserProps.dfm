@@ -185,11 +185,18 @@ object dm_UserProps: Tdm_UserProps
       ''
       'WHERE  C.ClientNo = R.ClientNo'
       'AND   R.RoleType in (2,6,7,9)'
+      'AND  C.OwnedBySalesRegionNo = :SalesRegionNo'
       ''
       ''
       'Order by C.clientName')
     Left = 32
     Top = 120
+    ParamData = <
+      item
+        Name = 'SALESREGIONNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
     object cds_VerkClientNo: TIntegerField
       FieldName = 'ClientNo'
       Origin = 'ClientNo'

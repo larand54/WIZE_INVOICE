@@ -498,7 +498,7 @@ begin
     cds_Props.CommitUpdates;
   End;
 
-  if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+  if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then // = VIDA_WOOD_COMPANY_NO then
     lcVerk.Enabled := True
   else
     lcVerk.Enabled := False;
@@ -872,9 +872,9 @@ Begin
         End
         else
         Begin
-          if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+          if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
             cdsArrivingLoads.SQL.Add('(SP.CustomerNo = ' +
-              cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = 741)')
+              cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = ' + Inttostr(ThisUser.CompanyNo) + ')')
           else
             cdsArrivingLoads.SQL.Add('SP.CustomerNo = ' +
               cds_PropsVerkNo.AsString);
@@ -1114,9 +1114,9 @@ Begin
         End
         else
         Begin
-          if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+          if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
             cdsArrivingLoads.SQL.Add('(SP.CustomerNo = ' +
-              cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = 741)')
+              cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = ' + inttostr(ThisUser.CompanyNo) + ')')
           else
             cdsArrivingLoads.SQL.Add('SP.CustomerNo = ' +
               cds_PropsVerkNo.AsString);

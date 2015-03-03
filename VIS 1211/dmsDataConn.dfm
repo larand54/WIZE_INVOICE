@@ -1824,7 +1824,7 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=vis.vida.se'
+      'Server=alvesql03'
       'Database=vis_vida'
       'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
@@ -2002,8 +2002,8 @@ object dmsConnector: TdmsConnector
   object SQLConn_XOR: TFDConnection
     ConnectionName = 'XOR'
     Params.Strings = (
-      'Server=alvesql14'
-      'Database=xor_vida'
+      'Server=alvesql03'
+      'Database=xor_test'
       'OSAuthent=No'
       'MetaDefCatalog=xor_test'
       'MetaDefSchema=dbo'
@@ -2013,8 +2013,8 @@ object dmsConnector: TdmsConnector
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
     LoginPrompt = False
-    Left = 704
-    Top = 24
+    Left = 584
+    Top = 72
   end
   object FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink
     Left = 464

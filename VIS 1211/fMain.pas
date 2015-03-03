@@ -287,7 +287,8 @@ uses
   uKundspecifika, uKontoLogik, uOrderStocken, uIntrastat,
   uTradingAnalyze, uFreightExternLoad, uPayControl,
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
-  PrintUnit, PreviewForm, uPrintTest, udmLanguage, ufrmChangeLanguage;
+  PrintUnit, PreviewForm, uPrintTest, udmLanguage, ufrmChangeLanguage,
+  dmsVidaContact;
 
 {$R *.DFM}
 
@@ -482,10 +483,10 @@ begin
 //   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
   // ThisUser.Database:= '172.24.0.40:vis_vida' ;
 
-  ThisUser.Database := 'vis.vida.se:vis_vida';
+ // ThisUser.Database := 'vis.vida.se:vis_vida';
 
   // ThisUser.Database:= 'alvevistest01:vis_vida' ;
-  // ThisUser.Database:= 'alvesql03:vis_vida' ;
+   ThisUser.Database:= 'alvesql03:vis_vida' ;
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
     close
@@ -514,7 +515,26 @@ end;
 
 Procedure TfrmMain.InitOnStartOfProgram;
 Begin
+ if Assigned(dm_UserProps) then
+  FreeAndNil(dm_UserProps) ;
+ dm_UserProps := Tdm_UserProps.Create(Application);
+ With dmsContact do
+ Begin
+  if sp_Customers.Active then
+   sp_Customers.Active  := False ;
+  sp_Customers.ParamByName('@SalesRegionNo').AsInteger  := GetSalesRegionNo(ThisUser.CompanyNo) ;
+  sp_Customers.Active := True ;
 
+  cds_Verk.Active := False ;
+  cds_Verk.ParamByName('SalesRegionNo').AsInteger :=  GetSalesRegionNo(ThisUser.CompanyNo) ;
+  cds_Verk.Active := True ;
+
+
+  if cds_Shippers.Active then
+   cds_Shippers.Active  := False ;
+  cds_Shippers.ParamByName('@SalesRegionNo').AsInteger  := GetSalesRegionNo(ThisUser.CompanyNo) ;
+  cds_Shippers.Active := True ;
+ End;
 End;
 
 // Sparas centralt

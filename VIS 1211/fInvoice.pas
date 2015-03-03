@@ -5550,7 +5550,8 @@ Begin
     // Calculate VAT if Country is SWEDEN and cbVAT (Skatteupplag) checked
     if ((Trim(cdsInvoiceHeadCountryName.AsString) = 'SWEDEN') and
       ((cdsInvoiceHeadSupplierNo.AsInteger = VIDA_WOOD_COMPANY_NO) OR
-      (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_BORGSTENA_BOTLR))
+      (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_BORGSTENA_BOTLR)
+      OR (cdsInvoiceHeadSupplierNo.AsInteger = cVidaPackaging))
 
       OR (Trim(cdsInvoiceHeadCountryName.AsString) = 'DENMARK') and
       (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_DANMARK))

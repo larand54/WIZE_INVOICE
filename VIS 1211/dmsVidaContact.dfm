@@ -415,7 +415,7 @@ object dmsContact: TdmsContact
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
-    StoredProcName = 'vida_Shippers'
+    StoredProcName = 'dbo.vis_Shippers'
     Left = 32
     Top = 176
     ParamData = <
@@ -424,7 +424,12 @@ object dmsContact: TdmsContact
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
-        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@SalesRegionNo'
+        DataType = ftInteger
+        ParamType = ptInput
       end>
     object cds_ShippersClientNo: TIntegerField
       FieldName = 'ClientNo'
@@ -732,15 +737,21 @@ object dmsContact: TdmsContact
         'C.PaketNoPos, C.PaketNoLength, C.SupplierCodePos, C.SupplierCode' +
         'Length'
       ''
-      'FROM   dbo.Client        C,'
-      '       dbo.ClientRole    R'
+      'FROM   dbo.Client        C'
+      '       inner join dbo.ClientRole    R on R.ClientNo = C.ClientNo'
       ''
-      'WHERE  C.ClientNo = R.ClientNo'
-      '  AND  R.RoleType = 9'
-      'AND (C.IntVerk = 1 OR C.ClientNo = 741 or C.ClientNo = 3682)'
+      'WHERE  R.RoleType = 9'
+      '-- AND (C.IntVerk = 1 OR C.ClientNo = 741 or C.ClientNo = 3682)'
+      'AND C.OwnedBySalesRegionNo = :SalesRegionNo'
       'Order by C.clientName')
     Left = 616
     Top = 296
+    ParamData = <
+      item
+        Name = 'SALESREGIONNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
     object cds_VerkClientNo: TIntegerField
       FieldName = 'ClientNo'
       Origin = 'ClientNo'
@@ -1291,7 +1302,7 @@ object dmsContact: TdmsContact
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
-    StoredProcName = 'vida_Customers'
+    StoredProcName = 'dbo.vis_Customers'
     Left = 592
     Top = 176
     ParamData = <
@@ -1300,7 +1311,12 @@ object dmsContact: TdmsContact
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
-        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@SalesRegionNo'
+        DataType = ftInteger
+        ParamType = ptInput
       end>
     object sp_CustomersClientNo: TIntegerField
       FieldName = 'ClientNo'
@@ -1326,6 +1342,7 @@ object dmsContact: TdmsContact
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
+        Value = 0
       end
       item
         Position = 2
@@ -2401,6 +2418,44 @@ object dmsContact: TdmsContact
       item
         Position = 2
         Name = '@LLNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sq_GetSRNo: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'Select SalesRegionNo from dbo.client'
+      'WHERE  ClientNo = :ClientNo'
+      '')
+    Left = 648
+    Top = 552
+    ParamData = <
+      item
+        Name = 'CLIENTNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sq_GetSRNoSalesRegionNo: TIntegerField
+      FieldName = 'SalesRegionNo'
+      Origin = 'SalesRegionNo'
+    end
+  end
+  object sp_GetCountryOfSR: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetCountryOfSR'
+    Left = 800
+    Top = 496
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SalesRegionNo'
         DataType = ftInteger
         ParamType = ptInput
       end>

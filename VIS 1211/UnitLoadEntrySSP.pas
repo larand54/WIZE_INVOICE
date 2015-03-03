@@ -1857,7 +1857,7 @@ begin
   if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdPkgs.Name,
     grdPkgsDBBandedTableView1) = False then;
 
-  if ThisUser.CompanyNo = 741 then
+  if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
     acImportPackages.Enabled := True
   else
     acImportPackages.Enabled := False;
@@ -5346,10 +5346,6 @@ begin
     if cds_LSP.ChangeCount > 0 then
       cds_LSP.ApplyUpdates(0);
 
-    // AddLONumberOnOpenTheForm(LO_NO, LocalCustomerNo, LocalSupplierNo, ShipToInvPointNo, LoadingLocationNo);
-    // AddLONumberOnOpenTheForm(LONo, 741, 741, 1, 1);
-    // if cds_LSP.ChangeCount > 0 then
-    // cds_LSP.ApplyUpdates(0) ;
 
     cds_LoadPackages.First;
     While not cds_LoadPackages.Eof do

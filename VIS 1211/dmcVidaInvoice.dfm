@@ -13116,7 +13116,7 @@ object dmVidaInvoice: TdmVidaInvoice
     Connection = dmsConnector.SQLConn_XOR
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'SELECT Invno FROM ALVESQL14.xor_VIDA.dbo.voulogx'
+      'SELECT Invno FROM xor_test.dbo.voulogx'
       'WHERE invno = :invno'
       'AND enumerator = :enumerator')
     Left = 808

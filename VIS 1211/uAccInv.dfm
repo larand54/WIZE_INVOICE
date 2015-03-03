@@ -285,7 +285,6 @@ object fAccInv: TfAccInv
     Top = 160
     object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.Header = 6350
@@ -297,7 +296,6 @@ object fAccInv: TfAccInv
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

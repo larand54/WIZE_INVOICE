@@ -63,7 +63,7 @@ object frmAvrakningar: TfrmAvrakningar
         Left = 1
         Top = 1
         Width = 593
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -79,7 +79,7 @@ object frmAvrakningar: TfrmAvrakningar
         Left = 1
         Top = 1
         Width = 66
-        Height = 46
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -643,12 +643,13 @@ object frmAvrakningar: TfrmAvrakningar
     Control = Panel6
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
+    Font.Height = -11
+    Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
       'Default')
@@ -795,7 +796,7 @@ object frmAvrakningar: TfrmAvrakningar
     Left = 240
     Top = 152
     Bitmap = {
-      494C010109000D000C0018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010109000D00040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000060000000480000000100200000000000006C
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1697,7 +1698,7 @@ object frmAvrakningar: TfrmAvrakningar
     Left = 336
     Top = 296
     Bitmap = {
-      494C0101020005000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000002194
       BD00087BAD000000000000000000000000000000000000000000000000000884
@@ -1920,6 +1921,7 @@ object frmAvrakningar: TfrmAvrakningar
     Left = 200
     Top = 120
     object dxComponentPrinter1Link1: TdxGridReportLink
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -1943,6 +1945,7 @@ object frmAvrakningar: TfrmAvrakningar
       PrinterPage._dxLastMU_ = 2
       ReportDocument.CreationDate = 39700.623333298610000000
       ShrinkToPageWidth = True
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

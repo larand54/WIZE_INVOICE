@@ -349,7 +349,7 @@ begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crHourGlass; { Show hourglass cursor }
 
-  if ThisUser.CompanyNo = VIDA_WOOD_COMPANY_NO then
+  if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then // = VIDA_WOOD_COMPANY_NO then
     lcVerk.Properties.ReadOnly := False
   else
     lcVerk.Properties.ReadOnly := True;
@@ -1624,12 +1624,12 @@ End;
 
 procedure TfrmSokAvropFormular.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
-  cds_PropsUserID.AsInteger := ThisUser.UserID;
-  cds_PropsName.AsString := 'SokAvropFormular';
-  cds_PropsLOObjectType.AsInteger := 0;
-  cds_PropsCopyPcs.AsInteger := 2;
-  cds_PropsOrderTypeNo.AsInteger := 0;
-  cds_PropsSalesRegionNo.AsInteger := 741;
+  cds_PropsUserID.AsInteger         := ThisUser.UserID  ;
+  cds_PropsName.AsString            := 'SokAvropFormular' ;
+  cds_PropsLOObjectType.AsInteger   := 0  ;
+  cds_PropsCopyPcs.AsInteger        := 2  ;
+  cds_PropsOrderTypeNo.AsInteger    := 0  ;
+  cds_PropsSalesRegionNo.AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo)  ;
 end;
 
 procedure TfrmSokAvropFormular.acSaveMallAsExecute(Sender: TObject);
