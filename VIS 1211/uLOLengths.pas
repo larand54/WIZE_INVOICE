@@ -74,7 +74,7 @@ type
 
 implementation
 
-uses dmcVidaOrder, dmsVidaSystem, dmsDataConn, dmsVidaProduct;
+uses dmcVidaOrder, dmsVidaSystem, dmsDataConn, dmsVidaProduct, udmLanguage;
 
 {$R *.dfm}
 

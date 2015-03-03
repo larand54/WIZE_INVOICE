@@ -641,7 +641,8 @@ uses VidaUser, dmsDataConn, UnitSelectClient, UnitdmModule1,
   dmcVidaInvoice, UnitBookingForm, dmsVidaContact, uStickyNote, VidaConst,
   UnitCRPrintReport, uLanguage, uSendMapiMail, UnitCRExportOneReport,
   UnitCRPrintOneReport, fAttestInvoice, dmsVidaSystem,
-  uKundspecifika, uAddKundSpecifika, uArticle, uAccInv, uVerifikationLogg;
+  uKundspecifika, uAddKundSpecifika, uArticle, uAccInv, uVerifikationLogg,
+  udmLanguage;
 
 {$R *.dfm}
 

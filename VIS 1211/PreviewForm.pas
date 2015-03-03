@@ -35,7 +35,7 @@ implementation
 
 {$R *.dfm}
 
-uses CR_Plugin_Import;
+uses CR_Plugin_Import, udmLanguage;
 
 procedure TForm2.FormDestroy(Sender: TObject);
 begin

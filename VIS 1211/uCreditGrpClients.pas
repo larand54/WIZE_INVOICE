@@ -77,7 +77,7 @@ type
 
 implementation
 
-uses dmcVidaInvoice, UnitdmModule1;
+uses dmcVidaInvoice, UnitdmModule1, udmLanguage;
 
 {$R *.dfm}
 

@@ -524,24 +524,49 @@ object fSelectLORowInLoad: TfSelectLORowInLoad
     Top = 175
     PixelsPerInch = 96
     object cxStyleYellow: TcxStyle
-      AssignedValues = [svColor]
+      AssignedValues = [svColor, svFont]
       Color = clYellow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
     object cxStyleRed: TcxStyle
-      AssignedValues = [svColor]
+      AssignedValues = [svColor, svFont]
       Color = clRed
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
     object cxStyleAqua: TcxStyle
-      AssignedValues = [svColor]
+      AssignedValues = [svColor, svFont]
       Color = clAqua
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
     object cxStyleBlue: TcxStyle
-      AssignedValues = [svColor]
+      AssignedValues = [svColor, svFont]
       Color = clBlue
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
     object cxStyleSilver: TcxStyle
-      AssignedValues = [svColor]
+      AssignedValues = [svColor, svFont]
       Color = clSilver
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
     object cxStyleHeader: TcxStyle
       AssignedValues = [svFont]
@@ -574,16 +599,14 @@ object fSelectLORowInLoad: TfSelectLORowInLoad
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

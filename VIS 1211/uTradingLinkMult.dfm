@@ -128,7 +128,6 @@ object fTradingLinkMult: TfTradingLinkMult
     Top = 251
   end
   object cds_AvropLink: TFDQuery
-    Active = True
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
@@ -159,7 +158,6 @@ object fTradingLinkMult: TfTradingLinkMult
     end
   end
   object sq_POorderInfo: TFDQuery
-    Active = True
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       

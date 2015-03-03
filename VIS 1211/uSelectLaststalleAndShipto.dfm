@@ -52,8 +52,6 @@ object fSelectLastStalleAndShipTo: TfSelectLastStalleAndShipTo
     Height = 50
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 135
-    ExplicitWidth = 404
     object BitBtn1: TBitBtn
       Left = 114
       Top = 13
@@ -146,16 +144,14 @@ object fSelectLastStalleAndShipTo: TfSelectLastStalleAndShipTo
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

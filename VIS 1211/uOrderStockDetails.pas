@@ -83,7 +83,7 @@ var
 
 implementation
 
-uses dmsDataConn, UnitdmModule1, dmsVidaSystem, VidaUser;
+uses dmsDataConn, UnitdmModule1, dmsVidaSystem, VidaUser, udmLanguage;
 
 {$R *.dfm}
 

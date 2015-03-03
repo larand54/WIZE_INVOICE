@@ -123,7 +123,8 @@ type
 
 implementation
 
-uses dmsDataConn, dmsVidaContact, dmsVidaSystem, uSendMapiMail, VidaUser;
+uses dmsDataConn, dmsVidaContact, dmsVidaSystem, uSendMapiMail, VidaUser,
+  udmLanguage;
 
 {$R *.dfm}
 

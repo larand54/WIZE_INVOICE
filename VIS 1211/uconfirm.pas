@@ -42,6 +42,8 @@ implementation
 
 {$R *.dfm}
 
+uses udmLanguage;
+
 Class function TfConfirm.Execute(const Cap: String): word;
 // var iniUserStore : TIniFile;
 Begin

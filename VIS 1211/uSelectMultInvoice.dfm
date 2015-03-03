@@ -22,8 +22,6 @@ object fSelectMultInvoice: TfSelectMultInvoice
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 211
-    ExplicitWidth = 470
     object BitBtn1: TBitBtn
       Left = 192
       Top = 8
@@ -41,8 +39,6 @@ object fSelectMultInvoice: TfSelectMultInvoice
     Height = 200
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 470
-    ExplicitHeight = 211
     object grdMultInvoiceDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmVidaInvoice.ds_NoOfInvoices
@@ -82,16 +78,14 @@ object fSelectMultInvoice: TfSelectMultInvoice
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

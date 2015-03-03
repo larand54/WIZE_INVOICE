@@ -244,7 +244,8 @@ implementation
 uses VidaUser, dmcVidaOrder,
   dmsVidaSystem, dmsVidaContact, VidaConst,
   dmsDataConn, dmcVidaInvoice, UnitdmModule1, UnitSelectClient, uArticle,
-  UnitAddress, uLanguage, UnitCurrency, UnitDelTerms, UnitPaymentTerms;
+  UnitAddress, uLanguage, UnitCurrency, UnitDelTerms, UnitPaymentTerms,
+  udmLanguage;
 
 {$R *.dfm}
 

@@ -71,7 +71,7 @@ implementation
 
 uses
   vidaUser, // dmcLoadEntry,
-  dmsDataConn;
+  dmsDataConn, udmLanguage;
 
 { TfrmPackagePicker }
 

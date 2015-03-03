@@ -21,7 +21,6 @@ object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 428
   end
   object Panel2: TPanel
     Left = 0
@@ -30,8 +29,6 @@ object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 271
-    ExplicitWidth = 428
     object BitBtn1: TBitBtn
       Left = 144
       Top = 8
@@ -58,8 +55,6 @@ object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
     Height = 219
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 428
-    ExplicitHeight = 230
     object grdSelectLONoDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.ds_GetLOByInvNo
@@ -111,16 +106,14 @@ object fSelectLONoByInvoiceSerie: TfSelectLONoByInvoiceSerie
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

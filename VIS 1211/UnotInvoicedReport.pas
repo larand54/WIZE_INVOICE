@@ -29,7 +29,8 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk, CrystalActiveXReportViewerLib11_TLB;
+//  siLngLnk, CrystalActiveXReportViewerLib11_TLB,
+  CrystalActiveXReportViewerLib11_5_TLB, siLngLnk;
 
 type
   TfnotInvoicedReport = class(TForm)
@@ -138,7 +139,7 @@ var
 implementation
 
 uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmcVidaSystem,
-  dmsVidaSystem, dmc_UserProps;
+  dmsVidaSystem, dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

@@ -60,20 +60,18 @@ object fSearchRunNo: TfSearchRunNo
     Height = 433
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 994
-    ExplicitHeight = 444
     object Panel3: TPanel
       Left = 1
       Top = 1
       Width = 424
-      Height = 442
+      Height = 431
       Align = alLeft
       TabOrder = 0
       object grdrunNos: TcxGrid
         Left = 1
         Top = 1
         Width = 422
-        Height = 440
+        Height = 429
         Align = alClient
         TabOrder = 0
         object grdrunNosDBTableView1: TcxGridDBTableView
@@ -110,22 +108,22 @@ object fSearchRunNo: TfSearchRunNo
       Left = 425
       Top = 1
       Width = 40
-      Height = 442
+      Height = 431
       Align = alLeft
       TabOrder = 1
     end
     object Panel6: TPanel
       Left = 465
       Top = 1
-      Width = 528
-      Height = 442
+      Width = 520
+      Height = 431
       Align = alClient
       TabOrder = 2
       object grdRunProds: TcxGrid
         Left = 1
         Top = 1
-        Width = 526
-        Height = 440
+        Width = 518
+        Height = 429
         Align = alClient
         TabOrder = 0
         object grdRunProdsDBTableView1: TcxGridDBTableView
@@ -159,8 +157,6 @@ object fSearchRunNo: TfSearchRunNo
     Height = 50
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 485
-    ExplicitWidth = 994
     object bbOK: TBitBtn
       Left = 384
       Top = 8
@@ -366,16 +362,14 @@ object fSearchRunNo: TfSearchRunNo
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

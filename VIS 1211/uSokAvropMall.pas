@@ -58,7 +58,7 @@ type
 
 implementation
 
-uses UnitSokAvropFormular;
+uses UnitSokAvropFormular, udmLanguage;
 
 {$R *.dfm}
 

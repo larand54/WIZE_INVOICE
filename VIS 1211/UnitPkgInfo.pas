@@ -155,7 +155,7 @@ type
 
 implementation
 
-uses UnitdmModule1, UnitPkgNo, dmsVidaSystem;
+uses UnitdmModule1, UnitPkgNo, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

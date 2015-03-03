@@ -54,7 +54,7 @@ var
 
 implementation
 
-uses fLoadOrder;
+uses fLoadOrder, udmLanguage;
 
 {$R *.dfm}
 

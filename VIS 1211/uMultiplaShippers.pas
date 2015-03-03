@@ -51,7 +51,7 @@ type
 
 implementation
 
-uses UnitdmModule1;
+uses UnitdmModule1, udmLanguage;
 
 {$R *.dfm}
 

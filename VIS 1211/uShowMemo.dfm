@@ -31,8 +31,6 @@ object fShowMemo: TfShowMemo
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 432
-    ExplicitWidth = 499
     object BitBtn1: TBitBtn
       Left = 197
       Top = 5
@@ -49,16 +47,14 @@ object fShowMemo: TfShowMemo
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

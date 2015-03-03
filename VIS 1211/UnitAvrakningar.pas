@@ -227,7 +227,7 @@ implementation
 
 uses UnitdmModule1, UnitCRViewReport, VidaUser, dmsVidaContact, VidaConst,
   uEntryField, dmsDataConn, dmsVidaSystem, uFreightAvrSearch,
-  dmc_UserProps;
+  dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

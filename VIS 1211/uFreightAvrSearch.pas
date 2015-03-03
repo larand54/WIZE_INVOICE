@@ -97,7 +97,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser;
+uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser, udmLanguage;
 
 // -----------------------------------------------------------------------
 function OpenAvrSearch(var AvrNr: Integer): Boolean;

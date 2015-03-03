@@ -420,7 +420,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
-  uWait, UnitCRExportOneReport, uSendMapiMail;
+  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage;
 
 {$R *.dfm}
 

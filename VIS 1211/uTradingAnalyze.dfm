@@ -553,7 +553,6 @@ inherited fTradingAnalyze: TfTradingAnalyze
     Top = 187
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdTradingAnalyze
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -573,7 +572,6 @@ inherited fTradingAnalyze: TfTradingAnalyze
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

@@ -143,7 +143,7 @@ type
 implementation
 
 uses dmsDataConn, VidaUser, dmcVidaInvoice,
-  dmsVidaContact, dmsVidaSystem;
+  dmsVidaContact, dmsVidaSystem, udmLanguage;
 
 {$R *.DFM}
 

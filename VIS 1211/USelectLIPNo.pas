@@ -79,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmsDataConn;
+uses dmsDataConn, udmLanguage;
 
 procedure TfSelectLIPNo.FormShow(Sender: TObject);
 begin

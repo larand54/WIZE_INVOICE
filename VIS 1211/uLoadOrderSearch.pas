@@ -113,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser;
+uses dmsDataConn, VidaConst, dmsVidaSystem, VidaUser, udmLanguage;
 
 // -----------------------------------------------------------------------
 function OpenLoadOrderSearch(var LONr: Integer): Boolean;

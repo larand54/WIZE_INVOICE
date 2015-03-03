@@ -27,8 +27,6 @@ object fSelectAttBeskrivning: TfSelectAttBeskrivning
     Height = 65
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 162
-    ExplicitWidth = 470
     object BitBtn1: TBitBtn
       Left = 168
       Top = 16
@@ -56,16 +54,14 @@ object fSelectAttBeskrivning: TfSelectAttBeskrivning
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

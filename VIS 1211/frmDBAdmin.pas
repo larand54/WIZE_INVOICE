@@ -81,7 +81,7 @@ implementation
 uses
   Graphics,
   VidaConst,
-  VidaUtils;
+  VidaUtils, udmLanguage;
 
 { TdlgDBAdmin }
 function TdlgDBAdmin.getDBUserName: String;

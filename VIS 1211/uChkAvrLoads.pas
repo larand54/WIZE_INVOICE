@@ -226,7 +226,7 @@ implementation
 
 uses dmc_ArrivingLoads, VidaUtils, Vidauser,
   UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn,
-  VidaConst, dmsVidaSystem; // , dmc_Filter;
+  VidaConst, dmsVidaSystem, udmLanguage; // , dmc_Filter;
 
 {$R *.dfm}
 

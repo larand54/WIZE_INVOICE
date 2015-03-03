@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses UnitdmModule1, dmsVidaSystem;
+uses UnitdmModule1, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

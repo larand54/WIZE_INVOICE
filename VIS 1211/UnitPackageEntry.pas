@@ -276,7 +276,7 @@ implementation
 uses dmsVidaProduct, VidaConst, VidaUser, dmsDataConn,
   UnitPkgNoSeries, dmcLoadEntrySSP, dmcVidaOrder, dmsVidaSystem,
   dmsVidaContact, dmcVidaSystem, uEntryField, uSearchRunNo,
-  uAddSpecialLengths, dmc_UserProps, dmcLoadEntryCSD;
+  uAddSpecialLengths, dmc_UserProps, dmcLoadEntryCSD, udmLanguage;
 
 {$R *.dfm}
 

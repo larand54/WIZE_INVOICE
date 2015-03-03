@@ -108,7 +108,7 @@ var
 
 implementation
 
-uses UnitCRViewReport, dmcVidaInvoice, dmLM1, dmsVidaSystem;
+uses UnitCRViewReport, dmcVidaInvoice, dmLM1, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

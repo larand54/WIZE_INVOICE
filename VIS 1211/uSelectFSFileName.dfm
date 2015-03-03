@@ -21,8 +21,6 @@ object fSelectFSFileName: TfSelectFSFileName
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 346
-    ExplicitWidth = 608
     object BitBtn1: TBitBtn
       Left = 216
       Top = 8
@@ -57,16 +55,14 @@ object fSelectFSFileName: TfSelectFSFileName
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

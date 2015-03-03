@@ -69,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses PreviewForm, PrintUnit;
+uses PreviewForm, PrintUnit, udmLanguage;
 
 procedure TfPrintTest.bt_ClearParamsClick(Sender: TObject);
 begin

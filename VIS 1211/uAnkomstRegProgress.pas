@@ -36,7 +36,7 @@ type
 
 implementation
 
-uses dmc_ArrivingLoads;
+uses dmc_ArrivingLoads, udmLanguage;
 
 {$R *.dfm}
 

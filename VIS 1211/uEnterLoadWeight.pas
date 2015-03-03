@@ -46,7 +46,7 @@ type
 
 implementation
 
-uses dmsVidaSystem;
+uses dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

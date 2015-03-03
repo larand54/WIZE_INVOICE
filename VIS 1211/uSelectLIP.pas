@@ -54,7 +54,7 @@ type
 
 implementation
 
-uses dmsVidaContact, VidaUser, VidaConst, dmc_UserProps;
+uses dmsVidaContact, VidaUser, VidaConst, dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

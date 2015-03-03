@@ -1220,7 +1220,7 @@ object fSamlingsfaktura: TfSamlingsfaktura
       True)
     ImageOptions.LargeImages = ImageList1
     PopupMenuLinks = <>
-    UseSystemFont = True
+    UseSystemFont = False
     Left = 384
     Top = 136
     DockControlHeights = (
@@ -1314,16 +1314,14 @@ object fSamlingsfaktura: TfSamlingsfaktura
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'

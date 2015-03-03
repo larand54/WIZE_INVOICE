@@ -168,7 +168,8 @@ type
 
 implementation
 
-uses dmsDataConn, dmsVidaSystem, UnitdmModule1, VidaUser, UnitPkgInfo;
+uses dmsDataConn, dmsVidaSystem, UnitdmModule1, VidaUser, UnitPkgInfo,
+  udmLanguage;
 
 {$R *.dfm}
 

@@ -622,7 +622,7 @@ uses
   dmsVidaSystem, UnitCRPrintReport,
   uLOLengths, uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
-  uSelectFSFileName, dmc_UserProps;
+  uSelectFSFileName, dmc_UserProps, udmLanguage;
 
 procedure TfrmLoadOrder.CMMoveIt(var Msg: TMessage);
 var

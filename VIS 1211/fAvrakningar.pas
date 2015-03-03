@@ -272,7 +272,8 @@ uses
   dmsVidaContact,
   uEntryField,
   dmc_ArrivingLoads,
-  dmsVidaSystem, dmcAvrakning, uWait, UnitLoadEntrySSP, dmc_UserProps;
+  dmsVidaSystem, dmcAvrakning, uWait, UnitLoadEntrySSP, dmc_UserProps,
+  udmLanguage;
 
 {$R *.dfm}
 

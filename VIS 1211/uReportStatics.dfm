@@ -76,9 +76,6 @@ object fReportStatics: TfReportStatics
     Height = 218
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 208
-    ExplicitWidth = 904
-    ExplicitHeight = 360
     object grdReportStatics: TcxGrid
       Left = 1
       Top = 1
@@ -86,10 +83,6 @@ object fReportStatics: TfReportStatics
       Height = 216
       Align = alClient
       TabOrder = 0
-      ExplicitLeft = 40
-      ExplicitTop = 24
-      ExplicitWidth = 250
-      ExplicitHeight = 200
       object grdReportStaticsDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
@@ -266,16 +259,14 @@ object fReportStatics: TfReportStatics
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
-    DefaultLanguage = 2
     NumOfLanguages = 3
-    ActiveLanguage = 2
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
       'English')
-    Language = 'Swedish'
+    Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
       'Category'
