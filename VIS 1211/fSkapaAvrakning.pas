@@ -259,7 +259,7 @@ uses
   UnitPkgInfo,
   dmcVidaSystem,
   dmc_ArrivingLoads,
-  dmsVidaSystem, dmcAvrakning;
+  dmsVidaSystem, dmcAvrakning, udmLanguage;
 
 {$R *.dfm}
 

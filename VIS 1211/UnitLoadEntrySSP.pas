@@ -576,7 +576,7 @@ uses dmcLoadEntrySSP, VidaConst, dlgPickPkg,
   UnitCRExportOneReport, uSendMapiMail, dmc_UserProps, VidaUtils,
   uPickVPPkgs, // uImportedPackages,
   fLoadOrder, uSelectPrintDevice, uconfirm, UnitCRPrintOneReport,
-  uEnterLoadWeight, uSelectLORowInLoad;
+  uEnterLoadWeight, uSelectLORowInLoad, udmLanguage;
 
 {$R *.dfm}
 { TfrmLoadEntry }

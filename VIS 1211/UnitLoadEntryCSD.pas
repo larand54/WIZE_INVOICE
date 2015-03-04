@@ -474,7 +474,7 @@ uses VidaConst, dlgPickPkg,
   uScanLoadPkgNo, uEntryField, dmsDataConn, dmcLoadEntryCSD,
   uSelectLoadPlanDest,
   dmsVidaProduct, UnitPackageEntry, dmcVidaInvoice, VidaUtils,
-  uPickVPPkgs;
+  uPickVPPkgs, udmLanguage;
 
 {$R *.dfm}
 { TfrmLoadEntry }

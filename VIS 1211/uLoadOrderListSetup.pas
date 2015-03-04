@@ -40,7 +40,7 @@ type
 
 implementation
 
-uses dmcVidaOrder;
+uses dmcVidaOrder, udmLanguage;
 
 {$R *.dfm}
 

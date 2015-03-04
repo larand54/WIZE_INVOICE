@@ -9,7 +9,7 @@ uses
 type
   TfrmStickyNote = class(TForm)
     mStickyNote: TMemo;
-    siLangLinked_frmStickyNote: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
   private
@@ -24,6 +24,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses udmLanguage;
 
 procedure TfrmStickyNote.FormClose(Sender: TObject; var Action: TCloseAction);
 begin

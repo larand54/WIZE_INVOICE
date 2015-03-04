@@ -541,7 +541,7 @@ uses
   UnitCRPrintOneReport, dmc_ImportWoodx, MainU, dmsVidaSystem,
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
   uSokAvropMall, uEntryField, uFastReports, uVerifikationLogg, uAccInv,
-  UnitdmModule1;
+  UnitdmModule1, udmLanguage;
 
 {$R *.dfm}
 

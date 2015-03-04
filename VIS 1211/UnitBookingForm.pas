@@ -166,7 +166,7 @@ implementation
 uses VidaConst,
   VidaUser,
   dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
-  dmsVidaContact;
+  dmsVidaContact, udmLanguage;
 
 {$R *.dfm}
 

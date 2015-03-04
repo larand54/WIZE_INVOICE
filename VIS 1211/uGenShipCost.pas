@@ -124,7 +124,7 @@ type
 
 implementation
 
-uses UnitdmModule1, dmsVidaContact, dmc_UserProps;
+uses UnitdmModule1, dmsVidaContact, dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

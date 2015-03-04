@@ -56,7 +56,7 @@ type
 
 implementation
 
-uses dmsVidaContact, dmsDataConn;
+uses dmsVidaContact, dmsDataConn, udmLanguage;
 
 {$R *.dfm}
 

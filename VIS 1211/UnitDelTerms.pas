@@ -44,7 +44,7 @@ type
 
 implementation
 
-uses UnitdmModule1, dmsVidaSystem, dmsVidaContact;
+uses UnitdmModule1, dmsVidaSystem, dmsVidaContact, udmLanguage;
 
 {$R *.dfm}
 

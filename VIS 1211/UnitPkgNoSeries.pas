@@ -42,7 +42,7 @@ type
 
 implementation
 
-Uses VidaConst;
+Uses VidaConst, udmLanguage;
 
 {$R *.dfm}
 

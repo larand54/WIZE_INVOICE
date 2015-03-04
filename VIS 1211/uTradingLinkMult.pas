@@ -53,7 +53,7 @@ type
     sq_POorderInfoKontrakt: TStringField;
     sq_POorderInfoLeverantr: TStringField;
     sq_POorderInfoAvropsnr: TIntegerField;
-    siLangLinked_fTradingLinkMult: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
     procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -67,7 +67,7 @@ type
 
 implementation
 
-uses dmsDataConn, dmc_ArrivingLoads;
+uses dmsDataConn, dmc_ArrivingLoads, udmLanguage;
 
 {$R *.dfm}
 

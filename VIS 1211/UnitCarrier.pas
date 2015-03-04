@@ -58,7 +58,7 @@ type
 
 implementation
 
-uses dmBooking, dmsVidaSystem;
+uses dmBooking, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 

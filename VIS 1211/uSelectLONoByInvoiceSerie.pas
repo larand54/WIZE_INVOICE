@@ -48,7 +48,7 @@ type
 
 implementation
 
-uses dmLM1;
+uses dmLM1, udmLanguage;
 
 {$R *.dfm}
 

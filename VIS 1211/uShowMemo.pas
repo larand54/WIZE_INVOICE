@@ -38,4 +38,6 @@ implementation
 
 {$R *.dfm}
 
+uses udmLanguage;
+
 end.

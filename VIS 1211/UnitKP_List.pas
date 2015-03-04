@@ -110,7 +110,6 @@ type
     lcAgent: TcxDBLookupComboBox;
     cxLabel3: TcxLabel;
     cds_PropsAgent: TStringField;
-    siLangLinked1: TsiLangLinked;
     procedure acCustomizegrdKP_ListExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);

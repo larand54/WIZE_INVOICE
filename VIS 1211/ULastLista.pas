@@ -178,7 +178,7 @@ implementation
 
 uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
   UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn, VidaConst,
-  dmsVidaSystem, dmc_UserProps;
+  dmsVidaSystem, dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

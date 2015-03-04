@@ -323,7 +323,7 @@ implementation
 uses VidaUser, dmSokFormular, dmcVidaOrder, dmsVidaContact,
   UnitBookingForm, UnitCRViewReport, dmsDataConn, VidaConst,
   dmsVidaSystem, uSokAvropMall, UnitCRExportOneReport, uSendMapiMail,
-  uEntryField, dmBooking;
+  uEntryField, dmBooking, udmLanguage;
 
 {$R *.dfm}
 

@@ -119,7 +119,7 @@ uses
   VidaConst,
   VidaUser,
   VidaUtils, fInvoice, dmsDataConn, dmcVidaInvoice,
-  dmsVidaContact;
+  dmsVidaContact, udmLanguage;
 
 {$R *.dfm}
 

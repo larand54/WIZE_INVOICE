@@ -122,7 +122,7 @@ var
 implementation
 
 uses dmcVidaInvoice, VidaUser, uSelectCustomer, uCreditGrpClients,
-  dmsDataConn, dmsVidaSystem, UnitdmModule1;
+  dmsDataConn, dmsVidaSystem, UnitdmModule1, udmLanguage;
 
 {$R *.dfm}
 

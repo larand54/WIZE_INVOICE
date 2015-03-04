@@ -48,7 +48,7 @@ type
 
 implementation
 
-Uses VidaUtils;
+Uses VidaUtils, udmLanguage;
 
 {$R *.dfm}
 

@@ -19,7 +19,7 @@ interface
 
 uses
   SysUtils, Windows, Variants, Messages, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, DB, ExtCtrls, DBClient;
+  Dialogs, StdCtrls, Grids, DB, ExtCtrls, DBClient, siComp, siLngLnk;
 
 const
   ActionStr: array [TReconcileAction] of string = ('Skip', 'Abort', 'Merge',
@@ -50,6 +50,7 @@ type
     ErrorMsg: TMemo;
     ChangedOnly: TCheckBox;
     ClientDataSet1: TClientDataSet;
+    siLangLinked1: TsiLangLinked;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure UpdateDataSetEditText(Sender: TObject; ACol, ARow: Integer;
@@ -81,6 +82,8 @@ function HandleReconcileError(DataSet: TDataSet; UpdateKind: TUpdateKind;
 implementation
 
 {$R *.dfm}
+
+uses udmLanguage;
 
 type
   PFieldData = ^TFieldData;

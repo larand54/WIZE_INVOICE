@@ -138,7 +138,7 @@ var
 
 implementation
 
-uses dmsDataConn, dmLM1, dmsVidaSystem, uAvdelning;
+uses dmsDataConn, dmLM1, dmsVidaSystem, uAvdelning, udmLanguage;
 
 {$R *.dfm}
 

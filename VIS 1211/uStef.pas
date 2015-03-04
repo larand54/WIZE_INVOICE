@@ -23,7 +23,9 @@ uses
   dxSkinXmas2008Blue, dxSkinsdxBarPainter, dxCore, cxDateUtils,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk, CrystalActiveXReportViewerLib11_TLB;
+  siLngLnk,
+  //CrystalActiveXReportViewerLib11_TLB,
+  CrystalActiveXReportViewerLib11_5_TLB;
 
 type
   TfStef = class(TForm)
@@ -93,7 +95,8 @@ var
 
 implementation
 
-uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmsVidaSystem;
+uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmsVidaSystem,
+  udmLanguage;
 
 {$R *.dfm}
 

@@ -85,7 +85,6 @@ type
     cxLabel2: TcxLabel;
     acExportToExcel: TAction;
     SaveDialog2: TSaveDialog;
-    siLangLinked1: TsiLangLinked;
     procedure toolbtnRefreshClick(Sender: TObject);
     procedure acCustomizegrdShipInstructExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);

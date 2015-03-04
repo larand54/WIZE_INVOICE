@@ -38,7 +38,7 @@ type
 
 implementation
 
-uses dmcVidaInvoice;
+uses dmcVidaInvoice, udmLanguage;
 
 {$R *.dfm}
 

@@ -102,7 +102,8 @@ var
 
 implementation
 
-uses dmcVidaInvoice, VidaUser, dmsDataConn, dmsVidaSystem, UnitdmModule1;
+uses dmcVidaInvoice, VidaUser, dmsDataConn, dmsVidaSystem, UnitdmModule1,
+  udmLanguage;
 
 {$R *.dfm}
 

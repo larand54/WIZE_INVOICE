@@ -258,7 +258,7 @@ uses
   VidaUtils, dmsDataConn,
   UnitPkgInfo, dmsVidaSystem, dmc_ImportWoodx, dmsVidaProduct,
   dmsVidaContact, uSelectWoodxClient, dmc_UserProps, uEntryPriceField,
-  uEntryField;
+  uEntryField, udmLanguage;
 
 {$R *.dfm}
 

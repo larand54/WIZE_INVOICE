@@ -58,7 +58,7 @@ type
     grdVerifikationLoggDBTableView1VatCode: TcxGridDBColumn;
     grdVerifikationLoggDBTableView1Avdelning: TcxGridDBColumn;
     grdVerifikationLoggDBTableView1Volym: TcxGridDBColumn;
-    siLangLinked_fVerifikationLogg: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
     procedure acCloseExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
   private
@@ -71,7 +71,7 @@ type
 
 implementation
 
-uses dmsDataConn, dmcVidaInvoice;
+uses dmsDataConn, dmcVidaInvoice, udmLanguage;
 
 {$R *.dfm}
 

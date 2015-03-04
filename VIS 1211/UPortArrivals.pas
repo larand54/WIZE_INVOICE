@@ -335,7 +335,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
   uSelectLIP, uAnkomstRegProgress, VidaConst,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
-  dmc_UserProps;
+  dmc_UserProps, udmLanguage;
 
 {$R *.dfm}
 

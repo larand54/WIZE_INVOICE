@@ -101,7 +101,7 @@ implementation
 
 {$R *.dfm}
 
-uses dmcLoadEntrySSP, vidaconst;
+uses dmcLoadEntrySSP, vidaconst, udmLanguage;
 
 procedure TfSelectLORowInLoad.grdLORowsDBBandedTableView1MATCHPropertiesChange
   (Sender: TObject);

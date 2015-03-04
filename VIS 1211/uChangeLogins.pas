@@ -29,7 +29,7 @@ type
 
 implementation
 
-uses dmsDataConn;
+uses dmsDataConn, udmLanguage;
 
 {$R *.dfm}
 

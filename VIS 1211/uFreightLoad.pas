@@ -260,7 +260,7 @@ implementation
 uses UnitdmModule1, dmsDataConn, VidaUser, dmsVidaContact,
   uMultiplaShippers, VidaUtils, UnitAvrakningar, VidaConst,
   uSelectShipper, uEntryField, dmsVidaSystem, uSelectLastStalleAndShipTo,
-  UnitLoadEntrySSP;
+  UnitLoadEntrySSP, udmLanguage;
 
 {$R *.dfm}
 

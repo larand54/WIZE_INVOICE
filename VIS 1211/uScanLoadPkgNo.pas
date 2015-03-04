@@ -27,7 +27,7 @@ type
 
 implementation
 
-uses UnitLoadEntrySSP;
+uses UnitLoadEntrySSP, udmLanguage;
 
 {$R *.dfm}
 

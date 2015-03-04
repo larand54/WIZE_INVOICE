@@ -544,7 +544,7 @@ uses
   UnitCRViewReport, dmcVidaInvoice, dmBooking,
   dmsVidaContact, dmcVidaSystem, UnitLoadEntryCSD, dmsVidaSystem,
   UnitCRExportOneReport, uSendMapiMail, uTradingLinkMult, uEntryField,
-  uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages;
+  uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages, udmLanguage;
 
 procedure TfrmAvrop.CreateCo(CompanyNo: Integer);
 begin
