@@ -17,6 +17,8 @@ object fStef: TfStef
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object CRViewer91: TCrystalActiveXReportViewer
@@ -51,7 +53,7 @@ object fStef: TfStef
         Left = 1
         Top = 1
         Width = 782
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -67,7 +69,7 @@ object fStef: TfStef
         Left = 1
         Top = 1
         Width = 67
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1022,7 +1024,7 @@ object fStef: TfStef
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False

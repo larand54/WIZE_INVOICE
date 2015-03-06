@@ -1826,15 +1826,12 @@ object dmsConnector: TdmsConnector
     Params.Strings = (
       'Server=alvesql03'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
-      'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24
