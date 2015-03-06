@@ -544,7 +544,8 @@ uses
   UnitCRViewReport, dmcVidaInvoice, dmBooking,
   dmsVidaContact, dmcVidaSystem, UnitLoadEntryCSD, dmsVidaSystem,
   UnitCRExportOneReport, uSendMapiMail, uTradingLinkMult, uEntryField,
-  uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages, udmLanguage;
+  uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages, udmLanguage,
+  udmFR, uReport, uReportController;
 
 procedure TfrmAvrop.CreateCo(CompanyNo: Integer);
 begin
@@ -3444,75 +3445,147 @@ procedure TfrmAvrop.acPrintContractExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if Length(daMoLM1.cdsAvropORDERNUMBER.AsString) <= 0 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := daMoLM1.cdsAvropORDERNUMBER.AsString;
+  if uReportController.useFR then begin
+
+    ClientNo := -1;
+    RoleType := -1;
 
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      FormCRViewReport.CreateCo('CONTRACT_NOTE.RPT', A)
+      DocTyp := 598 // CONTRACT.NOTE.fr3
     else
-      FormCRViewReport.CreateCo('INCONTRACT_NOTE.RPT', A);
+      DocTyp := 599; // INCONTRACT.NOTE.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := daMoLM1.cdsAvropORDERNUMBER.AsString;
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        FormCRViewReport.CreateCo('CONTRACT_NOTE.RPT', A)
+      else
+        FormCRViewReport.CreateCo('INCONTRACT_NOTE.RPT', A);
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfrmAvrop.acPrintLOExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if daMoLM1.cdsAvropShippingPlanNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 2);
-    A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-    A[1] := -1;
+  if uReportController.useFR then begin
+
+    ClientNo := -1;
+    RoleType := -1;
+
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A)
+      DocTyp := 601 // LASTORDER_NOTE_ver3.fr3
     else
-      FormCRViewReport.CreateCo('LASTORDER_INKOP_NOTE_ver2.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      DocTyp := 602; // LASTORDER_INKOP_NOTE_ver2.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      Params.Add('SupplierNo', -1);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 2);
+      A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+      A[1] := -1;
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A)
+      else
+        FormCRViewReport.CreateCo('LASTORDER_INKOP_NOTE_ver2.RPT', A);
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfrmAvrop.acPrintTrpOrderExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+  if uReportController.useFR then begin
+
+    ClientNo := -1;
+    RoleType := -1;
 
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+      DocTyp := 603 // TRP_ORDER_NOTE.fr3
     else
-      FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT', A);
+      DocTyp := 604; // TRP_ORDER_INKOP_NOTE.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+      else
+        FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT', A);
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfrmAvrop.BuildAvropSQL(const LONo: String; const ErReferens: String);
@@ -3968,33 +4041,57 @@ procedure TfrmAvrop.acPrintTallyUSNoteExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if daMoLM1.cdsLoadsLoadNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
+  if uReportController.useFR then begin
 
-    SetLength(A, 1);
-    A[0] := daMoLM1.cdsLoadsLoadNo.AsInteger;
+    ClientNo := -1;
+    RoleType := -1;
 
-    dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-      daMoLM1.cdsLoadsLoadNo.AsInteger;
-    dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A)
+      DocTyp := 12 // TALLY_US_NOTE.fr3
     else
-      FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A);
+      DocTyp := 12; // TALLY_US_NOTE.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      SetLength(A, 1);
+      A[0] := daMoLM1.cdsLoadsLoadNo.AsInteger;
+
+      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
+        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A)
+      else
+        FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A);
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_DelPkgType.ExecSQL;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-    dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-      daMoLM1.cdsLoadsLoadNo.AsInteger;
-    dmsSystem.sq_DelPkgType.ExecSQL;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 End;
 
 procedure TfrmAvrop.acSetLOStatusToCancelExecute(Sender: TObject);
@@ -4130,37 +4227,62 @@ procedure TfrmAvrop.acPrintFSExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if daMoLM1.cdsLoadsLoadNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-      daMoLM1.cdsLoadsLoadNo.AsInteger;
-    dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
+  if uReportController.useFR then begin
+
+    ClientNo := -1;
+    RoleType := -1;
+
+    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+      DocTyp := 4 // TALLY_VER3_NOTE.fr3
+    else
+      DocTyp := 10; // TALLY_VER2_INKOP_NOTE.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      Params.Add('LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('ShippingPlanNo', daMoLM1.cdsAvrop1ShippingPlanNo.AsInteger);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
     Try
-
-      SetLength(A, 1);
-      A[0] := daMoLM1.cdsLoadsLoadNo.AsInteger;
-
-      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-        FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A)
-      else
-        FormCRViewReport.CreateCo('TALLY_VER2_INKOP_NOTE.RPT', A);
-
-      if FormCRViewReport.ReportFound then
-      Begin
-        FormCRViewReport.ShowModal;
-      End;
-
-    Finally
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
         daMoLM1.cdsLoadsLoadNo.AsInteger;
-      dmsSystem.sq_DelPkgType.ExecSQL;
+      dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
+      Try
+
+        SetLength(A, 1);
+        A[0] := daMoLM1.cdsLoadsLoadNo.AsInteger;
+
+        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+          FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A)
+        else
+          FormCRViewReport.CreateCo('TALLY_VER2_INKOP_NOTE.RPT', A);
+
+        if FormCRViewReport.ReportFound then Begin
+          FormCRViewReport.ShowModal;
+        End;
+
+      Finally
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          daMoLM1.cdsLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 End;
 
 procedure TfrmAvrop.acPrintFSUpdate(Sender: TObject);

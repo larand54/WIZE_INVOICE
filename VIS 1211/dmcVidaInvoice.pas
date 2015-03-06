@@ -1773,7 +1773,7 @@ type
     procedure ExportInvoiceSpecWoodxExecute(const CustomerNo, IntInvNo: Integer;
       const InvoiceNo: String);
     procedure EmailaTrpBrevExecute(const IntInvNo, InvoiceNo, CustomerNo,
-      LONo: Integer);
+      LONo: Integer; const OrderNoText: string);
     procedure ExportTyp1(const InvoiceNo, InternalInvoiceNo, CET: Integer);
     function SaveInvoiceSpecChanges(const InternalInvoiceNo: Integer): Boolean;
     function SaveInvoiceSpecToInventory(const InternalInvoiceNo
@@ -1816,7 +1816,8 @@ Uses dmsDataConn, recerror, UnitEnterInvoiceNo, VidaConst, VidaUser,
   fMoveInvPkgToInventory, dmc_ArrivingLoads,
   dmsVidaContact, uSelectMultInvoice, dmsVidaSystem, VidaUtils,
   UnitCRExportOneReport, uSendMapiMail, MainU, dmc_ImportWoodx,
-  dmcVidaOrder, dmsVidaProduct, UnitdmModule1;
+  dmcVidaOrder, dmsVidaProduct, UnitdmModule1, udmFR, uReportController,
+  uReport;
 {$R *.dfm}
 
 function TdmVidaInvoice.ControlInvoiceData(var Msg: String): Boolean;
@@ -4139,7 +4140,7 @@ begin
 end;
 
 procedure TdmVidaInvoice.EmailaTrpBrevExecute(const IntInvNo, InvoiceNo,
-  CustomerNo, LONo: Integer);
+  CustomerNo, LONo: Integer; const OrderNoText: string);
 const
   LF = #10;
 Var
@@ -4148,6 +4149,14 @@ Var
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
   MailToAddress, ExcelDir: String;
+
+  sTransportBrev,
+  sSpecification: string;
+  RC: TCMReportController;
+  DocTyp,
+  RoleType,
+  ClientNo: integer;
+  Params: TCMParams;
 begin
   // if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
   // Begin
@@ -4161,23 +4170,45 @@ begin
   End;
   if Length(MailToAddress) > 0 then
   Begin
+    sTransportBrev := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) + '.pdf';
+    sSpecification := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
+    if uReportController.useFR then begin
 
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      SetLength(A, 1);
+      params := TCMParams.Create();
+      params.Add('INVOICENO',IntInvNo);
+      params.Add('OrderNoText',OrderNoText);
+      params.Add('ShippingPlanNo',LONo);
 
-      A[0] := IntInvNo;
-      FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
-        ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo));
-      FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-        ExcelDir + 'Specification ' + IntToStr(InvoiceNo));
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-    End;
+      RC := TCMReportController.create;
+      ClientNo := CustomerNo;
+      RoleType := -1;
+
+      DocTyp := cTrpBrev;
+      RC.setExportFile(sTransportBrev);
+      RC.RunReport(0,ClientNo,RoleType,DocTyp,params,frFile);
+
+      DocTyp := cPkgSpec;
+      RC.setExportFile(sSpecification);
+      RC.RunReport(0,ClientNo,RoleType,DocTyp,params,frFile);
+    end
+    else begin
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+
+        A[0] := IntInvNo;
+        FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
+          sTransportBrev);
+        FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
+          sSpecification);
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
+    end;
 
     SetLength(Attach, 2);
-    Attach[0] := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) + '.pdf';
-    Attach[1] := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
+    Attach[0] := sTransportBrev;
+    Attach[1] := sSpecification;
     dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
     Try
       dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
@@ -9551,6 +9582,13 @@ Var
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
   FilNamn, ExcelFolder, MailToAddress: String;
+
+  RC: TCMReportController;
+  DocTyp,
+  RoleType,
+  ClientNo: integer;
+  Params: TCMParams;
+
   // MailToAddressAgent,
   // MailToAddressKund,
   // MailToAddress,
@@ -9584,23 +9622,39 @@ begin
 
   if not FileExists(FilNamn) then
   Begin
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := InternalInvoiceNo;
+    if uReportController.useFR then begin
 
-      FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
-        ExcelFolder + 'InvoiceNo ' + InvoiceNo);
-      // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A, ExcelFolder + 'Specification '+InvoiceNo) ;
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-    End;
+      params := TCMParams.Create();
+      params.Add('INVOICENO',InternalInvoiceNo);
+
+      RC := TCMReportController.Create;
+      ClientNo := CustomerNo;
+      RoleType := -1;
+
+      DocTyp := cFaktura;
+      RC.setExportFile(FilNamn);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+
+    end
+    else begin
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := InternalInvoiceNo;
+
+        FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
+          ExcelFolder + 'InvoiceNo ' + InvoiceNo);
+        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A, ExcelFolder + 'Specification '+InvoiceNo) ;
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
+    end;
     // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
   End;
 
   SetLength(Attach, 1);
 
-  Attach[0] := ExcelFolder + 'InvoiceNo ' + InvoiceNo + '.pdf';
+  Attach[0] := FilNamn;
   // Attach[1]:= ExcelFolder + 'Specification '+InvoiceNo+'.pdf' ;
 
   // Attach[0]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'InvoiceNo '+InvoiceNo+'.pdf' ;

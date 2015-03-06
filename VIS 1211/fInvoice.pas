@@ -5449,7 +5449,7 @@ begin
   Begin
     EmailaTrpBrevExecute(cdsInvoiceHeadInternalInvoiceNo.AsInteger,
       StrToIntDef(lInvoiceNo.Caption, 0), cdsInvoiceHeadCustomerNo.AsInteger,
-      StrToIntDef(TabControl1.Tabs[TabControl1.TabIndex], 0));
+      StrToIntDef(TabControl1.Tabs[TabControl1.TabIndex], 0), cdsInvoiceLOOrderNoText.AsString);
 
     // EmailaTrpBrevExecute(const IntInvNo, InvoiceNo, CustomerNo, LONo : Integer) ;
   End;

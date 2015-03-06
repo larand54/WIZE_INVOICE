@@ -273,7 +273,7 @@ uses
   uEntryField,
   dmc_ArrivingLoads,
   dmsVidaSystem, dmcAvrakning, uWait, UnitLoadEntrySSP, dmc_UserProps,
-  udmLanguage;
+  udmLanguage, udmFR, uReport, uReportController;
 
 {$R *.dfm}
 
@@ -505,22 +505,43 @@ procedure TfrmGjordaAvrakningar.acSkrivUtExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RC: TCMReportController;
+  DocTyp,
+  RoleType,
+  ClientNo: integer;
+  Params: TCMParams;
 begin
   grdPayment.SetFocus;
   if dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger;
-    FormCRViewReport.CreateCo('AVRAKNING_ver_II.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+  if uReportController.useFR then begin
+
+    ClientNo := -1;
+    RoleType := -1;
+    DocTyp := 508;      // AVRAKNING_ver_II.RPT
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('PaymentNo', dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    finally
+      freeAndNil(Params);
+      freeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger;
+      FormCRViewReport.CreateCo('AVRAKNING_ver_II.RPT', A);
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      freeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfrmGjordaAvrakningar.acCloseExecute(Sender: TObject);
