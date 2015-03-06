@@ -1249,6 +1249,13 @@ end;
 
 procedure TfrmSokAvropFormular.OpenStandardMall(Sender: TObject);
 begin
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
+
+  dmsContact.cdsCities.Active := False;
+  dmsContact.cdsCities.ParamByName('@SalesRegionNo').AsInteger  :=  dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cdsCities.Active := True;
   With dm_SokFormular do
   Begin
     cds_mall.Active := False;

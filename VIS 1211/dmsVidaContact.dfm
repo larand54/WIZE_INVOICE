@@ -296,13 +296,21 @@ object dmsContact: TdmsContact
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'select C.ClientName, C.ClientNo'
-      'FROM   dbo.Client        C,'
-      '       dbo.ClientRole    R'
-      'WHERE  C.ClientNo = R.ClientNo'
-      'AND  R.RoleType = 7'
+      'FROM   dbo.Client        C'
+      
+        '       inner join dbo.ClientRole    R on R.ClientNo =  C.ClientN' +
+        'o'
+      'WHERE  R.RoleType = 7'
+      '  AND C.OwnedBySalesRegionNo = :SalesRegionNo'
       'Order by C.clientName')
     Left = 528
     Top = 16
+    ParamData = <
+      item
+        Name = 'SALESREGIONNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
     object cds_SRClientName: TStringField
       FieldName = 'ClientName'
       Origin = 'ClientName'
@@ -777,16 +785,21 @@ object dmsContact: TdmsContact
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
-    StoredProcName = 'vida_Cities'
+    StoredProcName = 'dbo.vis_Loading'
     Left = 744
-    Top = 296
+    Top = 288
     ParamData = <
       item
         Position = 1
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
-        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@SalesRegionNo'
+        DataType = ftInteger
+        ParamType = ptInput
       end>
     object cdsCitiesCityNo: TIntegerField
       FieldName = 'CityNo'

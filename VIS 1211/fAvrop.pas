@@ -592,6 +592,11 @@ Begin
     cbLoadsNotInvoiced.Checked  :=  ReadBool ('Avrop', 'EjFakt', False) ;
     SalesGroup                  :=  ReadInteger ('Avrop', 'SalesGroup', 0); }
 
+
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
+
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
   cds_Props.ParamByName('Form').AsString := Form;
   cds_Props.Active := True;

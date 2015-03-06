@@ -2187,12 +2187,12 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       000000000000}
   end
   object SaveDialog1: TSaveDialog
-    Left = 240
-    Top = 576
+    Left = 248
+    Top = 568
   end
   object OpenDialog1: TOpenDialog
-    Left = 240
-    Top = 616
+    Left = 248
+    Top = 624
   end
   object pmClearShipDate: TPopupMenu
     Left = 128
@@ -2202,8 +2202,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     end
   end
   object SaveDialog2: TSaveDialog
-    Left = 240
-    Top = 664
+    Left = 248
+    Top = 672
   end
   object ActionList1: TActionList
     Images = ImageList1
@@ -2336,7 +2336,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   end
   object pmShortcut: TPopupMenu
     Left = 248
-    Top = 504
+    Top = 512
     object Bokning1: TMenuItem
       Action = acBooking
     end
@@ -2396,17 +2396,18 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         ItemName = 'dxBarButton4'
       end>
     UseOwnFont = False
-    Left = 449
+    Left = 457
     Top = 542
   end
   object dxComponentPrinter1: TdxComponentPrinter
     CurrentLink = dxComponentPrinter1Link1
     Version = 0
-    Left = 449
+    Left = 457
     Top = 597
     object dxComponentPrinter1Link1: TdxGridReportLink
       Active = True
       Component = grdAvropSok
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -2954,8 +2955,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       'DataField'
       'KeyField'
       'ListField')
-    Left = 608
-    Top = 408
+    Left = 584
+    Top = 344
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660072006D0053006F006B004100760072006F007000
