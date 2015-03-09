@@ -4228,4 +4228,29 @@ object dmsSystem: TdmsSystem
         ParamType = ptInput
       end>
   end
+  object sp_Lang: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_Lang'
+    Left = 896
+    Top = 728
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@UseriD'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@LanguageNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end

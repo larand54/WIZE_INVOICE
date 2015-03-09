@@ -428,6 +428,7 @@ type
     mtSelectedPkgNoLagergrupp: TStringField;
     sq_dbPropsintsec: TIntegerField;
     sq_dbPropsLangPath: TStringField;
+    sp_Lang: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);
@@ -468,6 +469,8 @@ type
     LOG_ENABLE: Boolean;
     MarkedPkgs: Integer;
     PktNrPos, AntPosPktNr, LevKodPos, AntPosLevKod: Cardinal;
+    function  GetLanguageNo : Integer ;
+    procedure SaveLanguage(const LanguageNo : Integer) ;
     procedure MovePkgToInvFromLoad(const LoadNo, LIPNo: Integer);
     procedure Close_cds_LoadWeigth;
     procedure Open_cds_LoadWeigth(const LoadNo: Integer);
@@ -2511,6 +2514,42 @@ procedure TdmsSystem.Close_cds_LoadWeigth;
 Begin
   if cds_LoadWeigth.Active then
     cds_LoadWeigth.Active := False;
+End;
+
+procedure TdmsSystem.SaveLanguage(const LanguageNo : Integer) ;
+Begin
+  Try
+  sp_Lang.Active  := False ;
+  sp_Lang.ParamByName('@UseriD').AsInteger      :=  ThisUser.UserID ;
+  sp_Lang.ParamByName('@LanguageNo').AsInteger  :=  LanguageNo ;
+  sp_Lang.ExecProc ;
+  Except
+   On E: Exception do
+   Begin
+    ShowMessage('sp_Lang: ' + E.Message) ;
+    Raise ;
+   End
+  End ;
+End;
+
+function TdmsSystem.GetLanguageNo : Integer ;
+Begin
+  Try
+  sp_Lang.Active  := False ;
+  sp_Lang.ParamByName('@UseriD').AsInteger      :=  ThisUser.UserID ;
+  sp_Lang.ParamByName('@LanguageNo').AsInteger  :=  -1 ;//LanguageNo ;
+  sp_Lang.Active  := True ;
+  if sp_Lang.RecordCount > 0 then
+   Result := sp_Lang.FieldByName('LanguageNo').AsInteger
+    else
+     Result := -1 ;
+  Except
+     On E: Exception do
+     Begin
+      ShowMessage('sp_Lang: ' + E.Message) ;
+      Raise ;
+     End
+  End ;
 End;
 
 end.

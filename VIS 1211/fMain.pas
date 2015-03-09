@@ -186,6 +186,7 @@ type
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
     dxBarButton4: TdxBarButton;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
     procedure atAboutExecute(Sender: TObject);
@@ -236,6 +237,7 @@ type
     procedure dxBarButton18Click(Sender: TObject);
     procedure acChangeLanguageExecute(Sender: TObject);
     procedure dxBSIChangeLangClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     a: String;
     function GetLastNrToUnLock: Integer;
@@ -473,7 +475,7 @@ End;
 // -------------------------------------------------------------
 procedure TfrmMain.FormShow(Sender: TObject);
 var
-  Height, Width, Top, Left: Integer;
+  Height, Width, Top, Left, LanguageNo  : Integer;
 begin
   dmsConnector.DriveLetter := 'H:\';
   if dmsConnector.DriveLetter = 'C:\' then
@@ -483,10 +485,10 @@ begin
 //   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
   // ThisUser.Database:= '172.24.0.40:vis_vida' ;
 
-  ThisUser.Database := 'vis.vida.se:vis_vida';
+//  ThisUser.Database := 'vis.vida.se:vis_vida';
 
   // ThisUser.Database:= 'alvevistest01:vis_vida' ;
- //  ThisUser.Database:= 'alvesql03:vis_vida' ;
+  ThisUser.Database:= 'alvesql03:vis_vida' ;
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
     close
@@ -511,6 +513,13 @@ begin
     FrmMain.Left := Left;
   End;
   Load_Plugin;
+
+  LanguageNo  :=  dmsSystem.GetLanguageNo ;
+  if LanguageNo > -1 then
+  Begin
+   dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
+   dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);
+  End;
 end;
 
 Procedure TfrmMain.InitOnStartOfProgram;
@@ -607,6 +616,15 @@ begin
       FreeAndNil(frmGenShipCost);
     End;
   End;
+end;
+
+procedure TfrmMain.Button1Click(Sender: TObject);
+var
+  LanguageNo  : Integer;
+begin
+  LanguageNo  :=  dmsSystem.GetLanguageNo ;
+  if LanguageNo > -1 then
+   dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: Char);
@@ -1520,7 +1538,10 @@ begin
     if (frm <> nil) then
     begin
       if (frm.ShowModal = mrOk) then
+      Begin
         dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);
+        dmsSystem.SaveLanguage(dmLanguage.siLangDispatcher1.ActiveLanguage) ;
+      End;
     end;
   finally
     FreeAndNil(frm);
