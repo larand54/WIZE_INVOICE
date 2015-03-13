@@ -144,6 +144,7 @@ object frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Lastorder'
       Groups = <
         item
@@ -160,7 +161,6 @@ object frmMain: TfrmMain
       Index = 2
     end
     object dxRibbon1Tab4: TdxRibbonTab
-      Active = True
       Caption = 'Fraktavr'#228'kning'
       Groups = <
         item
@@ -433,6 +433,10 @@ object frmMain: TfrmMain
     object acChangeLanguage: TAction
       Caption = 'ChangeLanguage'
       OnExecute = acChangeLanguageExecute
+    end
+    object acToggleReportSystem: TAction
+      Caption = 'Change to FastReport'
+      OnExecute = acToggleReportSystemExecute
     end
   end
   object imglOutbar_large: TImageList
@@ -3481,6 +3485,10 @@ object frmMain: TfrmMain
         item
           Visible = True
           ItemName = 'dxBarButton4'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarButton19'
         end>
     end
     object dxBarSubItem4: TdxBarSubItem
@@ -3576,6 +3584,17 @@ object frmMain: TfrmMain
     object dxBarButton4: TdxBarButton
       Action = acChangeLanguage
       Category = 0
+    end
+    object dxBarButton6: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarButton19: TdxBarButton
+      Action = acToggleReportSystem
+      Category = 0
+      Hint = 'Toggle Reportsystem'
     end
     object dxBarButton1: TdxBarButton
       Action = atExit

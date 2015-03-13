@@ -642,7 +642,7 @@ uses VidaUser, dmsDataConn, UnitSelectClient, UnitdmModule1,
   UnitCRPrintReport, uLanguage, uSendMapiMail, UnitCRExportOneReport,
   UnitCRPrintOneReport, fAttestInvoice, dmsVidaSystem,
   uKundspecifika, uAddKundSpecifika, uArticle, uAccInv, uVerifikationLogg,
-  udmLanguage;
+  udmLanguage, uReportController, uReport;
 
 {$R *.dfm}
 
@@ -1547,7 +1547,7 @@ var
 begin
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
-
+     //LGA OBS!!! Denna rapport finns ej !!!!
     SetLength(A, 1);
     A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
     FormCRViewReport.CreateCo('FAKTURA_ENG_NOTE.RPT', A);
@@ -1567,6 +1567,7 @@ var
 begin
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
+     //LGA OBS!!! Denna rapport finns ej !!!!
 
     SetLength(A, 1);
     A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
@@ -1596,25 +1597,42 @@ procedure TfrmInvoice.TRPBREV1Click(Sender: TObject);
 var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RepNo: Integer;
+  Params: TCMParams;
+  RC: TCMReportController;
 begin
   if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
     Exit;
 
-  dmsContact.InsertUserIssueReport(ThisUser.UserID,
-    dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+  if uReportController.useFR then begin
+    RepNo := 42; // TRP_BREV.fr3
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+        AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    dmsContact.InsertUserIssueReport(ThisUser.UserID,
+      dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
-    FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport); // .Free ;
     End;
-  Finally
-    FreeAndNil(FormCRViewReport); // .Free ;
-  End;
+  end;
 end;
 
 procedure TfrmInvoice.Utankvalitet1Click(Sender: TObject);
@@ -1637,21 +1655,38 @@ procedure TfrmInvoice.SpecifikationSvenskVer2Click(Sender: TObject);
 var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RepNo: Integer;
+  Params: TCMParams;
+  RC: TCMReportController;
 begin
   if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
-    FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+  if uReportController.useFR then begin
+    RepNo := 82; // SPECIFICATION_SV_VER3.fr3
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+        AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo('SPECIFICATION_SV_VER2.RPT', A);
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport); // .Free ;
     End;
-  Finally
-    FreeAndNil(FormCRViewReport); // .Free ;
-  End;
+  end;
 end;
 
 procedure TfrmInvoice.SpecEngVer2Click(Sender: TObject);

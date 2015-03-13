@@ -623,7 +623,7 @@ uses
   //uLOLengths,
   uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
-  uSelectFSFileName, dmc_UserProps, udmLanguage;
+  uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController;
 
 procedure TfrmLoadOrder.CMMoveIt(var Msg: TMessage);
 var
