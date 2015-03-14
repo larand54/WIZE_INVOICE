@@ -172,7 +172,6 @@ begin
   Application.CreateForm(TdmsContact, dmsContact);
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(TdmLanguage, dmLanguage);
-  Application.CreateForm(TfrmChangeLanguage, frmChangeLanguage);
   Application.CreateForm(TXMLImportExport, XMLImportExport);
   Application.CreateForm(TdmFR, dmFR);
   Application.Run;

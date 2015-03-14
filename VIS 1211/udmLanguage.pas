@@ -34,6 +34,13 @@ procedure TdmLanguage.DataModuleCreate(Sender: TObject);
 var
   Path : String;
 begin
+{
+    path := dmsSystem.GetLangPath();
+    assert(path <> '','Path to languagefiles not defined in database');
+  //  siLangDispatcher1.FileName := Path;
+  siLangDispatcher1.FileName := Path + '\' + siLangDispatcher1.FileName;
+}
+
 {$IFDEF DEBUG}
   path := ExtractFilePath(ParamStr(0));
 {$ELSE}
