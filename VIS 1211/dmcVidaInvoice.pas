@@ -4183,13 +4183,18 @@ begin
       ClientNo := CustomerNo;
       RoleType := -1;
 
-      DocTyp := cTrpBrev;
-      RC.setExportFile(sTransportBrev);
-      RC.RunReport(0,ClientNo,RoleType,DocTyp,params,frFile);
+      Try
+        DocTyp := cTrpBrev;
+        RC.setExportFile(sTransportBrev);
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
-      DocTyp := cPkgSpec;
-      RC.setExportFile(sSpecification);
-      RC.RunReport(0,ClientNo,RoleType,DocTyp,params,frFile);
+        DocTyp := cPkgSpec;
+        RC.setExportFile(sSpecification);
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+      Finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      End;
     end
     else begin
       FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
@@ -9632,9 +9637,13 @@ begin
       RoleType := -1;
 
       DocTyp := cFaktura;
-      RC.setExportFile(FilNamn);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-
+      Try
+        RC.setExportFile(FilNamn);
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+      Finally
+        FreeAndNil(params);
+        FreeAndNil(RC);
+      End;
     end
     else begin
       FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);

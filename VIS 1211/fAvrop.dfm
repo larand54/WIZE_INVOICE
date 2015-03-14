@@ -1384,7 +1384,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 903
-        Height = 44
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1401,7 +1401,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 65
-        Height = 44
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -3241,7 +3241,7 @@ object frmAvrop: TfrmAvrop
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

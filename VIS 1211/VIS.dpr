@@ -1,11 +1,11 @@
 program VIS;
 
 uses
-  madExcept,
+ { madExcept,
   madLinkDisAsm,
   madListHardware,
   madListProcesses,
-  madListModules,
+  madListModules,}
   Forms,
   fMain in 'fMain.pas' {frmMain},
   VidaConst in 'VidaConst.pas',

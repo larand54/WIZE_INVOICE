@@ -567,7 +567,6 @@
         <DCCReference Include="Aug 31B dbExpress\PackageImportU.pas"/>
         <DCCReference Include="..\..\CommonSources\FastReport\udmFR.pas">
             <Form>dmFR</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="..\..\CommonSources\FastReport\uReport.pas"/>
