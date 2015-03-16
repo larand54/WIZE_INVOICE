@@ -475,10 +475,6 @@
         <DCCReference Include="uSelectAttBeskrivning.pas">
             <Form>fSelectAttBeskrivning</Form>
         </DCCReference>
-        <DCCReference Include="uFastReports.pas">
-            <Form>dmFR</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="uExportLoadPurpose.pas">
             <Form>fExportLoadPurpose</Form>
         </DCCReference>
@@ -544,11 +540,9 @@
         </DCCReference>
         <DCCReference Include="uAvdelning.pas">
             <Form>fAvdelning</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="USelectLIPNo.pas">
             <Form>fSelectLIPNo</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CR_Plugin_Import.pas"/>
         <DCCReference Include="PreviewForm.pas">
@@ -557,28 +551,30 @@
         <DCCReference Include="PrintUnit.pas"/>
         <DCCReference Include="uUnConnectedPackages.pas">
             <Form>fUnConnectedPackages</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uPrintTest.pas">
             <Form>fPrintTest</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="udmLanguage.pas">
             <Form>dmLanguage</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="ufrmChangeLanguage.pas">
             <Form>frmChangeLanguage</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Aug 31B dbExpress\MainU.pas">
             <Form>XMLImportExport</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas"/>
         <DCCReference Include="Aug 31B dbExpress\PackageExportU.pas"/>
         <DCCReference Include="Aug 31B dbExpress\PackageImportU.pas"/>
+        <DCCReference Include="..\..\CommonSources\FastReport\udmFR.pas">
+            <Form>dmFR</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\CommonSources\FastReport\uReport.pas"/>
+        <DCCReference Include="..\..\CommonSources\FastReport\uReportController.pas"/>
         <None Include="VIS.todo"/>
         <None Include="ModelSupport_VIS\default.txaPackage"/>
         <None Include="ModelSupport_VIS\default.txvpck"/>

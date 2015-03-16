@@ -94,7 +94,7 @@ object dmLanguage: TdmLanguage
     Language = 'Origin'
     UseDefaultLanguage = True
     OnLanguageChanged = siLangDispatcher1LanguageChanged
-    Left = 96
-    Top = 16
+    Left = 120
+    Top = 40
   end
 end

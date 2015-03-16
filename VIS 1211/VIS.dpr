@@ -123,7 +123,6 @@ uses
   uPayControl in 'uPayControl.pas' {fPayControl},
   uAttest_SetHdrInfo in 'uAttest_SetHdrInfo.pas' {fAttest_SetHdrInfo},
   uSelectAttBeskrivning in 'uSelectAttBeskrivning.pas' {fSelectAttBeskrivning},
-  uFastReports in 'uFastReports.pas' {dmFR: TDataModule},
   uExportLoadPurpose in 'uExportLoadPurpose.pas' {fExportLoadPurpose},
   uPickVPPkgs in 'uPickVPPkgs.pas' {fPickVPPkgs},
   uCreditGrpClients in 'uCreditGrpClients.pas' {frmCreditGrpClients},
@@ -157,7 +156,10 @@ uses
   MainU in 'Aug 31B dbExpress\MainU.pas' {XMLImportExport},
   DeliveryMessageWoodV2R31 in 'Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas',
   PackageExportU in 'Aug 31B dbExpress\PackageExportU.pas',
-  PackageImportU in 'Aug 31B dbExpress\PackageImportU.pas';
+  PackageImportU in 'Aug 31B dbExpress\PackageImportU.pas',
+  udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
+  uReport in '..\..\CommonSources\FastReport\uReport.pas',
+  uReportController in '..\..\CommonSources\FastReport\uReportController.pas';
 
 {$R *.res}
 
@@ -171,6 +173,7 @@ begin
   Application.CreateForm(TdmModule1, dmModule1);
   Application.CreateForm(TdmLanguage, dmLanguage);
   Application.CreateForm(TXMLImportExport, XMLImportExport);
+  Application.CreateForm(TdmFR, dmFR);
   Application.Run;
 
 end.

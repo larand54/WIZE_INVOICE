@@ -28,7 +28,7 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-uses dmsVidaSystem;
+uses dmsVidaSystem, dialogs;
 
 procedure TdmLanguage.DataModuleCreate(Sender: TObject);
 var
@@ -53,8 +53,7 @@ end;
 
 function TdmLanguage.getFileWithPath(ExeFileWithPath, ext, path: string): string;
 begin
-  result := IncludeTrailingPathDelimiter(path) + 'VIS.sib' ;// siLangDispatcher1.FileName ;// getProgramName(ExeFileWithPath) + includePrefixToExtension(ext);
-
+  result := IncludeTrailingPathDelimiter(path) + getProgramName(ExeFileWithPath) + includePrefixToExtension(ext);
 end;
 
 function TdmLanguage.getProgramName(ExeFileWithPath: string): string;

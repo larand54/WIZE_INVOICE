@@ -540,7 +540,7 @@ uses
   UnitCRPrintReport, UnitCRExportOneReport, uSendMapiMail,
   UnitCRPrintOneReport, dmc_ImportWoodx, MainU, dmsVidaSystem,
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
-  uSokAvropMall, uEntryField, uFastReports, uVerifikationLogg, uAccInv,
+  uSokAvropMall, uEntryField, uVerifikationLogg, uAccInv,
   UnitdmModule1, udmLanguage;
 
 {$R *.dfm}
@@ -5255,7 +5255,8 @@ begin
 end;
 
 procedure TfrmInvoiceList.acPrintFRInvoiceExecute(Sender: TObject);
-Var
+begin
+{Var
   dmFR: TdmFR;
 begin
   dmFR := TdmFR.Create(nil);
@@ -5277,6 +5278,7 @@ begin
   Finally
     FreeAndNil(dmFR);
   End;
+  }
 end;
 
 procedure TfrmInvoiceList.acExportXLSExecute(Sender: TObject);

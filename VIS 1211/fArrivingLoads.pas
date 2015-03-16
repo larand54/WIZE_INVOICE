@@ -22,7 +22,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinsdxBarPainter, dxBar, cxClasses, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, System.Actions;
+  FireDAC.Comp.Client, System.Actions, siComp, siLngLnk;
 
 type
   TfrmArrivingLoads = class(TfrmDBForm)

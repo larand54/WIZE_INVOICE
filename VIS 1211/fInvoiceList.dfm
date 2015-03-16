@@ -19,8 +19,6 @@ object frmInvoiceList: TfrmInvoiceList
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel
@@ -51,7 +49,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 1080
-          Height = 44
+          Height = 45
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -67,7 +65,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 70
-          Height = 44
+          Height = 45
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -1356,7 +1354,7 @@ object frmInvoiceList: TfrmInvoiceList
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -4454,10 +4452,7 @@ object frmInvoiceList: TfrmInvoiceList
       6C006C00650001004C006100730074007300740061006C006C00650001000100
       0D000A006300640073005F00500072006F007000730049006E00760041006700
       65006E0074004E0061006D006E0001004100670065006E0074004E0061006D00
-      6E00010001000D000A006300640073005F006D0061006C006C004E0061006D00
-      650001004E0061006D0065000100010001000D000A006300640073005F005000
-      72006F007000730049006E0076004E0061006D00650001004E0061006D006500
-      0100010001000D000A007300740046006F006E00740073005F0055006E006900
+      6E00010001000D000A007300740046006F006E00740073005F0055006E006900
       63006F00640065000D000A005400660072006D0049006E0076006F0069006300
       65004C0069007300740001004D0053002000530061006E007300200053006500
       72006900660001004D0053002000530061006E00730020005300650072006900
