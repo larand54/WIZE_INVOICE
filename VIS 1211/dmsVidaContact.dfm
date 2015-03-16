@@ -2319,6 +2319,7 @@ object dmsContact: TdmsContact
     end
   end
   object cds_ReportStaticsII: TFDQuery
+    Active = True
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select * FROM dbo.ReportStaticsII')
@@ -2383,6 +2384,11 @@ object dmsContact: TdmsContact
       Origin = 'Giro'
       ProviderFlags = [pfInUpdate]
       BlobType = ftMemo
+    end
+    object cds_ReportStaticsIILogga: TBlobField
+      FieldName = 'Logga'
+      Origin = 'Logga'
+      ProviderFlags = [pfInUpdate]
     end
   end
   object ds_ReportStaticsII: TDataSource

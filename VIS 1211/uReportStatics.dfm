@@ -2,8 +2,8 @@ object fReportStatics: TfReportStatics
   Left = 0
   Top = 0
   Caption = 'Rapport-parametrar'
-  ClientHeight = 291
-  ClientWidth = 959
+  ClientHeight = 674
+  ClientWidth = 1118
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,10 +19,11 @@ object fReportStatics: TfReportStatics
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 959
+    Width = 1118
     Height = 73
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 959
     object lcSalesregion: TcxDBLookupComboBox
       Left = 165
       Top = 27
@@ -72,17 +73,21 @@ object fReportStatics: TfReportStatics
   object Panel3: TPanel
     Left = 0
     Top = 73
-    Width = 959
-    Height = 218
+    Width = 1118
+    Height = 601
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 959
+    ExplicitHeight = 218
     object grdReportStatics: TcxGrid
       Left = 1
       Top = 1
-      Width = 957
-      Height = 216
+      Width = 1116
+      Height = 599
       Align = alClient
       TabOrder = 0
+      ExplicitLeft = 2
+      ExplicitTop = 0
       object grdReportStaticsDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
@@ -139,6 +144,10 @@ object fReportStatics: TfReportStatics
           Caption = 'Gironr'
           DataBinding.FieldName = 'Giro'
           PropertiesClassName = 'TcxRichEditProperties'
+        end
+        object grdReportStaticsDBTableView1Logga: TcxGridDBColumn
+          DataBinding.FieldName = 'Logga'
+          PropertiesClassName = 'TcxImageProperties'
         end
       end
       object grdReportStaticsDBCardView1: TcxGridDBCardView
@@ -259,6 +268,7 @@ object fReportStatics: TfReportStatics
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -299,8 +309,8 @@ object fReportStatics: TfReportStatics
       'DataField'
       'KeyField'
       'ListField')
-    Left = 472
-    Top = 152
+    Left = 440
+    Top = 360
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066005200650070006F00720074005300740061007400

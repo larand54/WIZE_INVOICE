@@ -538,7 +538,7 @@ type
 
   public
     { Public declarations }
-    FOrderClientNo, FShipping, FShipToInvPointNo, FLoadingLocationNo: Integer;
+    FOrderClientNo, FShipToInvPointNo, FLoadingLocationNo: Integer;
 
     procedure ExternSaveLoad;
     procedure SaveLoad;
@@ -926,7 +926,7 @@ begin
     CreateWithNewLoad(AOwner, SPCustomerNo,
       SupplierNo { Lars }{ CustomerNo } { supplierno } , 0, 0, LLNo, LoadNo,
       Shipping, -1 { orderClient } );
-    FShipping := Shipping;
+    dmLoadEntrySSP.FShipping := Shipping;
     With dmLoadEntrySSP do
     Begin
       ds_LoadPackages2.Enabled := False;
@@ -977,10 +977,10 @@ begin
 
   // CloseDataSets ;
 
-  FShipToInvPointNo := ShipToInvPointNo;
-  FLoadingLocationNo := LoadingLocationNo;
-  FShipping := Shipping;
-  FOrderClientNo := OrderClientNo;
+  FShipToInvPointNo         := ShipToInvPointNo;
+  FLoadingLocationNo        := LoadingLocationNo;
+  dmLoadEntrySSP.FShipping  := Shipping;
+  FOrderClientNo            := OrderClientNo;
 
   { if fShipping = 0 then
     grdLODBTableView1CUSTOMER.Caption:= 'KUND'
@@ -997,33 +997,33 @@ begin
       cdsLORows.ParamByName('LoadNo').AsInteger := -1 ;
       cdsLORows.Active                         := True ; }
 
-    cds_LoadHead.UpdateOptions.ReadOnly := False;
-    cds_LSP.UpdateOptions.ReadOnly := False;
-    cds_LoadPackages.UpdateOptions.ReadOnly := False;
+    cds_LoadHead.UpdateOptions.ReadOnly       := False;
+    cds_LSP.UpdateOptions.ReadOnly            := False;
+    cds_LoadPackages.UpdateOptions.ReadOnly   := False;
 
-    cds_LoadPackages.Active := True;
+    cds_LoadPackages.Active                   := True;
 
-    dmsContact.cdsCities.Active := False;
-    dmsContact.cdsCities.Active := True;
-    dmsContact.cds_LocalShipper.Active := True;
+    dmsContact.cdsCities.Active               := False;
+    dmsContact.cdsCities.Active               := True;
+    dmsContact.cds_LocalShipper.Active        := True;
 
-    cds_LoadHead.Active := True;
+    cds_LoadHead.Active                       := True;
 
     if LoadNo < 1 then
     Begin
       cds_LoadHead.Insert;
-      cds_LoadHeadSenderLoadStatus.AsInteger := 0;
-      cds_LoadHeadLoadedDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
-      cds_LoadHeadPIPNo.AsInteger := cds_LSPPIPNo.AsInteger;
-      cds_LoadHeadLIPNo.AsInteger := cds_LSPLIPNo.AsInteger;
+      cds_LoadHeadSenderLoadStatus.AsInteger      := 0;
+      cds_LoadHeadLoadedDate.AsSQLTimeStamp       := DateTimeToSQLTimeStamp(Now);
+      cds_LoadHeadPIPNo.AsInteger                 := cds_LSPPIPNo.AsInteger;
+      cds_LoadHeadLIPNo.AsInteger                 := cds_LSPLIPNo.AsInteger;
 
-      cds_LoadHeadLocalLoadingLocation.AsInteger := LoadingLocationNo;
+      cds_LoadHeadLocalLoadingLocation.AsInteger  := LoadingLocationNo;
 
-      cds_LoadHeadLocalDestinationNo.AsInteger := ShipToInvPointNo;
+      cds_LoadHeadLocalDestinationNo.AsInteger    := ShipToInvPointNo;
 
       cds_LoadHead.Post;
 
-      ReservedByUser := dmsSystem.Load_Reserved(cds_LoadHeadLoadNo.AsInteger);
+      ReservedByUser                              := dmsSystem.Load_Reserved(cds_LoadHeadLoadNo.AsInteger);
 
       if Length(ReservedByUser) > 0 then
       begin
@@ -4135,8 +4135,8 @@ end;
 
 procedure TfLoadEntrySSP.acPkgEntryExecute(Sender: TObject);
 Var
-  x, LocalSupplierNo: Integer;
-  frmPackageEntry: TfrmPackageEntry;
+  x, LocalSupplierNo  : Integer;
+  frmPackageEntry     : TfrmPackageEntry;
 begin
   LocalSupplierNo := dmsContact.GetLocalSupplierNo
     (dmLoadEntrySSP.cds_LSPLoadingLocationNo.AsInteger);
@@ -4155,7 +4155,7 @@ begin
             dmsProduct.CSD := 2;
 
             // if dmLoadEntrySSP.FAvrop_CustomerNo <> -1 then
-            if FShipping = 1 then
+            if dmLoadEntrySSP.FShipping = 1 then
             Begin // Purchase packages get external supplier SupplierCode
 
               dmsProduct.SupplierNo := FOrderClientNo;
@@ -4170,8 +4170,7 @@ begin
               // dmLoadEntrySSP.FSupplierNo ;
 
               if dmLoadEntrySSP.cds_LoadHeadPIPNo.AsInteger > 0 then
-                dmsProduct.InventoryNo :=
-                  dmLoadEntrySSP.cds_LoadHeadPIPNo.AsInteger;
+                dmsProduct.InventoryNo := dmLoadEntrySSP.cds_LoadHeadPIPNo.AsInteger;
 
               if dmLoadEntrySSP.cds_LoadHeadLIPNo.AsInteger > 0 then
                 dmsProduct.LIPNo := dmLoadEntrySSP.cds_LoadHeadLIPNo.AsInteger;

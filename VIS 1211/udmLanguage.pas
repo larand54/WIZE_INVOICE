@@ -53,7 +53,7 @@ end;
 
 function TdmLanguage.getFileWithPath(ExeFileWithPath, ext, path: string): string;
 begin
-  result := IncludeTrailingPathDelimiter(path) + 'VISIIX.sib' ;// siLangDispatcher1.FileName ;// getProgramName(ExeFileWithPath) + includePrefixToExtension(ext);
+  result := IncludeTrailingPathDelimiter(path) + 'VIS.sib' ;// siLangDispatcher1.FileName ;// getProgramName(ExeFileWithPath) + includePrefixToExtension(ext);
 
 end;
 

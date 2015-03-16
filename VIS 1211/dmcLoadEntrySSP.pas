@@ -350,6 +350,7 @@ type
     procedure cds_LoadPackagesPostError(DataSet: TDataSet; E: EDatabaseError;
       var Action: TDataAction);
     procedure cdsLORowsCalcFields(DataSet: TDataSet);
+    procedure cds_LoadHeadCustomerNoChange(Sender: TField);
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
@@ -372,7 +373,8 @@ type
 
   public
     { Public declarations }
-    Guid: String;
+    FShipping : Integer ;
+    Guid      : String;
     LoadStatus, LIPNo, InventoryNo: Integer; // , GlobalLoadDetailNo : Integer ;
     FSupplierNo, FCustomerNo: Integer;
     function PkgExistInInventory(const PackageNo, PIPNo: Integer;
@@ -405,7 +407,7 @@ type
   end;
 
 var
-  dmLoadEntrySSP: TdmLoadEntrySSP;
+  dmLoadEntrySSP  : TdmLoadEntrySSP;
 
 implementation
 
@@ -611,13 +613,13 @@ begin
     cds_LoadHead.Edit;
   // cds_LoadHeadLoadNo.AsInteger              := LoadNo ;
 
-  cds_LoadHeadSupplierNo.AsInteger := FSupplierNo;
-  cds_LoadHeadPackageEntryOption.AsInteger := 0;
-  cds_LoadHeadCreatedUser.AsInteger := ThisUser.UserID;
-  cds_LoadHeadModifiedUser.AsInteger := ThisUser.UserID;
-  cds_LoadHeadDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
-  cds_LoadHeadOriginalSupplierNo.AsInteger := FSupplierNo;
-  cds_LoadHeadCustomerNo.AsInteger := FCustomerNo;
+  cds_LoadHeadSupplierNo.AsInteger            := FSupplierNo;
+  cds_LoadHeadPackageEntryOption.AsInteger    := 0;
+  cds_LoadHeadCreatedUser.AsInteger           := ThisUser.UserID;
+  cds_LoadHeadModifiedUser.AsInteger          := ThisUser.UserID;
+  cds_LoadHeadDateCreated.AsSQLTimeStamp      := DateTimeToSqlTimeStamp(Now);
+  cds_LoadHeadOriginalSupplierNo.AsInteger    := FSupplierNo;
+  cds_LoadHeadCustomerNo.AsInteger            := FCustomerNo;
 
   cds_LoadHead.Post;
 
@@ -656,13 +658,13 @@ begin
   if cds_LoadHeadSenderLoadStatus.AsInteger <> 0 then
     cds_LoadHeadSenderLoadStatus.AsInteger := IS_Load_OK;
 
-  cds_LoadHeadLoadOK.AsInteger := IS_Load_OK;
-  cds_LoadHeadModifiedUser.AsInteger := ThisUser.UserID;
+  cds_LoadHeadLoadOK.AsInteger                := IS_Load_OK;
+  cds_LoadHeadModifiedUser.AsInteger          := ThisUser.UserID;
 
-  cds_LoadHeadSupplierNo.AsInteger := FSupplierNo;
+  cds_LoadHeadSupplierNo.AsInteger            := FSupplierNo;
 
-  cds_LoadHeadOriginalSupplierNo.AsInteger := FSupplierNo;
-  cds_LoadHeadCustomerNo.AsInteger := FCustomerNo;
+  cds_LoadHeadOriginalSupplierNo.AsInteger    := FSupplierNo;
+  cds_LoadHeadCustomerNo.AsInteger            := FCustomerNo;
 
   cds_LoadHead.Post;
 
@@ -1319,14 +1321,19 @@ begin
   End;
 end;
 
+procedure TdmLoadEntrySSP.cds_LoadHeadCustomerNoChange(Sender: TField);
+begin
+  csdUnit_OpenLagerLookup;
+end;
+
 procedure TdmLoadEntrySSP.cds_LSPAfterInsert(DataSet: TDataSet);
 begin
-  cds_LSPLoadNo.AsInteger := cds_LoadHeadLoadNo.AsInteger;
+  cds_LSPLoadNo.AsInteger                 := cds_LoadHeadLoadNo.AsInteger;
   // cds_LSPConfirmedByReciever.AsInteger := 0 ;
   // cds_LSPConfirmedBySupplier.AsInteger := 0 ;
-  cds_LSPCreatedUser.AsInteger := ThisUser.UserID;
-  cds_LSPModifiedUser.AsInteger := ThisUser.UserID;
-  cds_LSPDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
+  cds_LSPCreatedUser.AsInteger            := ThisUser.UserID;
+  cds_LSPModifiedUser.AsInteger           := ThisUser.UserID;
+  cds_LSPDateCreated.AsSQLTimeStamp       := DateTimeToSqlTimeStamp(Now);
 end;
 
 procedure TdmLoadEntrySSP.cds_LoadPackagesAfterInsert(DataSet: TDataSet);
@@ -1337,16 +1344,16 @@ begin
     ShowMessage('Spara lasten först.');
     Exit;
   End;
-  cds_LoadPackagesPkg_State.AsInteger := NEW_PACKAGE;
-  cds_LoadPackagesPkg_Function.AsInteger := ADD_PKG_TO_LOAD;
-  cds_LoadPackagesOverrideMatch.AsInteger := 0;
-  cds_LoadPackagesChanged.AsInteger := 1;
-  cds_LoadPackagesLoadNo.AsInteger := cds_LoadHeadLoadNo.AsInteger;
-  cds_LoadPackagesCreatedUser.AsInteger := ThisUser.UserID;
-  cds_LoadPackagesModifiedUser.AsInteger := ThisUser.UserID;
-  cds_LoadPackagesDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Now);
+  cds_LoadPackagesPkg_State.AsInteger         := NEW_PACKAGE;
+  cds_LoadPackagesPkg_Function.AsInteger      := ADD_PKG_TO_LOAD;
+  cds_LoadPackagesOverrideMatch.AsInteger     := 0;
+  cds_LoadPackagesChanged.AsInteger           := 1;
+  cds_LoadPackagesLoadNo.AsInteger            := cds_LoadHeadLoadNo.AsInteger;
+  cds_LoadPackagesCreatedUser.AsInteger       := ThisUser.UserID;
+  cds_LoadPackagesModifiedUser.AsInteger      := ThisUser.UserID;
+  cds_LoadPackagesDateCreated.AsSQLTimeStamp  := DateTimeToSqlTimeStamp(Now);
 
-  cds_LoadPackagesLoadDetailNo.AsInteger := dmsConnector.NextSecondMaxNo
+  cds_LoadPackagesLoadDetailNo.AsInteger      := dmsConnector.NextSecondMaxNo
     ('Loads', cds_LoadHeadLoadNo.AsInteger);
 end;
 
@@ -1388,13 +1395,17 @@ Begin
 End;
 
 procedure TdmLoadEntrySSP.csdUnit_OpenLagerLookup;
+Var OwnerNo : Integer ;
 Begin
   With dmLoadEntrySSP do
   Begin
+   if FShipping = 0 then
+    OwnerNo := cds_LoadHeadSupplierNo.AsInteger
+     else
+      OwnerNo := cds_LoadHeadCustomerNo.AsInteger ;
 
     cds_PIP2.Active := False;
-    cds_PIP2.ParamByName('OwnerNo').AsInteger :=
-      cds_LoadHeadSupplierNo.AsInteger;
+    cds_PIP2.ParamByName('OwnerNo').AsInteger     := OwnerNo ;
     cds_PIP2.ParamByName('LegoOwnerNo').AsInteger := ThisUser.CompanyNo;
     cds_PIP2.Active := True;
 

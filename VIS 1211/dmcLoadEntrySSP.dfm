@@ -316,6 +316,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       FieldName = 'CustomerNo'
       Origin = 'CustomerNo'
       ProviderFlags = [pfInUpdate]
+      OnChange = cds_LoadHeadCustomerNoChange
     end
     object cds_LoadHeadNotering: TMemoField
       FieldName = 'Notering'
@@ -674,7 +675,6 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     end
   end
   object cdsLORows: TFDQuery
-    Active = True
     OnCalcFields = cdsLORowsCalcFields
     CachedUpdates = True
     Indexes = <

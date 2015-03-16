@@ -334,6 +334,7 @@ type
     sq_GetSRNo: TFDQuery;
     sq_GetSRNoSalesRegionNo: TIntegerField;
     sp_GetCountryOfSR: TFDStoredProc;
+    cds_ReportStaticsIILogga: TBlobField;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;

@@ -34,15 +34,6 @@ object frmMain: TfrmMain
       Align = alClient
       BevelOuter = bvLowered
       TabOrder = 0
-      object Button1: TButton
-        Left = 72
-        Top = 88
-        Width = 217
-        Height = 97
-        Caption = 'Button1'
-        TabOrder = 0
-        OnClick = Button1Click
-      end
     end
   end
   object dxRibbon1: TdxRibbon

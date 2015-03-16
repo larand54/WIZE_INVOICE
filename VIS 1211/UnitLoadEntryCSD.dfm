@@ -28,16 +28,15 @@ object fLoadEntryCSD: TfLoadEntryCSD
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 212
-    ClientRectLeft = 4
-    ClientRectRight = 1032
+    ClientRectBottom = 216
+    ClientRectRight = 1036
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'LASTHUVUD'
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1028
+        Width = 1036
         Height = 73
         Align = alTop
         BevelOuter = bvNone
@@ -213,8 +212,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 149
-        Width = 1028
+        Top = 153
+        Width = 1036
         Height = 39
         Align = alBottom
         TabOrder = 1
@@ -251,8 +250,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       object grdLO: TcxGrid
         Left = 0
         Top = 73
-        Width = 1028
-        Height = 76
+        Width = 1036
+        Height = 80
         Align = alClient
         TabOrder = 2
         object grdLODBTableView1: TcxGridDBTableView
@@ -369,10 +368,6 @@ object fLoadEntryCSD: TfLoadEntryCSD
     end
     object tsLoadNote: TcxTabSheet
       Caption = 'NOTE'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
@@ -380,8 +375,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         TabOrder = 0
-        Height = 188
-        Width = 1028
+        Height = 192
+        Width = 1036
       end
     end
   end
@@ -404,7 +399,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 736
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -460,7 +455,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 61
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1420,7 +1415,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -3210,6 +3205,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

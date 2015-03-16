@@ -186,7 +186,6 @@ type
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
     dxBarButton4: TdxBarButton;
-    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
     procedure atAboutExecute(Sender: TObject);
@@ -237,7 +236,6 @@ type
     procedure dxBarButton18Click(Sender: TObject);
     procedure acChangeLanguageExecute(Sender: TObject);
     procedure dxBSIChangeLangClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     a: String;
     function GetLastNrToUnLock: Integer;
@@ -616,15 +614,6 @@ begin
       FreeAndNil(frmGenShipCost);
     End;
   End;
-end;
-
-procedure TfrmMain.Button1Click(Sender: TObject);
-var
-  LanguageNo  : Integer;
-begin
-  LanguageNo  :=  dmsSystem.GetLanguageNo ;
-  if LanguageNo > -1 then
-   dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: Char);

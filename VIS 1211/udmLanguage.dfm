@@ -8,6 +8,7 @@ object dmLanguage: TdmLanguage
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = siLangDispatcher1
     LangDelim = 1
@@ -91,6 +92,7 @@ object dmLanguage: TdmLanguage
       'Swedish'
       'English')
     Language = 'Origin'
+    UseDefaultLanguage = True
     OnLanguageChanged = siLangDispatcher1LanguageChanged
     Left = 96
     Top = 16

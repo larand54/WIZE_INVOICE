@@ -495,7 +495,7 @@ object frmPackageEntry: TfrmPackageEntry
         Left = 1
         Top = 1
         Width = 449
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -549,7 +549,7 @@ object frmPackageEntry: TfrmPackageEntry
         Left = 1
         Top = 1
         Width = 66
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -558,7 +558,7 @@ object frmPackageEntry: TfrmPackageEntry
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
@@ -1586,10 +1586,10 @@ object frmPackageEntry: TfrmPackageEntry
     Top = 384
     object mtUserPropVerkNo: TIntegerField
       FieldName = 'VerkNo'
-      OnChange = mtUserPropVerkNoChange
     end
     object mtUserPropOwnerNo: TIntegerField
       FieldName = 'OwnerNo'
+      OnChange = mtUserPropOwnerNoChange
     end
     object mtUserPropPIPNo: TIntegerField
       FieldName = 'PIPNo'
@@ -1932,6 +1932,7 @@ object frmPackageEntry: TfrmPackageEntry
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -1972,8 +1973,8 @@ object frmPackageEntry: TfrmPackageEntry
       'DataField'
       'KeyField'
       'ListField')
-    Left = 544
-    Top = 304
+    Left = 536
+    Top = 368
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660072006D005000610063006B006100670065004500

@@ -235,11 +235,11 @@ type
     procedure acAddPkgsWithPkgNosExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
     procedure acFillEmptyPkgNosUpdate(Sender: TObject);
-    procedure mtUserPropVerkNoChange(Sender: TField);
     procedure mtUserPropPIPNoChange(Sender: TField);
     procedure meSupplierCodeExit(Sender: TObject);
     procedure mtUserPropLengthGroupNoChange(Sender: TField);
     procedure Panel5DblClick(Sender: TObject);
+    procedure mtUserPropOwnerNoChange(Sender: TField);
 
   private
     { Private declarations }
@@ -810,7 +810,7 @@ begin
       mtUserPropOwnerNo.AsInteger := InventoryOwnerNo;
 
       cds_PIP2.Active := False;
-      cds_PIP2.ParamByName('OwnerNo').AsInteger := InventoryOwnerNo;
+      cds_PIP2.ParamByName('OwnerNo').AsInteger     := InventoryOwnerNo;
       cds_PIP2.ParamByName('LegoOwnerNo').AsInteger := InventoryOwnerNo;
       cds_PIP2.Active := True;
 
@@ -2499,17 +2499,6 @@ begin
   End;
 end;
 
-procedure TfrmPackageEntry.mtUserPropVerkNoChange(Sender: TField);
-begin
-  With dm_UserProps do
-  Begin
-    cds_RegPoint.Active := False;
-    cds_RegPoint.ParamByName('ClientNo').AsInteger :=
-      mtUserPropOwnerNo.AsInteger; // mtUserPropVerkNo.AsInteger ;
-    cds_RegPoint.Active := True;
-  End;
-end;
-
 procedure TfrmPackageEntry.mtUserPropPIPNoChange(Sender: TField);
 begin
   cds_LIP2.Active := False;
@@ -2528,6 +2517,16 @@ begin
   Begin
     dmsProduct.LoadGroupLengths(mtUserPropLengthGroupNo.AsInteger);
     ReLoadPackageColumnsWithAllLengths(Sender);
+  End;
+end;
+
+procedure TfrmPackageEntry.mtUserPropOwnerNoChange(Sender: TField);
+begin
+  With dm_UserProps do
+  Begin
+    cds_RegPoint.Active := False;
+    cds_RegPoint.ParamByName('ClientNo').AsInteger := mtUserPropOwnerNo.AsInteger; // mtUserPropVerkNo.AsInteger ;
+    cds_RegPoint.Active := True;
   End;
 end;
 

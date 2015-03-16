@@ -3464,14 +3464,14 @@ begin
           mtLoadPackagesLoadDetailNo.AsInteger]), []) then
         Begin
           cds_LoadPackages.Edit;
-          cds_LoadPackagesDefsspno.AsInteger := -1;
+          cds_LoadPackagesDefsspno.AsInteger                := -1;
           cds_LoadPackagesDefaultCustShipObjectNo.AsInteger :=
             mtLoadPackagesCustcdsNo.AsInteger;
-          cds_LoadPackagesOverrideRL.AsInteger := 0;
-          cds_LoadPackagesChanged.AsInteger := 1;
-          cds_LoadPackagesOverrideMatch.AsInteger := 1;
-          cds_LoadPackagesPackageOK.AsInteger := BAD_PKG;
-          cds_LoadPackagesProblemPackageLog.AsString := 'Manuell koppling';
+          cds_LoadPackagesOverrideRL.AsInteger              := 0;
+          cds_LoadPackagesChanged.AsInteger                 := 1;
+          cds_LoadPackagesOverrideMatch.AsInteger           := 1;
+          cds_LoadPackagesPackageOK.AsInteger               := BAD_PKG;
+          cds_LoadPackagesProblemPackageLog.AsString        := 'Manuell koppling';
           // Validera varje paket som har manuell koppling
           ValidatePkg(dmLoadEntryCSD.cds_LoadPackagesPackageNo.AsInteger,
             dmLoadEntryCSD.cds_LoadPackagesSupplierCode.AsString,
