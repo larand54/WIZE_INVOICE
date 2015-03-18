@@ -541,7 +541,7 @@ uses
   UnitCRPrintOneReport, dmc_ImportWoodx, MainU, dmsVidaSystem,
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
   uSokAvropMall, uEntryField, uVerifikationLogg, uAccInv,
-  UnitdmModule1, udmLanguage;
+  UnitdmModule1, udmLanguage, uReport, uReportController;
 
 {$R *.dfm}
 
@@ -1499,21 +1499,39 @@ procedure TfrmInvoiceList.acPrintClientsInvoiceExecute(Sender: TObject);
 Var
   FormCRPrintReport: TFormCRPrintReport;
   A: array of variant;
-  RoleType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
-  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
   RoleType := 1;
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
-    FormCRPrintReport.CreateCo(1,
-      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, A);
-  Finally
-    FreeAndNil(FormCRPrintReport); // .Free ;
-  End;
+  DocTyp := cFaktura;
+  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+  if uReportController.useFR then begin
+
+    Params := TCMParams.Create();
+    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+
+    RC := TCMReportController.Create;
+    Try
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
+  else begin
+    FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
+      FormCRPrintReport.CreateCo(1, clientNo, RoleType, cFaktura, A);
+    Finally
+      FreeAndNil(FormCRPrintReport); // .Free ;
+    End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acCancelProformaInvoiceExecute(Sender: TObject);
@@ -1566,20 +1584,38 @@ procedure TfrmInvoiceList.acClientPackageSpecificationExecute(Sender: TObject);
 Var
   FormCRPrintReport: TFormCRPrintReport;
   A: array of variant;
-  RoleType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
-  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
   RoleType := 1;
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    FormCRPrintReport.CreateCo(1,
-      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cPkgSpec, A);
-  Finally
-    FreeAndNil(FormCRPrintReport); // .Free ;
-  End;
+  DocTyp := cPkgSpec;
+  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+  if uReportController.useFR then begin
+
+    Params := TCMParams.Create();
+    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+
+    RC := TCMReportController.Create;
+    Try
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
+  else begin
+    FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRPrintReport.CreateCo(1, clientNo, RoleType, cPkgSpec, A);
+    Finally
+      FreeAndNil(FormCRPrintReport); // .Free ;
+    End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acFakturaSvenskExecute(Sender: TObject);
@@ -1748,23 +1784,40 @@ procedure TfrmInvoiceList.acTrpBrevExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
   dmsContact.InsertUserIssueReport(thisuser.userid,
     dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+  if uReportController.useFR then begin
+
+    RepNo := 42; // Trp_Brev.fr3
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('INVOICNO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acSpecifikatinUtanPaketNrExecute(Sender: TObject);
@@ -2091,23 +2144,41 @@ procedure TfrmInvoiceList.acPrintClientInvoiceAndSpecificationExecute
 Var
   FormCRPrintReport: TFormCRPrintReport;
   A: array of variant;
+  RC: TCMReportController;
+  ClientNo: integer;
+  Params: TCMParams;
   RoleType: Integer;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
-  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
   RoleType := 1;
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
-    FormCRPrintReport.CreateCo(0,
-      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cFaktura, A);
-    FormCRPrintReport.CreateCo(0,
-      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType, cPkgSpec, A);
-  Finally
-    FreeAndNil(FormCRPrintReport); // .Free ;
-  End;
+  if uReportController.useFR then begin
+
+    Params := TCMParams.Create();
+    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+
+    RC := TCMReportController.Create;
+    Try
+      RC.RunReport(0, ClientNo, RoleType, cFaktura, Params, frPrint);
+      RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frPrint);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
+  else begin
+    FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      // const OverRideNoOfCopies, ClientNo, DocTyp : Integer;const A: array of variant);
+      FormCRPrintReport.CreateCo(0, clientNo, RoleType, cFaktura, A);
+      FormCRPrintReport.CreateCo(0, clientNo, RoleType, cPkgSpec, A);
+    Finally
+      FreeAndNil(FormCRPrintReport); // .Free ;
+    End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acEmailFakturaAndSpecExecute(Sender: TObject);
@@ -2176,23 +2247,41 @@ procedure TfrmInvoiceList.acPrintTRPOrderExecute(Sender: TObject);
 var
   FormCRPrintOneReport: TFormCRPrintOneReport;
   A: array of variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
   dmsContact.InsertUserIssueReport(thisuser.userid,
     dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+  if uReportController.useFR then begin
 
-  FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-  Try
-    // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+    RepNo := 42; // Trp_Brev.fr3
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('INVOICNO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+        AsInteger);
+      RC.RunReport(RepNo, Params, frPrint, 0);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+    Try
+      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
 
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
 
-  Finally
-    FreeAndNil(FormCRPrintOneReport);
-  End;
+    Finally
+      FreeAndNil(FormCRPrintOneReport);
+    End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acPrintTrpOrderAndSpecExecute(Sender: TObject);
@@ -2323,10 +2412,14 @@ Var
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
   MailToAddressAgent, MailToAddressKund, MailToAddress: String;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportInvoiceFile: string;
+  ExportSpecFile: string;
 begin
-  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
-    InternalInvoiceNo, []) then
-  Begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo,
+    []) then Begin
 
     { if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
       (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
@@ -2349,38 +2442,64 @@ begin
     else if (Length(MailToAddressKund) > 0) then
       MailToAddress := MailToAddressKund;
 
-    if Length(MailToAddress) = 0 then
-    Begin
+    if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
         ('Emailadress saknas för klienten, ange adressen i mailet(outlook)');
     End;
-    if Length(MailToAddress) > 0 then
-    Begin
+    if Length(MailToAddress) > 0 then Begin
 
       if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
         Exit;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A,
-          ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A,
-          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
+      ExportInvoiceFile := ExcelDir + 'InvoiceNo ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      ExportSpecFile := ExcelDir + 'Specification ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+
+      if uReportController.useFR then begin
+
+        Params := TCMParams.Create();
+        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+          AsInteger);
+
+        RC := TCMReportController.Create;
+        RoleType := -1;
+
+        Try
+          RC.setExportFile(ExportInvoiceFile);
+          RC.RunReport(0, ClientNo, RoleType, cFaktura, Params, frFile);
+          RC.setExportFile(ExportSpecFile);
+          RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not(FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile))
+        then begin
+          ShowMessage('Rapportfil(er) skapades ej!');
+          Exit;
+        end;
+      end
+      else begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+          FormCRExportOneReport.CreateCo(ClientNo, cFaktura, A,
+            ExcelDir + 'InvoiceNo ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          FormCRExportOneReport.CreateCo(ClientNo, cPkgSpec, A,
+            ExcelDir + 'Specification ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
 
       SetLength(Attach, 2);
-      Attach[0] := ExcelDir + 'InvoiceNo ' +
-        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
-      Attach[1] := ExcelDir + 'Specification ' +
-        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      Attach[0] := ExportInvoiceFile;
+      Attach[1] := ExportSpecFile;
       dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
       Try
         dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
@@ -2415,45 +2534,73 @@ Var
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
   MailToAddress: String;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportTrpBrevFile: string;
+  ExportSpecFile: string;
 begin
-  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
-    InternalInvoiceNo, []) then
-  Begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo,
+    []) then Begin
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
       (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
-    if Length(MailToAddress) = 0 then
-    Begin
+    if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
         ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
     End;
-    if Length(MailToAddress) > 0 then
-    Begin
-
+    if Length(MailToAddress) > 0 then Begin
       if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
         Exit;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
 
-        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cTrpBrev, A,
-          ExcelDir + 'Transportbrev ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A,
-          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
+      ExportTrpBrevFile := ExcelDir + 'InvoiceNo ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      ExportSpecFile := ExcelDir + 'Specification ' +
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+      if uReportController.useFR then begin
+
+        Params := TCMParams.Create();
+        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+
+        RC := TCMReportController.Create;
+        RoleType := -1;
+
+        Try
+          RC.setExportFile(ExportTrpBrevFile);
+          RC.RunReport(0, ClientNo, RoleType, cTrpBrev, Params, frFile);
+          RC.setExportFile(ExportSpecFile);
+          RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not(FileExists(ExportTrpBrevFile) and FileExists(ExportSpecFile))
+        then begin
+          ShowMessage('Rapportfil(er) skapades ej!');
+          Exit;
+        end;
+      end
+      else begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+
+          A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+          FormCRExportOneReport.CreateCo(clientNo, cTrpBrev, A,
+            ExcelDir + 'Transportbrev ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          FormCRExportOneReport.CreateCo(clientNo, cPkgSpec, A,
+            ExcelDir + 'Specification ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
 
       SetLength(Attach, 2);
-      Attach[0] := ExcelDir + 'Transportbrev ' +
-        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
-      Attach[1] := ExcelDir + 'Specification ' +
-        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+      Attach[0] := ExportTrpBrevFile;
+      Attach[1] := ExportSpecFile;
       dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
       Try
         dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
@@ -2556,33 +2703,51 @@ var
   PrinterSetup: Integer;
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
 
-  dmsContact.GetClientDocPrefs(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
-    cFaktura { DocTyp } , ReportName, numberOfCopy, promptUser, collated,
-    PrinterSetup);
-  if (Length(ReportName) < 4) then
-  Begin
-    ShowMessage('Rapporten finns inte upplagd på klienten');
-    Exit;
-  End; // if
+  RoleType := -1;
+  DocTyp := cFaktura;
+  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+  if uReportController.useFR then begin
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    FormCRViewReport.CreateCo(ReportName, A);
+    Params := TCMParams.Create();
+    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+      AsInteger);
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+    RC := TCMReportController.Create;
+    Try
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end
+  else begin
+    dmsContact.GetClientDocPrefs(ClientNo, cFaktura, ReportName, numberOfCopy,
+      promptUser, collated, PrinterSetup);
+    if (Length(ReportName) < 4) then Begin
+      ShowMessage('Rapporten finns inte upplagd på klienten');
+      Exit;
+    End; // if
 
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo(ReportName, A);
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
+    End;
+  end;
 end;
 
 procedure TfrmInvoiceList.acPreviewPkgSpecExecute(Sender: TObject);
@@ -2595,6 +2760,9 @@ var
   FormCRViewReport: TFormCRViewReport;
   Save_Cursor: TCursor;
   A: array of variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
 begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crSQLWait; { Show hourglass cursor }
@@ -2603,27 +2771,42 @@ begin
     if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
       Exit;
 
+    RoleType := -1;
+    DocTyp := cPkgSpec;
+    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+    if uReportController.useFR then begin
+
+      Params := TCMParams.Create();
+      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+        AsInteger);
+
+      RC := TCMReportController.Create;
+      Try
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+      Finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      End;
+    end
+    else begin
     dmsContact.GetClientDocPrefs
-      (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec { DocTyp } ,
-      ReportName, numberOfCopy, promptUser, collated, PrinterSetup);
-    if (Length(ReportName) < 4) then
-    Begin
+      (clientNo, cPkgSpec, ReportName, numberOfCopy, promptUser, collated, PrinterSetup);
+    if (Length(ReportName) < 4) then Begin
       ShowMessage('Rapporten finns inte upplagd på klienten');
       Exit;
     End; // if
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRViewReport.CreateCo(ReportName, A);
 
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-      FormCRViewReport.CreateCo(ReportName, A);
-
-      if FormCRViewReport.ReportFound then
-      Begin
-        FormCRViewReport.ShowModal;
+        if FormCRViewReport.ReportFound then Begin
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
     End;
   Finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }
@@ -2636,17 +2819,18 @@ Var
   FormCRPrintReport: TFormCRPrintReport;
   IntInvNo, Client: array of variant;
   x, RoleType: Integer;
+  RC: TCMReportController;
+  DocTyp: integer;
+  Params: TCMParams;
 begin
   x := 0;
   if MessageDlg('Vill du skriva ut alla kreditfakturor gjorda under 2008?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    With dmVidaInvoice do
-    Begin
+    With dmVidaInvoice do Begin
       sq_CreditInv.Open;
       Try
         sq_CreditInv.First;
-        While not sq_CreditInv.Eof do
-        Begin
+        While not sq_CreditInv.Eof do Begin
           SetLength(IntInvNo, x + 1);
           SetLength(Client, x + 1);
           IntInvNo[x] := sq_CreditInvInternalInvoiceNo.AsInteger;
@@ -2658,18 +2842,39 @@ begin
         sq_CreditInv.Close;
       End;
 
-      if High(IntInvNo) > 0 then
-      Begin
-        FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+      if uReportController.useFR then begin
+
+        Params := TCMParams.Create();
+        RC := TCMReportController.Create;
+        DocTyp := cFaktura;
         RoleType := 1;
         Try
-          FormCRPrintReport.CreateCoForPrintMany(1,
-            dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType,
-            cFaktura, IntInvNo, Client);
+        x := 0;
+        while (x < High(IntInvNo)) do begin
+          Params.Add('INVOICENO', IntInvNo[x].AsInteger);
+          RC.RunReport(0, Client[x], RoleType, DocTyp, Params, frPrint);
+          inc(x);
+          Params.Clear;
+        end;
         Finally
-          FreeAndNil(FormCRPrintReport); // .Free ;
+          FreeAndNil(Params);
+          FreeAndNil(RC);
         End;
-      End;
+      end
+      else begin
+
+        if High(IntInvNo) > 0 then Begin
+          FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+          RoleType := 1;
+          Try
+            FormCRPrintReport.CreateCoForPrintMany(1,
+              dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, RoleType,
+              cFaktura, IntInvNo, Client);
+          Finally
+            FreeAndNil(FormCRPrintReport); // .Free ;
+          End;
+        End;
+      end;
 
     End; // With
 end;
@@ -2701,24 +2906,40 @@ procedure TfrmInvoiceList.PrintKundSpecifikFaktura(const RapportNamn: String);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RC: TCMReportController;
+  Params: TCMParams;
 begin
   if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
     Exit;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-    FormCRViewReport.CreateCo(RapportNamn, A);
+  if uReportController.useFR then begin
 
-    if FormCRViewReport.ReportFound then
-    Begin
+    Params := TCMParams.Create();
+    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
-      FormCRViewReport.ShowModal;
+    RC := TCMReportController.Create;
+    Try
+      RC.RunReport(RapportNamn, Params, frPreview, 0);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      FormCRViewReport.CreateCo(RapportNamn, A);
+
+      if FormCRViewReport.ReportFound then Begin
+
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
+    End;
+  end;
 
 end;
 
@@ -3476,6 +3697,7 @@ begin
   End;
 end;
 
+
 procedure TfrmInvoiceList.EMailaKundOchAgentFakturaOchSpecExecute
   (InternalInvoiceNo: Integer);
 const
@@ -3486,10 +3708,14 @@ Var
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
   MailToAddress, AgentMailToAddress, InvoiceNo: String;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportInvoiceFile: string;
+  ExportSpecFile: string;
 begin
-  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo',
-    InternalInvoiceNo, []) then
-  Begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo,
+    []) then Begin
     InvoiceNo := inttostr(dmVidaInvoice.GetInvoiceNo
       (dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
       dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger));
@@ -3499,29 +3725,58 @@ begin
       (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger);
     if Length(AgentMailToAddress) > 0 then
       MailToAddress := MailToAddress + ';' + AgentMailToAddress;
-    if Length(MailToAddress) > 0 then
-    Begin
+    if Length(MailToAddress) > 0 then Begin
       if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
         Exit;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-        // const ClientNo, DocTyp : Integer;const A: array of variant);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+      ExportInvoiceFile := ExcelDir + 'InvoiceNo ' + InvoiceNo + '.pdf';
+      ExportSpecFile := ExcelDir + 'Specification ' + InvoiceNo + '.pdf';
+      ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
 
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A,
-          ExcelDir + 'InvoiceNo ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A,
-          ExcelDir + 'Specification ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.
-          AsString);
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
+      if uReportController.useFR then begin
+
+        Params := TCMParams.Create();
+        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+          AsInteger);
+
+        RC := TCMReportController.Create;
+        RoleType := -1;
+
+        Try
+          RC.setExportFile(ExportInvoiceFile);
+          RC.RunReport(0, ClientNo, RoleType, cFaktura, Params, frFile);
+          RC.setExportFile(ExportSpecFile);
+          RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not(FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile))
+        then begin
+          ShowMessage('Rapportfil(er) skapades ej!');
+          Exit;
+        end;
+      end
+      else begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+          // const ClientNo, DocTyp : Integer;const A: array of variant);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+
+          FormCRExportOneReport.CreateCo
+            (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A,
+            ExcelDir + 'InvoiceNo ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          FormCRExportOneReport.CreateCo
+            (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A,
+            ExcelDir + 'Specification ' +
+            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
       // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
 
       SetLength(Attach, 2);

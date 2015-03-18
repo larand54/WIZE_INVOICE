@@ -3555,7 +3555,6 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -4232,11 +4231,16 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvrop1ShippingPlanNo.AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
+        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
+      RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
       FreeAndNil(RC);
+      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_DelPkgType.ExecSQL;
     end;
   end
   else begin

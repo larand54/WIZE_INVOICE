@@ -166,7 +166,7 @@ implementation
 uses VidaConst,
   VidaUser,
   dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
-  dmsVidaContact, udmLanguage;
+  dmsVidaContact, udmLanguage, uReport, uReportController;
 
 {$R *.dfm}
 
@@ -360,23 +360,43 @@ procedure TFormBookingForm.acPrintExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dm_Booking.cdsBookingShippingPlanNo.AsInteger;
+  if uReportController.useFR then begin
     if OrderType = 0 then
-      FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+      RepNo := 22 // TRP_ORDER_NOTE.fr3
     else
-      FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A);
+      RepNo := 23; // TRP_ORDER_INKOP_NOTE.fr3;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('ShippingPlanNo',
+        dm_Booking.cdsBookingShippingPlanNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    end;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dm_Booking.cdsBookingShippingPlanNo.AsInteger;
+      if OrderType = 0 then
+        FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+      else
+        FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A);
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TFormBookingForm.FormDestroy(Sender: TObject);

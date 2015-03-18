@@ -34,6 +34,10 @@ object fLoadEntryCSD: TfLoadEntryCSD
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'LASTHUVUD'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pLoadHead: TPanel
         Left = 0
         Top = 0
@@ -1407,6 +1411,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = dxPageControl1
+    ExplicitWidth = 8
   end
   object cxSplitter2: TcxSplitter
     Left = 0
@@ -1416,6 +1421,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = PanelLORows
+    ExplicitWidth = 8
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -3210,6 +3216,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

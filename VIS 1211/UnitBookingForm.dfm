@@ -782,6 +782,7 @@ object FormBookingForm: TFormBookingForm
       Control = PanelFixedNotes
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
   end
   object grdLoRows: TcxGrid
@@ -874,6 +875,7 @@ object FormBookingForm: TFormBookingForm
     Control = grdLoRows
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object ImageList1: TImageList
     Height = 24
@@ -1564,6 +1566,7 @@ object FormBookingForm: TFormBookingForm
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

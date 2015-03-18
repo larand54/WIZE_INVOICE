@@ -683,6 +683,10 @@ object frmInvoice: TfrmInvoice
     object tsShipToAddress: TcxTabSheet
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 28
@@ -884,6 +888,10 @@ object frmInvoice: TfrmInvoice
     object tsNotes: TcxTabSheet
       Caption = '&NOTERING'
       ImageIndex = 11
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -901,6 +909,10 @@ object frmInvoice: TfrmInvoice
     object tsStickyNote: TcxTabSheet
       Caption = '&POST IT!'
       ImageIndex = 13
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 400
         Top = 5

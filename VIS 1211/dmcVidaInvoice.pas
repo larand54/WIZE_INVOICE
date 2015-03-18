@@ -4176,8 +4176,6 @@ begin
 
       params := TCMParams.Create();
       params.Add('INVOICENO',IntInvNo);
-      params.Add('OrderNoText',OrderNoText);
-      params.Add('ShippingPlanNo',LONo);
 
       RC := TCMReportController.create;
       ClientNo := CustomerNo;

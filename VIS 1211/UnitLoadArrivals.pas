@@ -420,7 +420,8 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
-  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage;
+  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage, uReport,
+  uReportController;
 
 {$R *.dfm}
 
@@ -1882,52 +1883,92 @@ procedure TfrmLoadArrivals.acFSExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+  if uReportController.useFR then begin
+
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
-    else
-    Begin
+      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
+    else Begin
+      RepNo := 43; // TALLY_VER3_NOTE.fr3;
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
         dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
       except
-        On E: Exception do
-        Begin
+        On E: Exception do Begin
           dmsSystem.FDoLog(E.Message);
           // ShowMessage(E.Message);
           Raise;
         End;
       end;
-      FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
     End;
-
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-    Try
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      dmsSystem.sq_DelPkgType.ExecSQL;
-    except
-      On E: Exception do
-      Begin
-        dmsSystem.FDoLog(E.Message);
-        // ShowMessage(E.Message);
-        Raise;
-      End;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     end;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
+      else Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+        FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
+      End;
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    Finally
+      FreeAndNil(FormCRViewReport);
+    End;
+  end;
 end;
 
 procedure TfrmLoadArrivals.acFS_DKExecute(Sender: TObject);
@@ -3355,51 +3396,91 @@ procedure TfrmLoadArrivals.acPrintTallyUSNoteExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+  if uReportController.useFR then begin
+
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      FormCRViewReport.CreateCo('TALLY_INT_USA.RPT', A)
-    else
-    Begin
+      RepNo := 637 // TALLY_INT_USA.fr3
+    else Begin
+      RepNo := 41; // TALLY_US_NOTE.fr3
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
         dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
       except
-        On E: Exception do
-        Begin
+        On E: Exception do Begin
           dmsSystem.FDoLog(E.Message);
           // ShowMessage(E.Message);
           Raise;
         End;
       end;
-      FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A);
     End;
-
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-    Try
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      dmsSystem.sq_DelPkgType.ExecSQL;
-    except
-      On E: Exception do
-      Begin
-        dmsSystem.FDoLog(E.Message);
-        // ShowMessage(E.Message);
-        Raise;
-      End;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     end;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end
+  else begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        FormCRViewReport.CreateCo('TALLY_INT_USA.RPT', A)
+      else Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+        FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A);
+      End;
+
+      if FormCRViewReport.ReportFound then Begin
+        FormCRViewReport.ShowModal;
+      End;
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    Finally
+      FreeAndNil(FormCRViewReport);
+    End;
+  end;
 end;
 
 procedure TfrmLoadArrivals.acConfirmOneLoadExecute(Sender: TObject);
@@ -3418,50 +3499,92 @@ procedure TfrmLoadArrivals.PrintDirectFS(Sender: TObject);
 var
   FormCRPrintOneReport: TFormCRPrintOneReport;
   A: array of Variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
-  FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-  Try
-    // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+  if uReportController.useFR then begin
 
-    SetLength(A, 1);
-    A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      FormCRPrintOneReport.CreateCo(1, False, False, A,
-        'TALLY_INTERNAL_VER3_NOTE.RPT')
-    else
-    Begin
+      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
+    else Begin
+      RepNo := 43; // TALLY_VER3_NOTE.fr3;
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
         dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
       except
-        On E: Exception do
-        Begin
+        On E: Exception do Begin
           dmsSystem.FDoLog(E.Message);
           // ShowMessage(E.Message);
           Raise;
         End;
       end;
-      FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_VER3_NOTE.RPT');
     End;
-
-    Try
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      dmsSystem.sq_DelPkgType.ExecSQL;
-    except
-      On E: Exception do
-      Begin
-        dmsSystem.FDoLog(E.Message);
-        // ShowMessage(E.Message);
-        Raise;
-      End;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPreview, 0);
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     end;
-  Finally
-    FreeAndNil(FormCRPrintOneReport);
-  End;
+  end
+  else begin
+    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+    Try
+      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+
+      SetLength(A, 1);
+      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        FormCRPrintOneReport.CreateCo(1, False, False, A,
+          'TALLY_INTERNAL_VER3_NOTE.RPT')
+      else Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+        FormCRPrintOneReport.CreateCo(1, False, False, A,
+          'TALLY_VER3_NOTE.RPT');
+      End;
+
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    Finally
+      FreeAndNil(FormCRPrintOneReport);
+    End;
+  end;
 end;
 
 procedure TfrmLoadArrivals.acPrintDirectFSExecute(Sender: TObject);
@@ -3497,57 +3620,97 @@ procedure TfrmLoadArrivals.PrintDirectFS_USA(Sender: TObject);
 var
   FormCRPrintOneReport: TFormCRPrintOneReport;
   A: array of Variant;
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
-  FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-  Try
-    // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
-
-    SetLength(A, 1);
-    A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+  if uReportController.useFR then begin
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_INT_USA.RPT')
-    else
-    Begin
+      RepNo := 637 // TALLY_INT_USA.fr3')
+    else Begin
+      RepNo := 41; // TALLY_US_NOTE.fr3
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
         dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
       except
-        On E: Exception do
-        Begin
+        On E: Exception do Begin
           dmsSystem.FDoLog(E.Message);
           // ShowMessage(E.Message);
           Raise;
         End;
       end;
-      FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_US_NOTE.RPT');
     End;
 
-    Try
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      dmsSystem.sq_DelPkgType.ExecSQL;
-    except
-      On E: Exception do
-      Begin
-        dmsSystem.FDoLog(E.Message);
-        // ShowMessage(E.Message);
-        Raise;
-      End;
+    RC := TCMReportController.Create;
+    try
+      Params := TCMParams.Create();
+      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPrint, 0);
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
     end;
-  Finally
-    FreeAndNil(FormCRPrintOneReport);
-  End;
+  end
+  else begin
+    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+    Try
+      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+
+      SetLength(A, 1);
+      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_INT_USA.RPT')
+      else Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+        FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_US_NOTE.RPT');
+      End;
+
+      Try
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    Finally
+      FreeAndNil(FormCRPrintOneReport);
+    End;
+  end;
 end;
 
 procedure TfrmLoadArrivals.acPrintDirectFS_USAExecute(Sender: TObject);
 Var
   Save_Cursor: TCursor;
 begin
-  with dmArrivingLoads do
-  Begin
+  with dmArrivingLoads do Begin
     Save_Cursor := Screen.Cursor;
     Screen.Cursor := crSQLWait; { Show hourglass cursor }
     cdsArrivingLoads.DisableControls;
