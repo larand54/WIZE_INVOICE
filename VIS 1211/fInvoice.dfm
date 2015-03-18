@@ -31,7 +31,7 @@ object frmInvoice: TfrmInvoice
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    Properties.ActivePage = tsInvoiceHead
+    Properties.ActivePage = tsSpec
     Properties.CustomButtons.Buttons = <>
     Properties.TabWidth = 150
     LookAndFeel.Kind = lfUltraFlat
@@ -43,9 +43,6 @@ object frmInvoice: TfrmInvoice
     object tsInvoiceHead: TcxTabSheet
       Caption = '&FAKTURA'
       ImageIndex = 16
-      ExplicitLeft = 0
-      ExplicitWidth = 1144
-      ExplicitHeight = 174
       object PanelInvoiceHead: TPanel
         Left = 0
         Top = 0
@@ -55,7 +52,6 @@ object frmInvoice: TfrmInvoice
         Color = clMoneyGreen
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 1144
         object Label1: TLabel
           Left = 6
           Top = 12
@@ -811,9 +807,6 @@ object frmInvoice: TfrmInvoice
     object tsAgent: TcxTabSheet
       Caption = '&AGENT'
       ImageIndex = 15
-      ExplicitLeft = 0
-      ExplicitWidth = 1144
-      ExplicitHeight = 174
       DesignSize = (
         1136
         170)
@@ -909,8 +902,6 @@ object frmInvoice: TfrmInvoice
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        ExplicitWidth = 1144
-        ExplicitHeight = 174
         Height = 170
         Width = 1136
       end
@@ -944,10 +935,6 @@ object frmInvoice: TfrmInvoice
     object tsSpec: TcxTabSheet
       Caption = '&SPEC'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -956,7 +943,6 @@ object frmInvoice: TfrmInvoice
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1144
         object eSearchPkgNo: TcxTextEdit
           Left = 226
           Top = 2
@@ -1482,7 +1468,6 @@ object frmInvoice: TfrmInvoice
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
-        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0
@@ -1502,8 +1487,6 @@ object frmInvoice: TfrmInvoice
         object tsKortSkeppSpec: TcxTabSheet
           Caption = 'Kortskeppningsspec'
           ImageIndex = 18
-          ExplicitTop = 15
-          ExplicitWidth = 1144
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -1512,7 +1495,6 @@ object frmInvoice: TfrmInvoice
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 1144
             object Panel5: TPanel
               Left = 0
               Top = 0
@@ -1521,7 +1503,6 @@ object frmInvoice: TfrmInvoice
               Align = alTop
               BevelOuter = bvNone
               TabOrder = 0
-              ExplicitWidth = 1144
               object bAdd: TcxButton
                 Left = 16
                 Top = 4
@@ -1906,8 +1887,6 @@ object frmInvoice: TfrmInvoice
         object tsLagdTillLagerSpec: TcxTabSheet
           Caption = 'Lager'
           ImageIndex = 19
-          ExplicitTop = 15
-          ExplicitWidth = 1144
           object Panel7: TPanel
             Left = 0
             Top = 0
@@ -1916,7 +1895,6 @@ object frmInvoice: TfrmInvoice
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 1144
             object Panel8: TPanel
               Left = 0
               Top = 0
@@ -1925,7 +1903,6 @@ object frmInvoice: TfrmInvoice
               Align = alTop
               BevelOuter = bvNone
               TabOrder = 0
-              ExplicitWidth = 1144
               object cxButton3: TcxButton
                 Left = 16
                 Top = 5
@@ -6525,6 +6502,7 @@ object frmInvoice: TfrmInvoice
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

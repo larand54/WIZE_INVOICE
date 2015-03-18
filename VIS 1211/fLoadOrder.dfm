@@ -20,6 +20,8 @@ object frmLoadOrder: TfrmLoadOrder
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottomGrid: TPanel
@@ -514,6 +516,7 @@ object frmLoadOrder: TfrmLoadOrder
       Control = pcLoadOrder
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object pcLoadOrder: TcxPageControl
       Left = 0
@@ -533,6 +536,8 @@ object frmLoadOrder: TfrmLoadOrder
       object tsLoads: TcxTabSheet
         Caption = 'Last'
         ImageIndex = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object PanelLoadDetail: TPanel
           Left = 0
           Top = 0
@@ -6731,7 +6736,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42036.064050439820000000
+      ReportDocument.CreationDate = 42079.435277592590000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
@@ -7022,6 +7027,7 @@ object frmLoadOrder: TfrmLoadOrder
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

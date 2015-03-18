@@ -3,7 +3,7 @@
         <ProjectGuid>{44411B54-35B5-4DF9-8ADF-E73EDFC21DE0}</ProjectGuid>
         <MainSource>VIS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
@@ -570,7 +570,6 @@
         <DCCReference Include="Aug 31B dbExpress\PackageImportU.pas"/>
         <DCCReference Include="..\..\CommonSources\FastReport\udmFR.pas">
             <Form>dmFR</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="..\..\CommonSources\FastReport\uReport.pas"/>

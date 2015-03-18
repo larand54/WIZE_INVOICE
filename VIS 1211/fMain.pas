@@ -186,6 +186,12 @@ type
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
     dxBarButton4: TdxBarButton;
+    Button1: TButton;
+
+    acToggleReportSystem: TAction;
+    dxBarButton6: TdxBarButton;
+    dxBarButton19: TdxBarButton;
+
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
     procedure atAboutExecute(Sender: TObject);
@@ -236,6 +242,11 @@ type
     procedure dxBarButton18Click(Sender: TObject);
     procedure acChangeLanguageExecute(Sender: TObject);
     procedure dxBSIChangeLangClick(Sender: TObject);
+
+    procedure Button1Click(Sender: TObject);
+
+    procedure acToggleReportSystemExecute(Sender: TObject);
+
   private
     a: String;
     function GetLastNrToUnLock: Integer;
@@ -288,7 +299,7 @@ uses
   uTradingAnalyze, uFreightExternLoad, uPayControl,
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
   PrintUnit, PreviewForm, uPrintTest, udmLanguage, ufrmChangeLanguage,
-  dmsVidaContact;
+  dmsVidaContact, uReportController;
 
 {$R *.DFM}
 
@@ -614,6 +625,15 @@ begin
       FreeAndNil(frmGenShipCost);
     End;
   End;
+end;
+
+procedure TfrmMain.Button1Click(Sender: TObject);
+var
+  LanguageNo  : Integer;
+begin
+  LanguageNo  :=  dmsSystem.GetLanguageNo ;
+  if LanguageNo > -1 then
+   dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
 end;
 
 procedure TfrmMain.FormKeyPress(Sender: TObject; var Key: Char);
@@ -1537,6 +1557,18 @@ begin
   end;
 end;
 
+procedure TfrmMain.acToggleReportSystemExecute(Sender: TObject);
+begin
+  if uReportController.useFR then begin
+    uReportController.useFR := false;
+    acToggleReportSystem.Caption := 'Byt till FastReport';
+  end
+  else begin
+    uReportController.useFR := true;
+    acToggleReportSystem.Caption := 'Byt till Crystal Report';
+  end;
+end;
+
 procedure TfrmMain.acCreditAnalysisExecute(Sender: TObject);
 begin
   // if ThisUser.CanView[dcFrakt_AvrakningSec] then
@@ -1563,7 +1595,7 @@ begin
   End;
 end;
 
-// LG_lang
+
 function TfrmMain.GetLastNrToUnLock: Integer;
 var
   fEntryField: TfEntryField;
