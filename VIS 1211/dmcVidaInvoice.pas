@@ -4175,7 +4175,7 @@ begin
     if uReportController.useFR then begin
 
       params := TCMParams.Create();
-      params.Add('INVOICENO',IntInvNo);
+      Params.Add('@INVOICENO',IntInvNo);
 
       RC := TCMReportController.create;
       ClientNo := CustomerNo;
@@ -9628,7 +9628,7 @@ begin
     if uReportController.useFR then begin
 
       params := TCMParams.Create();
-      params.Add('INVOICENO',InternalInvoiceNo);
+      Params.Add('@INVOICENO',InternalInvoiceNo);
 
       RC := TCMReportController.Create;
       ClientNo := CustomerNo;

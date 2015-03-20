@@ -83,10 +83,6 @@ object XMLImportExport: TXMLImportExport
     object tsExport: TTabSheet
       Caption = '&DB Export to XML'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 24
         Top = 32

@@ -2180,7 +2180,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       Try
         dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
           dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
@@ -3320,7 +3320,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -3609,7 +3609,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       Try
         dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
           dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;

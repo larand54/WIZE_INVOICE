@@ -18,7 +18,9 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, cxClasses;
+  dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, cxClasses,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
 
 type
 
@@ -110,7 +112,7 @@ implementation
 
 uses PackageImportU, ComObj, TypInfo, dmsVidaSystem, VidaUser ,
   dmsDataConn, dmsVidaContact, UnitCRExportOneReport,
-  uSendMapiMail, VidaConst , dmc_ImportWoodx;
+  uSendMapiMail, VidaConst , dmc_ImportWoodx, uReport, uReportController;
 
 
 procedure TXMLImportExport.LoadConfig;
@@ -266,7 +268,7 @@ end;
 {-------------------------------------------------------------------------------
   Procedure: btnExportClick
   Author:    2006.08.31 13.25.55 By Zheng Jie (Gear1023@163.com)
-  Function:  DB Export TO XML 
+  Function:  DB Export TO XML
 
   // Only ONE record can be exported one time.
   // Some changes need to be done for multi reocrd export.
@@ -323,7 +325,7 @@ procedure TXMLImportExport.btnClearEmptyNodeClick(Sender: TObject);
 begin
   OutPutPackageFileName := edtFileToExport.Text;
   DoClearEmptyNode;
-end;   
+end;
 
 procedure TXMLImportExport.btnImportClick(Sender: TObject);
 begin
@@ -334,7 +336,7 @@ begin
     DoSetPropValue(Sender, 'Enabled', True);
   end;
 end;
-         
+
 procedure TXMLImportExport.ADOConnection1BeforeConnect(Sender: TObject);
 begin
   ADOConnection1.ConnectionString := edtConnectionString.Text;
@@ -437,7 +439,7 @@ begin
       Screen.Cursor := crSQLWait;    { Show hourglass cursor }
 //      DoImportExport('select * from InformationalQuantity2', ImportInformationalQuantity);
       ADOConnection1.CommitTrans;
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }      
+      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
     ShowMessage('Import av paket OK') ;
     ImportOfPkgsOK:= True ;
   except
@@ -527,87 +529,115 @@ begin
  End ;
 end;
 
-procedure TXMLImportExport.EmailFakturaAndSpecExecuteViaBizTalk ;
+procedure TXMLImportExport.EmailFakturaAndSpecExecuteViaBizTalk;
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddress           : String ;
-    x                       : Integer ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of Variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddress: String;
+  x: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
- if thisuser.UserName = 'Lars' then exit ;
+  if ThisUser.UserName = 'Lars' then
+    exit;
 
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]:= InternalInvoiceNo ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A, WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo)) ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A, WoodXDir + 'Specification ' + IntToStr(InvoiceNo)) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
+  if uReportController.useFR then begin
 
- if cbEmaila.Checked then
- Begin
- MailToAddress:= dmsContact.GetEmailAddress(CustomerNo) ;
- if Length(MailToAddress) > 0 then
- Begin
-  SetLength(Attach, 2);
-  Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf' ;
-  Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf' ;
+    Params := TCMParams.Create();
+    Params.Add('@INVOICENO', InternalInvoiceNo);
 
-  x:= 1 ;
+    RC := TCMReportController.Create;
+    ClientNo := CustomerNo;
+    RoleType := -1;
 
-  sq_GetLONos.Close ;
-  sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value := InternalInvoiceNo ;
-  sq_GetLONos.Open ;
-  sq_GetLONos.First ;
-  While not sq_GetLONos.Eof do
-  Begin
- //  x:= succ(x) ;
- //  SetLength(Attach, x+1);
-   dmsSystem.DeliveryMessageNumber  := sq_GetLONosDeliveryMessageNumber.AsString ;
+    Try
+      DocTyp := cFaktura;
+      ExportFile := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportFile);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
-   dm_ImportWoodx.Ins_InvoicePkgSpecWoodX (InternalInvoiceNo, sq_GetLONosDeliveryMessageNumber.AsInteger) ;
+      DocTyp := cPkgSpec;
+      ExportFile := WoodXDir + 'Specification ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportFile);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
+  else begin
+    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := InternalInvoiceNo;
+      FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
+        WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo));
+      FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
+        WoodXDir + 'Specification ' + IntToStr(InvoiceNo));
+    Finally
+      FreeAndNil(FormCRExportOneReport); // .Free ;
+    End;
+  end;
 
- //  Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber + '.xml' ;
+  if cbEmaila.Checked then Begin
+    MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
+    if Length(MailToAddress) > 0 then Begin
+      SetLength(Attach, 2);
+      Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
+      Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
 
-   sq_GetLONos.Next ;
-  End ;
- sq_GetLONos.Close ;
+      x := 1;
 
- dm_SendMapiMail         := Tdm_SendMapiMail.Create(nil);
- Try
+      sq_GetLONos.Close;
+      sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value :=
+        InternalInvoiceNo;
+      sq_GetLONos.Open;
+      sq_GetLONos.First;
+      While not sq_GetLONos.Eof do Begin
+        // x:= succ(x) ;
+        // SetLength(Attach, x+1);
+        dmsSystem.DeliveryMessageNumber :=
+          sq_GetLONosDeliveryMessageNumber.AsString;
 
-  dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' + IntToStr(InvoiceNo)
-  +' - Invoice/package specification. InvoiceNo: ' + IntToStr(InvoiceNo),
-  'Faktura, paketspecifikation bifogad. '
-  +LF+''
-  +'Invoice, package specification attached. '
-  +LF+''
-  +LF+''
-  +LF+'MVH/Best Regards, '
-  +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-//  'lars.makiaho@falubo.se',
+        dm_ImportWoodx.Ins_InvoicePkgSpecWoodX(InternalInvoiceNo,
+          sq_GetLONosDeliveryMessageNumber.AsInteger);
 
-  MailToAddress,
-//  'lars.makiaho@falubo.se', //getinvoice emailaddress
+        // Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber + '.xml' ;
 
-  Attach, False) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End //if cbEmaila.Checked then
-  else
-   ShowMessage('Emailadress saknas för klienten!') ;
- End ;
+        sq_GetLONos.Next;
+      End;
+      sq_GetLONos.Close;
+
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+
+        dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
+          IntToStr(InvoiceNo) + ' - Invoice/package specification. InvoiceNo: '
+          + IntToStr(InvoiceNo), 'Faktura, paketspecifikation bifogad. ' + LF +
+          '' + 'Invoice, package specification attached. ' + LF + '' + LF + '' +
+          LF + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
+          // 'lars.makiaho@falubo.se',
+
+          MailToAddress,
+          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
+
+          Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End // if cbEmaila.Checked then
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  End;
 
 end;
-
 
 procedure TXMLImportExport.EmailFakturaAndSpecExecute ;
 const
@@ -794,7 +824,7 @@ begin
    acImportPkgsExecute(Sender) ;
    Timer1.Enabled  := True ;
   End ;
- End ; 
+ End ;
 end;
 
 procedure TXMLImportExport.FormCreate(Sender: TObject);

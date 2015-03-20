@@ -323,7 +323,7 @@ implementation
 uses VidaUser, dmSokFormular, dmcVidaOrder, dmsVidaContact,
   UnitBookingForm, UnitCRViewReport, dmsDataConn, VidaConst,
   dmsVidaSystem, uSokAvropMall, UnitCRExportOneReport, uSendMapiMail,
-  uEntryField, dmBooking, udmLanguage;
+  uEntryField, dmBooking, udmLanguage, uReport, uReportController;
 
 {$R *.dfm}
 
@@ -1317,50 +1317,72 @@ Var
   Attach: array of String;
   MailToAddress: String;
   ReportType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
-  With dm_SokFormular do
-  Begin
+  With dm_SokFormular do Begin
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
       (cds_MakeSokAvropLO.AsInteger);
-    if Length(MailToAddress) = 0 then
-    Begin
+    if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
         ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
     End;
-    if Length(MailToAddress) > 0 then
-    Begin
+    if Length(MailToAddress) > 0 then Begin
+      if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
+        ReportType := cTrpOrder // TRP_ORDER_NOTE.fr3 (22)
+      else
+        ReportType := cTrpOrderInkop; // trp_order_inkop_NOTE.fr3  (23)
       // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := cds_MakeSokAvropLO.AsInteger;
-        if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-          ReportType := cTrpOrder
-        else
-          ReportType := cTrpOrderInkop;
-        FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
-          ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        if FormCRExportOneReport.ReportFound = False then
+      RoleType := 1;
+      ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
+      ExportFile := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+
+      if uReportController.useFR then begin
+        Params := TCMParams.Create();
+        Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
+        DocTyp := ReportType;
+        RC := TCMReportController.Create;
+        Try
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
           Exit;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
-      SetLength(Attach, 1);
-      Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
-      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-      Try
-        dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
-          cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
-          'Transportorder attached. ' + LF + '' + LF + '' + LF +
-          'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-          Attach, False);
-      Finally
-        FreeAndNil(dm_SendMapiMail);
-      End;
+      end
+      else begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := cds_MakeSokAvropLO.AsInteger;
+          FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
+            ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+        SetLength(Attach, 1);
+        Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+        // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+        dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+        Try
+          dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
+            cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
+            'Transportorder attached. ' + LF + '' + LF + '' + LF +
+            'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+            (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
+            MailToAddress, Attach, False);
+        Finally
+          FreeAndNil(dm_SendMapiMail);
+        End;
+      end;
     End
     else
       ShowMessage('Emailadress saknas för klienten!');
@@ -1377,40 +1399,61 @@ Var
   Attach: array of String;
   MailToAddress: String;
   ReportType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
-  With dm_SokFormular do
-  Begin
+  With dm_SokFormular do Begin
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
       (cds_MakeSokAvropLO.AsInteger);
-    if Length(MailToAddress) = 0 then
-    Begin
+    if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
         ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
     End;
-    if Length(MailToAddress) > 0 then
-    Begin
+    if Length(MailToAddress) > 0 then Begin
       // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := cds_MakeSokAvropLO.AsInteger;
-        if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-          ReportType := cTrpOrderAvrop
-        else
-        Begin
-          ShowMessage('N/A');
-        End;
-        // ReportType := cTrpOrderInkop ;
-
-        FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
-          ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        if FormCRExportOneReport.ReportFound = False then
-          Exit;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
+      if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
+        ReportType := cTrpOrderAvrop // TRP_AVROPSORDER_NOTE_STATUS.fr3 (69)
+      else Begin
+        ShowMessage('N/A');
       End;
+      RoleType := 1;
+      ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
+      ExportFile := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+
+      if uReportController.useFR then begin
+        Params := TCMParams.Create();
+        Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
+        DocTyp := ReportType;
+        RC := TCMReportController.Create;
+        Try
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
+          Exit;
+      end
+      else begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := cds_MakeSokAvropLO.AsInteger;
+          // ReportType := cTrpOrderInkop ;
+
+          FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
+            ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
       SetLength(Attach, 1);
       Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
       // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
@@ -1503,51 +1546,76 @@ Var
   Attach: array of String;
   SS, S, MailToAddress: String;
   ReportType, I: Integer;
+  RC: TCMReportController;
+  DocTyp,
+  RoleType,
+  ClientNo: integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
-  if GetSelectedLONos then
-  Begin
-    With dm_SokFormular do
-    Begin
+  if GetSelectedLONos then Begin
+    With dm_SokFormular do Begin
       MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
         (cds_MakeSokAvropLO.AsInteger);
 
-      if Length(MailToAddress) = 0 then
-      Begin
+      if Length(MailToAddress) = 0 then Begin
         MailToAddress := 'ange@adress.nu';
         ShowMessage
           ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
       End;
 
-      if Length(MailToAddress) > 0 then
-      Begin
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-        Try
+      if Length(MailToAddress) > 0 then Begin
+        if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
+          ReportType := cTrpOrder
+        else
+          ReportType := cTrpOrderInkop;
+        RoleType := 1;
+        ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
+        ExportFile := ExcelDir + 'LONo ';
 
-          // A[0]:= cds_MakeSokAvropLO.AsInteger ;
-          if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-            ReportType := cTrpOrder
-          else
-            ReportType := cTrpOrderInkop;
-          SetLength(A, 1);
-          for I := 0 to High(AA) do
-          Begin
-            A[0] := AA[I];
-            S := AA[I]; // A[0] ;
-            FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
-              ReportType, A, ExcelDir + 'LONo ' + S);
-            if FormCRExportOneReport.ReportFound = False then
-              Exit;
-            Screen.Cursor := crSQLWait; { Show hourglass cursor }
-            SetLength(Attach, I + 1);
-            Attach[I] := ExcelDir + 'LONo ' + S + '.pdf';
-          End; // for I := 0 to High(AA) do
+        if uReportController.useFR then begin
+          Params := TCMParams.Create();
+          DocTyp := ReportType;
+          RC := TCMReportController.Create;
+          Try
+            for I := 0 to High(AA) do Begin
+              Params.Add('@SHIPPINGPLANNO', AA[I]);
+              RC.setExportFile(ExportFile + AA[I] + '.pdf');
+              RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+              Params.Clear;
+              SetLength(Attach, I + 1);
+              Attach[I] := ExportFile + AA[I] + '.pdf';
+            End;
+          Finally
+            FreeAndNil(Params);
+            FreeAndNil(RC);
+          End;
+        end
+        else begin
+          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+          Try
 
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
+            // A[0]:= cds_MakeSokAvropLO.AsInteger ;
+            SetLength(A, 1);
+            for I := 0 to High(AA) do Begin
+              A[0] := AA[I];
+              S := AA[I]; // A[0] ;
+              FormCRExportOneReport.CreateCo
+                (cds_MakeSokAvropCustomerNo.AsInteger, ReportType, A,
+                ExcelDir + 'LONo ' + S);
+              if FormCRExportOneReport.ReportFound = False then
+                Exit;
+              Screen.Cursor := crSQLWait; { Show hourglass cursor }
+              SetLength(Attach, I + 1);
+              Attach[I] := ExcelDir + 'LONo ' + S + '.pdf';
+            End; // for I := 0 to High(AA) do
 
-        for I := 0 to High(AA) do
-        Begin
+          Finally
+            FreeAndNil(FormCRExportOneReport); // .Free ;
+          End;
+        end;
+
+        for I := 0 to High(AA) do Begin
           SS := AA[I];
           if I = 0 then
             S := SS

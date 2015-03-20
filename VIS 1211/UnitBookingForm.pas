@@ -372,7 +372,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         dm_Booking.cdsBookingShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally

@@ -53,30 +53,36 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 216
-    ClientRectRight = 1115
+    ClientRectBottom = 212
+    ClientRectLeft = 4
+    ClientRectRight = 1111
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'Leveranshuvud'
+      ExplicitLeft = 0
+      ExplicitWidth = 1115
+      ExplicitHeight = 192
       object Splitter1: TSplitter
         Left = 0
-        Top = 143
-        Width = 1115
+        Top = 139
+        Width = 1107
         Height = 3
         Cursor = crVSplit
         Align = alBottom
         Color = clBlack
         ParentColor = False
         ExplicitTop = 145
+        ExplicitWidth = 1115
       end
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1115
+        Width = 1107
         Height = 74
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 1115
         object detLoaded: TcxDBDateEdit
           Left = 80
           Top = 26
@@ -321,11 +327,13 @@ object fLoadEntrySSP: TfLoadEntrySSP
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 146
-        Width = 1115
+        Top = 142
+        Width = 1107
         Height = 46
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 146
+        ExplicitWidth = 1115
         object grdAddressDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dmsContact.dsrcAddressAndReference
@@ -364,10 +372,12 @@ object fLoadEntrySSP: TfLoadEntrySSP
       object grdLO: TcxGrid
         Left = 0
         Top = 74
-        Width = 1115
-        Height = 69
+        Width = 1107
+        Height = 65
         Align = alClient
         TabOrder = 2
+        ExplicitWidth = 1115
+        ExplicitHeight = 69
         object grdLODBTableView1: TcxGridDBTableView
           PopupMenu = pmLONumber
           Navigator.Buttons.CustomButtons = <>
@@ -552,6 +562,10 @@ object fLoadEntrySSP: TfLoadEntrySSP
     end
     object tsLoadNote: TcxTabSheet
       Caption = 'Notering'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
@@ -559,8 +573,10 @@ object fLoadEntrySSP: TfLoadEntrySSP
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntrySSP.ds_LoadHead
         TabOrder = 0
-        Height = 192
-        Width = 1115
+        ExplicitWidth = 1115
+        ExplicitHeight = 192
+        Height = 188
+        Width = 1107
       end
     end
   end
@@ -583,7 +599,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 1019
-        Height = 44
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -615,7 +631,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 64
-        Height = 44
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1756,7 +1772,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False

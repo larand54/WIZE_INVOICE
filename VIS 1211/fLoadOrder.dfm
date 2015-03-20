@@ -6722,7 +6722,6 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -6736,8 +6735,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42079.435277592590000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42082.370108750000000000
       BuiltInReportLink = True
     end
   end

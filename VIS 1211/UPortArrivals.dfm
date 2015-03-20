@@ -17,8 +17,6 @@ object frmPortArrivals: TfrmPortArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object grdPortPkgs: TcxGrid
@@ -188,7 +186,6 @@ object frmPortArrivals: TfrmPortArrivals
     Control = grdPortPkgs
     Color = clMaroon
     ParentColor = False
-    ExplicitWidth = 8
   end
   object grdPortLoads: TcxGrid
     Left = 0

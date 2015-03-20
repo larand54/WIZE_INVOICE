@@ -935,6 +935,10 @@ object frmInvoice: TfrmInvoice
     object tsSpec: TcxTabSheet
       Caption = '&SPEC'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -1468,6 +1472,7 @@ object frmInvoice: TfrmInvoice
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
+        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0

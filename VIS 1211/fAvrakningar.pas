@@ -522,7 +522,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('PaymentNo', dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger);
+      Params.Add('@PaymentNo', dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger);
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
     finally
       freeAndNil(Params);

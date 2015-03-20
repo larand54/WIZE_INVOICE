@@ -1911,7 +1911,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -2530,6 +2530,10 @@ Var
   Attach: array of String;
   ExcelDir, MailToAddress2, MailToAddress: String;
   ReportType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   MailToAddress2 := '';
@@ -2541,8 +2545,7 @@ begin
   else
     MailToAddress := dmsContact.GetEmailAddress_Utlastad
       (dmArrivingLoads.cdsArrivingLoadsCUSTOMERNO.AsInteger);
-  if Length(MailToAddress) = 0 then
-  Begin
+  if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu;';
     ShowMessage
       ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
@@ -2551,57 +2554,77 @@ begin
   MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
     (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
 
-  if Length(MailToAddress2) > 0 then
-  Begin
+  if Length(MailToAddress2) > 0 then Begin
     if MailToAddress = 'ange@adress.nu' then
       MailToAddress := MailToAddress2
     else
       MailToAddress := MailToAddress + MailToAddress2;
   End;
 
-  if Length(MailToAddress) > 0 then
-  Begin
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+  if Length(MailToAddress) > 0 then Begin
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+      ReportType := cFoljesedelIntern    // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+    else Begin
+      Try
+        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
 
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-        ReportType := cFoljesedelIntern
+      if dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
+      then
+        ReportType := cFoljesedel         // TALLY_VER3_NOTE.fr3 (43)
       else
-      Begin
-        Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-          // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
+        ReportType := cFoljesedel_eng;    // TALLY_eng_VER3_NOTE.fr3 (56)
+    End;
 
-        if dmsContact.Client_Language
-          (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
-        then
-          ReportType := cFoljesedel
-        else
-          ReportType := cFoljesedel_eng;
+    ExportFile := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
+      AsString + '.pdf';
+    if uReportController.useFR then begin
+
+      Params := TCMParams.Create();
+      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
+
+      RC := TCMReportController.Create;
+      ClientNo := 1;
+      RoleType := -1;
+
+      Try
+        DocTyp := ReportType;
+        RC.setExportFile(ExportFile);
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+      Finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      End;
+      if not FileExists(ExportFile) then
+        Exit;
+    end
+    else
+      try
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        SetLength(A, 1);
+        A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+        FormCRExportOneReport.CreateCo(1, ReportType, A,
+          ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
+        // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
+
+        if FormCRExportOneReport.ReportFound = False then
+          Exit;
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
       End;
 
-      FormCRExportOneReport.CreateCo(1, ReportType, A,
-        ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
-      // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
-
-      if FormCRExportOneReport.ReportFound = False then
-        Exit;
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-    End;
     SetLength(Attach, 1);
     Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
       AsString + '.pdf';
@@ -3423,7 +3446,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -3526,8 +3549,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
+      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      RC.RunReport(RepNo, Params, frPrint, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
@@ -3647,7 +3670,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=

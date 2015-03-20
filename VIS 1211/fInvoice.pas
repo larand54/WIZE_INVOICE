@@ -1609,7 +1609,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
         AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -1666,7 +1666,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
         AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -2384,7 +2384,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2422,7 +2422,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
       AsInteger);
 
     RC := TCMReportController.Create;
@@ -2856,7 +2856,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
         AsInteger);
 
       RC := TCMReportController.Create;
@@ -2908,7 +2908,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2983,7 +2983,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
       RC := TCMReportController.Create;
       RoleType := -1;
@@ -3071,7 +3071,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('INVOICNO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);
     finally
       FreeAndNil(Params);
@@ -5531,13 +5531,13 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     RoleType := -1;
 
     Try
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
     Finally
       FreeAndNil(Params);
       FreeAndNil(RC);
@@ -5695,7 +5695,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
       AsInteger);
 
     RC := TCMReportController.Create;
@@ -5832,7 +5832,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
       RC := TCMReportController.Create;
       RoleType := -1;

@@ -952,10 +952,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
-      Params.Add('SupplierNo', -1);
+      Params.Add('@SupplierNo', -1);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
@@ -1013,10 +1013,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
-      Params.Add('SupplierNo',
+      Params.Add('@SupplierNo',
       grdLODBTableView1.DataController.DataSet.FieldByName('Supplier').AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -3076,7 +3076,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo',
+      Params.Add('@LoadNo',
           grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -3182,7 +3182,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo',
+      Params.Add('@LoadNo',
         grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
         .AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
@@ -4336,38 +4336,67 @@ end;
 
 procedure TfrmLoadOrder.PrintLO(const ShippingPlanNo: Integer);
 Var
-  LOReport, RoleType: Integer;
+  LOReport: Integer;
   Save_Cursor: TCursor;
   FormCRPrintReport: TFormCRPrintReport;
   A: array of variant;
+  RC: TCMReportController;
+  DocTyp,
+  RoleType,
+  ClientNo: integer;
+  Params: TCMParams;
 begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crSQLWait; { Show hourglass cursor }
-  FormCRPrintReport := TFormCRPrintReport.Create(Nil);
-  Try
-    if dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 0 then
-    Begin
-      LOReport := -1;
-      RoleType := 1;
-      SetLength(A, 2);
-      A[0] := ShippingPlanNo;
-      A[1] := -1;
-      FormCRPrintReport.CreateCo(0, LOReport, RoleType, cLastorder, A);
-    End
-    else
-    Begin
-      LOReport := -1;
-      RoleType := 2;
-      SetLength(A, 2);
-      A[0] := ShippingPlanNo;
-      A[1] := -1;
-      FormCRPrintReport.CreateCo(0, LOReport, RoleType, cLastorderInkop, A);
-    End;
+  if uReportController.useFR then begin
 
-  Finally
-    FreeAndNil(FormCRPrintReport);
-    Screen.Cursor := Save_Cursor; { Always restore to normal }
-  End;
+    Params := TCMParams.Create();
+    Params.Add('@ShippingPlanNo', ShippingPlanNo);
+    Params.Add('@SupplierNo', -1);
+
+    RC := TCMReportController.Create;
+    ClientNo := -1;
+
+    Try
+      if dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 0 then Begin
+        RoleType := 1;
+        DocTyp := cLastOrder  // LASTORDER_NOTE_ver3.fr3 (20)
+      End
+      else begin
+        RoleType := 2;
+        DocTyp := cLastOrderInkop   // Lastorder_inkop_NOTE_ver2.fr3 (21)
+      end;
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
+  else begin
+    FormCRPrintReport := TFormCRPrintReport.Create(Nil);
+    Try
+      if dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 0 then Begin
+        LOReport := -1;
+        RoleType := 1;
+        SetLength(A, 2);
+        A[0] := ShippingPlanNo;
+        A[1] := -1;
+        FormCRPrintReport.CreateCo(0, LOReport, RoleType, cLastOrder, A);
+      End
+      else Begin
+        LOReport := -1;
+        RoleType := 2;
+        SetLength(A, 2);
+        A[0] := ShippingPlanNo;
+        A[1] := -1;
+        FormCRPrintReport.CreateCo(0, LOReport, RoleType, cLastOrderInkop, A);
+      End;
+
+    Finally
+      FreeAndNil(FormCRPrintReport);
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
+  end;
 end;
 
 procedure TfrmLoadOrder.acPrintMarkedLOsExecute(Sender: TObject);
@@ -5287,6 +5316,10 @@ Var
   Attach: array of String;
   MailToAddress: String;
   ReportType: Integer;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
   if (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger > 0) and
     (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.IsNull = False) then
@@ -5295,55 +5328,76 @@ begin
   else
     MailToAddress := dmsContact.GetEmailAddress
       (dmcOrder.cdsSawmillLoadOrdersSPCustomerNo.AsInteger);
-  if Length(MailToAddress) = 0 then
-  Begin
+  if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
       ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
   End;
-  if Length(MailToAddress) > 0 then
-  Begin
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
-        .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+  if Length(MailToAddress) > 0 then begin
+    if grdLODBTableView1.DataController.DataSet.FieldByName('ObjectType')
+      .AsInteger <> 2 then
+      ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+    else Begin
+      Try
+        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+          grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+          .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+      except
+        On E: Exception do Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    end;
 
-      if grdLODBTableView1.DataController.DataSet.FieldByName('ObjectType')
-        .AsInteger <> 2 then
-        ReportType := cFoljesedelIntern
-      else
-      Begin
-        Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-            grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
-            .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
+    if dmsContact.Client_Language
+      (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger) = cSwedish then
+      ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+    else
+      ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
 
-        if dmsContact.Client_Language
-          (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger) = cSwedish
-        then
-          ReportType := cFoljesedel
-        else
-          ReportType := cFoljesedel_eng;
+    if uReportController.useFR then begin
+
+      Params := TCMParams.Create();
+      Params.Add('@ShippingPlanNo',
+        grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+        .AsInteger);
+      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+
+      RC := TCMReportController.Create;
+      ClientNo := 1;
+      RoleType := -1;
+
+      Try
+        DocTyp := ReportType;
+        RC.setExportFile(ExportFile);
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+      Finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
       End;
-
-      FormCRExportOneReport.CreateCo(1, ReportType, A,
-        ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.FieldByName
-        ('LoadNo').AsString); // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
-
-      if FormCRExportOneReport.ReportFound = False then
+      if not FileExists(ExportFile) then
         Exit;
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
+    end
+    else begin
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+          .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+
+        FormCRExportOneReport.CreateCo(1, ReportType, A,
+          ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
+          FieldByName('LoadNo').AsString);
+        // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
+
+        if FormCRExportOneReport.ReportFound = False then
+          Exit;
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
     End;
     SetLength(Attach, 1);
     Attach[0] := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.

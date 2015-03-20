@@ -2576,7 +2576,7 @@ begin
     End;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -3726,7 +3726,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -4006,7 +4006,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
+    Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
     RC := TCMReportController.Create;
 
     Try
@@ -4118,7 +4118,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
+      Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
@@ -5762,6 +5762,10 @@ Var
   MailToAddress: String;
   ReportType: Integer;
   ExcelDir: String;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo: Integer;
+  Params: TCMParams;
+  ExportFile: string;
 begin
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   if (dmLoadEntrySSP.cds_LSPAVROP_CUSTOMERNO.AsInteger > 0) and
@@ -5771,31 +5775,23 @@ begin
   else
     MailToAddress := dmsContact.GetEmailAddress
       (dmLoadEntrySSP.cds_LSPCustomerNo.AsInteger);
-  if Length(MailToAddress) = 0 then
-  Begin
+  if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
       ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
   End;
-  if Length(MailToAddress) > 0 then
-  Begin
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+  if Length(MailToAddress) > 0 then Begin
     Try
-      SetLength(A, 1);
-      A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-
       if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
-        ReportType := cFoljesedelIntern
-      else
-      Begin
+        ReportType := cFoljesedelIntern  // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+      else Begin
 
         Try
           dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
             dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
           dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
         except
-          On E: Exception do
-          Begin
+          On E: Exception do Begin
             dmsSystem.FDoLog(E.Message);
             // ShowMessage(E.Message);
             Raise;
@@ -5804,17 +5800,49 @@ begin
 
         if dmsContact.Client_Language
           (dmLoadEntrySSP.cds_LSPAVROP_CUSTOMERNO.AsInteger) = cSwedish then
-          ReportType := cFoljesedel
+          ReportType := cFoljesedel       // TALLY_VER3_NOTE.fr3 (43)
         else
-          ReportType := cFoljesedel_eng;
+          ReportType := cFoljesedel_eng;  //  TALLY_eng_VER3_NOTE.fr3 (56)
       End;
 
-      FormCRExportOneReport.CreateCo(1, ReportType, A,
-        ExcelDir + 'FS ' + dmLoadEntrySSP.cds_LoadHeadLoadNo.AsString);
-      if FormCRExportOneReport.ReportFound = False then
-        Exit;
+      ExportFile := ExcelDir + 'FS ' + dmLoadEntrySSP.cds_LoadHeadLoadNo.
+        AsString + '.pdf';
+      if uReportController.useFR then begin
+
+        Params := TCMParams.Create();
+        Params.Add('@LoadNo',
+          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
+
+        RC := TCMReportController.Create;
+        ClientNo := 1;
+        RoleType := -1;
+
+        Try
+          DocTyp := ReportType;
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
+          Exit;
+      end
+      else
+        try
+          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+          SetLength(A, 1);
+          A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+
+          FormCRExportOneReport.CreateCo(1, ReportType, A,
+            ExcelDir + 'FS ' + dmLoadEntrySSP.cds_LoadHeadLoadNo.AsString);
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
     Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
+
     End;
     SetLength(Attach, 1);
     Attach[0] := ExcelDir + 'FS ' + dmLoadEntrySSP.cds_LoadHeadLoadNo.
@@ -5837,8 +5865,7 @@ end;
 
 procedure TfLoadEntrySSP.acSetStatusPrelandSaveExecute(Sender: TObject);
 begin
-  with dmLoadEntrySSP do
-  Begin
+  with dmLoadEntrySSP do Begin
     if not dmsSystem.IsLoadAR(cds_LoadHeadLoadNo.AsInteger) then
     Begin
       if cds_LoadPackages.UpdateOptions.ReadOnly then

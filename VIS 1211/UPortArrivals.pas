@@ -1198,7 +1198,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger);
+      Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
@@ -2281,9 +2281,9 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
+      Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
         AsInteger);
-      RC.RunReport(RepNo, Params, frPrint, 0);
+      RC.RunReport(RepNo, Params, frPreview, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;
@@ -2386,9 +2386,9 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
+      Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
         AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
+      RC.RunReport(RepNo, Params, frPrint, 0);
       Try
         dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;

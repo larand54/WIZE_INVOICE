@@ -1511,7 +1511,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -1596,7 +1596,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -1798,7 +1798,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('INVOICNO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
@@ -2156,7 +2156,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2261,7 +2261,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('INVOICNO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+      Params.Add('@INVOICNO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
         AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);
     finally
@@ -2460,7 +2460,7 @@ begin
       if uReportController.useFR then begin
 
         Params := TCMParams.Create();
-        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
           AsInteger);
 
         RC := TCMReportController.Create;
@@ -2561,7 +2561,7 @@ begin
       if uReportController.useFR then begin
 
         Params := TCMParams.Create();
-        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
         RC := TCMReportController.Create;
         RoleType := -1;
@@ -2716,7 +2716,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
       AsInteger);
 
     RC := TCMReportController.Create;
@@ -2777,7 +2777,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
         AsInteger);
 
       RC := TCMReportController.Create;
@@ -2851,7 +2851,7 @@ begin
         Try
         x := 0;
         while (x < High(IntInvNo)) do begin
-          Params.Add('INVOICENO', IntInvNo[x].AsInteger);
+          Params.Add('@INVOICENO', IntInvNo[x].AsInteger);
           RC.RunReport(0, Client[x], RoleType, DocTyp, Params, frPrint);
           inc(x);
           Params.Clear;
@@ -2915,7 +2915,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -3735,7 +3735,7 @@ begin
       if uReportController.useFR then begin
 
         Params := TCMParams.Create();
-        Params.Add('INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
           AsInteger);
 
         RC := TCMReportController.Create;

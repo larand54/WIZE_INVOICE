@@ -1232,7 +1232,6 @@ inherited frmKP_List: TfrmKP_List
     end
   end
   inherited siLangLinked1: TsiLangLinked
-    DefaultLanguage = 2
     Left = 472
     Top = 352
     TranslationData = {

@@ -3465,7 +3465,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -3511,8 +3511,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      Params.Add('SupplierNo', -1);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@SupplierNo', -1);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -3554,7 +3554,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -4048,8 +4048,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-      Params.Add('ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -4230,7 +4230,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
       dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
         daMoLM1.cdsLoadsLoadNo.AsInteger;
       dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
@@ -4577,10 +4577,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
-      Params.Add('SupplierNo', grdLODBTableView1.DataController.DataSource.
+      Params.Add('@SupplierNo', grdLODBTableView1.DataController.DataSource.
         DataSet.FieldByName('SUPPLIERNO').AsInteger);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
@@ -4624,10 +4624,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
-      Params.Add('SupplierNo', -1);
+      Params.Add('@SupplierNo', -1);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -4691,10 +4691,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
-      Params.Add('SupplierNo', grdLODBTableView1.DataController.DataSource.
+      Params.Add('@SupplierNo', grdLODBTableView1.DataController.DataSource.
         DataSet.FieldByName('SUPPLIERNO').AsInteger);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
@@ -4739,10 +4739,10 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',
+      Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
-      Params.Add('SupplierNo',-1);
+      Params.Add('@SupplierNo',-1);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -4924,7 +4924,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
@@ -5018,7 +5018,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
@@ -5109,8 +5109,8 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      Params.Add('SupplierNo', -1);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@SupplierNo', -1);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
@@ -5208,7 +5208,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
@@ -5522,7 +5522,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo',daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@ShippingPlanNo',daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
@@ -5591,7 +5591,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
