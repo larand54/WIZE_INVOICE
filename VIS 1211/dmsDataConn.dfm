@@ -1824,7 +1824,7 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=alvesql03'
+      'Server=alvesql01'
       'Database=vis_vida'
       'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
@@ -1834,7 +1834,6 @@ object dmsConnector: TdmsConnector
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24
@@ -2037,6 +2036,27 @@ object dmsConnector: TdmsConnector
         Name = '@LoadNo'
         DataType = ftInteger
         ParamType = ptInput
+      end>
+  end
+  object FDStoredProc1: TFDStoredProc
+    Connection = FDConnection1
+    StoredProcName = 'dbo.vis_InqLevelThree_v3'
+    Left = 472
+    Top = 264
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@LOBuffertNo'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 4
       end>
   end
 end
