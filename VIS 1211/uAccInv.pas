@@ -86,6 +86,7 @@ type
     sp_ExportInvoiceData: TFDStoredProc;
     siLangLinked_fAccInv: TsiLangLinked;
     dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
+    sp_ExpInvContData: TFDStoredProc;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
@@ -95,6 +96,9 @@ type
     { Private declarations }
     CurRow: Integer;
     FirstSumRow: Integer;
+    procedure SetKolumnTitlesIII ;
+    procedure WritePackageToSheetIII ;
+    procedure AddPkgDataToSheetContainer ;
     procedure SetCellTextNormalFont2(ACol, ARow: Integer; AText: String;
       const AA: variant);
     procedure EmailExportFile(const Pdf: String);
@@ -282,6 +286,25 @@ Begin
   End;
 End;
 
+procedure TfAccInv.SetKolumnTitlesIII ;
+Var x : Integer ;
+Begin
+ for x := 0 to sp_ExpInvContData.Fields.Count - 1 do
+ Begin
+  SetCellTextBold(x,CurRow, sp_ExpInvContData.Fields.Fields[x].DisplayLabel);
+ End;
+
+ {
+ SetCellTextBold(1,CurRow, 'NomThick');
+ SetCellTextBold(2,CurRow, 'NomWidth');
+
+ SetCellTextBold(3,CurRow, 'MAXLENGTH');
+ SetCellTextBold(4,CurRow, 'MINLENGTH');
+ SetCellTextBold(5,CurRow, 'Pcs');
+ SetCellTextBold(6,CurRow, 'm3');  }
+End ;
+
+
 procedure TfAccInv.SetKolumnTitlesII;
 Var
   x: Integer;
@@ -301,6 +324,83 @@ Begin
     SetCellTextBold(5,CurRow, 'Pcs');
     SetCellTextBold(6,CurRow, 'm3'); }
 End;
+
+procedure TfAccInv.WritePackageToSheetIII ;
+Var x : Integer ;
+Begin
+ for x := 0 to sp_ExpInvContData.Fields.Count - 1 do
+ Begin
+  SetCellTextNormalFont2(x,CurRow, sp_ExpInvContData.Fields.Fields[x].AsString, $00);
+ End;
+{
+ SetCellTextNormalFont2(0,CurRow, cds_ExportTyp1PackageNo.AsString, $01);
+ SetCellTextNormalFont2(1,CurRow, cds_ExportTyp1NomThick.AsString, $00);
+ SetCellTextNormalFont2(2,CurRow, cds_ExportTyp1NomWidth.AsString, $00);
+
+ SetCellTextNormalFont2(3,CurRow, cds_ExportTyp1MAXLENGTH.AsString, $00);
+ SetCellTextNormalFont2(4,CurRow, cds_ExportTyp1MINLENGTH.AsString, $00);
+ SetCellTextNormalFont2(5,CurRow, cds_ExportTyp1Pcs.AsString, $00);
+ SetCellTextNormalFont2(6,CurRow, cds_ExportTyp1AM3.AsString, $00);
+ }
+ CurRow  := succ(CurRow) ;
+End ;
+
+procedure TfAccInv.AddPkgDataToSheetContainer  ;
+Var FirstRec    : Boolean ;
+    Save_Cursor : TCursor;
+    CurrentLONo : Integer ;
+
+procedure Summa ;
+Begin
+ SetCellTextBold(6,CurRow ,  '=SUM(G' + inttostr(FirstSumRow) +':G' + inttostr(CurRow) + ')');
+// SetCellTextBold(0,CurRow, 'SUMMA');
+End ;
+
+Begin
+ Save_Cursor    := Screen.Cursor;
+ Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
+ Try
+ CurRow := 0 ;
+
+ sp_ExpInvContData.ParamByName('@UserID').AsInteger  := ThisUser.UserID ;
+ sp_ExpInvContData.Active  := True ;
+
+ SetKolumnTitlesIII ;
+ CurRow := CurRow + 1 ;
+ FirstSumRow  := CurRow + 1 ;
+{ cds_ExportTyp1.Active  := False ;
+ cds_ExportTyp1.ParamByName('CET').AsInteger                := 0 ;
+ cds_ExportTyp1.ParamByName('INTERNALINVOICENO').AsInteger  := IntInvNo ;
+ cds_ExportTyp1.Active  := True ;   }
+ sp_ExpInvContData.First ;
+// CurrentLONo  := cds_ExportTyp1SHIPPINGPLANNO.AsInteger ;
+ While not sp_ExpInvContData.Eof do
+ Begin
+ { if CurrentLONo <> cds_ExportTyp1SHIPPINGPLANNO.AsInteger then
+  Begin
+  // Summa ;
+   CurRow := CurRow + 2 ;
+   SetKolumnTitlesII ;
+   CurRow := CurRow + 1 ;
+   FirstSumRow  := CurRow + 1 ;
+   CurrentLONo  := cds_ExportTyp1SHIPPINGPLANNO.AsInteger ;
+  End ;         }
+
+
+
+  WritePackageToSheetIII ;
+  sp_ExpInvContData.Next ;
+//  CurRow  := succ(CurRow) ;
+ End ;
+
+// CurRow  := Pred(CurRow) ;
+// Summa ;
+
+ sp_ExpInvContData.Active  := False ;
+ Finally
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+ End ;
+End ;
 
 procedure TfAccInv.WritePackageToSheetII;
 Var

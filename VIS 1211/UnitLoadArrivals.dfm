@@ -19,8 +19,6 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object grdPkgs: TcxGrid
@@ -212,7 +210,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Control = grdPkgs
     Color = clMaroon
     ParentColor = False
-    ExplicitWidth = 8
   end
   object grdLoads: TcxGrid
     Left = 0
@@ -506,7 +503,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 736
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -522,7 +519,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 61
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -734,7 +731,7 @@ object frmLoadArrivals: TfrmLoadArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

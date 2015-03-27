@@ -49,7 +49,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 1080
-          Height = 45
+          Height = 44
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -65,7 +65,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 70
-          Height = 45
+          Height = 44
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -1347,14 +1347,18 @@ object frmInvoiceList: TfrmInvoiceList
       OnExecute = acPreviewPkgSpecExecute
     end
     object acAustraliaExport: TAction
-      Caption = 'Export (Australien)'
+      Caption = 'Export packageno (Australien)'
       OnExecute = acAustraliaExportExecute
+    end
+    object acAustraliaContainerExport: TAction
+      Caption = 'Export container (Australien)'
+      OnExecute = acAustraliaContainerExportExecute
     end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -1637,6 +1641,10 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object dxBarButton49: TdxBarButton
       Action = acAustraliaExport
+      Category = 0
+    end
+    object dxBarButton50: TdxBarButton
+      Action = acAustraliaContainerExport
       Category = 0
     end
     object dxBarButton1: TdxBarButton
@@ -3826,6 +3834,10 @@ object frmInvoiceList: TfrmInvoiceList
       item
         Visible = True
         ItemName = 'dxBarButton49'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton50'
       end>
     UseOwnFont = False
     Left = 312

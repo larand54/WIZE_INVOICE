@@ -53,7 +53,7 @@ object fStef: TfStef
         Left = 1
         Top = 1
         Width = 782
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -69,7 +69,7 @@ object fStef: TfStef
         Left = 1
         Top = 1
         Width = 67
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1024,7 +1024,7 @@ object fStef: TfStef
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
@@ -1247,6 +1247,7 @@ object fStef: TfStef
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1

@@ -791,43 +791,74 @@ Begin
 
       cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType');
 
-      cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
-      cdsArrivingLoads.SQL.Add
-        ('Left Outer Join dbo.LogicalInventoryPoint LIP ');
-      cdsArrivingLoads.SQL.Add
-        ('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
-      cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
-      cdsArrivingLoads.SQL.Add
-        ('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SP.ShippingPlanNo');
-      cdsArrivingLoads.SQL.Add
-        (' AND LSP.LoadingLocationNo = SP.LoadingLocationNo');
+{
+        cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
+        cdsArrivingLoads.SQL.Add
+          ('Left Outer Join dbo.LogicalInventoryPoint LIP ');
+        cdsArrivingLoads.SQL.Add
+          ('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
+        cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
+        cdsArrivingLoads.SQL.Add
+          ('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SP.ShippingPlanNo');
+        cdsArrivingLoads.SQL.Add
+          (' AND LSP.LoadingLocationNo = SP.LoadingLocationNo');
 
-      if (LONo = -1) and (LoadNo = -1) then
-        if bcConfirmed.ItemIndex = 2 then
-        Begin
-          cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
-          cdsArrivingLoads.SQL.Add
-            ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
-        End;
+        if (LONo = -1) and (LoadNo = -1) then
+          if bcConfirmed.ItemIndex = 2 then
+          Begin
+            cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
+            cdsArrivingLoads.SQL.Add
+              ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+          End;
 
-      cdsArrivingLoads.SQL.Add
-        ('INNER JOIN dbo.Loads L ON	LSP.LoadNo 		= L.LoadNo');
-      cdsArrivingLoads.SQL.Add('AND     L.supplierno 		= SP.SUPPLIERno');
-      cdsArrivingLoads.SQL.Add('AND     L.CustomerNo 		= SP.CustomerNo');
+        cdsArrivingLoads.SQL.Add
+          ('INNER JOIN dbo.Loads L ON	LSP.LoadNo 		= L.LoadNo');
+        cdsArrivingLoads.SQL.Add('AND     L.supplierno 		= SP.SUPPLIERno');
+        cdsArrivingLoads.SQL.Add('AND     L.CustomerNo 		= SP.CustomerNo');
+
+}
+
+
+        cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
+        cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
+        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
+
+        if (LONo = -1) and (LoadNo = -1) then
+          if bcConfirmed.ItemIndex = 2 then
+          Begin
+            cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
+            cdsArrivingLoads.SQL.Add
+              ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+          End;
+
+
+        cdsArrivingLoads.SQL.Add('Left Outer Join dbo.LogicalInventoryPoint LIP');
+        cdsArrivingLoads.SQL.Add('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
+        cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
+
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
+
+
       cdsArrivingLoads.SQL.Add
         ('Left Outer Join dbo.VIS_LoadVolumes LV on LV.LoadNo = L.LoadNo');
+
       cdsArrivingLoads.SQL.Add
         ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= SP.SupplierNo');
       cdsArrivingLoads.SQL.Add
         ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= SP.CustomerNo');
+
       cdsArrivingLoads.SQL.Add
         ('Left Outer JOIN dbo.CustomerShippingPlanDetails CSD');
+
       cdsArrivingLoads.SQL.Add
         ('INNER JOIN dbo.CustomerShippingPlanHeader CSH	ON CSH.ShippingPlanNo = CSD.ShippingPlanNo');
       cdsArrivingLoads.SQL.Add
@@ -1041,39 +1072,70 @@ Begin
       cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs');
       cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType');
 
-      cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
-      cdsArrivingLoads.SQL.Add
-        ('Left Outer Join dbo.LogicalInventoryPoint LIP ');
-      cdsArrivingLoads.SQL.Add
-        ('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
-      cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
-      cdsArrivingLoads.SQL.Add
-        ('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
-      cdsArrivingLoads.SQL.Add
-        ('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SP.ShippingPlanNo');
-      cdsArrivingLoads.SQL.Add
-        (' AND LSP.LoadingLocationNo = SP.LoadingLocationNo');
+{
+        cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
+        cdsArrivingLoads.SQL.Add
+          ('Left Outer Join dbo.LogicalInventoryPoint LIP ');
+        cdsArrivingLoads.SQL.Add
+          ('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
+        cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
+        cdsArrivingLoads.SQL.Add
+          ('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
+        cdsArrivingLoads.SQL.Add
+          ('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SP.ShippingPlanNo');
+        cdsArrivingLoads.SQL.Add
+          (' AND LSP.LoadingLocationNo = SP.LoadingLocationNo');
 
-      if (LONo = -1) and (LoadNo = -1) then
-      Begin
-        if bcConfirmed.ItemIndex = 2 then
+        if (LONo = -1) and (LoadNo = -1) then
         Begin
-          cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
-          cdsArrivingLoads.SQL.Add
-            ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+          if bcConfirmed.ItemIndex = 2 then
+          Begin
+            cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
+            cdsArrivingLoads.SQL.Add
+              ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+          End;
         End;
-      End;
 
-      cdsArrivingLoads.SQL.Add
-        ('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo');
-      cdsArrivingLoads.SQL.Add
-        ('				AND     L.supplierno 		= SP.SUPPLIERno');
-      cdsArrivingLoads.SQL.Add
-        ('				AND     L.CustomerNo 		= SP.CustomerNo');
+        cdsArrivingLoads.SQL.Add
+          ('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo');
+        cdsArrivingLoads.SQL.Add
+          ('				AND     L.supplierno 		= SP.SUPPLIERno');
+        cdsArrivingLoads.SQL.Add
+          ('				AND     L.CustomerNo 		= SP.CustomerNo');
+
+}
+
+
+        cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
+        cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
+        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
+
+        if (LONo = -1) and (LoadNo = -1) then
+        Begin
+          if bcConfirmed.ItemIndex = 2 then
+          Begin
+            cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
+            cdsArrivingLoads.SQL.Add
+              ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+          End;
+        End;
+
+
+        cdsArrivingLoads.SQL.Add('Left Outer Join dbo.LogicalInventoryPoint LIP');
+        cdsArrivingLoads.SQL.Add('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo');
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City PIPCity			ON	PIPCity.CityNo = PIP.PhyInvPointNameNo');
+        cdsArrivingLoads.SQL.Add('on LIP.LogicalInventoryPointNo = SP.LIPNo');
+
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName			ON	IName.CityNo = SP.ShipToInvPointNo');
+        cdsArrivingLoads.SQL.Add('inner JOIN dbo.City Loading			ON	Loading.CityNo = SP.LoadingLocationNo');
+
+
+
       cdsArrivingLoads.SQL.Add
         ('Left Outer Join dbo.VIS_LoadVolumes LV on LV.LoadNo = L.LoadNo');
       cdsArrivingLoads.SQL.Add
@@ -1431,7 +1493,8 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then
+    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 

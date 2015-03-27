@@ -1,6 +1,11 @@
 program VIS;
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
  { madExcept,
   madLinkDisAsm,
   madListHardware,

@@ -34,7 +34,7 @@ object fAccInv: TfAccInv
         Left = 1
         Top = 1
         Width = 432
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -50,7 +50,7 @@ object fAccInv: TfAccInv
         Left = 1
         Top = 1
         Width = 70
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -92,7 +92,7 @@ object fAccInv: TfAccInv
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -285,6 +285,7 @@ object fAccInv: TfAccInv
     Top = 160
     object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -297,6 +298,7 @@ object fAccInv: TfAccInv
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -485,6 +487,7 @@ object fAccInv: TfAccInv
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -660,5 +663,24 @@ object fAccInv: TfAccInv
       410055004C0054005F0043004800410052005300450054000100440045004600
       410055004C0054005F0043004800410052005300450054000100440045004600
       410055004C0054005F0043004800410052005300450054000D000A00}
+  end
+  object sp_ExpInvContData: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_ExpContInvData'
+    Left = 216
+    Top = 456
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

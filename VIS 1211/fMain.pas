@@ -186,7 +186,6 @@ type
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
     dxBarButton4: TdxBarButton;
-    Button1: TButton;
 
     acToggleReportSystem: TAction;
     dxBarButton6: TdxBarButton;

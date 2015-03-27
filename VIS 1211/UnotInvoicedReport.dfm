@@ -54,7 +54,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 96
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -71,7 +71,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
         Left = 0
         Top = 0
         Width = 121
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1105,7 +1105,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -1200,6 +1200,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
