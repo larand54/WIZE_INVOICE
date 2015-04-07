@@ -256,7 +256,7 @@ object dmsSystem: TdmsSystem
   end
   object spAccessRights: TFDStoredProc
     Connection = dmsConnector.FDConnection1
-    StoredProcName = 'dbo.vida_UserRights_V4'
+    StoredProcName = 'dbo.vida_UserRights_V5'
     Left = 48
     Top = 16
     ParamData = <
@@ -288,121 +288,115 @@ object dmsSystem: TdmsSystem
       end
       item
         Position = 5
-        Name = '@Company'
+        Name = '@LanguageID'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 6
-        Name = '@InvSec'
+        Name = '@Company'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 7
-        Name = '@IntOrdSec'
+        Name = '@InvSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 8
-        Name = '@ProdSec'
+        Name = '@IntOrdSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 9
-        Name = '@CliSec'
+        Name = '@ProdSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 10
-        Name = '@OrdSec'
+        Name = '@CliSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 11
-        Name = '@BaseSec'
+        Name = '@OrdSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 12
-        Name = '@fAvropSec'
+        Name = '@BaseSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 13
-        Name = '@fARSec'
+        Name = '@fAvropSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 14
-        Name = '@fSkeppInstrSec'
+        Name = '@fARSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 15
-        Name = '@fKP_ListaSec'
+        Name = '@fSkeppInstrSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 16
-        Name = '@fUtlastningSec'
+        Name = '@fKP_ListaSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 17
-        Name = '@fFakturaSec'
+        Name = '@fUtlastningSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 18
-        Name = '@fAvrakningSec'
+        Name = '@fFakturaSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 19
-        Name = '@fFrakt_AvrakningSec'
+        Name = '@fAvrakningSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 20
-        Name = '@fAdd_packagesSec'
+        Name = '@fFrakt_AvrakningSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 21
-        Name = '@fAsk_packagesSec'
+        Name = '@fAdd_packagesSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 22
-        Name = '@fReport_AvropSec'
+        Name = '@fAsk_packagesSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end
       item
         Position = 23
-        Name = '@EditLoadOrder'
-        DataType = ftInteger
-        ParamType = ptInputOutput
-      end
-      item
-        Position = 24
-        Name = '@ShowPrice'
+        Name = '@fReport_AvropSec'
         DataType = ftInteger
         ParamType = ptInputOutput
       end>

@@ -60,6 +60,7 @@ type
   TUserSpec = record
     UserID: Integer;
     CompanyNo: Integer;
+    LanguageID   : Integer ;
     AccessRights: TAccessRights;
   end;
 

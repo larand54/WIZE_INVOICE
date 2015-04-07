@@ -57,6 +57,7 @@ object fEntryField: TfEntryField
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -96,7 +97,17 @@ object fEntryField: TfEntryField
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 184
     Top = 88
     TranslationData = {

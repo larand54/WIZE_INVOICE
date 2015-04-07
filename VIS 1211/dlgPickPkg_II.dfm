@@ -109,6 +109,7 @@ object frmPackagePicker_II: TfrmPackagePicker_II
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -148,7 +149,17 @@ object frmPackagePicker_II: TfrmPackagePicker_II
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 424
     Top = 120
     TranslationData = {

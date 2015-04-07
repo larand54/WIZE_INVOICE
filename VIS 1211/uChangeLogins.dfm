@@ -83,6 +83,7 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -122,7 +123,17 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 184
     Top = 96
     TranslationData = {

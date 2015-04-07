@@ -38,6 +38,7 @@ object Form2: TForm2
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -77,7 +78,17 @@ object Form2: TForm2
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 200
     Top = 136
     TranslationData = {

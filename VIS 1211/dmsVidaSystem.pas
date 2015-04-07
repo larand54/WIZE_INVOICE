@@ -993,8 +993,9 @@ begin
     End;
   end;
 
-  Result.UserID := spAccessRights.ParamByName('@UserID').AsInteger;
-  Result.CompanyNo := spAccessRights.ParamByName('@Company').AsInteger;
+  Result.UserID       := spAccessRights.ParamByName('@UserID').AsInteger;
+  Result.CompanyNo    := spAccessRights.ParamByName('@Company').AsInteger;
+  Result.LanguageID   := spAccessRights.ParamByName('@LanguageID').AsInteger;
 
   Result.AccessRights[dcProductSection] :=
     TAccessLevel(spAccessRights.ParamByName('@ProdSec').AsInteger);

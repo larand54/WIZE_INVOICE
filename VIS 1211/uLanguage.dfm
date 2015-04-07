@@ -76,6 +76,7 @@ object frmLanguage: TfrmLanguage
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -115,7 +116,17 @@ object frmLanguage: TfrmLanguage
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 160
     Top = 232
     TranslationData = {

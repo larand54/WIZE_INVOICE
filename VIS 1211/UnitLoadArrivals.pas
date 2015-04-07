@@ -295,6 +295,8 @@ type
     grdLoadsDBTableView1ClientName: TcxGridDBColumn;
     grdLoadsDBTableView1BookingType: TcxGridDBColumn;
     siLangLinked_frmLoadArrivals: TsiLangLinked;
+    grdLoadsDBTableView1NoOfPackages: TcxGridDBColumn;
+    grdLoadsDBTableView1PackagesConfirmed: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -613,7 +615,7 @@ begin
     Try
       While Not cdsArrivingLoads.Eof do
       Begin
-        if cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        if cdsArrivingLoadsObjectType.AsInteger < 2 then
         Begin
           sq_Check_CDS_Link.Close;
           sq_Check_CDS_Link.ParamByName('LoadNo').AsInteger :=
@@ -629,7 +631,7 @@ begin
               ' länkning till LO, kolla att LO samt Last är OK ');
           sq_Check_CDS_Link.Close;
         End;
-        if cdsArrivingLoadsObjectType.AsInteger = 2 then
+        if cdsArrivingLoadsObjectType.AsInteger >= 2 then
         Begin
           sq_CheckObject2Link.Close;
           sq_CheckObject2Link.ParamByName('LoadNo').AsInteger :=
@@ -759,7 +761,7 @@ Begin
         QuotedStr('INTERN'));
       cdsArrivingLoads.SQL.Add('End AS TYP,');
       cdsArrivingLoads.SQL.Add('CASE');
-      cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 2 THEN ' +
+      cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) >= 2 THEN ' +
         QuotedStr('LO'));
       cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 1 THEN ' +
         QuotedStr('ADD'));
@@ -789,7 +791,12 @@ Begin
 
       cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs');
 
-      cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType');
+      cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType,');
+
+      cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
+      cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
+      cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
+      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
 
 {
         cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
@@ -953,7 +960,7 @@ Begin
 
       cdsArrivingLoads.SQL.Add('AND SP.ObjectType <> 1');
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 2');
+      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
@@ -1047,7 +1054,7 @@ Begin
         QuotedStr('INTERN'));
       cdsArrivingLoads.SQL.Add('End AS TYP,');
       cdsArrivingLoads.SQL.Add('CASE');
-      cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 2 THEN ' +
+      cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) >= 2 THEN ' +
         QuotedStr('LO'));
       cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 1 THEN ' +
         QuotedStr('ADD'));
@@ -1070,7 +1077,12 @@ Begin
       cdsArrivingLoads.SQL.Add('IsNull(IName.ImpVerk,0) AS ImpVerk,');
 
       cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs');
-      cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType');
+      cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType,');
+
+   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
+   cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
+   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
+   cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
 
 {
         cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
@@ -1142,6 +1154,7 @@ Begin
         ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= SP.SupplierNo');
       cdsArrivingLoads.SQL.Add
         ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= SP.CustomerNo');
+
       cdsArrivingLoads.SQL.Add
         ('Left Outer JOIN dbo.CustomerShippingPlanHeader CSH');
       cdsArrivingLoads.SQL.Add
@@ -1223,7 +1236,7 @@ Begin
 
       cdsArrivingLoads.SQL.Add('AND SP.ObjectType = 1');
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 2');
+      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
@@ -1324,7 +1337,7 @@ Begin
       QuotedStr('INTERN'));
     cdsArrivingLoads.SQL.Add('End AS TYP,');
     cdsArrivingLoads.SQL.Add('CASE');
-    cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 2 THEN ' +
+    cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) >= 2 THEN ' +
       QuotedStr('LO'));
     cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) = 1 THEN ' +
       QuotedStr('ADD'));
@@ -1347,7 +1360,12 @@ Begin
     cdsArrivingLoads.SQL.Add('IsNull(IName.ImpVerk,0) AS ImpVerk,');
 
     cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs');
-    cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType');
+    cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType,');
+
+   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
+   cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
+   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
+   cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
 
     { cdsArrivingLoads.SQL.Add('IsNull(cl.Confirmed_LoadNo,0) AS AR_LoadNo') ;
       cdsArrivingLoads.SQL.Add('Loading.CityName AS LASTSTÄLLE, ') ;
@@ -1435,7 +1453,7 @@ Begin
     else
       cdsArrivingLoads.SQL.Add('CSH.CustomerNo = -1');
 
-    cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 2');
+    cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
     cdsArrivingLoads.SQL.Add('AND (L.SenderLoadStatus = 2)');
 
@@ -1493,8 +1511,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then
-    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -1955,7 +1972,7 @@ begin
 
   if uReportController.useFR then begin
 
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
     else Begin
       RepNo := 43; // TALLY_VER3_NOTE.fr3;
@@ -1997,7 +2014,7 @@ begin
     Try
       SetLength(A, 1);
       A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
         FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
       else Begin
         Try
@@ -2046,7 +2063,7 @@ begin
   Try
     SetLength(A, 1);
     A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       FormCRViewReport.CreateCo('TALLY_INTERNAL_VER2_NOTE_dk.RPT', A)
     else
     Begin
@@ -2625,7 +2642,7 @@ begin
   End;
 
   if Length(MailToAddress) > 0 then Begin
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       ReportType := cFoljesedelIntern    // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
       Try
@@ -3347,7 +3364,7 @@ begin
       if (mtSelectedLoads.RecordCount = 0) or (mtSelectedLoads.RecordCount > 1)
       then
         Result := False
-      else if (mtSelectedLoadsOBJECTTYPE.AsInteger = 2) and
+      else if (mtSelectedLoadsOBJECTTYPE.AsInteger >= 2) and
         (mtSelectedLoadsEGEN.AsInteger = 0) then
         Result := True
       else
@@ -3408,7 +3425,7 @@ begin
       if (mtSelectedLoads.RecordCount = 0) or (mtSelectedLoads.RecordCount > 1)
       then
         Result := False
-      else if mtSelectedLoadsOBJECTTYPE.AsInteger = 2 then
+      else if mtSelectedLoadsOBJECTTYPE.AsInteger >= 2 then
         Result := True
       else
         Result := False;
@@ -3490,7 +3507,7 @@ begin
     Exit;
   if uReportController.useFR then begin
 
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 637 // TALLY_INT_USA.fr3
     else Begin
       RepNo := 41; // TALLY_US_NOTE.fr3
@@ -3532,7 +3549,7 @@ begin
     Try
       SetLength(A, 1);
       A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
         FormCRViewReport.CreateCo('TALLY_INT_USA.RPT', A)
       else Begin
         Try
@@ -3593,7 +3610,7 @@ begin
     Exit;
   if uReportController.useFR then begin
 
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
     else Begin
       RepNo := 43; // TALLY_VER3_NOTE.fr3;
@@ -3637,7 +3654,7 @@ begin
 
       SetLength(A, 1);
       A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
         FormCRPrintOneReport.CreateCo(1, False, False, A,
           'TALLY_INTERNAL_VER3_NOTE.RPT')
       else Begin
@@ -3713,7 +3730,7 @@ begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
   if uReportController.useFR then begin
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 637 // TALLY_INT_USA.fr3')
     else Begin
       RepNo := 41; // TALLY_US_NOTE.fr3
@@ -3872,6 +3889,8 @@ begin
       cdsArrivingLoadsLoadNo.AsInteger;
     cdsArrivingPackages.ParamByName('ShippingPlanNo').AsInteger :=
       cdsArrivingLoadsLO.AsInteger;
+    cdsArrivingPackages.ParamByName('LanguageID').AsInteger :=
+      ThisUser.LanguageID ;
     cdsArrivingPackages.Open;
     cdsArrivingPackages.Active := True;
   End;
