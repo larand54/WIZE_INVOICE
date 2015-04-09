@@ -920,6 +920,15 @@ End;
 
 function TdmsSystem.Get_Dir(const pFieldName: String): String;
 Begin
+  {$IFDEF DEBUG}
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+      if AnsiUpperCase(pFieldName) = 'EXCELDIR' then
+        Result := 'D:\VIS\TEMP\EXCEL\'
+      else
+        result := 'D:\VIS\TEMP\';
+      exit;
+    end;
+  {$ENDIF}
   cds_Props.Active := False;
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
   cds_Props.ParamByName('Form').AsString := 'Global';

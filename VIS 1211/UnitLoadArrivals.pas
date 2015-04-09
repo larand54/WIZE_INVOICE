@@ -2538,6 +2538,12 @@ begin
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   MailToAddress2 := '';
   MailToAddress := '';
+{$IFDEF TEST_WITH_EMAIL}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    MailToAddress := 'larand54@gmail.com';
+    MailToAddress2 := 'larand54@yahoo.se';
+  end;
+{$ELSE}
   if (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger > 0) and
     (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = False) then
     MailToAddress := dmsContact.GetEmailAddress_Utlastad
@@ -2554,6 +2560,7 @@ begin
   MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
     (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
 
+{$ENDIF}
   if Length(MailToAddress2) > 0 then Begin
     if MailToAddress = 'ange@adress.nu' then
       MailToAddress := MailToAddress2
@@ -2624,24 +2631,29 @@ begin
       Finally
         FreeAndNil(FormCRExportOneReport); // .Free ;
       End;
-
-    SetLength(Attach, 1);
-    Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
-      AsString + '.pdf';
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString,
-        'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
-        LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
-        dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    ShowMessage('Emailadress saknas för klienten!');
+{$IFDEF DEBUG}
+  {$IFDEF TEST_WITH_EMAIL}
+  {$ELSE}
+  exit;
+  {$ENDIF}
+{$ENDIF}
+  SetLength(Attach, 1);
+  Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
+    AsString + '.pdf';
+  dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+  Try
+    dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
+      dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString, 'Följesedel bifogad. ' +
+      LF + '' + 'Load tally attached. ' + LF + '' + LF + '' + LF +
+      'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+      (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+      Attach, False);
+  Finally
+    FreeAndNil(dm_SendMapiMail);
+  End;
+End
+else
+  ShowMessage('Emailadress saknas för klienten!');
 end;
 
 procedure TfrmLoadArrivals.acExpandAllExecute(Sender: TObject);
