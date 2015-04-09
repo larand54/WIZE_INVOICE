@@ -536,6 +536,7 @@ object dmArrivingLoads: TdmArrivingLoads
     Top = 528
   end
   object cdsArrivingLoads: TFDQuery
+    Active = True
     CachedUpdates = True
     Indexes = <
       item
@@ -560,6 +561,7 @@ object dmArrivingLoads: TdmArrivingLoads
         Fields = 'LOADEDDATE'
       end>
     IndexName = 'cdsArrivingLoadsIndex1'
+    AggregatesActive = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     ResourceOptions.AssignedValues = [rvCmdExecMode]
@@ -619,7 +621,12 @@ object dmArrivingLoads: TdmArrivingLoads
       'IsNull(IName.ImpVerk,0) AS ImpVerk,'
       ''
       'LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs'
-      ',SC.ClientName, Bt.BookingType'
+      ',SC.ClientName, Bt.BookingType,'
+      ''
+      '(Select Count(*) FROM dbo.LoadDetail LD'
+      'WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,'
+      '(Select Count(*) FROM dbo.PackageARConfirmed PC'
+      'WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed'
       ''
       ''
       ''
@@ -939,6 +946,18 @@ object dmArrivingLoads: TdmArrivingLoads
       FixedChar = True
       Size = 30
     end
+    object cdsArrivingLoadsNoOfPackages: TIntegerField
+      DisplayLabel = 'Antal paket'
+      FieldName = 'NoOfPackages'
+      Origin = 'NoOfPackages'
+      ReadOnly = True
+    end
+    object cdsArrivingLoadsPackagesConfirmed: TIntegerField
+      DisplayLabel = 'Paket bekr'#228'ftade'
+      FieldName = 'PackagesConfirmed'
+      Origin = 'PackagesConfirmed'
+      ReadOnly = True
+    end
   end
   object cdsArrivingPackages: TFDQuery
     CachedUpdates = True
@@ -959,9 +978,6 @@ object dmArrivingLoads: TdmArrivingLoads
       'LSP.ShippingPlanNo'#9#9'AS'#9'LO,'
       'LD.PackageNo'#9#9#9'AS'#9'PACKAGE_NO,'
       'LD.SUPPLIERCODE'#9#9#9'AS '#9'SUPPLIERCODE,'
-      '-- P.Totalm3Actual'#9#9#9'AS '#9'M3_NET,'
-      '-- P.Totalm3Nominal'#9#9'AS '#9'M3_NOM,'
-      '-- P.TotalMFBMNominal              AS      MFBM,'
       ''
       'PTD.m3Actual'#9#9#9'    AS '#9'M3_NET,'
       'PTD.m3Nominal'#9#9'      AS '#9'M3_NOM,'
@@ -970,37 +986,17 @@ object dmArrivingLoads: TdmArrivingLoads
       ''
       'CASE'
       'WHEN isnull(ptbypp.ProductDisplayName,'#39#39') = '#39#39' THEN'
-      'PR.ProductDisplayName'
+      'PDE.ProductDisplayName'
       'else'
       'ptbypp.ProductDisplayName'
       'END'
       'AS PRODUCT_DESCRIPTION,'
       ''
-      ''
-      ''
-      '-- P.TotalNoOfPieces'#9#9'AS'#9'PCS,'
       'LD.PACKAGEOK'#9#9#9'AS'#9'PACKAGEOK,'
       'LD.ProblemPackageLog'#9#9'AS'#9'PACKAGE_LOG,'
       'LD.LoadDetailNo                 AS      LOAD_DETAILNO,'
-      ''
-      
-        '-- CASE WHEN isnull(ptbypp.PackageTypeNo, 0) = 0 THEN PTL.PcsPer' +
-        'Length'
-      '--  WHEN ptbypp.Langd = '#39'0'#39' THEN PTL.PcsPerLength'
-      '-- ELSE'
-      
-        '-- CAST( p.TotalNoOfPieces  As varchar(5))+'#39' / '#39'+CAST( ptbypp.La' +
-        'ngd  As varchar(15))'
-      '-- END'
-      '-- AS '#9'PSCPERLENGTH,'
-      ''
-      ''
       'BC.BarCode '#9#9#9'AS '#9'BC,'
       'GS.GradeStamp '#9#9#9'AS '#9'GS,'
-      '-- p.TotalNoOfPieces AS PPP,'
-      '-- LDV.SubSum            ,'
-      '-- LDV.Price             AS  PRICE,'
-      '-- LDV.OldPrice,'
       ''
       ''
       'CASE'
@@ -1074,14 +1070,14 @@ object dmArrivingLoads: TdmArrivingLoads
       
         'INNER JOIN dbo.ProductLength PL on PL.ProductLengthNo = PTD.Prod' +
         'uctLengthNo'
-      
-        '-- INNER JOIN dbo.PackageTypeLengths ptl on ptl.PackageTypeNo = ' +
-        'p.PackageTypeNo'
+      ''
       'Left Outer Join dbo.Barcode BC ON BC.BarCodeNo = p.BarCodeID'
       
         'Left Outer Join dbo.GradeStamp GS ON GS.GradeStampNo = p.GradeSt' +
         'amp'
       'INNER JOIN dbo.Product PR'#9#9'ON'#9'PR.ProductNo = P.ProductNo'
+      'INNER JOIN dbo.productdesc PDE'#9#9'ON'#9'PDE.ProductNo = P.ProductNo'
+      ''
       ''
       ''
       
@@ -1093,6 +1089,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'WHERE'
       'LSP.LoadNo = :LoadNo'
       'and LSP.ShippingPlanNo = :ShippingPlanNo'
+      'AND PDE.LanguageID = :LanguageID'
       '')
     Left = 168
     Top = 32
@@ -1104,6 +1101,11 @@ object dmArrivingLoads: TdmArrivingLoads
       end
       item
         Name = 'SHIPPINGPLANNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -5524,6 +5526,25 @@ object dmArrivingLoads: TdmArrivingLoads
     ParamData = <
       item
         Name = 'SAMLASTNR'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_IsLoadAvr: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_IsLoadAvr'
+    Left = 736
+    Top = 360
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LoadNo'
         DataType = ftInteger
         ParamType = ptInput
       end>

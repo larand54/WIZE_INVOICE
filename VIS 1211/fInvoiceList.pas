@@ -371,6 +371,8 @@ type
     acAustraliaExport: TAction;
     dxBarButton49: TdxBarButton;
     siLangLinked_frmInvoiceList: TsiLangLinked;
+    acAustraliaContainerExport: TAction;
+    dxBarButton50: TdxBarButton;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -485,6 +487,7 @@ type
     procedure TimerKontraktnrTimer(Sender: TObject);
     procedure acPreviewPkgSpecExecute(Sender: TObject);
     procedure acAustraliaExportExecute(Sender: TObject);
+    procedure acAustraliaContainerExportExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -2082,6 +2085,33 @@ Begin
     mtSelectedInvoices.Active := False;
   End;
 End;
+
+procedure TfrmInvoiceList.acAustraliaContainerExportExecute(Sender: TObject);
+var
+  fAccInv: TfAccInv;
+begin
+  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+    0) = mrYes then
+  Begin
+    fAccInv := TfAccInv.Create(nil);
+    Try
+
+      SaveInternalInvoiceNoToExportInvoiceData;
+
+      fAccInv.IntInvNo :=
+        dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+      fAccInv.teInvoiceNo.Text :=
+        dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString;
+      fAccInv.CustomerNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+      fAccInv.AgentNo := dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger;
+      fAccInv.ExportNo := 3; // 3 = Australien container
+      fAccInv.acRefreshExecute(Sender);
+      fAccInv.ShowModal;
+    Finally
+      FreeAndNil(fAccInv);
+    End;
+  End;
+end;
 
 procedure TfrmInvoiceList.acAustraliaExportExecute(Sender: TObject);
 var

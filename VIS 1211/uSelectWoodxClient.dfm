@@ -49,8 +49,6 @@ object fSelectWoodxClient: TfSelectWoodxClient
     Height = 41
     Align = alBottom
     TabOrder = 3
-    ExplicitTop = 161
-    ExplicitWidth = 446
     object BitBtn1: TBitBtn
       Left = 128
       Top = 8
@@ -90,6 +88,7 @@ object fSelectWoodxClient: TfSelectWoodxClient
     StringsTypes.Strings = (
       'TIB_STRINGLIST'
       'TSTRINGLIST')
+    UseDefaultLanguage = True
     NumOfLanguages = 3
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
@@ -129,7 +128,17 @@ object fSelectWoodxClient: TfSelectWoodxClient
       'LookupResultField'
       'DataField'
       'KeyField'
-      'ListField')
+      'ListField'
+      'ConnectionName'
+      'DisplayChecked'
+      'DisplayUnchecked'
+      'HelpFile'
+      'HotZoneClassName'
+      'KeyFieldNames'
+      'ListFieldNames'
+      'OldName'
+      'Origin'
+      'PropertiesClassName')
     Left = 216
     Top = 104
     TranslationData = {

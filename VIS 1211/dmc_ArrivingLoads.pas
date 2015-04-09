@@ -556,6 +556,9 @@ type
     cdsArrivingLoadsPkgs: TIntegerField;
     cdsArrivingLoadsClientName: TStringField;
     cdsArrivingLoadsBookingType: TStringField;
+    sp_IsLoadAvr: TFDStoredProc;
+    cdsArrivingLoadsNoOfPackages: TIntegerField;
+    cdsArrivingLoadsPackagesConfirmed: TIntegerField;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
@@ -564,6 +567,7 @@ type
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
+    function IsLoadAvr(const LoadNo : Integer) : Boolean ;
     Function GetCurrentXrate(const LoadNo: Integer): Double;
     Function GetXrateAtDateOfDelivery(const LoadNo: Integer): Double;
     procedure InsertLoadDtlVal(const Inkop: Boolean;
@@ -666,10 +670,9 @@ procedure TdmArrivingLoads.RefreshArrivingPackages;
 begin
   cdsArrivingPackages.Active := False;
   cdsArrivingPackages.Close;
-  cdsArrivingPackages.ParamByName('LoadNo').AsInteger :=
-    cdsArrivingLoadsLOADNO.AsInteger;
-  cdsArrivingPackages.ParamByName('ShippingPlanNo').AsInteger :=
-    cdsArrivingLoadsLO.AsInteger;
+  cdsArrivingPackages.ParamByName('LoadNo').AsInteger         :=  cdsArrivingLoadsLOADNO.AsInteger;
+  cdsArrivingPackages.ParamByName('ShippingPlanNo').AsInteger :=  cdsArrivingLoadsLO.AsInteger;
+  cdsArrivingPackages.ParamByName('LanguageID').AsInteger     :=  ThisUser.LanguageID ;
   cdsArrivingPackages.Open;
   cdsArrivingPackages.Active := True;
 end;
@@ -1692,6 +1695,21 @@ Begin
   cds_LoadRow.Active := False;
 End;
 
+function TdmArrivingLoads.IsLoadAvr(const LoadNo : Integer) : Boolean ;
+Begin
+  Try
+  sp_IsLoadAvr.ParamByName('@LoadNo').AsInteger := LoadNo ;
+  sp_IsLoadAvr.Active := True ;
+  if not sp_IsLoadAvr.Eof then
+   Result := True
+    else
+     Result := False ;
+  Finally
+   sp_IsLoadAvr.Active := False ;
+  End ;
+End;
+
+
 // P_SupplierNo (kan vara både kund eller leverantör) används bara när det anropas från avräkningen, då det är en specifik LoadDtlVal som uppdateras
 // För att veta om lasten är ett inköp eller försäljning
 procedure TdmArrivingLoads.GetIntPrice(const P_SupplierNo, PaymentType,
@@ -1702,6 +1720,8 @@ Var
   MakeForCustAndSupp, MakeForInkop, MakeForVerk: Boolean;
   P_Inkop: Boolean;
 Begin
+ if not IsLoadAvr(LoadNo) then
+ Begin
   if P_SupplierNo > 0 then
   Begin
     // OM LO är ett "inköp" körs denna rutin
@@ -1767,6 +1787,7 @@ Begin
   else if MakeForInkop then
     InsertLoadDtlVal(True, CustomerNo, PaymentType, PaymentNo, LoadNo,
       Update_OldPrice);
+ End;
 End;
 
 // PaymentType, vilken typ av avräkning som tex priskorrigering (kredit) eller vanlig debit.

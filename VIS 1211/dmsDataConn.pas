@@ -41,6 +41,7 @@ type
     SQLConn_XOR: TFDConnection;
     FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink;
     sp_UpdateMaxSecByLoad: TFDStoredProc;
+    FDStoredProc1: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
