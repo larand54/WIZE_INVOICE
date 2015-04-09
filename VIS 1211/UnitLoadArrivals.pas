@@ -1893,9 +1893,9 @@ begin
   if uReportController.useFR then begin
 
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
+      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
-      RepNo := 43; // TALLY_VER3_NOTE.fr3;
+      RepNo := 43; // TALLY_VER3_NOTE.fr3 (43)
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
@@ -2570,7 +2570,7 @@ begin
 
   if Length(MailToAddress) > 0 then Begin
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-      ReportType := cFoljesedelIntern    // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+      ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
