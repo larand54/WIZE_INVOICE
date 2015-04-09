@@ -383,6 +383,12 @@ end;
 
 procedure TfrmMain.CheckDrive;
 Begin
+  {$IFDEF DEBUG}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    dmsConnector.DriveLetter := 'D:\';
+    exit;
+  end;
+  {$ENDIF}
   if not DirectoryExists('h:\') then
   Begin
     cxShellBrowserDialog1.Title := 'Disk drive H: finns ej, ange en annan.';
@@ -489,6 +495,30 @@ begin
   dmsConnector.DriveLetter := 'H:\';
   if dmsConnector.DriveLetter = 'C:\' then
     ShowMessage('Ändra till H:');
+{$IFDEF DEBUG}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    dmsConnector.DriveLetter := 'D:\';
+    ThisUser.Database:= 'alvesql03:vis_vida' ;
+      with dmsConnector.FDConnection1 do begin
+        Params.Clear;
+        Params.Add('Server=alvesql03');
+        Params.Add('Database=vis_vida');
+        Params.Add('OSAuthent=No');
+        Params.add('MetaDefCatalog=vis_vida');
+        Params.Add('MetaDefSchema=dbo');
+        Params.Add('User_Name=Lars');
+        Params.Add('Password=woods2011');
+        Params.Add('DriverID=MSSQL');
+      end;
+
+      // Setup for FastReport
+      dxBarButton19.DoClick;
+  end
+  else begin
+    ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+  end;
+  CheckMappar;
+{$ELSE}
 
   CheckMappar;
 //   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
@@ -498,6 +528,7 @@ begin
 
   // ThisUser.Database:= 'alvevistest01:vis_vida' ;
   ThisUser.Database:= 'alvesql03:vis_vida' ;
+{$ENDIF}
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
     close
