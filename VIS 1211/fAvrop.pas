@@ -3555,7 +3555,7 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
       FreeAndNil(RC);
@@ -4049,7 +4049,6 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-      Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
