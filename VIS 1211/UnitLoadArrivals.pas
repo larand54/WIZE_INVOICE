@@ -2614,13 +2614,15 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
+  Save_Cursor: TCursor;
 begin
+  Save_Cursor := Screen.Cursor;
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   MailToAddress2 := '';
   MailToAddress := '';
-{$IFDEF TEST_WITH_EMAIL}
+{$IFDEF DEBUG}
   if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
-    MailToAddress := 'larand54@gmail.com';
+    MailToAddress := 'larand54@gmail.com;';
     MailToAddress2 := 'larand54@yahoo.se';
   end;
 {$ELSE}
@@ -2668,18 +2670,19 @@ begin
       if dmsContact.Client_Language
         (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
       then
-        ReportType := cFoljesedel         // TALLY_VER3_NOTE.fr3 (43)
+        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
       else
-        ReportType := cFoljesedel_eng;    // TALLY_eng_VER3_NOTE.fr3 (56)
+        ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
     End;
 
     ExportFile := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
       AsString + '.pdf';
     if uReportController.useFR then begin
 
+      Screen.Cursor := crHourGlass; { Show hourglass cursor }
       Params := TCMParams.Create();
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
-        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
+      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
 
       RC := TCMReportController.Create;
       ClientNo := 1;
@@ -2692,6 +2695,7 @@ begin
       Finally
         FreeAndNil(Params);
         FreeAndNil(RC);
+        Screen.Cursor := Save_Cursor;
       End;
       if not FileExists(ExportFile) then
         Exit;
@@ -2712,28 +2716,28 @@ begin
         FreeAndNil(FormCRExportOneReport); // .Free ;
       End;
 {$IFDEF DEBUG}
-  {$IFDEF TEST_WITH_EMAIL}
-  {$ELSE}
-  exit;
-  {$ENDIF}
+{$IFDEF TEST_WITH_EMAIL}
+{$ELSE}
+    Exit;
 {$ENDIF}
-  SetLength(Attach, 1);
-  Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
-    AsString + '.pdf';
-  dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-  Try
-    dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
-      dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString, 'Följesedel bifogad. ' +
-      LF + '' + 'Load tally attached. ' + LF + '' + LF + '' + LF +
-      'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-      (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-      Attach, False);
-  Finally
-    FreeAndNil(dm_SendMapiMail);
-  End;
-End
-else
-  ShowMessage('Emailadress saknas för klienten!');
+{$ENDIF}
+    SetLength(Attach, 1);
+    Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
+      AsString + '.pdf';
+    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+    Try
+      dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
+        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString,
+        'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
+        LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
+        dmsContact.GetFirstAndLastName(ThisUser.UserID),
+        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+    Finally
+      FreeAndNil(dm_SendMapiMail);
+    End;
+  End
+  else
+    ShowMessage('Emailadress saknas för klienten!');
 end;
 
 procedure TfrmLoadArrivals.acExpandAllExecute(Sender: TObject);
