@@ -3,7 +3,7 @@
         <ProjectGuid>{44411B54-35B5-4DF9-8ADF-E73EDFC21DE0}</ProjectGuid>
         <MainSource>VIS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Test_With_Email</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
@@ -55,6 +55,11 @@
         <Cfg_3_Win32>true</Cfg_3_Win32>
         <CfgParent>Cfg_3</CfgParent>
         <Cfg_3>true</Cfg_3>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='NODEBUG' or '$(Cfg_5)'!=''">
+        <Cfg_5>true</Cfg_5>
+        <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
@@ -136,6 +141,11 @@
         <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_MinorVer>0</VerInfo_MinorVer>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_5)'!=''">
+        <DCC_Define>NODEBUG;$(DCC_Define)</DCC_Define>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <VerInfo_Keys>CompanyName=Carmak AB;FileDescription=VIS;FileVersion=2.1.2.97;InternalName=VIS;LegalCopyright=;LegalTrademarks=;OriginalFilename=VIS.exe;ProductName=Vida Information Systems;ProductVersion=2.1.2.97;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -908,6 +918,10 @@
         <None Include="ModelSupport_VIS\UPortArrivals\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="NODEBUG">
+            <Key>Cfg_5</Key>
             <CfgParent>Base</CfgParent>
         </BuildConfiguration>
         <BuildConfiguration Include="Test_With_Email">

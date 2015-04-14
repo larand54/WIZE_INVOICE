@@ -921,11 +921,11 @@ End;
 function TdmsSystem.Get_Dir(const pFieldName: String): String;
 Begin
   {$IFDEF DEBUG}
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    if copy(GetEnvironmentVariable('COMPUTERNAME'),0,6) = 'CARMAK' then begin
       if AnsiUpperCase(pFieldName) = 'EXCELDIR' then
-        Result := 'D:\VIS\TEMP\EXCEL\'
+        Result := dmsConnector.DriveLetter+'VIS\TEMP\EXCEL\'
       else
-        result := 'D:\VIS\TEMP\';
+        result := dmsConnector.DriveLetter+'VIS\TEMP\';
       exit;
     end;
   {$ENDIF}
