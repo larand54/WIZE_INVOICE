@@ -924,6 +924,9 @@ Begin
     if copy(GetEnvironmentVariable('COMPUTERNAME'),0,6) = 'CARMAK' then begin
       if AnsiUpperCase(pFieldName) = 'EXCELDIR' then
         Result := dmsConnector.DriveLetter+'VIS\TEMP\EXCEL\'
+      else if pFieldName = 'MyEmailAddress' then
+        if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+           Result := 'larand54@gmail.com'
       else
         result := dmsConnector.DriveLetter+'VIS\TEMP\';
       exit;

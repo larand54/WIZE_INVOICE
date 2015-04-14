@@ -1321,15 +1321,24 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
+  Save_Cursor: TCursor;
 begin
+  Save_Cursor := Screen.Cursor;
   With dm_SokFormular do Begin
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+    // Byter cursor !! Bör fixas!
       (cds_MakeSokAvropLO.AsInteger);
     if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
         ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
     End;
+{$IFDEF TEST_WITH_EMAIL}
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      MailToAddress := 'larand54@gmail.com'
+    else if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-SPEED' then
+      MailToAddress := 'lars.makiaho@gmail.com';
+{$ENDIF}
     if Length(MailToAddress) > 0 then Begin
       if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
         ReportType := cTrpOrder // TRP_ORDER_NOTE.fr3 (22)
@@ -1352,12 +1361,14 @@ begin
           FreeAndNil(Params);
           FreeAndNil(RC);
         End;
-        if not FileExists(ExportFile) then
+        if not FileExists(ExportFile) then begin
+          Screen.Cursor := Save_Cursor;
           Exit;
+        end;
       end
-      else begin
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      else
         Try
+          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
           SetLength(A, 1);
           A[0] := cds_MakeSokAvropLO.AsInteger;
           FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
@@ -1368,21 +1379,27 @@ begin
         Finally
           FreeAndNil(FormCRExportOneReport); // .Free ;
         End;
-        SetLength(Attach, 1);
-        Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
-        // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-        dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-        Try
-          dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
-            cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
-            'Transportorder attached. ' + LF + '' + LF + '' + LF +
-            'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-            (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
-            MailToAddress, Attach, False);
-        Finally
-          FreeAndNil(dm_SendMapiMail);
-        End;
-      end;
+{$IFDEF DEBUG}
+{$IFDEF TEST_WITH_EMAIL}
+{$ELSE}
+      Exit; // No email if debugging and not TEST_WITH_EMAIL
+{$ENDIF}
+{$ENDIF}
+      SetLength(Attach, 1);
+      Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
+          cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
+          'Transportorder attached. ' + LF + '' + LF + '' + LF +
+          'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+          Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+        Screen.Cursor := Save_Cursor;
+      End;
     End
     else
       ShowMessage('Emailadress saknas för klienten!');
@@ -1403,7 +1420,9 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
+  Save_Cursor: TCursor;
 begin
+  Save_Cursor := Screen.Cursor;
   With dm_SokFormular do Begin
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
       (cds_MakeSokAvropLO.AsInteger);
@@ -1422,7 +1441,7 @@ begin
       RoleType := 1;
       ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
       ExportFile := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
-
+      DeleteFile(ExportFile);
       if uReportController.useFR then begin
         Params := TCMParams.Create();
         Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
@@ -1435,8 +1454,10 @@ begin
           FreeAndNil(Params);
           FreeAndNil(RC);
         End;
-        if not FileExists(ExportFile) then
+        if not FileExists(ExportFile) then begin
+          Screen.Cursor := Save_Cursor;
           Exit;
+        end;
       end
       else begin
         FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
@@ -1552,6 +1573,7 @@ Var
   ClientNo: integer;
   Params: TCMParams;
   ExportFile: string;
+  Save_Cursor: TCursor;
 begin
   if GetSelectedLONos then Begin
     With dm_SokFormular do Begin
@@ -1580,11 +1602,16 @@ begin
           Try
             for I := 0 to High(AA) do Begin
               Params.Add('@SHIPPINGPLANNO', AA[I]);
-              RC.setExportFile(ExportFile + AA[I] + '.pdf');
+              RC.setExportFile(ExportFile + intToStr(AA[I]) + '.pdf');
               RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
               Params.Clear;
               SetLength(Attach, I + 1);
-              Attach[I] := ExportFile + AA[I] + '.pdf';
+              Attach[I] := ExportFile + intToStr(AA[I]) + '.pdf';
+              if not FileExists(Attach[I]) then begin
+                Showmessage('Fil: '+Attach[I] + 'har ej skapats. Mail avbryts!');
+                Screen.Cursor := Save_Cursor;
+                exit;
+              end;
             End;
           Finally
             FreeAndNil(Params);
