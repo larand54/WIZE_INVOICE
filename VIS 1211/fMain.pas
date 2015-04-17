@@ -537,7 +537,7 @@ begin
   uReportController.useFR := true;
   acToggleReportSystem.Caption := 'Byt till Crystal Report';
   CheckMappar;
-{$ELSE IFDEF NODEBUG}
+{$ELSEIF DEFINED(NODEBUG)}
     ThisUser.Database:= 'alvesqltest01:vis_vida' ;
     with dmsConnector.FDConn_VIS_VIDA do begin
       Params.Clear;
@@ -552,7 +552,7 @@ begin
     end;
   end;
   CheckMappar;
-{$ELSE IFDEF RELEASE}
+{$ELSEIF DEFINED(RELEASE)}
   ThisUser.Database := 'vis.vida.se:vis_vida';
   CheckMappar;
 {$ELSE}
