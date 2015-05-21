@@ -1974,9 +1974,9 @@ begin
   if uReportController.useFR then begin
 
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
+      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
-      RepNo := 43; // TALLY_VER3_NOTE.fr3;
+      RepNo := 43; // TALLY_VER3_NOTE.fr3 (43)
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
@@ -2483,10 +2483,18 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
+  Save_Cursor: TCursor;
 begin
+  Save_Cursor := Screen.Cursor;
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   MailToAddress2 := '';
   MailToAddress := '';
+{$IFDEF DEBUG}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    MailToAddress := 'larand54@gmail.com;';
+    MailToAddress2 := 'larand54@yahoo.se';
+  end;
+{$ELSE}
   if (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger > 0) and
     (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = False) then
     MailToAddress := dmsContact.GetEmailAddress_Utlastad
@@ -2503,6 +2511,7 @@ begin
   MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
     (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
 
+{$ENDIF}
   if Length(MailToAddress2) > 0 then Begin
     if MailToAddress = 'ange@adress.nu' then
       MailToAddress := MailToAddress2
@@ -2512,7 +2521,7 @@ begin
 
   if Length(MailToAddress) > 0 then Begin
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-      ReportType := cFoljesedelIntern    // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+      ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
@@ -2530,18 +2539,19 @@ begin
       if dmsContact.Client_Language
         (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
       then
-        ReportType := cFoljesedel         // TALLY_VER3_NOTE.fr3 (43)
+        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
       else
-        ReportType := cFoljesedel_eng;    // TALLY_eng_VER3_NOTE.fr3 (56)
+        ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
     End;
 
     ExportFile := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
       AsString + '.pdf';
     if uReportController.useFR then begin
 
+      Screen.Cursor := crHourGlass; { Show hourglass cursor }
       Params := TCMParams.Create();
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
-        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
+      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
 
       RC := TCMReportController.Create;
       ClientNo := 1;
@@ -2554,6 +2564,7 @@ begin
       Finally
         FreeAndNil(Params);
         FreeAndNil(RC);
+        Screen.Cursor := Save_Cursor;
       End;
       if not FileExists(ExportFile) then
         Exit;
@@ -2573,7 +2584,12 @@ begin
       Finally
         FreeAndNil(FormCRExportOneReport); // .Free ;
       End;
-
+{$IFDEF DEBUG}
+{$IFDEF TEST_WITH_EMAIL}
+{$ELSE}
+    Exit;
+{$ENDIF}
+{$ENDIF}
     SetLength(Attach, 1);
     Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
       AsString + '.pdf';

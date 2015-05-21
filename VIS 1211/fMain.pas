@@ -384,6 +384,15 @@ end;
 
 procedure TfrmMain.CheckDrive;
 Begin
+  {$IFDEF DEBUG}
+  if copy(GetEnvironmentVariable('COMPUTERNAME'),1,6) = 'CARMAK' then begin
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      dmsConnector.DriveLetter := 'D:\'
+    else
+      dmsConnector.DriveLetter := 'C:\';
+    exit;
+  end;
+  {$ENDIF}
   if not DirectoryExists('h:\') then
   Begin
     cxShellBrowserDialog1.Title := 'Disk drive H: finns ej, ange en annan.';
@@ -516,15 +525,70 @@ begin
   dmsConnector.DriveLetter := 'H:\';
   if dmsConnector.DriveLetter = 'C:\' then
     ShowMessage('Ändra till H:');
+{$IFDEF DEBUG}
+  if copy(GetEnvironmentVariable('COMPUTERNAME'),1,6) = 'CARMAK' then begin
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      dmsConnector.DriveLetter := 'D:\'
+    else
+      dmsConnector.DriveLetter := 'C:\';
+        // Debugging with CARMAK computers
+    ThisUser.Database:= 'alvesql03:vis_vida' ;
+    with dmsConnector.FDConnection1 do begin
+      Params.Clear;
+      Params.Add('Server=alvesql03');
+      Params.Add('Database=vis_vida');
+      Params.Add('OSAuthent=No');
+      Params.add('MetaDefCatalog=vis_vida');
+      Params.Add('MetaDefSchema=dbo');
+      Params.Add('User_Name=Lars');
+      Params.Add('Password=woods2011');
+      Params.Add('DriverID=MSSQL');
+    end;
 
+  end
+  else begin
+      // Debugging with other computers
+    ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+    with dmsConnector.FDConnection1 do begin
+      Params.Clear;
+      Params.Add('Server=alvesqltest01');
+      Params.Add('Database=vis_vida');
+      Params.Add('OSAuthent=No');
+      Params.add('MetaDefCatalog=vis_vida');
+      Params.Add('MetaDefSchema=dbo');
+      Params.Add('User_Name=Lars');
+      Params.Add('Password=woods2011');
+      Params.Add('DriverID=MSSQL');
+    end;
+  end;
+      // Setup for FastReport
+  uReportController.useFR := true;
+  acToggleReportSystem.Caption := 'Byt till Crystal Report';
   CheckMappar;
-//   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
-  // ThisUser.Database:= '172.24.0.40:vis_vida' ;
 
+{$ELSEIF DEFINED(NODEBUG)}
+    ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+    with dmsConnector.FDConn_VIS_VIDA do begin
+      Params.Clear;
+      Params.Add('Server=alvesqltest01');
+      Params.Add('Database=vis_vida');
+      Params.Add('OSAuthent=No');
+      Params.add('MetaDefCatalog=vis_vida');
+      Params.Add('MetaDefSchema=dbo');
+      Params.Add('User_Name=Lars');
+      Params.Add('Password=woods2011');
+      Params.Add('DriverID=MSSQL');
+    end;
+  end;
+  CheckMappar;
+{$ELSEIF DEFINED(RELEASE)}
   ThisUser.Database := 'vis.vida.se:vis_vida';
+  CheckMappar;
+{$ELSE}
+  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+  CheckMappar;
+{$ENDIF}
 
-//  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
- // ThisUser.Database:= 'alvesql03:vis_vida' ;
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
     close

@@ -920,6 +920,18 @@ End;
 
 function TdmsSystem.Get_Dir(const pFieldName: String): String;
 Begin
+  {$IFDEF DEBUG}
+    if copy(GetEnvironmentVariable('COMPUTERNAME'),0,6) = 'CARMAK' then begin
+      if AnsiUpperCase(pFieldName) = 'EXCELDIR' then
+        Result := dmsConnector.DriveLetter+'VIS\TEMP\EXCEL\'
+      else if pFieldName = 'MyEmailAddress' then
+        if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+           Result := 'larand54@gmail.com'
+      else
+        result := dmsConnector.DriveLetter+'VIS\TEMP\';
+      exit;
+    end;
+  {$ENDIF}
   cds_Props.Active := False;
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
   cds_Props.ParamByName('Form').AsString := 'Global';

@@ -584,9 +584,26 @@ begin
       FreeAndNil(FormCRExportOneReport); // .Free ;
     End;
   end;
-
+{$IFDEF TEST_WITH_EMAIL}
+{$ELSE}
+  {$IFDEF DEBUG}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+    exit;
+  {$ENDIF}
+{$ENDIF}
   if cbEmaila.Checked then Begin
+{$IFDEF TEST_WITH_EMAIL}
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      MailToAddress := 'larand54@yahoo.se'
+    else if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FAST' then
+      MailToAddress := 'lars.makiaho@gmail.com'
+    else begin
+      showMessage('This computer: ' + GetEnvironmentVariable('COMPUTERNAME')+' is not defined for TEST_WITH_EMAIL');
+      exit;
+    end;
+{$ELSE}
     MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
+{$ENDIF}
     if Length(MailToAddress) > 0 then Begin
       SetLength(Attach, 2);
       Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
@@ -636,7 +653,6 @@ begin
     else
       ShowMessage('Emailadress saknas för klienten!');
   End;
-
 end;
 
 procedure TXMLImportExport.EmailFakturaAndSpecExecute ;

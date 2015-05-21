@@ -506,24 +506,19 @@ Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
   RC: TCMReportController;
-  DocTyp,
-  RoleType,
-  ClientNo: integer;
+  RepNo: integer;
   Params: TCMParams;
 begin
   grdPayment.SetFocus;
   if dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger < 1 then
     Exit;
   if uReportController.useFR then begin
-
-    ClientNo := -1;
-    RoleType := -1;
-    DocTyp := 508;      // AVRAKNING_ver_II.RPT
+    RepNo := 557;      // AVRAKNING_ver_II.RPT (557)
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
       Params.Add('@PaymentNo', dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+      RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       freeAndNil(Params);
       freeAndNil(RC);

@@ -3555,7 +3555,7 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
       FreeAndNil(RC);
@@ -4052,7 +4052,6 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-      Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -5021,7 +5020,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
@@ -5211,7 +5210,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+      Params.Add('@LoadNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
       ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;

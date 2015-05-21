@@ -1,11 +1,19 @@
 program VIS;
 
 uses
+<<<<<<< HEAD
   madExcept,
   madLinkDisAsm,
   madListHardware,
   madListProcesses,
   madListModules,
+=======
+ { madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,}
+>>>>>>> origin/master
   Forms,
   fMain in 'fMain.pas' {frmMain},
   VidaConst in 'VidaConst.pas',

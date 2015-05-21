@@ -3,7 +3,11 @@
         <ProjectGuid>{44411B54-35B5-4DF9-8ADF-E73EDFC21DE0}</ProjectGuid>
         <MainSource>VIS.dpr</MainSource>
         <Base>True</Base>
+<<<<<<< HEAD
         <Config Condition="'$(Config)'==''">Release</Config>
+=======
+        <Config Condition="'$(Config)'==''">Test_With_Email</Config>
+>>>>>>> origin/master
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
@@ -44,6 +48,22 @@
         <Cfg_2_Win32>true</Cfg_2_Win32>
         <CfgParent>Cfg_2</CfgParent>
         <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Test_With_Email' or '$(Cfg_3)'!=''">
+        <Cfg_3>true</Cfg_3>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_3)'=='true') or '$(Cfg_3_Win32)'!=''">
+        <Cfg_3_Win32>true</Cfg_3_Win32>
+        <CfgParent>Cfg_3</CfgParent>
+        <Cfg_3>true</Cfg_3>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='NODEBUG' or '$(Cfg_5)'!=''">
+        <Cfg_5>true</Cfg_5>
+        <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
@@ -113,6 +133,23 @@
         <VerInfo_Build>56</VerInfo_Build>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=2.1.3.56;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_3)'!=''">
+        <DCC_Define>TEST_WITH_EMAIL;DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>0</VerInfo_Build>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_5)'!=''">
+        <DCC_Define>NODEBUG;$(DCC_Define)</DCC_Define>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <VerInfo_Keys>CompanyName=Carmak AB;FileDescription=VIS;FileVersion=2.1.2.97;InternalName=VIS;LegalCopyright=;LegalTrademarks=;OriginalFilename=VIS.exe;ProductName=Vida Information Systems;ProductVersion=2.1.2.97;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -880,6 +917,14 @@
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
         </BuildConfiguration>
+        <BuildConfiguration Include="NODEBUG">
+            <Key>Cfg_5</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Test_With_Email">
+            <Key>Cfg_3</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -926,22 +971,21 @@
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxPivotGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressPivotGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxTLLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressQuantumTreeList by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxVGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressVerticalGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSTeeChartRS20.bpl">ExpressPrinting System ReportLink for TeeChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSLnksRS20.bpl">ExpressPrinting System ReportLinks (Standard) by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxFCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressFlowChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxPivotGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressPivotGrid by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxTLLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressQuantumTreeList by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxVGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressVerticalGrid by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxDBOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressDBOrgChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxFCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressFlowChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressOrgChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSDBTeeChartRS20.bpl">ExpressPrinting System ReportLink for DBTeeChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dxPScxPCProdRS20.bpl">ExpressPrinting System ContainerProducer for ExpressPageControl by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxCommonRS20.bpl">ExpressPrinting System Cross Platform Library by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxExtCommonRS20.bpl">ExpressPrinting System Extended Cross Platform Library by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\RemObjects Software\Hydra for Delphi\Dcu\D20\win32\Hydra_IDE_D20.bpl">RemObjects Hydra - IDE Integration</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\RemObjects Software\Hydra for Delphi\Dcu\D20\win32\Hydra_IDE_D20.bpl">RemObjects Hydra - IDE Integration</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
