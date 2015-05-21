@@ -28,7 +28,7 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, System.Actions, cxGridCustomLayoutView,
-  siComp, siLngLnk, cxImage;
+  siComp, siLngLnk, cxImage, dxBar, Vcl.ExtDlgs;
 
 type
   TfReportStatics = class(TForm)
@@ -74,6 +74,10 @@ type
     grdReportStaticsDBTableView1Giro: TcxGridDBColumn;
     siLangLinked_fReportStatics: TsiLangLinked;
     grdReportStaticsDBTableView1Logga: TcxGridDBColumn;
+    dxBarPopupMenu1: TdxBarPopupMenu;
+    acOpenImage: TAction;
+    cxButton4: TcxButton;
+    OpenPictureDialog1: TOpenPictureDialog;
     procedure FormShow(Sender: TObject);
     procedure acNewRSExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
@@ -83,6 +87,7 @@ type
     procedure acDeleteUpdate(Sender: TObject);
     procedure mtClientClientNoChange(Sender: TField);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure acOpenImageExecute(Sender: TObject);
   private
     { Private declarations }
     function Saved: Boolean;
@@ -94,7 +99,7 @@ type
 
 implementation
 
-uses dmsVidaContact, udmLanguage;
+uses dmsVidaContact, udmLanguage, VidaUser ;
 
 {$R *.dfm}
 
@@ -151,6 +156,27 @@ begin
   End;
 end;
 
+procedure TfReportStatics.acOpenImageExecute(Sender: TObject);
+Var Filnamn : String ;
+begin
+  with dmsContact do
+  Begin
+    with TOpenDialog.Create(self) do
+      try
+        Caption := 'Öppna Logga';
+        Options := [ofPathMustExist, ofFileMustExist];
+        if Execute then
+         Begin
+          if cds_ReportStaticsII.State in [dsbrowse] then
+           cds_ReportStaticsII.Edit ;
+          cds_ReportStaticsIILogga.LoadFromFile(FileName);
+         End;
+      finally
+        Free;
+      end;
+  End;
+end;
+
 procedure TfReportStatics.acSaveExecute(Sender: TObject);
 begin
   with dmsContact do
@@ -193,6 +219,11 @@ end;
 
 procedure TfReportStatics.FormShow(Sender: TObject);
 begin
+
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
+
   mtClient.Active := False;
   mtClient.Active := True;
   mtClient.Insert;

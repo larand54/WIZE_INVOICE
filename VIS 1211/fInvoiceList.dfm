@@ -1354,6 +1354,10 @@ object frmInvoiceList: TfrmInvoiceList
       Caption = 'Export container (Australien)'
       OnExecute = acAustraliaContainerExportExecute
     end
+    object acAusExportCustomerInfo: TAction
+      Caption = 'Export customer info (Australien)'
+      OnExecute = acAusExportCustomerInfoExecute
+    end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -1645,6 +1649,10 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object dxBarButton50: TdxBarButton
       Action = acAustraliaContainerExport
+      Category = 0
+    end
+    object dxBarButton51: TdxBarButton
+      Action = acAusExportCustomerInfo
       Category = 0
     end
     object dxBarButton1: TdxBarButton
@@ -3838,6 +3846,10 @@ object frmInvoiceList: TfrmInvoiceList
       item
         Visible = True
         ItemName = 'dxBarButton50'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton51'
       end>
     UseOwnFont = False
     Left = 312
@@ -4479,10 +4491,7 @@ object frmInvoiceList: TfrmInvoiceList
       4C006100730074007300740061006C006C00650001004C006100730074007300
       740061006C006C006500010001000D000A006300640073005F00500072006F00
       7000730049006E0076004100670065006E0074004E0061006D006E0001004100
-      670065006E0074004E0061006D006E00010001000D000A006300640073005F00
-      6D0061006C006C004E0061006D00650001004E0061006D006500010001000100
-      0D000A006300640073005F00500072006F007000730049006E0076004E006100
-      6D00650001004E0061006D0065000100010001000D000A007300740046006F00
+      670065006E0074004E0061006D006E00010001000D000A007300740046006F00
       6E00740073005F0055006E00690063006F00640065000D000A00540066007200
       6D0049006E0076006F006900630065004C0069007300740001004D0053002000
       530061006E00730020005300650072006900660001004D005300200053006100

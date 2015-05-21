@@ -87,6 +87,7 @@ type
     siLangLinked_fAccInv: TsiLangLinked;
     dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink;
     sp_ExpInvContData: TFDStoredProc;
+    sp_ExpPkgCustInfoData: TFDStoredProc;
     procedure acRefreshExecute(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
@@ -96,6 +97,9 @@ type
     { Private declarations }
     CurRow: Integer;
     FirstSumRow: Integer;
+    procedure AddPkgDataToSheetExportCustomerInfo ;
+    procedure SetKolumnTitlesIIII ;
+    procedure WritePackageToSheetIIII ;
     procedure SetKolumnTitlesIII ;
     procedure WritePackageToSheetIII ;
     procedure AddPkgDataToSheetContainer ;
@@ -179,10 +183,18 @@ begin
     finally
       Free;
     end;
+
   if ExportNo = 1 then
     AddPkgDataToSheet
-  else
-    AddPkgDataToSheetII;
+      else
+       if ExportNo = 2 then
+         AddPkgDataToSheetII
+          else
+           if ExportNo = 3 then
+            AddPkgDataToSheetContainer
+             else
+               if ExportNo = 4 then
+                AddPkgDataToSheetExportCustomerInfo ;
 end;
 
 procedure TfAccInv.acPrintExecute(Sender: TObject);
@@ -206,6 +218,64 @@ procedure TfAccInv.acCloseExecute(Sender: TObject);
 begin
   Close;
 end;
+
+procedure TfAccInv.SetKolumnTitlesIIII ;
+Var x : Integer ;
+Begin
+ for x := 0 to sp_ExpPkgCustInfoData.Fields.Count - 1 do
+ Begin
+  SetCellTextBold(x,CurRow, sp_ExpPkgCustInfoData.Fields.Fields[x].DisplayLabel);
+ End;
+End ;
+
+procedure TfAccInv.WritePackageToSheetIIII ;
+Var x : Integer ;
+Begin
+ for x := 0 to sp_ExpPkgCustInfoData.Fields.Count - 1 do
+ Begin
+  SetCellTextNormalFont2(x,CurRow, sp_ExpPkgCustInfoData.Fields.Fields[x].AsString, $00);
+ End;
+ CurRow  := succ(CurRow) ;
+End ;
+
+
+procedure TfAccInv.AddPkgDataToSheetExportCustomerInfo ;
+Var FirstRec    : Boolean ;
+    Save_Cursor : TCursor;
+    CurrentLONo : Integer ;
+
+procedure Summa ;
+Begin
+ SetCellTextBold(6,CurRow ,  '=SUM(G' + inttostr(FirstSumRow) +':G' + inttostr(CurRow) + ')');
+End ;
+
+Begin
+ Save_Cursor    := Screen.Cursor;
+ Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
+ Try
+ CurRow := 0 ;
+
+ sp_ExpPkgCustInfoData.ParamByName('@UserID').AsInteger  := ThisUser.UserID ;
+ sp_ExpPkgCustInfoData.Active  := True ;
+
+ SetKolumnTitlesIIII ;
+ CurRow       := CurRow + 1 ;
+ FirstSumRow  := CurRow + 1 ;
+
+ sp_ExpPkgCustInfoData.First ;
+
+ While not sp_ExpPkgCustInfoData.Eof do
+ Begin
+  WritePackageToSheetIIII ;
+  sp_ExpPkgCustInfoData.Next ;
+ End ;
+
+ sp_ExpPkgCustInfoData.Active  := False ;
+ Finally
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+ End ;
+End ;
+
 
 procedure TfAccInv.SetKolumnTitles;
 Begin

@@ -1824,17 +1824,14 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=alvesqltest01'
+      'Server=vis.vida.se'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
-      'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24
@@ -2059,5 +2056,47 @@ object dmsConnector: TdmsConnector
         ParamType = ptInput
         Value = 4
       end>
+  end
+  object sp_GetUserStartHost: TFDStoredProc
+    Connection = FDConnection1
+    StoredProcName = 'dbo.vis_GetUserStartHost'
+    Left = 613
+    Top = 280
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sp_GetUserStartHostUserID: TIntegerField
+      FieldName = 'UserID'
+      Origin = 'UserID'
+    end
+    object sp_GetUserStartHostHostName: TStringField
+      FieldName = 'HostName'
+      Origin = 'HostName'
+      Size = 50
+    end
+    object sp_GetUserStartHostCanChangeUser: TIntegerField
+      FieldName = 'CanChangeUser'
+      Origin = 'CanChangeUser'
+    end
+    object sp_GetUserStartHostSetOnStart: TIntegerField
+      FieldName = 'SetOnStart'
+      Origin = 'SetOnStart'
+    end
+    object sp_GetUserStartHostChangeToUser: TStringField
+      FieldName = 'ChangeToUser'
+      Origin = 'ChangeToUser'
+      Size = 50
+    end
   end
 end

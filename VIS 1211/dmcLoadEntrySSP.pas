@@ -559,7 +559,7 @@ begin
     Try
 
       if cds_LoadHeadSenderLoadStatus.AsInteger = 2 then
-        dmArrivingLoads.GetIntPrice(-1, 0, -1,
+        dmArrivingLoads.GetIntPrice(False, -1, 0, -1,
           cds_LoadHeadLoadNo.AsInteger, True);
 
     Finally

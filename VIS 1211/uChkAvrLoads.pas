@@ -514,7 +514,7 @@ begin
     mtSelectedLoads.First;
     While not mtSelectedLoads.Eof do
     Begin
-      GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True);
+      GetIntPrice(False, -1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True);
       sq_DelLastAvr.ParamByName('LoadNo').AsInteger :=
         mtSelectedLoadsLoadNo.AsInteger;
       sq_DelLastAvr.ExecSQL(False);
@@ -552,7 +552,7 @@ begin
       if MessageDlg('Vill du påföra/uppdatera internpriser?', mtConfirmation,
         [mbYes, mbNo], 0) = mrYes then
       Begin
-        GetIntPrice(-1, 0, -1, strToIntDef(eLoadNo.Text, 0), True);
+        GetIntPrice(False, -1, 0, -1, strToIntDef(eLoadNo.Text, 0), True);
         sq_DelLastAvr.ParamByName('LoadNo').AsInteger :=
           strToIntDef(eLoadNo.Text, 0);
         sq_DelLastAvr.ExecSQL(False);

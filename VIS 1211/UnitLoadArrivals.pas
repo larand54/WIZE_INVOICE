@@ -436,19 +436,20 @@ begin
   if dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdPkgs.Name,
     grdPkgsDBTableView1) = False then;
 
-  grdLoadsDBTableView1INVPOINTNO.Visible := False;
-  grdLoadsDBTableView1LipNo.Visible := False;
-  grdLoadsDBTableView1SUPPLIERNO.Visible := False;
-  grdLoadsDBTableView1OrderType.Visible := False;
-  grdLoadsDBTableView1AVROP_CUSTOMERNO.Visible := False;
-  grdLoadsDBTableView1CUSTOMERNO.Visible := False;
-  grdLoadsDBTableView1OBJECTTYPE.Visible := False;
-  grdLoadsDBTableView1ORDER_NO.Visible := False;
+  grdLoadsDBTableView1INVPOINTNO.Visible        := False;
+  grdLoadsDBTableView1LipNo.Visible             := False;
+  grdLoadsDBTableView1SUPPLIERNO.Visible        := False;
+  grdLoadsDBTableView1OrderType.Visible         := False;
+  grdLoadsDBTableView1AVROP_CUSTOMERNO.Visible  := False;
+  grdLoadsDBTableView1CUSTOMERNO.Visible        := False;
+  grdLoadsDBTableView1OBJECTTYPE.Visible        := False;
+  grdLoadsDBTableView1ORDER_NO.Visible          := False;
 
   dmsContact.sp_Customers.Active := False;
   dmsContact.sp_Customers.Active := True;
 
   dmsContact.cds_verk.Active := False;
+  dmsContact.cds_Verk.ParamByName('SalesRegionNo').AsInteger :=  dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
   dmsContact.cds_verk.Active := True;
 
   { dmsContact.Load_Int_and_Lego(bcCompany.Properties.Items) ;
@@ -477,7 +478,7 @@ begin
 
   cds_Props.Active := False;
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
-  cds_Props.ParamByName('Form').AsString := Self.Name;
+  cds_Props.ParamByName('Form').AsString    := Self.Name;
   cds_Props.Active := True;
   if cds_Props.Eof then
     cds_Props.Insert;
@@ -493,18 +494,18 @@ begin
   cds_PropsNewItemRow.AsInteger := 0;
   cds_Props.Post;
 
-  if (cds_Props.State in [dsEdit, dsInsert]) or (cds_Props.ChangeCount > 0) then
-  Begin
     if cds_Props.State in [dsEdit, dsInsert] then
-      cds_Props.Post;
-    cds_Props.ApplyUpdates(0);
-    cds_Props.CommitUpdates;
-  End;
+      cds_Props.Post ;
+    if cds_Props.ChangeCount > 0 then
+    Begin
+      cds_Props.ApplyUpdates(0);
+      cds_Props.CommitUpdates;
+    End;
 
   if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then // = VIDA_WOOD_COMPANY_NO then
     lcVerk.Enabled := True
-  else
-    lcVerk.Enabled := False;
+      else
+        lcVerk.Enabled := False;
 
   RefreshOrter;
   RefreshDest;
@@ -1511,7 +1512,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -1913,16 +1914,16 @@ begin
           (LOAD_STATUS = 2) then
         Begin
           mtSelectedLoads.Insert;
-          mtSelectedLoadsLoadNo.AsInteger := LoadNo;
-          mtSelectedLoadsLONo.AsInteger := LONo;
-          mtSelectedLoadsLIPNo.AsInteger := LIPNo;
-          mtSelectedLoadsCustomerNo.AsInteger := CustomerNo;
-          mtSelectedLoadsAvropCustomerNo.AsInteger := AvropCustomerNo;
-          mtSelectedLoadsStatus.AsInteger := Status;
-          mtSelectedLoadsLoadAR.AsInteger := LoadAR;
-          mtSelectedLoadsImpOrt.AsInteger := ImpVerk;
-          mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType;
-          mtSelectedLoadsEGEN.AsInteger := EGEN;
+          mtSelectedLoadsLoadNo.AsInteger           := LoadNo;
+          mtSelectedLoadsLONo.AsInteger             := LONo;
+          mtSelectedLoadsLIPNo.AsInteger            := LIPNo;
+          mtSelectedLoadsCustomerNo.AsInteger       := CustomerNo;
+          mtSelectedLoadsAvropCustomerNo.AsInteger  := AvropCustomerNo;
+          mtSelectedLoadsStatus.AsInteger           := Status;
+          mtSelectedLoadsLoadAR.AsInteger           := LoadAR;
+          mtSelectedLoadsImpOrt.AsInteger           := ImpVerk;
+          mtSelectedLoadsOBJECTTYPE.AsInteger       := ObjectType;
+          mtSelectedLoadsEGEN.AsInteger             := EGEN;
           mtSelectedLoads.Post;
         End;
       End; // for y
@@ -2169,26 +2170,27 @@ begin
       if AreMarkedLoadsSameObjectTypeAndNOTEGEN then
         // External customer AR loads purchased of VW
         ConfirmManyLoadsPurchasedFromVW(Sender)
-      else if AreMarkedLoadsSameObjectTypeAndNotNormalLOType then
+      else
+       if AreMarkedLoadsSameObjectTypeAndNotNormalLOType then
         AR_INTADDLoads(Sender)
-      else if AreMarkedLoadsSameObjectTypeAndNotIntORAddLOType then
-      Begin
-        if mtSelectedLoadsOrderType.AsInteger = 0 then
-          AR_Sales_Loads(Sender)
-        else
-        Begin
-          if AreMarkedLoadsSameTRADINGType then
+         else if AreMarkedLoadsSameObjectTypeAndNotIntORAddLOType then
           Begin
-            if cdsArrivingLoadsTrading.AsInteger = 0 then
-              AR_PO_Loads(Sender);
-            // else
-            // ConfirmManyPOTRADINGLoads(Sender) ;
-          End // if AreMarkedLoadsSameTRADINGType then
-          else
-            ShowMessage
-              ('Alla markerade laster måste antingen vara trading eller inte.');
-        End;
-      End
+            if mtSelectedLoadsOrderType.AsInteger = 0 then
+              AR_Sales_Loads(Sender)
+            else
+            Begin
+              if AreMarkedLoadsSameTRADINGType then
+              Begin
+                if cdsArrivingLoadsTrading.AsInteger = 0 then
+                  AR_PO_Loads(Sender);
+                // else
+                // ConfirmManyPOTRADINGLoads(Sender) ;
+              End // if AreMarkedLoadsSameTRADINGType then
+              else
+                ShowMessage
+                  ('Alla markerade laster måste antingen vara trading eller inte.');
+            End;
+          End
       else
         ShowMessage
           ('Markerade laster måste vara av samma LO typ, (LO, add LO eller interna LO) och samma ordertyp (sales, PO eller interna)');
@@ -2458,139 +2460,6 @@ begin
   End;
 end;
 
-(*
-  procedure TfrmLoadArrivals.ConfirmedINTLoad(Sender: TObject);
-  Var
-  LoadNo, LONo        : Integer ;
-  formConfirmINTLoad  : TformConfirmINTLoad;
-  begin
-  With dmArrivingLoads do
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger:= dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger:= dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  mtSelectedLoads.Active             := False ;
-  mtSelectedLoads.Active             := True ;
-  mtSelectedLoads.Insert ;
-  mtSelectedLoadsLoadNo.AsInteger    := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  mtSelectedLoadsLONo.AsInteger      := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  mtSelectedLoadsLIPNo.AsInteger     := -1 ;
-  mtSelectedLoadsCustomerNo.AsInteger:= -1 ;
-  mtSelectedLoadsStatus.AsInteger    := 0 ;
-  mtSelectedLoads.Post ;
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmINTLoad:= TformConfirmINTLoad.Create(Nil);
-  Try
-  LoadNo := cdsArrivingLoadsLoadNo.AsInteger ;
-  LONo   := cdsArrivingLoadsLO.AsInteger ;
-  formConfirmINTLoad.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmINTLoad.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
-  formConfirmINTLoad.ShowModal ;
-  if LoadConfirmedOK then
-  Begin
-  GetIntPrice(-1, 0,-1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  TaBortAnkomstRegistreradeLaster(1) ;
-  End ;
-  Finally
-  FreeAndNil(formConfirmINTLoad) ;
-  End ;
-
-  End
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-  End ; //with
-  end;
-
-*)
-(*
-  procedure TfrmLoadArrivals.ConfirmedORDERLoad(Sender: TObject);
-  Var
-  LoadNo          : Integer ;
-  formConfirmLoad : TformConfirmLoad;
-  begin
-  With dmArrivingLoads do
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger          := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger  := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  mtSelectedLoads.Active             := False ;
-  mtSelectedLoads.Active             := True ;
-  mtSelectedLoads.Insert ;
-  mtSelectedLoadsLoadNo.AsInteger    := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  mtSelectedLoadsLONo.AsInteger      := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  mtSelectedLoadsLIPNo.AsInteger     := -1 ;
-  mtSelectedLoadsCustomerNo.AsInteger:= -1 ;
-  mtSelectedLoadsStatus.AsInteger    := 0 ;
-  mtSelectedLoads.Post ;
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmLoad:= TformConfirmLoad.Create(Nil);
-  Try
-  LoadNo := cdsArrivingLoadsLoadNo.AsInteger ;
-  formConfirmLoad.OBJECTTYPE         :=  cdsArrivingLoadsOBJECTTYPE.AsInteger ;
-  formConfirmLoad.LO_CUSTOMERNO      :=  cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmLoad.LO_SUPPLIERNO      :=  cdsArrivingLoadsSUPPLIERNO.AsInteger ;
-  formConfirmLoad.AVROP_CUSTOMERNO   :=  cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger ;
-  formConfirmLoad.LoadNo             :=  cdsArrivingLoadsLOADNO.AsInteger ;
-  formConfirmLoad.OrderType          :=  cdsArrivingLoadsOrderType.AsInteger ;
-  formConfirmLoad.ShowModal ;
-  if formConfirmLoad.dxBarConfirmLoad.Enabled = False then
-  Begin
-  GetIntPrice(-1, 0,-1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  TaBortAnkomstRegistreradeLaster(1) ;
-  End ;
-  Finally
-  FreeAndNil(formConfirmLoad) ;
-  End ;
-
-  End
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-
-  End ; //with
-  end;
-*)
 
 procedure TfrmLoadArrivals.acShowGroupBoxExecute(Sender: TObject);
 begin
@@ -2734,336 +2603,6 @@ begin
   grdLoadsDBTableView1.ViewData.Collapse(True);
 end;
 
-(*
-  procedure TfrmLoadArrivals.ConfirmManyINTADDLoads(Sender: TObject);
-  Var
-  LIPNo                     : Integer ;
-  formConfirmManyIntLoads   : TformConfirmManyIntLoads ;
-  fSelectLIP                : TfSelectLIP ;
-  fAnkomstRegProgress       : TfAnkomstRegProgress ;
-  Save_Cursor               : TCursor ;
-  ChangeToIMPProduct        : Boolean ;
-  ObjectType                : Integer ;
-  begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  With dmArrivingLoads do
-  Begin
-  ObjectType:= mtSelectedLoadsOBJECTTYPE.AsInteger ;
-  if (ObjectType = 1) then // or (ObjectType = 0) then
-  Begin
-  if MessageDlg('Vill du ändra kvalitet till kvalitet + impregnerat på alla produkter? (i annat fall går varorna till lagret som de är)',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  ChangeToIMPProduct:= True
-  else
-  ChangeToIMPProduct:= False ;
-  End
-  else
-  ChangeToIMPProduct:= False ;
-
-  InsertMarkedLoadsToTempTable (Sender, 0) ;
-  fSelectLIP:= TfSelectLIP.Create(nil);
-  fAnkomstRegProgress:= TfAnkomstRegProgress.Create(nil);
-  Try
-  grdLoadsDBTableView1.DataController.DataSource:= Nil ;
-  fSelectLIP.LIPNo          := mtSelectedLoadsLIPNo.AsInteger ;
-  fSelectLIP.LO_CUSTOMERNO  := mtSelectedLoadsCustomerNo.AsInteger ;
-  fSelectLIP.LoadDefaultLager ;
-  if fSelectLIP.ShowModal = mrOK then
-  Begin
-  LIPNo:= fSelectLIP.LIPNo ;
-  if LIPNo < 1 then
-  Begin
-  ShowMessage('Du måste välja ett lager!') ;
-  Exit ;
-  End ;
-
-  fAnkomstRegProgress.Show ;
-  mtSelectedLoads.Filter    := 'LoadAR = 0' ;
-  mtSelectedLoads.Filtered  := True ;
-  Try
-  mtSelectedLoads.First ;
-  While not mtSelectedLoads.Eof do
-  Begin
-  if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  ShowMessage('Load is not valid.') ;
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger          := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger  := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmManyIntLoads:= TformConfirmManyIntLoads.Create(Nil);
-  Try
-  //       LoadNo := cdsArrivingLoadsLoadNo.AsInteger ;
-  //       LONo   := cdsArrivingLoadsLO.AsInteger ;
-  formConfirmManyIntLoads.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmManyIntLoads.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
-  formConfirmManyIntLoads.LIPNo              := LIPNo ;
-
-  //       formConfirmManyIntLoads.Show ;
-  fAnkomstRegProgress.Show ;
-  Application.ProcessMessages ;
-  formConfirmManyIntLoads.ConfirmThisLoad (ChangeToIMPProduct, ObjectType) ;
-  //       TformConfirmanyNormalLoad
-  //göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
-  if LoadConfirmedOK then
-  Begin
-  GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  End ; //if LoadConfirmedOK then
-
-  Finally
-  formConfirmManyIntLoads.Close ;
-  FreeAndNil(formConfirmManyIntLoads) ;
-  End ;
-  End //if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-
-  End ;//if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  mtSelectedLoads.Next ;
-  End ;//While not mtSelectedLoads.Eof do
-
-  TaBortAnkomstRegistreradeLaster(1) ;
-  Finally
-  mtSelectedLoads.Filtered  := False ;
-  End ;
-  End ;//if fSelectLIP.ShowModal = mrOK then
-
-  Finally
-  FreeAndNil(fAnkomstRegProgress) ;
-  FreeAndNil(fSelectLIP) ;
-  grdLoadsDBTableView1.DataController.DataSource:= dsrcArrivingLoads ;
-  End ;
-  End ; //with
-  end;
-
-*)
-
-(*
-  procedure TfrmLoadArrivals.ConfirmManySALESLoads(Sender: TObject);
-  Var
-  LIPNo                     : Integer ;
-  formConfirmanyNormalLoad  : TformConfirmanyNormalLoad ;
-  fAnkomstRegProgress       : TfAnkomstRegProgress;
-  Save_Cursor               : TCursor;
-  begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  With dmArrivingLoads do
-  Begin
-  InsertMarkedLoadsToTempTable (Sender, 0) ;
-  fAnkomstRegProgress:= TfAnkomstRegProgress.Create(nil);
-  Try
-  grdLoadsDBTableView1.DataController.DataSource:= Nil ;
-  fAnkomstRegProgress.Show ;
-  mtSelectedLoads.Filter    := 'LoadAR = 0' ;
-  mtSelectedLoads.Filtered  := True ;
-  Try
-  mtSelectedLoads.First ;
-  While not mtSelectedLoads.Eof do
-  Begin
-  if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  ShowMessage('Load is not valid.') ;
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger          := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger  := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmanyNormalLoad:= TformConfirmanyNormalLoad.Create(Nil);
-  Try
-
-  //       LoadNo := cdsArrivingLoadsLoadNo.AsInteger ;
-  //       LONo   := cdsArrivingLoadsLO.AsInteger ;
-  formConfirmanyNormalLoad.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmanyNormalLoad.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
-  //Ändring. Nu tas LIPNo från lagergrupp angiven på LO för att den skall hamna i rätt lager i LagerBalansen.
-  formConfirmanyNormalLoad.LIPNo              := cdsArrivingLoadsLipNo.AsInteger ;//isNull(SP.LipNo,-1)                     AS LipNo,
-
-  //       formConfirmManyIntLoads.Show ;
-  fAnkomstRegProgress.Show ;
-  Application.ProcessMessages ;
-  formConfirmanyNormalLoad.ConfirmThisLoad (0 {0 = Not Trading}, -1, -1) ;
-  //       TformConfirmanyNormalLoad
-  //göra det här när alla laster är OK, med andra ord flyta till efter loopen!
-  if LoadConfirmedOK then
-  Begin
-  GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  End ; //if LoadConfirmedOK then
-
-  Finally
-  formConfirmanyNormalLoad.Close ;
-  FreeAndNil(formConfirmanyNormalLoad) ;
-  End ;
-  End //if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-
-  End ;//if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  mtSelectedLoads.Next ;
-  End ;//While not mtSelectedLoads.Eof do
-
-  TaBortAnkomstRegistreradeLaster(1) ;
-  //  End ;//if fSelectLIP.ShowModal = mrOK then
-  Finally
-  mtSelectedLoads.Filtered  := False ;
-  End ;
-
-  Finally
-  FreeAndNil(fAnkomstRegProgress) ;
-  grdLoadsDBTableView1.DataController.DataSource:= dsrcArrivingLoads ;
-  End ;
-  End ; //with
-  end;
-
-
-  procedure TfrmLoadArrivals.ConfirmManyPOLoads(Sender: TObject);
-  Var
-  LIPNo                     : Integer ;
-  formConfirmanyNormalLoad  : TformConfirmanyNormalLoad ;
-  fSelectLIP                : TfSelectLIP ;
-  fAnkomstRegProgress       : TfAnkomstRegProgress;
-  Save_Cursor               : TCursor;
-  begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  With dmArrivingLoads do
-  Begin
-  InsertMarkedLoadsToTempTable (Sender, 0) ;
-  fSelectLIP:= TfSelectLIP.Create(nil);
-  fAnkomstRegProgress:= TfAnkomstRegProgress.Create(nil);
-  Try
-  grdLoadsDBTableView1.DataController.DataSource:= Nil ;
-  fSelectLIP.LIPNo          := mtSelectedLoadsLIPNo.AsInteger ;
-  fSelectLIP.LO_CUSTOMERNO  := mtSelectedLoadsCustomerNo.AsInteger ;
-  fSelectLIP.LoadDefaultLager ;
-
-  if fSelectLIP.ShowModal = mrOK then
-  Begin
-  LIPNo:= fSelectLIP.LIPNo ;
-  if LIPNo < 1 then
-  Begin
-  ShowMessage('Du måste välja ett lager!') ;
-  Exit ;
-  End ;
-
-  fAnkomstRegProgress.Show ;
-  mtSelectedLoads.Filter    := 'LoadAR = 0' ;
-  mtSelectedLoads.Filtered  := True ;
-  Try
-  mtSelectedLoads.First ;
-  While not mtSelectedLoads.Eof do
-  Begin
-  if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  ShowMessage('Load is not valid.') ;
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger          := dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger  := dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmanyNormalLoad:= TformConfirmanyNormalLoad.Create(Nil);
-  Try
-  formConfirmanyNormalLoad.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmanyNormalLoad.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
-  formConfirmanyNormalLoad.LIPNo              := LIPNo ;
-
-  fAnkomstRegProgress.Show ;
-  Application.ProcessMessages ;
-  formConfirmanyNormalLoad.ConfirmThisLoad(0 {0 = Not Trading}, -1, -1) ;
-  //       TformConfirmanyNormalLoad
-  //göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
-  if LoadConfirmedOK then
-  Begin
-  GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  End ; //if LoadConfirmedOK then
-
-  Finally
-  formConfirmanyNormalLoad.Close ;
-  FreeAndNil(formConfirmanyNormalLoad) ;
-  End ;
-  End //if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-
-  End ;//if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  mtSelectedLoads.Next ;
-  End ;//While not mtSelectedLoads.Eof do
-
-  TaBortAnkomstRegistreradeLaster(1) ;
-  Finally
-  mtSelectedLoads.Filtered  := False ;
-  End ;
-  End ;//if fSelectLIP.ShowModal = mrOK then
-
-  Finally
-  FreeAndNil(fAnkomstRegProgress) ;
-  FreeAndNil(fSelectLIP) ;
-  grdLoadsDBTableView1.DataController.DataSource:= dsrcArrivingLoads ;
-  End ;
-
-  End ; //with
-  end;
-*)
-
 function TfrmLoadArrivals.SelectAvropsNrAttSkapaSalesLoadMot
   (const POLONo: Integer): Integer;
 var
@@ -3083,117 +2622,6 @@ Begin
     end;
   End;
 End;
-
-(*
-  procedure TfrmLoadArrivals.ConfirmManyPOTRADINGLoads(Sender: TObject);
-  Var
-  LIPNo, NewLoadNo,
-  Sales_LONo                : Integer ;
-  formConfirmanyNormalLoad  : TformConfirmanyNormalLoad ;
-  fSelectLIP                : TfSelectLIP ;
-  fAnkomstRegProgress       : TfAnkomstRegProgress;
-  Save_Cursor               : TCursor;
-  begin
-  if MessageDlg('Vill du ankomstregistrera markerade trading laster?',
-  mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  With dmArrivingLoads do
-  Begin
-  InsertMarkedLoadsToTempTable (Sender, 0) ;
-  fAnkomstRegProgress:= TfAnkomstRegProgress.Create(nil);
-  Try
-  grdLoadsDBTableView1.DataController.DataSource:= Nil ;
-
-  fAnkomstRegProgress.Show ;
-  mtSelectedLoads.Filter    := 'LoadAR = 0' ;
-  mtSelectedLoads.Filtered  := True ;
-  Try
-  mtSelectedLoads.First ;
-  While not mtSelectedLoads.Eof do
-  Begin
-  LIPNo:= 10206 ;//GetSTDLIP!
-  if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  Begin
-  if IsLoadValid(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger, cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
-  Begin
-  ShowMessage('Load is not valid.') ;
-  Exit ;
-  End ;
-
-  Try
-  sq_IsLoadConfirmed.Close ;
-  sq_IsLoadConfirmed.ParamByName('LoadNo').AsInteger:= dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger ;
-  sq_IsLoadConfirmed.ParamByName('ShippingPlanNo').AsInteger:= dmArrivingLoads.cdsArrivingLoadsLO.AsInteger ;
-  sq_IsLoadConfirmed.Open ;
-  if sq_IsLoadConfirmed.Eof then
-  Begin
-  if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  Begin
-  formConfirmanyNormalLoad:= TformConfirmanyNormalLoad.Create(Nil);
-  Try
-  formConfirmanyNormalLoad.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
-  formConfirmanyNormalLoad.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
-  formConfirmanyNormalLoad.LIPNo              := LIPNo ;
-
-  Sales_LONo:= SelectAvropsNrAttSkapaSalesLoadMot(cdsArrivingLoadsLO.AsInteger) ;
-
-  fAnkomstRegProgress.Show ;
-  Application.ProcessMessages ;
-  if Sales_LONo > 1 then
-  Begin
-  formConfirmanyNormalLoad.ConfirmThisLoad(1 {1 = Trading}, Sales_LONo, mtSelectedLoadsLoadNo.AsInteger) ;
-  //       TformConfirmanyNormalLoad
-  //göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
-  if LoadConfirmedOK then
-  Begin
-  GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
-  mtSelectedLoads.Edit ;
-  mtSelectedLoadsStatus.AsInteger    := 1 ;
-  mtSelectedLoads.Post ;
-  End ; //if LoadConfirmedOK then
-  End //if Sales_LONO..
-  else
-  Begin
-  if Sales_LONo = -1 then
-  ShowMessage('Avbryter.')
-  else
-  ShowMessage('Avbryt kan ej fortsätta ta bort tradingkoppling och försök igen.');
-
-  End ;
-
-  Finally
-  formConfirmanyNormalLoad.Close ;
-  FreeAndNil(formConfirmanyNormalLoad) ;
-  End ;
-  End //if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
-  else
-  ShowMessage('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.') ;
-  End //check IS load confirmed
-  else
-  ShowMessage('Lasten är redan ankomstregistrerad av '+Trim(sq_IsLoadConfirmedUserName.AsString)
-  +' den '+SQLTimeStampToStr('',sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp)) ;
-  Finally
-  sq_IsLoadConfirmed.Close ;
-  End ;
-
-  End ;//if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-  mtSelectedLoads.Next ;
-  End ;//While not mtSelectedLoads.Eof do
-
-  TaBortAnkomstRegistreradeLaster(1) ;
-
-  Finally
-  mtSelectedLoads.Filtered  := False ;
-  End ;
-
-  Finally
-  FreeAndNil(fAnkomstRegProgress) ;
-  grdLoadsDBTableView1.DataController.DataSource:= dsrcArrivingLoads ;
-  End ;
-
-  End ; //with
-  end;
-
-*)
 
 procedure TfrmLoadArrivals.TaBortAnkomstRegistreradeLaster(const AR_Status
   : Integer);
@@ -3356,7 +2784,7 @@ begin
         Begin
           mtSelectedLoads.Insert;
           mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType;
-          mtSelectedLoadsEGEN.AsInteger := EGEN;
+          mtSelectedLoadsEGEN.AsInteger       := EGEN;
           mtSelectedLoads.Post;
         End;
       End; // for y
@@ -3411,12 +2839,15 @@ begin
           ('OrderType').Index;
         OrderType := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
 
+        if ObjectType = 3 then
+         ObjectType := 2 ;
+
         if not mtSelectedLoads.Locate('OBJECTTYPE;OrderType',
           VarArrayOf([ObjectType, OrderType]), []) then
         Begin
           mtSelectedLoads.Insert;
           mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType;
-          mtSelectedLoadsOrderType.AsInteger := OrderType;
+          mtSelectedLoadsOrderType.AsInteger  := OrderType;
           mtSelectedLoads.Post;
         End;
       End; // for y
@@ -3870,18 +3301,9 @@ begin
     mtSelectedLoads.First;
     While not mtSelectedLoads.Eof do
     Begin
-      // if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
-      // Begin
-      // if UndoConfirmLoad then
-      // Begin
-      if IsLoadAvraknad(mtSelectedLoadsLoadNo.AsInteger) = False then
-        GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True);
-      // mtSelectedLoads.Edit ;
-      // mtSelectedLoadsStatus.AsInteger  := 1 ;
-      // mtSelectedLoads.Post ;
-      // End ; //if LoadConfirmedOK then
-      // End ;//if cdsArrivingLoads.Locate...
-      mtSelectedLoads.Next;
+    if IsLoadAvraknad(mtSelectedLoadsLoadNo.AsInteger) = False then
+     GetIntPrice(False, -1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True);
+    mtSelectedLoads.Next;
     End; // While not mtSelectedLoads.Eof do
     cdsArrivingPackages.Active := False;
     cdsArrivingPackages.Close;
@@ -4034,7 +3456,7 @@ begin
                         if NewLoadNo > 0 then
                         Begin
                           // SetLoadAs_AR(mtSelectedLoadsLoadNo.AsInteger) ;
-                          GetIntPrice(-1, 0, -1,
+                          GetIntPrice(False, -1, 0, -1,
                             mtSelectedLoadsLoadNo.AsInteger, True);
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 1;
@@ -4213,7 +3635,7 @@ begin
                             ChangeToIMPProduct);
                           if LoadAROK then
                           Begin
-                            GetIntPrice(-1, 0, -1,
+                            GetIntPrice(False, -1, 0, -1,
                               mtSelectedLoadsLoadNo.AsInteger, True);
                             mtSelectedLoads.Edit;
                             mtSelectedLoadsStatus.AsInteger := 1;
@@ -4352,7 +3774,7 @@ begin
                         // göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
                         if NewLoadNo > 0 then
                         Begin
-                          GetIntPrice(-1, 0, -1,
+                          GetIntPrice(False, -1, 0, -1,
                             mtSelectedLoadsLoadNo.AsInteger, True);
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 1;
@@ -4474,7 +3896,7 @@ begin
                         // göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
                         if LoadConfirmed then
                         Begin
-                          GetIntPrice(-1, 0, -1,
+                          GetIntPrice(False, -1, 0, -1,
                             mtSelectedLoadsLoadNo.AsInteger, True);
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 1;
@@ -4758,8 +4180,8 @@ begin
       fAnkomstRegProgress := TfAnkomstRegProgress.Create(nil);
       Try
         grdLoadsDBTableView1.DataController.DataSource := Nil;
-        fSelectLIP.LIPNo := mtSelectedLoadsLIPNo.AsInteger;
-        fSelectLIP.LO_CUSTOMERNO := mtSelectedLoadsAvropCustomerNo.AsInteger;
+        fSelectLIP.LIPNo          := mtSelectedLoadsLIPNo.AsInteger;
+        fSelectLIP.LO_CUSTOMERNO  := mtSelectedLoadsAvropCustomerNo.AsInteger;
         fSelectLIP.LoadDefaultLager;
         if fSelectLIP.ShowModal = mrOK then
         Begin

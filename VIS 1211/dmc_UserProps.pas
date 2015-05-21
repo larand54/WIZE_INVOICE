@@ -455,6 +455,8 @@ begin
     cdsGradeStampsAct.AsInteger          := 0 ;
     cdsGradeStamps.Post ; }
 
+  if cds_Verk.Active then
+  cds_Verk.Active := False ;
   cds_Verk.ParamByName('SalesRegionNo').AsInteger := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
   cds_Verk.Active := True;
   cds_Verk.InsertRecord([0, 'Ingen ändring', 'Ingen ändring']);
@@ -534,19 +536,19 @@ End;
 procedure Tdm_UserProps.GetAppFormSize(const Form: String;
   var Height, Width, Top, Left: Integer);
 Begin
-  Height := -1;
-  Width := -1;
-  Top := -1;
-  Left := 1;
+  Height  := -1;
+  Width   := -1;
+  Top     := -1;
+  Left    := 1;
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
-  cds_Props.ParamByName('Form').AsString := Form;
+  cds_Props.ParamByName('Form').AsString    := Form;
   cds_Props.Active := True;
   if not cds_Props.Eof then
   Begin
-    Height := cds_PropsInputOption.AsInteger;
-    Width := cds_PropsRegPointNo.AsInteger;
-    Top := cds_PropsCopyPcs.AsInteger;
-    Left := cds_PropsRunNo.AsInteger;
+    Height  := cds_PropsInputOption.AsInteger;
+    Width   := cds_PropsRegPointNo.AsInteger;
+    Top     := cds_PropsCopyPcs.AsInteger;
+    Left    := cds_PropsRunNo.AsInteger;
   End;
   cds_Props.Active := False;
 End;
@@ -555,18 +557,18 @@ procedure Tdm_UserProps.SetAppFormSize(const Form: String;
   const Height, Width, Top, Left: Integer);
 Begin
   cds_Props.ParamByName('UserID').AsInteger := ThisUser.UserID;
-  cds_Props.ParamByName('Form').AsString := Form;
+  cds_Props.ParamByName('Form').AsString    := Form;
   cds_Props.Active := True;
   if not cds_Props.Eof then
     cds_Props.Edit
   else
     cds_Props.Insert;
-  cds_PropsInputOption.AsInteger := Height;
-  cds_PropsRegPointNo.AsInteger := Width;
-  cds_PropsCopyPcs.AsInteger := Top;
-  cds_PropsRunNo.AsInteger := Left;
-  cds_PropsUserID.AsInteger := ThisUser.UserID;
-  cds_PropsForm.AsString := Form;
+  cds_PropsInputOption.AsInteger  := Height;
+  cds_PropsRegPointNo.AsInteger   := Width;
+  cds_PropsCopyPcs.AsInteger      := Top;
+  cds_PropsRunNo.AsInteger        := Left;
+  cds_PropsUserID.AsInteger       := ThisUser.UserID;
+  cds_PropsForm.AsString          := Form;
 
   cds_Props.Post;
   if cds_Props.ChangeCount > 0 then

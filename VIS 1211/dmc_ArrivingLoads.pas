@@ -610,7 +610,7 @@ type
     // function  ChangePackagesToIMPProduct : Boolean ;
     procedure SetLoadAR(const LoadNo, LoadAR: Integer);
     function GetDefaultCSObjectNo(const defsspno: Integer): Integer;
-    procedure GetIntPrice(const P_SupplierNo, PaymentType, PaymentNo,
+    procedure GetIntPrice(const ForceUpdatePrice : Boolean;const P_SupplierNo, PaymentType, PaymentNo,
       LoadNo: Integer; const Update_OldPrice: Boolean);
     Function GetMotsvarandeVWLIPNo(const LIPNo: Integer): Integer;
     Function GetMotsvarandeVWLIPNoForLoadingLocation
@@ -1700,7 +1700,7 @@ Begin
   Try
   sp_IsLoadAvr.ParamByName('@LoadNo').AsInteger := LoadNo ;
   sp_IsLoadAvr.Active := True ;
-  if not sp_IsLoadAvr.Eof then
+  if not sp_IsLoadAvr.Eof then     // inte tom then True
    Result := True
     else
      Result := False ;
@@ -1712,7 +1712,7 @@ End;
 
 // P_SupplierNo (kan vara både kund eller leverantör) används bara när det anropas från avräkningen, då det är en specifik LoadDtlVal som uppdateras
 // För att veta om lasten är ett inköp eller försäljning
-procedure TdmArrivingLoads.GetIntPrice(const P_SupplierNo, PaymentType,
+procedure TdmArrivingLoads.GetIntPrice(const ForceUpdatePrice : Boolean;const P_SupplierNo, PaymentType,
   PaymentNo, LoadNo: Integer; const Update_OldPrice: Boolean);
 Var
   Price: Double;
@@ -1720,7 +1720,7 @@ Var
   MakeForCustAndSupp, MakeForInkop, MakeForVerk: Boolean;
   P_Inkop: Boolean;
 Begin
- if not IsLoadAvr(LoadNo) then
+ if (not IsLoadAvr(LoadNo){om inte sant är den tom}) or (ForceUpdatePrice) then
  Begin
   if P_SupplierNo > 0 then
   Begin
@@ -2282,9 +2282,9 @@ Begin
         else if ChangeToIMPProduct = 2 then
         Begin
           sp_ChangeToIMPProductForIntLoad.ParamByName('@LoadNo').AsInteger :=
-            OldLoadNo;
+            OldLoadNo ;
           sp_ChangeToIMPProductForIntLoad.ParamByName('@UserID').AsInteger :=
-            ThisUser.UserID;;
+            ThisUser.UserID ;
           sp_ChangeToIMPProductForIntLoad.ExecProc;
         End;
 

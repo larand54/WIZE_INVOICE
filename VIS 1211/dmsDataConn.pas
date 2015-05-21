@@ -42,6 +42,12 @@ type
     FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink;
     sp_UpdateMaxSecByLoad: TFDStoredProc;
     FDStoredProc1: TFDStoredProc;
+    sp_GetUserStartHost: TFDStoredProc;
+    sp_GetUserStartHostUserID: TIntegerField;
+    sp_GetUserStartHostHostName: TStringField;
+    sp_GetUserStartHostCanChangeUser: TIntegerField;
+    sp_GetUserStartHostSetOnStart: TIntegerField;
+    sp_GetUserStartHostChangeToUser: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -57,11 +63,12 @@ type
     Org_AD_Name: String;
     Org_DB_Name: String;
     // DeleteTdmVidaInvoice  : Boolean ;
+    function  GetHostName(const UserID : Integer)  : String ;
     procedure UpdateMaxSecByLoad(const LoadNo: Integer);
     procedure InitProcedure(Proc: TFDStoredProc);
-    function NextSecondMaxNo(const TableName: String;
+    function  NextSecondMaxNo(const TableName: String;
       const PrimaryKeyValue: Integer): Integer;
-    function Get_AD_Name: String;
+    function  Get_AD_Name: String;
     procedure GetUserNameLoggedIn(Var UserName, UserPswd: String;
       Const pAD_Name: String);
 
@@ -92,6 +99,26 @@ uses
 // VidaUser;
 
 {$R *.dfm}
+
+function TdmsConnector.GetHostName(const UserID : Integer)  : String ;
+Var AD_Name : String ;
+Begin
+  Result  := '' ;
+  sp_GetUserStartHost.ParamByName('@UserID').AsInteger  :=  UserID ;
+  sp_GetUserStartHost.Active  :=  True ;
+  Try
+  if not sp_GetUserStartHost.Eof then
+  Begin
+   if sp_GetUserStartHostSetOnStart.AsInteger = 1 then
+    Result := sp_GetUserStartHostHostName.AsString
+     else
+      Result  := '' ;
+  End;
+  Finally
+    sp_GetUserStartHost.Active  := False ;
+  End;
+End;
+
 
 procedure TdmsConnector.InitProcedure(Proc: TFDStoredProc);
 var

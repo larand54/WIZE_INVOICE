@@ -248,8 +248,9 @@ type
 
   private
     a: String;
-    function GetLastNrToUnLock: Integer;
-    function FormOpen: Boolean;
+    procedure ChangeUserSettingsOnStartUp ;
+    function  GetLastNrToUnLock: Integer;
+    function  FormOpen: Boolean;
     procedure AppException(Sender: TObject; E: Exception);
     procedure PaketInmatningPerPktKod(Sender: TObject);
     procedure CleanUpForms(Sender: TObject);
@@ -297,7 +298,8 @@ uses
   uKundspecifika, uKontoLogik, uOrderStocken, uIntrastat,
   uTradingAnalyze, uFreightExternLoad, uPayControl,
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
-  PrintUnit, PreviewForm, uPrintTest, udmLanguage, ufrmChangeLanguage,
+//  PrintUnit,  PreviewForm,
+  udmLanguage, ufrmChangeLanguage,
   dmsVidaContact, uReportController;
 
 {$R *.DFM}
@@ -480,6 +482,32 @@ Begin
     End }
 End;
 
+procedure TfrmMain.ChangeUserSettingsOnStartUp ;
+Var HostName : String ;
+Begin
+ HostName := dmsConnector.GetHostName(ThisUser.UserID) ;
+ if Length(HostName) > 0 then
+ Begin
+  ThisUser.Database := HostName ;
+  if not ThisUser.Logon then
+  Close
+  else
+  Begin
+            InitOnStartOfProgram;
+            Timer1.Enabled := True;
+            dmsConnector.LoginChanged := True;
+            // dxNavBar1.DefaultStyles.Background.BackColor:= clGreen ;
+
+            Application.Title := 'VIS';
+            a := Application.Title + '/' + dmsConnector.GetCompanyName
+              (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' +
+              GetVersion + ' - ' + dmsConnector.FDConnection1.Params.Values
+              ['Server'] + '/' + dmsConnector.FDConnection1.Params.Values
+              ['Database'] + ' ';
+  End;
+ End;
+End;
+
 // -------------------------------------------------------------
 procedure TfrmMain.FormShow(Sender: TObject);
 var
@@ -493,9 +521,9 @@ begin
 //   ThisUser.Database:= 'carmak-faster\sqlexpress:vis_vida' ;
   // ThisUser.Database:= '172.24.0.40:vis_vida' ;
 
-//  ThisUser.Database := 'vis.vida.se:vis_vida';
+  ThisUser.Database := 'vis.vida.se:vis_vida';
 
-  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+//  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
  // ThisUser.Database:= 'alvesql03:vis_vida' ;
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
@@ -512,15 +540,23 @@ begin
   Begin
     close;
   End;
-  dm_UserProps.GetAppFormSize(FrmMain.Name, Height, Width, Top, Left);
-  if (Height > 0) and (Width > 0) then // and (Top > 0) and (Left > 0) then
+
+  ChangeUserSettingsOnStartUp ;
+
+
+  if forms.Screen.MonitorCount = 2 then
   Begin
-    FrmMain.Height := Height;
-    FrmMain.Width := Width;
-    FrmMain.Top := Top;
-    FrmMain.Left := Left;
+    dm_UserProps.GetAppFormSize(FrmMain.Name, Height, Width, Top, Left);
+    if (Height > 0) and (Width > 0) then // and (Top > 0) and (Left > 0) then
+    Begin
+      FrmMain.Height  := Height;
+      FrmMain.Width   := Width;
+      FrmMain.Top     := Top;
+      FrmMain.Left    := Left;
+    End;
   End;
-  Load_Plugin;
+
+//  Load_Plugin;
 
   LanguageNo  :=  dmsSystem.GetLanguageNo ;
   if LanguageNo > -1 then
@@ -565,15 +601,16 @@ begin
 end;
 
 procedure TfrmMain.dxBarButton18Click(Sender: TObject);
-var
-  fPrintTest: TfPrintTest;
+//var  fPrintTest: TfPrintTest;
 begin
-  fPrintTest := TfPrintTest.Create(nil);
-  Try
-    fPrintTest.ShowModal;
-  Finally
-    FreeAndNil(fPrintTest);
-  End;
+{
+    fPrintTest := TfPrintTest.Create(nil);
+    Try
+      fPrintTest.ShowModal;
+    Finally
+      FreeAndNil(fPrintTest);
+    End;
+}
 end;
 
 procedure TfrmMain.dxBSIChangeLangClick(Sender: TObject);

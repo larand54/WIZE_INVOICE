@@ -1647,10 +1647,10 @@ begin
         if (cds_PropsStatus.AsInteger = 0) or (cds_PropsStatus.AsInteger = 1) or
           (cds_PropsStatus.AsInteger = 3) or (cds_PropsStatus.AsInteger = 4)
         then
-          dmArrivingLoads.GetIntPrice(cdsArrivingLoadsSUPPLIER_NO.AsInteger, 0,
+          dmArrivingLoads.GetIntPrice(False, cdsArrivingLoadsSUPPLIER_NO.AsInteger, 0,
             -1, RecID, True)
         else
-          dmArrivingLoads.GetIntPrice(cdsArrivingLoadsCustomerNo.AsInteger, 0,
+          dmArrivingLoads.GetIntPrice(False, cdsArrivingLoadsCustomerNo.AsInteger, 0,
             -1, RecID, True);
 
         // dmArrivingLoads.GetIntPrice(fSupplierNo, 0,-1, RecID, True) ;

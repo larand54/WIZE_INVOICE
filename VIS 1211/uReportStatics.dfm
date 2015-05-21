@@ -68,6 +68,14 @@ object fReportStatics: TfReportStatics
       Action = acDelete
       TabOrder = 4
     end
+    object cxButton4: TcxButton
+      Left = 639
+      Top = 18
+      Width = 90
+      Height = 49
+      Action = acOpenImage
+      TabOrder = 5
+    end
   end
   object Panel3: TPanel
     Left = 0
@@ -90,8 +98,9 @@ object fReportStatics: TfReportStatics
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
+        OptionsCustomize.DataRowSizing = True
         OptionsView.ColumnAutoWidth = True
-        OptionsView.DataRowHeight = 200
+        OptionsView.DataRowHeight = 173
         OptionsView.GroupByBox = False
         OptionsView.Indicator = True
         object grdReportStaticsDBTableView1SalesRegionNo: TcxGridDBColumn
@@ -108,41 +117,50 @@ object fReportStatics: TfReportStatics
           Caption = 'F'#246'retagsnamn'
           DataBinding.FieldName = 'CompanyName'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 121
         end
         object grdReportStaticsDBTableView1Address: TcxGridDBColumn
           DataBinding.FieldName = 'Address'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 120
         end
         object grdReportStaticsDBTableView1Telefon: TcxGridDBColumn
           DataBinding.FieldName = 'Telefon'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 121
         end
         object grdReportStaticsDBTableView1Email: TcxGridDBColumn
           DataBinding.FieldName = 'Email'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 121
         end
         object grdReportStaticsDBTableView1HQ: TcxGridDBColumn
           DataBinding.FieldName = 'HQ'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 120
         end
         object grdReportStaticsDBTableView1Vat_BankInfo: TcxGridDBColumn
           Caption = 'Vat och BankInfo'
           DataBinding.FieldName = 'Vat_BankInfo'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 121
         end
         object grdReportStaticsDBTableView1AccountNo: TcxGridDBColumn
           Caption = 'Kontonr'
           DataBinding.FieldName = 'AccountNo'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 121
         end
         object grdReportStaticsDBTableView1Giro: TcxGridDBColumn
           Caption = 'Gironr'
           DataBinding.FieldName = 'Giro'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 71
         end
         object grdReportStaticsDBTableView1Logga: TcxGridDBColumn
           DataBinding.FieldName = 'Logga'
           PropertiesClassName = 'TcxImageProperties'
+          Width = 170
         end
       end
       object grdReportStaticsDBCardView1: TcxGridDBCardView
@@ -256,6 +274,10 @@ object fReportStatics: TfReportStatics
       Caption = 'Ta bort'
       OnExecute = acDeleteExecute
       OnUpdate = acDeleteUpdate
+    end
+    object acOpenImage: TAction
+      Caption = #214'ppna bild'
+      OnExecute = acOpenImageExecute
     end
   end
   object siLangLinked_fReportStatics: TsiLangLinked
@@ -422,5 +444,16 @@ object fReportStatics: TfReportStatics
       5300450054000100440045004600410055004C0054005F004300480041005200
       5300450054000100440045004600410055004C0054005F004300480041005200
       5300450054000D000A00}
+  end
+  object dxBarPopupMenu1: TdxBarPopupMenu
+    BarManager = frmMain.dxBarManager1
+    ItemLinks = <>
+    UseOwnFont = False
+    Left = 432
+    Top = 489
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 760
+    Top = 457
   end
 end

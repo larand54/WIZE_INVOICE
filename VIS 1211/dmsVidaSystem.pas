@@ -528,7 +528,7 @@ type
     Function GetReportNameByReportNo(const ReportNo: Integer): String;
     function GetReportNameByDocTyp(const DocTyp: Integer): String;
     function GetLogonParams(var HostName, Database, UserName, Password,
-      CRpath: String; var intsec: Integer): Boolean;
+      CRpath: String): Boolean;
     procedure SaveDir(const Value, Field: String);
     procedure GetLastUsedLoadNo(Strings: TStrings);
     procedure SaveLastUsedLoadNo(Strings: TStrings);
@@ -749,7 +749,7 @@ Begin
 End;
 
 function TdmsSystem.GetLogonParams(var HostName, Database, UserName, Password,
-  CRpath: String; var intsec: Integer): Boolean;
+  CRpath: String): Boolean;
 Begin
   sq_dbProps.Open;
   if not sq_dbProps.Eof then
@@ -759,7 +759,7 @@ Begin
     UserName := sq_dbPropsUserName.AsString;
     Password := sq_dbPropsPassword.AsString;
     CRpath := sq_dbPropsCRPath.AsString;
-    intsec := sq_dbPropsintsec.AsInteger;
+//    intsec := sq_dbPropsintsec.AsInteger;
     Result := True;
   End
   else

@@ -552,9 +552,6 @@ object fLoadEntrySSP: TfLoadEntrySSP
     end
     object tsLoadNote: TcxTabSheet
       Caption = 'Notering'
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0

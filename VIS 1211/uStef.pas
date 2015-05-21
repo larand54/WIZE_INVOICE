@@ -106,8 +106,7 @@ var
 var
   iSecurity: Integer;
 begin
-  dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath,
-    iSecurity);
+  dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath);
 
   Result := True;
   if not(FileExists(spath + ReportName)) then

@@ -925,7 +925,7 @@ Begin
           SupplierNo := cdsPaymentHeadCustomerNo.AsInteger
         else
           SupplierNo := cds_PropsVerkNo.AsInteger;
-        dmArrivingLoads.GetIntPrice(SupplierNo, mtLoadNosPaymentType.AsInteger,
+        dmArrivingLoads.GetIntPrice(True {force update}, SupplierNo, mtLoadNosPaymentType.AsInteger,
           mtLoadNosPaymentNo.AsInteger, mtLoadNosLoadNo.AsInteger, False);
       End;
       mtLoadNos.Next;

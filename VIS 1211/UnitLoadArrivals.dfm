@@ -403,7 +403,6 @@ object frmLoadArrivals: TfrmLoadArrivals
         DataBinding.FieldName = 'LipNo'
         PropertiesClassName = 'TcxLabelProperties'
         Visible = False
-        VisibleForCustomization = False
       end
       object grdLoadsDBTableView1INVPOINTNO: TcxGridDBColumn
         DataBinding.FieldName = 'INVPOINTNO'

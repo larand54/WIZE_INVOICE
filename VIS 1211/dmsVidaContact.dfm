@@ -2444,7 +2444,7 @@ object dmsContact: TdmsContact
   object sq_GetSRNo: TFDQuery
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
-      'Select SalesRegionNo from dbo.client'
+      'Select OwnedBySalesRegionNo AS SalesRegionNo from dbo.client'
       'WHERE  ClientNo = :ClientNo'
       '')
     Left = 648

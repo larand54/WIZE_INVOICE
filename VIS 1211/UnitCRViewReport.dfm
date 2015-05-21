@@ -12,17 +12,31 @@ object FormCRViewReport: TFormCRViewReport
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
-  object DelphiHostPanel: TPanel
+  object CrystalActiveXReportViewer1: TCrystalActiveXReportViewer
     Left = 0
     Top = 0
     Width = 1161
     Height = 689
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 32
-    ExplicitTop = -8
+    ExplicitLeft = 560
+    ExplicitTop = 368
+    ExplicitWidth = 192
+    ExplicitHeight = 192
+    ControlData = {
+      10070000FE770000364700000B00FFFF0B00FFFF0B00FFFF0B00FFFF0B00FFFF
+      0B00FFFF0B00FFFF0B00FFFF0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
+      0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF08000200000000000B00FFFF
+      0B00FFFF0B0000000B0000000B00FFFF0B00FFFF13001D040000}
+  end
+  object Application1: TApplication
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    Left = 56
+    Top = 152
   end
 end

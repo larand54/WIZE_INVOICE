@@ -9,11 +9,14 @@ uses
 
 type
   TFormCRPrintOneReport = class(TForm)
+    Application1: TApplication;
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     ReportFound: Boolean;
+    CRreport : IReport ;
     procedure CreateCo(const numberOfCopy: Integer;
       const PrinterSetup, promptUser: Boolean; const A: array of variant;
       const ReportName: String);
@@ -28,7 +31,7 @@ implementation
 Uses
   VidaConst,
   VidaUser,
-  VidaUtils, dmsVidaContact, dmsVidaSystem, PrintUnit;
+  VidaUtils, dmsVidaContact, dmsVidaSystem ;
 
 procedure TFormCRPrintOneReport.CreateCo(const numberOfCopy: Integer;
   const PrinterSetup, promptUser: Boolean; const A: array of variant;
@@ -53,8 +56,7 @@ begin
     // startPageN   := 0 ;
     // stopPageN    := 0 ;
     // ThisUser.GetLogonValues (HostName, Database, UserName, Password, spath) ;
-    if dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath,
-      iSecurity) = False then
+    if dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath) = False then
     Begin
       ShowMessage('Rapport inställningar saknas, kontakta admin.');
       Exit;
@@ -75,33 +77,35 @@ begin
     else
       piSecurity := False;
 
-    for I := 0 to High(A) do
-      paramCount := paramCount + 1;
+{
+      for I := 0 to High(A) do
+        paramCount := paramCount + 1;
 
-    VarArray := VarArrayCreate([0, paramCount], varOleStr);
+      VarArray := VarArrayCreate([0, paramCount], varOleStr);
 
-    // VarArray[0]:= param;
+      // VarArray[0]:= param;
 
-    for I := 0 to High(A) do
-      // for i := 0 to paramCount-1 do
-      VarArray[I] := A[I];
+      for I := 0 to High(A) do
+        // for i := 0 to paramCount-1 do
+        VarArray[I] := A[I];
 
-    safeArray := VarArrayAsPSafeArray(VarArray);
+      safeArray := VarArrayAsPSafeArray(VarArray);
 
-    PrintUnit.set_Print(pReportName, spath, '1',
-      // report_Option 0 : preview, 1 : direct print, 2 : store as pdf
-      '1', // print_Type 0 : default printer, 1 : select printer
-      '', // store_Path for pdf
-      '', // pdf_Name pdf filnamn
-      safeArray, // parameters
-      HostName, Database, UserName, Password, piSecurity);
+      PrintUnit.set_Print(pReportName, spath, '1',
+        // report_Option 0 : preview, 1 : direct print, 2 : store as pdf
+        '1', // print_Type 0 : default printer, 1 : select printer
+        '', // store_Path for pdf
+        '', // pdf_Name pdf filnamn
+        safeArray, // parameters
+        HostName, Database, UserName, Password, piSecurity);
 
+}
     { PrintUnit.set_Print(report_Name,
       rpt_FilePath,
       report_Option,
       print_Type, store_Path, pdf_Name, safeArray, server_Name, database_Name, userID, password); }
 
-    { CRreport := Application1.OpenReport(sPath+ReportName, crOpenReportByTempCopy) ;
+     CRreport := Application1.OpenReport(sPath+ReportName, crOpenReportByTempCopy) ;
       CRreport.Database.Tables.Item[1].SetLogOnInfo(HostName, Database, UserName, Password);
       Screen.Cursor := crSQLWait;
 
@@ -113,10 +117,16 @@ begin
       CRreport.PrinterSetup(0) ;
       //  Try
       crreport.printout(False, numberOfCopy, False, startPageN, stopPageN);
-    }
+
   Finally
     Screen.Cursor := Save_Cursor;
   End;
+end;
+
+procedure TFormCRPrintOneReport.FormDestroy(Sender: TObject);
+begin
+  CRreport      := Nil ;
+  Application1  := Nil ;
 end;
 
 end.

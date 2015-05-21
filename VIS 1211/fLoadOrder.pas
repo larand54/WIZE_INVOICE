@@ -5657,7 +5657,8 @@ Begin
   With dmcOrder do
   Begin
     ccbKV2.Properties.Items.Clear;
-    sq_Grade.ParamByName('VerkNo').AsInteger := VerkNo;
+    sq_Grade.ParamByName('VerkNo').AsInteger        := VerkNo ;
+    sq_Grade.ParamByName('LanguageCode').AsInteger  := ThisUser.LanguageID ;
     sq_Grade.Active := True;
     While not sq_Grade.Eof do
     Begin
@@ -5668,7 +5669,8 @@ Begin
     sq_Grade.Active := False;
 
     ccbSU2.Properties.Items.Clear;
-    sq_Surfacing.ParamByName('VerkNo').AsInteger := VerkNo;
+    sq_Surfacing.ParamByName('VerkNo').AsInteger        := VerkNo;
+    sq_Surfacing.ParamByName('LanguageCode').AsInteger  := ThisUser.LanguageID ;
     sq_Surfacing.Open;
     While not sq_Surfacing.Eof do
     Begin
@@ -5719,6 +5721,7 @@ Begin
     sq_Land.Close;
 
     ccVarugrupp.Properties.Items.Clear;
+    sq_varugrupp.ParamByName('LanguageCode').AsInteger  := ThisUser.LanguageID ;
     sq_varugrupp.Open;
     While not sq_varugrupp.Eof do
     Begin
@@ -5728,26 +5731,6 @@ Begin
       sq_varugrupp.Next;
     End;
     sq_varugrupp.Close;
-
-    { ccMatpunkt.Properties.Items.Clear ;
-      sq_Matpunkt.ParamByName('VerkNo').AsString  := VerkNo ;
-      sq_Matpunkt.Open ;
-      While not sq_Matpunkt.Eof do
-      Begin
-      ccMatpunkt.Properties.Items.AddCheckItem(sq_Matpunkt.FieldByName('RegPointName').AsString, sq_Matpunkt.FieldByName('RegPointNo').AsString) ;
-      sq_Matpunkt.Next ;
-      End ;
-      sq_Matpunkt.Close ;
-
-      ccSkiftLag.Properties.Items.Clear ;
-      sq_SkiftLag.ParamByName('VerkNo').AsString  := VerkNo ;
-      sq_SkiftLag.Open ;
-      While not sq_SkiftLag.Eof do
-      Begin
-      ccSkiftLag.Properties.Items.AddCheckItem(sq_SkiftLag.FieldByName('ShiftTeamName').AsString, sq_SkiftLag.FieldByName('ShiftTeamNo').AsString) ;
-      sq_SkiftLag.Next ;
-      End ;
-      sq_SkiftLag.Close ; }
 
   End; // With
 End;

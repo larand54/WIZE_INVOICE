@@ -12,6 +12,13 @@ object FormCRPrintReport: TFormCRPrintReport
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object Application1: TApplication
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    Left = 40
+    Top = 24
+  end
 end

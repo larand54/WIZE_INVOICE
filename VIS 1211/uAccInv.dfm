@@ -105,8 +105,8 @@ object fAccInv: TfAccInv
     ImageOptions.LargeImages = dmsConnector.imglistActions
     PopupMenuLinks = <>
     UseSystemFont = False
-    Left = 232
-    Top = 208
+    Left = 400
+    Top = 320
     DockControlHeights = (
       0
       0
@@ -209,8 +209,8 @@ object fAccInv: TfAccInv
   end
   object ActionList1: TActionList
     Images = dmsConnector.imglistActions
-    Left = 352
-    Top = 296
+    Left = 400
+    Top = 224
     object acRefresh: TAction
       Caption = 'Uppdatera F6'
       ImageIndex = 1
@@ -248,12 +248,12 @@ object fAccInv: TfAccInv
   end
   object cxGridPopupMenu1: TcxGridPopupMenu
     PopupMenus = <>
-    Left = 432
-    Top = 168
+    Left = 400
+    Top = 176
   end
   object SaveDialog1: TSaveDialog
-    Left = 280
-    Top = 152
+    Left = 400
+    Top = 272
   end
   object PopupMenu1: TPopupMenu
     AutoPopup = False
@@ -281,11 +281,10 @@ object fAccInv: TfAccInv
   object dxComponentPrinter1: TdxComponentPrinter
     CurrentLink = dxComponentPrinter1Link1
     Version = 0
-    Left = 152
-    Top = 160
+    Left = 400
+    Top = 368
     object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -298,7 +297,6 @@ object fAccInv: TfAccInv
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -402,7 +400,7 @@ object fAccInv: TfAccInv
       ''
       '')
     Left = 224
-    Top = 96
+    Top = 320
     ParamData = <
       item
         Name = 'CET'
@@ -467,7 +465,7 @@ object fAccInv: TfAccInv
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_ExportInvoiceData'
     Left = 224
-    Top = 352
+    Top = 368
     ParamData = <
       item
         Position = 1
@@ -538,8 +536,8 @@ object fAccInv: TfAccInv
       'OldName'
       'Origin'
       'PropertiesClassName')
-    Left = 616
-    Top = 376
+    Left = 400
+    Top = 416
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660041006300630049006E0076000100450078007000
@@ -646,8 +644,27 @@ object fAccInv: TfAccInv
   object sp_ExpInvContData: TFDStoredProc
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_ExpContInvData'
-    Left = 216
-    Top = 456
+    Left = 224
+    Top = 416
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_ExpPkgCustInfoData: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_ExpPkgCustInfoData'
+    Left = 224
+    Top = 472
     ParamData = <
       item
         Position = 1

@@ -1835,6 +1835,8 @@ object daMoLM1: TdaMoLM1
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
+    ResourceOptions.AssignedValues = [rvCmdExecMode]
+    ResourceOptions.CmdExecMode = amCancelDialog
     SQL.Strings = (
       'SELECT'
       'OH.CurrencyNo,'

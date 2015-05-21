@@ -536,7 +536,6 @@ object dmArrivingLoads: TdmArrivingLoads
     Top = 528
   end
   object cdsArrivingLoads: TFDQuery
-    Active = True
     CachedUpdates = True
     Indexes = <
       item

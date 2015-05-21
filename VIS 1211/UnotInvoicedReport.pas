@@ -174,8 +174,7 @@ begin
   Screen.Cursor := crSQLWait; { Show hourglass cursor }
   Try
 
-    dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath,
-      iSecurity);
+    dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath);
     Result := True;
     if not(FileExists(spath + ReportName)) then
     Begin

@@ -3460,9 +3460,17 @@ object dmcOrder: TdmcOrder
       'Select  s.VarugruppNamn, S.VarugruppNo,'
       'S.VarugruppNo AS VarugruppID'
       'From dbo.Varugrupp S'
+      'where S.LanguageCode = :LanguageCode'
       'Order by S.Varugruppnamn')
     Left = 280
     Top = 576
+    ParamData = <
+      item
+        Name = 'LANGUAGECODE'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object sq_grade: TFDQuery
     Connection = dmsConnector.FDConnection1
@@ -3482,14 +3490,21 @@ object dmcOrder: TdmcOrder
       'Inner Join dbo.Product pd ON pd.ProductNo = SP.ProductNo'
       'Inner join dbo.Grade G on G.Gradeno = pd.GradeNo'
       ''
-      'where  g.LanguageCode = 1'
+      'where  g.LanguageCode = :LanguageCode'
       'AND G.GradeNo > 0'
       'and Verk.ClientNo = :VerkNo'
       'and SP.ShippingPlanStatus in (0,1,3)'
+      'Group by g.gradecode , G.GradeName, G.GradeNo'
       'Order by g.gradecode , G.GradeName')
     Left = 352
     Top = 512
     ParamData = <
+      item
+        Name = 'LANGUAGECODE'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end
       item
         Name = 'VERKNO'
         DataType = ftInteger
@@ -3516,14 +3531,21 @@ object dmcOrder: TdmcOrder
         'Inner Join dbo.ProductGroup pg ON pg.ProductGroupNo = pd.Product' +
         'GroupNo'
       'Inner join dbo.Surfacing S on S.SurfacingNo = pg.SurfacingNo'
-      'where S.LanguageCode = 1'
+      'where S.LanguageCode = :LanguageCode'
       'AND S.SurfacingNo > 0'
       'and Verk.ClientNo = :VerkNo'
       'and SP.ShippingPlanStatus in (0,1,3)'
+      'Group by S.Surfacingcode, S.SurfacingName, S.SurfacingNo'
       'Order by S.Surfacingcode, S.SurfacingName')
     Left = 352
     Top = 568
     ParamData = <
+      item
+        Name = 'LANGUAGECODE'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end
       item
         Name = 'VERKNO'
         DataType = ftInteger

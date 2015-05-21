@@ -1185,7 +1185,7 @@ object dm_Avrakning: Tdm_Avrakning
       'SSP.ShippingPlanNo AS LO,'
       
         'ISNULL(OLA.ResponsibleSeller, ILA.ResponsibleSeller) AS Attester' +
-        'FD,'
+        'AD,'
       'SSP.Objecttype,'
       'PL.PaymentNo'#9#9#9#9'  AS'#9'AVRAKNING_NO,'
       'LDV.LoadNo'#9#9#9#9'    AS'#9'VIS_FS,'

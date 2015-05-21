@@ -3762,16 +3762,19 @@ Begin
       (cds_PropsVerkSupplierNo.AsInteger = 1) then
     Begin
       SQL.Add('AND ((LSP.ConfirmedByReciever = 1) OR (LSP.ConfirmedByReciever = 0 AND LSP.LoadingLocationNo is null))          ');
-      SQL.Add('AND L.LoadedDate > ' + QuotedStr('2009-11-01'));
-      SQL.Add('AND L.LoadNo NOT IN (Select IL.LoadNo');
+
+      SQL.Add('AND L.LoadedDate > ' + QuotedStr('2015-01-01'));
+      SQL.Add('AND NOT EXISTS (Select IL.LoadNo') ;//AND L.LoadNo NOT IN (Select IL.LoadNo');
       SQL.Add('FROM dbo.Invoiced_Load IL');
       SQL.Add('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = IL.InternalInvoiceNo');
       SQL.Add('WHERE L.LoadNo = IL.LoadNo AND IL.ShippingPlanNo = LSP.ShippingPlanNo)');
 
-      SQL.Add('AND (Select count(PackageNo) from dbo.LoadDetail LD');
-      SQL.Add('where LD.LoadNo = LSP.LoadNo');
-      SQL.Add('AND LD.ShippingPlanNo = LSP.ShippingPlanNo) > 0');
+{
+        SQL.Add('AND (Select count(PackageNo) from dbo.LoadDetail LD');
+        SQL.Add('where LD.LoadNo = LSP.LoadNo');
+        SQL.Add('AND LD.ShippingPlanNo = LSP.ShippingPlanNo) > 0');
 
+}
       { SQL.Add('AND CSH.CustomerNo in (Select LNI.CustomerNo') ;
         SQL.Add('FROM dbo.VIS_LoadsNotInvoiced LNI') ;
         SQL.Add('WHERE LNI.ShippingPlanNo = CSH.ShippingPlanNo)') ; }
@@ -3780,7 +3783,7 @@ Begin
     // GlobalLONo         := IntLONo ;
     GlobalLOErReferens := IntErReferens;
 
-    // if thisuser.UserID = 8 then SQL.SaveToFile('cdsAvrop.TXT');
+    // if thisuser.UserID = 8 then      SQL.SaveToFile('cdsAvrop.TXT');
     if ThisUser.UserID = 8 then
     Begin
       mLog.Clear;

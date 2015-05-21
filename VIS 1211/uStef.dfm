@@ -17,6 +17,8 @@ object fStef: TfStef
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object CRViewer91: TCrystalActiveXReportViewer

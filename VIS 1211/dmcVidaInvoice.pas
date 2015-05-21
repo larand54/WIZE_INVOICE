@@ -7464,14 +7464,14 @@ begin
         SkatteUpplag := sp_InvTotalsSkatteupplag.AsInteger;
         // 0 = INGET SKATTEUPPLAG, 1 = SKATTEUPPLAG
 
-        InvoiceDate := sp_InvTotalsInvoiceDate.AsSQLTimeStamp; // FAKTURADATUM
+        InvoiceDate           := sp_InvTotalsInvoiceDate.AsSQLTimeStamp; // FAKTURADATUM
         InvoiceDateAsDateTime := SQLTimeStampToDateTime(InvoiceDate);
         InvoiceDateAsDateTime := RecodeTime(InvoiceDateAsDateTime, 0, 0, 0, 0);
-        InvoiceDate := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime);
-        duedate := sp_InvTotalsDueDate.AsSQLTimeStamp; // FÖRFALLODATUM
-        DueDateAsDateTime := SQLTimeStampToDateTime(duedate);
-        DueDateAsDateTime := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0);
-        duedate := DateTimeToSQLTimeStamp(DueDateAsDateTime);
+        InvoiceDate           := DateTimeToSQLTimeStamp(InvoiceDateAsDateTime);
+        duedate               := sp_InvTotalsDueDate.AsSQLTimeStamp; // FÖRFALLODATUM
+        DueDateAsDateTime     := SQLTimeStampToDateTime(duedate);
+        DueDateAsDateTime     := RecodeTime(DueDateAsDateTime, 0, 0, 0, 0);
+        duedate               := DateTimeToSQLTimeStamp(DueDateAsDateTime);
 
         // Okt 24 2005 borttaget från nedan formel KassaRabatt_For + Provision_For +
         // ForsaljningsKonto_For:= InvoiceTotal_For - (Total_frakt_FOR + moms_for + Rounding_For) ;
