@@ -525,69 +525,17 @@ begin
   dmsConnector.DriveLetter := 'H:\';
   if dmsConnector.DriveLetter = 'C:\' then
     ShowMessage('Ändra till H:');
-{$IFDEF DEBUG}
-  if copy(GetEnvironmentVariable('COMPUTERNAME'),1,6) = 'CARMAK' then begin
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-      dmsConnector.DriveLetter := 'D:\'
-    else
-      dmsConnector.DriveLetter := 'C:\';
-        // Debugging with CARMAK computers
-    ThisUser.Database:= 'alvesql03:vis_vida' ;
-    with dmsConnector.FDConnection1 do begin
-      Params.Clear;
-      Params.Add('Server=alvesql03');
-      Params.Add('Database=vis_vida');
-      Params.Add('OSAuthent=No');
-      Params.add('MetaDefCatalog=vis_vida');
-      Params.Add('MetaDefSchema=dbo');
-      Params.Add('User_Name=Lars');
-      Params.Add('Password=woods2011');
-      Params.Add('DriverID=MSSQL');
-    end;
 
-  end
-  else begin
-      // Debugging with other computers
-    ThisUser.Database:= 'alvesqltest01:vis_vida' ;
-    with dmsConnector.FDConnection1 do begin
-      Params.Clear;
-      Params.Add('Server=alvesqltest01');
-      Params.Add('Database=vis_vida');
-      Params.Add('OSAuthent=No');
-      Params.add('MetaDefCatalog=vis_vida');
-      Params.Add('MetaDefSchema=dbo');
-      Params.Add('User_Name=Lars');
-      Params.Add('Password=woods2011');
-      Params.Add('DriverID=MSSQL');
-    end;
-  end;
       // Setup for FastReport
-  uReportController.useFR := true;
-  acToggleReportSystem.Caption := 'Byt till Crystal Report';
+  uReportController.useFR       := false;
+  acToggleReportSystem.Caption  := 'Change to FastReport';
   CheckMappar;
 
-{$ELSEIF DEFINED(NODEBUG)}
-    ThisUser.Database:= 'alvesqltest01:vis_vida' ;
-    with dmsConnector.FDConn_VIS_VIDA do begin
-      Params.Clear;
-      Params.Add('Server=alvesqltest01');
-      Params.Add('Database=vis_vida');
-      Params.Add('OSAuthent=No');
-      Params.add('MetaDefCatalog=vis_vida');
-      Params.Add('MetaDefSchema=dbo');
-      Params.Add('User_Name=Lars');
-      Params.Add('Password=woods2011');
-      Params.Add('DriverID=MSSQL');
-    end;
-  end;
-  CheckMappar;
-{$ELSEIF DEFINED(RELEASE)}
-  ThisUser.Database := 'vis.vida.se:vis_vida';
-  CheckMappar;
-{$ELSE}
-  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
-  CheckMappar;
-{$ENDIF}
+
+ // ThisUser.Database  := 'alvesql01:vis_vida' ;
+// ThisUser.Database  := 'vis.vida.se:vis_vida' ;
+    ThisUser.Database  := 'alvesql03:vis_vida' ;
+
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
@@ -940,6 +888,8 @@ begin
     (Trim(dmsConnector.Get_AD_Name) = 'VIDA\annjon') or
     (Trim(dmsConnector.Get_AD_Name) = 'VIDA\kritom') or
     (Trim(dmsConnector.Get_AD_Name) = 'VIDA\johlis') or
+    (Trim(dmsConnector.Get_AD_Name) = 'VIDA\adminlarmak') or
+    (Trim(dmsConnector.Get_AD_Name) = 'adminlarmak') or
     (Trim(dmsConnector.Get_AD_Name) = 'sa') then
   Begin
     if FormOpen then

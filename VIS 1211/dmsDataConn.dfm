@@ -1826,11 +1826,9 @@ object dmsConnector: TdmsConnector
     Params.Strings = (
       'Server=vis.vida.se'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
-      'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
@@ -2001,16 +1999,17 @@ object dmsConnector: TdmsConnector
   object SQLConn_XOR: TFDConnection
     ConnectionName = 'XOR'
     Params.Strings = (
-      'Server=alvesql03'
-      'Database=xor_test'
+      'Server=alvesql14'
+      'Database=xor_vida'
       'OSAuthent=No'
-      'MetaDefCatalog=xor_test'
+      'MetaDefCatalog=xor_vida'
       'MetaDefSchema=dbo'
       'User_Name=visimport'
       'Password=Qwerty88'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
+    Connected = True
     LoginPrompt = False
     Left = 584
     Top = 72

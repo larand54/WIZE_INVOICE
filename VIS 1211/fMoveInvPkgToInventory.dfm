@@ -3326,7 +3326,7 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       'where CL.Confirmed_LoadNo = IL.LoadNo)'
       '')
     Left = 432
-    Top = 360
+    Top = 336
     ParamData = <
       item
         Name = 'USERID'
@@ -3370,7 +3370,7 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       ''
       
         '          INNER JOIN dbo.Loaddetail LD '#9'ON  LD.LoadNo = ILoad.Lo' +
-        'FDNo'
+        'adNo'
       '       '#9#9#9#9#9#9'AND LD.SHIPPINGPLANNO = ILoad.SHIPPINGPLANNO'
       'WHERE     IH.InternalInvoiceNo = :InternalInvoiceNo'
       ''
@@ -3561,8 +3561,8 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       'OldName'
       'Origin'
       'PropertiesClassName')
-    Left = 496
-    Top = 352
+    Left = 816
+    Top = 240
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066006F0072006D0066004D006F007600650049006E00

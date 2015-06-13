@@ -825,6 +825,7 @@ begin
     cds_LoadPackages.Active := True;
 
     dmsContact.cdsCities.Active := False;
+    dmsContact.cdsCities.ParamByName('@SalesRegionNo').AsInteger  :=  dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
     dmsContact.cdsCities.Active := True;
     dmsContact.cds_LocalShipper.Active := True;
 

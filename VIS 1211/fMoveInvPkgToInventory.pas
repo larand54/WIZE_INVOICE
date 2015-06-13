@@ -333,8 +333,7 @@ end;
   End ; *)
 
 // Aktiverar paketet och ger det nytt lagerställe
-procedure TformfMoveInvPkgToInventory.
-  Insert_Confirmed_Log_and_Confirmed_Package_Log;
+procedure TformfMoveInvPkgToInventory.Insert_Confirmed_Log_and_Confirmed_Package_Log;
 Begin
   Try
     sq_Delete_Delete_Confirmed_Package_Log.ParamByName('InternalInvoiceNo')

@@ -1221,7 +1221,7 @@ object dm_Avrakning: Tdm_Avrakning
       'P.ProductNo,'
       'PL.PaymentType,'
       'PL.CreditToPaymentNo,'
-      'US.INITIALS AS AR_AV'
+      #39'NA'#39' AS AR_AV'
       ''
       ''
       'FROM  dbo.LastAvrDtl PL'
@@ -1267,9 +1267,9 @@ object dm_Avrakning: Tdm_Avrakning
         'INNER JOIN dbo.ProductGroup PG'#9#9'ON'#9'PG.ProductGroupNo = PR.Produc' +
         'tGroupNo'
       ''
-      'Inner Join dbo.Confirmed_Load   CL'
-      'Left Outer join dbo.Users'#9'US'#9'ON'#9'US.UserID = cl.CreatedUser'
-      'ON CL.Confirmed_LoadNo = LD.LoadNo'
+      '-- Inner Join dbo.Confirmed_Load   CL'
+      '-- Left Outer join dbo.Users'#9'US'#9'ON'#9'US.UserID = cl.CreatedUser'
+      '-- ON CL.Confirmed_LoadNo = LD.LoadNo'
       ''
       'WHERE PL.PaymentNo = :PaymentNo'
       ''
@@ -1296,8 +1296,7 @@ object dm_Avrakning: Tdm_Avrakning
       'SSP.Objecttype,'
       'OLA.ResponsibleSeller,'
       'ILA.ResponsibleSeller,'
-      'SSP.ShippingPlanNo,'
-      'US.INITIALS')
+      'SSP.ShippingPlanNo')
     Left = 184
     Top = 152
     ParamData = <

@@ -4247,4 +4247,55 @@ object dmsSystem: TdmsSystem
         ParamType = ptInput
       end>
   end
+  object ds_PackageSize: TDataSource
+    DataSet = cds_PackageSize
+    Left = 640
+    Top = 496
+  end
+  object cds_PackageSize: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'SELECT TOP 1000 [PackageSizeNo]'
+      '      ,[PackageSizeName]'
+      '      ,[LanguageCode]'
+      '      ,[DateCreated]'
+      '      ,[CreatedUser]'
+      '      ,[Act]'
+      '  FROM [vis_vida].[dbo].[PackageSize]'
+      '  where [LanguageCode] = 1')
+    Left = 640
+    Top = 448
+    object cds_PackageSizePackageSizeNo: TIntegerField
+      FieldName = 'PackageSizeNo'
+      Origin = 'PackageSizeNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_PackageSizePackageSizeName: TStringField
+      FieldName = 'PackageSizeName'
+      Origin = 'PackageSizeName'
+      ProviderFlags = [pfInUpdate]
+      Size = 50
+    end
+    object cds_PackageSizeLanguageCode: TIntegerField
+      FieldName = 'LanguageCode'
+      Origin = 'LanguageCode'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PackageSizeDateCreated: TSQLTimeStampField
+      FieldName = 'DateCreated'
+      Origin = 'DateCreated'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PackageSizeCreatedUser: TIntegerField
+      FieldName = 'CreatedUser'
+      Origin = 'CreatedUser'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PackageSizeAct: TIntegerField
+      FieldName = 'Act'
+      Origin = 'Act'
+      ProviderFlags = [pfInUpdate]
+    end
+  end
 end

@@ -563,6 +563,9 @@ end;
 procedure TfrmInvoiceList.FormShow(Sender: TObject);
 begin
   // acRefreshExecute(Sender) ;
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
   With dmVidaInvoice do
   Begin
     // LoadUserProps (Self.Caption) ;
@@ -2302,18 +2305,23 @@ begin
       FreeAndNil(RC);
     end;
   end
-  else begin
-    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-    Try
-      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
-
-      SetLength(A, 1);
-      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-      FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
-
-    Finally
-      FreeAndNil(FormCRPrintOneReport);
-    End;
+  else
+    begin
+      dmVidaInvoice.EmailaTrpBrevExecute(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger,
+      dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger,
+      dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+      dmVidaInvoice.cdsInvoiceListLO.AsInteger,
+      dmVidaInvoice.cdsInvoiceListOrdernr.AsString);
+{
+      FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRPrintOneReport.CreateCo(1, False, False, A, 'TRP_BREV.RPT')
+      Finally
+        FreeAndNil(FormCRPrintOneReport);
+      End;
+}
   end;
 end;
 
@@ -2613,7 +2621,7 @@ begin
       if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
         Exit;
 
-      ExportTrpBrevFile := ExcelDir + 'InvoiceNo ' +
+      ExportTrpBrevFile := ExcelDir + 'Transportbrev ' +
         dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
       ExportSpecFile := ExcelDir + 'Specification ' +
         dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
@@ -2641,26 +2649,32 @@ begin
           Exit;
         end;
       end
-      else begin
+      else
+       begin
+        ExportTrpBrevFile := ExcelDir + 'Transportbrev ' +
+          dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString ;
+        ExportSpecFile := ExcelDir + 'Specification ' +
+          dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString ;
+
         FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
         Try
           SetLength(A, 1);
 
           A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-          FormCRExportOneReport.CreateCo(clientNo, cTrpBrev, A,
-            ExcelDir + 'Transportbrev ' +
-            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
-          FormCRExportOneReport.CreateCo(clientNo, cPkgSpec, A,
-            ExcelDir + 'Specification ' +
-            dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          FormCRExportOneReport.CreateCo(clientNo, cTrpBrev, A, ExportTrpBrevFile) ;
+//           ExcelDir + 'Transportbrev ' + dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          FormCRExportOneReport.CreateCo(clientNo, cPkgSpec, A, ExportSpecFile) ;
+//          ExcelDir + 'Specification ' +  dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString);
+          ExportTrpBrevFile := ExportTrpBrevFile + '.pdf' ;
+          ExportSpecFile    := ExportSpecFile + '.pdf' ;
         Finally
           FreeAndNil(FormCRExportOneReport); // .Free ;
         End;
       end;
 
       SetLength(Attach, 2);
-      Attach[0] := ExportTrpBrevFile;
-      Attach[1] := ExportSpecFile;
+      Attach[0] := ExportTrpBrevFile ;
+      Attach[1] := ExportSpecFile ;
       dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
       Try
         dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +

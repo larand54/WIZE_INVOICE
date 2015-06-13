@@ -1,19 +1,11 @@
 program VIS;
 
 uses
-<<<<<<< HEAD
   madExcept,
   madLinkDisAsm,
   madListHardware,
   madListProcesses,
   madListModules,
-=======
- { madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,}
->>>>>>> origin/master
   Forms,
   fMain in 'fMain.pas' {frmMain},
   VidaConst in 'VidaConst.pas',
@@ -164,7 +156,8 @@ uses
   PackageImportU in 'Aug 31B dbExpress\PackageImportU.pas',
   udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
   uReport in '..\..\CommonSources\FastReport\uReport.pas',
-  uReportController in '..\..\CommonSources\FastReport\uReportController.pas';
+  uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
+  uPackageSize in 'uPackageSize.pas' {fPackageSize};
 
 {$R *.res}
 

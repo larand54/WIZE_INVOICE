@@ -2777,17 +2777,17 @@ Begin
   Try
     fSelectMultInvoice := TfSelectMultInvoice.Create(nil);
     Try // Finally
-      cxDBRichEdit3 := TDBRichEdit.Create(self);
-      cxDBRichEdit3.Parent := fSelectMultInvoice;
-      cxDBRichEdit3.DataSource := dmVidaInvoice.dsrcInvoiceHead;
-      cxDBRichEdit3.DataField := 'InvoiceText';
-      cxDBRichEdit3.Visible := False;
+      cxDBRichEdit3             := TDBRichEdit.Create(self);
+      cxDBRichEdit3.Parent      := fSelectMultInvoice;
+      cxDBRichEdit3.DataSource  := dmVidaInvoice.dsrcInvoiceHead;
+      cxDBRichEdit3.DataField   := 'InvoiceText';
+      cxDBRichEdit3.Visible     := False;
 
-      Result := -1;
-      NewInternalInvoiceNo := 0;
-      myRollBack := False;
+      Result                  := -1;
+      NewInternalInvoiceNo    := 0;
+      myRollBack              := False;
       cdsInvoiceNumber.Active := True;
-      NewInternalInvoiceNo := dmsConnector.NextMaxNo('InvoiceHeader');
+      NewInternalInvoiceNo    := dmsConnector.NextMaxNo('InvoiceHeader');
 
       // START A TRANSACTION
       dmsConnector.StartTransaction;
@@ -4155,7 +4155,7 @@ Var
   RC: TCMReportController;
   DocTyp,
   RoleType,
-  ClientNo: integer;
+  i, ClientNo: integer;
   Params: TCMParams;
 begin
   // if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
@@ -4168,11 +4168,14 @@ begin
     showmessage
       ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
   End;
+
   if Length(MailToAddress) > 0 then
   Begin
     sTransportBrev := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) + '.pdf';
     sSpecification := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
-    if uReportController.useFR then begin
+
+    if uReportController.useFR then
+     begin
 
       params := TCMParams.Create();
       Params.Add('@INVOICENO',IntInvNo);
@@ -4193,8 +4196,11 @@ begin
         FreeAndNil(Params);
         FreeAndNil(RC);
       End;
-    end
-    else begin
+     end
+    else
+     begin
+      sTransportBrev := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) ;
+      sSpecification := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) ;
       FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
       Try
         SetLength(A, 1);
@@ -4202,18 +4208,33 @@ begin
         A[0] := IntInvNo;
         FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
           sTransportBrev);
+
         FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
           sSpecification);
+        sTransportBrev    := sTransportBrev + '.pdf' ;
+        sSpecification    := sSpecification + '.pdf' ;
       Finally
         FreeAndNil(FormCRExportOneReport); // .Free ;
       End;
-    end;
+     end;
 
     SetLength(Attach, 2);
     Attach[0] := sTransportBrev;
+    if thisuser.userid = 8 then
+       dmsSystem.FDoLog('sTransportBrev= ' + sTransportBrev);
     Attach[1] := sSpecification;
+    if thisuser.userid = 8 then
+       dmsSystem.FDoLog('sSpecification= ' + sSpecification);
     dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
     Try
+
+    for i := Low(Attach) to High(Attach) do
+    Begin
+      if thisuser.userid = 8 then
+       dmsSystem.FDoLog('Attach= ' + Attach[i]);
+
+    End;
+
       dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
         IntToStr(InvoiceNo), 'Transportbrev/Paketspecifikation bifogad. ' + LF +
         '' + 'Transport letter/Package specification attached. ' + LF + '' + LF

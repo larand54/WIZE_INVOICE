@@ -31,7 +31,7 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  System.Actions, siComp, siLngLnk;
+  System.Actions, siComp, siLngLnk, cxGridCustomPopupMenu, cxGridPopupMenu;
 
 type
   TfrmKP_List = class(TfrmDBForm)
@@ -110,6 +110,9 @@ type
     lcAgent: TcxDBLookupComboBox;
     cxLabel3: TcxLabel;
     cds_PropsAgent: TStringField;
+    cdsKP_ListAvropsreferens: TStringField;
+    grdKPListDBTableView1Avropsreferens: TcxGridDBColumn;
+    cxGridPopupMenu2: TcxGridPopupMenu;
     procedure acCustomizegrdKP_ListExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);

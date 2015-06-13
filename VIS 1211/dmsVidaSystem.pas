@@ -429,6 +429,14 @@ type
     sq_dbPropsintsec: TIntegerField;
     sq_dbPropsLangPath: TStringField;
     sp_Lang: TFDStoredProc;
+    ds_PackageSize: TDataSource;
+    cds_PackageSize: TFDQuery;
+    cds_PackageSizePackageSizeNo: TIntegerField;
+    cds_PackageSizePackageSizeName: TStringField;
+    cds_PackageSizeLanguageCode: TIntegerField;
+    cds_PackageSizeDateCreated: TSQLTimeStampField;
+    cds_PackageSizeCreatedUser: TIntegerField;
+    cds_PackageSizeAct: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);

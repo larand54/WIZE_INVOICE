@@ -37,7 +37,8 @@ uses
 {$IFDEF VARIANTS}
   , Variants
 {$ENDIF VARIANTS}
-    uRwBoxes, uRwMapiMessage, uRwClasses, fRwMapiFields, dmsDataConn;
+    uRwBoxes, uRwMapiMessage, uRwClasses, fRwMapiFields, dmsDataConn,
+  dmsVidaSystem, VidaUser;
 
 procedure Tdm_SendMapiMail.SendMail(const Subject, MessageText, MailFromAddress,
   MailToAddress: String; const Attachments: array of String;
@@ -71,7 +72,11 @@ begin
     // NewMessage.RecipBCC := '' ;
     // Add the selected attachments
     for i := Low(Attachments) to High(Attachments) do
+    Begin
+      if thisuser.userid = 8 then
+       dmsSystem.FDoLog('Attachment= ' + Attachments[i]);
       NewMessage.AddFileAttachment(Attachments[i]);
+    End;
 
     // save the message
     NewMessage.SaveChanges(smKeepOpenReadOnly);

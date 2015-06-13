@@ -31,7 +31,7 @@ object frmInvoice: TfrmInvoice
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    Properties.ActivePage = tsSpec
+    Properties.ActivePage = tsInvoiceHead
     Properties.CustomButtons.Buttons = <>
     Properties.TabWidth = 150
     LookAndFeel.Kind = lfUltraFlat
@@ -682,14 +682,11 @@ object frmInvoice: TfrmInvoice
     object tsShipToAddress: TcxTabSheet
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 28
-        Width = 1136
-        Height = 142
+        Width = 1144
+        Height = 146
         Align = alClient
         TabOrder = 0
         object grdShipAdrDBTableView1: TcxGridDBTableView
@@ -786,7 +783,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceRowMissing: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 28
         Align = alTop
         Caption = 
@@ -885,9 +882,6 @@ object frmInvoice: TfrmInvoice
     object tsNotes: TcxTabSheet
       Caption = '&NOTERING'
       ImageIndex = 11
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -905,9 +899,6 @@ object frmInvoice: TfrmInvoice
     object tsStickyNote: TcxTabSheet
       Caption = '&POST IT!'
       ImageIndex = 13
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 400
         Top = 5
@@ -2097,7 +2088,6 @@ object frmInvoice: TfrmInvoice
               Height = 236
               Align = alClient
               TabOrder = 1
-              ExplicitWidth = 0
               object grdToInventoryDBTableView1: TcxGridDBTableView
                 OnDblClick = grdToInventoryDBTableView1DblClick
                 Navigator.Buttons.CustomButtons = <>
@@ -4196,6 +4186,9 @@ object frmInvoice: TfrmInvoice
     end
     object SkrivutTrpbrevKlientspec1st1: TMenuItem
       Action = acPrintOrderAndSpec
+    end
+    object N1: TMenuItem
+      Caption = '-'
     end
     object EmailaKlientfakturaKlientspec1: TMenuItem
       Action = acEmailClientFakturaAndSpec

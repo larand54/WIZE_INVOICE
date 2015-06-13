@@ -13116,7 +13116,7 @@ object dmVidaInvoice: TdmVidaInvoice
     Connection = dmsConnector.SQLConn_XOR
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'SELECT Invno FROM xor_test.dbo.voulogx'
+      'SELECT Invno FROM ALVESQL14.xor_VIDA.dbo.voulogx'
       'WHERE invno = :invno'
       'AND enumerator = :enumerator')
     Left = 808
@@ -13320,7 +13320,7 @@ object dmVidaInvoice: TdmVidaInvoice
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'VIS_xp_ldglogwrite_ALVE'
     Left = 920
-    Top = 504
+    Top = 488
     ParamData = <
       item
         Position = 1
@@ -16415,7 +16415,7 @@ object dmVidaInvoice: TdmVidaInvoice
       item
         Position = 16
         Name = '@vatcode'
-        DataType = ftShortint
+        DataType = ftByte
         ParamType = ptInput
       end
       item

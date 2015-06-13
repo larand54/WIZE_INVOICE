@@ -55,21 +55,6 @@ type
     bbTally_Ver: TdxBarButton;
     dxBarButton1: TdxBarButton;
     dxBarButton2: TdxBarButton;
-    grdPkgsDBTableView1: TcxGridDBTableView;
-    grdPkgsLevel1: TcxGridLevel;
-    grdPkgs: TcxGrid;
-    grdPkgsDBTableView1LO: TcxGridDBColumn;
-    grdPkgsDBTableView1PACKAGE_NO: TcxGridDBColumn;
-    grdPkgsDBTableView1SUPPLIERCODE: TcxGridDBColumn;
-    grdPkgsDBTableView1M3_NET: TcxGridDBColumn;
-    grdPkgsDBTableView1PRODUCT_DESCRIPTION: TcxGridDBColumn;
-    grdPkgsDBTableView1PCS: TcxGridDBColumn;
-    grdPkgsDBTableView1PACKAGEOK: TcxGridDBColumn;
-    grdPkgsDBTableView1PACKAGE_LOG: TcxGridDBColumn;
-    grdPkgsDBTableView1M3_NOM: TcxGridDBColumn;
-    grdPkgsDBTableView1LOAD_DETAILNO: TcxGridDBColumn;
-    grdPkgsDBTableView1LoadNo: TcxGridDBColumn;
-    grdPkgsDBTableView1MFBM: TcxGridDBColumn;
     cxSplitter1: TcxSplitter;
     grdLoadsDBTableView1: TcxGridDBTableView;
     grdLoadsLevel1: TcxGridLevel;
@@ -123,8 +108,6 @@ type
     cxLabel1: TcxLabel;
     cxLabel2: TcxLabel;
     acUndoAR: TAction;
-    grdPkgsDBTableView1GS: TcxGridDBColumn;
-    grdPkgsDBTableView1BC: TcxGridDBColumn;
     acShowGroupBox: TAction;
     dxBarButton4: TdxBarButton;
     acExpandAll: TAction;
@@ -171,10 +154,6 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     cbShowOnlyVWLoads: TcxDBCheckBox;
     grdLoadsDBTableView1Trading: TcxGridDBColumn;
-    grdPkgsDBTableView1SubSum: TcxGridDBColumn;
-    grdPkgsDBTableView1PRICE: TcxGridDBColumn;
-    grdPkgsDBTableView1NLMM: TcxGridDBColumn;
-    grdPkgsDBTableView1ALMM: TcxGridDBColumn;
     grdLoadsDBTableView1LoadAR: TcxGridDBColumn;
     cxStyleLoadAR: TcxStyle;
     PopupMenu1: TPopupMenu;
@@ -284,7 +263,6 @@ type
     mtSelectedLoadsEGEN: TIntegerField;
     grdLoadsDBTableView1EGEN: TcxGridDBColumn;
     mtSelectedLoadsAvropCustomerNo: TIntegerField;
-    grdPkgsDBTableView1Used: TcxGridDBColumn;
     cxStyleAvraknad: TcxStyle;
     grdLoadsDBTableView1intNM3: TcxGridDBColumn;
     grdLoadsDBTableView1AM3: TcxGridDBColumn;
@@ -297,6 +275,43 @@ type
     siLangLinked_frmLoadArrivals: TsiLangLinked;
     grdLoadsDBTableView1NoOfPackages: TcxGridDBColumn;
     grdLoadsDBTableView1PackagesConfirmed: TcxGridDBColumn;
+    Panel5: TPanel;
+    grdPkgs: TcxGrid;
+    grdPkgsDBTableView1: TcxGridDBTableView;
+    grdPkgsDBTableView1PACKAGE_NO: TcxGridDBColumn;
+    grdPkgsDBTableView1SUPPLIERCODE: TcxGridDBColumn;
+    grdPkgsDBTableView1PRODUCT_DESCRIPTION: TcxGridDBColumn;
+    grdPkgsDBTableView1GS: TcxGridDBColumn;
+    grdPkgsDBTableView1BC: TcxGridDBColumn;
+    grdPkgsDBTableView1M3_NET: TcxGridDBColumn;
+    grdPkgsDBTableView1PCS: TcxGridDBColumn;
+    grdPkgsDBTableView1M3_NOM: TcxGridDBColumn;
+    grdPkgsDBTableView1MFBM: TcxGridDBColumn;
+    grdPkgsDBTableView1LoadNo: TcxGridDBColumn;
+    grdPkgsDBTableView1LO: TcxGridDBColumn;
+    grdPkgsDBTableView1LOAD_DETAILNO: TcxGridDBColumn;
+    grdPkgsDBTableView1PACKAGEOK: TcxGridDBColumn;
+    grdPkgsDBTableView1PACKAGE_LOG: TcxGridDBColumn;
+    grdPkgsDBTableView1SubSum: TcxGridDBColumn;
+    grdPkgsDBTableView1PRICE: TcxGridDBColumn;
+    grdPkgsDBTableView1NLMM: TcxGridDBColumn;
+    grdPkgsDBTableView1ALMM: TcxGridDBColumn;
+    grdPkgsDBTableView1Used: TcxGridDBColumn;
+    grdPkgsLevel1: TcxGridLevel;
+    Panel6: TPanel;
+    acSetPktStorlek: TAction;
+    mtPkgNos: TkbmMemTable;
+    mtPkgNosPackageNo: TIntegerField;
+    mtPkgNosSupp_Code: TStringField;
+    mtPkgNosOwnerNo: TIntegerField;
+    mtPkgNosLIPNo: TIntegerField;
+    mtPkgNosPIPNo: TIntegerField;
+    mtPkgNosStatus: TIntegerField;
+    mtPkgNosPackage_Size: TIntegerField;
+    mtPkgNosCertNo: TIntegerField;
+    cxButton1: TcxButton;
+    grdPkgsDBTableView1Package_Size: TcxGridDBColumn;
+    grdPkgsDBTableView1PackageSizeName: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -361,10 +376,12 @@ type
     procedure acPrintDirectFS_USAUpdate(Sender: TObject);
     procedure acPrintTallyUSNoteUpdate(Sender: TObject);
     procedure acEmailFSExecute(Sender: TObject);
+    procedure acSetPktStorlekExecute(Sender: TObject);
 
   private
     { Private declarations }
-    function AreMarkedLoadsSameObjectTypeAndNOTEGEN: Boolean;
+    procedure SelectedPkgsOfPkgNosTable ;
+    function  AreMarkedLoadsSameObjectTypeAndNOTEGEN: Boolean;
     procedure ConfirmManyLoadsPurchasedFromVW(Sender: TObject);
     procedure EmptyGrid;
     procedure RefreshDest;
@@ -2159,6 +2176,79 @@ end;
 procedure TfrmLoadArrivals.acSetLoadToConfirmedExecute(Sender: TObject);
 begin
   SetConfirmed_Load_Table(Sender);
+end;
+
+procedure TfrmLoadArrivals.SelectedPkgsOfPkgNosTable ;
+ Var i, RecIDX  : Integer ;
+ RecID          : Variant ;
+ ADATASET       : TDATASET;
+ Save_Cursor    : TCursor;
+begin
+ Save_Cursor    := Screen.Cursor;
+ Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
+ grdPkgsDBTableView1.BeginUpdate ;
+ grdPkgsDBTableView1.DataController.BeginLocate ;
+ Try
+   ADataSet := grdPkgsDBTableView1.DataController.DataSource.DataSet ;
+   For I    := 0 to grdPkgsDBTableView1.Controller.SelectedRecordCount - 1 do
+   Begin
+    RecIDx  := grdPkgsDBTableView1.Controller.SelectedRecords[i].RecordIndex ;
+    RecID   := grdPkgsDBTableView1.DataController.GetRecordId(RecIdx) ;
+    ADataSet.Locate('LOAD_DETAILNO;ProductLengthNo', RecID,[]) ;
+
+    mtPkgNos.Insert ;
+    mtPkgNosPackageNo.AsInteger := ADataSet.FieldByName('PACKAGE_NO').AsInteger ;
+    mtPkgNosSupp_Code.AsString  := ADataSet.FieldByName('SUPPLIERCODE').AsString ;
+{
+      mtPkgNosOwnerNo.AsInteger   := cds_PropsOwnerNo.AsInteger ;
+      mtPkgNosPIPNo.AsInteger     := ADataSet.FieldByName('PIPNo').AsInteger ;
+      mtPkgNosLIPNo.AsInteger     := ADataSet.FieldByName('LIPNo').AsInteger ;
+      mtPkgNosStatus.AsInteger    := 1 ;// ADataSet.FieldByName('Status').AsInteger ;
+}
+    mtPkgNos.Post ;
+   End ;
+
+ Finally
+  grdPkgsDBTableView1.DataController.EndLocate ;
+  grdPkgsDBTableView1.EndUpdate ;
+  Screen.Cursor := Save_Cursor;  { Always restore to normal }
+ End ;
+end;
+
+procedure TfrmLoadArrivals.acSetPktStorlekExecute(Sender: TObject);
+Var Package_Size      : Integer ;
+    PackageSizeName   : String ;
+begin
+ With dmArrivingLoads do
+ Begin
+  Package_Size  :=  GetNewPackage_Size(PackageSizeName) ;
+  if Package_Size > -1 then
+  Begin
+    mtPkgNos.Active := True ;
+    cdsArrivingPackages.DisableControls ;
+    Try
+    SelectedPkgsOfPkgNosTable ;
+    mtPkgNos.First ;
+    while not mtPkgNos.Eof do
+    Begin
+     if cdsArrivingPackages.Locate('PACKAGE_NO;SupplierCode',  VarArrayOf([mtPkgNosPackageNo.AsInteger, mtPkgNosSupp_Code.AsString]), []) then
+     Begin
+{      sp_invpivPkgDtl.Edit ;
+      sp_invpivPkgDtl.FieldByName('Package_Size').AsInteger     := Package_Size ;
+      sp_invpivPkgDtl.FieldByName('PackageSizeName').AsString   := PackageSizeName ;
+      sp_invpivPkgDtl.Post ;   }
+
+      CngArtNoByPkgSize(mtPkgNosPackageNo.AsInteger, Package_Size, mtPkgNosSupp_Code.AsString) ;
+     End;
+     mtPkgNos.Next ;
+    End;
+     cdsArrivingPackages.Refresh ;
+    Finally
+     cdsArrivingPackages.EnableControls ;
+     mtPkgNos.Active := False ;
+    End;
+  End;
+ End;
 end;
 
 procedure TfrmLoadArrivals.acConfirmedLoadExecute(Sender: TObject);

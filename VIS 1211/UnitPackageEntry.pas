@@ -245,10 +245,11 @@ type
     { Private declarations }
     ManuellLengthColumn, OldProductGroupNo: Integer;
     LoadAllLengths, OKToSave: Boolean;
+    procedure FilterRegPoints(const TypeOfOrder  : integer) ;
     procedure SetControls;
 
     procedure SavePackages(Sender: TObject);
-    Function UnsavedPkgs: Boolean;
+    Function  UnsavedPkgs: Boolean;
     Procedure CreateFieldsInmtPackagesTable(Sender: TObject);
     procedure InsertPkgSerie(Sender: TObject);
     procedure AddPkgsToLoadFromPkgEntry(Sender: TObject);
@@ -762,6 +763,15 @@ Begin
   End;
 End;
 
+procedure TfrmPackageEntry.FilterRegPoints(const TypeOfOrder  : integer) ;
+Begin
+ if TypeOfOrder = 0 then
+  dm_UserProps.cds_RegPoint.Filter := 'RegistrationPointNo <> 5 AND RegistrationPointNo <> 20'
+   else
+    dm_UserProps.cds_RegPoint.Filter := 'RegistrationPointNo <> 5' ;
+ dm_UserProps.cds_RegPoint.Filtered := True ;
+End;
+
 procedure TfrmPackageEntry.FormCreate(Sender: TObject);
 Var
   x: Integer;
@@ -770,8 +780,8 @@ begin
     grdLORowsDBTableView1);
 
   dm_UserProps.LoadUserProps('TfrmPackageEntry', mtUserProp);
-  seRunNo.Value := -1;
-  deRegDate.Date := now;
+  seRunNo.Value   := -1;
+  deRegDate.Date  := now;
   With dmsProduct do
   Begin
     Try
@@ -780,15 +790,18 @@ begin
       bcLengthOption.Properties.OnChange := Nil;
       lcLengthGroup.Enabled := False;
 
-      LoadAllLengths := False;
-      ChangeNoOfPcsEvent := True;
-      OldProductGroupNo := 0;
+      LoadAllLengths      := False;
+      ChangeNoOfPcsEvent  := True;
+      OldProductGroupNo   := 0;
+
+      FilterRegPoints(dmsProduct.OrderType) ;
 
       mtUserProp.Edit;
       mtUserPropSupplierCode.AsString := dmsProduct.SupplierCode;
 
       if dmsProduct.OrderType = c_Sales then
       Begin
+       mtUserPropRegPointNo.AsInteger  := -1 ;
         if dmsContact.IsClientVerk(ThisUser.CompanyNo) = cInternal_Mill then
         Begin
           mtUserPropVerkNo.AsInteger := dmsProduct.SupplierNo;
@@ -801,11 +814,12 @@ begin
       End
       else
       Begin
-        mtUserPropVerkNo.AsInteger := dmsProduct.SupplierNo;
+        mtUserPropVerkNo.AsInteger      := dmsProduct.SupplierNo;
+        mtUserPropRegPointNo.AsInteger  := mp_INKOP;
         // ThisUser.CompanyNo ;
       End;
 
-      mtUserPropRegPointNo.AsInteger := mp_INKOP;
+
 
       mtUserPropOwnerNo.AsInteger := InventoryOwnerNo;
 
@@ -1122,6 +1136,7 @@ begin
       dm_UserProps.SaveUserProps('TfrmPackageEntry', mtUserProp);
       dmsSystem.StoreGridLayout(ThisUser.UserID,
         Self.Name + '/' + grdLORows.Name, grdLORowsDBTableView1);
+     dm_UserProps.cds_RegPoint.Filtered := False ;
     End;
   end;
 end;

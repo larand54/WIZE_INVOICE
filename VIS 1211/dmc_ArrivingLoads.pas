@@ -559,6 +559,9 @@ type
     sp_IsLoadAvr: TFDStoredProc;
     cdsArrivingLoadsNoOfPackages: TIntegerField;
     cdsArrivingLoadsPackagesConfirmed: TIntegerField;
+    cdsArrivingPackagesPackage_Size: TIntegerField;
+    cdsArrivingPackagesPackageSizeName: TStringField;
+    sp_CngArtNoByPkgSize: TFDStoredProc;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
@@ -591,18 +594,20 @@ type
   public
     { Public declarations }
     LoadConfirmedOK: Boolean;
-    function AR_ExternLoad(const LoadNo, Status, LIPNo,
+    procedure CngArtNoByPkgSize (const PackageNo, Package_Size : Integer; Prefix : string) ;
+    function  GetNewPackage_Size(var PackageSizeName : String) : Integer ;
+    function  AR_ExternLoad(const LoadNo, Status, LIPNo,
       CreatedUser: Integer): Boolean;
     procedure RefreshArrivingPackages;
     // procedure LoadUserProps (const Form : String) ;
     procedure SaveUserProps22(const Form: String);
-    Function IsLoadAvraknad(const LoadNo: Integer): Boolean;
-    Function AR_TRADING_PO_Loads(const OldLoadNo, LIPNo: Integer): Boolean;
-    Function ARPOLoadToLager(const OldLoadNo, LIPNo: Integer): Boolean;
-    Function ARINTADDLOLoadToLager(const OldLoadNo, LIPNo: Integer;
+    Function  IsLoadAvraknad(const LoadNo: Integer): Boolean;
+    Function  AR_TRADING_PO_Loads(const OldLoadNo, LIPNo: Integer): Boolean;
+    Function  ARPOLoadToLager(const OldLoadNo, LIPNo: Integer): Boolean;
+    Function  ARINTADDLOLoadToLager(const OldLoadNo, LIPNo: Integer;
       const ChangeToIMPProduct: Integer): Boolean;
-    Function ex_AR_SALES_Loads(const OldLoadNo, LIPNo: Integer): Integer;
-    function GetNoOfPkgs: Integer;
+    Function  ex_AR_SALES_Loads(const OldLoadNo, LIPNo: Integer): Integer;
+    function  GetNoOfPkgs: Integer;
     // procedure ProcessPackage_Log(const LogInvPointNo : Integer) ;
     Function SearchLoadNoByPkgNo(const PackageNo, ShippingCompanyNo: Integer;
       const SupplierCode: String): Integer;
@@ -626,7 +631,8 @@ var
 
 implementation
 
-uses recerror, dmsDataConn, dmsVidaSystem, VidaConst, VidaUser, dlgPickPkg_II;
+uses recerror, dmsDataConn, dmsVidaSystem, VidaConst, VidaUser, dlgPickPkg_II,
+  uPackageSize;
 
 {$R *.dfm}
 
@@ -2522,5 +2528,44 @@ Begin
     End;
   end;
 End;
+
+function TdmArrivingLoads.GetNewPackage_Size(var PackageSizeName : String) : Integer ;
+var fPackageSize: TfPackageSize;
+Begin
+ fPackageSize := TfPackageSize.Create(nil);
+ dmsSystem.cds_PackageSize.Active := True ;
+ Try
+  if fPackageSize.ShowModal = mrOK then
+  Begin
+   Result           := dmsSystem.cds_PackageSizePackageSizeNo.AsInteger ;
+   PackageSizeName  := dmsSystem.cds_PackageSizePackageSizeName.AsString ;
+  End
+    else
+     Begin
+      Result            := -1 ;
+      PackageSizeName   := '' ;
+     End;
+ Finally
+  dmsSystem.cds_PackageSize.Active := False ;
+  FreeAndNil(fPackageSize) ;
+ End;
+End;
+
+procedure TdmArrivingLoads.CngArtNoByPkgSize (const PackageNo, Package_Size : Integer; Prefix : string) ;
+Begin
+ sp_CngArtNoByPkgSize.ParamByName('@PackageNo').AsInteger     := PackageNo ;
+ sp_CngArtNoByPkgSize.ParamByName('@SupplierCode').AsString   := Prefix ;
+ sp_CngArtNoByPkgSize.ParamByName('@UserID').AsInteger        := ThisUser.UserID ;
+ sp_CngArtNoByPkgSize.ParamByName('@Package_Size').AsInteger  := Package_Size ;
+ Try
+  sp_CngArtNoByPkgSize.ExecProc ;
+ Except
+   On E: Exception do
+   Begin
+    ShowMessage(E.Message+' :sp_CngArtNoByPkgSize.ExecProc') ;
+    Raise ;
+   End ;
+ End ;
+End ;
 
 end.

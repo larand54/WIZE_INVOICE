@@ -6730,7 +6730,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42102.149583356480000000
+      ReportDocument.CreationDate = 42160.200521944450000000
       BuiltInReportLink = True
     end
   end

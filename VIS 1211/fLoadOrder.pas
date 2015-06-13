@@ -4062,11 +4062,12 @@ begin
 
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
-    SetLength(A, 2);
+    SetLength(A, 3);
     A[0] := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
       .AsInteger;
     A[1] := grdLODBTableView1.DataController.DataSet.FieldByName('Supplier')
       .AsInteger;
+    A[2] := ThisUser.UserID ;
 
     FormCRViewReport.CreateCo('SPEC_ALLA_LASTER_VERK_III.RPT', A);
 
@@ -4108,21 +4109,45 @@ begin
     end
   end
   else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-        .AsInteger;
+{
+     if grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger < 1 then exit ;
 
-      FormCRViewReport.CreateCo('SPEC_ALLA_LASTER_III.RPT', A);
+     FormCRViewReport:= TFormCRViewReport.Create(Nil);
+     Try
+     FormCRViewReport.CreateCo('SPEC_ALLA_LASTER_III.RPT') ;
 
-      if FormCRViewReport.ReportFound then Begin
+     if FormCRViewReport.ReportFound then
+     Begin
+      FormCRViewReport.report.ParameterFields.Item[1].AddCurrentValue(grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger);
+    //  FormCRViewReport.report.ParameterFields.Item[2].AddCurrentValue(grdLODBTableView1.DataController.DataSet.FieldByName('Supplier').AsInteger);
+      FormCRViewReport.report.ParameterFields.Item[2].AddCurrentValue(ThisUser.UserID);
+      FormCRViewReport.CrystalActiveXReportViewer1.ReportSource:= FormCRViewReport.Report ;
+      FormCRViewReport.CrystalActiveXReportViewer1.ViewReport ;
+      FormCRViewReport.ShowModal ;
+     End ;
+     Finally
+        FreeAndNil(FormCRViewReport)  ;
+     End ;
+}
 
-        FormCRViewReport.ShowModal;
+
+
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 2);
+        A[0] := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger ;
+        A[1] := ThisUser.UserID ;
+
+        FormCRViewReport.CreateCo('SPEC_ALLA_LASTER_III.RPT', A);
+
+        if FormCRViewReport.ReportFound then Begin
+
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+
   end;
 end;
 

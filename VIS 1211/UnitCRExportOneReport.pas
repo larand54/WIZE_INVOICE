@@ -76,6 +76,9 @@ begin
   crReport.ExportOptions.DestinationType  := CRAXDRT_TLB.crEDTDiskFile;
   crReport.ExportOptions.DiskFileName     := ExportFile+'.pdf';
   crReport.Export(false);
+
+      if thisuser.userid = 8 then
+       dmsSystem.FDoLog('ExportFile+.pdf= ' + ExportFile+'.pdf');
  Finally
   Screen.Cursor := Save_Cursor;  { Always restore to normal }
  End ;

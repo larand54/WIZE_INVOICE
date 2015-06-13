@@ -1047,13 +1047,23 @@ object dmArrivingLoads: TdmArrivingLoads
       'WHERE'
       'pkg.AvRegPackageNo = LD.PackageNo'
       'and pkg.AvRegPrefix = LD.SupplierCode'
-      'and pkg.ProducerNo = csh.CustomerNo),0) AS Used'
+      'and pkg.ProducerNo = csh.CustomerNo),0) AS Used,'
+      'IsNull(pn.Package_Size,12) AS Package_Size,'
+      'ps.PackageSizeName'
       ''
       ''
       'FROM dbo.LoadShippingPlan LSP'
       'INNER JOIN dbo.Loads L'#9'ON '#9'L.LoadNo = LSP.LoadNo'
       'INNER JOIN dbo.Loaddetail LD'#9#9'ON '#9'LD.LoadNo = LSP.LoadNo'
       #9#9#9#9#9#9'and LD.ShippingPlanNo = LSP.ShippingPlanNo'
+      ''
+      'inner join dbo.PackageNumber pn on pn.PackageNo = LD.PackageNo'
+      'AND pn.SupplierCode = LD.SupplierCode'
+      
+        'Left Outer Join [dbo].[PackageSize] ps on ps.PackageSizeNo = IsN' +
+        'ull(pn.Package_Size,12)'
+      'and ps.LanguageCode = 1'
+      ''
       
         'Left Outer Join dbo.SupplierShippingPlan SSP on SSP.SupplierShip' +
         'PlanObjectNo = LD.defsspno'
@@ -1228,6 +1238,17 @@ object dmArrivingLoads: TdmArrivingLoads
       FieldName = 'Used'
       Origin = 'Used'
       ReadOnly = True
+    end
+    object cdsArrivingPackagesPackage_Size: TIntegerField
+      FieldName = 'Package_Size'
+      Origin = 'Package_Size'
+      ReadOnly = True
+      Required = True
+    end
+    object cdsArrivingPackagesPackageSizeName: TStringField
+      FieldName = 'PackageSizeName'
+      Origin = 'PackageSizeName'
+      Size = 50
     end
   end
   object sq_GetDefaultCSObjectNo: TFDQuery
@@ -2435,7 +2456,8 @@ object dmArrivingLoads: TdmArrivingLoads
       '        OldPackageTypeNo,'
       '        LogicalInventoryPointNo,'
       #9'EventDate,'
-      #9'ShiftNo'
+      #9'ShiftNo,'
+      '  PkgArticleNo'
       ''
       '        )'
       
@@ -2444,7 +2466,7 @@ object dmArrivingLoads: TdmArrivingLoads
       
         ':LoadNo, :UserID, CPL.PackageTypeNo, PN.PackageTypeNo, CPL.Logic' +
         'alInventoryPointNo, GetDate(),'
-      'CPL.Confirmed_LoadNo'
+      'CPL.Confirmed_LoadNo, PN.PkgArticleNo'
       'FROM dbo.Confirmed_Package_Log CPL'
       
         '   INNER JOIN dbo.PackageNumber  PN  ON PN.PackageNo     = CPL.P' +
@@ -2465,11 +2487,6 @@ object dmArrivingLoads: TdmArrivingLoads
       end
       item
         Name = 'USERID'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'LOADNO'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -5544,6 +5561,44 @@ object dmArrivingLoads: TdmArrivingLoads
       item
         Position = 2
         Name = '@LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_CngArtNoByPkgSize: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_CngArtNoByPkgSize'
+    Left = 992
+    Top = 440
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@PackageNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@SupplierCode'
+        DataType = ftFixedChar
+        ParamType = ptInput
+        Size = 3
+      end
+      item
+        Position = 4
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@Package_Size'
         DataType = ftInteger
         ParamType = ptInput
       end>

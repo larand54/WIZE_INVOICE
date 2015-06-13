@@ -54,7 +54,6 @@ object fPickPkgNo: TfPickPkgNo
       DataController.Summary.SummaryGroups = <>
       OptionsData.Deleting = False
       OptionsData.Inserting = False
-      OptionsSelection.CellSelect = False
       OptionsSelection.MultiSelect = True
       OptionsView.ColumnAutoWidth = True
       OptionsView.Footer = True
@@ -526,7 +525,6 @@ object fPickPkgNo: TfPickPkgNo
     Top = 312
   end
   object sq_PaketLista: TFDQuery
-    Active = True
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       'Select pn.PackageNo, pn.SupplierCode AS LEVKOD,'

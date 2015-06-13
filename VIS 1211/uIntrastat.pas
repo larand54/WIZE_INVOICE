@@ -64,6 +64,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure acPrintExecute(Sender: TObject);
     procedure acExportXLSExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,7 +76,7 @@ var
 
 implementation
 
-uses UnitdmModule1, VidaUser, dmsVidaSystem, udmLanguage;
+uses UnitdmModule1, VidaUser, dmsVidaSystem, udmLanguage, dmsVidaContact;
 
 {$R *.dfm}
 
@@ -104,6 +105,14 @@ procedure TfIntrastat.FormDestroy(Sender: TObject);
 begin
   inherited;
   fIntrastat := NIL;
+end;
+
+procedure TfIntrastat.FormShow(Sender: TObject);
+begin
+  inherited;
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
 end;
 
 procedure TfIntrastat.acPrintExecute(Sender: TObject);

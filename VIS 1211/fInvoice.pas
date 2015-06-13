@@ -468,6 +468,7 @@ type
     acPreviewKlientPkgSpec: TAction;
     Frhandsgranskaklientspecifikation1: TMenuItem;
     siLangLinked_frmInvoice: TsiLangLinked;
+    N1: TMenuItem;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -5613,21 +5614,27 @@ begin
 end;
 
 procedure TfrmInvoice.acEmailaTrpBrevExecute(Sender: TObject);
-const
-  LF = #10;
-Var
-  FormCRExportOneReport: TFormCRExportOneReport;
-  A: array of variant;
-  dm_SendMapiMail: Tdm_SendMapiMail;
-  Attach: array of String;
-  MailToAddress: String;
-  x: Integer;
+{
+  const
+    LF = #10;
+}
+{
+  Var
+    FormCRExportOneReport: TFormCRExportOneReport;
+    A: array of variant;
+    dm_SendMapiMail: Tdm_SendMapiMail;
+    Attach: array of String;
+    MailToAddress: String;
+    x: Integer;
+}
 begin
   With dmVidaInvoice do
   Begin
     EmailaTrpBrevExecute(cdsInvoiceHeadInternalInvoiceNo.AsInteger,
-      StrToIntDef(lInvoiceNo.Caption, 0), cdsInvoiceHeadCustomerNo.AsInteger,
-      StrToIntDef(TabControl1.Tabs[TabControl1.TabIndex], 0), cdsInvoiceLOOrderNoText.AsString);
+      StrToIntDef(lInvoiceNo.Caption, 0),
+      cdsInvoiceHeadCustomerNo.AsInteger,
+      StrToIntDef(TabControl1.Tabs[TabControl1.TabIndex], 0),
+      cdsInvoiceLOOrderNoText.AsString);
 
     // EmailaTrpBrevExecute(const IntInvNo, InvoiceNo, CustomerNo, LONo : Integer) ;
   End;

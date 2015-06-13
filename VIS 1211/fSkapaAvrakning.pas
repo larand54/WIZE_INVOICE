@@ -294,369 +294,685 @@ begin
   Action := caFree;
 end;
 
+
 procedure TfrmSkapaAvrakning.Build_Sold_Loads_SQL(Sender: TObject);
 begin
-  With dm_Avrakning do
+ With dm_Avrakning do
+ Begin
+  cdsArrivingLoads.Close ;
+  cdsArrivingLoads.SQL.Clear ;
+  cdsArrivingLoads.SQL.Add('SELECT DISTINCT') ;
+  cdsArrivingLoads.SQL.Add('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,') ;
+  cdsArrivingLoads.SQL.Add('isNull(IName.CityName, '+QuotedStr('')+')		AS	INVPOINTNAME,') ;
+  cdsArrivingLoads.SQL.Add('US.INITIALS,') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,') ;
+  cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,') ;
+  cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,') ;
+
+  cdsArrivingLoads.SQL.Add('Mill.ClientCode                         AS      SUPPCODE,') ;
+  cdsArrivingLoads.SQL.Add('Cust.ClientCode                         AS      INT_CUSTOMER,') ;
+  cdsArrivingLoads.SQL.Add('Cust.ClientNo                         AS      CUSTOMERNO,') ;
+  cdsArrivingLoads.SQL.Add('Mill.ClientNo                      AS       SUPPLIER_NO,') ;
+  cdsArrivingLoads.SQL.Add('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,') ;
+  cdsArrivingLoads.SQL.Add('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo') ;
+  cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,') ;
+  cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2') ;
+  cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad') ;
+
+
+{  cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ;
+            }
+//  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
+
+{
+  cdsArrivingLoads.SQL.Add('FROM ') ;
+  cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;     //ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
+  cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
+  cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
+ }
+
+  cdsArrivingLoads.SQL.Add('FROM dbo.Loads L') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo') ;
+
+  cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo') ;
+
+  cdsArrivingLoads.SQL.Add('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH') ;
+  cdsArrivingLoads.SQL.Add(' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo') ;
+  cdsArrivingLoads.SQL.Add(' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo') ;
+  cdsArrivingLoads.SQL.Add(' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo') ;
+
+  cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.ShippingPlanNo') ;
+
+
+//    cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL') ;
+    cdsArrivingLoads.SQL.Add('Left Outer join dbo.Users	US	ON	US.UserID = L.ModifiedUser') ;
+//    cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo') ;
+
+
+  cdsArrivingLoads.SQL.Add('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo') ;
+  cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9') ;
+
+  cdsArrivingLoads.SQL.Add('WHERE') ;
+  cdsArrivingLoads.SQL.Add('L.LoadedDate > ' + QuotedStr('2012-06-01 00:00:00.000')) ;
+  cdsArrivingLoads.SQL.Add('AND L.SenderLoadStatus = 2') ; // to get list of loads to pay
+  if cds_PropsVerkNo.AsInteger > 0 then
+  cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' + cds_PropsVerkNo.AsString) ;
+
+{
+0: Utlaster med moms
+1: Utlaster utan moms
+2: Inlaster Köp
+3: Interna mellan BTH och BTB
+4: Alla utlaster som saknar pris
+5: Alla inlaster som saknar pris }
+
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+  else
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ;
+
+  if (cds_PropsStatus.AsInteger <> 3) AND (cds_PropsStatus.AsInteger <> 4) then
   Begin
-    cdsArrivingLoads.Close;
-    cdsArrivingLoads.SQL.Clear;
-    cdsArrivingLoads.SQL.Add('SELECT DISTINCT');
-    cdsArrivingLoads.SQL.Add
-      ('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,');
-    cdsArrivingLoads.SQL.Add('isNull(IName.CityName, ' + QuotedStr('') +
-      ')		AS	INVPOINTNAME,');
-    cdsArrivingLoads.SQL.Add('US.INITIALS,');
-    cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,');
-    cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,');
-    cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,');
+   cdsArrivingLoads.SQL.Add('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
+  End ;
 
-    cdsArrivingLoads.SQL.Add
-      ('Mill.ClientCode                         AS      SUPPCODE,');
-    cdsArrivingLoads.SQL.Add
-      ('Cust.ClientCode                         AS      INT_CUSTOMER,');
-    cdsArrivingLoads.SQL.Add
-      ('Cust.ClientNo                         AS      CUSTOMERNO,');
-    cdsArrivingLoads.SQL.Add
-      ('Mill.ClientNo                      AS       SUPPLIER_NO,');
-    cdsArrivingLoads.SQL.Add
-      ('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,');
-    cdsArrivingLoads.SQL.Add
-      ('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo');
-    cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,');
-    cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2');
-    cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad');
 
-    { cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ;
-    }
-    // cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
+   if cds_PropsStatus.AsInteger = const_Utan_Moms then
+   Begin
+    cdsArrivingLoads.SQL.Add('AND  (SSP.ObjectType >= 2)') ;
+    //Försäljning utom Sverige eller skatteupplag
+    cdsArrivingLoads.SQL.Add('AND ((  A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1))') ;
+   End
+   else
+//Laster med moms
+   if cds_PropsStatus.AsInteger = const_Med_Moms then
+   Begin
+    cdsArrivingLoads.SQL.Add('AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  )') ;
+   End ;
 
-    {
-      cdsArrivingLoads.SQL.Add('FROM ') ;
-      cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;     //ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
+  cdsArrivingLoads.SQL.Add('AND') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
 
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
-      cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
+  cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo') ;
+  cdsArrivingLoads.SQL.Add('WHERE') ;
+  cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo') ;
+  cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)') ;
 
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
-      cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
-    }
+  cdsArrivingLoads.SQL.Add('AND') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)') ;
 
-    cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo');
-    cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo');
+  if cds_PropsStatus.AsInteger = 4 then
+  Begin
+   cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM') ;
+   cdsArrivingLoads.SQL.Add('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo') ;
+   cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo') ;
+   cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)') ;
+  End ;
 
-    cdsArrivingLoads.SQL.Add
-      ('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo');
+  cdsArrivingLoads.SQL.Add('UNION') ;
 
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo');
 
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo');
+  cdsArrivingLoads.SQL.Add('SELECT DISTINCT') ;
+  cdsArrivingLoads.SQL.Add('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,') ;
+  cdsArrivingLoads.SQL.Add('isNull(IName.CityName, '+QuotedStr('')+')		AS	INVPOINTNAME,') ;
+  cdsArrivingLoads.SQL.Add('US.INITIALS,') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,') ;
+  cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,') ;
+  cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,') ;
 
-    cdsArrivingLoads.SQL.Add
-      ('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH');
-    cdsArrivingLoads.SQL.Add
-      (' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo');
-    cdsArrivingLoads.SQL.Add
-      (' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo');
-    cdsArrivingLoads.SQL.Add
-      (' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo');
+  cdsArrivingLoads.SQL.Add('Mill.ClientCode                         AS      SUPPCODE,') ;
+  cdsArrivingLoads.SQL.Add('Cust.ClientCode                         AS      INT_CUSTOMER,') ;
+  cdsArrivingLoads.SQL.Add('Cust.ClientNo                         AS      CUSTOMERNO,') ;
+  cdsArrivingLoads.SQL.Add('Mill.ClientNo                      AS       SUPPLIER_NO,') ;
+  cdsArrivingLoads.SQL.Add('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,') ;
+  cdsArrivingLoads.SQL.Add('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo') ;
+  cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,') ;
+  cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2') ;
+  cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad') ;
 
-    cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.ShippingPlanNo');
 
-    cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL');
-    cdsArrivingLoads.SQL.Add
-      ('Left Outer join dbo.Users	US	ON	US.UserID = cl.CreatedUser');
-    cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo');
-    cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9');
 
-    cdsArrivingLoads.SQL.Add('WHERE');
-    cdsArrivingLoads.SQL.Add('L.LoadedDate > ' +
-      QuotedStr('2012-06-01 00:00:00.000'));
-    if cds_PropsVerkNo.AsInteger > 0 then
-      cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' +
-        cds_PropsVerkNo.AsString);
+{  cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
+						cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ;}
 
-    {
-      0: Utlaster med moms
-      1: Utlaster utan moms
-      2: Inlaster Köp
-      3: Interna mellan BTH och BTB
-      4: Alla utlaster som saknar pris
-      5: Alla inlaster som saknar pris }
+  cdsArrivingLoads.SQL.Add('FROM dbo.Loads L') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo') ;
 
-    if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
-    else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
 
-    if (cds_PropsStatus.AsInteger <> 3) AND (cds_PropsStatus.AsInteger <> 4)
-    then
+{  cdsArrivingLoads.SQL.Add('FROM ') ;
+cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;//ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
+   cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
+  cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
+ }
+
+  cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo') ;
+
+  cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo') ;
+
+  cdsArrivingLoads.SQL.Add('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH') ;
+  cdsArrivingLoads.SQL.Add(' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo') ;
+  cdsArrivingLoads.SQL.Add(' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo') ;
+  cdsArrivingLoads.SQL.Add(' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo') ;
+  cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.LO_No') ;
+
+
+//    cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL') ;
+    cdsArrivingLoads.SQL.Add('Left Outer join dbo.Users	US	ON	US.UserID = L.ModifiedUser') ;
+//    cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo') ;
+
+
+  cdsArrivingLoads.SQL.Add('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo') ;
+  cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9') ;
+
+  cdsArrivingLoads.SQL.Add('WHERE') ;
+  cdsArrivingLoads.SQL.Add('L.LoadedDate > ' + QuotedStr('2012-06-01 00:00:00.000')) ;
+  cdsArrivingLoads.SQL.Add('AND L.SenderLoadStatus = 2') ; // to get list of loads to pay
+  if cds_PropsVerkNo.AsInteger > 0 then
+  cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' + cds_PropsVerkNo.AsString) ;
+
+
+{
+0: Utlaster med moms
+1: Utlaster utan moms
+2: Inlaster Köp
+3: Interna mellan BTH och BTB
+4: Alla utlaster som saknar pris
+5: Alla inlaster som saknar pris }
+
+
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+  else
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ;
+
+  if (cds_PropsStatus.AsInteger <> 3) and (cds_PropsStatus.AsInteger <> 4) then
+  Begin
+   cdsArrivingLoads.SQL.Add('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ') ;
+   cdsArrivingLoads.SQL.Add('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
+  End ;
+
+{  if (fSupplierNo = 2878) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+  else
+  if (peMomsFilter.ItemIndex = 3) AND (fSupplierNo = 172) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ; }
+
+
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+  else
+  if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172) then
+  cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ;
+
+
+   if cds_PropsStatus.AsInteger = const_Utan_Moms then
+   Begin
+    cdsArrivingLoads.SQL.Add('AND ( ((SSP.ObjectType = 1)') ;
+    cdsArrivingLoads.SQL.Add('AND  ((A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1)))') ;
+    cdsArrivingLoads.SQL.Add('OR ( (SSP.ObjectType = 0) AND (ioh.VatExempt = 1) ) )') ;
+   End
+   else
+//Laster med moms
+   if cds_PropsStatus.AsInteger = const_Med_Moms then
+   Begin
+    cdsArrivingLoads.SQL.Add('AND (  ( SSP.ObjectType = 1 AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  ))') ;
+    cdsArrivingLoads.SQL.Add('OR (SSP.ObjectType = 0 and ioh.VatExempt = 0))') ;
+    cdsArrivingLoads.SQL.Add('AND ioh.VatExempt = 0') ;
+
+   End ;
+
+  cdsArrivingLoads.SQL.Add('AND') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL') ;
+  cdsArrivingLoads.SQL.Add('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo') ;
+  cdsArrivingLoads.SQL.Add('WHERE') ;
+  cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo') ;
+  cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)') ;
+
+  cdsArrivingLoads.SQL.Add('AND') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('NOT IN (SELECT LoadNo') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LoadRemAvr)') ;
+
+  cdsArrivingLoads.SQL.Add('AND') ;
+  cdsArrivingLoads.SQL.Add('L.LoadNo') ;
+  cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo') ;
+  cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)') ;
+
+  if cds_PropsStatus.AsInteger = 4 then
+  Begin
+   cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM') ;
+   cdsArrivingLoads.SQL.Add('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo') ;
+   cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo') ;
+   cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)') ;
+  End ;
+
+
+//  if ThisUser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('Build_Sold_Loads_SQL.txt');
+//Fel kan vara att skatteupplag inte är varken bockad eller ej (bara grå)
+
+  CreatePackageSQL(False) ;
+
+ End ; //With dm_Avrakning do
+End ;
+
+
+(*
+  procedure TfrmSkapaAvrakning.Build_Sold_Loads_SQL(Sender: TObject);
+  begin
+    With dm_Avrakning do
     Begin
+      cdsArrivingLoads.Close;
+      cdsArrivingLoads.SQL.Clear;
+      cdsArrivingLoads.SQL.Add('SELECT DISTINCT');
       cdsArrivingLoads.SQL.Add
-        ('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
-    End;
+        ('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,');
+      cdsArrivingLoads.SQL.Add('isNull(IName.CityName, ' + QuotedStr('') +
+        ')		AS	INVPOINTNAME,');
+      cdsArrivingLoads.SQL.Add('US.INITIALS,');
+      cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,');
+      cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,');
+      cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,');
 
-    if cds_PropsStatus.AsInteger = const_Utan_Moms then
-    Begin
-      cdsArrivingLoads.SQL.Add('AND  (SSP.ObjectType >= 2)');
-      // Försäljning utom Sverige eller skatteupplag
       cdsArrivingLoads.SQL.Add
-        ('AND ((  A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1))');
-    End
-    else
-      // Laster med moms
-      if cds_PropsStatus.AsInteger = const_Med_Moms then
+        ('Mill.ClientCode                         AS      SUPPCODE,');
+      cdsArrivingLoads.SQL.Add
+        ('Cust.ClientCode                         AS      INT_CUSTOMER,');
+      cdsArrivingLoads.SQL.Add
+        ('Cust.ClientNo                         AS      CUSTOMERNO,');
+      cdsArrivingLoads.SQL.Add
+        ('Mill.ClientNo                      AS       SUPPLIER_NO,');
+      cdsArrivingLoads.SQL.Add
+        ('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,');
+      cdsArrivingLoads.SQL.Add
+        ('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo');
+      cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,');
+      cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2');
+      cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad');
+
+      { cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ;
+      }
+      // cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
+
+      {
+        cdsArrivingLoads.SQL.Add('FROM ') ;
+        cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;     //ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
+
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
+        cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
+
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
+        cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
+      }
+
+      cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo');
+      cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo');
+      cdsArrivingLoads.SQL.Add
+        ('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH');
+      cdsArrivingLoads.SQL.Add
+        (' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo');
+      cdsArrivingLoads.SQL.Add
+        (' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo');
+      cdsArrivingLoads.SQL.Add
+        (' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo');
+
+      cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.ShippingPlanNo');
+
+      cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL');
+      cdsArrivingLoads.SQL.Add
+        ('Left Outer join dbo.Users	US	ON	US.UserID = cl.CreatedUser');
+      cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add
+        ('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo');
+      cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9');
+
+      cdsArrivingLoads.SQL.Add('WHERE');
+      cdsArrivingLoads.SQL.Add('L.LoadedDate > ' +
+        QuotedStr('2012-06-01 00:00:00.000'));
+      if cds_PropsVerkNo.AsInteger > 0 then
+        cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' +
+          cds_PropsVerkNo.AsString);
+
+      {
+        0: Utlaster med moms
+        1: Utlaster utan moms
+        2: Inlaster Köp
+        3: Interna mellan BTH och BTB
+        4: Alla utlaster som saknar pris
+        5: Alla inlaster som saknar pris }
+
+      if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+      else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
+
+      if (cds_PropsStatus.AsInteger <> 3) AND (cds_PropsStatus.AsInteger <> 4)
+      then
       Begin
         cdsArrivingLoads.SQL.Add
-          ('AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  )');
+          ('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
       End;
 
-    cdsArrivingLoads.SQL.Add('AND');
-    cdsArrivingLoads.SQL.Add('L.LoadNo');
-
-    cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo');
-    cdsArrivingLoads.SQL.Add('WHERE');
-    cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo');
-    cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)');
-
-    cdsArrivingLoads.SQL.Add('AND');
-    cdsArrivingLoads.SQL.Add('L.LoadNo');
-    cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)');
-
-    if cds_PropsStatus.AsInteger = 4 then
-    Begin
-      cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM');
-      cdsArrivingLoads.SQL.Add
-        ('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
-      cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo');
-      cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)');
-    End;
-
-    cdsArrivingLoads.SQL.Add('UNION');
-
-    cdsArrivingLoads.SQL.Add('SELECT DISTINCT');
-    cdsArrivingLoads.SQL.Add
-      ('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,');
-    cdsArrivingLoads.SQL.Add('isNull(IName.CityName, ' + QuotedStr('') +
-      ')		AS	INVPOINTNAME,');
-    cdsArrivingLoads.SQL.Add('US.INITIALS,');
-    cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,');
-    cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,');
-    cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,');
-
-    cdsArrivingLoads.SQL.Add
-      ('Mill.ClientCode                         AS      SUPPCODE,');
-    cdsArrivingLoads.SQL.Add
-      ('Cust.ClientCode                         AS      INT_CUSTOMER,');
-    cdsArrivingLoads.SQL.Add
-      ('Cust.ClientNo                         AS      CUSTOMERNO,');
-    cdsArrivingLoads.SQL.Add
-      ('Mill.ClientNo                      AS       SUPPLIER_NO,');
-    cdsArrivingLoads.SQL.Add
-      ('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,');
-    cdsArrivingLoads.SQL.Add
-      ('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo');
-    cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,');
-    cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2');
-    cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad');
-
-    { cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ; }
-
-    cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo');
-    cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo');
-
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo');
-
-    { cdsArrivingLoads.SQL.Add('FROM ') ;
-      cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;//ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
-
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
-      cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
-
-      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
-      cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
-    }
-
-    cdsArrivingLoads.SQL.Add
-      ('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo');
-
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo');
-
-    cdsArrivingLoads.SQL.Add
-      ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo');
-
-    cdsArrivingLoads.SQL.Add
-      ('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH');
-    cdsArrivingLoads.SQL.Add
-      (' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo');
-    cdsArrivingLoads.SQL.Add
-      (' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo');
-    cdsArrivingLoads.SQL.Add
-      (' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo');
-    cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.LO_No');
-
-    cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL');
-    cdsArrivingLoads.SQL.Add
-      ('Left Outer join dbo.Users	US	ON	US.UserID = cl.CreatedUser');
-    cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo');
-    cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9');
-
-    cdsArrivingLoads.SQL.Add('WHERE');
-    cdsArrivingLoads.SQL.Add('L.LoadedDate > ' +
-      QuotedStr('2012-06-01 00:00:00.000'));
-    if cds_PropsVerkNo.AsInteger > 0 then
-      cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' +
-        cds_PropsVerkNo.AsString);
-
-    {
-      0: Utlaster med moms
-      1: Utlaster utan moms
-      2: Inlaster Köp
-      3: Interna mellan BTH och BTB
-      4: Alla utlaster som saknar pris
-      5: Alla inlaster som saknar pris }
-
-    if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
-    else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
-
-    if (cds_PropsStatus.AsInteger <> 3) and (cds_PropsStatus.AsInteger <> 4)
-    then
-    Begin
-      cdsArrivingLoads.SQL.Add
-        ('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ');
-      cdsArrivingLoads.SQL.Add
-        ('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
-    End;
-
-    { if (fSupplierNo = 2878) then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+      if cds_PropsStatus.AsInteger = const_Utan_Moms then
+      Begin
+        cdsArrivingLoads.SQL.Add('AND  (SSP.ObjectType >= 2)');
+        // Försäljning utom Sverige eller skatteupplag
+        cdsArrivingLoads.SQL.Add
+          ('AND ((  A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1))');
+      End
       else
-      if (peMomsFilter.ItemIndex = 3) AND (fSupplierNo = 172) then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ; }
+        // Laster med moms
+        if cds_PropsStatus.AsInteger = const_Med_Moms then
+        Begin
+          cdsArrivingLoads.SQL.Add
+            ('AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  )');
+        End;
 
-    if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
-    else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
-    then
-      cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
+      cdsArrivingLoads.SQL.Add('AND');
+      cdsArrivingLoads.SQL.Add('L.LoadNo');
 
-    if cds_PropsStatus.AsInteger = const_Utan_Moms then
-    Begin
-      cdsArrivingLoads.SQL.Add('AND ( ((SSP.ObjectType = 1)');
+      cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL');
       cdsArrivingLoads.SQL.Add
-        ('AND  ((A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1)))');
-      cdsArrivingLoads.SQL.Add
-        ('OR ( (SSP.ObjectType = 0) AND (ioh.VatExempt = 1) ) )');
-    End
-    else
-      // Laster med moms
-      if cds_PropsStatus.AsInteger = const_Med_Moms then
+        ('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo');
+      cdsArrivingLoads.SQL.Add('WHERE');
+      cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo');
+      cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)');
+
+      cdsArrivingLoads.SQL.Add('AND');
+      cdsArrivingLoads.SQL.Add('L.LoadNo');
+      cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)');
+
+      if cds_PropsStatus.AsInteger = 4 then
       Begin
+        cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM');
         cdsArrivingLoads.SQL.Add
-          ('AND (  ( SSP.ObjectType = 1 AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  ))');
-        cdsArrivingLoads.SQL.Add
-          ('OR (SSP.ObjectType = 0 and ioh.VatExempt = 0))');
-        cdsArrivingLoads.SQL.Add('AND ioh.VatExempt = 0');
-
+          ('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
+        cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo');
+        cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)');
       End;
 
-    cdsArrivingLoads.SQL.Add('AND');
-    cdsArrivingLoads.SQL.Add('L.LoadNo');
-    cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL');
-    cdsArrivingLoads.SQL.Add
-      ('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo');
-    cdsArrivingLoads.SQL.Add('WHERE');
-    cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo');
-    cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)');
+      cdsArrivingLoads.SQL.Add('UNION');
 
-    cdsArrivingLoads.SQL.Add('AND');
-    cdsArrivingLoads.SQL.Add('L.LoadNo');
-    cdsArrivingLoads.SQL.Add('NOT IN (SELECT LoadNo');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LoadRemAvr)');
-
-    cdsArrivingLoads.SQL.Add('AND');
-    cdsArrivingLoads.SQL.Add('L.LoadNo');
-    cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo');
-    cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)');
-
-    if cds_PropsStatus.AsInteger = 4 then
-    Begin
-      cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM');
+      cdsArrivingLoads.SQL.Add('SELECT DISTINCT');
       cdsArrivingLoads.SQL.Add
-        ('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
-      cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo');
-      cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)');
-    End;
+        ('isNull(SSP.ShipToInvPointNo,-1)		AS	INVPOINTNO,');
+      cdsArrivingLoads.SQL.Add('isNull(IName.CityName, ' + QuotedStr('') +
+        ')		AS	INVPOINTNAME,');
+      cdsArrivingLoads.SQL.Add('US.INITIALS,');
+      cdsArrivingLoads.SQL.Add('L.LoadNo				AS	VIS_FS,');
+      cdsArrivingLoads.SQL.Add('L.FS				        AS	MILL_FS,');
+      cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOAD_DATE,');
+
+      cdsArrivingLoads.SQL.Add
+        ('Mill.ClientCode                         AS      SUPPCODE,');
+      cdsArrivingLoads.SQL.Add
+        ('Cust.ClientCode                         AS      INT_CUSTOMER,');
+      cdsArrivingLoads.SQL.Add
+        ('Cust.ClientNo                         AS      CUSTOMERNO,');
+      cdsArrivingLoads.SQL.Add
+        ('Mill.ClientNo                      AS       SUPPLIER_NO,');
+      cdsArrivingLoads.SQL.Add
+        ('IsNull(CP.VAT_OnInvoice,0)                        AS      SKATTE_UPPLAG,');
+      cdsArrivingLoads.SQL.Add
+        ('  IsNull((Select Top 1 0 FROM dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add('  AND LDV.SupplierNo = SSP.SupplierNo');
+      cdsArrivingLoads.SQL.Add('  AND LDV.Price = 0),1) AS PRISOK,');
+      cdsArrivingLoads.SQL.Add('  isNull((SELECT Top 1 -1');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LastAvrDtl PL2');
+      cdsArrivingLoads.SQL.Add('WHERE PL2.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add('AND PL2.PaymentType = -1),1) AS Krediterad');
+
+      { cdsArrivingLoads.SQL.Add('FROM dbo.Loads L 				-- ON	LSP.LoadNo 		= L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON LSP.LoadNo = L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.ShippingPlanNo = LSP.ShippingPlanNo') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.ShiptoInvPointNo = LSP.ShipToInvPointNo') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.supplierno 		= L.SUPPLIERno') ;
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo 		= L.CustomerNo') ; }
+
+      cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.LoadDetail LD on LD.LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.LoadNo = LD.LoadNo');
+      cdsArrivingLoads.SQL.Add('AND LSP.ShippingPlanNo = LD.ShippingPlanNo');
+      cdsArrivingLoads.SQL.Add
+        ('Inner Join dbo.SupplierShippingPlan       SSP   on SSP.SupplierShipPlanObjectNo = LD.DefsspNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo');
+
+      { cdsArrivingLoads.SQL.Add('FROM ') ;
+        cdsArrivingLoads.SQL.Add('dbo.SupplierShippingPlan       SSP   	') ;//ON CLL.PhyInvPointNameNo = SSP.ShipToInvPointNo') ;
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.InternalOrderHead ioh on ioh.ShippingPlanNo = SSP.ShippingPlanNo') ;
+
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.ShippingPlanNo = SSP.ShippingPlanNo') ;
+        cdsArrivingLoads.SQL.Add('  AND LSP.ShiptoInvPointNo = SSP.ShipToInvPointNo') ;
+
+        cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L 				ON	LSP.LoadNo 		= L.LoadNo') ;
+        cdsArrivingLoads.SQL.Add('						AND     L.supplierno 		= SSP.SUPPLIERno') ;
+        cdsArrivingLoads.SQL.Add('						AND     L.CustomerNo 		= SSP.CustomerNo') ;
+      }
+
+      cdsArrivingLoads.SQL.Add
+        ('inner JOIN dbo.City IName			ON	IName.CityNo=SSP.ShipToInvPointNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= L.SupplierNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= L.CustomerNo');
+
+      cdsArrivingLoads.SQL.Add
+        ('LEFT OUTER JOIN dbo.CustomerShippingPlanHeader CSH');
+      cdsArrivingLoads.SQL.Add
+        (' INNER JOIN dbo.Orders O				ON	O.OrderNo		= CSH.OrderNo');
+      cdsArrivingLoads.SQL.Add
+        (' LEFT OUTER JOIN dbo.ClientPreference CP		ON	CP.ClientNo		= O.CustomerNo');
+      cdsArrivingLoads.SQL.Add
+        (' LEFT OUTER JOIN dbo.Address	A			ON	A.AddressNo = CSH.ClientBillingAddressNo');
+      cdsArrivingLoads.SQL.Add('ON	CSH.ShippingPlanNo	= SSP.LO_No');
+
+      cdsArrivingLoads.SQL.Add('Inner Join dbo.Confirmed_Load   CL');
+      cdsArrivingLoads.SQL.Add
+        ('Left Outer join dbo.Users	US	ON	US.UserID = cl.CreatedUser');
+      cdsArrivingLoads.SQL.Add('ON CL.Confirmed_LoadNo = L.LoadNo');
+      cdsArrivingLoads.SQL.Add
+        ('Inner Join ClientRole CR ON CR.ClientNo = L.CustomerNo');
+      cdsArrivingLoads.SQL.Add('AND CR.RoleType = 9');
+
+      cdsArrivingLoads.SQL.Add('WHERE');
+      cdsArrivingLoads.SQL.Add('L.LoadedDate > ' +
+        QuotedStr('2012-06-01 00:00:00.000'));
+      if cds_PropsVerkNo.AsInteger > 0 then
+        cdsArrivingLoads.SQL.Add('AND SSP.SupplierNo  = ' +
+          cds_PropsVerkNo.AsString);
+
+      {
+        0: Utlaster med moms
+        1: Utlaster utan moms
+        2: Inlaster Köp
+        3: Interna mellan BTH och BTB
+        4: Alla utlaster som saknar pris
+        5: Alla inlaster som saknar pris }
+
+      if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+      else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
+
+      if (cds_PropsStatus.AsInteger <> 3) and (cds_PropsStatus.AsInteger <> 4)
+      then
+      Begin
+        cdsArrivingLoads.SQL.Add
+          ('AND ((SSP.CustomerNo  <> 172 AND SSP.CustomerNo <> 2878) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  = 2878 AND SSP.SupplierNo <> 172) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  = 172 AND SSP.SupplierNo <> 2878) OR ');
+        cdsArrivingLoads.SQL.Add
+          ('(SSP.CustomerNo  <> 2878 AND SSP.CustomerNo = 172))')
+      End;
+
+      { if (fSupplierNo = 2878) then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+        else
+        if (peMomsFilter.ItemIndex = 3) AND (fSupplierNo = 172) then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878') ; }
+
+      if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 2878)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 172')
+      else if (cds_PropsStatus.AsInteger = 3) AND (cds_PropsVerkNo.AsInteger = 172)
+      then
+        cdsArrivingLoads.SQL.Add('AND SSP.CustomerNo  = 2878');
+
+      if cds_PropsStatus.AsInteger = const_Utan_Moms then
+      Begin
+        cdsArrivingLoads.SQL.Add('AND ( ((SSP.ObjectType = 1)');
+        cdsArrivingLoads.SQL.Add
+          ('AND  ((A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1)))');
+        cdsArrivingLoads.SQL.Add
+          ('OR ( (SSP.ObjectType = 0) AND (ioh.VatExempt = 1) ) )');
+      End
+      else
+        // Laster med moms
+        if cds_PropsStatus.AsInteger = const_Med_Moms then
+        Begin
+          cdsArrivingLoads.SQL.Add
+            ('AND (  ( SSP.ObjectType = 1 AND ( CP.VAT_OnInvoice = 0 and A.CountryNo = 9  ))');
+          cdsArrivingLoads.SQL.Add
+            ('OR (SSP.ObjectType = 0 and ioh.VatExempt = 0))');
+          cdsArrivingLoads.SQL.Add('AND ioh.VatExempt = 0');
+
+        End;
+
+      cdsArrivingLoads.SQL.Add('AND');
+      cdsArrivingLoads.SQL.Add('L.LoadNo');
+      cdsArrivingLoads.SQL.Add('NOT IN (SELECT PL.LoadNo');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LastAvr PL');
+      cdsArrivingLoads.SQL.Add
+        ('Inner Join dbo.LastAvrHdr PH on PH.PaymentNo = PL.PaymentNo');
+      cdsArrivingLoads.SQL.Add('WHERE');
+      cdsArrivingLoads.SQL.Add('PH.SupplierNo = SSP.SupplierNo');
+      cdsArrivingLoads.SQL.Add('AND PL.LoadNo = L.LoadNo)');
+
+      cdsArrivingLoads.SQL.Add('AND');
+      cdsArrivingLoads.SQL.Add('L.LoadNo');
+      cdsArrivingLoads.SQL.Add('NOT IN (SELECT LoadNo');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LoadRemAvr)');
+
+      cdsArrivingLoads.SQL.Add('AND');
+      cdsArrivingLoads.SQL.Add('L.LoadNo');
+      cdsArrivingLoads.SQL.Add('IN (SELECT LoadNo');
+      cdsArrivingLoads.SQL.Add('FROM dbo.LoadDtlVal)');
+
+      if cds_PropsStatus.AsInteger = 4 then
+      Begin
+        cdsArrivingLoads.SQL.Add('AND L.LoadNo in (Select LDV.LoadNo FROM');
+        cdsArrivingLoads.SQL.Add
+          ('dbo.LoadDtlVal LDV	WHERE LDV.LoadNo = L.LoadNo');
+        cdsArrivingLoads.SQL.Add('AND LDV.SupplierNo = SSP.SupplierNo');
+        cdsArrivingLoads.SQL.Add('AND LDV.Price = 0)');
+      End;
 
 
-    // if ThisUser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('Build_Sold_Loads_SQL.txt');
-    // Fel kan vara att skatteupplag inte är varken bockad eller ej (bara grå)
+      // if ThisUser.UserID = 8 then cdsArrivingLoads.SQL.SaveToFile('Build_Sold_Loads_SQL.txt');
+      // Fel kan vara att skatteupplag inte är varken bockad eller ej (bara grå)
 
-    CreatePackageSQL(False);
+      CreatePackageSQL(False);
 
-  End; // With dm_Avrakning do
-End;
+    End; // With dm_Avrakning do
+  End;
 
+*)
 
 procedure TfrmSkapaAvrakning.Build_PurchaseLoads_SQL(Sender: TObject);
 begin
