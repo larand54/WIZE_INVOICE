@@ -1240,12 +1240,14 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
     end
     object cdsArrivingPackagesPackage_Size: TIntegerField
+      DisplayLabel = 'Pktstorlek id'
       FieldName = 'Package_Size'
       Origin = 'Package_Size'
       ReadOnly = True
       Required = True
     end
     object cdsArrivingPackagesPackageSizeName: TStringField
+      DisplayLabel = 'Paketstorlek'
       FieldName = 'PackageSizeName'
       Origin = 'PackageSizeName'
       Size = 50

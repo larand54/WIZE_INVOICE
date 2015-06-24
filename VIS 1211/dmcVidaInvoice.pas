@@ -1560,6 +1560,7 @@ type
     sp_LdConnCtrl: TFDStoredProc;
     sp_DEL_ExportInvoiceData: TFDStoredProc;
     sp_STORE_ExportInvoiceData: TFDStoredProc;
+    sp_GetKundResKontra: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1618,6 +1619,7 @@ type
     { Private declarations }
     GlobalLoadDetailNo: Integer;
     lbList: TStringList;
+    function  GetKundResKontra(const Object5  : String;const CountryNo  : Integer) : String ;
     function GetAvdelning(const ClientNo: Integer;
       const KontoNr: String): String;
     procedure DeleteInvoiceEDI(const InternalInvoiceNo: Integer);
@@ -7333,6 +7335,22 @@ Begin
   end;
 End;
 
+function TdmVidaInvoice.GetKundResKontra(const Object5  : String;const CountryNo  : Integer) : String ;
+Begin
+  sp_GetKundResKontra.Active := False ;
+  sp_GetKundResKontra.ParamByName('@CountryNo').AsInteger := CountryNo ;
+  sp_GetKundResKontra.ParamByName('@Object5').AsString    := Object5 ;
+  Try
+    sp_GetKundResKontra.Active  := True ;
+    if not sp_GetKundResKontra.Eof then
+     Result := sp_GetKundResKontra.FieldByName('ResKontranr').AsString
+      else
+       Result := '0000' ;
+  Finally
+    sp_GetKundResKontra.Active  :=  False ;
+  End;
+End;
+
 function TdmVidaInvoice.InsertVerifikatLogg(const Test: Boolean;
   const InvoiceNo, InternalInvoiceNo, CustomerNo, InvoiceType2
   : Integer): Boolean;
@@ -7524,23 +7542,26 @@ begin
 
         // OBJECT 5 ÄR MOTPART
         Object5 := sp_InvTotalsO5.AsString;
+        KundResKontra :=  GetKundResKontra(Object5, sp_InvTotalsCountryNo.AsInteger) ;
 
      //   KundResKontra :=  GetKundResKontra(Object5, sp_InvTotalsCountryNo.AsInteger) ;
         // Kundreskontra
-        if Object5 = '99' then // 99 = extern kund
-        Begin
-          if sp_InvTotalsCountryNo.AsInteger = 9 then // CountryNo 9 = Sverige
-            KundResKontra := '1510' // Kundfordring Sverige externa kunder
-          else
-            KundResKontra := '1512'; // Kundfordring utländska externa kunder
-        End
-        else // Intern kund
-        Begin
-          if Object5 = '22' then
-            KundResKontra := '1562' // Kundfordring koncern Vida Wood UK
-          else
-            KundResKontra := '1560'; // Kundfordring koncern Sverige
-        End;
+{
+          if Object5 = '99' then // 99 = extern kund
+          Begin
+            if sp_InvTotalsCountryNo.AsInteger = 9 then // CountryNo 9 = Sverige
+              KundResKontra := '1510' // Kundfordring Sverige externa kunder
+            else
+              KundResKontra := '1512'; // Kundfordring utländska externa kunder
+          End
+          else // Intern kund
+          Begin
+            if Object5 = '22' then
+              KundResKontra := '1562' // Kundfordring koncern Vida Wood UK
+            else
+              KundResKontra := '1560'; // Kundfordring koncern Sverige
+          End;
+}
 
         { if Debit_Credit = 0 then
           Begin

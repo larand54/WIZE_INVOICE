@@ -16906,4 +16906,30 @@ object dmVidaInvoice: TdmVidaInvoice
         ParamType = ptInput
       end>
   end
+  object sp_GetKundResKontra: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetKundResKontra'
+    Left = 576
+    Top = 328
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@CountryNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@Object5'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 4
+      end>
+  end
 end

@@ -2,8 +2,8 @@ object dmsConnector: TdmsConnector
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 421
-  Width = 805
+  Height = 490
+  Width = 990
   object ilStatus: TImageList
     Left = 176
     Top = 72
@@ -1826,9 +1826,11 @@ object dmsConnector: TdmsConnector
     Params.Strings = (
       'Server=vis.vida.se'
       'Database=vis_vida'
-      'OSAuthent=Yes'
+      'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
+      'User_Name=Lars'
+      'Password=woods2011'
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
@@ -2009,7 +2011,6 @@ object dmsConnector: TdmsConnector
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 584
     Top = 72

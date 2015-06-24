@@ -533,8 +533,8 @@ begin
 
 
  // ThisUser.Database  := 'alvesql01:vis_vida' ;
-// ThisUser.Database  := 'vis.vida.se:vis_vida' ;
-    ThisUser.Database  := 'alvesql03:vis_vida' ;
+ ThisUser.Database  := 'vis.vida.se:vis_vida' ;
+//    ThisUser.Database  := 'alvesql03:vis_vida' ;
 
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
