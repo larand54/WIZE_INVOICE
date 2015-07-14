@@ -1561,6 +1561,7 @@ type
     sp_DEL_ExportInvoiceData: TFDStoredProc;
     sp_STORE_ExportInvoiceData: TFDStoredProc;
     sp_GetKundResKontra: TFDStoredProc;
+    sp_JusteraUSAFakturor: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1688,6 +1689,7 @@ type
     vouno, logno: Integer;
     serie: String;
     ldglogwrite_logerror, vourowlog_logerror: Integer;
+    procedure JusteraUSAFakturor ;
     procedure STORE_ExportInvoiceData(mtSelectedInvoices: TkbmMemTable);
     procedure DEL_ExportInvoiceData;
     procedure PkgLogInvoiced(const InternalInvoiceNo, Operation: Integer);
@@ -9778,6 +9780,26 @@ Begin
       End;
     end;
   End;
+End;
+
+procedure TdmVidaInvoice.JusteraUSAFakturor ;
+Var Save_Cursor   : TCursor ;
+Begin
+ Try
+  Save_Cursor    := Screen.Cursor ;
+  Screen.Cursor  := crHourGlass ;    { Show hourglass cursor }
+    Try
+    sp_JusteraUSAFakturor.ExecProc ;
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog(E.Message);
+        Raise;
+      End;
+    end;
+  Finally
+  Screen.Cursor := Save_Cursor ;
+  End ;
 End;
 
 end.

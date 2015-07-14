@@ -375,6 +375,9 @@ type
     dxBarButton50: TdxBarButton;
     acAusExportCustomerInfo: TAction;
     dxBarButton51: TdxBarButton;
+    dxBarButton52: TdxBarButton;
+    dxBarLargeButton14: TdxBarLargeButton;
+    acJusteraUSAfakturor: TAction;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -491,6 +494,7 @@ type
     procedure acAustraliaExportExecute(Sender: TObject);
     procedure acAustraliaContainerExportExecute(Sender: TObject);
     procedure acAusExportCustomerInfoExecute(Sender: TObject);
+    procedure acJusteraUSAfakturorExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -2164,6 +2168,11 @@ begin
   // and (grdFakturaDBBandedTableView1.DataController.DataSource.DataSet.RecordCount > 0)
     AND ((dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0) AND
     (dmVidaInvoice.cdsInvoiceListINVOICE_NO.IsNull = False));
+end;
+
+procedure TfrmInvoiceList.acJusteraUSAfakturorExecute(Sender: TObject);
+begin
+  dmVidaInvoice.JusteraUSAFakturor ;
 end;
 
 procedure TfrmInvoiceList.acOpenInvoiceUpdate(Sender: TObject);

@@ -3328,10 +3328,10 @@ end;
 
 procedure TfrmLoadArrivals.cds_PropsAfterInsert(DataSet: TDataSet);
 begin
-  cds_PropsForm.AsString := Self.Name;
-  cds_PropsUserID.AsInteger := ThisUser.UserID;
-  cds_PropsNewItemRow.AsInteger := 0;
-  cds_PropsVerkNo.AsInteger := ThisUser.CompanyNo;
+  cds_PropsForm.AsString          := Self.Name;
+  cds_PropsUserID.AsInteger       := ThisUser.UserID;
+  cds_PropsNewItemRow.AsInteger   := 0;
+  cds_PropsVerkNo.AsInteger       := ThisUser.CompanyNo;
 end;
 
 procedure TfrmLoadArrivals.acConfirmOneLoadUpdate(Sender: TObject);

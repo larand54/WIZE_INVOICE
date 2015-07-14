@@ -916,7 +916,7 @@ Begin
       if mtLoadNosPaymentType.AsInteger = 1 then
       Begin
         // om det är ett inköp är vw leverantör, då måste vi byts ut supplierno mot köparens
-        if cds_PropsVerkNo.AsInteger = ThisUser.CompanyNo then
+        if cds_PropsVerkNo.AsInteger = 741 then
           SupplierNo := cdsPaymentHeadCustomerNo.AsInteger
         else
           SupplierNo := cds_PropsVerkNo.AsInteger;

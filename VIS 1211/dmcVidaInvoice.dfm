@@ -16932,4 +16932,17 @@ object dmVidaInvoice: TdmVidaInvoice
         Size = 4
       end>
   end
+  object sp_JusteraUSAFakturor: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_justeraUSAfakturor'
+    Left = 1072
+    Top = 1016
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end>
+  end
 end

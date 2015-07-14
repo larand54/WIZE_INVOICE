@@ -538,7 +538,7 @@ type
     cds_verkLasterPaket: TIntegerField;
     sp_ChangeToIMPProductForIntLoad: TFDStoredProc;
     cdsArrivingLoadsEGEN: TIntegerField;
-    sp_AR_Invoice: TFDStoredProc;
+    sp_AR_Load_Ext: TFDStoredProc;
     sq_IsEXTLoadConfirmed: TFDQuery;
     sq_IsEXTLoadConfirmedConfirmed_LoadNo: TIntegerField;
     sq_IsEXTLoadConfirmedConfirmed_ShippingPlanNo: TIntegerField;
@@ -2507,11 +2507,11 @@ function TdmArrivingLoads.AR_ExternLoad(const LoadNo, Status, LIPNo,
 Begin
   Result := True;
   Try
-    sp_AR_Invoice.ParamByName('@LoadNo').AsInteger := LoadNo;
-    sp_AR_Invoice.ParamByName('@Status').AsInteger := Status;
-    sp_AR_Invoice.ParamByName('@LIPNo').AsInteger := LIPNo;
-    sp_AR_Invoice.ParamByName('@CreatedUser').AsInteger := CreatedUser;
-    sp_AR_Invoice.ExecProc;
+    sp_AR_Load_Ext.ParamByName('@LoadNo').AsInteger      := LoadNo;
+    sp_AR_Load_Ext.ParamByName('@Status').AsInteger      := Status;
+    sp_AR_Load_Ext.ParamByName('@LIPNo').AsInteger       := LIPNo;
+    sp_AR_Load_Ext.ParamByName('@CreatedUser').AsInteger := CreatedUser;
+    sp_AR_Load_Ext.ExecProc;
 
     { cdsInvoiceList.Edit ;
       cdsInvoiceListArDate.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
@@ -2523,7 +2523,7 @@ Begin
     Begin
       Result := False;
       // dmsSystem.FDoLog(E.Message) ;
-      ShowMessage(E.Message);
+      ShowMessage(E.Message +' sp_AR_Load_Ext');
       Raise;
     End;
   end;

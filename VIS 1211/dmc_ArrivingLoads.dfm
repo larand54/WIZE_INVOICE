@@ -5407,7 +5407,7 @@ object dmArrivingLoads: TdmArrivingLoads
         ParamType = ptInput
       end>
   end
-  object sp_AR_Invoice: TFDStoredProc
+  object sp_AR_Load_Ext: TFDStoredProc
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]

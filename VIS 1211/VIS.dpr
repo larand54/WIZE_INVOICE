@@ -157,7 +157,8 @@ uses
   udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
   uReport in '..\..\CommonSources\FastReport\uReport.pas',
   uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
-  uPackageSize in 'uPackageSize.pas' {fPackageSize};
+  uPackageSize in 'uPackageSize.pas' {fPackageSize},
+  uFR_Log in '..\..\CommonSources\FastReport\uFR_Log.pas';
 
 {$R *.res}
 

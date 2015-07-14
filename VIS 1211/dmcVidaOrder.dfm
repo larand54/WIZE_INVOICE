@@ -755,8 +755,8 @@ object dmcOrder: TdmcOrder
       'AND SP.ShippingPlanNo = -1'
       'order by SP.ShippingPlanNo'
       '')
-    Left = 56
-    Top = 8
+    Left = 64
+    Top = 32
     object cdsSawmillLoadOrdersKONTRAKTSBESKRIVNING: TStringField
       DisplayLabel = 'Kontraktsbeskrivning'
       FieldName = 'KONTRAKTSBESKRIVNING'
@@ -2445,8 +2445,8 @@ object dmcOrder: TdmcOrder
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_LoadsForLO_VIII'
-    Left = 448
-    Top = 32
+    Left = 456
+    Top = 24
     ParamData = <
       item
         Position = 1

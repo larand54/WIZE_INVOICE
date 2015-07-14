@@ -4,12 +4,12 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   Align = alClient
   BorderStyle = bsNone
   Caption = 'frmGjordaAvrakningar'
-  ClientHeight = 652
-  ClientWidth = 1012
+  ClientHeight = 802
+  ClientWidth = 1246
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -18,44 +18,56 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel3: TPanel
     Left = 0
-    Top = 279
-    Width = 1012
-    Height = 373
+    Top = 343
+    Width = 1246
+    Height = 459
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 0
     object Panel1: TPanel
       Left = 1
       Top = 1
-      Width = 1010
-      Height = 32
+      Width = 1244
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       Color = clGreen
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
       DesignSize = (
-        1010
-        32)
+        1244
+        40)
       object BitBtn1: TBitBtn
-        Left = 848
+        Left = 1045
         Top = 2
-        Width = 156
-        Height = 28
+        Width = 192
+        Height = 35
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = acCancelLoad
         Anchors = [akTop, akRight]
         Caption = 'Ta bort last Shift+F5'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         Glyph.Data = {
@@ -137,16 +149,20 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         TabOrder = 0
       end
       object BitBtn2: TBitBtn
-        Left = 709
+        Left = 874
         Top = 2
-        Width = 131
-        Height = 28
+        Width = 161
+        Height = 35
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = acCreditLoad
         Anchors = [akTop, akRight]
         Caption = 'Kreditera laster'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         Glyph.Data = {
@@ -228,16 +244,20 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         TabOrder = 1
       end
       object BitBtn3: TBitBtn
-        Left = 541
+        Left = 667
         Top = 2
-        Width = 156
-        Height = 28
+        Width = 192
+        Height = 35
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = acUppdateraPriser
         Anchors = [akTop, akRight]
         Caption = 'Uppdatera priser F10'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         Glyph.Data = {
@@ -319,32 +339,40 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         TabOrder = 2
       end
       object BitBtn4: TBitBtn
-        Left = 13
-        Top = 3
-        Width = 76
-        Height = 28
+        Left = 17
+        Top = 4
+        Width = 94
+        Height = 34
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = Action1
         Anchors = [akTop, akRight]
         Caption = 'Upd.price'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGreen
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 3
       end
       object BitBtn5: TBitBtn
-        Left = 400
+        Left = 493
         Top = 2
-        Width = 132
-        Height = 28
+        Width = 163
+        Height = 35
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = acOpenLoad
         Anchors = [akTop, akRight]
         Caption = #214'ppna last F9'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         Glyph.Data = {
@@ -428,9 +456,13 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     end
     object grdAvrRows: TcxGrid
       Left = 1
-      Top = 33
-      Width = 1010
-      Height = 339
+      Top = 41
+      Width = 1244
+      Height = 417
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 1
       object grdAvrRowsDBTableView1: TcxGridDBTableView
@@ -617,24 +649,36 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object Panel4: TPanel
     Left = 0
     Top = 0
-    Width = 1012
-    Height = 54
+    Width = 1246
+    Height = 66
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
     object Panel5: TPanel
-      Left = 255
+      Left = 314
       Top = 0
-      Width = 757
-      Height = 54
+      Width = 932
+      Height = 66
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 757
-        Height = 44
+        Width = 932
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -642,29 +686,45 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     object Panel7: TPanel
       Left = 0
       Top = 0
-      Width = 255
-      Height = 54
+      Width = 314
+      Height = 66
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       BevelOuter = bvNone
-      Constraints.MinWidth = 255
+      Constraints.MinWidth = 314
       TabOrder = 1
       object Label1: TLabel
-        Left = 24
-        Top = 9
-        Width = 32
-        Height = 13
+        Left = 30
+        Top = 11
+        Width = 39
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'VERK:'
       end
       object Label2: TLabel
-        Left = 10
-        Top = 33
-        Width = 46
-        Height = 13
+        Left = 12
+        Top = 41
+        Width = 58
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'STATUS:'
       end
       object lcVerk: TcxDBLookupComboBox
-        Left = 64
+        Left = 79
         Top = 0
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Verk'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -672,11 +732,15 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         Properties.ListOptions.AnsiSort = True
         Properties.ListOptions.ShowHeader = False
         TabOrder = 0
-        Width = 185
+        Width = 227
       end
       object icStatus: TcxDBImageComboBox
-        Left = 64
-        Top = 24
+        Left = 79
+        Top = 30
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Status'
         DataBinding.DataSource = ds_Props
         Properties.Images = ImageList1
@@ -708,39 +772,51 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
             Value = 4
           end>
         TabOrder = 1
-        Width = 185
+        Width = 227
       end
     end
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 271
-    Width = 1012
+    Top = 335
+    Width = 1246
     Height = 8
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel3
   end
   object Panel2: TPanel
     Left = 0
-    Top = 54
-    Width = 1012
-    Height = 217
+    Top = 66
+    Width = 1246
+    Height = 269
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     Caption = 'Panel2'
     TabOrder = 7
     object Panel6: TPanel
       Left = 1
       Top = 1
-      Width = 1010
-      Height = 17
+      Width = 1244
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       Caption = 'Avr'#228'kningshuvud'
       Color = clGreen
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -748,9 +824,13 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     end
     object grdPayment: TcxGrid
       Left = 1
-      Top = 18
-      Width = 1010
-      Height = 198
+      Top = 22
+      Width = 1244
+      Height = 246
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 1
       object grdPaymentDBTableView1: TcxGridDBTableView
@@ -1354,7 +1434,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -3084,7 +3164,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object cxStyleRepository1: TcxStyleRepository
     Left = 152
     Top = 235
-    PixelsPerInch = 96
+    PixelsPerInch = 120
     object cxStyleRed: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clRed

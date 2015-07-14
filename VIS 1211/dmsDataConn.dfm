@@ -1824,7 +1824,7 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=vis.vida.se'
+      'Server=alvesql01'
       'Database=vis_vida'
       'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
@@ -1832,6 +1832,8 @@ object dmsConnector: TdmsConnector
       'User_Name=Lars'
       'Password=woods2011'
       'DriverID=MSSQL')
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
     LoginPrompt = False

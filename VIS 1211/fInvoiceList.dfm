@@ -4,12 +4,12 @@ object frmInvoiceList: TfrmInvoiceList
   Align = alClient
   BorderStyle = bsNone
   Caption = 'frmInvoiceList'
-  ClientHeight = 856
-  ClientWidth = 1154
+  ClientHeight = 1054
+  ClientWidth = 1420
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -19,21 +19,29 @@ object frmInvoiceList: TfrmInvoiceList
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1154
-    Height = 172
+    Width = 1420
+    Height = 212
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object Panel6: TPanel
       Left = 0
       Top = 0
-      Width = 1154
-      Height = 50
+      Width = 1420
+      Height = 62
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       Caption = 'Panel6'
@@ -41,31 +49,47 @@ object frmInvoiceList: TfrmInvoiceList
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1082
-        Height = 50
+        Width = 1332
+        Height = 62
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
         object dxBarDockControl1: TdxBarDockControl
           Left = 1
           Top = 1
-          Width = 1080
-          Height = 44
+          Width = 1330
+          Height = 48
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = dalTop
           BarManager = dxBarManager1
         end
       end
       object Panel3: TPanel
-        Left = 1082
+        Left = 1332
         Top = 0
-        Width = 72
-        Height = 50
+        Width = 88
+        Height = 62
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         TabOrder = 1
         object dxBarDockControl2: TdxBarDockControl
           Left = 1
           Top = 1
-          Width = 70
-          Height = 44
+          Width = 86
+          Height = 48
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -73,141 +97,221 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object Panel7: TPanel
       Left = 0
-      Top = 50
-      Width = 1154
-      Height = 122
+      Top = 62
+      Width = 1420
+      Height = 150
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1154
-        Height = 122
+        Width = 1420
+        Height = 150
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
         object Label3: TLabel
-          Left = 8
-          Top = 8
-          Width = 23
-          Height = 13
+          Left = 10
+          Top = 10
+          Width = 28
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'LOnr'
         end
         object Label1: TLabel
-          Left = 8
-          Top = 54
-          Width = 48
-          Height = 13
+          Left = 10
+          Top = 66
+          Width = 59
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Fakturanr:'
         end
         object Label4: TLabel
-          Left = 8
-          Top = 31
-          Width = 29
-          Height = 13
+          Left = 10
+          Top = 38
+          Width = 36
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lastnr'
         end
         object Label5: TLabel
-          Left = 165
-          Top = 11
-          Width = 27
-          Height = 13
+          Left = 203
+          Top = 14
+          Width = 35
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Serie:'
         end
         object Label6: TLabel
-          Left = 366
-          Top = 9
-          Width = 55
-          Height = 13
+          Left = 450
+          Top = 11
+          Width = 69
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Betalstatus:'
         end
         object Label7: TLabel
-          Left = 366
-          Top = 33
-          Width = 47
-          Height = 13
+          Left = 450
+          Top = 41
+          Width = 61
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'S'#228'ljgrupp:'
         end
         object Label8: TLabel
-          Left = 576
-          Top = 12
-          Width = 53
-          Height = 13
+          Left = 709
+          Top = 15
+          Width = 66
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Fakturatyp:'
         end
         object Label9: TLabel
-          Left = 576
-          Top = 36
-          Width = 31
-          Height = 13
+          Left = 709
+          Top = 44
+          Width = 37
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Konto:'
         end
         object Label10: TLabel
-          Left = 576
-          Top = 60
-          Width = 44
-          Height = 13
+          Left = 709
+          Top = 74
+          Width = 57
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Varuslag:'
         end
         object Label11: TLabel
-          Left = 366
-          Top = 57
-          Width = 37
-          Height = 13
+          Left = 450
+          Top = 70
+          Width = 47
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Region:'
         end
         object Label12: TLabel
-          Left = 366
-          Top = 81
-          Width = 29
-          Height = 13
+          Left = 450
+          Top = 100
+          Width = 35
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Klient:'
         end
         object Label13: TLabel
-          Left = 8
-          Top = 80
-          Width = 32
-          Height = 13
+          Left = 10
+          Top = 98
+          Width = 39
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Org.nr:'
         end
         object Label14: TLabel
-          Left = 576
-          Top = 84
-          Width = 44
-          Height = 13
+          Left = 709
+          Top = 103
+          Width = 55
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = #214'verf'#246'ra:'
         end
         object Label2: TLabel
-          Left = 8
-          Top = 103
-          Width = 52
-          Height = 13
+          Left = 10
+          Top = 127
+          Width = 62
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Kontraktnr:'
         end
         object nfSearchLO: TcxTextEdit
-          Left = 67
+          Left = 82
           Top = 2
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 0
           OnKeyDown = nfSearchLOKeyDown
-          Width = 62
+          Width = 77
         end
         object nfSearchInvoiceNo: TcxTextEdit
-          Left = 67
-          Top = 48
+          Left = 82
+          Top = 59
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 2
           OnKeyDown = nfSearchInvoiceNoKeyDown
-          Width = 62
+          Width = 77
         end
         object nfSearchLastNr: TcxTextEdit
-          Left = 67
-          Top = 24
+          Left = 82
+          Top = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 1
           OnKeyDown = nfSearchLastNrKeyDown
-          Width = 62
+          Width = 77
         end
         object lcSaljgrupp: TcxDBLookupComboBox
-          Left = 424
-          Top = 28
+          Left = 522
+          Top = 34
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Saljgrupp'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -222,11 +326,15 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ListOptions.AnsiSort = True
           Properties.ListOptions.ShowHeader = False
           TabOrder = 12
-          Width = 145
+          Width = 178
         end
         object icBetalStatus: TcxDBImageComboBox
-          Left = 424
-          Top = 4
+          Left = 522
+          Top = 5
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Status'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -250,40 +358,56 @@ object frmInvoiceList: TfrmInvoiceList
               Value = 3
             end>
           TabOrder = 11
-          Width = 145
+          Width = 178
         end
         object deStartPeriod: TcxDBDateEdit
-          Left = 205
-          Top = 27
+          Left = 252
+          Top = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'StartPeriod'
           DataBinding.DataSource = ds_Props
           Properties.ImmediatePost = True
           Properties.Kind = ckDateTime
           TabOrder = 8
-          Width = 156
+          Width = 192
         end
         object deEndPeriod: TcxDBDateEdit
-          Left = 205
-          Top = 51
+          Left = 252
+          Top = 63
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'EndPeriod'
           DataBinding.DataSource = ds_Props
           Properties.ImmediatePost = True
           Properties.Kind = ckDateTime
           TabOrder = 9
-          Width = 156
+          Width = 192
         end
         object ccbInvoiceType: TcxCheckComboBox
-          Left = 205
-          Top = 3
+          Left = 252
+          Top = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Properties.DropDownRows = 15
           Properties.ImmediatePost = True
           Properties.Items = <>
           TabOrder = 6
-          Width = 155
+          Width = 191
         end
         object cbTyp: TcxDBImageComboBox
-          Left = 632
-          Top = 3
+          Left = 778
+          Top = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'BarCodeNo'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -303,11 +427,15 @@ object frmInvoiceList: TfrmInvoiceList
               Value = 2
             end>
           TabOrder = 15
-          Width = 121
+          Width = 149
         end
         object cbKonto: TcxDBImageComboBox
-          Left = 632
-          Top = 27
+          Left = 778
+          Top = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'BookingTypeNo'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -327,11 +455,15 @@ object frmInvoiceList: TfrmInvoiceList
               Value = 2
             end>
           TabOrder = 16
-          Width = 121
+          Width = 149
         end
         object cbVaruSlag: TcxDBImageComboBox
-          Left = 632
-          Top = 51
+          Left = 778
+          Top = 63
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'CopyPcs'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -351,19 +483,27 @@ object frmInvoiceList: TfrmInvoiceList
               Value = 4
             end>
           TabOrder = 17
-          Width = 121
+          Width = 149
         end
         object nfSearchInvoiceNoII: TcxTextEdit
-          Left = 163
-          Top = 48
+          Left = 201
+          Top = 59
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 3
           Visible = False
           OnKeyDown = nfSearchInvoiceNoIIKeyDown
-          Width = 29
+          Width = 35
         end
         object lcSR: TcxDBLookupComboBox
-          Left = 424
-          Top = 52
+          Left = 522
+          Top = 64
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'SR'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -378,20 +518,28 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ListOptions.AnsiSort = True
           Properties.ListOptions.ShowHeader = False
           TabOrder = 13
-          Width = 145
+          Width = 178
         end
         object bSparaDueDate: TcxButton
-          Left = 205
-          Top = 75
-          Width = 154
-          Height = 22
+          Left = 252
+          Top = 92
+          Width = 190
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acSave
           Caption = 'Spara duedate '#228'ndringar'
           TabOrder = 10
         end
         object icTransferredStatus: TcxDBImageComboBox
-          Left = 632
-          Top = 75
+          Left = 778
+          Top = 92
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'GradeStampNo'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -411,11 +559,15 @@ object frmInvoiceList: TfrmInvoiceList
               Value = 2
             end>
           TabOrder = 18
-          Width = 121
+          Width = 149
         end
         object lcKund: TcxDBLookupComboBox
-          Left = 424
-          Top = 76
+          Left = 522
+          Top = 94
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Kund'
           DataBinding.DataSource = ds_Props
           Properties.ClearKey = 46
@@ -429,43 +581,59 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ListOptions.AnsiSort = True
           Properties.ListOptions.ShowHeader = False
           TabOrder = 14
-          Width = 145
+          Width = 178
         end
         object teSaleOrgNr: TcxTextEdit
-          Left = 67
-          Top = 72
+          Left = 82
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 4
           OnKeyDown = teSaleOrgNrKeyDown
-          Width = 99
+          Width = 122
         end
         object bMallar: TcxButton
-          Left = 768
-          Top = 8
-          Width = 73
-          Height = 33
+          Left = 945
+          Top = 10
+          Width = 90
+          Height = 40
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Mallar'
           DropDownMenu = pmMallar
           Kind = cxbkDropDown
           TabOrder = 19
         end
         object cxDBLabel1: TcxDBLabel
-          Left = 846
-          Top = 18
+          Left = 1041
+          Top = 22
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Form'
           DataBinding.DataSource = ds_Props
           ParentFont = False
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -12
+          Style.Font.Height = -15
           Style.Font.Name = 'MS Sans Serif'
           Style.Font.Style = [fsBold]
           Style.IsFontAssigned = True
-          Height = 21
-          Width = 83
+          Height = 26
+          Width = 102
         end
         object cbFillterOnInvoiceDate: TcxDBCheckBox
-          Left = 144
-          Top = 27
+          Left = 177
+          Top = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Period:'
           DataBinding.DataField = 'FilterOrderDate'
           DataBinding.DataSource = ds_Props
@@ -473,11 +641,15 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 7
-          Width = 57
+          Width = 70
         end
         object cbDelKredit: TcxDBCheckBox
-          Left = 768
-          Top = 48
+          Left = 945
+          Top = 59
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Exkludera delkredit'
           DataBinding.DataField = 'LengthFormatNo'
           DataBinding.DataSource = ds_Props
@@ -485,11 +657,15 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 21
-          Width = 121
+          Width = 149
         end
         object cxDBCheckBox1: TcxDBCheckBox
-          Left = 768
-          Top = 72
+          Left = 945
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Exkludera prelimin'#228'ra'
           DataBinding.DataField = 'LengthOption'
           DataBinding.DataSource = ds_Props
@@ -497,42 +673,62 @@ object frmInvoiceList: TfrmInvoiceList
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 22
-          Width = 129
+          Width = 159
         end
         object cxButton1: TcxButton
-          Left = 904
-          Top = 56
-          Width = 75
-          Height = 41
+          Left = 1113
+          Top = 69
+          Width = 92
+          Height = 50
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acShowVerifikatLogg
           TabOrder = 23
         end
         object BKalkylera: TcxButton
-          Left = 1064
-          Top = 56
-          Width = 75
-          Height = 41
+          Left = 1310
+          Top = 69
+          Width = 92
+          Height = 50
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acReCalcInvoice
           TabOrder = 24
         end
         object BKontonr: TcxButton
-          Left = 984
-          Top = 56
-          Width = 75
-          Height = 41
+          Left = 1211
+          Top = 69
+          Width = 92
+          Height = 50
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acGetKontoNr
           TabOrder = 25
         end
         object ccKontraktnr: TcxComboBox
-          Left = 66
-          Top = 95
+          Left = 81
+          Top = 117
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 5
           OnKeyDown = ccKontraktnrKeyDown
-          Width = 121
+          Width = 149
         end
         object cxLabel1: TcxLabel
-          Left = 904
-          Top = 104
+          Left = 1113
+          Top = 128
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'cxLabel1'
         end
       end
@@ -540,9 +736,13 @@ object frmInvoiceList: TfrmInvoiceList
   end
   object grdFaktura: TcxGrid
     Left = 0
-    Top = 172
-    Width = 1154
-    Height = 684
+    Top = 212
+    Width = 1420
+    Height = 842
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     PopupMenu = pmInvoiceGrid
     TabOrder = 6
@@ -1028,11 +1228,14 @@ object frmInvoiceList: TfrmInvoiceList
     end
   end
   object lbLO_To_Invoice: TListBox
-    Left = 456
-    Top = 360
-    Width = 169
-    Height = 193
-    ItemHeight = 13
+    Left = 561
+    Top = 443
+    Width = 208
+    Height = 238
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Sorted = True
     TabOrder = 1
     Visible = False
@@ -1358,11 +1561,16 @@ object frmInvoiceList: TfrmInvoiceList
       Caption = 'Export customer info (Australien)'
       OnExecute = acAusExportCustomerInfoExecute
     end
+    object acJusteraUSAfakturor: TAction
+      Caption = 'Just. us fakt'
+      ImageIndex = 12
+      OnExecute = acJusteraUSAfakturorExecute
+    end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -1450,6 +1658,10 @@ object frmInvoiceList: TfrmInvoiceList
         item
           Visible = True
           ItemName = 'dxBarLargeButton13'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton14'
         end>
       OldName = 'Custom 1'
       OneOnRow = True
@@ -1653,6 +1865,16 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object dxBarButton51: TdxBarButton
       Action = acAusExportCustomerInfo
+      Category = 0
+    end
+    object dxBarButton52: TdxBarButton
+      Caption = 'New Button'
+      Category = 0
+      Hint = 'New Button'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton14: TdxBarLargeButton
+      Action = acJusteraUSAfakturor
       Category = 0
     end
     object dxBarButton1: TdxBarButton
