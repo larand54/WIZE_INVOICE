@@ -8,7 +8,7 @@ uses
   dxEditor, dxExEdtr, ImgList, OleServer, OleCtrls,
   Menus, dxTL, dxTLClms, dxDBTLCl, dxGrClms,
   dxDBCtrl, dxDBGrid, CRAXDDRT_TLB, DB, ActnList,
-  CrystalActiveXReportViewerLib11_TLB, FMTBcd, DBClient, Provider, SqlExpr, SqlTimSt,
+  CrystalActiveXReportViewerLib11_5_TLB, FMTBcd, DBClient, Provider, SqlExpr, SqlTimSt,
   cxClasses;
 
 type

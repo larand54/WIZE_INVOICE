@@ -2,8 +2,8 @@ inherited fAvdelning: TfAvdelning
   Caption = 'Avdelning'
   ClientHeight = 700
   ClientWidth = 1049
-  ExplicitWidth = 1057
-  ExplicitHeight = 728
+  ExplicitWidth = 1065
+  ExplicitHeight = 738
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel5: TPanel
@@ -109,7 +109,6 @@ inherited fAvdelning: TfAvdelning
     Left = 80
     Top = 224
     inherited dxComponentPrinter1Link1: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -264,16 +263,53 @@ inherited fAvdelning: TfAvdelning
       'DataField'
       'KeyField'
       'ListField'
+      'HelpFile'
+      'Origin'
       'ConnectionName'
       'DisplayChecked'
       'DisplayUnchecked'
-      'HelpFile'
       'HotZoneClassName'
       'KeyFieldNames'
       'ListFieldNames'
       'OldName'
-      'Origin'
-      'PropertiesClassName')
+      'PropertiesClassName'
+      'AutoIncFields'
+      'CaseInsFields'
+      'Categories'
+      'ClassName'
+      'CommandText'
+      'ConstraintErrorMessage'
+      'CustomConstraint'
+      'DataTypeName'
+      'DefaultExpression'
+      'DescFields'
+      'DetailFields'
+      'EditFormat'
+      'Expression'
+      'FetchRowSQL'
+      'Fields'
+      'Filter'
+      'FmtDisplayDate'
+      'FmtDisplayDateTime'
+      'FmtDisplayNumeric'
+      'FmtDisplayTime'
+      'FmtEditNumeric'
+      'GeneratorName'
+      'ImportedConstraint'
+      'IndexFieldNames'
+      'IniFileName'
+      'InsertSQL'
+      'LockSQL'
+      'PersistentFileName'
+      'PictureFilter'
+      'PictureGraphicClassName'
+      'RegistryPath'
+      'SkinName'
+      'StorageName'
+      'StoredProcName'
+      'UpdateTableName'
+      'Version'
+      'Version')
     Left = 624
     Top = 352
     TranslationData = {

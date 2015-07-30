@@ -9,7 +9,7 @@ uses
   Menus, dxTL, dxTLClms, dxDBTLCl, dxGrClms,
   dxDBCtrl, dxDBGrid, SqlTimSt, CRAXDDRT_TLB, DB, kbmMemTable, cxControls,
   cxContainer, cxEdit, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,
-  DateUtils, ActnList, CrystalActiveXReportViewerLib11_TLB, FMTBcd,
+  DateUtils, ActnList, CrystalActiveXReportViewerLib11_5_TLB, FMTBcd,
   DBClient, Provider, SqlExpr, cxLookAndFeelPainters, cxLabel, cxButtons,
   cxClasses ;
 

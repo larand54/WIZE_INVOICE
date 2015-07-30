@@ -181,7 +181,6 @@ type
     dxBarLargeButton25: TdxBarLargeButton;
     acSTEF: TAction;
     dxBarButton18: TdxBarButton;
-    siLangLinked_frmMain: TsiLangLinked;
     acChangeLanguage: TAction;
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
@@ -190,6 +189,7 @@ type
     acToggleReportSystem: TAction;
     dxBarButton6: TdxBarButton;
     dxBarButton19: TdxBarButton;
+    siLangLinked1: TsiLangLinked;
 
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
@@ -571,7 +571,8 @@ begin
 //  Load_Plugin;
 
   LanguageNo  :=  dmsSystem.GetLanguageNo ;
-  if LanguageNo > -1 then
+  if LanguageNo <= 0 then
+    LanguageNo := 1;
   Begin
    dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
    dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);

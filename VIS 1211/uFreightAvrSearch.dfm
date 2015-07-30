@@ -1,4 +1,4 @@
-﻿object fFreightAvrSearch: TfFreightAvrSearch
+object fFreightAvrSearch: TfFreightAvrSearch
   Left = 219
   Top = 106
   ActiveControl = EditSearchLO
@@ -185,7 +185,7 @@
       'SELECT distinct'
       
         'LFCH.AvrakningsNo AS AvrNr, Verk.clientName AS Verk, shipper.cli' +
-        'entName AS Spedit'#246'r'
+        'entName AS Speditor'
       'FROM   dbo.LoadFreightCostHeader LFCH'
       ''
       
@@ -209,9 +209,9 @@
       Origin = 'Verk'
       Size = 80
     end
-    object cds_SearchOrderSpeditör: TStringField
-      FieldName = 'Spedit'#246'r'
-      Origin = '[Spedit'#246'r]'
+    object cds_SearchOrderSpeditor: TStringField
+      FieldName = 'Speditor'
+      Origin = 'Speditor'
       Size = 80
     end
   end
@@ -261,18 +261,55 @@
       'DataField'
       'KeyField'
       'ListField'
+      'HelpFile'
+      'Origin'
       'ConnectionName'
       'DisplayChecked'
       'DisplayUnchecked'
-      'HelpFile'
       'HotZoneClassName'
       'KeyFieldNames'
       'ListFieldNames'
       'OldName'
-      'Origin'
+      'PropertiesClassName'
+      'AutoIncFields'
+      'CaseInsFields'
+      'Categories'
+      'ClassName'
+      'CommandText'
+      'ConstraintErrorMessage'
+      'CustomConstraint'
+      'DataTypeName'
+      'DefaultExpression'
+      'DescFields'
+      'DetailFields'
+      'EditFormat'
+      'Expression'
+      'FetchRowSQL'
+      'Fields'
+      'Filter'
+      'FmtDisplayDate'
+      'FmtDisplayDateTime'
+      'FmtDisplayNumeric'
+      'FmtDisplayTime'
+      'FmtEditNumeric'
+      'GeneratorName'
+      'ImportedConstraint'
+      'IndexFieldNames'
+      'IniFileName'
+      'InsertSQL'
+      'LockSQL'
+      'PersistentFileName'
+      'PictureFilter'
+      'PictureGraphicClassName'
+      'RegistryPath'
+      'SkinName'
+      'StorageName'
+      'StoredProcName'
+      'UpdateTableName'
+      'Version'
       'PropertiesClassName')
-    Left = 496
-    Top = 256
+    Left = 456
+    Top = 280
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066004600720065006900670068007400410076007200

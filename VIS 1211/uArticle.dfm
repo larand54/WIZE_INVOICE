@@ -3,8 +3,8 @@ inherited fArticle: TfArticle
   Top = 185
   Caption = 'Artiklar f'#246'rs'#228'ljningskonton'
   ClientHeight = 620
-  ExplicitWidth = 768
-  ExplicitHeight = 648
+  ExplicitWidth = 776
+  ExplicitHeight = 658
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel5: TPanel
@@ -156,7 +156,6 @@ inherited fArticle: TfArticle
   end
   inherited dxComponentPrinter1: TdxComponentPrinter
     inherited dxComponentPrinter1Link1: TdxGridReportLink
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -206,16 +205,53 @@ inherited fArticle: TfArticle
       'DataField'
       'KeyField'
       'ListField'
+      'HelpFile'
+      'Origin'
       'ConnectionName'
       'DisplayChecked'
       'DisplayUnchecked'
-      'HelpFile'
       'HotZoneClassName'
       'KeyFieldNames'
       'ListFieldNames'
       'OldName'
-      'Origin'
-      'PropertiesClassName')
+      'PropertiesClassName'
+      'AutoIncFields'
+      'CaseInsFields'
+      'Categories'
+      'ClassName'
+      'CommandText'
+      'ConstraintErrorMessage'
+      'CustomConstraint'
+      'DataTypeName'
+      'DefaultExpression'
+      'DescFields'
+      'DetailFields'
+      'EditFormat'
+      'Expression'
+      'FetchRowSQL'
+      'Fields'
+      'Filter'
+      'FmtDisplayDate'
+      'FmtDisplayDateTime'
+      'FmtDisplayNumeric'
+      'FmtDisplayTime'
+      'FmtEditNumeric'
+      'GeneratorName'
+      'ImportedConstraint'
+      'IndexFieldNames'
+      'IniFileName'
+      'InsertSQL'
+      'LockSQL'
+      'PersistentFileName'
+      'PictureFilter'
+      'PictureGraphicClassName'
+      'RegistryPath'
+      'SkinName'
+      'StorageName'
+      'StoredProcName'
+      'UpdateTableName'
+      'Version'
+      'Version')
     Left = 520
     Top = 256
     TranslationData = {

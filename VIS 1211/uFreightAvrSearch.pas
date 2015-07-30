@@ -54,8 +54,8 @@ type
     cds_SearchOrder: TFDQuery;
     cds_SearchOrderAvrNr: TIntegerField;
     cds_SearchOrderVerk: TStringField;
-    cds_SearchOrderSpeditör: TStringField;
     siLangLinked_fFreightAvrSearch: TsiLangLinked;
+    cds_SearchOrderSpeditor: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure atOKExecute(Sender: TObject);
     procedure atOKUpdate(Sender: TObject);

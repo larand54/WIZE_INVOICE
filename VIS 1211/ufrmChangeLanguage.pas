@@ -42,7 +42,7 @@ begin
  if cboSelectLanguage.ItemIndex > 0 then
   dmLanguage.siLangDispatcher1.ActiveLanguage := cboSelectLanguage.ItemIndex + 1
    else
-    dmLanguage.siLangDispatcher1.ActiveLanguage :=  0 ;
+    dmLanguage.siLangDispatcher1.ActiveLanguage :=  1 ;
   ModalResult := mrOK;
 end;
 
