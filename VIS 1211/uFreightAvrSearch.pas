@@ -46,9 +46,6 @@ type
     Label3: TLabel;
     Button2: TButton;
     Button1: TButton;
-    grdFreightAvrSearchDBTableView1AvrNr: TcxGridDBColumn;
-    grdFreightAvrSearchDBTableView1Verk: TcxGridDBColumn;
-    grdFreightAvrSearchDBTableView1Speditr: TcxGridDBColumn;
     EditSearchYourInvoiceNo: TEdit;
     Label4: TLabel;
     cds_SearchOrder: TFDQuery;
@@ -56,6 +53,9 @@ type
     cds_SearchOrderVerk: TStringField;
     siLangLinked_fFreightAvrSearch: TsiLangLinked;
     cds_SearchOrderSpeditor: TStringField;
+    grdFreightAvrSearchDBTableView1AvrNr: TcxGridDBColumn;
+    grdFreightAvrSearchDBTableView1Verk: TcxGridDBColumn;
+    grdFreightAvrSearchDBTableView1Speditor: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure atOKExecute(Sender: TObject);
     procedure atOKUpdate(Sender: TObject);
@@ -282,7 +282,7 @@ begin
     begin
       cds_SearchOrder.Active := False;
       SQL.Clear;
-      SQL.Add('SELECT distinct LFCH.AvrakningsNo AS AvrNr, Verk.clientName AS Verk, shipper.clientName AS Speditör');
+      SQL.Add('SELECT distinct LFCH.AvrakningsNo AS AvrNr, Verk.clientName AS Verk, shipper.clientName AS Speditor');
       SQL.Add('FROM   dbo.LoadFreightCostHeader LFCH');
       SQL.Add('Inner join Client Shipper on shipper.clientno = LFCH.LocalShipperNo');
       SQL.Add('Inner join Client Verk on Verk.clientno = LFCH.VerkNo');

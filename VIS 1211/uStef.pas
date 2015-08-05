@@ -30,7 +30,6 @@ type
   TfStef = class(TForm)
     ImageList1: TImageList;
     Application1: TApplication;
-    CRViewer91: TCrystalActiveXReportViewer;
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
@@ -68,6 +67,7 @@ type
     acFSC: TAction;
     dxBarLargeButton10: TdxBarLargeButton;
     siLangLinked_fStef: TsiLangLinked;
+    CRViewer91: TCrystalActiveXReportViewer;
     procedure lbExitClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lbPkgNoReportClick(Sender: TObject);
