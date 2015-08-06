@@ -29,8 +29,8 @@ uses
   dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, dxSkinsdxBarPainter,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-//  siLngLnk, CrystalActiveXReportViewerLib11_TLB,
-   siLngLnk, CrystalActiveXReportViewerLib11_TLB;
+//  siLngLnk, CrystalActiveXReportViewerLib11_5_TLB,
+   siLngLnk, CrystalActiveXReportViewerLib11_5_TLB;
 
 type
   TfnotInvoicedReport = class(TForm)

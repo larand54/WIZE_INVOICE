@@ -189,7 +189,7 @@ type
     acToggleReportSystem: TAction;
     dxBarButton6: TdxBarButton;
     dxBarButton19: TdxBarButton;
-    siLangLinked_frmMain: TsiLangLinked;
+    siLangLinked1: TsiLangLinked;
 
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
@@ -532,10 +532,38 @@ begin
   CheckMappar;
 
 
+
  // ThisUser.Database  := 'alvesql01:vis_vida' ;
 // ThisUser.Database  := 'vis.vida.se:vis_vida' ;
    ThisUser.Database  := 'alvesql03:vis_vida' ;
 
+{$IFDEF DEBUG}
+  if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
+    if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-FASTER' then
+      dmsConnector.DriveLetter := 'D:\'
+    else
+      dmsConnector.DriveLetter := 'C:\';
+    ThisUser.Database:= 'alvesql03:vis_vida' ;
+      with dmsConnector.FDConnection1 do begin
+        Params.Clear;
+        Params.Add('Server=alvesql03');
+        Params.Add('Database=vis_vida');
+        Params.Add('OSAuthent=No');
+        Params.add('MetaDefCatalog=vis_vida');
+        Params.Add('MetaDefSchema=dbo');
+        Params.Add('User_Name=Lars');
+        Params.Add('Password=woods2011');
+        Params.Add('DriverID=MSSQL');
+      end;
+  end
+  else begin
+  //  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
+    ThisUser.Database:= 'vis.vida.se:vis_vida' ;
+  end;
+{$ELSE}
+
+
+{$ENDIF}
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
@@ -571,7 +599,8 @@ begin
 //  Load_Plugin;
 
   LanguageNo  :=  dmsSystem.GetLanguageNo ;
-  if LanguageNo > -1 then
+  if LanguageNo <= 0 then
+    LanguageNo := 1;
   Begin
    dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
    dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);

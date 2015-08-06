@@ -40,6 +40,7 @@ end;
 procedure TfrmChangeLanguage.bbtnOkClick(Sender: TObject);
 begin
   dmLanguage.siLangDispatcher1.ActiveLanguage := cboSelectLanguage.ItemIndex + 1;
+
   ModalResult := mrOK;
 end;
 

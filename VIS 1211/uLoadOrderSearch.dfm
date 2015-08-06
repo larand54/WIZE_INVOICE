@@ -1,4 +1,4 @@
-﻿object fLoadOrderSearch: TfLoadOrderSearch
+object fLoadOrderSearch: TfLoadOrderSearch
   Left = 219
   Top = 106
   ActiveControl = EditSearchLO
@@ -151,7 +151,7 @@
       OptionsView.Footer = True
       OptionsView.GroupByBox = False
       object grdLoadOrderSearchDBTableView1Leverantr: TcxGridDBColumn
-        DataBinding.FieldName = 'Leverant'#246'r'
+        DataBinding.FieldName = 'Leverantor'
         PropertiesClassName = 'TcxLabelProperties'
         Width = 178
       end
@@ -1179,7 +1179,7 @@
         'Select distinct kund.SearchName AS Kund, ssp.ShippingPlanNo AS L' +
         'O, csd.Reference AS Referens,'
       
-        'ssp.ProductDescription AS Produkt, Verk.SearchName AS Leverant'#246'r' +
+        'ssp.ProductDescription AS Produkt, Verk.SearchName AS Leverantor' +
         ',   ssp.ShippingPlanStatus AS Status,'
       'SlutKund.ClientName AS Slutkund,'
       'Case'
@@ -1240,9 +1240,9 @@
       Origin = 'LO_ID'
       Required = True
     end
-    object cds_SearchOrderLeverantör: TStringField
-      FieldName = 'Leverant'#246'r'
-      Origin = '[Leverant'#246'r]'
+    object cds_SearchOrderLeverantor: TStringField
+      FieldName = 'Leverantor'
+      Origin = '[Leverantor]'
       Size = 80
     end
     object cds_SearchOrderStatus: TIntegerField
@@ -1301,15 +1301,52 @@
       'DataField'
       'KeyField'
       'ListField'
+      'HelpFile'
+      'Origin'
       'ConnectionName'
       'DisplayChecked'
       'DisplayUnchecked'
-      'HelpFile'
       'HotZoneClassName'
       'KeyFieldNames'
       'ListFieldNames'
       'OldName'
-      'Origin'
+      'PropertiesClassName'
+      'AutoIncFields'
+      'CaseInsFields'
+      'Categories'
+      'ClassName'
+      'CommandText'
+      'ConstraintErrorMessage'
+      'CustomConstraint'
+      'DataTypeName'
+      'DefaultExpression'
+      'DescFields'
+      'DetailFields'
+      'EditFormat'
+      'Expression'
+      'FetchRowSQL'
+      'Fields'
+      'Filter'
+      'FmtDisplayDate'
+      'FmtDisplayDateTime'
+      'FmtDisplayNumeric'
+      'FmtDisplayTime'
+      'FmtEditNumeric'
+      'GeneratorName'
+      'ImportedConstraint'
+      'IndexFieldNames'
+      'IniFileName'
+      'InsertSQL'
+      'LockSQL'
+      'PersistentFileName'
+      'PictureFilter'
+      'PictureGraphicClassName'
+      'RegistryPath'
+      'SkinName'
+      'StorageName'
+      'StoredProcName'
+      'UpdateTableName'
+      'Version'
       'PropertiesClassName')
     Left = 496
     Top = 256

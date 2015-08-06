@@ -1,4 +1,4 @@
-﻿object fFreightAvrSearch: TfFreightAvrSearch
+object fFreightAvrSearch: TfFreightAvrSearch
   Left = 219
   Top = 106
   ActiveControl = EditSearchLO
@@ -146,18 +146,12 @@
       OptionsView.GroupByBox = False
       object grdFreightAvrSearchDBTableView1AvrNr: TcxGridDBColumn
         DataBinding.FieldName = 'AvrNr'
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 127
       end
       object grdFreightAvrSearchDBTableView1Verk: TcxGridDBColumn
         DataBinding.FieldName = 'Verk'
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 439
       end
-      object grdFreightAvrSearchDBTableView1Speditr: TcxGridDBColumn
-        DataBinding.FieldName = 'Spedit'#246'r'
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 438
+      object grdFreightAvrSearchDBTableView1Speditor: TcxGridDBColumn
+        DataBinding.FieldName = 'Speditor'
       end
     end
     object grdFreightAvrSearchLevel1: TcxGridLevel
@@ -185,7 +179,7 @@
       'SELECT distinct'
       
         'LFCH.AvrakningsNo AS AvrNr, Verk.clientName AS Verk, shipper.cli' +
-        'entName AS Spedit'#246'r'
+        'entName AS Speditor'
       'FROM   dbo.LoadFreightCostHeader LFCH'
       ''
       
@@ -209,9 +203,10 @@
       Origin = 'Verk'
       Size = 80
     end
-    object cds_SearchOrderSpeditör: TStringField
-      FieldName = 'Spedit'#246'r'
-      Origin = '[Spedit'#246'r]'
+    object cds_SearchOrderSpeditor: TStringField
+      DisplayLabel = 'Spedit'#246'r'
+      FieldName = 'Speditor'
+      Origin = 'Spedit'#246'r'
       Size = 80
     end
   end
@@ -261,18 +256,55 @@
       'DataField'
       'KeyField'
       'ListField'
+      'HelpFile'
+      'Origin'
       'ConnectionName'
       'DisplayChecked'
       'DisplayUnchecked'
-      'HelpFile'
       'HotZoneClassName'
       'KeyFieldNames'
       'ListFieldNames'
       'OldName'
-      'Origin'
+      'PropertiesClassName'
+      'AutoIncFields'
+      'CaseInsFields'
+      'Categories'
+      'ClassName'
+      'CommandText'
+      'ConstraintErrorMessage'
+      'CustomConstraint'
+      'DataTypeName'
+      'DefaultExpression'
+      'DescFields'
+      'DetailFields'
+      'EditFormat'
+      'Expression'
+      'FetchRowSQL'
+      'Fields'
+      'Filter'
+      'FmtDisplayDate'
+      'FmtDisplayDateTime'
+      'FmtDisplayNumeric'
+      'FmtDisplayTime'
+      'FmtEditNumeric'
+      'GeneratorName'
+      'ImportedConstraint'
+      'IndexFieldNames'
+      'IniFileName'
+      'InsertSQL'
+      'LockSQL'
+      'PersistentFileName'
+      'PictureFilter'
+      'PictureGraphicClassName'
+      'RegistryPath'
+      'SkinName'
+      'StorageName'
+      'StoredProcName'
+      'UpdateTableName'
+      'Version'
       'PropertiesClassName')
-    Left = 496
-    Top = 256
+    Left = 456
+    Top = 280
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066004600720065006900670068007400410076007200
@@ -284,16 +316,7 @@
       6C00330001005300F6006B0020004C004F000100010001000D000A004C006100
       620065006C00340001005300F6006B0020002000660061006B00740075007200
       61006E0072000100010001000D000A0042007500740074006F006E0032000100
-      2600430061006E00630065006C000100010001000D000A006700720064004600
-      7200650069006700680074004100760072005300650061007200630068004400
-      42005400610062006C006500560069006500770031004100760072004E007200
-      01004100760072004E0072000100010001000D000A0067007200640046007200
-      6500690067006800740041007600720053006500610072006300680044004200
-      5400610062006C006500560069006500770031005600650072006B0001005600
-      650072006B000100010001000D000A0067007200640046007200650069006700
-      6800740041007600720053006500610072006300680044004200540061006200
-      6C00650056006900650077003100530070006500640069007400720001005300
-      70006500640069007400F60072000100010001000D000A00610074004F004B00
+      2600430061006E00630065006C000100010001000D000A00610074004F004B00
       010026004F004B000100010001000D000A0073007400480069006E0074007300
       5F0055006E00690063006F00640065000D000A00610074004F004B0001004F00
       4B00010001000D000A007300740044006900730070006C00610079004C006100

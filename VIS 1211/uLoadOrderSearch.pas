@@ -65,7 +65,7 @@ type
     cds_SearchOrderLO: TIntegerField;
     cds_SearchOrderReferens: TStringField;
     cds_SearchOrderProdukt: TStringField;
-    cds_SearchOrderLeverantör: TStringField;
+    cds_SearchOrderLeverantor: TStringField;
     cds_SearchOrderStatus: TIntegerField;
     cds_SearchOrderSlutkund: TStringField;
     cds_SearchOrderLO_typ: TStringField;
