@@ -5780,16 +5780,16 @@ Begin
   With dmcOrder do
   Begin
     ccbKV2.Properties.Items.Clear;
-    sq_Grade.ParamByName('VerkNo').AsInteger        := VerkNo ;
-    sq_Grade.ParamByName('LanguageCode').AsInteger  := ThisUser.LanguageID ;
-    sq_Grade.Active := True;
-    While not sq_Grade.Eof do
+    sp_grade.ParamByName('@VerkNo').AsInteger        := VerkNo ;
+    sp_grade.ParamByName('@LanguageCode').AsInteger  := ThisUser.LanguageID ;
+    sp_grade.Active := True;
+    While not sp_grade.Eof do
     Begin
-      ccbKV2.Properties.Items.AddCheckItem(sq_Grade.FieldByName('gradeName')
-        .AsString, sq_Grade.FieldByName('gradecode').AsString);
-      sq_Grade.Next;
+      ccbKV2.Properties.Items.AddCheckItem(sp_grade.FieldByName('gradeName')
+        .AsString, sp_grade.FieldByName('gradecode').AsString);
+      sp_grade.Next;
     End;
-    sq_Grade.Active := False;
+    sp_grade.Active := False;
 
     ccbSU2.Properties.Items.Clear;
     sq_Surfacing.ParamByName('VerkNo').AsInteger        := VerkNo;

@@ -428,6 +428,7 @@ type
     cdsSawmillLoadOrdersLoadedPkgs: TIntegerField;
     cdsSawmillLoadOrdersLoadedNM3: TFloatField;
     sp_SetLOStatus: TFDStoredProc;
+    sp_grade: TFDStoredProc;
 
     procedure provSawMillLoadOrdersGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);

@@ -2,48 +2,64 @@ object frmChangeLanguage: TfrmChangeLanguage
   Left = 0
   Top = 0
   Caption = 'V'#228'lj spr'#229'k'
-  ClientHeight = 126
-  ClientWidth = 261
+  ClientHeight = 165
+  ClientWidth = 341
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 17
   object lblcboLang: TLabel
-    Left = 24
-    Top = 21
-    Width = 47
-    Height = 13
+    Left = 31
+    Top = 27
+    Width = 60
+    Height = 17
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'V'#228'lj Spr'#229'k'
   end
   object cboSelectLanguage: TComboBox
-    Left = 24
-    Top = 40
-    Width = 203
-    Height = 21
+    Left = 31
+    Top = 52
+    Width = 266
+    Height = 25
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 0
     Text = 'V'#228'lj spr'#229'k'
   end
   object bbtnOk: TBitBtn
-    Left = 24
-    Top = 80
-    Width = 75
-    Height = 25
+    Left = 31
+    Top = 105
+    Width = 98
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Kind = bkOK
     NumGlyphs = 2
     TabOrder = 1
     OnClick = bbtnOkClick
   end
   object bbtnCancel: TBitBtn
-    Left = 152
-    Top = 80
-    Width = 75
-    Height = 25
+    Left = 199
+    Top = 105
+    Width = 98
+    Height = 32
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Kind = bkCancel
     NumGlyphs = 2
     TabOrder = 2

@@ -3737,8 +3737,8 @@ begin
           End;
 
           fAnkomstRegProgress.Show;
-          mtSelectedLoads.Filter := 'LoadAR = 0';
-          mtSelectedLoads.Filtered := True;
+          mtSelectedLoads.Filter    := 'LoadAR = 0';
+          mtSelectedLoads.Filtered  := True;
           Try
             mtSelectedLoads.First;
             While not mtSelectedLoads.Eof do

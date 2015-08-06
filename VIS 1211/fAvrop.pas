@@ -390,6 +390,8 @@ type
     cxButton5: TcxButton;
     acMovePkgsToInvAndDeleteLoad: TAction;
     siLangLinked_frmAvrop: TsiLangLinked;
+    acCopyLoadToOtherSalesRegion: TAction;
+    dxBarButton38: TdxBarButton;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -498,6 +500,8 @@ type
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
     procedure acMovePkgsToInvAndDeleteLoadExecute(Sender: TObject);
     procedure acMovePkgsToInvAndDeleteLoadUpdate(Sender: TObject);
+    procedure acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
+    procedure acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
   private
     { Private declarations }
     GlobalLONo, CSDNO: Integer;
@@ -5313,6 +5317,47 @@ Begin
     end;
   End;
 End;
+
+procedure TfrmAvrop.acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
+Var
+  Sales_LONo, NewLoadNo: Integer;
+begin
+
+  // ToDo ! Gör en kontroll att avropen matchar med orderlineno!!
+
+  With daMoLM1 do
+  Begin
+    NewLoadNo := dmsSystem.POLoadConfirmed(cdsLoadsLoadNo.AsInteger,
+      Sales_LONo);
+    if NewLoadNo = 0 then
+    Begin
+      Sales_LONo := SelectAvropsNrAttSkapaSalesLoadMot
+        (cdsAvropShippingPlanNo.AsInteger);
+      if Sales_LONo > 0 then
+      Begin
+        NewLoadNo := dmsSystem.CopyPOLoadToSalesLoadAndSetPackagesAsNotAvailable
+          (cdsLoadsLoadNo.AsInteger, Sales_LONo, cdsLoadsLoadNo.AsInteger, 1);
+        if NewLoadNo > 0 then
+          ShowMessage('Lasten kopierad till annan försäljningsregion ' +
+            inttostr(Sales_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+      End;
+    End
+    else
+      ShowMessage('Lasten är redan kopierad till annan försäljningsregion ' +
+        inttostr(Sales_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+  End;
+end;
+
+procedure TfrmAvrop.acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
+begin
+  With daMoLM1 do
+  Begin
+    acCopyLoadToSales.Enabled := (cdsAvrop.Active) and
+      (cdsAvrop.RecordCount > 0) and (cdsAvropORDERTYPE.AsInteger = 0) and
+      (cdsAvropTrading.AsInteger = 2) and (cdsLoads.Active) and
+      (cdsLoads.RecordCount > 0);
+  End;
+end;
 
 procedure TfrmAvrop.acCopyLoadToSalesExecute(Sender: TObject);
 Var

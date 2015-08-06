@@ -181,7 +181,6 @@ type
     dxBarLargeButton25: TdxBarLargeButton;
     acSTEF: TAction;
     dxBarButton18: TdxBarButton;
-    siLangLinked_frmMain: TsiLangLinked;
     acChangeLanguage: TAction;
     dxBSIChangeLang: TdxBarSubItem;
     dxBarSubItem5: TdxBarSubItem;
@@ -190,6 +189,7 @@ type
     acToggleReportSystem: TAction;
     dxBarButton6: TdxBarButton;
     dxBarButton19: TdxBarButton;
+    siLangLinked_frmMain: TsiLangLinked;
 
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
@@ -533,8 +533,8 @@ begin
 
 
  // ThisUser.Database  := 'alvesql01:vis_vida' ;
- ThisUser.Database  := 'vis.vida.se:vis_vida' ;
- //   ThisUser.Database  := 'alvesql03:vis_vida' ;
+// ThisUser.Database  := 'vis.vida.se:vis_vida' ;
+   ThisUser.Database  := 'alvesql03:vis_vida' ;
 
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
