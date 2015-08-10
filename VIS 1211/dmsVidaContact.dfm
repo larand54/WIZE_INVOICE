@@ -2478,4 +2478,30 @@ object dmsContact: TdmsContact
         ParamType = ptInput
       end>
   end
+  object sp_GetVerkOfLL: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetVerkOfLL'
+    Left = 872
+    Top = 552
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@LLNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@SalesRegionNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end

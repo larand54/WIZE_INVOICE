@@ -861,7 +861,7 @@ object dmsSystem: TdmsSystem
   object sp_CopyPOLoadToSales: TFDStoredProc
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_CopyPOLoadToSalesII'
-    Left = 48
+    Left = 64
     Top = 256
     ParamData = <
       item

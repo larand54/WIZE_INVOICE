@@ -534,8 +534,8 @@ begin
 
 
  // ThisUser.Database  := 'alvesql01:vis_vida' ;
-// ThisUser.Database  := 'vis.vida.se:vis_vida' ;
-   ThisUser.Database  := 'alvesql03:vis_vida' ;
+ ThisUser.Database  := 'vis.vida.se:vis_vida' ;
+//   ThisUser.Database  := 'alvesql03:vis_vida' ;
 
 {$IFDEF DEBUG}
   if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin

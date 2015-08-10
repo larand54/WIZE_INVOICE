@@ -4,12 +4,12 @@ object fnotInvoicedReport: TfnotInvoicedReport
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Ej Fakturerat'
-  ClientHeight = 711
-  ClientWidth = 1014
+  ClientHeight = 875
+  ClientWidth = 1248
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -18,13 +18,19 @@ object fnotInvoicedReport: TfnotInvoicedReport
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 120
+  TextHeight = 16
   object CRViewer91: TCrystalActiveXReportViewer
     Left = 0
-    Top = 60
-    Width = 1014
-    Height = 651
+    Top = 74
+    Width = 1248
+    Height = 801
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
     ControlData = {
@@ -36,97 +42,145 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1014
-    Height = 60
+    Width = 1248
+    Height = 74
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 1
     object Panel2: TPanel
       Left = 1
       Top = 1
-      Width = 96
-      Height = 58
+      Width = 118
+      Height = 72
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 96
-        Height = 45
+        Width = 118
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel3: TPanel
-      Left = 892
+      Left = 1098
       Top = 1
-      Width = 121
-      Height = 58
+      Width = 149
+      Height = 72
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 121
-        Height = 45
+        Width = 149
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel122: TPanel
-      Left = 97
+      Left = 119
       Top = 1
-      Width = 795
-      Height = 58
+      Width = 979
+      Height = 72
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       PopupMenu = PopupMenu1
       TabOrder = 2
       object Label1: TLabel
-        Left = 24
-        Top = 35
-        Width = 45
-        Height = 13
+        Left = 30
+        Top = 43
+        Width = 56
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Marknad:'
       end
       object Label2: TLabel
-        Left = 24
-        Top = 11
-        Width = 27
-        Height = 13
+        Left = 30
+        Top = 14
+        Width = 33
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'TOM:'
       end
       object Label3: TLabel
-        Left = 232
-        Top = 11
-        Width = 43
-        Height = 13
+        Left = 286
+        Top = 14
+        Width = 55
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Ordertyp:'
       end
       object deStartPeriod: TcxDBDateEdit
-        Left = 80
-        Top = 3
+        Left = 98
+        Top = 4
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'StartPeriod'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         TabOrder = 0
-        Width = 145
+        Width = 179
       end
       object lcMarknad: TcxDBLookupComboBox
-        Left = 80
-        Top = 27
+        Left = 98
+        Top = 33
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Marknad'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 1
-        Width = 145
+        Width = 179
       end
       object icOrderTypeNo: TcxDBImageComboBox
-        Left = 280
-        Top = 3
+        Left = 345
+        Top = 4
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'OrderTypeNo'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -141,16 +195,20 @@ object fnotInvoicedReport: TfnotInvoicedReport
             Value = 1
           end>
         TabOrder = 2
-        Width = 121
+        Width = 149
       end
       object cxLabel1: TcxLabel
-        Left = 552
+        Left = 679
         Top = 2
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Ej fakturerat'
         ParentFont = False
         Style.Font.Charset = DEFAULT_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -11
+        Style.Font.Height = -15
         Style.Font.Name = 'MS Sans Serif'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
@@ -1103,7 +1161,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -1421,37 +1479,35 @@ object fnotInvoicedReport: TfnotInvoicedReport
       6E0061006700650072003100420061007200320001005300650067006F006500
       200055004900010001005400610068006F006D0061000D000A00730074004D00
       75006C00740069004C0069006E00650073005F0055006E00690063006F006400
-      65000D000A00640078004200610072004D0061006E0061006700650072003100
-      2E00430061007400650067006F00720069006500730001004400650066006100
-      75006C007400010001000D000A007300740053007400720069006E0067007300
-      5F0055006E00690063006F00640065000D000A00730074004F00740068006500
-      720053007400720069006E00670073005F0055006E00690063006F0064006500
-      0D000A007300740043006F006C006C0065006300740069006F006E0073005F00
-      55006E00690063006F00640065000D000A00690063004F007200640065007200
-      54007900700065004E006F002E00500072006F00700065007200740069006500
-      73002E004900740065006D0073005B0030005D002E0044006500730063007200
-      69007000740069006F006E0001004600F60072007300E4006C006A006E006900
-      6E006700010001000D000A00690063004F007200640065007200540079007000
-      65004E006F002E00500072006F0070006500720074006900650073002E004900
-      740065006D0073005B0031005D002E0044006500730063007200690070007400
-      69006F006E00010049006E006B00F6007000010001000D000A00730074004300
-      68006100720053006500740073005F0055006E00690063006F00640065000D00
-      0A00540066006E006F00740049006E0076006F00690063006500640052006500
-      70006F00720074000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A00640078004200610072004D0061006E0061006700
-      6500720031000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A00640078004200610072004D0061006E00610067006500
-      7200310042006100720031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00640078004200610072004D0061006E00
-      6100670065007200310042006100720032000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A00}
+      65000D000A007300740053007400720069006E00670073005F0055006E006900
+      63006F00640065000D000A00730074004F007400680065007200530074007200
+      69006E00670073005F0055006E00690063006F00640065000D000A0073007400
+      43006F006C006C0065006300740069006F006E0073005F0055006E0069006300
+      6F00640065000D000A00690063004F0072006400650072005400790070006500
+      4E006F002E00500072006F0070006500720074006900650073002E0049007400
+      65006D0073005B0030005D002E00440065007300630072006900700074006900
+      6F006E0001004600F60072007300E4006C006A006E0069006E00670001000100
+      0D000A00690063004F00720064006500720054007900700065004E006F002E00
+      500072006F0070006500720074006900650073002E004900740065006D007300
+      5B0031005D002E004400650073006300720069007000740069006F006E000100
+      49006E006B00F6007000010001000D000A007300740043006800610072005300
+      6500740073005F0055006E00690063006F00640065000D000A00540066006E00
+      6F00740049006E0076006F0069006300650064005200650070006F0072007400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A00640078004200610072004D0061006E00610067006500720031000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A00640078004200610072004D0061006E006100670065007200310042006100
+      720031000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00640078004200610072004D0061006E006100670065007200
+      310042006100720032000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A00}
   end
 end

@@ -1,6 +1,11 @@
 program VIS;
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Forms,
   fMain in 'fMain.pas' {frmMain},
   VidaConst in 'VidaConst.pas',
@@ -153,7 +158,8 @@ uses
   uReport in '..\..\CommonSources\FastReport\uReport.pas',
   uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
   uPackageSize in 'uPackageSize.pas' {fPackageSize},
-  uFR_Log in '..\..\CommonSources\FastReport\uFR_Log.pas';
+  uFR_Log in '..\..\CommonSources\FastReport\uFR_Log.pas',
+  URegionToRegionSelectLIPNo in 'URegionToRegionSelectLIPNo.pas' {fRegionToRegionSelectLIPNo};
 
 {$R *.res}
 

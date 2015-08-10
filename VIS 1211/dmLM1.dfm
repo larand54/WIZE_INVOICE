@@ -2099,4 +2099,66 @@ object daMoLM1: TdaMoLM1
       Required = True
     end
   end
+  object sp_GetRtRPOLoNo: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetRtRPOLoNo'
+    Left = 520
+    Top = 376
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SalesLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_CopySalesLoadToPO: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_CopySalesLoadToPO'
+    Left = 520
+    Top = 448
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SrcLoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@NewLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@NewLoadNo'
+        DataType = ftInteger
+        ParamType = ptInputOutput
+      end
+      item
+        Position = 6
+        Name = '@Insert_Confirmed_Load'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end
