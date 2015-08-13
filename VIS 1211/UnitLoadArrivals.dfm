@@ -3055,6 +3055,10 @@ object frmLoadArrivals: TfrmLoadArrivals
     object mtSelectedLoadsAvropCustomerNo: TIntegerField
       FieldName = 'AvropCustomerNo'
     end
+    object mtSelectedLoadsLOTYP: TStringField
+      FieldName = 'LOTYP'
+      Size = 10
+    end
   end
   object cxLookAndFeelController1: TcxLookAndFeelController
     Kind = lfFlat

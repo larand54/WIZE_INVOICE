@@ -68,12 +68,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure mtPropsOwnerNoChange(Sender: TField);
     procedure mtPropsPIPNoChange(Sender: TField);
+    procedure cxButton1Click(Sender: TObject);
   private
     { Private declarations }
     Procedure InitLager;
   public
     { Public declarations }
-    DestinationCityNo, LONo, OwnerNo: Integer;
+    DestinationCityNo, LIPNo, OwnerNo: Integer;
   end;
 
   // var fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo;
@@ -84,6 +85,14 @@ implementation
 
 uses dmsDataConn, udmLanguage, VidaUser ;
 
+procedure TfRegionToRegionSelectLIPNo.cxButton1Click(Sender: TObject);
+begin
+  if mtPropsLIPNo.AsInteger > 0 then
+    LIPNo := mtPropsLIPNo.AsInteger
+  else
+    LIPNo := -1;
+end;
+
 procedure TfRegionToRegionSelectLIPNo.FormShow(Sender: TObject);
 begin
   InitLager;
@@ -91,21 +100,22 @@ end;
 
 Procedure TfRegionToRegionSelectLIPNo.InitLager;
 Begin
+ cds_Verk.Active  := False ;
  cds_Verk.ParamByName('SALESREGIONNO').AsInteger  :=  OwnerNo ;
  cds_Verk.Active  := True ;
+ mtProps.Active := True;
+ if cds_Verk.Locate('ClientNo', ThisUser.CompanyNo, []) then
+ Begin
+    mtProps.Insert;
+    mtPropsOwnerNo.AsInteger  := ThisUser.CompanyNo ;
+//    mtPropsPIPNo.AsInteger := cds_LO_LookUpLoadingPIPNo.AsInteger;
+//    mtPropsLIPNo.AsInteger := cds_LO_LookUpLoadingLIPNo.AsInteger;
+    mtProps.Post;
+ End;
 
  //cds_PIP.ParamByName('OwnerNo').AsInteger :=
- mtProps.Active := True;
- if mtProps.Locate('OwnerNo', ThisUser.CompanyNo, []) then ;
 
-  if not cds_LO_LookUp.Eof then
-  Begin
-    mtProps.Insert;
-    mtPropsPIPNo.AsInteger := cds_LO_LookUpLoadingPIPNo.AsInteger;
-    mtPropsLIPNo.AsInteger := cds_LO_LookUpLoadingLIPNo.AsInteger;
-    mtPropsOwnerNo.AsInteger := OwnerNo;
-    mtProps.Post;
-  end;
+
 End;
 
 procedure TfRegionToRegionSelectLIPNo.mtPropsOwnerNoChange(Sender: TField);
@@ -113,13 +123,16 @@ begin
  cds_PIP.Active := False ;
  cds_PIP.ParamByName('OwnerNo').AsInteger :=  mtPropsOwnerNo.AsInteger ;
  cds_PIP.Active := True ;
+
+ mtPropsPIPNo.AsInteger := -1 ;
 end;
 
 procedure TfRegionToRegionSelectLIPNo.mtPropsPIPNoChange(Sender: TField);
 begin
  cds_LIP.Active := False ;
- cds_LIP.ParamByName('OwnerNo').AsInteger :=  mtPropsPIPNo.AsInteger ;
+ cds_LIP.ParamByName('PIPNo').AsInteger :=  mtPropsPIPNo.AsInteger ;
  cds_LIP.Active := True ;
+ mtPropsLIPNo.AsInteger := -1 ;
 end;
 
 end.

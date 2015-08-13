@@ -562,6 +562,9 @@ type
     cdsArrivingPackagesPackage_Size: TIntegerField;
     cdsArrivingPackagesPackageSizeName: TStringField;
     sp_CngArtNoByPkgSize: TFDStoredProc;
+    sq_CheckObjectRegionToRegionLink: TFDQuery;
+    sq_CheckObjectRegionToRegionLinkSupplierShipPlanObjectNo: TIntegerField;
+    sq_CheckObjectRegionToRegionLinkCustShipPlanDetailObjectNo: TIntegerField;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);

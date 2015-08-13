@@ -1,9 +1,9 @@
 object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
   Left = 0
   Top = 0
-  ActiveControl = lcPIP
-  Caption = 'fRegionToRegionSelectLIPNo'
-  ClientHeight = 395
+  ActiveControl = lcVerk
+  Caption = 'V'#228'lj lager att Ankomstregistrera laster till'
+  ClientHeight = 327
   ClientWidth = 622
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
   TextHeight = 17
   object Panel1: TPanel
     Left = 0
-    Top = 321
+    Top = 253
     Width = 622
     Height = 74
     Margins.Left = 4
@@ -41,6 +41,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Default = True
       ModalResult = 1
       TabOrder = 0
+      OnClick = cxButton1Click
     end
     object cxButton2: TcxButton
       Left = 314
@@ -60,7 +61,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
     Left = 0
     Top = 0
     Width = 622
-    Height = 321
+    Height = 253
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -69,8 +70,8 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
     TabOrder = 1
     ExplicitHeight = 123
     object cxLabel1: TcxLabel
-      Left = 24
-      Top = 102
+      Left = 23
+      Top = 64
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -78,8 +79,8 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Caption = 'Lagerst'#228'lle:'
     end
     object cxLabel2: TcxLabel
-      Left = 24
-      Top = 128
+      Left = 23
+      Top = 94
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -87,8 +88,8 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Caption = 'Lagergrupp:'
     end
     object lcPIP: TcxDBLookupComboBox
-      Left = 105
-      Top = 90
+      Left = 104
+      Top = 58
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -98,12 +99,12 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Properties.ImmediatePost = True
       Properties.ListColumns = <>
       Properties.ListOptions.ShowHeader = False
-      TabOrder = 2
+      TabOrder = 3
       Width = 398
     end
     object lcLIP: TcxDBLookupComboBox
-      Left = 105
-      Top = 122
+      Left = 104
+      Top = 90
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -113,23 +114,27 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Properties.ImmediatePost = True
       Properties.ListColumns = <>
       Properties.ListOptions.ShowHeader = False
-      TabOrder = 3
+      TabOrder = 4
       Width = 398
     end
     object cxLabel3: TcxLabel
-      Left = 24
-      Top = 38
+      Left = 23
+      Top = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Caption = 'Verk:'
+      Caption = #196'gare:'
     end
     object lcVerk: TcxDBLookupComboBox
       Left = 104
       Top = 24
+      DataBinding.DataField = 'Verk'
+      DataBinding.DataSource = dsProps
+      Properties.ImmediatePost = True
       Properties.ListColumns = <>
-      TabOrder = 5
+      Properties.ListOptions.ShowHeader = False
+      TabOrder = 2
       Width = 399
     end
   end
@@ -144,7 +149,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       'WHERE'
       'CSH.ShippingPlanNo = :ShippingPlanNo')
     Left = 184
-    Top = 192
+    Top = 136
     ParamData = <
       item
         Name = 'SHIPPINGPLANNO'
@@ -178,13 +183,13 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
     SubLanguageID = 1
     LocaleID = 1024
     Left = 89
-    Top = 197
+    Top = 141
     object mtPropsFakturanr: TIntegerField
       FieldName = 'Fakturanr'
     end
-    object mtPropsPIPNo: TIntegerField
-      FieldName = 'PIPNo'
-      OnChange = mtPropsPIPNoChange
+    object mtPropsOwnerNo: TIntegerField
+      FieldName = 'OwnerNo'
+      OnChange = mtPropsOwnerNoChange
     end
     object mtPropsLIPNo: TIntegerField
       FieldName = 'LIPNo'
@@ -209,9 +214,9 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Size = 50
       Lookup = True
     end
-    object mtPropsOwnerNo: TIntegerField
-      FieldName = 'OwnerNo'
-      OnChange = mtPropsOwnerNoChange
+    object mtPropsPIPNo: TIntegerField
+      FieldName = 'PIPNo'
+      OnChange = mtPropsPIPNoChange
     end
     object mtPropsVerk: TStringField
       FieldKind = fkLookup
@@ -227,17 +232,17 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
   object dsProps: TDataSource
     DataSet = mtProps
     Left = 89
-    Top = 245
+    Top = 189
   end
   object ds_LIP2: TDataSource
     DataSet = cds_LIP
     Left = 368
-    Top = 240
+    Top = 184
   end
   object ds_PIP2: TDataSource
     DataSet = cds_PIP
     Left = 288
-    Top = 240
+    Top = 184
   end
   object cds_PIP: TFDQuery
     CachedUpdates = True
@@ -259,7 +264,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       ''
       'Order By  CY.CITYNAME')
     Left = 288
-    Top = 184
+    Top = 128
     ParamData = <
       item
         Name = 'OWNERNO'
@@ -292,7 +297,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       ''
       'Order By LogicalInventoryName ')
     Left = 368
-    Top = 184
+    Top = 128
     ParamData = <
       item
         Name = 'PIPNO'
@@ -403,8 +408,8 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 64
-    Top = 336
+    Left = 184
+    Top = 200
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660052006500670069006F006E0054006F0052006500
@@ -461,7 +466,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       'select * from Client c'
       'where  SalesRegionNo = :SalesRegionNo')
     Left = 440
-    Top = 184
+    Top = 128
     ParamData = <
       item
         Name = 'SALESREGIONNO'
@@ -483,6 +488,6 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
   object ds_Verk: TDataSource
     DataSet = cds_Verk
     Left = 440
-    Top = 240
+    Top = 184
   end
 end
