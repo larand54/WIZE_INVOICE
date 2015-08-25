@@ -4,12 +4,12 @@ object fStef: TfStef
   Align = alClient
   BorderStyle = bsNone
   Caption = 'INTRASTAT'
-  ClientHeight = 713
-  ClientWidth = 1039
+  ClientHeight = 878
+  ClientWidth = 1279
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -17,44 +17,66 @@ object fStef: TfStef
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1039
-    Height = 55
+    Width = 1279
+    Height = 68
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object Panel3: TPanel
-      Left = 186
+      Left = 229
       Top = 0
-      Width = 784
-      Height = 55
+      Width = 965
+      Height = 68
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 782
-        Height = 46
+        Width = 963
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel4: TPanel
-      Left = 970
+      Left = 1194
       Top = 0
-      Width = 69
-      Height = 55
+      Width = 85
+      Height = 68
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alRight
       TabOrder = 1
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 67
-        Height = 46
+        Width = 83
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -62,45 +84,69 @@ object fStef: TfStef
     object Panel5: TPanel
       Left = 0
       Top = 0
-      Width = 186
-      Height = 55
+      Width = 229
+      Height = 68
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       TabOrder = 2
       object Label1: TLabel
-        Left = 7
-        Top = 11
-        Width = 26
-        Height = 13
+        Left = 9
+        Top = 14
+        Width = 32
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'FOM:'
       end
       object Label2: TLabel
-        Left = 6
-        Top = 36
-        Width = 27
-        Height = 13
+        Left = 7
+        Top = 44
+        Width = 33
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'TOM:'
       end
       object dtStart: TcxDateEdit
-        Left = 35
-        Top = 3
+        Left = 43
+        Top = 4
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Properties.Kind = ckDateTime
         TabOrder = 0
-        Width = 137
+        Width = 169
       end
       object dtStop: TcxDateEdit
-        Left = 35
-        Top = 27
+        Left = 43
+        Top = 33
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Properties.Kind = ckDateTime
         TabOrder = 1
-        Width = 137
+        Width = 169
       end
     end
   end
   object CRViewer91: TCrystalActiveXReportViewer
-    Left = 504
-    Top = 472
-    Width = 192
-    Height = 192
+    Left = 620
+    Top = 581
+    Width = 237
+    Height = 236
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 5
     ControlData = {
       10070000D8130000D81300000B00FFFF0B00FFFF0B00FFFF0B00FFFF0B00FFFF
@@ -1021,7 +1067,7 @@ object fStef: TfStef
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False

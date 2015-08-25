@@ -531,6 +531,12 @@ begin
   acToggleReportSystem.Caption  := 'Change to FastReport';
   CheckMappar;
 
+
+
+ // ThisUser.Database  := 'alvesql01:vis_vida' ;
+ ThisUser.Database  := 'vis.vida.se:vis_vida' ;
+//   ThisUser.Database  := 'alvesql03:vis_vida' ;
+
 {$IFDEF DEBUG}
   if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
     if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-FASTER' then
@@ -555,9 +561,7 @@ begin
     ThisUser.Database:= 'vis.vida.se:vis_vida' ;
   end;
 {$ELSE}
- //ThisUser.Database:= 'alvesqltest01:vis_vida' ;
-  ThisUser.Database:= 'vis.vida.se:vis_vida' ;
- //   ThisUser.Database  := 'alvesql03:vis_vida' ;
+
 
 {$ENDIF}
 

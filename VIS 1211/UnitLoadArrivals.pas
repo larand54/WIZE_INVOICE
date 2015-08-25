@@ -312,6 +312,7 @@ type
     cxButton1: TcxButton;
     grdPkgsDBTableView1Package_Size: TcxGridDBColumn;
     grdPkgsDBTableView1PackageSizeName: TcxGridDBColumn;
+    mtSelectedLoadsLOTYP: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -380,6 +381,10 @@ type
 
   private
     { Private declarations }
+    Function  IsRegionToRegionLoadValid(LoadNo, ShippingPlanNo,
+  ObjectType: Integer; Sender: TObject): Boolean;
+    function  AreMarkedLoadsSameObjectTypeRegionToRegion: Boolean;
+    procedure ConfirmManyLoadsRegionToRegion(Sender: TObject) ;
     procedure SelectedPkgsOfPkgNosTable ;
     function  AreMarkedLoadsSameObjectTypeAndNOTEGEN: Boolean;
     procedure ConfirmManyLoadsPurchasedFromVW(Sender: TObject);
@@ -440,7 +445,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
   uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage, uReport,
-  uReportController;
+  uReportController, URegionToRegionSelectLIPNo;
 
 {$R *.dfm}
 
@@ -1208,6 +1213,224 @@ Begin
       End; // if(LONo = -1) and (LoadNo = -1) then
 
       cdsArrivingLoads.SQL.Add('UNION');
+ // START REGION To REGION AR query
+      cdsArrivingLoads.SQL.Add('SELECT distinct  0 AS EGEN,') ;
+//      cdsArrivingLoads.SQL.Add('LSP.LoadingLocationNo, CSH.LoadingLocationNo,') ;
+//      cdsArrivingLoads.SQL.Add('CSH.ShipToCityNo,') ;
+      cdsArrivingLoads.SQL.Add('IsNull((Select Top 1 cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo ') ;
+      cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo),0) AS LoadAR,') ;
+
+      cdsArrivingLoads.SQL.Add('ST_AdrCtry.CountryCode,') ;
+      cdsArrivingLoads.SQL.Add('LSP.ShippingPlanNo			AS	LO,') ;
+      cdsArrivingLoads.SQL.Add('L.LoadNo				AS	LOADNO,') ;
+      cdsArrivingLoads.SQL.Add('L.FS				        AS	FS,') ;
+      cdsArrivingLoads.SQL.Add('L.LoadedDate				AS	LOADEDDATE,') ;
+      cdsArrivingLoads.SQL.Add('L.SenderLoadStatus			AS	LOAD_STATUS,') ;
+      cdsArrivingLoads.SQL.Add('L.LoadID				AS	LOAD_ID,') ;
+      cdsArrivingLoads.SQL.Add('Mill.ClientName				AS 	SUPPLIER,') ;
+      cdsArrivingLoads.SQL.Add('Mill.ClientCode                         AS      SUPPCODE,') ;
+      cdsArrivingLoads.SQL.Add('ST_AdrCY.CityName			AS	DESTINATION,') ;
+      cdsArrivingLoads.SQL.Add('OH.OrderNoText				AS 	ORDER_NO,') ;
+      cdsArrivingLoads.SQL.Add('2				AS	OBJECTTYPE,') ;
+      cdsArrivingLoads.SQL.Add('isNull(CSH.ShipToCityNo,-1)		AS	INVPOINTNO,') ;
+      cdsArrivingLoads.SQL.Add('isNull(IName.CityName, ' + QuotedStr('') + ')		AS	INVPOINTNAME,') ;// -- Leverera till
+      cdsArrivingLoads.SQL.Add('OH.CustomerNo                           AS      CUSTOMERNO,') ;
+      cdsArrivingLoads.SQL.Add('Cust.ClientCode                         AS      CUSTOMER,') ;
+      cdsArrivingLoads.SQL.Add('OH.SalesRegionNo                           AS      SUPPLIERNO,') ;
+      cdsArrivingLoads.SQL.Add('CSH.CustomerNo				AS	AVROP_CUSTOMERNO,') ;
+      cdsArrivingLoads.SQL.Add('AV_CUST.ClientName			AS	AVROP_CUSTOMER,') ;
+      cdsArrivingLoads.SQL.Add(' 2 AS OBJECTTYPE,') ;
+      cdsArrivingLoads.SQL.Add('(SELECT Top 1 US.INITIALS') ;
+      cdsArrivingLoads.SQL.Add('FROM dbo.Confirmed_Load_EXT CL') ;
+      cdsArrivingLoads.SQL.Add('Inner Join dbo.Users	US on US.UserID = cl.CreatedUser') ;
+      cdsArrivingLoads.SQL.Add('WHERE CL.Confirmed_LoadNo = LSP.LoadNo') ;
+      cdsArrivingLoads.SQL.Add('AND CL.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo) AS INITIALS,') ;
+      cdsArrivingLoads.SQL.Add('isNull(OH.OrderType,-1) AS ORDERTYPE,') ;
+
+      cdsArrivingLoads.SQL.Add('CASE');
+      cdsArrivingLoads.SQL.Add('WHEN isNull(OH.OrderType,-1) = 0 THEN ' +
+        QuotedStr('SALES'));
+      cdsArrivingLoads.SQL.Add('WHEN isNull(OH.OrderType,-1) = 1 THEN ' +
+        QuotedStr('PO'));
+      cdsArrivingLoads.SQL.Add('WHEN isNull(OH.OrderType,-1) = -1 THEN ' +
+        QuotedStr('INTERN'));
+      cdsArrivingLoads.SQL.Add('End AS TYP,') ;
+
+      cdsArrivingLoads.SQL.Add(QuotedStr('RtR') + ' AS LOTYP,') ;
+      cdsArrivingLoads.SQL.Add('(Select Top 1 US.INITIALS') ;
+      cdsArrivingLoads.SQL.Add('From dbo.CustomerShippingPlanHeader sp2') ;
+      cdsArrivingLoads.SQL.Add('Inner Join dbo.Users US on US.UserID = SP2.CreatedUser') ;
+      cdsArrivingLoads.SQL.Add('WHERE SP2.ShippingPlanNo = CSH.ShippingPlanNo)') ;
+      cdsArrivingLoads.SQL.Add(' AS LOINI,') ;
+
+      cdsArrivingLoads.SQL.Add('Loading.CityName AS LASTSTÄLLE,') ;
+      cdsArrivingLoads.SQL.Add('CSH.ShipToLIPNo AS LipNo,') ;
+      cdsArrivingLoads.SQL.Add('isNull(OH.Trading,0) AS Trading,') ;
+ //     cdsArrivingLoads.SQL.Add(,isNull(PIPCity.CityName,'/')+'/' +	LIP.LogicalInventoryName	AS	ARtillLager,
+
+      cdsArrivingLoads.SQL.Add('isNull(PIPCity.CityName,' + QuotedStr('/') + ')+' + QuotedStr('/') +
+        ' +	LIP.LogicalInventoryName	AS	ARtillLager,');
+
+      cdsArrivingLoads.SQL.Add('IsNull(IName.ImpVerk,0) AS ImpVerk,') ;
+      cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs') ;
+      cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType,') ;
+      cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
+      cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
+      cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
+      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
+//* ===================== FROM ==================== */
+      cdsArrivingLoads.SQL.Add('FROM  dbo.CustomerShippingPlanDetails CSD') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.CustomerShippingPlanHeader CSH	ON CSH.ShippingPlanNo = CSD.ShippingPlanNo') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Orders	OH ON OH.OrderNo = CSH.OrderNo') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client AV_CUST ON	AV_CUST.ClientNo 	=	CSH.CustomerNo') ;
+
+
+
+      cdsArrivingLoads.SQL.Add('Left Outer Join dbo.LogicalInventoryPoint LIP on LIP.LogicalInventoryPointNo = CSH.ShipToLIPNo') ;
+      cdsArrivingLoads.SQL.Add('Inner Join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo') ;
+      cdsArrivingLoads.SQL.Add('inner JOIN dbo.City PIPCity ON PIPCity.CityNo = PIP.PhyInvPointNameNo') ;
+
+      cdsArrivingLoads.SQL.Add('inner JOIN dbo.City IName ON	IName.CityNo = PIP.PhyInvPointNameNo') ;
+      cdsArrivingLoads.SQL.Add('LEFT JOIN dbo.City Loading ON	Loading.CityNo = CSH.LoadingLocationNo') ;// -- SP.LoadingLocationNo
+
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP ON LSP.ShippingPlanNo = CSH.ShippingPlanNo') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Loads L ON	LSP.LoadNo 		= L.LoadNo') ;
+      cdsArrivingLoads.SQL.Add('AND     L.supplierno 		= OH.SalesRegionNo') ;
+      cdsArrivingLoads.SQL.Add('AND     L.CustomerNo 		= OH.CustomerNo') ;
+      cdsArrivingLoads.SQL.Add('Left Outer Join dbo.VIS_LoadVolumes LV on LV.LoadNo = L.LoadNo') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Mill			ON	Mill.ClientNo 		= OH.CustomerNo') ;
+      cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Client Cust			ON	Cust.ClientNo 		= OH.SalesRegionNo') ;
+      cdsArrivingLoads.SQL.Add('	INNER JOIN dbo.ShippingPlan_ShippingAddress ST') ;
+      cdsArrivingLoads.SQL.Add('	LEFT OUTER JOIN dbo.Address 		ST_ADR		ON	ST_ADR.AddressNo	= ST.AddressNo') ;
+      cdsArrivingLoads.SQL.Add('	LEFT OUTER JOIN dbo.CITY		ST_AdrCY	ON	ST_AdrCY.CityNo 	= ST_ADR.CityNo') ;
+      cdsArrivingLoads.SQL.Add('	LEFT OUTER JOIN dbo.Country		ST_AdrCtry	ON	ST_AdrCtry.CountryNo 	= ST_ADR.CountryNo') ;
+      cdsArrivingLoads.SQL.Add('							ON	ST.ShippingPlanNo	= CSD.ShippingPlanNo') ;
+      cdsArrivingLoads.SQL.Add('							AND	ST.Reference		= CSD.Reference') ;
+    //  cdsArrivingLoads.SQL.Add('Inner Join dbo.UserArrivalPoint uap on uap.PhyInvPointNameNo = PIPCity.CityNo
+      cdsArrivingLoads.SQL.Add('LEFT OUTER JOIN dbo.Booking		Bk') ;
+      cdsArrivingLoads.SQL.Add('Left Outer JOIN dbo.Client		SC 	ON  	Bk.ShippingCompanyNo 	= SC.ClientNo') ;
+      cdsArrivingLoads.SQL.Add('Left Outer Join dbo.BookingType		Bt	ON	Bt.BookingTypeNo	= Bk.BookingTypeNo') ;
+      cdsArrivingLoads.SQL.Add('ON  	Bk.ShippingPlanNo = CSH.ShippingPlanNo') ;
+
+{
+        OH.SalesRegionNo = 1879
+  and csh.ShippingPlanNo = 120729
+
+}
+
+
+
+      cdsArrivingLoads.SQL.Add('WHERE');
+      if (LONo = -1) and (LoadNo = -1) then
+      Begin
+       cdsArrivingLoads.SQL.Add('OH.SalesRegionNo = ' + cds_PropsVerkNo.AsString);
+        // if cbAllaVerk.Checked then
+{
+          if (cds_PropsVerkNo.IsNull) or (cds_PropsVerkNo.AsInteger < 1) then
+          Begin
+            cdsArrivingLoads.SQL.Add
+              ('(L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)');
+          End
+          else
+          Begin
+            if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
+              cdsArrivingLoads.SQL.Add('(SP.CustomerNo = ' +
+                cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = ' + inttostr(ThisUser.CompanyNo) + ')')
+            else
+              cdsArrivingLoads.SQL.Add('SP.CustomerNo = ' +
+                cds_PropsVerkNo.AsString);
+
+            cdsArrivingLoads.SQL.Add
+              ('AND (L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)');
+          End;
+}
+      End // if (LONo = -1) and (LoadNo = -1) then
+      else
+        cdsArrivingLoads.SQL.Add('1=1');
+
+      if LONo > -1 then
+        cdsArrivingLoads.SQL.Add('AND csh.ShippingPlanNo = ' + IntToStr(LONo));
+      if LoadNo > -1 then
+        cdsArrivingLoads.SQL.Add('AND L.LoadNo = ' + IntToStr(LoadNo));
+
+      if (LONo = -1) and (LoadNo = -1) then
+      Begin  //cds_PropsBookingTypeNo = LevereraTill
+        if (not cds_PropsBookingTypeNo.IsNull) and
+          (cds_PropsBookingTypeNo.AsInteger > 0) then
+          cdsArrivingLoads.SQL.Add('AND PIP.PhyInvPointNameNo = ' +
+            cds_PropsBookingTypeNo.AsString);
+
+{
+          if (not cds_PropsLoadingLocationNo.IsNull) and
+            (cds_PropsLoadingLocationNo.AsInteger > 0) then
+            cdsArrivingLoads.SQL.Add('AND	SP.LoadingLocationNo = ' +
+              cds_PropsLoadingLocationNo.AsString);
+}
+      End;
+
+      if (LONo = -1) and (LoadNo = -1) then
+        if (not cds_PropsOwnerNo.IsNull) and (cds_PropsOwnerNo.AsInteger > 0)
+        then
+          cdsArrivingLoads.SQL.Add('AND CSH.CustomerNo = ' +
+            cds_PropsOwnerNo.AsString);
+
+      if (LONo = -1) and (LoadNo = -1) then
+        if (not cds_PropsClientNo.IsNull) and (cds_PropsClientNo.AsInteger > 0)
+        then
+          cdsArrivingLoads.SQL.Add('AND SP.SupplierNo = ' +
+            cds_PropsClientNo.AsString);
+
+
+      cdsArrivingLoads.SQL.Add('AND Not Exists (Select cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo') ;
+      cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)') ;
+
+
+{
+        cdsArrivingLoads.SQL.Add('AND SP.ObjectType = 1');
+
+        cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
+}
+
+      if (LONo = -1) and (LoadNo = -1) then
+      Begin
+        if bcConfirmed.ItemIndex = 0 then // lbConfirmLoad.Enabled = True then
+        Begin
+          cdsArrivingLoads.SQL.Add('AND L.LoadAR = 0');
+        End
+        else if bcConfirmed.ItemIndex = 1 then
+        // lbConfirmLoad.Enabled = True then
+        Begin
+          cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
+          if (LONo = -1) and (LoadNo = -1) then
+          Begin
+            cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
+              QuotedStr(DateTimeToStr(deStartPeriod.Date)));
+            cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
+              QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+          End;
+        End
+        else if bcConfirmed.ItemIndex = 2 then
+        // lbConfirmLoad.Enabled = True then
+        Begin
+          cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
+          cdsArrivingLoads.SQL.Add('AND cl.CreatedUser = ' +
+            IntToStr(ThisUser.UserID));
+          cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' +
+            QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+            DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+          cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' +
+            QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+            DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+        End;
+      End; // if(LONo = -1) and (LoadNo = -1) then
+
+
+ // END REGION To REGION AR query
+
+
+      cdsArrivingLoads.SQL.Add('UNION');
 
     End // if cds_PropsNewItemRow.AsInteger = 0 then
     else
@@ -1431,7 +1654,8 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then
+    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -2159,6 +2383,9 @@ begin
   Begin
     if grdLoadsDBTableView1.Controller.SelectedRecordCount > 0 then
     Begin
+     if AreMarkedLoadsSameObjectTypeRegionToRegion then
+      ConfirmManyLoadsRegionToRegion(Sender)
+      else
       if AreMarkedLoadsSameObjectTypeAndNOTEGEN then
         // External customer AR loads purchased of VW
         ConfirmManyLoadsPurchasedFromVW(Sender)
@@ -2764,11 +2991,11 @@ Var
   ObjectType: Integer;
   EGEN: Integer;
 begin
-  Result := False;
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait; { Show hourglass cursor }
-  mtSelectedLoads.Active := False;
-  mtSelectedLoads.Active := True;
+  Result                  := False;
+  Save_Cursor             := Screen.Cursor;
+  Screen.Cursor           := crSQLWait; { Show hourglass cursor }
+  mtSelectedLoads.Active  := False;
+  mtSelectedLoads.Active  := True;
   with dmArrivingLoads do
   Begin
     grdLoadsDBTableView1.BeginUpdate;
@@ -3737,8 +3964,8 @@ begin
           End;
 
           fAnkomstRegProgress.Show;
-          mtSelectedLoads.Filter := 'LoadAR = 0';
-          mtSelectedLoads.Filtered := True;
+          mtSelectedLoads.Filter    := 'LoadAR = 0';
+          mtSelectedLoads.Filtered  := True;
           Try
             mtSelectedLoads.First;
             While not mtSelectedLoads.Eof do
@@ -4165,14 +4392,14 @@ end;
 
 procedure TfrmLoadArrivals.ConfirmManyLoadsPurchasedFromVW(Sender: TObject);
 Var
-  LIPNo: Integer;
+  LIPNo               : Integer;
   // formConfirmManyIntLoads   : TformConfirmManyIntLoads ;
-  fSelectLIP: TfSelectLIP;
-  fAnkomstRegProgress: TfAnkomstRegProgress;
-  Save_Cursor: TCursor;
+  fSelectLIP          : TfSelectLIP;
+  fAnkomstRegProgress : TfAnkomstRegProgress;
+  Save_Cursor         : TCursor;
   // ChangeToIMPProduct        : Boolean ;
-  ObjectType: Integer;
-  LoadAROK: Boolean;
+  ObjectType          : Integer;
+  LoadAROK            : Boolean;
 begin
 
   if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
@@ -4365,5 +4592,291 @@ begin
   acPrintTallyUSNote.Enabled := grdLoadsDBTableView1.Controller.
     SelectedRecordCount > 0;
 end;
+
+procedure TfrmLoadArrivals.ConfirmManyLoadsRegionToRegion(Sender: TObject) ;
+Var
+  LIPNo               : Integer;
+  // formConfirmManyIntLoads   : TformConfirmManyIntLoads ;
+  fSelectLIP          : TfRegionToRegionSelectLIPNo ;
+  fAnkomstRegProgress : TfAnkomstRegProgress;
+  Save_Cursor         : TCursor;
+  // ChangeToIMPProduct        : Boolean ;
+  ObjectType          : Integer;
+  LoadAROK            : Boolean;
+begin
+
+  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+    [mbYes, mbNo], 0) = mrYes then
+    With dmArrivingLoads do
+    Begin
+      // ChangeToIMPProduct:= 0 ;
+
+      // ObjectType:= mtSelectedLoadsOBJECTTYPE.AsInteger ;
+
+      InsertMarkedLoadsToTempTable(Sender, 0);
+      fSelectLIP := TfRegionToRegionSelectLIPNo.Create(nil);
+      fAnkomstRegProgress := TfAnkomstRegProgress.Create(nil);
+      Try
+        grdLoadsDBTableView1.DataController.DataSource := Nil;
+ //       fSelectLIP.LIPNo          := mtSelectedLoadsLIPNo.AsInteger;
+        fSelectLIP.OwnerNo        := cds_PropsVerkNo.AsInteger;
+//        fSelectLIP.LoadDefaultLager;
+        if fSelectLIP.ShowModal = mrOK then
+        Begin
+          LIPNo := fSelectLIP.LIPNo;
+          if LIPNo < 1 then
+          Begin
+            ShowMessage('Du måste välja ett lager!');
+            Exit;
+          End;
+
+          Try
+            fAnkomstRegProgress.Show;
+            mtSelectedLoads.Filter := 'LoadAR = 0';
+            mtSelectedLoads.Filtered := True;
+            Try
+              mtSelectedLoads.First;
+              While not mtSelectedLoads.Eof do
+              Begin
+                if cdsArrivingLoads.Locate('LoadNo;LO',
+                  VarArrayOf([mtSelectedLoadsLoadNo.AsInteger,
+                  mtSelectedLoadsLONo.AsInteger]), []) then
+                Begin
+                  if IsRegionToRegionLoadValid(cdsArrivingLoadsLoadNo.AsInteger,
+                    cdsArrivingLoadsLO.AsInteger,
+                    cdsArrivingLoadsObjectType.AsInteger, Sender) = False then
+                  Begin
+                    ShowMessage('Load is not valid.');
+                    Exit;
+                  End;
+
+                  Try
+                    sq_IsEXTLoadConfirmed.Close;
+                    sq_IsEXTLoadConfirmed.ParamByName('LoadNo').AsInteger :=
+                      dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+                    sq_IsEXTLoadConfirmed.ParamByName('ShippingPlanNo')
+                      .AsInteger := dmArrivingLoads.cdsArrivingLoadsLO.
+                      AsInteger;
+                    sq_IsEXTLoadConfirmed.Open;
+                    if sq_IsEXTLoadConfirmed.Eof then
+                    Begin
+                      if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
+                      Begin
+                        // formConfirmManyIntLoads:= TformConfirmManyIntLoads.Create(Nil);
+                        Try
+                          // LoadNo := cdsArrivingLoadsLoadNo.AsInteger ;
+                          // LONo   := cdsArrivingLoadsLO.AsInteger ;
+                          // formConfirmManyIntLoads.LO_CUSTOMERNO      := cdsArrivingLoadsCUSTOMERNO.AsInteger ;
+                          // formConfirmManyIntLoads.LoadNo             := cdsArrivingLoadsLOADNO.AsInteger ;
+                          // formConfirmManyIntLoads.LIPNo              := LIPNo ;
+
+                          // formConfirmManyIntLoads.Show ;
+                          fAnkomstRegProgress.Show;
+                          Application.ProcessMessages;
+                          // formConfirmManyIntLoads.ConfirmThisLoad (ChangeToIMPProduct, ObjectType) ;
+                          // TformConfirmanyNormalLoad
+                          // göra det här när alla laster är OK, med nadra ord flyta till efter loopen!
+
+                          { if (mtSelectedLoadsImpOrt.AsInteger = 1) or (mtSelectedLoadsOBJECTTYPE.AsInteger = 1) then
+                            Begin
+                            if mtSelectedLoadsOBJECTTYPE.AsInteger = 0 then
+                            Begin
+                            if MessageDlg('Vill du ändra kvalitet till kvalitet + impregnerat på alla produkter i lastnr ' + mtSelectedLoadsLoadNo.AsString + '? (i annat fall går varorna till lagret som de är)',
+                            mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+                            ChangeToIMPProduct:= 2
+                            else
+                            ChangeToIMPProduct:= 0 ;
+                            End
+                            else
+                            if mtSelectedLoadsOBJECTTYPE.AsInteger = 1 then
+                            Begin
+                            if MessageDlg('Vill du ändra kvalitet till kvalitet + impregnerat på alla produkter i lastnr ' + mtSelectedLoadsLoadNo.AsString + '? (i annat fall går varorna till lagret som de är)',
+                            mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+                            ChangeToIMPProduct:= 1
+                            else
+                            ChangeToIMPProduct:= 0 ;
+                            End
+
+                            End
+                            else
+                            ChangeToIMPProduct:= 0 ; }
+
+                          // LoadAROK  := ARINTADDLOLoadToLager(mtSelectedLoadsLoadNo.AsInteger, LIPNo, ChangeToIMPProduct) ;
+
+                          LoadAROK :=
+                            AR_ExternLoad(mtSelectedLoadsLoadNo.AsInteger,
+                            1 { Status } , LIPNo, ThisUser.UserID);
+
+                          if LoadAROK then
+                          Begin
+                            // Obs, laster som AR av externa kunder skall inte generera internpris!!
+                            // GetIntPrice(-1, 0, -1, mtSelectedLoadsLoadNo.AsInteger, True) ;
+                            mtSelectedLoads.Edit;
+                            mtSelectedLoadsStatus.AsInteger := 1;
+                            mtSelectedLoads.Post;
+                          End // if LoadAROK then
+                          else
+                          Begin
+                            mtSelectedLoads.Edit;
+                            mtSelectedLoadsStatus.AsInteger := 0;
+                            mtSelectedLoads.Post;
+                            ShowMessage
+                              ('Lastnr ' + mtSelectedLoadsLoadNo.AsString +
+                              ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                          End;
+
+                        Finally
+                          // formConfirmManyIntLoads.Close ;
+                          // FreeAndNil(formConfirmManyIntLoads) ;
+                        End;
+                      End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
+                      else
+                        ShowMessage
+                          ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                    End // check IS load confirmed
+                    else
+                      ShowMessage('Lasten är redan ankomstregistrerad av ' +
+                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                        SqlTimeStampToStr('',
+                        sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
+                  Finally
+                    sq_IsEXTLoadConfirmed.Close;
+                  End;
+
+                End; // if cdsArrivingLoads.Locate('LoadNo;LO', VarArrayOf([mtSelectedLoadsLoadNo.AsInteger, mtSelectedLoadsLONo.AsInteger]), []) then
+                mtSelectedLoads.Next;
+              End; // While not mtSelectedLoads.Eof do
+
+              TaBortAnkomstRegistreradeLaster(1);
+
+            except
+              On E: Exception do
+              Begin
+                dmsSystem.FDoLog(E.Message);
+                ShowMessage
+                  ('Ankomstregistrering misslyckades, kolla om lasten har ändrat status');
+                // Raise ;
+              End;
+            end;
+
+          Finally
+            mtSelectedLoads.Filtered := False;
+          End;
+        End; // if fSelectLIP.ShowModal = mrOK then
+
+      Finally
+        FreeAndNil(fAnkomstRegProgress);
+        FreeAndNil(fSelectLIP);
+        grdLoadsDBTableView1.DataController.DataSource := dsrcArrivingLoads;
+      End;
+    End; // with
+end;
+
+function TfrmLoadArrivals.AreMarkedLoadsSameObjectTypeRegionToRegion: Boolean;
+Var
+  i, RecIDX: Integer;
+  Save_Cursor: TCursor;
+  ColIdx: Integer;
+  ObjectType: Integer;
+  EGEN: Integer;
+  LOTYP : String ;
+begin
+  Result                  := False;
+  Save_Cursor             := Screen.Cursor;
+  Screen.Cursor           := crSQLWait; { Show hourglass cursor }
+  mtSelectedLoads.Active  := False;
+  mtSelectedLoads.Active  := True;
+  with dmArrivingLoads do
+  Begin
+    grdLoadsDBTableView1.BeginUpdate;
+    grdLoadsDBTableView1.DataController.BeginLocate;
+    Try
+      For i := 0 to grdLoadsDBTableView1.Controller.SelectedRecordCount - 1 do
+      Begin
+        RecIDX := grdLoadsDBTableView1.Controller.SelectedRecords[i]
+          .RecordIndex;
+        ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+          ('OBJECTTYPE').Index;
+
+        ObjectType := grdLoadsDBTableView1.DataController.Values
+          [RecIDX, ColIdx];
+
+        ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+          ('EGEN').Index;
+        EGEN := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
+
+        ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+          ('LOTYP').Index;
+        LOTYP := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
+
+        if not mtSelectedLoads.Locate('OBJECTTYPE;LOTYP',
+          VarArrayOf([ObjectType, EGEN]), []) then
+        Begin
+          mtSelectedLoads.Insert;
+          mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType;
+          mtSelectedLoadsLOTYP.AsString       := LOTYP ;
+ //         mtSelectedLoadsEGEN.AsInteger       := EGEN;
+          mtSelectedLoads.Post;
+        End;
+      End; // for y
+      // Är det fler än en record är valda laster av olika "sort"
+      if (mtSelectedLoads.RecordCount = 0) or (mtSelectedLoads.RecordCount > 1)
+      then
+        Result := False
+      else if (mtSelectedLoadsOBJECTTYPE.AsInteger >= 2) and
+        (LOTYP = 'RtR') then
+        Result := True
+      else
+        Result := False;
+    Finally
+      grdLoadsDBTableView1.DataController.EndLocate;
+      grdLoadsDBTableView1.EndUpdate;
+      Screen.Cursor := Save_Cursor; { Always restore to normal }
+    End;
+
+  End; // with
+end;
+
+Function TfrmLoadArrivals.IsRegionToRegionLoadValid(LoadNo, ShippingPlanNo,
+  ObjectType: Integer; Sender: TObject): Boolean;
+begin
+  Result := False;
+  With dmArrivingLoads do
+  Begin
+    // cdsArrivingLoads.IndexName:= 'cdsArrivingLoadsIndex1' ;
+
+    cdsArrivingLoads.Filter := 'LoadNo = ' + IntToStr(LoadNo);
+    cdsArrivingLoads.Filtered := True;
+    cdsArrivingLoads.First;
+    Try
+      While Not cdsArrivingLoads.Eof do
+      Begin
+
+        if cdsArrivingLoadsObjectType.AsInteger >= 2 then
+        Begin
+          sq_CheckObjectRegionToRegionLink.Close;
+          sq_CheckObjectRegionToRegionLink.ParamByName('LoadNo').AsInteger :=
+            cdsArrivingLoadsLoadNo.AsInteger;
+          sq_CheckObjectRegionToRegionLink.ParamByName('ShippingPlanNo').AsInteger :=
+            cdsArrivingLoadsLO.AsInteger;
+          sq_CheckObjectRegionToRegionLink.Open;
+          if sq_CheckObjectRegionToRegionLink.Eof then
+            Result := True
+          else
+            ShowMessage('Kan inte AR lasten. Problem med LO# ' +
+              cdsArrivingLoadsLO.AsString +
+              ' länkning till Avrop eller LO, kolla att AVROP / LO samt LAST är OK ');
+          sq_CheckObjectRegionToRegionLink.Close;
+        End;
+        cdsArrivingLoads.Next;
+      End; // While
+      cdsArrivingLoads.Filtered := False;
+      if not cdsArrivingLoads.FindKey([LoadNo]) then
+        Result := False;
+    Finally
+      // cdsArrivingLoads.IndexName:= 'cdsArrivingLoadsIndex2' ;
+    End;
+  End; // With
+End;
 
 end.

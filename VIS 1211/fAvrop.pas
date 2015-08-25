@@ -312,7 +312,6 @@ type
     acChangeLOonLoad: TAction;
     dxBarButton37: TdxBarButton;
     acExpLoad: TAction;
-    cxButton3: TcxButton;
     cds_Props: TFDQuery;
     cds_PropsUserID: TIntegerField;
     cds_PropsForm: TStringField;
@@ -374,7 +373,6 @@ type
     dxBarLargeButton4: TdxBarLargeButton;
     grdcxAvropDBBandedTableView1LoadedPkgs: TcxGridDBBandedColumn;
     acNewDeliveryRequest: TAction;
-    cxButton4: TcxButton;
     grdLoadDBTableView1PackageEntryOption: TcxGridDBColumn;
     cxStyleRed: TcxStyle;
     Timer2: TTimer;
@@ -390,6 +388,8 @@ type
     cxButton5: TcxButton;
     acMovePkgsToInvAndDeleteLoad: TAction;
     siLangLinked_frmAvrop: TsiLangLinked;
+    acCopyLoadToOtherSalesRegion: TAction;
+    dxBarButton38: TdxBarButton;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -485,9 +485,6 @@ type
     procedure acSetStatusToSkeppatExecute(Sender: TObject);
     procedure acChangeLOonLoadExecute(Sender: TObject);
     procedure acChangeLOonLoadUpdate(Sender: TObject);
-(* LG    procedure acExpLoadExecute(Sender: TObject);
-*)
-    procedure acExpLoadUpdate(Sender: TObject);
     procedure cds_PropsOrderTypeNoChange(Sender: TField);
     procedure cds_PropsNewItemRowChange(Sender: TField);
     procedure acNewDeliveryRequestUpdate(Sender: TObject);
@@ -498,6 +495,8 @@ type
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
     procedure acMovePkgsToInvAndDeleteLoadExecute(Sender: TObject);
     procedure acMovePkgsToInvAndDeleteLoadUpdate(Sender: TObject);
+    procedure acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
+    procedure acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
   private
     { Private declarations }
     GlobalLONo, CSDNO: Integer;
@@ -4350,7 +4349,7 @@ var
 begin
   // 1) Move alla packages to selected inventory
   // 2) Delete load
-  if MessageDlg('Vill du flytta alla paket i lasten och makulera lasten?',
+  if MessageDlg('Do you want to add the packages to inventory and delete the load ?',
     mtConfirmation, [mbYes, mbNo, mbCancel], 0) = mrYes then
   Begin
     fSelectLIPNo := TfSelectLIPNo.Create(nil);
@@ -4367,7 +4366,7 @@ begin
         End
         else
           ShowMessage
-            ('Kan inte flytta paket pga att ingen lagergrupp är vald.');
+            ('Cannot execute the operation because no inventory group was selected.');
       End;
     Finally
       fSelectLIPNo.mtProps.Active := False;
@@ -5314,6 +5313,47 @@ Begin
   End;
 End;
 
+procedure TfrmAvrop.acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
+Var
+  PO_LONo, NewLoadNo: Integer;
+begin
+
+  // ToDo ! Gör en kontroll att avropen matchar med orderlineno!!
+
+  With daMoLM1 do
+  Begin
+    NewLoadNo := dmsSystem.POLoadConfirmed(cdsLoadsLoadNo.AsInteger,
+      PO_LONo);
+    if NewLoadNo = 0 then
+    Begin
+      PO_LONo := GetPOLoNoInRegionToRegion // SelectAvropsNrAttSkapaSalesLoadMot
+        (cdsAvropShippingPlanNo.AsInteger);
+      if PO_LONo > 0 then
+      Begin
+        NewLoadNo := CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
+          (cdsLoadsLoadNo.AsInteger, PO_LONo, 1);
+        if NewLoadNo > 0 then
+          ShowMessage('Lasten kopierad till annan försäljningsregion ' +
+            inttostr(PO_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+      End;
+    End
+    else
+      ShowMessage('Lasten är redan kopierad till annan försäljningsregion ' +
+        inttostr(PO_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+  End;
+end;
+
+procedure TfrmAvrop.acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
+begin
+  With daMoLM1 do
+  Begin
+    acCopyLoadToSales.Enabled := (cdsAvrop.Active) and
+      (cdsAvrop.RecordCount > 0) and (cdsAvropORDERTYPE.AsInteger = 0) and
+      (cdsAvropTrading.AsInteger = 2) and (cdsLoads.Active) and
+      (cdsLoads.RecordCount > 0);
+  End;
+end;
+
 procedure TfrmAvrop.acCopyLoadToSalesExecute(Sender: TObject);
 Var
   Sales_LONo, NewLoadNo: Integer;
@@ -5982,17 +6022,6 @@ begin
 end;
 
 LG *)
-
-procedure TfrmAvrop.acExpLoadUpdate(Sender: TObject);
-begin
-  acExpLoad.Enabled := (daMoLM1.cdsAvrop.Active) and
-    (daMoLM1.cdsAvrop.RecordCount > 0) and
-    (daMoLM1.cdsAvropORDERTYPE.AsInteger = 1) and
-    ((daMoLM1.cdsAvropTrading.AsInteger = 0) or (daMoLM1.cdsAvropTrading.IsNull)
-    ) and (grdLoadDBTableView1.DataController.DataSource.DataSet.Active) and
-    (grdLoadDBTableView1.DataController.DataSource.DataSet.RecordCount > 0) and
-    (daMoLM1.cdsLoadsINTERNAL_INVOICENO.AsInteger > 0);
-end;
 
 procedure TfrmAvrop.cds_PropsOrderTypeNoChange(Sender: TField);
 var

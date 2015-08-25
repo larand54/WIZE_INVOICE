@@ -1824,18 +1824,19 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=alvesql01'
+      'Server=alvesql03'
       'Database=vis_vida'
       'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
+      'ApplicationName=VIS'
       'User_Name=Lars'
       'Password=woods2011'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
+    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24
@@ -1997,7 +1998,7 @@ object dmsConnector: TdmsConnector
   end
   object FDTransaction1: TFDTransaction
     Connection = FDConnection1
-    Left = 584
+    Left = 616
     Top = 24
   end
   object SQLConn_XOR: TFDConnection
@@ -2014,7 +2015,7 @@ object dmsConnector: TdmsConnector
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
     LoginPrompt = False
-    Left = 584
+    Left = 616
     Top = 72
   end
   object FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink
@@ -2065,7 +2066,7 @@ object dmsConnector: TdmsConnector
     Connection = FDConnection1
     StoredProcName = 'dbo.vis_GetUserStartHost'
     Left = 613
-    Top = 280
+    Top = 128
     ParamData = <
       item
         Position = 1

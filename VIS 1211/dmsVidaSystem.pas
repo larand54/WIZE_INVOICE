@@ -2555,6 +2555,7 @@ End;
 
 function TdmsSystem.GetLanguageNo : Integer ;
 Begin
+ Try
   Try
   sp_Lang.Active  := False ;
   sp_Lang.ParamByName('@UseriD').AsInteger      :=  ThisUser.UserID ;
@@ -2571,6 +2572,9 @@ Begin
       Raise ;
      End
   End ;
+ Finally
+   sp_Lang.Active  := False ;
+ End;
 End;
 
 end.

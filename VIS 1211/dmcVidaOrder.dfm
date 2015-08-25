@@ -3474,6 +3474,15 @@ object dmcOrder: TdmcOrder
   end
   object sq_grade: TFDQuery
     Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evMode, evUnidirectional]
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate, uvLockMode, uvCountUpdatedRecords, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.EnableDelete = False
+    UpdateOptions.EnableInsert = False
+    UpdateOptions.EnableUpdate = False
+    UpdateOptions.CountUpdatedRecords = False
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.CheckReadOnly = False
+    UpdateOptions.CheckUpdatable = False
     SQL.Strings = (
       'Select distinct'
       'CASE WHEN g.gradecode is null then'
@@ -3674,6 +3683,32 @@ object dmcOrder: TdmcOrder
       item
         Position = 3
         Name = '@Status'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_grade: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Vis_GetLOGrades'
+    Left = 432
+    Top = 512
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@VerkNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@LanguageCode'
         DataType = ftInteger
         ParamType = ptInput
       end>

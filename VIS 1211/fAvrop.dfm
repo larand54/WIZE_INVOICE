@@ -5,12 +5,12 @@ object frmAvrop: TfrmAvrop
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Avrop'
-  ClientHeight = 711
-  ClientWidth = 1248
+  ClientHeight = 875
+  ClientWidth = 1536
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -20,48 +20,68 @@ object frmAvrop: TfrmAvrop
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Splitter1: TSplitter
     Left = 0
-    Top = 388
-    Width = 1248
+    Top = 478
+    Width = 1536
     Height = 3
     Cursor = crVSplit
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     Color = clBlack
     ParentColor = False
-    ExplicitWidth = 1234
   end
   object Panel1: TPanel
     Left = 0
-    Top = 391
-    Width = 1248
-    Height = 320
+    Top = 481
+    Width = 1536
+    Height = 394
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
     object Splitter2: TSplitter
-      Left = 561
+      Left = 690
       Top = 1
-      Height = 318
+      Width = 4
+      Height = 392
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Color = clBlack
       ParentColor = False
     end
     object pLoadOrder: TPanel
       Left = 1
       Top = 1
-      Width = 560
-      Height = 318
+      Width = 689
+      Height = 392
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object Splitter3: TSplitter
         Left = 0
-        Top = 142
-        Width = 560
+        Top = 175
+        Width = 689
         Height = 3
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Color = clBlack
         ParentColor = False
@@ -69,21 +89,29 @@ object frmAvrop: TfrmAvrop
       object PanelNormalLO: TPanel
         Left = 0
         Top = 0
-        Width = 560
-        Height = 142
+        Width = 689
+        Height = 175
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         TabOrder = 0
         object Panel3: TPanel
           Left = 1
           Top = 1
-          Width = 558
-          Height = 27
+          Width = 687
+          Height = 33
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           Caption = 'LASTORDER'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
@@ -91,9 +119,13 @@ object frmAvrop: TfrmAvrop
         end
         object grdLO: TcxGrid
           Left = 1
-          Top = 28
-          Width = 558
-          Height = 113
+          Top = 34
+          Width = 687
+          Height = 140
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           TabOrder = 1
           object grdLODBTableView1: TcxGridDBTableView
@@ -271,22 +303,30 @@ object frmAvrop: TfrmAvrop
       end
       object PanelAddLO: TPanel
         Left = 0
-        Top = 145
-        Width = 560
-        Height = 173
+        Top = 178
+        Width = 689
+        Height = 214
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 1
         object Panel2: TPanel
           Left = 1
           Top = 1
-          Width = 558
-          Height = 16
+          Width = 687
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           Caption = 'ADD LO'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
@@ -294,9 +334,13 @@ object frmAvrop: TfrmAvrop
         end
         object grdAddLO: TcxGrid
           Left = 1
-          Top = 17
-          Width = 558
-          Height = 155
+          Top = 21
+          Width = 687
+          Height = 192
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           TabOrder = 1
           object grdAddLODBTableView1: TcxGridDBTableView
@@ -457,47 +501,67 @@ object frmAvrop: TfrmAvrop
       end
     end
     object pLoads: TPanel
-      Left = 564
+      Left = 694
       Top = 1
-      Width = 683
-      Height = 318
+      Width = 841
+      Height = 392
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       object PanelAvropLoad: TPanel
         Left = 0
         Top = 0
-        Width = 683
-        Height = 73
+        Width = 841
+        Height = 90
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelOuter = bvNone
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
         DesignSize = (
-          683
-          73)
+          841
+          90)
         object Label1: TLabel
-          Left = 8
-          Top = 4
-          Width = 58
-          Height = 15
+          Left = 10
+          Top = 5
+          Width = 71
+          Height = 18
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'S'#246'k lastnr'
         end
         object Label8: TLabel
-          Left = 111
-          Top = 4
-          Width = 75
-          Height = 15
+          Left = 137
+          Top = 5
+          Width = 91
+          Height = 18
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'S'#246'kfakturanr'
         end
         object cxlabelLoads: TcxLabel
-          Left = 281
-          Top = 3
+          Left = 346
+          Top = 4
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akLeft, akBottom]
           AutoSize = False
           Caption = 'INLEVERANSER'
@@ -510,108 +574,98 @@ object frmAvrop: TfrmAvrop
           StyleDisabled.LookAndFeel.Kind = lfFlat
           StyleFocused.LookAndFeel.Kind = lfFlat
           StyleHot.LookAndFeel.Kind = lfFlat
-          Height = 18
-          Width = 96
+          Height = 22
+          Width = 118
         end
         object cxButton1: TcxButton
-          Left = 245
-          Top = 42
-          Width = 95
-          Height = 25
+          Left = 8
+          Top = 52
+          Width = 116
+          Height = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acNewLoad
           Anchors = [akTop, akRight]
           TabOrder = 3
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object cxButton2: TcxButton
-          Left = 346
-          Top = 42
-          Width = 125
-          Height = 25
+          Left = 143
+          Top = 52
+          Width = 154
+          Height = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acOpenLoad
           Anchors = [akTop, akRight]
           TabOrder = 4
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object teSearchInvoiceNo: TcxTextEdit
-          Left = 111
-          Top = 18
+          Left = 137
+          Top = 22
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           ParentFont = False
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -12
+          Style.Font.Height = -15
           Style.Font.Name = 'Arial'
           Style.Font.Style = []
           Style.IsFontAssigned = True
           TabOrder = 1
           OnKeyDown = teSearchInvoiceNoKeyDown
-          Width = 82
+          Width = 101
         end
         object teSearchLoadNo: TcxTextEdit
-          Left = 8
-          Top = 18
+          Left = 10
+          Top = 22
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           ParentFont = False
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -12
+          Style.Font.Height = -15
           Style.Font.Name = 'Arial'
           Style.Font.Style = []
           Style.IsFontAssigned = True
           TabOrder = 0
           OnKeyDown = teSearchLoadNoKeyDown
-          Width = 83
+          Width = 102
         end
-        object cxButton3: TcxButton
-          Left = 125
-          Top = 42
-          Width = 114
-          Height = 25
-          Action = acExpLoad
+        object cxButton5: TcxButton
+          Left = 315
+          Top = 52
+          Width = 180
+          Height = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Action = acMovePkgsToInvAndDeleteLoad
           Anchors = [akTop, akRight]
           TabOrder = 5
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object cxButton4: TcxButton
-          Left = 20
-          Top = 42
-          Width = 90
-          Height = 25
-          Action = acNewDeliveryRequest
-          Anchors = [akTop, akRight]
-          TabOrder = 6
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
-        object cxButton5: TcxButton
-          Left = 477
-          Top = 42
-          Width = 146
-          Height = 25
-          Action = acMovePkgsToInvAndDeleteLoad
-          Anchors = [akTop, akRight]
-          TabOrder = 7
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
@@ -619,9 +673,13 @@ object frmAvrop: TfrmAvrop
       end
       object grdLoad: TcxGrid
         Left = 0
-        Top = 73
-        Width = 683
-        Height = 245
+        Top = 90
+        Width = 841
+        Height = 302
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 1
         object grdLoadDBTableView1: TcxGridDBTableView
@@ -770,58 +828,90 @@ object frmAvrop: TfrmAvrop
   end
   object Panel4: TPanel
     Left = 0
-    Top = 48
-    Width = 1248
-    Height = 69
+    Top = 59
+    Width = 1536
+    Height = 85
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 1
     object Label3: TLabel
-      Left = 408
-      Top = 16
-      Width = 45
-      Height = 13
+      Left = 502
+      Top = 20
+      Width = 56
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Marknad:'
     end
     object Label4: TLabel
-      Left = 608
-      Top = 16
-      Width = 65
-      Height = 13
+      Left = 748
+      Top = 20
+      Width = 85
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'F'#246'rs'#228'lj.region:'
     end
     object Label5: TLabel
-      Left = 8
-      Top = 15
-      Width = 50
-      Height = 13
+      Left = 10
+      Top = 18
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'S'#246'k LONr:'
     end
     object LabelKlient: TLabel
-      Left = 408
-      Top = 40
-      Width = 28
-      Height = 13
+      Left = 502
+      Top = 49
+      Width = 33
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kund:'
     end
     object Label7: TLabel
-      Left = 608
-      Top = 40
-      Width = 47
-      Height = 13
+      Left = 748
+      Top = 49
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'S'#228'ljgrupp:'
     end
     object Label6: TLabel
-      Left = 8
-      Top = 39
-      Width = 50
-      Height = 13
+      Left = 10
+      Top = 48
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'S'#246'k Er ref:'
     end
     object eSearchLONr: TEdit
-      Left = 64
-      Top = 9
-      Width = 137
-      Height = 19
+      Left = 79
+      Top = 11
+      Width = 168
+      Height = 23
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AutoSize = False
       BevelInner = bvLowered
       BevelOuter = bvNone
@@ -829,39 +919,55 @@ object frmAvrop: TfrmAvrop
       OnKeyDown = eSearchLONrKeyDown
     end
     object mLog: TMemo
-      Left = 928
-      Top = 8
-      Width = 89
-      Height = 41
+      Left = 1142
+      Top = 10
+      Width = 110
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Lines.Strings = (
         'mLog')
       TabOrder = 10
       Visible = False
     end
     object bLog: TButton
-      Left = 1024
-      Top = 10
-      Width = 94
-      Height = 39
+      Left = 1260
+      Top = 12
+      Width = 116
+      Height = 48
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'bLog'
       TabOrder = 11
       Visible = False
       OnClick = bLogClick
     end
     object Button1: TButton
-      Left = 314
-      Top = 32
-      Width = 75
-      Height = 25
+      Left = 386
+      Top = 39
+      Width = 93
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Emaila log'
       TabOrder = 12
       OnClick = Button1Click
     end
     object eSearchErReferens: TEdit
-      Left = 64
-      Top = 33
-      Width = 137
-      Height = 19
+      Left = 79
+      Top = 41
+      Width = 168
+      Height = 23
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AutoSize = False
       BevelInner = bvLowered
       BevelOuter = bvNone
@@ -869,8 +975,12 @@ object frmAvrop: TfrmAvrop
       OnKeyDown = eSearchErReferensKeyDown
     end
     object lcMarknad: TcxDBLookupComboBox
-      Left = 461
-      Top = 8
+      Left = 567
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Marknad'
       DataBinding.DataSource = ds_Props
       Properties.ClearKey = 46
@@ -884,11 +994,15 @@ object frmAvrop: TfrmAvrop
       Properties.ListOptions.AnsiSort = True
       Properties.ListOptions.ShowHeader = False
       TabOrder = 4
-      Width = 136
+      Width = 168
     end
     object lcKund: TcxDBLookupComboBox
-      Left = 461
-      Top = 32
+      Left = 567
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Kund'
       DataBinding.DataSource = ds_Props
       Properties.ClearKey = 46
@@ -898,11 +1012,15 @@ object frmAvrop: TfrmAvrop
       Properties.ListOptions.AnsiSort = True
       Properties.ListOptions.ShowHeader = False
       TabOrder = 5
-      Width = 136
+      Width = 168
     end
     object lcSR: TcxDBLookupComboBox
-      Left = 680
-      Top = 8
+      Left = 837
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'SR'
       DataBinding.DataSource = ds_Props
       Properties.ClearKey = 46
@@ -912,11 +1030,15 @@ object frmAvrop: TfrmAvrop
       Properties.ListOptions.AnsiSort = True
       Properties.ListOptions.ShowHeader = False
       TabOrder = 6
-      Width = 145
+      Width = 178
     end
     object cbNotInvoiced: TcxDBCheckBox
-      Left = 944
-      Top = 48
+      Left = 1162
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Ej fakturerat'
       DataBinding.DataField = 'VerkSupplierNo'
       DataBinding.DataSource = ds_Props
@@ -925,11 +1047,15 @@ object frmAvrop: TfrmAvrop
       Properties.ValueUnchecked = 0
       TabOrder = 8
       Visible = False
-      Width = 65
+      Width = 80
     end
     object rgOrderTypeNo: TcxDBRadioGroup
-      Left = 208
-      Top = 5
+      Left = 256
+      Top = 6
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kontrakt'
       DataBinding.DataField = 'OrderTypeNo'
       DataBinding.DataSource = ds_Props
@@ -944,12 +1070,16 @@ object frmAvrop: TfrmAvrop
           Value = 1
         end>
       TabOrder = 2
-      Height = 57
-      Width = 89
+      Height = 70
+      Width = 110
     end
     object icStatus: TcxDBImageComboBox
-      Left = 312
-      Top = 8
+      Left = 384
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Status'
       DataBinding.DataSource = ds_Props
       Properties.ClearKey = 46
@@ -982,11 +1112,15 @@ object frmAvrop: TfrmAvrop
           Value = 4
         end>
       TabOrder = 3
-      Width = 89
+      Width = 110
     end
     object cbShowAll: TcxDBCheckBox
-      Left = 880
-      Top = 48
+      Left = 1083
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Visa alla'
       DataBinding.DataField = 'NewItemRow'
       DataBinding.DataSource = ds_Props
@@ -995,11 +1129,15 @@ object frmAvrop: TfrmAvrop
       Properties.ValueUnchecked = 0
       TabOrder = 9
       Visible = False
-      Width = 65
+      Width = 80
     end
     object lcSaljgrupp: TcxDBLookupComboBox
-      Left = 680
-      Top = 32
+      Left = 837
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Saljgrupp'
       DataBinding.DataSource = ds_Props
       Properties.ClearKey = 46
@@ -1010,14 +1148,18 @@ object frmAvrop: TfrmAvrop
       Properties.ListOptions.AnsiSort = True
       Properties.ListOptions.ShowHeader = False
       TabOrder = 7
-      Width = 145
+      Width = 178
     end
   end
   object grdcxAvrop: TcxGrid
     Left = 0
-    Top = 117
-    Width = 1248
-    Height = 271
+    Top = 144
+    Width = 1536
+    Height = 334
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     PopupMenu = pmAvropGrid
     TabOrder = 2
@@ -1367,73 +1509,105 @@ object frmAvrop: TfrmAvrop
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 1248
-    Height = 48
+    Width = 1536
+    Height = 59
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 3
     object Panel6: TPanel
       Left = 0
       Top = 0
-      Width = 903
-      Height = 48
+      Width = 1111
+      Height = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 903
-        Height = 44
+        Width = 1111
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel7: TPanel
-      Left = 1183
+      Left = 1456
       Top = 0
-      Width = 65
-      Height = 48
+      Width = 80
+      Height = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 65
-        Height = 44
+        Width = 80
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel8: TPanel
-      Left = 903
+      Left = 1111
       Top = 0
-      Width = 280
-      Height = 48
+      Width = 345
+      Height = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
     end
   end
   object cxRichEdit1: TcxRichEdit
-    Left = 40
-    Top = 176
+    Left = 49
+    Top = 217
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 4
     Visible = False
-    Height = 153
-    Width = 1177
+    Height = 188
+    Width = 1449
   end
   object DBRichEdit_InvoiceText: TDBRichEdit
     Left = 0
-    Top = 490
-    Width = 1233
-    Height = 159
+    Top = 603
+    Width = 1518
+    Height = 196
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     DataField = 'InvoiceText'
     DataSource = dmVidaInvoice.dsrcInvoiceHead
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     TabOrder = 9
@@ -1442,8 +1616,8 @@ object frmAvrop: TfrmAvrop
   end
   object ActionList1: TActionList
     Images = imglistActions
-    Left = 256
-    Top = 136
+    Left = 208
+    Top = 176
     object ac_Exit: TAction
       Caption = 'St'#228'ng F12'
       ImageIndex = 0
@@ -1680,6 +1854,7 @@ object frmAvrop: TfrmAvrop
       OnUpdate = acEmailaFS_USAUpdate
     end
     object acCopyLoadToSales: TAction
+      Category = 'Last'
       Caption = 'acCopyLoadToSales'
       OnExecute = acCopyLoadToSalesExecute
       OnUpdate = acCopyLoadToSalesUpdate
@@ -1722,7 +1897,6 @@ object frmAvrop: TfrmAvrop
     object acExpLoad: TAction
       Category = 'Last'
       Caption = 'S'#228'nd inlev. till HTF'
-      OnUpdate = acExpLoadUpdate
     end
     object acGetPkgStatusOfHampen: TAction
       Caption = 'Importera paketstatus&&leveranser'
@@ -1739,12 +1913,19 @@ object frmAvrop: TfrmAvrop
       OnExecute = acMovePkgsToInvAndDeleteLoadExecute
       OnUpdate = acMovePkgsToInvAndDeleteLoadUpdate
     end
+    object acCopyLoadToOtherSalesRegion: TAction
+      Category = 'Last'
+      Caption = 'Kopiera last till annan f'#246'rs'#228'ljningsregion'
+      ImageIndex = 3
+      OnExecute = acCopyLoadToOtherSalesRegionExecute
+      OnUpdate = acCopyLoadToOtherSalesRegionUpdate
+    end
   end
   object imglistActions: TImageList
     Height = 24
     Width = 24
-    Left = 576
-    Top = 256
+    Left = 512
+    Top = 312
     Bitmap = {
       494C010110001500040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       00000000000036000000280000006000000078000000010020000000000000B4
@@ -3241,7 +3422,7 @@ object frmAvrop: TfrmAvrop
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -3270,8 +3451,8 @@ object frmAvrop: TfrmAvrop
     ImageOptions.LargeImages = imglistActions
     PopupMenuLinks = <>
     UseSystemFont = False
-    Left = 104
-    Top = 136
+    Left = 96
+    Top = 344
     DockControlHeights = (
       0
       0
@@ -3403,6 +3584,10 @@ object frmAvrop: TfrmAvrop
     end
     object dxBarLargeButton4: TdxBarLargeButton
       Action = acGetPkgStatusOfHampen
+      Category = 0
+    end
+    object dxBarButton38: TdxBarButton
+      Action = acCopyLoadToOtherSalesRegion
       Category = 0
     end
     object bbPrintOrder: TdxBarButton
@@ -3648,13 +3833,13 @@ object frmAvrop: TfrmAvrop
         ItemName = 'dxBarButton35'
       end>
     UseOwnFont = False
-    Left = 104
-    Top = 88
+    Left = 208
+    Top = 384
   end
   object pmShortCuts: TPopupMenu
     AutoPopup = False
-    Left = 680
-    Top = 184
+    Left = 656
+    Top = 208
     object Booking1: TMenuItem
       Action = ac_Booking
     end
@@ -4674,7 +4859,7 @@ object frmAvrop: TfrmAvrop
     SubLanguageID = 1
     LocaleID = 1024
     Left = 208
-    Top = 264
+    Top = 288
     object mtCompSelRowsSALESREGIONNO: TIntegerField
       FieldName = 'SALESREGIONNO'
     end
@@ -4689,9 +4874,9 @@ object frmAvrop: TfrmAvrop
     end
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 256
-    Top = 184
-    PixelsPerInch = 96
+    Left = 208
+    Top = 232
+    PixelsPerInch = 120
     object cxStyleSilver: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clSilver
@@ -4894,6 +5079,10 @@ object frmAvrop: TfrmAvrop
       end
       item
         Visible = True
+        ItemName = 'dxBarButton38'
+      end
+      item
+        Visible = True
         ItemName = 'dxBarButton37'
       end
       item
@@ -4928,8 +5117,8 @@ object frmAvrop: TfrmAvrop
         ItemName = 'dxBarButton33'
       end>
     UseOwnFont = False
-    Left = 200
-    Top = 488
+    Left = 504
+    Top = 392
   end
   object pmLO: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -4952,8 +5141,8 @@ object frmAvrop: TfrmAvrop
         ItemName = 'dxBarButton22'
       end>
     UseOwnFont = False
-    Left = 264
-    Top = 488
+    Left = 648
+    Top = 392
   end
   object pmAddLO: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -4976,8 +5165,8 @@ object frmAvrop: TfrmAvrop
         ItemName = 'dxBarButton26'
       end>
     UseOwnFont = False
-    Left = 137
-    Top = 489
+    Left = 361
+    Top = 393
   end
   object SaveDialog1: TSaveDialog
     Left = 512
@@ -4986,7 +5175,7 @@ object frmAvrop: TfrmAvrop
   object ds_Props: TDataSource
     DataSet = cds_Props
     Left = 376
-    Top = 360
+    Top = 328
   end
   object Timer1: TTimer
     Enabled = False
@@ -5004,7 +5193,7 @@ object frmAvrop: TfrmAvrop
       'WHERE UserID = :UserID'
       'AND Form = :Form')
     Left = 376
-    Top = 304
+    Top = 264
     ParamData = <
       item
         Name = 'USERID'
@@ -5286,8 +5475,8 @@ object frmAvrop: TfrmAvrop
   object cxGridPopupMenu1: TcxGridPopupMenu
     Grid = grdcxAvrop
     PopupMenus = <>
-    Left = 736
-    Top = 256
+    Left = 824
+    Top = 312
   end
   object Timer2: TTimer
     Enabled = False
@@ -5326,7 +5515,7 @@ object frmAvrop: TfrmAvrop
     SubLanguageID = 0
     LocaleID = 0
     Left = 208
-    Top = 312
+    Top = 336
     object mtOrdersOrderNo: TIntegerField
       FieldName = 'OrderNo'
     end
@@ -5424,8 +5613,8 @@ object frmAvrop: TfrmAvrop
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 608
-    Top = 344
+    Left = 656
+    Top = 312
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A005400660072006D004100760072006F007000010041007600
@@ -5967,245 +6156,224 @@ object frmAvrop: TfrmAvrop
       6F006E003100010041007200690061006C00010001005400610068006F006D00
       61000D000A006300780042007500740074006F006E0032000100410072006900
       61006C00010001005400610068006F006D0061000D000A006300780042007500
-      740074006F006E003300010041007200690061006C0001000100540061006800
-      6F006D0061000D000A006300780042007500740074006F006E00340001004100
-      7200690061006C00010001005400610068006F006D0061000D000A0063007800
-      42007500740074006F006E003500010041007200690061006C00010001005400
-      610068006F006D0061000D000A00440042005200690063006800450064006900
-      74005F0049006E0076006F00690063006500540065007800740001004D005300
-      2000530061006E00730020005300650072006900660001000100540061006800
-      6F006D0061000D000A00640078004200610072004D0061006E00610067006500
+      740074006F006E003500010041007200690061006C0001000100540061006800
+      6F006D0061000D000A0044004200520069006300680045006400690074005F00
+      49006E0076006F00690063006500540065007800740001004D00530020005300
+      61006E007300200053006500720069006600010001005400610068006F006D00
+      61000D000A00640078004200610072004D0061006E0061006700650072003100
+      01005400610068006F006D006100010001005400610068006F006D0061000D00
+      0A00640078004200610072004D0061006E006100670065007200310042006100
       7200310001005400610068006F006D006100010001005400610068006F006D00
       61000D000A00640078004200610072004D0061006E0061006700650072003100
-      420061007200310001005400610068006F006D00610001000100540061006800
-      6F006D0061000D000A00640078004200610072004D0061006E00610067006500
-      72003100420061007200320001005400610068006F006D006100010001005400
-      610068006F006D0061000D000A00700070006D005000720069006E0074005200
-      650070006F0072007400730001005400610068006F006D006100010001005400
-      610068006F006D0061000D000A0070006D004100760072006F00700047007200
-      6900640001005400610068006F006D006100010001005400610068006F006D00
-      61000D000A00630078005300740079006C006500530069006C00760065007200
+      420061007200320001005400610068006F006D00610001000100540061006800
+      6F006D0061000D000A00700070006D005000720069006E007400520065007000
+      6F0072007400730001005400610068006F006D00610001000100540061006800
+      6F006D0061000D000A0070006D004100760072006F0070004700720069006400
       01005400610068006F006D006100010001005400610068006F006D0061000D00
-      0A00630078005300740079006C00650042006C00750065000100540061006800
-      6F006D006100010001005400610068006F006D0061000D000A00630078005300
-      740079006C006500590065006C006C006F00770001005400610068006F006D00
+      0A00630078005300740079006C006500530069006C0076006500720001005400
+      610068006F006D006100010001005400610068006F006D0061000D000A006300
+      78005300740079006C00650042006C007500650001005400610068006F006D00
       6100010001005400610068006F006D0061000D000A0063007800530074007900
-      6C00650052006500640001004D0053002000530061006E007300200053006500
-      720069006600010001005400610068006F006D0061000D000A0070006D004C00
-      6F0061006400730001005400610068006F006D00610001000100540061006800
-      6F006D0061000D000A0070006D004C004F0001005400610068006F006D006100
-      010001005400610068006F006D0061000D000A0070006D004100640064004C00
-      4F0001005400610068006F006D006100010001005400610068006F006D006100
-      0D000A00730074004D0075006C00740069004C0069006E00650073005F005500
-      6E00690063006F00640065000D000A006D004C006F0067002E004C0069006E00
-      6500730001006D004C006F006700010001000D000A0064007800420061007200
-      4D0061006E00610067006500720031002E00430061007400650067006F007200
-      6900650073000100440065006600610075006C0074002C005000720069006E00
-      740042007500740074006F006E002C004100760072006F007000470072006400
-      2C004C006F006100640073002C004C004F002C004100640064004C004F000100
-      01000D000A007300740053007400720069006E00670073005F0055006E006900
-      63006F00640065000D000A00730074004F007400680065007200530074007200
-      69006E00670073005F0055006E00690063006F00640065000D000A006D007400
-      43006F006D007000530065006C0052006F00770073002E005600650072007300
-      69006F006E00010037002E00360033002E003000300020005300740061006E00
-      64006100720064002000450064006900740069006F006E00010001000D000A00
-      6D0074004F00720064006500720073002E00560065007200730069006F006E00
-      010037002E00360033002E003000300020005300740061006E00640061007200
-      64002000450064006900740069006F006E00010001000D000A00730074004300
-      6F006C006C0065006300740069006F006E0073005F0055006E00690063006F00
-      640065000D000A006700720064004C004F00440042005400610062006C006500
-      560069006500770031005300540041005400550053002E00500072006F007000
-      6500720074006900650073002E004900740065006D0073005B0039005D002E00
-      4400650073006300720069007000740069006F006E0001004B00460055000100
-      01000D000A006700720064004C006F0061006400440042005400610062006C00
-      650056006900650077003100530065006E006400650072004C006F0061006400
-      5300740061007400750073002E00500072006F00700065007200740069006500
-      73002E004900740065006D0073005B0030005D002E0044006500730063007200
-      69007000740069006F006E0001005000720065006C0069006D0069006E00E400
-      7200010001000D000A006700720064004C006F00610064004400420054006100
+      6C006500590065006C006C006F00770001005400610068006F006D0061000100
+      01005400610068006F006D0061000D000A00630078005300740079006C006500
+      52006500640001004D0053002000530061006E00730020005300650072006900
+      6600010001005400610068006F006D0061000D000A0070006D004C006F006100
+      6400730001005400610068006F006D006100010001005400610068006F006D00
+      61000D000A0070006D004C004F0001005400610068006F006D00610001000100
+      5400610068006F006D0061000D000A0070006D004100640064004C004F000100
+      5400610068006F006D006100010001005400610068006F006D0061000D000A00
+      730074004D0075006C00740069004C0069006E00650073005F0055006E006900
+      63006F00640065000D000A006D004C006F0067002E004C0069006E0065007300
+      01006D004C006F006700010001000D000A007300740053007400720069006E00
+      670073005F0055006E00690063006F00640065000D000A00730074004F007400
+      68006500720053007400720069006E00670073005F0055006E00690063006F00
+      640065000D000A007300740043006F006C006C0065006300740069006F006E00
+      73005F0055006E00690063006F00640065000D000A006700720064004C004F00
+      440042005400610062006C006500560069006500770031005300540041005400
+      550053002E00500072006F0070006500720074006900650073002E0049007400
+      65006D0073005B0039005D002E00440065007300630072006900700074006900
+      6F006E0001004B0046005500010001000D000A006700720064004C006F006100
+      6400440042005400610062006C00650056006900650077003100530065006E00
+      6400650072004C006F00610064005300740061007400750073002E0050007200
+      6F0070006500720074006900650073002E004900740065006D0073005B003000
+      5D002E004400650073006300720069007000740069006F006E00010050007200
+      65006C0069006D0069006E00E4007200010001000D000A006700720064004C00
+      6F0061006400440042005400610062006C006500560069006500770031005300
+      65006E006400650072004C006F00610064005300740061007400750073002E00
+      500072006F0070006500720074006900650073002E004900740065006D007300
+      5B0031005D002E004400650073006300720069007000740069006F006E000100
+      500072006F0062006C0065006D00010001000D000A006700720064004C006F00
+      61006400440042005400610062006C0065005600690065007700310053006500
+      6E006400650072004C006F00610064005300740061007400750073002E005000
+      72006F0070006500720074006900650073002E004900740065006D0073005B00
+      32005D002E004400650073006300720069007000740069006F006E0001004F00
+      4B00010001000D000A006700720064004C006F00610064004400420054006100
       62006C00650056006900650077003100530065006E006400650072004C006F00
       610064005300740061007400750073002E00500072006F007000650072007400
-      6900650073002E004900740065006D0073005B0031005D002E00440065007300
-      6300720069007000740069006F006E000100500072006F0062006C0065006D00
-      010001000D000A006700720064004C006F006100640044004200540061006200
-      6C00650056006900650077003100530065006E006400650072004C006F006100
-      64005300740061007400750073002E00500072006F0070006500720074006900
-      650073002E004900740065006D0073005B0032005D002E004400650073006300
-      720069007000740069006F006E0001004F004B00010001000D000A0067007200
-      64004C006F0061006400440042005400610062006C0065005600690065007700
-      3100530065006E006400650072004C006F006100640053007400610074007500
-      73002E00500072006F0070006500720074006900650073002E00490074006500
-      6D0073005B0033005D002E004400650073006300720069007000740069006F00
-      6E000100550074006C006100730074006E0069006E0067007300700065006300
-      010001000D000A006C0063004D00610072006B006E00610064002E0050007200
-      6F0070006500720074006900650073002E004C0069007300740043006F006C00
-      75006D006E0073005B0030005D002E00430061007000740069006F006E000100
-      4D00610072006B006500740052006500670069006F006E004E0061006D006500
+      6900650073002E004900740065006D0073005B0033005D002E00440065007300
+      6300720069007000740069006F006E000100550074006C006100730074006E00
+      69006E0067007300700065006300010001000D000A006C0063004D0061007200
+      6B006E00610064002E00500072006F0070006500720074006900650073002E00
+      4C0069007300740043006F006C0075006D006E0073005B0030005D002E004300
+      61007000740069006F006E0001004D00610072006B0065007400520065006700
+      69006F006E004E0061006D006500010001000D000A00720067004F0072006400
+      6500720054007900700065004E006F002E00500072006F007000650072007400
+      6900650073002E004900740065006D0073005B0030005D002E00430061007000
+      740069006F006E0001004600F60072007300E4006C006A006E0069006E006700
       010001000D000A00720067004F00720064006500720054007900700065004E00
       6F002E00500072006F0070006500720074006900650073002E00490074006500
-      6D0073005B0030005D002E00430061007000740069006F006E0001004600F600
-      72007300E4006C006A006E0069006E006700010001000D000A00720067004F00
-      720064006500720054007900700065004E006F002E00500072006F0070006500
-      720074006900650073002E004900740065006D0073005B0031005D002E004300
-      61007000740069006F006E00010049006E006B00F6007000010001000D000A00
-      690063005300740061007400750073002E00500072006F007000650072007400
-      6900650073002E004900740065006D0073005B0030005D002E00440065007300
-      6300720069007000740069006F006E00010041006E006E0075006C0065007200
-      61006400010001000D000A00690063005300740061007400750073002E005000
-      72006F0070006500720074006900650073002E004900740065006D0073005B00
-      31005D002E004400650073006300720069007000740069006F006E0001004100
-      6B00740069007600010001000D000A0069006300530074006100740075007300
-      2E00500072006F0070006500720074006900650073002E004900740065006D00
-      73005B0032005D002E004400650073006300720069007000740069006F006E00
-      01004100760073006C007500740061006400010001000D000A00690063005300
+      6D0073005B0031005D002E00430061007000740069006F006E00010049006E00
+      6B00F6007000010001000D000A00690063005300740061007400750073002E00
+      500072006F0070006500720074006900650073002E004900740065006D007300
+      5B0030005D002E004400650073006300720069007000740069006F006E000100
+      41006E006E0075006C006500720061006400010001000D000A00690063005300
       740061007400750073002E00500072006F007000650072007400690065007300
-      2E004900740065006D0073005B0033005D002E00440065007300630072006900
-      7000740069006F006E0001005000720065006C0069006D0069006E00E4007200
+      2E004900740065006D0073005B0031005D002E00440065007300630072006900
+      7000740069006F006E00010041006B00740069007600010001000D000A006900
+      63005300740061007400750073002E00500072006F0070006500720074006900
+      650073002E004900740065006D0073005B0032005D002E004400650073006300
+      720069007000740069006F006E0001004100760073006C007500740061006400
       010001000D000A00690063005300740061007400750073002E00500072006F00
-      70006500720074006900650073002E004900740065006D0073005B0034005D00
-      2E004400650073006300720069007000740069006F006E00010053006B006500
-      7000700061007400010001000D000A0067007200640063007800410076007200
-      6F00700044004200420061006E006400650064005400610062006C0065005600
-      69006500770031002E00420061006E00640073005B0030005D002E0043006100
-      7000740069006F006E00010046004900580045004400010001000D000A006700
+      70006500720074006900650073002E004900740065006D0073005B0033005D00
+      2E004400650073006300720069007000740069006F006E000100500072006500
+      6C0069006D0069006E00E4007200010001000D000A0069006300530074006100
+      7400750073002E00500072006F0070006500720074006900650073002E004900
+      740065006D0073005B0034005D002E0044006500730063007200690070007400
+      69006F006E00010053006B0065007000700061007400010001000D000A006700
       72006400630078004100760072006F00700044004200420061006E0064006500
       64005400610062006C006500560069006500770031002E00420061006E006400
-      73005B0031005D002E00430061007000740069006F006E0001004F0054004800
-      45005200010001000D000A00670072006400630078004100760072006F007000
+      73005B0030005D002E00430061007000740069006F006E000100460049005800
+      45004400010001000D000A00670072006400630078004100760072006F007000
       44004200420061006E006400650064005400610062006C006500560069006500
-      770031005300540041005400550053002E00500072006F007000650072007400
-      6900650073002E004900740065006D0073005B0030005D002E00440065007300
-      6300720069007000740069006F006E00010041006E006E0075006C0065007200
-      61006400010001000D000A00670072006400630078004100760072006F007000
-      44004200420061006E006400650064005400610062006C006500560069006500
-      770031005300540041005400550053002E00500072006F007000650072007400
-      6900650073002E004900740065006D0073005B0031005D002E00440065007300
-      6300720069007000740069006F006E00010041006B0074006900760001000100
-      0D000A00670072006400630078004100760072006F0070004400420042006100
-      6E006400650064005400610062006C0065005600690065007700310053005400
-      41005400550053002E00500072006F0070006500720074006900650073002E00
-      4900740065006D0073005B0032005D002E004400650073006300720069007000
-      740069006F006E0001004100760073006C007500740061006400010001000D00
-      0A00670072006400630078004100760072006F00700044004200420061006E00
-      6400650064005400610062006C00650056006900650077003100530054004100
-      5400550053002E00500072006F0070006500720074006900650073002E004900
-      740065006D0073005B0033005D002E0044006500730063007200690070007400
-      69006F006E0001005000720065006C0069006D0069006E00E400720001000100
-      0D000A00670072006400630078004100760072006F0070004400420042006100
-      6E006400650064005400610062006C0065005600690065007700310053005400
-      41005400550053002E00500072006F0070006500720074006900650073002E00
-      4900740065006D0073005B0034005D002E004400650073006300720069007000
-      740069006F006E00010053006B0065007000700061007400010001000D000A00
-      670072006400630078004100760072006F00700044004200420061006E006400
-      650064005400610062006C006500560069006500770031005300650071007500
-      65006E00630065004E006F002E00500072006F00700065007200740069006500
-      73002E004900740065006D0073005B0030005D002E0044006500730063007200
-      69007000740069006F006E00010041006E006E0075006C006500720061006400
-      010001000D000A00670072006400630078004100760072006F00700044004200
-      420061006E006400650064005400610062006C00650056006900650077003100
-      530065007100750065006E00630065004E006F002E00500072006F0070006500
-      720074006900650073002E004900740065006D0073005B0031005D002E004400
-      650073006300720069007000740069006F006E00010041006B00740069007600
-      010001000D000A00670072006400630078004100760072006F00700044004200
-      420061006E006400650064005400610062006C00650056006900650077003100
-      530065007100750065006E00630065004E006F002E00500072006F0070006500
-      720074006900650073002E004900740065006D0073005B0032005D002E004400
-      650073006300720069007000740069006F006E0001004100760073006C007500
-      740061006400010001000D000A00670072006400630078004100760072006F00
+      770031002E00420061006E00640073005B0031005D002E004300610070007400
+      69006F006E0001004F005400480045005200010001000D000A00670072006400
+      630078004100760072006F00700044004200420061006E006400650064005400
+      610062006C006500560069006500770031005300540041005400550053002E00
+      500072006F0070006500720074006900650073002E004900740065006D007300
+      5B0030005D002E004400650073006300720069007000740069006F006E000100
+      41006E006E0075006C006500720061006400010001000D000A00670072006400
+      630078004100760072006F00700044004200420061006E006400650064005400
+      610062006C006500560069006500770031005300540041005400550053002E00
+      500072006F0070006500720074006900650073002E004900740065006D007300
+      5B0031005D002E004400650073006300720069007000740069006F006E000100
+      41006B00740069007600010001000D000A006700720064006300780041007600
+      72006F00700044004200420061006E006400650064005400610062006C006500
+      560069006500770031005300540041005400550053002E00500072006F007000
+      6500720074006900650073002E004900740065006D0073005B0032005D002E00
+      4400650073006300720069007000740069006F006E0001004100760073006C00
+      7500740061006400010001000D000A0067007200640063007800410076007200
+      6F00700044004200420061006E006400650064005400610062006C0065005600
+      69006500770031005300540041005400550053002E00500072006F0070006500
+      720074006900650073002E004900740065006D0073005B0033005D002E004400
+      650073006300720069007000740069006F006E0001005000720065006C006900
+      6D0069006E00E4007200010001000D000A006700720064006300780041007600
+      72006F00700044004200420061006E006400650064005400610062006C006500
+      560069006500770031005300540041005400550053002E00500072006F007000
+      6500720074006900650073002E004900740065006D0073005B0034005D002E00
+      4400650073006300720069007000740069006F006E00010053006B0065007000
+      700061007400010001000D000A00670072006400630078004100760072006F00
       700044004200420061006E006400650064005400610062006C00650056006900
       650077003100530065007100750065006E00630065004E006F002E0050007200
-      6F0070006500720074006900650073002E004900740065006D0073005B003300
-      5D002E004400650073006300720069007000740069006F006E00010050007200
-      65006C0069006D0069006E00E4007200010001000D000A006700720064006300
-      78004100760072006F00700044004200420061006E0064006500640054006100
-      62006C00650056006900650077003100530065007100750065006E0063006500
-      4E006F002E00500072006F0070006500720074006900650073002E0049007400
-      65006D0073005B0034005D002E00440065007300630072006900700074006900
-      6F006E00010053006B0065007000700061007400010001000D000A0073007400
-      430068006100720053006500740073005F0055006E00690063006F0064006500
-      0D000A005400660072006D004100760072006F00700001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00500061006E00
-      65006C0033000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A00500061006E0065006C00320001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00500061006E00
-      65006C004100760072006F0070004C006F006100640001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00630078004200
-      7500740074006F006E0031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A006300780042007500740074006F006E00
-      32000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A006300780042007500740074006F006E0033000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0063007800
-      42007500740074006F006E0034000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A006300780042007500740074006F00
-      6E0035000100440045004600410055004C0054005F0043004800410052005300
+      6F0070006500720074006900650073002E004900740065006D0073005B003000
+      5D002E004400650073006300720069007000740069006F006E00010041006E00
+      6E0075006C006500720061006400010001000D000A0067007200640063007800
+      4100760072006F00700044004200420061006E00640065006400540061006200
+      6C00650056006900650077003100530065007100750065006E00630065004E00
+      6F002E00500072006F0070006500720074006900650073002E00490074006500
+      6D0073005B0031005D002E004400650073006300720069007000740069006F00
+      6E00010041006B00740069007600010001000D000A0067007200640063007800
+      4100760072006F00700044004200420061006E00640065006400540061006200
+      6C00650056006900650077003100530065007100750065006E00630065004E00
+      6F002E00500072006F0070006500720074006900650073002E00490074006500
+      6D0073005B0032005D002E004400650073006300720069007000740069006F00
+      6E0001004100760073006C007500740061006400010001000D000A0067007200
+      6400630078004100760072006F00700044004200420061006E00640065006400
+      5400610062006C00650056006900650077003100530065007100750065006E00
+      630065004E006F002E00500072006F0070006500720074006900650073002E00
+      4900740065006D0073005B0033005D002E004400650073006300720069007000
+      740069006F006E0001005000720065006C0069006D0069006E00E40072000100
+      01000D000A00670072006400630078004100760072006F007000440042004200
+      61006E006400650064005400610062006C006500560069006500770031005300
+      65007100750065006E00630065004E006F002E00500072006F00700065007200
+      74006900650073002E004900740065006D0073005B0034005D002E0044006500
+      73006300720069007000740069006F006E00010053006B006500700070006100
+      7400010001000D000A0073007400430068006100720053006500740073005F00
+      55006E00690063006F00640065000D000A005400660072006D00410076007200
+      6F0070000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A0044004200520069006300680045006400690074005F004900
-      6E0076006F006900630065005400650078007400010041004E00530049005F00
+      450054000D000A00500061006E0065006C003300010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A00500061006E006500
+      6C0032000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00500061006E0065006C004100760072006F0070004C006F00
+      610064000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A006300780042007500740074006F006E003100010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A006300
+      780042007500740074006F006E0032000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00630078004200750074007400
+      6F006E0035000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A0044004200520069006300680045006400690074005F00
+      49006E0076006F006900630065005400650078007400010041004E0053004900
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00640078004200610072004D00
+      61006E00610067006500720031000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
       43004800410052005300450054000D000A00640078004200610072004D006100
-      6E00610067006500720031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00640078004200610072004D0061006E00
-      6100670065007200310042006100720031000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A0064007800420061007200
-      4D0061006E006100670065007200310042006100720032000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0070007000
-      6D005000720069006E0074005200650070006F00720074007300010044004500
+      6E00610067006500720031004200610072003100010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A006400780042006100
+      72004D0061006E00610067006500720031004200610072003200010044004500
       4600410055004C0054005F004300480041005200530045005400010044004500
       4600410055004C0054005F004300480041005200530045005400010044004500
       4600410055004C0054005F0043004800410052005300450054000D000A007000
-      6D004100760072006F0070004700720069006400010044004500460041005500
+      70006D005000720069006E0074005200650070006F0072007400730001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      70006D004100760072006F007000470072006900640001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F0043004800410052005300450054000D000A00630078005300
+      740079006C006500530069006C00760065007200010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F0043004800410052005300450054000D000A006300780053007400
-      79006C006500530069006C007600650072000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A0063007800530074007900
-      6C00650042006C00750065000100440045004600410055004C0054005F004300
+      79006C00650042006C00750065000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A00630078005300740079006C006500
+      590065006C006C006F0077000100440045004600410055004C0054005F004300
       4800410052005300450054000100440045004600410055004C0054005F004300
       4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00630078005300740079006C0065005900
-      65006C006C006F0077000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000D000A00630078005300740079006C00650052006500
-      64000100440045004600410055004C0054005F00430048004100520053004500
+      4800410052005300450054000D000A00630078005300740079006C0065005200
+      650064000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A0070006D004C006F0061006400730001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F0043004800410052005300450054000D000A0070006D004C00
+      4F000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A0070006D004C006F00610064007300010044004500460041005500
+      54000D000A0070006D004100640064004C004F00010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
-      4C0054005F0043004800410052005300450054000D000A0070006D004C004F00
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A0070006D004100640064004C004F000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A00}
+      4C0054005F0043004800410052005300450054000D000A00}
   end
 end

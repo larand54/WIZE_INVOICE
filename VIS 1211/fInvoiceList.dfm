@@ -4074,8 +4074,8 @@ object frmInvoiceList: TfrmInvoiceList
         ItemName = 'dxBarButton51'
       end>
     UseOwnFont = False
-    Left = 312
-    Top = 392
+    Left = 336
+    Top = 400
   end
   object TimerKontraktnr: TTimer
     Interval = 200

@@ -335,6 +335,7 @@ type
     sq_GetSRNoSalesRegionNo: TIntegerField;
     sp_GetCountryOfSR: TFDStoredProc;
     cds_ReportStaticsIILogga: TBlobField;
+    sp_GetVerkOfLL: TFDStoredProc;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;
@@ -356,6 +357,7 @@ type
     // function  WhoBelongsToLoadingLocation(const LoadingLocationNo : Integer) : Integer ;
 
   public
+    function GetVerkOfLL(const LoadingLocationNo, SalesRegionNo : integer) : Integer ;
     function GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
     function ThisUserIsRoleType(const ClientNo, RoleType: Integer): Boolean;
     function  GetSalesRegionNo (const CompanyNo : Integer) : Integer ;
@@ -921,6 +923,21 @@ Begin
       Result := ThisUser.CompanyNo ;
   Finally
     sp_GetLegoOfLL.Active := False;
+  End;
+End;
+
+function TdmsContact.GetVerkOfLL(const LoadingLocationNo, SalesRegionNo : integer) : Integer ;//Get ClientNo
+Begin
+  sp_GetVerkOfLL.ParamByName('@LLNo').AsInteger           := LoadingLocationNo ; //PIPNo
+  sp_GetVerkOfLL.ParamByName('@SalesRegionNo').AsInteger  := SalesRegionNo ;
+  sp_GetVerkOfLL.Active := True ;
+  Try
+  if not sp_GetVerkOfLL.Eof then
+   Result := sp_GetVerkOfLL.FieldByName('ClientNo').AsInteger
+    else
+     Result := -1 ;
+  Finally
+    sp_GetVerkOfLL.Active := False ;
   End;
 End;
 

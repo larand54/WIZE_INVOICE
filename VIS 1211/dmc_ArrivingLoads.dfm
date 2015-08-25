@@ -4455,7 +4455,7 @@ object dmArrivingLoads: TdmArrivingLoads
       ' '
       '')
     Left = 600
-    Top = 480
+    Top = 472
     ParamData = <
       item
         Name = 'LOADNO'
@@ -5604,5 +5604,55 @@ object dmArrivingLoads: TdmArrivingLoads
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object sq_CheckObjectRegionToRegionLink: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'SELECT DISTINCT'
+      'IsNull(LD.DefsspNo,-1) AS SupplierShipPlanObjectNo,'
+      
+        'IsNull(LD.DefaultCustShipObjectNo,-1) AS CustShipPlanDetailObjec' +
+        'tNo'
+      ''
+      'FROM dbo.Loaddetail LD'
+      ''
+      'WHERE'
+      'LD.LoadNo = :LoadNo'
+      'AND LD.ShippingPlanNo = :ShippingPlanNo'
+      ''
+      
+        'AND LD.DefaultCustShipObjectNo NOT IN (Select CSD.CustShipPlanDe' +
+        'tailObjectNo'
+      'FROM dbo.CustomerShippingPlanDetails CSD)'
+      ' '
+      ' '
+      '')
+    Left = 724
+    Top = 616
+    ParamData = <
+      item
+        Name = 'LOADNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'SHIPPINGPLANNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sq_CheckObjectRegionToRegionLinkSupplierShipPlanObjectNo: TIntegerField
+      FieldName = 'SupplierShipPlanObjectNo'
+      Origin = 'SupplierShipPlanObjectNo'
+      ReadOnly = True
+      Required = True
+    end
+    object sq_CheckObjectRegionToRegionLinkCustShipPlanDetailObjectNo: TIntegerField
+      FieldName = 'CustShipPlanDetailObjectNo'
+      Origin = 'CustShipPlanDetailObjectNo'
+      ReadOnly = True
+      Required = True
+    end
   end
 end

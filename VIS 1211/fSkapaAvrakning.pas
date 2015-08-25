@@ -1966,7 +1966,7 @@ begin
           dmArrivingLoads.GetIntPrice(False, cdsArrivingLoadsSUPPLIER_NO.AsInteger, 0,
             -1, RecID, True)
         else
-          dmArrivingLoads.GetIntPrice(False, cdsArrivingLoadsCustomerNo.AsInteger, 0,
+          dmArrivingLoads.GetIntPrice(True, cdsArrivingLoadsCustomerNo.AsInteger, 0,
             -1, RecID, True);
 
         // dmArrivingLoads.GetIntPrice(fSupplierNo, 0,-1, RecID, True) ;
