@@ -183,8 +183,8 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     SortID = 0
     SubLanguageID = 1
     LocaleID = 1024
-    Left = 304
-    Top = 152
+    Left = 312
+    Top = 144
     object mtLoadPackagesLONo: TIntegerField
       FieldName = 'LONo'
     end

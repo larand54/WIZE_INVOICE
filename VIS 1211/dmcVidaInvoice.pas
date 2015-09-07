@@ -1562,6 +1562,7 @@ type
     sp_STORE_ExportInvoiceData: TFDStoredProc;
     sp_GetKundResKontra: TFDStoredProc;
     sp_JusteraUSAFakturor: TFDStoredProc;
+    sp_GetInvoiceHeadData: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);

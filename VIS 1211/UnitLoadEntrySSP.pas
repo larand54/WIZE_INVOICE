@@ -6168,10 +6168,19 @@ end;
 
 procedure TfLoadEntrySSP.acRaderaPaketExecute(Sender: TObject);
 begin
-  acInsertPkgToInventoryExecute(Sender);
-  SaveLoad;
-  if mePackageNo.Enabled then
-    mePackageNo.SetFocus;
+{
+    dmsConnector.FDMoniFlatFileClientLink1.Tracing  :=  True ;
+    Try
+}
+    acInsertPkgToInventoryExecute(Sender);
+    SaveLoad;
+    if mePackageNo.Enabled then
+      mePackageNo.SetFocus;
+{
+    Finally
+      dmsConnector.FDMoniFlatFileClientLink1.Tracing  :=  False ;
+    End;
+}
 end;
 
 procedure TfLoadEntrySSP.acRaderaPaketUpdate(Sender: TObject);

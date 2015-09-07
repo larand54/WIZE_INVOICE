@@ -1824,19 +1824,17 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=alvesql03'
+      'Server=vis.vida.se'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
       'ApplicationName=VIS'
-      'User_Name=Lars'
-      'Password=woods2011'
       'DriverID=MSSQL')
-    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
+    FetchOptions.Mode = fmAll
+    FetchOptions.RowsetSize = 1000
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
-    UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24
@@ -2019,6 +2017,7 @@ object dmsConnector: TdmsConnector
     Top = 72
   end
   object FDMoniFlatFileClientLink1: TFDMoniFlatFileClientLink
+    FileName = 'C:\test\trace1.txt'
     Left = 464
     Top = 184
   end

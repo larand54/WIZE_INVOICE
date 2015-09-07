@@ -477,6 +477,7 @@ object frmInvoice: TfrmInvoice
           Margins.Bottom = 4
           DataBinding.DataField = 'InvoiceDate'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
+          Properties.Kind = ckDateTime
           TabOrder = 4
           Width = 172
         end

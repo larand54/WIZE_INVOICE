@@ -2,7 +2,7 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
   Left = 0
   Top = 0
   ActiveControl = lcVerk
-  Caption = 'V'#228'lj lager att Ankomstregistrera laster till'
+  Caption = 'Select owner and inventory stock to store packages to'
   ClientHeight = 327
   ClientWidth = 622
   Color = clBtnFace
@@ -27,7 +27,6 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
     Margins.Bottom = 4
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 123
     object cxButton1: TcxButton
       Left = 157
       Top = 21
@@ -68,7 +67,6 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 123
     object cxLabel1: TcxLabel
       Left = 23
       Top = 64
@@ -127,8 +125,8 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Caption = #196'gare:'
     end
     object lcVerk: TcxDBLookupComboBox
-      Left = 104
-      Top = 24
+      Left = 103
+      Top = 26
       DataBinding.DataField = 'Verk'
       DataBinding.DataSource = dsProps
       Properties.ImmediatePost = True
@@ -136,6 +134,11 @@ object fRegionToRegionSelectLIPNo: TfRegionToRegionSelectLIPNo
       Properties.ListOptions.ShowHeader = False
       TabOrder = 2
       Width = 399
+    end
+    object cxLabel4: TcxLabel
+      Left = 104
+      Top = 128
+      Caption = 'Select owner and inventory stock to store packages to'
     end
   end
   object cds_LO_LookUp: TFDQuery

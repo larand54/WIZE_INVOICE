@@ -1046,8 +1046,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'END AvRegPackageNo FROM dbo.PackageGroup pkg'
       'WHERE'
       'pkg.AvRegPackageNo = LD.PackageNo'
-      'and pkg.AvRegPrefix = LD.SupplierCode'
-      'and pkg.ProducerNo = csh.CustomerNo),0) AS Used,'
+      'and pkg.AvRegPrefix = LD.SupplierCode),0) AS Used,'
       'IsNull(pn.Package_Size,12) AS Package_Size,'
       'ps.PackageSizeName'
       ''
@@ -1101,7 +1100,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'AND PDE.LanguageID = :LanguageID'
       '')
     Left = 168
-    Top = 32
+    Top = 16
     ParamData = <
       item
         Name = 'LOADNO'

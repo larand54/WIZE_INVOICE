@@ -525,11 +525,14 @@ begin
 
     SaveLoadPkgs(WhenPosted, LoadNo);
 
+
     if cds_LoadPackages.ChangeCount > 0 then
     Begin
       cds_LoadPackages.ApplyUpdates(0);
       cds_LoadPackages.CommitUpdates;
     End;
+
+
 
     // Om status = 2 then check and change manuell overriden packages
     if cds_LoadHeadSenderLoadStatus.AsInteger = 2 then

@@ -1367,22 +1367,22 @@ Var
       // While not mtCompSelRows.eof do
       // Begin
       Try
-        sq_GetInvoiceHeadData.Close;
-        sq_GetInvoiceHeadData.ParamByName('ShippingPlanNo').AsInteger :=
+     //   sp_GetInvoiceHeadData.Close;
+        sp_GetInvoiceHeadData.ParamByName('@ShippingPlanNo').AsInteger :=
           mtCompSelRowsLONo.AsInteger; // StrToInt(LO_String[x]) ;
-        sq_GetInvoiceHeadData.ParamByName('CustomerNo').AsInteger :=
+        sp_GetInvoiceHeadData.ParamByName('@CustomerNo').AsInteger :=
           mtCompSelRowsClientNo.AsInteger;
         // daMoLM1.cdsAvropCLIENTNO.AsInteger ; // Avrop customerNo
-        sq_GetInvoiceHeadData.Open;
+        sp_GetInvoiceHeadData.Active  := True;
 
-        if sq_GetInvoiceHeadDataPaymentText.IsNull then
+        if sp_GetInvoiceHeadData.FieldByName('PaymentText').IsNull then
         Begin
           Result := False;
           ShowMessage('Betalningsinstruktion saknas, åtgärda och prova igen.');
         End;
 
       Finally
-        sq_GetInvoiceHeadData.Close;
+        sp_GetInvoiceHeadData.Close;
       End;
       // End;
     End;
@@ -3782,7 +3782,7 @@ Begin
     // GlobalLONo         := IntLONo ;
     GlobalLOErReferens := IntErReferens;
 
-    // if thisuser.UserID = 8 then      SQL.SaveToFile('cdsAvrop.TXT');
+    // if thisuser.UserID = 8 then    SQL.SaveToFile('cdsAvrop.TXT');
     if ThisUser.UserID = 8 then
     Begin
       mLog.Clear;
@@ -5347,7 +5347,7 @@ procedure TfrmAvrop.acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
 begin
   With daMoLM1 do
   Begin
-    acCopyLoadToSales.Enabled := (cdsAvrop.Active) and
+    acCopyLoadToOtherSalesRegion.Enabled := (cdsAvrop.Active) and
       (cdsAvrop.RecordCount > 0) and (cdsAvropORDERTYPE.AsInteger = 0) and
       (cdsAvropTrading.AsInteger = 2) and (cdsLoads.Active) and
       (cdsLoads.RecordCount > 0);

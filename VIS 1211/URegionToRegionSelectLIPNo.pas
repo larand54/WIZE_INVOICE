@@ -65,6 +65,7 @@ type
     mtPropsVerk: TStringField;
     cds_VerkClientNo: TIntegerField;
     cds_VerkClientName: TStringField;
+    cxLabel4: TcxLabel;
     procedure FormShow(Sender: TObject);
     procedure mtPropsOwnerNoChange(Sender: TField);
     procedure mtPropsPIPNoChange(Sender: TField);

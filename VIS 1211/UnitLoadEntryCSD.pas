@@ -372,20 +372,22 @@ LG *)
     procedure acSend700Update(Sender: TObject);
     procedure acSetStatusPrelAndSaveUpdate(Sender: TObject);
     procedure acCreditPackagesExecute(Sender: TObject);
+    procedure Label1DblClick(Sender: TObject);
 
   private
     { Private declarations }
     DoingCreditingPkgs, LoadEnabled, AddingPkgsFromPkgEntry: Boolean;
+    procedure SetSpecialLoadEnabled ;
     Procedure EnabledTheLoad;
     procedure SetMarkedPkgsAsCreditPackages(Sender: TObject);
-    function ControlInvDate: Boolean;
+    function  ControlInvDate: Boolean;
     procedure ValidateAllPkgs;
     procedure AddPkg;
     procedure SaveLoad;
     procedure SetLoadEnabled;
     Procedure Get_LO_LookUp_SQL(const LO_NO, SalesRegionNo,
       CustomerNo: Integer);
-    function DataSaved: Boolean;
+    function  DataSaved: Boolean;
     procedure GetMarkedPkgs;
     procedure SetLoadRowToChanged;
     procedure InsertPkgNo(Sender: TObject);
@@ -478,6 +480,72 @@ uses VidaConst, dlgPickPkg,
 
 {$R *.dfm}
 { TfrmLoadEntry }
+
+procedure TfLoadEntryCSD.SetSpecialLoadEnabled;
+Begin
+  With dmLoadEntryCSD do
+  Begin
+{
+      if dmsSystem.IsLoadInvoiced(cds_LoadHeadLoadNo.AsInteger) then
+        LoadEnabled := False
+      else
+}
+      LoadEnabled := True;
+
+    if (LoadEnabled = False) //or (cds_LoadHeadSenderLoadStatus.AsInteger = 2)
+    then
+    Begin
+      if (ThisUser.UserID = 8) or (ThisUser.UserID = 258) then
+      Begin
+        if LoadEnabled = False then
+          Caption := 'Lasten kan inte ändras, den är fakturerad.'
+        else
+          Caption := 'Lasten kan inte ändras för att status är "Avslutad"';
+        LoadEnabled := True;
+      End
+      else
+
+      Begin
+        MessageBeep(MB_ICONEXCLAMATION);
+        if LoadEnabled = False then
+          Caption := 'Lasten kan inte ändras, den är fakturerad.'
+        else
+          Caption := 'Lasten kan inte ändras för att status är "Avslutad"';
+
+        LoadEnabled := False;
+        cds_LoadHead.UpdateOptions.ReadOnly := True;
+        grdLORowsDBBandedTableView1MATCH.Properties.ReadOnly := True;
+        cds_LSP.UpdateOptions.ReadOnly := True;
+        cds_LoadPackages.UpdateOptions.ReadOnly := True;
+        lcPIP.Properties.ReadOnly := True;
+        lcLIP.Properties.ReadOnly := True;
+      End;
+    End // if LoadEnabled = False...
+    else
+    Begin
+      MessageBeep(MB_ICONEXCLAMATION);
+
+      Caption := 'Lasten kan ändras.';
+
+      LoadEnabled := True;
+      cds_LoadHead.UpdateOptions.ReadOnly := False;
+      grdLORowsDBBandedTableView1MATCH.Properties.ReadOnly := False;
+      cds_LSP.UpdateOptions.ReadOnly := False;
+      cds_LoadPackages.UpdateOptions.ReadOnly := False;
+    End;
+
+    if ThisUser.UserID = 888 then
+    Begin
+      // LoadEnabled:= True ;
+      // Caption := 'Lasten kan inte ändras, den är fakturerad.' ;
+      grdPkgsDBBandedTableView1Defsspno.Visible := True;
+      grdPkgsDBBandedTableView1DefaultCustShipObjectNo.Visible := True;
+      grdPkgsDBBandedTableView1Defsspno.Hidden := False;
+      grdPkgsDBBandedTableView1DefaultCustShipObjectNo.Hidden := False;
+    End;
+
+  End; // with
+End;
 
 procedure TfLoadEntryCSD.SetLoadEnabled;
 Begin
@@ -2377,6 +2445,11 @@ begin
     MessageBeep(MB_ICONEXCLAMATION);
     Result := eaReserved; // eaREJECT;
   end;
+end;
+
+procedure TfLoadEntryCSD.Label1DblClick(Sender: TObject);
+begin
+ SetSpecialLoadEnabled;
 end;
 
 procedure TfLoadEntryCSD.ScanningEgnaPkgNo(Sender: TObject;
@@ -4537,9 +4610,9 @@ Begin
     [mbYes, mbNo], 0) = mrYes then
     With dmLoadEntryCSD do
     Begin
-      DoingCreditingPkgs := True;
-      Save_Cursor := Screen.Cursor;
-      Screen.Cursor := crHourGlass; { Show hourglass cursor }
+      DoingCreditingPkgs  := True;
+      Save_Cursor         := Screen.Cursor;
+      Screen.Cursor       := crHourGlass; { Show hourglass cursor }
       Try
         EnabledTheLoad;
         Try
@@ -4576,6 +4649,26 @@ Begin
             Raise;
           End;
         End;
+
+
+      if (cds_LoadPackages.ChangeCount > 0) or (cds_LoadPackages.State in [dsEdit, dsInsert]) then
+      Begin
+        if cds_LoadPackages.State in [dsEdit, dsInsert] then
+         cds_LoadPackages.Cancel ;
+        if cds_LoadPackages.ChangeCount > 0 then
+         cds_LoadPackages.CancelUpdates ;
+      End;
+
+      if (cds_LoadHead.ChangeCount > 0) or (cds_LoadHead.State in [dsEdit, dsInsert]) then
+      Begin
+        if cds_LoadHead.State in [dsEdit, dsInsert] then
+         cds_LoadHead.Cancel ;
+        if cds_LoadHead.ChangeCount > 0 then
+         cds_LoadHead.CancelUpdates ;
+      End;
+
+      LoadEnabled := False ;
+
 
       Finally
         DoingCreditingPkgs := False;

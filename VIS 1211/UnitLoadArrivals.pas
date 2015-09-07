@@ -1596,6 +1596,8 @@ Begin
     else
       cdsArrivingLoads.SQL.Add('CSH.CustomerNo = -1');
 
+    cdsArrivingLoads.SQL.Add(' AND  L.SupplierNo = CSH.CustomerNo') ;
+
     cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
     cdsArrivingLoads.SQL.Add('AND (L.SenderLoadStatus = 2)');
@@ -1654,8 +1656,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then
-    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 

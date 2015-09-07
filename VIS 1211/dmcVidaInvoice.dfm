@@ -4026,8 +4026,8 @@ object dmVidaInvoice: TdmVidaInvoice
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT MAX(InvoiceNo) + 1 AS NEXT_INVNO FROM dbo.InvoiceNumber')
-    Left = 64
-    Top = 176
+    Left = 96
+    Top = 208
     object sq_GetNextInvoiceNoNEXT_INVNO: TIntegerField
       FieldName = 'NEXT_INVNO'
       Origin = 'NEXT_INVNO'
@@ -16943,6 +16943,31 @@ object dmVidaInvoice: TdmVidaInvoice
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
+      end>
+  end
+  object sp_GetInvoiceHeadData: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetInvoiceHeadData'
+    Left = 64
+    Top = 176
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@ShippingPlanNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@CustomerNo'
+        DataType = ftInteger
+        ParamType = ptInput
       end>
   end
 end
