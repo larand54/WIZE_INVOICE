@@ -1833,7 +1833,7 @@ object dmsConnector: TdmsConnector
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
     FetchOptions.Mode = fmAll
-    FetchOptions.RowsetSize = 1000
+    FetchOptions.RowsetSize = 500
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     LoginPrompt = False
     Left = 464
@@ -1993,11 +1993,6 @@ object dmsConnector: TdmsConnector
         DataType = ftInteger
         ParamType = ptInputOutput
       end>
-  end
-  object FDTransaction1: TFDTransaction
-    Connection = FDConnection1
-    Left = 616
-    Top = 24
   end
   object SQLConn_XOR: TFDConnection
     ConnectionName = 'XOR'

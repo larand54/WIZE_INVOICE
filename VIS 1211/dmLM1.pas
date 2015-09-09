@@ -288,7 +288,7 @@ uses dmsDataConn, recerror, UnitEnterInvoiceNo, uSelectLONoByInvoiceSerie,
 
 function TdaMoLM1.SetAvropStatus(const LONo, Status: Integer): Boolean;
 Begin
-  dmsConnector.StartTransaction;
+//  dmsConnector.StartTransaction;
   try
 
     Try
@@ -319,10 +319,10 @@ Begin
       End;
     end;
 
-    dmsConnector.Commit;
+  //  dmsConnector.Commit;
     Result := True;
   except
-    dmsConnector.Rollback;
+  //  dmsConnector.Rollback;
     Result := False;
     raise;
   end;

@@ -867,6 +867,9 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 34
@@ -1103,6 +1106,9 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&NOTERING'
       ImageIndex = 11
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -1128,6 +1134,9 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&POST IT!'
       ImageIndex = 13
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 492
         Top = 6
@@ -1158,6 +1167,9 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&SPEC'
       ImageIndex = 5
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -1727,6 +1739,7 @@ object frmInvoice: TfrmInvoice
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
+        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0

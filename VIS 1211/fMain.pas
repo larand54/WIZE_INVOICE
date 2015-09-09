@@ -521,6 +521,7 @@ End;
 procedure TfrmMain.FormShow(Sender: TObject);
 var
   Height, Width, Top, Left, LanguageNo  : Integer;
+  lCaption  : String ;
 begin
   dmsConnector.DriveLetter := 'H:\';
   if dmsConnector.DriveLetter = 'C:\' then
@@ -563,7 +564,7 @@ begin
   end;
 {$ELSE}
 
-
+ ThisUser.Database:= 'vis.vida.se:vis_vida' ;
 {$ENDIF}
 
  //  ThisUser.Database:= 'vis.vida.se:vis_vida' ;
@@ -573,7 +574,7 @@ begin
     close
   else if dmsConnector.FDConnection1.Connected then
   Begin
-    Caption := Application.Title + '/' + dmsConnector.GetCompanyName
+    lCaption := Application.Title + '/' + dmsConnector.GetCompanyName
       (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' + GetVersion +
       ' - ' + dmsConnector.FDConnection1.Params.Values['Server'] + '/' +
       dmsConnector.FDConnection1.Params.Values['Database'] + ' ';
@@ -608,6 +609,8 @@ begin
    dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
    dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);
   End;
+
+  Caption  := lCaption ;
 end;
 
 Procedure TfrmMain.InitOnStartOfProgram;

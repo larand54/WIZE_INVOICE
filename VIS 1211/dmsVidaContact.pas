@@ -835,11 +835,11 @@ End;
 
 procedure TdmsContact.cds_AdrSearchAfterInsert(DataSet: TDataSet);
 begin
-  cds_AdrSearchAddressNo.AsInteger := dmsConnector.NextMaxNo('Address');
-  cds_AdrSearchModifiedUser.AsInteger := ThisUser.UserID;
-  cds_AdrSearchCreatedUser.AsInteger := ThisUser.UserID;
+  cds_AdrSearchAddressNo.AsInteger        := dmsConnector.NextMaxNo('Address');
+  cds_AdrSearchModifiedUser.AsInteger     := ThisUser.UserID;
+  cds_AdrSearchCreatedUser.AsInteger      := ThisUser.UserID;
   cds_AdrSearchDateCreated.AsSQLTimeStamp := DateTimeToSqlTimeStamp(Date);
-  cds_AdrSearchAddressType.AsInteger := 1;
+  cds_AdrSearchAddressType.AsInteger      := 1;
   // AddressType är bara intressant i companyAddress ;
 end;
 
@@ -940,5 +940,6 @@ Begin
     sp_GetVerkOfLL.Active := False ;
   End;
 End;
+
 
 end.

@@ -746,7 +746,7 @@ begin
       // END
       // otherwise simply remove the verk load from confirmed_load table
 
-      dmsConnector.FDTransaction1.StartTransaction;
+      dmsConnector.StartTransaction;
       Try
 
         // Är lasten fakturerad?
@@ -2234,7 +2234,7 @@ Function TdmArrivingLoads.ex_AR_SALES_Loads(const OldLoadNo,
   LIPNo: Integer): Integer;
 Begin
   // START A TRANSACTION
-  dmsConnector.FDTransaction1.StartTransaction;
+  dmsConnector.StartTransaction;
 
   Try
     Result := -1;

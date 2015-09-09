@@ -4824,7 +4824,7 @@ BEGIN
         End; // with dm_Booking
 
         // Start Transaction
-        dmsConnector.StartTransaction;
+      //  dmsConnector.StartTransaction;
         Try
           cdsInvoiceDetail.First;
           While not cdsInvoiceDetail.Eof do
@@ -4910,9 +4910,9 @@ BEGIN
             cdsInvoiceShipTo.CommitUpdates;
           End;
 
-          dmsConnector.Commit;
+   //       dmsConnector.Commit;
         Except
-          dmsConnector.Rollback;
+     //     dmsConnector.Rollback;
           Exit;
         End;
         Screen.Cursor := crSQLWait; { Show hourglass cursor }
