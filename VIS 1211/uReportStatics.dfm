@@ -2,38 +2,30 @@ object fReportStatics: TfReportStatics
   Left = 0
   Top = 0
   Caption = 'Rapport-parametrar'
-  ClientHeight = 881
-  ClientWidth = 1462
+  ClientHeight = 674
+  ClientWidth = 1118
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 17
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1462
-    Height = 95
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1118
+    Height = 73
     Align = alTop
     TabOrder = 0
     object lcSalesregion: TcxDBLookupComboBox
-      Left = 216
-      Top = 35
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 165
+      Top = 27
       DataBinding.DataField = 'Salesregion'
       DataBinding.DataSource = dsClient
       Properties.DropDownWidth = 300
@@ -45,91 +37,60 @@ object fReportStatics: TfReportStatics
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 0
-      Width = 189
+      Width = 145
     end
     object cxLabel1: TcxLabel
-      Left = 84
-      Top = 42
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 64
+      Top = 32
       Caption = 'F'#246'rs'#228'ljningsregion:'
     end
     object cxButton1: TcxButton
-      Left = 439
-      Top = 24
-      Width = 117
-      Height = 64
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 336
+      Top = 18
+      Width = 89
+      Height = 49
       Action = acNewRS
       TabOrder = 2
     end
     object cxButton2: TcxButton
-      Left = 575
-      Top = 24
-      Width = 117
-      Height = 64
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 440
+      Top = 18
+      Width = 89
+      Height = 49
       Action = acSave
       TabOrder = 3
     end
     object cxButton3: TcxButton
-      Left = 711
-      Top = 24
-      Width = 117
-      Height = 64
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 544
+      Top = 18
+      Width = 89
+      Height = 49
       Action = acDelete
       TabOrder = 4
     end
     object cxButton4: TcxButton
-      Left = 836
-      Top = 24
-      Width = 117
-      Height = 64
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 639
+      Top = 18
+      Width = 90
+      Height = 49
       Action = acOpenImage
       TabOrder = 5
     end
   end
   object Panel3: TPanel
     Left = 0
-    Top = 95
-    Width = 1462
-    Height = 786
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 73
+    Width = 1118
+    Height = 601
     Align = alClient
     TabOrder = 1
     object cxGrid1: TcxGrid
       Left = 1
       Top = 1
-      Width = 1460
-      Height = 784
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1116
+      Height = 599
       Align = alClient
       TabOrder = 0
-      ExplicitLeft = 2
-      ExplicitTop = 0
-      ExplicitWidth = 816
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
@@ -185,6 +146,9 @@ object fReportStatics: TfReportStatics
           DataBinding.FieldName = 'Logga'
           PropertiesClassName = 'TcxImageProperties'
           Properties.GraphicClassName = 'TdxPNGImage'
+        end
+        object cxGridDBTableView1FootNote: TcxGridDBColumn
+          DataBinding.FieldName = 'FootNote'
         end
       end
       object cxGridDBCardView1: TcxGridDBCardView
