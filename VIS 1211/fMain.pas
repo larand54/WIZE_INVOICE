@@ -532,15 +532,11 @@ begin
   acToggleReportSystem.Caption  := 'Change to FastReport';
   CheckMappar;
 
-
-
- // ThisUser.Database  := 'alvesql01:vis_vida' ;
-// ThisUser.Database  := 'vis.vida.se:vis_vida' ;
-  ThisUser.Database  := 'alvesql03:vis_vida' ;
-
 {$IFDEF DEBUG}
   if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
     if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-SPEED' then
+      dmsConnector.DriveLetter := 'D:\'
+    else if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-FASTER' then
       dmsConnector.DriveLetter := 'D:\'
     else
       dmsConnector.DriveLetter := 'C:\';
@@ -564,10 +560,8 @@ begin
   end;
 {$ELSE}
 
- ThisUser.Database:= 'vis.vida.se:vis_vida' ;
+  ThisUser.Database:= 'vis.vida.se:vis_vida' ;
 {$ENDIF}
-
- //  ThisUser.Database:= 'vis.vida.se:vis_vida' ;
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then

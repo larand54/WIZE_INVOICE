@@ -1829,7 +1829,6 @@ object dmsConnector: TdmsConnector
       'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'ApplicationName=VIS'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
     FetchOptions.Mode = fmAll

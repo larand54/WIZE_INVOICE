@@ -77,6 +77,7 @@ type
     AccountNo: TcxGridDBColumn;
     Giro: TcxGridDBColumn;
     Logga: TcxGridDBColumn;
+    cxGridDBTableView1FootNote: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure acNewRSExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);

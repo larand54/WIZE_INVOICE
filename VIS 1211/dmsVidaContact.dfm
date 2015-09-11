@@ -2389,6 +2389,11 @@ object dmsContact: TdmsContact
       Origin = 'Logga'
       ProviderFlags = [pfInUpdate]
     end
+    object cds_ReportStaticsIIFootNote: TMemoField
+      FieldName = 'FootNote'
+      Origin = 'FootNote'
+      BlobType = ftMemo
+    end
   end
   object ds_ReportStaticsII: TDataSource
     DataSet = cds_ReportStaticsII
