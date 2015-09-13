@@ -1656,7 +1656,8 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then
+    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
