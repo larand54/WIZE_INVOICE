@@ -570,7 +570,10 @@ object dmArrivingLoads: TdmArrivingLoads
       '0 AS EGEN,'
       'L.LoadAR,'
       'ST_AdrCtry.CountryCode,'
-      ''
+      '(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl'
+      'where ctl.POShippingPlanNo = CSH.ShippingPlanNo) as OriginalLO,'
+      '( select cl2.Confirmed_LoadNo from dbo.Confirmed_Load cl2'
+      'where cl2.NewLoadNo = L.LoadNo) AS OriginalLoadNo,'
       'LSP.ShippingPlanNo'#9#9#9'                AS'#9'LO,'
       'L.LoadNo'#9#9#9#9'                        AS'#9'LOADNO,'
       'L.FS'#9#9#9#9'                            AS'#9'FS,'
@@ -955,6 +958,16 @@ object dmArrivingLoads: TdmArrivingLoads
       DisplayLabel = 'Paket bekr'#228'ftade'
       FieldName = 'PackagesConfirmed'
       Origin = 'PackagesConfirmed'
+      ReadOnly = True
+    end
+    object cdsArrivingLoadsOriginalLO: TIntegerField
+      FieldName = 'OriginalLO'
+      Origin = 'OriginalLO'
+      ReadOnly = True
+    end
+    object cdsArrivingLoadsOriginalLoadNo: TIntegerField
+      FieldName = 'OriginalLoadNo'
+      Origin = 'OriginalLoadNo'
       ReadOnly = True
     end
   end
@@ -5569,8 +5582,8 @@ object dmArrivingLoads: TdmArrivingLoads
   object sp_CngArtNoByPkgSize: TFDStoredProc
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.vis_CngArtNoByPkgSize'
-    Left = 992
-    Top = 440
+    Left = 904
+    Top = 432
     ParamData = <
       item
         Position = 1
@@ -5653,5 +5666,111 @@ object dmArrivingLoads: TdmArrivingLoads
       ReadOnly = True
       Required = True
     end
+  end
+  object sp_CopyRtR: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = '[dbo].[vis_CopyRtR]'
+    Left = 1056
+    Top = 584
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@OldLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_GetRtRPOLoNo: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetRtRPOLoNo'
+    Left = 1056
+    Top = 536
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SalesLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_CopySalesLoadToPO: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_CopySalesLoadToPO'
+    Left = 1056
+    Top = 488
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SrcLoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@NewLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@NewLoadNo'
+        DataType = ftInteger
+        ParamType = ptInputOutput
+      end
+      item
+        Position = 6
+        Name = '@Insert_Confirmed_Load'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_delAR_RtRLoad: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_delAR_RtRLoad'
+    Left = 1056
+    Top = 440
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@Confirmed_LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

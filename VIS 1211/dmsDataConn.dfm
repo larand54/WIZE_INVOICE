@@ -1824,13 +1824,12 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=vis.vida.se'
+      'Server=visprodsql.vida.se'
       'Database=vis_vida'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
-      'User_Name=Lars'
-      'Password=woods2011'
+      'ApplicationName=VIS'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
     FetchOptions.Mode = fmAll
@@ -2059,22 +2058,35 @@ object dmsConnector: TdmsConnector
   end
   object sp_GetUserStartHost: TFDStoredProc
     Connection = FDConnection1
-    StoredProcName = 'dbo.vis_GetUserStartHost'
-    Left = 613
-    Top = 128
+    StoredProcName = 'vis_GetUserStartHost_v2'
+    Left = 469
+    Top = 328
     ParamData = <
       item
         Position = 1
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
-        Value = 0
       end
       item
         Position = 2
         Name = '@UserID'
         DataType = ftInteger
         ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@AppDir'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 100
+      end
+      item
+        Position = 4
+        Name = '@AppPath'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 255
       end>
     object sp_GetUserStartHostUserID: TIntegerField
       FieldName = 'UserID'

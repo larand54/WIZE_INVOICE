@@ -657,8 +657,8 @@ var
       cdsLORows.DisableControls;
       Try
         cdsLORows.Active := False;
-        cdsLORows.ParamByName('LoadNo').AsInteger :=
-          cds_LoadHeadLoadNo.AsInteger;
+        cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+        cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
         cdsLORows.Active := True;
 
         { mtLoadShippingPlan.First ;
@@ -710,7 +710,8 @@ var
       cds_LoadPackages.DisableControls;
       Try
         cds_LoadPackages.Active := False;
-        cds_LoadPackages.ParamByName('LoadNo').AsInteger := LoadNo;
+        cds_LoadPackages.ParamByName('LoadNo').AsInteger      := LoadNo;
+        cds_LoadPackages.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
         cds_LoadPackages.Active := True;
       Finally
         cds_LoadPackages.EnableControls;
@@ -881,14 +882,16 @@ begin
   Begin
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := -1;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := -1;
+    cdsLORows.ParamByName('LanguageID').AsInteger := 1 ;
     cdsLORows.Active := True;
 
     FCustomerNo := CustomerNo;
     FSalesRegionNo := SalesRegionNo;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := -1;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := -1;
+    cdsLORows.ParamByName('LanguageID').AsInteger := 1 ;
     cdsLORows.Active := True;
     cds_LoadPackages.Active := True;
 
@@ -2161,6 +2164,7 @@ Begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -2541,6 +2545,7 @@ begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -4286,6 +4291,7 @@ Begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin

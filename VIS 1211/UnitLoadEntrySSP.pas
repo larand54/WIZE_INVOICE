@@ -588,7 +588,8 @@ Begin
     cdsLORows.DisableControls;
     Try
       cdsLORows.Active := False;
-      cdsLORows.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+      cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+      cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
       cdsLORows.Active := True;
 
     Finally
@@ -810,7 +811,8 @@ var
       cds_LoadPackages.DisableControls;
       Try
         cds_LoadPackages.Active := False;
-        cds_LoadPackages.ParamByName('LoadNo').AsInteger := LoadNo;
+        cds_LoadPackages.ParamByName('LoadNo').AsInteger      := LoadNo;
+        cds_LoadPackages.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
         cds_LoadPackages.Active := True;
       Finally
         cds_LoadPackages.EnableControls;
@@ -1079,13 +1081,15 @@ begin
     cds_LoadPackages.Active := False;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := -100;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := -100;
+    cdsLORows.ParamByName('LanguageID').AsInteger := 1;
     cdsLORows.Active := True;
 
     dmsContact.cds_LocalShipper.Active := False;
 
     cds_LoadPackages.Active := False;
-    cds_LoadPackages.ParamByName('LoadNo').AsInteger := -100;
+    cds_LoadPackages.ParamByName('LoadNo').AsInteger      := -100;
+    cds_LoadPackages.ParamByName('LanguageID').AsInteger  := 1 ;
     cds_LoadPackages.Active := True;
   End;
 end;
@@ -2028,6 +2032,7 @@ Begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -2472,15 +2477,17 @@ Begin
 
       // Default LO number in case there is no match the LoadDetail must get a value
       dmLoadEntrySSP.cdsLORows.First;
-      LO_Number := dmLoadEntrySSP.cdsLORowsShippingPlanNo.AsInteger;
-      SuppShipPlanObjectNo := cdsLORowsSupplierShipPlanObjectNo.AsInteger;
+      LO_Number             := dmLoadEntrySSP.cdsLORowsShippingPlanNo.AsInteger;
+      SuppShipPlanObjectNo  := cdsLORowsSupplierShipPlanObjectNo.AsInteger;
 
-      cds_LoadPackagesOverrideRL.AsInteger := 0;
-      cds_LoadPackagesDefsspno.AsInteger := -1;
-      cds_LoadPackagesDefaultCustShipObjectNo.AsInteger := -1;
-      sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
+      cds_LoadPackagesOverrideRL.AsInteger                    := 0;
+      cds_LoadPackagesDefsspno.AsInteger                      := -1;
+      cds_LoadPackagesDefaultCustShipObjectNo.AsInteger       := -1;
+
+      sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger  := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -2859,6 +2866,7 @@ begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -3675,7 +3683,8 @@ Begin
     End;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
     cdsLORows.Active := True;
 
     dmLoadEntrySSP.Get_LO_LinesMatched
@@ -5175,6 +5184,7 @@ Begin
       sq_OnePkgDetailData.ParamByName('PackageNo').AsInteger := PkgNo;
       sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
         PkgSupplierCode;
+      sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
       sq_OnePkgDetailData.Open;
       if not sq_OnePkgDetailData.Eof then
       Begin
@@ -5475,7 +5485,8 @@ begin
       cds_LoadHead.Post;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
     cdsLORows.Active := True;
     cdsLORows.Filter := 'ShippingPlanNo = ' + cds_LSPShippingPlanNo.AsString;
     cdsLORows.Filtered := True;
@@ -5541,7 +5552,8 @@ begin
       cds_LoadHead.Post;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
     cdsLORows.Active := True;
     cdsLORows.Filter := 'ShippingPlanNo = ' + cds_LSPShippingPlanNo.AsString;
     cdsLORows.Filtered := True;
@@ -5604,7 +5616,8 @@ begin
       cds_LoadHead.Post;
 
     cdsLORows.Active := False;
-    cdsLORows.ParamByName('LoadNo').AsInteger := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LoadNo').AsInteger     := cds_LoadHeadLoadNo.AsInteger;
+    cdsLORows.ParamByName('LanguageID').AsInteger := ThisUser.LanguageID ;
     cdsLORows.Active := True;
     cdsLORows.Filter := 'ShippingPlanNo = ' + cds_LSPShippingPlanNo.AsString;
     cdsLORows.Filtered := True;

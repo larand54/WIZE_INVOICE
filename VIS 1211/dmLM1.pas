@@ -247,8 +247,6 @@ type
     cdsLoadsINVOICE_NO: TIntegerField;
     cdsLoadsPrefix: TStringField;
     cdsLoadsInvoiceType: TStringField;
-    sp_GetRtRPOLoNo: TFDStoredProc;
-    sp_CopySalesLoadToPO: TFDStoredProc;
     procedure dsrcAvropDataChange(Sender: TObject; Field: TField);
     procedure dspLoadsGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
@@ -260,10 +258,8 @@ type
     function SelectLONo: Integer;
 
   public
-    Function CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
-  (const OldLoadNo, NewLONo, Insert_Confirmed_Load
-  : Integer): Integer;
-    function  GetPOLoNoInRegionToRegion(const SalesLONo : Integer) : Integer ;//Return PO_LO
+    
+
     procedure CngLOonLoad(const LoadNo, NewLONo: Integer);
     function  ValidLO(const LONo: Integer): Boolean;
     procedure RefreshAvropLoads;
@@ -522,48 +518,6 @@ begin
     cdsAvropRest.AsFloat := 0;
 end;
 
-function TdaMoLM1.GetPOLoNoInRegionToRegion(const SalesLONo : Integer) : Integer ;//Return PO_LO
-Begin
-  sp_GetRtRPOLoNo.ParamByName('@SalesLONo').AsInteger :=  SalesLONo ;
-  sp_GetRtRPOLoNo.Active  := True ;
-  Try
-  if not sp_GetRtRPOLoNo.Eof then
-   Result := sp_GetRtRPOLoNo.FieldByName('POShippingPlanNo').AsInteger
-    else
-     Result := -1 ;
-  Finally
-   sp_GetRtRPOLoNo.Active := False ;
-  End;
-End;
 
-Function TdaMoLM1.CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
-  (const OldLoadNo, NewLONo, Insert_Confirmed_Load
-  : Integer): Integer;
-Begin
-  Try
-    sp_CopySalesLoadToPO.ParamByName('@SrcLoadNo').AsInteger := OldLoadNo;
-    sp_CopySalesLoadToPO.ParamByName('@NewLONo').AsInteger := NewLONo;
-    sp_CopySalesLoadToPO.ParamByName('@CreateUser').AsInteger :=
-      ThisUser.UserID;
-//    sp_CopySalesLoadToPO.ParamByName('@OriginalLoadNo').AsInteger :=
-//      OriginalLoadNo;
-    sp_CopySalesLoadToPO.ParamByName('@Insert_Confirmed_Load').AsInteger :=
-      Insert_Confirmed_Load;
-    Result := sp_CopySalesLoadToPO.ParamByName('@NewLoadNo').AsInteger;
-    sp_CopySalesLoadToPO.ExecProc;
-  Try
-
-  except
-    On E: Exception do
-    Begin
-      dmsSystem.FDoLog(E.Message);
-      // ShowMessage(E.Message);
-      Raise;
-    End;
-  end;
-  Finally
-    sp_CopySalesLoadToPO.Close;
-  End;
-End;
 
 end.

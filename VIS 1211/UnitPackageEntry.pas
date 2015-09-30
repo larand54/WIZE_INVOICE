@@ -1289,6 +1289,7 @@ begin
             dmsProduct.mtPackages.Fields.Fields[cPACKAGENO].AsInteger;
           sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
             Trim(dmsProduct.mtPackages.Fields.Fields[cSUPPLIERCODE].AsString);
+          sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
           sq_OnePkgDetailData.Open;
           if not sq_OnePkgDetailData.Eof then
           Begin
@@ -1393,6 +1394,7 @@ begin
             dmsProduct.mtPackages.Fields.Fields[cPACKAGENO].AsInteger;
           sq_OnePkgDetailData.ParamByName('SupplierCode').AsString :=
             Trim(dmsProduct.mtPackages.Fields.Fields[cSUPPLIERCODE].AsString);
+          sq_OnePkgDetailData.ParamByName('LanguageID').AsInteger  := ThisUser.LanguageID ;
           sq_OnePkgDetailData.Open;
           if not sq_OnePkgDetailData.Eof then
           Begin

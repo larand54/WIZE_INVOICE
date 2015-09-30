@@ -313,6 +313,9 @@ type
     grdPkgsDBTableView1Package_Size: TcxGridDBColumn;
     grdPkgsDBTableView1PackageSizeName: TcxGridDBColumn;
     mtSelectedLoadsLOTYP: TStringField;
+    grdLoadsDBTableView1OriginalLO: TcxGridDBColumn;
+    grdLoadsDBTableView1OriginalLoadNo: TcxGridDBColumn;
+    mtSelectedLoadsTrading: TIntegerField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -381,6 +384,7 @@ type
 
   private
     { Private declarations }
+    procedure CopyLoadToOtherSalesRegion(const LoadNo, LONo  : Integer);
     Function  IsRegionToRegionLoadValid(LoadNo, ShippingPlanNo,
   ObjectType: Integer; Sender: TObject): Boolean;
     function  AreMarkedLoadsSameObjectTypeRegionToRegion: Boolean;
@@ -649,9 +653,9 @@ begin
           if sq_Check_CDS_Link.Eof then
             Result := True
           else
-            ShowMessage('Kan inte AR lasten. Problem med LO# ' +
+            ShowMessage('The load cannot be confirmed. Problem with the LO#. ' +
               cdsArrivingLoadsLO.AsString +
-              ' länkning till LO, kolla att LO samt Last är OK ');
+              ' Please check that the load is OK.');
           sq_Check_CDS_Link.Close;
         End;
         if cdsArrivingLoadsObjectType.AsInteger >= 2 then
@@ -665,9 +669,9 @@ begin
           if sq_CheckObject2Link.Eof then
             Result := True
           else
-            ShowMessage('Kan inte AR lasten. Problem med LO# ' +
+            ShowMessage('The load cannot be confirmed. Problem with the LO#. ' +
               cdsArrivingLoadsLO.AsString +
-              ' länkning till Avrop eller LO, kolla att AVROP / LO samt LAST är OK ');
+              ' Please check that the load is OK.');
           sq_CheckObject2Link.Close;
         End;
         cdsArrivingLoads.Next;
@@ -736,7 +740,12 @@ Begin
     if cds_PropsNewItemRow.AsInteger = 0 then
     Begin
       cdsArrivingLoads.SQL.Clear;
-      cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN, L.LoadAR,');
+      cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN,') ;
+      cdsArrivingLoads.SQL.Add('(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl') ;
+      cdsArrivingLoads.SQL.Add('where ctl.POShippingPlanNo = CSH.ShippingPlanNo) as OriginalLO,') ;
+      cdsArrivingLoads.SQL.Add('(select cl2.Confirmed_LoadNo from dbo.Confirmed_Load cl2') ;
+      cdsArrivingLoads.SQL.Add('where cl2.NewLoadNo = L.LoadNo) AS OriginalLoadNo,') ;
+      cdsArrivingLoads.SQL.Add('L.LoadAR,');
       cdsArrivingLoads.SQL.Add('ST_AdrCtry.CountryCode,');
 
       cdsArrivingLoads.SQL.Add('LSP.ShippingPlanNo			AS	LO,');
@@ -821,8 +830,9 @@ Begin
 
         cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
         cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
-        cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
-        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
+        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan SP on SP.shippingplanno = LSP.shippingplanno');
+        cdsArrivingLoads.SQL.Add('and SP.SupplierNo = L.SupplierNo') ;
+      //  cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
 
         if (LONo = -1) and (LoadNo = -1) then
           if bcConfirmed.ItemIndex = 2 then
@@ -911,6 +921,8 @@ Begin
       else
         cdsArrivingLoads.SQL.Add('1=1');
 
+      cdsArrivingLoads.SQL.Add('AND LSP.ConfirmedByReciever = 0') ;
+
 
       if LONo > -1 then
         cdsArrivingLoads.SQL.Add('AND SP.ShippingPlanNo = ' + IntToStr(LONo));
@@ -942,9 +954,9 @@ Begin
           cdsArrivingLoads.SQL.Add('AND SP.SupplierNo = ' +
             cds_PropsClientNo.AsString);
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <> 1');
+//      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <> 1');
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
+      cdsArrivingLoads.SQL.Add('AND SP.ObjectType IN (0,2)');
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
@@ -983,7 +995,12 @@ Begin
       // UNION
       cdsArrivingLoads.SQL.Add('UNION');
 
-      cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN, L.LoadAR,');
+      cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN,') ;
+      cdsArrivingLoads.SQL.Add('(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl') ;
+      cdsArrivingLoads.SQL.Add('where ctl.POShippingPlanNo = CSH.ShippingPlanNo) as OriginalLO,') ;
+      cdsArrivingLoads.SQL.Add('(select cl2.Confirmed_LoadNo from dbo.Confirmed_Load cl2') ;
+      cdsArrivingLoads.SQL.Add('where cl2.NewLoadNo = L.LoadNo) AS OriginalLoadNo,') ;
+      cdsArrivingLoads.SQL.Add('L.LoadAR,');
 
       cdsArrivingLoads.SQL.Add('ST_AdrCtry.CountryCode,');
 
@@ -1065,9 +1082,9 @@ Begin
 
         cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
         cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
-        cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
-        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
-
+ //       cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
+        cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on SP.shippingplanno = LSP.shippingplanno');
+        cdsArrivingLoads.SQL.Add('and SP.SupplierNo = L.SupplierNo') ;
         if (LONo = -1) and (LoadNo = -1) then
         Begin
           if bcConfirmed.ItemIndex = 2 then
@@ -1177,7 +1194,7 @@ Begin
 
       cdsArrivingLoads.SQL.Add('AND SP.ObjectType = 1');
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
+ //     cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
@@ -1215,10 +1232,13 @@ Begin
       cdsArrivingLoads.SQL.Add('UNION');
  // START REGION To REGION AR query
       cdsArrivingLoads.SQL.Add('SELECT distinct  0 AS EGEN,') ;
-//      cdsArrivingLoads.SQL.Add('LSP.LoadingLocationNo, CSH.LoadingLocationNo,') ;
-//      cdsArrivingLoads.SQL.Add('CSH.ShipToCityNo,') ;
+      cdsArrivingLoads.SQL.Add('(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl') ;
+      cdsArrivingLoads.SQL.Add('where ctl.POShippingPlanNo = CSH.ShippingPlanNo) as OriginalLO,') ;
+      cdsArrivingLoads.SQL.Add('(select cl2.Confirmed_LoadNo from dbo.Confirmed_Load cl2') ;
+      cdsArrivingLoads.SQL.Add('where cl2.NewLoadNo = L.LoadNo) AS OriginalLoadNo,') ;
       cdsArrivingLoads.SQL.Add('IsNull((Select Top 1 cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
       cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo ') ;
+
       cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo),0) AS LoadAR,') ;
 
       cdsArrivingLoads.SQL.Add('ST_AdrCtry.CountryCode,') ;
@@ -1313,38 +1333,13 @@ Begin
       cdsArrivingLoads.SQL.Add('Left Outer Join dbo.BookingType		Bt	ON	Bt.BookingTypeNo	= Bk.BookingTypeNo') ;
       cdsArrivingLoads.SQL.Add('ON  	Bk.ShippingPlanNo = CSH.ShippingPlanNo') ;
 
-{
-        OH.SalesRegionNo = 1879
-  and csh.ShippingPlanNo = 120729
-
-}
-
-
-
       cdsArrivingLoads.SQL.Add('WHERE');
       if (LONo = -1) and (LoadNo = -1) then
       Begin
-       cdsArrivingLoads.SQL.Add('OH.SalesRegionNo = ' + cds_PropsVerkNo.AsString);
-        // if cbAllaVerk.Checked then
-{
-          if (cds_PropsVerkNo.IsNull) or (cds_PropsVerkNo.AsInteger < 1) then
-          Begin
-            cdsArrivingLoads.SQL.Add
-              ('(L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)');
-          End
-          else
-          Begin
-            if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
-              cdsArrivingLoads.SQL.Add('(SP.CustomerNo = ' +
-                cds_PropsVerkNo.AsString + ' OR SP.CustomerNo = ' + inttostr(ThisUser.CompanyNo) + ')')
-            else
-              cdsArrivingLoads.SQL.Add('SP.CustomerNo = ' +
-                cds_PropsVerkNo.AsString);
-
-            cdsArrivingLoads.SQL.Add
-              ('AND (L.SenderLoadStatus = 1 or L.SenderLoadStatus = 2)');
-          End;
-}
+       if (not cds_PropsVerkNo.IsNull) and (cds_PropsVerkNo.AsInteger > 0) then
+        cdsArrivingLoads.SQL.Add('OH.SalesRegionNo = ' + cds_PropsVerkNo.AsString)
+         else
+          cdsArrivingLoads.SQL.Add('OH.SalesRegionNo = -1');
       End // if (LONo = -1) and (LoadNo = -1) then
       else
         cdsArrivingLoads.SQL.Add('1=1');
@@ -1361,12 +1356,6 @@ Begin
           cdsArrivingLoads.SQL.Add('AND PIP.PhyInvPointNameNo = ' +
             cds_PropsBookingTypeNo.AsString);
 
-{
-          if (not cds_PropsLoadingLocationNo.IsNull) and
-            (cds_PropsLoadingLocationNo.AsInteger > 0) then
-            cdsArrivingLoads.SQL.Add('AND	SP.LoadingLocationNo = ' +
-              cds_PropsLoadingLocationNo.AsString);
-}
       End;
 
       if (LONo = -1) and (LoadNo = -1) then
@@ -1375,34 +1364,27 @@ Begin
           cdsArrivingLoads.SQL.Add('AND CSH.CustomerNo = ' +
             cds_PropsOwnerNo.AsString);
 
-      if (LONo = -1) and (LoadNo = -1) then
-        if (not cds_PropsClientNo.IsNull) and (cds_PropsClientNo.AsInteger > 0)
-        then
-          cdsArrivingLoads.SQL.Add('AND SP.SupplierNo = ' +
-            cds_PropsClientNo.AsString);
 
 
-      cdsArrivingLoads.SQL.Add('AND Not Exists (Select cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
-      cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo') ;
-      cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)') ;
 
-
-{
-        cdsArrivingLoads.SQL.Add('AND SP.ObjectType = 1');
-
-        cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
-}
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
         if bcConfirmed.ItemIndex = 0 then // lbConfirmLoad.Enabled = True then
         Begin
+          cdsArrivingLoads.SQL.Add('AND Not Exists (Select cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
+          cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo') ;
+          cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)') ;
           cdsArrivingLoads.SQL.Add('AND L.LoadAR = 0');
         End
         else if bcConfirmed.ItemIndex = 1 then
         // lbConfirmLoad.Enabled = True then
         Begin
-          cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
+          cdsArrivingLoads.SQL.Add('AND Exists (Select cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2') ;
+          cdsArrivingLoads.SQL.Add('WHERE cl2.Confirmed_LoadNo = LSP.LoadNo') ;
+          cdsArrivingLoads.SQL.Add('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)') ;
+
+
           if (LONo = -1) and (LoadNo = -1) then
           Begin
             cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
@@ -1436,7 +1418,12 @@ Begin
     else
       cdsArrivingLoads.SQL.Clear;
 
-    cdsArrivingLoads.SQL.Add('SELECT DISTINCT  0 AS EGEN,');
+      cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN,') ;
+      cdsArrivingLoads.SQL.Add('(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl') ;
+      cdsArrivingLoads.SQL.Add('where ctl.POShippingPlanNo = CSH.ShippingPlanNo) as OriginalLO,') ;
+      cdsArrivingLoads.SQL.Add('(select cl2.Confirmed_LoadNo from dbo.Confirmed_Load cl2') ;
+      cdsArrivingLoads.SQL.Add('where cl2.NewLoadNo = L.LoadNo) AS OriginalLoadNo,') ;
+
 
     cdsArrivingLoads.SQL.Add
       ('IsNull((Select Top 1 cl2.Confirmed_LoadNo FROM dbo.Confirmed_Load_EXT cl2');
@@ -1598,7 +1585,7 @@ Begin
 
     cdsArrivingLoads.SQL.Add(' AND  L.SupplierNo = CSH.CustomerNo') ;
 
-    cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
+    cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 2');
 
     cdsArrivingLoads.SQL.Add('AND (L.SenderLoadStatus = 2)');
 
@@ -1656,8 +1643,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then
-    cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then     cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -1697,7 +1683,7 @@ Begin
         if cdsConfirmed_Load.ChangeCount > 0 then
           if cdsConfirmed_Load.ApplyUpdates(0) > 0 then
             ShowMessage
-              ('Inmatning av post misslyckades, kontakta support med LO och LastNr.')
+              ('Error applying confirmed load to database, contact support referring LO and Load #')
           else
           Begin
             cdsArrivingLoads.Refresh;
@@ -1734,7 +1720,7 @@ begin
       // cdsArrivingLoads.LogChanges:= False ;
       if not cdsArrivingLoads.FindKey([StrToIntDef(Trim(Edit1.Text), 0)]) then
       Begin
-        ShowMessage('No luck');
+        ShowMessage('No match');
       End
       else
         Timer1.Enabled := True;
@@ -1787,7 +1773,7 @@ begin
       // cdsArrivingLoads.LogChanges:= False ;
       if not cdsArrivingLoads.FindKey([StrToIntDef(Trim(Edit2.Text), 0)]) then
       Begin
-        ShowMessage('No luck');
+        ShowMessage('No match.');
       End
       else
         Timer2.Enabled := True;
@@ -1992,12 +1978,12 @@ Var
   Save_Cursor: TCursor;
   ColIdx: Integer;
   AvropCustomerNo, EGEN, ObjectType, ImpVerk, LoadAR, LIPNo, LoadNo, LONo,
-    CustomerNo, LOAD_STATUS: Integer;
+  CustomerNo, LOAD_STATUS, Trading  : Integer;
 begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait; { Show hourglass cursor }
-  mtSelectedLoads.Active := False;
-  mtSelectedLoads.Active := True;
+  Save_Cursor             := Screen.Cursor;
+  Screen.Cursor           := crSQLWait; { Show hourglass cursor }
+  mtSelectedLoads.Active  := False;
+  mtSelectedLoads.Active  := True;
   with dmArrivingLoads do
   Begin
     grdLoadsDBTableView1.BeginUpdate;
@@ -2054,6 +2040,11 @@ begin
         AvropCustomerNo := grdLoadsDBTableView1.DataController.Values
           [RecIDX, ColIdx];
 
+        ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+          ('Trading').Index;
+        Trading := grdLoadsDBTableView1.DataController.Values
+          [RecIDX, ColIdx];
+
         // if not mtSelectedLoads.Locate('LoadNo;LONo', VarArrayOf([LoadNo, LONo]), []) then
         if (not mtSelectedLoads.Locate('LoadNo', LoadNo, [])) and
           (LOAD_STATUS = 2) then
@@ -2069,6 +2060,7 @@ begin
           mtSelectedLoadsImpOrt.AsInteger           := ImpVerk;
           mtSelectedLoadsOBJECTTYPE.AsInteger       := ObjectType;
           mtSelectedLoadsEGEN.AsInteger             := EGEN;
+          mtSelectedLoadsTrading.AsInteger          := Trading ;
           mtSelectedLoads.Post;
         End;
       End; // for y
@@ -2409,12 +2401,12 @@ begin
               End // if AreMarkedLoadsSameTRADINGType then
               else
                 ShowMessage
-                  ('Alla markerade laster måste antingen vara trading eller inte.');
+                  ('All selected loads must either be trading or not.');
             End;
           End
       else
         ShowMessage
-          ('Markerade laster måste vara av samma LO typ, (LO, add LO eller interna LO) och samma ordertyp (sales, PO eller interna)');
+          ('Selected loads must be of same LO type, (LO, ADD LO or internal LO) and same order type (sales, PO or internal)');
     End;
     { else
       if cdsArrivingLoadsObjectType.AsInteger = 2 then
@@ -2577,7 +2569,7 @@ begin
       Begin
         FileName := SaveDialog1.FileName;
         ExportGridToExcel(FileName, grdLoads, False, False, True, 'xls');
-        ShowMessage('Tabell exporterad till Excelfil ' + FileName);
+        ShowMessage('Table exported to Excelfil ' + FileName);
       End;
     End;
 
@@ -2595,13 +2587,13 @@ begin
     DecodeDate(deStartPeriod.Date, Year, Month, Day);
     if IsValidDate(Year, Month, Day) = False then
     Begin
-      ShowMessage('Ange ett FOM datum');
+      ShowMessage('Enter a from date.');
       Exit;
     End;
     DecodeDate(deEndPeriod.Date, Year, Month, Day);
     if IsValidDate(Year, Month, Day) = False then
     Begin
-      ShowMessage('Ange ett TOM datum');
+      ShowMessage('Enter a to date.');
       Exit;
     End;
   End;
@@ -2726,7 +2718,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu;';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address missing, enter the address direct in the mail(outlook)');
   End;
 
   MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
@@ -3049,7 +3041,7 @@ Var
   i, RecIDX: Integer;
   Save_Cursor: TCursor;
   ColIdx: Integer;
-  ObjectType, OrderType: Integer;
+  ObjectType, OrderType, Trading  : Integer;
 begin
   Result := False;
   Save_Cursor := Screen.Cursor;
@@ -3076,15 +3068,22 @@ begin
           ('OrderType').Index;
         OrderType := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
 
+        RecIDX := grdLoadsDBTableView1.Controller.SelectedRecords[i]
+          .RecordIndex;
+        ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
+          ('Trading').Index;
+        Trading := grdLoadsDBTableView1.DataController.Values[RecIDX, ColIdx];
+
         if ObjectType = 3 then
          ObjectType := 2 ;
 
-        if not mtSelectedLoads.Locate('OBJECTTYPE;OrderType',
-          VarArrayOf([ObjectType, OrderType]), []) then
+        if not mtSelectedLoads.Locate('OBJECTTYPE;OrderType;Trading',
+          VarArrayOf([ObjectType, OrderType, Trading]), []) then
         Begin
           mtSelectedLoads.Insert;
-          mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType;
-          mtSelectedLoadsOrderType.AsInteger  := OrderType;
+          mtSelectedLoadsOBJECTTYPE.AsInteger := ObjectType ;
+          mtSelectedLoadsOrderType.AsInteger  := OrderType  ;
+          mtSelectedLoadsTrading.AsInteger    := Trading  ;
           mtSelectedLoads.Post;
         End;
       End; // for y
@@ -3655,7 +3654,7 @@ begin
 
                 if cdsArrivingLoadsLipNo.AsInteger = -1 then
                 Begin
-                  ShowMessage('LO saknar lagergrupp');
+                  ShowMessage('LO missing inventory group.');
                   Exit;
                 End;
 
@@ -3698,14 +3697,24 @@ begin
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 1;
                           mtSelectedLoads.Post;
+
+
+                            if mtSelectedLoadsTrading.AsInteger = 2 then
+                                     Begin
+                                       dmArrivingLoads.CopyRtR(mtSelectedLoadsLONo.AsInteger) ;
+
+                                       CopyLoadToOtherSalesRegion(NewLoadNo, mtSelectedLoadsLONo.AsInteger) ;
+                                     End;
+
+
                         End // if NewLoadNo > 0 then
                         else
                         Begin
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 0;
                           mtSelectedLoads.Post;
-                          ShowMessage('Lastnr ' + mtSelectedLoadsLoadNo.AsString
-                            + ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                          ShowMessage('Load# ' + mtSelectedLoadsLoadNo.AsString
+                            + ' could not be confirmed because status has changed to preliminary.');
                         End;
 
                       Finally
@@ -3715,11 +3724,11 @@ begin
                     End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                     else
                       ShowMessage
-                        ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                        ('Load status indicate problem with the load, cannot confirm the load.');
                   End // check IS load confirmed
                   else
-                    ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                      Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                    ShowMessage('The load is already confirmed by ' +
+                      Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                       SqlTimeStampToStr('',
                       sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
                 Finally
@@ -3738,7 +3747,7 @@ begin
             Begin
               dmsSystem.FDoLog(E.Message);
               ShowMessage
-                ('Ankomstregistrering misslyckades, kolla om lasten har ändrat status');
+                ('Confirmation failed, please check the load.');
               // Raise ;
             End;
           end;
@@ -3786,7 +3795,7 @@ begin
           LIPNo := fSelectLIP.LIPNo;
           if LIPNo < 1 then
           Begin
-            ShowMessage('Du måste välja ett lager!');
+            ShowMessage('You did not select a inventory.');
             Exit;
           End ;
 
@@ -3884,8 +3893,8 @@ begin
                             mtSelectedLoadsStatus.AsInteger := 0;
                             mtSelectedLoads.Post;
                             ShowMessage
-                              ('Lastnr ' + mtSelectedLoadsLoadNo.AsString +
-                              ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                              ('Load# ' + mtSelectedLoadsLoadNo.AsString +
+                              ' could not be confirmed because status is set to preliminary.');
                           End;
 
                         Finally
@@ -3895,11 +3904,11 @@ begin
                       End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                       else
                         ShowMessage
-                          ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                          ('Load status indicate problem, load cannot be confirmed.');
                     End // check IS load confirmed
                     else
-                      ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                      ShowMessage('The load is already confirmd by ' +
+                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                         SqlTimeStampToStr('',
                         sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
                   Finally
@@ -3917,7 +3926,7 @@ begin
               Begin
                 dmsSystem.FDoLog(E.Message);
                 ShowMessage
-                  ('Ankomstregistrering misslyckades, kolla om lasten har ändrat status');
+                  ('Confirming failed, please check the load.');
                 // Raise ;
               End;
             end;
@@ -3961,7 +3970,7 @@ begin
           LIPNo := fSelectLIP.LIPNo;
           if LIPNo < 1 then
           Begin
-            ShowMessage('Du måste välja ett lager!');
+            ShowMessage('You did not select a inventory.');
             Exit;
           End;
 
@@ -4022,8 +4031,8 @@ begin
                           mtSelectedLoads.Edit;
                           mtSelectedLoadsStatus.AsInteger := 0;
                           mtSelectedLoads.Post;
-                          ShowMessage('Lastnr ' + mtSelectedLoadsLoadNo.AsString
-                            + ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                          ShowMessage('Load# ' + mtSelectedLoadsLoadNo.AsString
+                            + ' could be confirmed cause status changed to preliminary.');
                         End;
 
                       Finally
@@ -4033,11 +4042,11 @@ begin
                     End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                     else
                       ShowMessage
-                        ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                        ('Load status indicate problem, please check the load.');
                   End // check IS load confirmed
                   else
-                    ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                      Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                    ShowMessage('The load is already confirmed by ' +
+                      Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                       SqlTimeStampToStr('',
                       sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
                 Finally
@@ -4143,10 +4152,10 @@ begin
                       else
                       Begin
                         if Sales_LONo = -1 then
-                          ShowMessage('Avbryter.')
+                          ShowMessage('cancel.')
                         else
                           ShowMessage
-                            ('Avbryt kan ej fortsätta ta bort tradingkoppling och försök igen.');
+                            ('Cancelled, can not continue. restart and try again.');
                         (*
                           fSelectLIP:= TfSelectLIP.Create(nil);
                           Try
@@ -4184,11 +4193,11 @@ begin
                   End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                   else
                     ShowMessage
-                      ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                      ('Load status indicate problem, please check the load.');
                 End // check IS load confirmed
                 else
-                  ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                    Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                  ShowMessage('The load is already confirmed by ' +
+                    Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                     SqlTimeStampToStr('',
                     sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
               Finally
@@ -4425,7 +4434,7 @@ begin
           LIPNo := fSelectLIP.LIPNo;
           if LIPNo < 1 then
           Begin
-            ShowMessage('Du måste välja ett lager!');
+            ShowMessage('You did not select a inventory.');
             Exit;
           End;
 
@@ -4520,8 +4529,8 @@ begin
                             mtSelectedLoadsStatus.AsInteger := 0;
                             mtSelectedLoads.Post;
                             ShowMessage
-                              ('Lastnr ' + mtSelectedLoadsLoadNo.AsString +
-                              ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                              ('Load# ' + mtSelectedLoadsLoadNo.AsString +
+                              ' could not be confirmed cause status changed to preliminary.');
                           End;
 
                         Finally
@@ -4531,11 +4540,11 @@ begin
                       End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                       else
                         ShowMessage
-                          ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                          ('Load status indicate problem, please check the load.');
                     End // check IS load confirmed
                     else
-                      ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                      ShowMessage('The load is already confirmed by ' +
+                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                         SqlTimeStampToStr('',
                         sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
                   Finally
@@ -4553,7 +4562,7 @@ begin
               Begin
                 dmsSystem.FDoLog(E.Message);
                 ShowMessage
-                  ('Ankomstregistrering misslyckades, kolla om lasten har ändrat status');
+                  ('Confirmation failed, please check the load.');
                 // Raise ;
               End;
             end;
@@ -4595,6 +4604,37 @@ begin
     SelectedRecordCount > 0;
 end;
 
+
+procedure TfrmLoadArrivals.CopyLoadToOtherSalesRegion(const LoadNo, LONo  : Integer);
+Var
+  PO_LONo, NewLoadNo: Integer;
+begin
+
+  // ToDo ! Gör en kontroll att avropen matchar med orderlineno!!
+
+  With dmArrivingLoads do
+  Begin
+    NewLoadNo := dmsSystem.POLoadConfirmed(LoadNo,
+      PO_LONo);
+    if NewLoadNo = 0 then
+    Begin
+      PO_LONo := GetPOLoNoInRegionToRegion(LONo); // SelectAvropsNrAttSkapaSalesLoadMot
+
+      if PO_LONo > 0 then
+      Begin
+        NewLoadNo := CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
+          (LoadNo, PO_LONo, 1);
+        if NewLoadNo > 0 then
+          ShowMessage('The Load was copied to other sales region ' +
+            inttostr(PO_LONo) + ', Load# ' + inttostr(NewLoadNo));
+      End;
+    End
+    else
+      ShowMessage('The load is already copied to other sales region ' +
+        inttostr(PO_LONo) + ', Load# ' + inttostr(NewLoadNo));
+  End;
+end;
+
 procedure TfrmLoadArrivals.ConfirmManyLoadsRegionToRegion(Sender: TObject) ;
 Var
   LIPNo               : Integer;
@@ -4628,7 +4668,7 @@ begin
           LIPNo := fSelectLIP.LIPNo;
           if LIPNo < 1 then
           Begin
-            ShowMessage('Du måste välja ett lager!');
+            ShowMessage('You did not select a inventory.');
             Exit;
           End;
 
@@ -4716,6 +4756,8 @@ begin
                             mtSelectedLoads.Edit;
                             mtSelectedLoadsStatus.AsInteger := 1;
                             mtSelectedLoads.Post;
+
+
                           End // if LoadAROK then
                           else
                           Begin
@@ -4723,8 +4765,8 @@ begin
                             mtSelectedLoadsStatus.AsInteger := 0;
                             mtSelectedLoads.Post;
                             ShowMessage
-                              ('Lastnr ' + mtSelectedLoadsLoadNo.AsString +
-                              ' kunde inte ankomstregistreras pga att status ändrats till preliminär');
+                              ('Load# ' + mtSelectedLoadsLoadNo.AsString +
+                              ' could be confirmed, please check the load.');
                           End;
 
                         Finally
@@ -4734,11 +4776,11 @@ begin
                       End // if cdsArrivingLoadsLOAD_STATUS.AsInteger = 2 then
                       else
                         ShowMessage
-                          ('Laststatus indikerar problem med lasten, kan inte ankomstregistreras.');
+                          ('Load status indicate problem, please check the load.');
                     End // check IS load confirmed
                     else
-                      ShowMessage('Lasten är redan ankomstregistrerad av ' +
-                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' den ' +
+                      ShowMessage('The load is already confirmed by ' +
+                        Trim(sq_IsLoadConfirmedUserName.AsString) + ' at ' +
                         SqlTimeStampToStr('',
                         sq_IsLoadConfirmedDateCreated.AsSQLTimeStamp));
                   Finally
@@ -4756,7 +4798,7 @@ begin
               Begin
                 dmsSystem.FDoLog(E.Message);
                 ShowMessage
-                  ('Ankomstregistrering misslyckades, kolla om lasten har ändrat status');
+                  ('Confirmation failed, please check the load.');
                 // Raise ;
               End;
             end;
@@ -4865,9 +4907,9 @@ begin
           if sq_CheckObjectRegionToRegionLink.Eof then
             Result := True
           else
-            ShowMessage('Kan inte AR lasten. Problem med LO# ' +
+            ShowMessage('Cannot confirm the load.  LO# ' +
               cdsArrivingLoadsLO.AsString +
-              ' länkning till Avrop eller LO, kolla att AVROP / LO samt LAST är OK ');
+              '. Please check that load is OK');
           sq_CheckObjectRegionToRegionLink.Close;
         End;
         cdsArrivingLoads.Next;

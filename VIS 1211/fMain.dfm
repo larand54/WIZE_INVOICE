@@ -136,6 +136,7 @@ object frmMain: TfrmMain
     TabOrder = 2
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
+      Active = True
       Caption = 'Avrop'
       Groups = <
         item
@@ -147,7 +148,6 @@ object frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Lastorder'
       Groups = <
         item

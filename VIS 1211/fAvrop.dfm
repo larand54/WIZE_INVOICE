@@ -1917,7 +1917,6 @@ object frmAvrop: TfrmAvrop
       Category = 'Last'
       Caption = 'Kopiera last till annan f'#246'rs'#228'ljningsregion'
       ImageIndex = 3
-      OnExecute = acCopyLoadToOtherSalesRegionExecute
       OnUpdate = acCopyLoadToOtherSalesRegionUpdate
     end
   end
@@ -5076,10 +5075,6 @@ object frmAvrop: TfrmAvrop
       item
         Visible = True
         ItemName = 'dxBarButton32'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton38'
       end
       item
         Visible = True

@@ -565,6 +565,12 @@ type
     sq_CheckObjectRegionToRegionLink: TFDQuery;
     sq_CheckObjectRegionToRegionLinkSupplierShipPlanObjectNo: TIntegerField;
     sq_CheckObjectRegionToRegionLinkCustShipPlanDetailObjectNo: TIntegerField;
+    cdsArrivingLoadsOriginalLO: TIntegerField;
+    cdsArrivingLoadsOriginalLoadNo: TIntegerField;
+    sp_CopyRtR: TFDStoredProc;
+    sp_GetRtRPOLoNo: TFDStoredProc;
+    sp_CopySalesLoadToPO: TFDStoredProc;
+    sp_delAR_RtRLoad: TFDStoredProc;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
@@ -597,6 +603,12 @@ type
   public
     { Public declarations }
     LoadConfirmedOK: Boolean;
+    procedure delAR_RtRLoad(const Confirmed_LoadNo  : Integer) ;
+    Function  CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
+  (const OldLoadNo, NewLONo, Insert_Confirmed_Load
+  : Integer): Integer;
+    function  GetPOLoNoInRegionToRegion(const SalesLONo : Integer) : Integer ;//Return PO_LO
+    procedure CopyRtR(const OldLONo : Integer) ;
     procedure CngArtNoByPkgSize (const PackageNo, Package_Size : Integer; Prefix : string) ;
     function  GetNewPackage_Size(var PackageSizeName : String) : Integer ;
     function  AR_ExternLoad(const LoadNo, Status, LIPNo,
@@ -638,6 +650,49 @@ uses recerror, dmsDataConn, dmsVidaSystem, VidaConst, VidaUser, dlgPickPkg_II,
   uPackageSize;
 
 {$R *.dfm}
+
+Function TdmArrivingLoads.CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
+  (const OldLoadNo, NewLONo, Insert_Confirmed_Load
+  : Integer): Integer;
+Begin
+  Try
+    sp_CopySalesLoadToPO.ParamByName('@SrcLoadNo').AsInteger  := OldLoadNo;
+    sp_CopySalesLoadToPO.ParamByName('@NewLONo').AsInteger    := NewLONo;
+    sp_CopySalesLoadToPO.ParamByName('@CreateUser').AsInteger := ThisUser.UserID;
+
+    sp_CopySalesLoadToPO.ParamByName('@Insert_Confirmed_Load').AsInteger :=
+      Insert_Confirmed_Load;
+    Result := sp_CopySalesLoadToPO.ParamByName('@NewLoadNo').AsInteger;
+    sp_CopySalesLoadToPO.ExecProc;
+    Result := sp_CopySalesLoadToPO.ParamByName('@NewLoadNo').AsInteger;
+  Try
+
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+  Finally
+    sp_CopySalesLoadToPO.Close;
+  End;
+End;
+
+function TdmArrivingLoads.GetPOLoNoInRegionToRegion(const SalesLONo : Integer) : Integer ;//Return PO_LO
+Begin
+  sp_GetRtRPOLoNo.ParamByName('@SalesLONo').AsInteger :=  SalesLONo ;
+  sp_GetRtRPOLoNo.Active  := True ;
+  Try
+  if not sp_GetRtRPOLoNo.Eof then
+   Result := sp_GetRtRPOLoNo.FieldByName('POShippingPlanNo').AsInteger
+    else
+     Result := -1 ;
+  Finally
+   sp_GetRtRPOLoNo.Active := False ;
+  End;
+End;
 
 function TdmArrivingLoads.GetDefaultCSObjectNo(const defsspno: Integer)
   : Integer;
@@ -911,6 +966,8 @@ begin
               cdsArrivingLoadsLOADNO.AsInteger;
             // if sq_DeleteConfirmed_Load_Entry.ExecSQL(False) = -1 then CommitChanges:= False ;
             sq_DeleteConfirmed_Load_Entry.ExecSQL;
+
+            delAR_RtRLoad(cdsArrivingLoadsLOADNO.AsInteger) ;
           except
             On E: Exception do
             Begin
@@ -2570,5 +2627,35 @@ Begin
    End ;
  End ;
 End ;
+
+procedure TdmArrivingLoads.CopyRtR(const OldLONo : Integer) ;
+Begin
+ sp_CopyRtR.ParamByName('@CreateUser').AsInteger  := ThisUser.UserID ;
+ sp_CopyRtR.ParamByName('@OldLONo').AsInteger     := OldLONo ;
+ Try
+ sp_CopyRtR.ExecProc ;
+ Except
+   On E: Exception do
+   Begin
+    ShowMessage(E.Message+' :sp_CopyRtR.ExecProc') ;
+    Raise ;
+   End ;
+ End ;
+End ;
+
+//Remove RtR load when regret AR
+procedure TdmArrivingLoads.delAR_RtRLoad(const Confirmed_LoadNo  : Integer) ;
+begin
+ sp_delAR_RtRLoad.ParamByName('@Confirmed_LoadNo').AsInteger :=  Confirmed_LoadNo ;
+ Try
+ sp_delAR_RtRLoad.ExecProc ;
+ Except
+   On E: Exception do
+   Begin
+    ShowMessage(E.Message+' :sp_delAR_RtRLoad.ExecProc') ;
+    Raise ;
+   End ;
+ End ;
+end;
 
 end.

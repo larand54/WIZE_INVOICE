@@ -703,7 +703,9 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       'SSP.PackageCode'
       'END                                           AS PKGCODE,'
       'SSP.ProductNo,'
-      'P.ProductDisplayName                          AS INTERNPRODDESC,'
+      
+        'pdc.ProductDisplayName                          AS INTERNPRODDES' +
+        'C,'
       'SSP.LengthDescription'#9#9#9'                    AS LENGTHDESC,'
       'SSP.NoOfUnits'#9#9#9#9'                          AS NOOFUNITS,'
       'UN.VolumeUnitName'#9#9#9'                        AS VOLUNIT,'
@@ -812,6 +814,9 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
         #9'INNER JOIN dbo.Product P                      ON P.ProductNo = ' +
         'SSP.ProductNo'
       
+        #9' Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = P.Produ' +
+        'ctNo'
+      
         #9'INNER JOIN dbo.Grade G                        ON G.GradeNo = P.' +
         'GradeNo'
       
@@ -839,6 +844,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       ''
       ''
       'WHERE L.LoadNo = :LoadNo'
+      'and pdc.LanguageID = :LanguageID'
       
         'AND ((SSP.ShippingPlanStatus <> 7) and (SSP.ShippingPlanStatus <' +
         '> 8))'
@@ -849,6 +855,11 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     ParamData = <
       item
         Name = 'LOADNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -1425,9 +1436,9 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     UpdateOptions.UpdateTableName = 'LoadDetail'
     SQL.Strings = (
       'SELECT distinct'
-      '           LD.LoadNo, '
+      '           LD.LoadNo,'
       '           LD.ShippingPlanNo,'
-      '           PR.ProductDisplayName     AS PRODUCT,'
+      '           pdc.ProductDisplayName     AS PRODUCT,'
       '           LD.LoadDetailNo,'
       '           LD.PackageNo'#9#9'            AS PACKAGENO,'
       '           LD.NoOfPackages'#9'          ,'
@@ -1496,6 +1507,9 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
         ' Left Outer JOIN dbo.Product       Pr  ON    Pr.ProductNo       ' +
         ' = Pt.ProductNo'
       
+        ' Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = PT.Produ' +
+        'ctNo'
+      
         ' Left Outer JOIN dbo.ProductGroup  PG  ON    PG.ProductGroupNo  ' +
         ' = Pr.ProductGroupNo'
       
@@ -1519,6 +1533,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
         'No'
       ''
       'WHERE      LD.LoadNo = :LoadNo'
+      'and pdc.LanguageID = :LanguageID'
       ''
       'ORDER BY   LD.LoadDetailNo DESC')
     Left = 304
@@ -1526,6 +1541,11 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     ParamData = <
       item
         Name = 'LOADNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -2328,7 +2348,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct'
-      '  PR.ProductDisplayName         AS PRODUCT,'
+      '  pdc.ProductDisplayName         AS PRODUCT,'
       '  PN.PackageNo'#9#9'              AS PACKAGENO,'
       '  PN.PackageTypeNo'#9'            AS PACKAGETYPENO,'
       '  PN.SupplierCode'#9'              AS SUPP_CODE,'
@@ -2375,6 +2395,9 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
         '        INNER JOIN dbo.Product      Pr  ON Pr.ProductNo     = Pt' +
         '.ProductNo'
       
+        '        Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = P' +
+        'T.ProductNo'
+      
         '        INNER JOIN dbo.ProductGroup      PG  ON PG.ProductGroupN' +
         'o     = Pr.ProductGroupNo'
       
@@ -2386,7 +2409,8 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       ''
       'WHERE     PN.PackageNo = :PackageNo'
       'AND PN.SupplierCode = :SupplierCode'
-      ' '
+      'and pdc.LanguageID = :LanguageID'
+      ''
       ' '
       '')
     Left = 304
@@ -2400,6 +2424,11 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       item
         Name = 'SUPPLIERCODE'
         DataType = ftString
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
+        DataType = ftInteger
         ParamType = ptInput
       end>
     object sq_OnePkgDetailDataPRODUCT: TStringField

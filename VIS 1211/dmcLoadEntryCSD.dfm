@@ -865,7 +865,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         'OL.PackageCode                                           AS PKGC' +
         'ODE,'
       'CSD.ProductNo,'
-      'P.ProductDisplayName                          AS INTERNPRODDESC,'
+      
+        'pdc.ProductDisplayName                          AS INTERNPRODDES' +
+        'C,'
       'CSD.LengthDescription'#9#9#9'                    AS LENGTHDESC,'
       'CSD.NoOfUnits'#9#9#9#9'                          AS NOOFUNITS,'
       'UN.VolumeUnitName'#9#9#9'                        AS VOLUNIT,'
@@ -943,6 +945,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         #9'INNER JOIN dbo.Product P                      ON P.ProductNo = ' +
         'OL.ProductNo'
       
+        '  Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = P.Produ' +
+        'ctNo'
+      
         #9'INNER JOIN dbo.Grade G                        ON G.GradeNo = P.' +
         'GradeNo'
       
@@ -964,12 +969,18 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ' '#9'= OL.PriceUnitNo'
       ''
       ''
-      'WHERE L.LoadNo = :LoadNo')
+      'WHERE L.LoadNo = :LoadNo'
+      'and pdc.LanguageID = :LanguageID')
     Left = 192
     Top = 80
     ParamData = <
       item
         Name = 'LOADNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -1975,7 +1986,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       'SELECT distinct'
       '           LD.LoadNo, '
       '           LD.ShippingPlanNo,'
-      '           PR.ProductDisplayName     AS PRODUCT,'
+      '           pdc.ProductDisplayName     AS PRODUCT,'
       '           LD.LoadDetailNo,'
       '           LD.PackageNo'#9#9'            AS PACKAGENO,'
       '           LD.NoOfPackages'#9'          ,'
@@ -2042,6 +2053,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         ' INNER JOIN dbo.Product       Pr  ON    Pr.ProductNo        = Pt' +
         '.ProductNo'
       
+        ' Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = PT.Produ' +
+        'ctNo'
+      
         ' INNER JOIN dbo.ProductGroup  PG  ON    PG.ProductGroupNo   = Pr' +
         '.ProductGroupNo'
       
@@ -2053,6 +2067,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         'PT.PackageTypeNo'
       ''
       'WHERE      LD.LoadNo = :LoadNo'
+      'and pdc.LanguageID = :LanguageID'
       ''
       'ORDER BY   LD.LoadDetailNo DESC')
     Left = 288
@@ -2060,6 +2075,11 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     ParamData = <
       item
         Name = 'LOADNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -2411,7 +2431,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT distinct'
-      '  PR.ProductDisplayName         AS PRODUCT,'
+      '  pdc.ProductDisplayName         AS PRODUCT,'
       '  PN.PackageNo'#9#9'              AS PACKAGENO,'
       '  PN.PackageTypeNo'#9'            AS PACKAGETYPENO,'
       '  PN.SupplierCode'#9'              AS SUPP_CODE,'
@@ -2459,6 +2479,9 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         '        INNER JOIN dbo.Product      Pr  ON Pr.ProductNo     = Pt' +
         '.ProductNo'
       
+        '        Left outer Join dbo.ProductDesc pdc on pdc.ProductNo = P' +
+        'T.ProductNo'
+      
         '        INNER JOIN dbo.ProductGroup      PG  ON PG.ProductGroupN' +
         'o     = Pr.ProductGroupNo'
       
@@ -2469,7 +2492,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         'No = PT.PackageTypeNo'
       ''
       'WHERE     PN.PackageNo = :PackageNo'
-      'AND PN.SupplierCode = :SupplierCode')
+      'AND PN.SupplierCode = :SupplierCode'
+      'and pdc.LanguageID = :LanguageID')
     Left = 400
     Top = 176
     ParamData = <
@@ -2481,6 +2505,11 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       item
         Name = 'SUPPLIERCODE'
         DataType = ftString
+        ParamType = ptInput
+      end
+      item
+        Name = 'LANGUAGEID'
+        DataType = ftInteger
         ParamType = ptInput
       end>
     object sq_OnePkgDetailDataPRODUCT: TStringField

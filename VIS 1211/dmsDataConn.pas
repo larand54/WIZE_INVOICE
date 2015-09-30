@@ -102,11 +102,22 @@ uses
 {$R *.dfm}
 
 function TdmsConnector.GetHostName(const UserID : Integer)  : String ;
-Var AD_Name : String ;
-Begin
+Var Dir : String ;
+LengthOfPath  : Integer ;
+begin
+ Dir          := GetCurrentDir ;
+// showmessage('Dir = ' + Dir) ;
+ LengthOfPath := Length(Dir) ;
+ Dir          := Copy(GetCurrentDir, LengthOfPath - 13, 14) ;
+
+// showmessage('Dir = ' + Dir) ;
+
   Result  := '' ;
+
   sp_GetUserStartHost.ParamByName('@UserID').AsInteger  :=  UserID ;
-  sp_GetUserStartHost.Active  :=  True ;
+  sp_GetUserStartHost.ParamByName('@AppDir').AsString   :=  'VIS' ;
+  sp_GetUserStartHost.ParamByName('@AppPath').AsString  :=  Dir ;
+  sp_GetUserStartHost.Active                            :=  True ;
   Try
   if not sp_GetUserStartHost.Eof then
   Begin
@@ -179,14 +190,14 @@ Begin
     End
     else
     Begin
-      ShowMessage('Användare ' + AD_Name + ' saknar behörighet i VIS');
+      ShowMessage('User ' + AD_Name + ' have no access in VIS');
       UserName := '-';
     End;
     sq_GetUserName.Close;
   End
   else
   Begin
-    ShowMessage('Windows användarnamn saknas');
+    ShowMessage('Windows user name missing.');
     UserName := '-';
   End;
 End;

@@ -309,9 +309,18 @@ object frmLoadArrivals: TfrmLoadArrivals
       end
       object grdLoadsDBTableView1NoOfPackages: TcxGridDBColumn
         DataBinding.FieldName = 'NoOfPackages'
+        PropertiesClassName = 'TcxLabelProperties'
       end
       object grdLoadsDBTableView1PackagesConfirmed: TcxGridDBColumn
         DataBinding.FieldName = 'PackagesConfirmed'
+      end
+      object grdLoadsDBTableView1OriginalLO: TcxGridDBColumn
+        DataBinding.FieldName = 'OriginalLO'
+        PropertiesClassName = 'TcxLabelProperties'
+      end
+      object grdLoadsDBTableView1OriginalLoadNo: TcxGridDBColumn
+        DataBinding.FieldName = 'OriginalLoadNo'
+        PropertiesClassName = 'TcxLabelProperties'
       end
     end
     object grdLoadsLevel1: TcxGridLevel
@@ -3058,6 +3067,9 @@ object frmLoadArrivals: TfrmLoadArrivals
     object mtSelectedLoadsLOTYP: TStringField
       FieldName = 'LOTYP'
       Size = 10
+    end
+    object mtSelectedLoadsTrading: TIntegerField
+      FieldName = 'Trading'
     end
   end
   object cxLookAndFeelController1: TcxLookAndFeelController

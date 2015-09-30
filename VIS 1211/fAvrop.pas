@@ -496,7 +496,6 @@ type
     procedure acMovePkgsToInvAndDeleteLoadExecute(Sender: TObject);
     procedure acMovePkgsToInvAndDeleteLoadUpdate(Sender: TObject);
     procedure acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
-    procedure acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
   private
     { Private declarations }
     GlobalLONo, CSDNO: Integer;
@@ -826,17 +825,17 @@ begin
 
       if ClientDiff then
       Begin
-        ShowMessage('Valda avrop måste ha samma kund/leverantör.');
+        ShowMessage('Selected call off must have the same klient.');
         Result := -1;
       End;
       if CurrencyDiff then
       Begin
-        ShowMessage('Valda avrop måste ha samma valuta.');
+        ShowMessage('Selected call off must have the same currency.');
         Result := -1;
       End;
       if SalesRegionDiff then
       Begin
-        ShowMessage('Valda avrop måste ha samma försäljningsregion.');
+        ShowMessage('Selected call off must have the same sales region.');
         Result := -1;
       End;
 
@@ -1378,7 +1377,7 @@ Var
         if sp_GetInvoiceHeadData.FieldByName('PaymentText').IsNull then
         Begin
           Result := False;
-          ShowMessage('Betalningsinstruktion saknas, åtgärda och prova igen.');
+          ShowMessage('Payment instruktion is missing, redo and try again.');
         End;
 
       Finally
@@ -1624,7 +1623,7 @@ Var
           End // while sq_GetInvoiceHeadData.
           else
           Begin
-            ShowMessage('Inga laster att fakturera.');
+            ShowMessage('No loads to invoice.');
           End;
         Finally
           dmVidaInvoice.cdsInvoiceHeadResponsibleSeller.OnChange :=
@@ -2537,7 +2536,7 @@ BEGIN
 
               if sq_AnyLoadsToInvoice.Eof then
               Begin
-                ShowMessage('Finns inga laster att fakturera.');
+                ShowMessage('No loads to invoice.');
                 sq_AnyLoadsToInvoice.Active := False;
                 Exit;
               End
@@ -2848,7 +2847,7 @@ BEGIN
       End; // Finally
     End // if CompareSelectedRows = 1 then
     else if SelectedRows <> -1 then
-      ShowMessage('Inget avrop valt.');
+      ShowMessage('Please select a call off.');
   Finally
     if dmsSystem.DeleteAssigned('TfrmAvropTdmVidaInvoice', 'dmVidaInvoice') = True
     then
@@ -3288,7 +3287,7 @@ begin
     End
     else
       ShowMessage
-        ('Kan inte avsluta eller annulera en LO som har ofakturerade laster!');
+        ('Cannot complete or cancel a call off with non invoiced loads.');
   End; // with
 end;
 
@@ -3960,7 +3959,7 @@ end;
 
 procedure TfrmAvrop.acDeleteLoadExecute(Sender: TObject);
 begin
-  ShowMessage('Öppna lasten för att ta bort den.');
+  ShowMessage('Open the load to delete it.');
 end;
 
 procedure TfrmAvrop.acChangeLoadLayoutExecute(Sender: TObject);
@@ -4868,7 +4867,7 @@ begin
     Begin
       FileName := SaveDialog1.FileName;
       ExportGridToExcel(FileName, grdcxAvrop, False, False, True, 'xls');
-      ShowMessage('Tabell exporterad till Excelfil ' + FileName);
+      ShowMessage('Table exported to Excelfil ' + FileName);
     End;
   Finally
     Screen.Cursor := Save_Cursor;
@@ -4909,7 +4908,7 @@ begin
   Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then
   Begin
@@ -4999,7 +4998,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then Begin
     // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
@@ -5090,7 +5089,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then Begin
     // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
@@ -5189,7 +5188,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then Begin
     // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
@@ -5313,36 +5312,6 @@ Begin
   End;
 End;
 
-procedure TfrmAvrop.acCopyLoadToOtherSalesRegionExecute(Sender: TObject);
-Var
-  PO_LONo, NewLoadNo: Integer;
-begin
-
-  // ToDo ! Gör en kontroll att avropen matchar med orderlineno!!
-
-  With daMoLM1 do
-  Begin
-    NewLoadNo := dmsSystem.POLoadConfirmed(cdsLoadsLoadNo.AsInteger,
-      PO_LONo);
-    if NewLoadNo = 0 then
-    Begin
-      PO_LONo := GetPOLoNoInRegionToRegion // SelectAvropsNrAttSkapaSalesLoadMot
-        (cdsAvropShippingPlanNo.AsInteger);
-      if PO_LONo > 0 then
-      Begin
-        NewLoadNo := CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
-          (cdsLoadsLoadNo.AsInteger, PO_LONo, 1);
-        if NewLoadNo > 0 then
-          ShowMessage('Lasten kopierad till annan försäljningsregion ' +
-            inttostr(PO_LONo) + ', lastnr ' + inttostr(NewLoadNo));
-      End;
-    End
-    else
-      ShowMessage('Lasten är redan kopierad till annan försäljningsregion ' +
-        inttostr(PO_LONo) + ', lastnr ' + inttostr(NewLoadNo));
-  End;
-end;
-
 procedure TfrmAvrop.acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
 begin
   With daMoLM1 do
@@ -5374,13 +5343,13 @@ begin
         NewLoadNo := dmsSystem.CopyPOLoadToSalesLoadAndSetPackagesAsNotAvailable
           (cdsLoadsLoadNo.AsInteger, Sales_LONo, cdsLoadsLoadNo.AsInteger, 1);
         if NewLoadNo > 0 then
-          ShowMessage('Inköpslasten kopierad till försäljningsavrop ' +
-            inttostr(Sales_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+          ShowMessage('PO load is copied to sales call off ' +
+            inttostr(Sales_LONo) + ', load# ' + inttostr(NewLoadNo));
       End;
     End
     else
-      ShowMessage('Inköpslasten är redan kopierad till försäljningsavrop ' +
-        inttostr(Sales_LONo) + ', lastnr ' + inttostr(NewLoadNo));
+      ShowMessage('PO load is already copied to sales call off ' +
+        inttostr(Sales_LONo) + ', load# ' + inttostr(NewLoadNo));
   End;
 end;
 
@@ -5615,7 +5584,7 @@ begin
   Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then
   Begin
@@ -5927,15 +5896,15 @@ begin
             daMoLM1.cdsLoads.Active := False;
             daMoLM1.cdsLoads.Active := True;
             ShowMessage
-              ('LOnr ändrat. Nu Måste du öppna och kontrollera LO-kopplingar i lasten!');
+              ('LO# changed. Open the load and check the LO-Package links.');
             // if daMoLM1.cdsLoadsForLO.Locate('LoadNo', LoadNo, []) then
             // acOpenLoadExecute(Sender) ;
           Except
           End;
         End
         else
-          ShowMessage('LOnr ' + fEntryField.eNoofpkgs.Text +
-            ' finns ej eller så skiljer sig leverantör eller lastställe från det LOnr lasten har.');
+          ShowMessage('LO# ' + fEntryField.eNoofpkgs.Text +
+            ' does not exist.');
     End;
   Finally
     FreeAndNil(fEntryField);
