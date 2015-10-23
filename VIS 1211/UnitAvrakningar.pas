@@ -289,7 +289,7 @@ Var
 begin
   if cds_PropsStatus.IsNull then
   Begin
-    ShowMessage('Välj en status');
+    ShowMessage('Select a staus.');
     Exit;
   End;
   Save_Cursor := Screen.Cursor;
@@ -347,7 +347,7 @@ procedure TfrmAvrakningar.FormCloseQuery(Sender: TObject;
 begin
   CanClose := True;
   if DataSparat = False then
-    if MessageDlg('Ändringar är inte sparade, vill du stänga?', mtConfirmation,
+    if MessageDlg('Changes are not saved, do you want to close anyway?', mtConfirmation,
       [mbYes, mbNo], 0) = mrYes then
     Begin
       CanClose := True;
@@ -366,7 +366,7 @@ end;
 
 procedure TfrmAvrakningar.acSaveExecute(Sender: TObject);
 begin
-  if MessageDlg('Är du säker du vill spara de ändringar du gjort?',
+  if MessageDlg('Are you sure you want to save the changes you made?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     With dmModule1 do
@@ -460,7 +460,7 @@ begin
     End
     else
       ShowMessage
-        ('Fler extrarader kan inte läggas till eftersom max antal extrarader(5) är uppnådd.');
+        ('No more extra rows can be added as the maximum extra rows(5) is reached.');
   End;
 end;
 
@@ -484,7 +484,7 @@ end;
 
 procedure TfrmAvrakningar.acRemoveRowExecute(Sender: TObject);
 begin
-  if MessageDlg('Är du säker ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  if MessageDlg('Are you sure?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     With dmModule1 do
     Begin
@@ -501,9 +501,7 @@ end;
 procedure TfrmAvrakningar.acRemoveAvrExecute(Sender: TObject);
 begin
   if MessageDlg
-    ('Är du säker? du kan även ångra genom att klicka på "ångra ändringar". Klickar du däremot'
-    + ' på "spara ändringar" sen går det inte att ångra ändringar. Du måste alltså klicka "spara ändringar" '
-    + ' för att spara de ändringar som är gjorda.', mtConfirmation,
+    ('Are you sure you want to delete? It is also possible to cancel the changes made by click on "Cancel changes".', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   Begin
     With dmModule1 do
@@ -557,7 +555,7 @@ begin
             StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0), []);
         End
         else
-          ShowMessage('Hittar ej lastnr.');
+          ShowMessage('Cannot find load number.');
       End;
     Finally
       FreeAndNil(fEntryField); // .Free ;

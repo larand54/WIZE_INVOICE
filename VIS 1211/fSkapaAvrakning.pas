@@ -2104,7 +2104,7 @@ Begin
         if fRollBack = True then
         Begin
           dmsConnector.Rollback;
-          ShowMessage('Godkänna laster failed');
+          ShowMessage('Confirming loads failed');
         End
         else
         Begin

@@ -238,10 +238,10 @@ begin
         CRViewer91.ViewReport;
       End
       else
-        ShowMessage('Välj en ordertyp');
+        ShowMessage('Please select order type.');
     End
     else
-      ShowMessage('Välj en marknad');
+      ShowMessage('Please select a market.');
   Finally
     Screen.Cursor := Save_Cursor;
   End;

@@ -2067,7 +2067,7 @@ begin
   Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing for the client.');
   End;
   if Length(MailToAddress) > 0 then
   Begin
@@ -2082,7 +2082,7 @@ begin
     End;
   End
   else
-    ShowMessage('Emailadress saknas för klienten!');
+    ShowMessage('Email address is missing for the client.');
 end;
 
 procedure TdmsSystem.Open_ClientPrefDocs;

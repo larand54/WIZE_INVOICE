@@ -18,8 +18,6 @@ object fnotInvoicedReport: TfnotInvoicedReport
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object CRViewer91: TCrystalActiveXReportViewer
@@ -33,8 +31,10 @@ object fnotInvoicedReport: TfnotInvoicedReport
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1268
+    ExplicitHeight = 814
     ControlData = {
-      10070000CD680000484300000B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
+      10070000306700003B4200000B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
       0B00FFFF0B00FFFF0B00FFFF0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
       0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF08000200000000000B00FFFF
       0B00FFFF0B0000000B0000000B00FFFF0B00FFFF13001D040000}

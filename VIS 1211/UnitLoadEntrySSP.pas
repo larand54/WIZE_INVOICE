@@ -1218,7 +1218,7 @@ Begin
           on eDatabaseError do
           Begin
             Raise;
-            ShowMessage('Paketnr finns redan i lasten.');
+            ShowMessage('Package number is already assigned to the load.');
             cds_LoadPackages.Cancel;
           End;
         End; // Except
@@ -1905,7 +1905,7 @@ Var
 begin
   if DataSaved = False then
   Begin
-    dResult := MessageDlg('Ändringar är inte sparade, vill du spara?',
+    dResult := MessageDlg('Do you want to save your changes?',
       mtConfirmation, [mbYes, mbNo, mbCancel], 0);
   End
   else
@@ -1965,7 +1965,7 @@ begin
 
         if NoOfPkgsInSerie > 100 then
           ResultButton := MessageDlg(IntToStr(NoOfPkgsInSerie) +
-            ' paket läggs till lasten, vill du fortsätta?', mtConfirmation,
+            ' packages will be added to the load, continue?', mtConfirmation,
             [mbYes, mbNo, mbCancel], 0);
 
         if ResultButton = mrYes then
@@ -2091,7 +2091,7 @@ Begin
         on eDatabaseError do
         Begin
           Raise;
-          ShowMessage('Paketnr finns redan i lasten.');
+          ShowMessage('Package number is already assigned to the load.');
           cds_LoadPackages.Cancel;
         End;
       End;
@@ -2128,18 +2128,18 @@ begin
       if AfterAddedPkgNo(Sender, PkgNo, PkgSupplierCode, ProductNo,
         ProductLengthNo, NoOfLengths) <> eaACCEPT then
       Begin
-        ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte');
+        ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist.');
       End;
     End
     else if Action = eaREJECT then
     Begin
       dmLoadEntrySSP.cds_LoadPackages.Cancel;
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte');
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist.');
     End
     else if Action = eaReserved then
     Begin
       dmLoadEntrySSP.cds_LoadPackages.Cancel;
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' är reserverat av ' +
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' is reserved by ' +
         Res_UserName);
     End;
 
@@ -2241,7 +2241,7 @@ begin
       End
       else
         ShowMessage
-          ('Den här Last Ordern är inte tillgänglig, kanske LO status inte är accept eller att avropet inte är aktivt längre?');
+          ('This load order is no longer available, perhaps LO status is not accept or the call off is no longer active?');
     Finally
       Screen.Cursor := Save_Cursor;
       sq_Booking_Data.Close;
@@ -2546,7 +2546,7 @@ Begin
         on eDatabaseError do
         Begin
           Raise;
-          ShowMessage('Paketnr finns redan i lasten.');
+          ShowMessage('Package number is already assigned to the load.');
           cds_LoadPackages.Cancel;
         End;
       End;
@@ -2723,18 +2723,18 @@ begin
         if AfterAddedPkgNo(Sender, PkgNo, PkgSupplierCode, ProductNo,
           ProductLengthNo, 1 { NoOfLengths } ) <> eaACCEPT then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte i lager ' +
+          ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exists in inventory ' +
             Trim(lcPIP.Text) + '/' + ''); // Trim(bcLogicalInventory.Text)) ;
         End;
     End
     else if Action = eaREJECT then
     Begin
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte i lager ' +
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exists in inventory ' +
         Trim(lcPIP.Text) + '/' + ''); // Trim(bcLogicalInventory.Text)) ;
     End
     else if Action = eaReserved then
     Begin
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' är reserverat av ' +
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' is reserved by ' +
         Res_UserName);
     End
   finally
@@ -2811,7 +2811,7 @@ begin
       PkgSupplierCode := EgenPkgSupplierCode;
       if NewPkgNo = 0 then
       Begin
-        ShowMessage('Koden kunde inte översättas till ett Paketnr');
+        ShowMessage('The code could not be translated to a package number.');
         Exit;
       End;
     End;
@@ -2836,10 +2836,10 @@ begin
     if Action = eaACCEPT then
       InsertScannedPkgNo(Sender, NewPkgNo, PkgSupplierCode)
     else if Action = eaReserved then
-      ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' är reserverat av ' +
+      ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' is reserved by ' +
         Res_UserName)
     else
-      ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' finns inte');
+      ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' does not exist.');
 
     SaveLoad;
 
@@ -2927,12 +2927,12 @@ begin
           cds_LoadPackagesProductLengthNo.AsInteger,
           cds_LoadPackagesNoOfLengths.AsInteger) <> eaACCEPT then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte');
+          ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist.');
         End;
 
       End
       else
-        ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte');
+        ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist.');
 
     Except
       on eDatabaseError do
@@ -3026,7 +3026,7 @@ begin
       NewPkgNo := StrToIntDef(PkgNo, 0);
       if NewPkgNo = 0 then
       Begin
-        ShowMessage('Koden kunde inte översättas till ett Paketnr');
+        ShowMessage('The code could not be translated to a package number.');
         Exit;
       End;
 
@@ -3055,10 +3055,10 @@ begin
     if Action = eaACCEPT then
       InsertScannedPkgNo(Sender, NewPkgNo, PkgSupplierCode)
     else if Action = eaReserved then
-      ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' är reserverat av ' +
+      ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' is reserved by ' +
         Res_UserName)
     else
-      ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' finns inte');
+      ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' does not exist.');
 
     SaveLoad;
 
@@ -3093,7 +3093,7 @@ begin
     End
     else
       ShowMessage
-        ('Raden ligger i ändringsläge, spara raden genom pil upp eller ner först.');
+        ('The package row is in edit mode, please press arrow key up or down.');
 
   finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }
@@ -3228,7 +3228,7 @@ Var
   Save_Cursor: TCursor;
 Begin
   if MessageDlg
-    ('Är du säker? markerade paket kommer att fösvinna från systemet!',
+    ('Are  you sure, selected package will be completly deleted from the system.',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     With dmLoadEntrySSP do
     Begin
@@ -3266,7 +3266,7 @@ procedure TfLoadEntrySSP.acRemoveAllPkgsFromSystemExecute(Sender: TObject);
 Var
   Save_Cursor: TCursor;
 Begin
-  if MessageDlg('Är du säker? paketen kommer att fösvinna från systemet!',
+  if MessageDlg('Are  you sure, selected package will be completly deleted from the system.',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     Save_Cursor := Screen.Cursor;
@@ -3474,10 +3474,10 @@ begin
                 if noofpkgs <> StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0)
                 then
                 Begin
-                  if MessageDlg('Du begärde ' + Trim(fEntryField.eNoofpkgs.Text)
-                    + ' paket med det finns endast ' + IntToStr(noofpkgs) +
-                    ' vill du lägga ' + IntToStr(noofpkgs) +
-                    ' paket till lasten?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+                  if MessageDlg('You asked for ' + Trim(fEntryField.eNoofpkgs.Text)
+                    + ' packages but there are only ' + IntToStr(noofpkgs) +
+                    ' available. Do you want to add ' + IntToStr(noofpkgs) +
+                    ' packages to the load?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
                   then
                     InsertPkgNo(Sender);
                 End
@@ -3485,8 +3485,8 @@ begin
                   InsertPkgNo(Sender);
               End
               else
-                ShowMessage('Det finns inga paket av pktkod ' +
-                  Trim(cdsLORowsPKGCODE.AsString) + ' i lager ' +
+                ShowMessage('There is no packages availabel with package code ' +
+                  Trim(cdsLORowsPKGCODE.AsString) + ' in inventory ' +
                   Trim(lcPIP.Text) + '/' + Trim(lcLIP.Text));
             Finally
               Screen.Cursor := Save_Cursor; { Always restore to normal }
@@ -3502,7 +3502,7 @@ begin
       SaveLoad;
     End
     else
-      ShowMessage('Spara lasten först.');
+      ShowMessage('Save the load first.');
   End; // with
 end;
 
@@ -3520,7 +3520,7 @@ var
 begin
   if dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger < 1 then
   Begin
-    ShowMessage('Spara lasten först.');
+    ShowMessage('Save the load first..');
     Exit;
   End;
 
@@ -3642,12 +3642,12 @@ Begin
         if (cds_LSP.Active) AND (cds_LSP.RecordCount > 0) then
           SaveLOData(cds_LoadHeadLoadNo.AsInteger)
         else
-          ShowMessage('Lägg till minst en LO.');
+          ShowMessage('Add at least one LO.');
         if (cds_LoadHeadSenderLoadStatus.AsInteger = 1) and
           (cds_LoadPackages.RecordCount > 0) then
         Begin
           ShowMessage
-            ('Alla paket matchar inte, status kan inte sättas till OK.');
+            ('All package does not match therefore cannot set load to complete.');
         End;
         // else
         // if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (cds_LoadPackages.RecordCount > 0) then
@@ -3663,7 +3663,7 @@ Begin
     End // if SQLTimeStampToDateTime(cds_LoadHeadLoadedDate.AsSQLTimeStamp) < Date then
     else
       ShowMessage
-        ('Utlastningsdatum får inte vara större än aktuellt datum&tid, var vänlig justera.');
+        ('Loading date is not allowed to be greater than current date and time, please adjust.');
 
     if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (not ControlInvDate)
     then
@@ -3679,7 +3679,9 @@ Begin
       End;
 
       ShowMessage
-        ('Lasten kan inte sätta Status till OK pga att utlastningsdatum är före inventerings eller maxdatum i en inventering där lagergruppen ingår');
+        ('The load cannot be set to complete because loading date is either before inventory count date or max date were the inventory group is present.');
+//Lasten kan inte sätta Status till OK pga att utlastningsdatum är före
+//inventerings eller maxdatum i en inventering där lagergruppen ingår');
     End;
 
     cdsLORows.Active := False;
@@ -3949,11 +3951,11 @@ begin
   LONo := dmLoadEntrySSP.cds_LSPShippingPlanNo.AsInteger;
   if dmLoadEntrySSP.cds_LoadPackages.RecordCount > 0 then
   Begin
-    ShowMessage('Ta bort paketen från lasten först.');
+    ShowMessage('Remove all packages from the load first.');
   End
   else
   Begin
-    if MessageDlg('Är du säker?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Are you sure?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       Try
         dmLoadEntrySSP.DeleteOneLoad
           (dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
@@ -4422,13 +4424,13 @@ begin
 
         End
         else
-          ShowMessage('Lägg till en LO först.');
+          ShowMessage('Add LO first.');
       End // if (dmLoadEntrySSP.cds_LoadHeadLIPNo.AsInteger > 0) and (dmLoadEntrySSP.cds_LoadHeadLIPNo.IsNull = False) then
       else
-        ShowMessage('Välj Lagerställe och Lagergrupp.');
+        ShowMessage('Select inventory place and group.');
     End
     else
-      ShowMessage('Spara lasten först.');
+      ShowMessage('Save the load first.');
 
     if mePackageNo.Enabled then
       mePackageNo.SetFocus;
@@ -5238,7 +5240,7 @@ Begin
         on eDatabaseError do
         Begin
           Raise;
-          ShowMessage('Paketnr finns redan i lasten.');
+          ShowMessage('The Package number is already assigned to the load.');
           cds_LoadPackages.Cancel;
         End;
       End;
@@ -5272,18 +5274,18 @@ begin
         if AfterAddedPkgNo_WhenPickPkgNo(Sender, PkgNo, PkgSupplierCode,
           ProductNo, ProductLengthNo, 1 { NoOfLengths } ) <> eaACCEPT then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte i lager ' +
+          ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist in inventory ' +
             Trim(lcPIP.Text) + '/' + ''); // Trim(lcLIP.Text)) ;
         End;
     End
     else if Action = eaREJECT then
     Begin
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' finns inte i lager ' +
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' does not exist in inventory ' +
         Trim(lcPIP.Text) + '/' + ''); // Trim(lcLIP.Text)) ;
     End
     else if Action = eaReserved then
     Begin
-      ShowMessage('Paketnr ' + IntToStr(PkgNo) + ' är reserverat av ' +
+      ShowMessage('Package number ' + IntToStr(PkgNo) + ' is reserved by ' +
         Res_UserName);
     End
   finally
@@ -5419,7 +5421,7 @@ Begin
           on eDatabaseError do
           Begin
             Raise;
-            ShowMessage('Paketnr finns redan i lasten.');
+            ShowMessage('Package number is already assigned to the load.');
             cds_LoadPackages.Cancel;
           End;
         End; // Except
@@ -5652,7 +5654,7 @@ begin
 
     if DagensDag <> UtlastningsDatum then
     Begin
-      if MessageDlg('Vill du ändra till dagens datum?', mtConfirmation,
+      if MessageDlg('Do you want to change to todays date?', mtConfirmation,
         [mbYes, mbNo], 0) = mrYes then
       begin
         if cds_LoadHead.State in [dsBrowse] then
@@ -5792,7 +5794,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then Begin
     Try
@@ -5874,7 +5876,7 @@ begin
     End;
   End
   else
-    ShowMessage('Emailadress saknas för klienten!');
+    ShowMessage('Email address missing.');
 end;
 
 procedure TfLoadEntrySSP.acSetStatusPrelandSaveExecute(Sender: TObject);
@@ -5900,7 +5902,7 @@ begin
     else
     Begin
       ShowMessage
-        ('Lasten kan inte sättas till preliminär för att den är ankomstregistrerad.');
+        ('The cannot be set to preliminary because it is received at destination.');
       SetLoadEnabled;
     End;
   End;
@@ -5920,7 +5922,7 @@ var
 begin
   if dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger < 1 then
   Begin
-    ShowMessage('Spara lasten först.');
+    ShowMessage('Save the load first.');
     Exit;
   End;
 
@@ -6016,7 +6018,7 @@ begin
           NewPkgNo := StrToIntDef(PackageNo, 0);
           if NewPkgNo = 0 then
           Begin
-            ShowMessage('Koden kunde inte översättas till ett Paketnr');
+            ShowMessage('The code could not translate into a package number.');
             Exit;
           End;
 
@@ -6037,7 +6039,7 @@ begin
           if AfterAddedPkgNo(Sender, NewPkgNo, PkgSupplierCode, ProductNo,
             ProductLengthNo, NoOfLengths) <> eaACCEPT then
           Begin
-            ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' finns inte i lager '
+            ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' does not exists in inventory '
               + Trim(lcPIP.Text));
             Error := True;
           End
@@ -6048,25 +6050,25 @@ begin
         End
         else if Action = eaREJECT then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' finns inte i lager ' +
+          ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' does not exists in inventory ' +
             Trim(lcPIP.Text));
           Error := True;
         End
         else if Action = eaReserved then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' är reserverat av ' +
+          ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' is reserved by ' +
             Res_UserName);
           Error := True;
         End
         else if Action = eaDuplicate then
         Begin
-          ShowMessage('Paketnr ' + IntToStr(NewPkgNo) + ' är redan inmatat');
+          ShowMessage('Package number ' + IntToStr(NewPkgNo) + ' är redan inmatat');
           Error := True;
         End;
       End
       else
       Begin
-        ShowMessage('Paketnr saknas.');
+        ShowMessage('Package number missing.');
         Error := True;
       End;
     finally
@@ -6144,7 +6146,7 @@ Begin
       End // if SQLTimeStampToDateTime(cds_LoadHeadLoadedDate.AsSQLTimeStamp) < Date then
       else
         ShowMessage
-          ('Utlastningsdatum får inte vara större än aktuellt datum&tid, var vänlig justera.');
+          ('Loading date is not allowed to be greater than current date and time, please adjust.');
 
       if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (not ControlInvDate)
       then
@@ -6160,7 +6162,7 @@ Begin
         End;
 
         ShowMessage
-          ('Lasten kan inte sätta Status till OK pga att utlastningsdatum är före inventerings eller maxdatum i en inventering där lagergruppen ingår');
+          ('The load cannot be set to complete because loading date is either before inventory count date or max date were the inventory group is present.');
       End;
 
     End; // if not cds_LoadHead.UpdateOptions.ReadOnly then

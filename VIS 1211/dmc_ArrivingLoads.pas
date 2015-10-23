@@ -571,6 +571,8 @@ type
     sp_GetRtRPOLoNo: TFDStoredProc;
     sp_CopySalesLoadToPO: TFDStoredProc;
     sp_delAR_RtRLoad: TFDStoredProc;
+    sp_isRtRLoadAR: TFDStoredProc;
+    sp_RtR_Load_is_AR: TFDStoredProc;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
@@ -603,6 +605,8 @@ type
   public
     { Public declarations }
     LoadConfirmedOK: Boolean;
+    function  RtR_Load_is_AR(Const Confirmed_LoadNo : Integer;Var RtR_LoadNo : String) : Boolean ;
+
     procedure delAR_RtRLoad(const Confirmed_LoadNo  : Integer) ;
     Function  CopySalesLoadToPOLoadAndSetPackagesAsNotAvailable
   (const OldLoadNo, NewLONo, Insert_Confirmed_Load
@@ -626,7 +630,7 @@ type
     // procedure ProcessPackage_Log(const LogInvPointNo : Integer) ;
     Function SearchLoadNoByPkgNo(const PackageNo, ShippingCompanyNo: Integer;
       const SupplierCode: String): Integer;
-    function UndoConfirmLoad: Boolean;
+    function UndoConfirmLoad(const Trading : Integer) : Boolean;
     // function  ChangePackagesToIMPProduct : Boolean ;
     procedure SetLoadAR(const LoadNo, LoadAR: Integer);
     function GetDefaultCSObjectNo(const defsspno: Integer): Integer;
@@ -741,12 +745,24 @@ begin
   cdsArrivingPackages.Active := True;
 end;
 
-function TdmArrivingLoads.UndoConfirmLoad: Boolean;
+function TdmArrivingLoads.RtR_Load_is_AR(Const Confirmed_LoadNo : Integer;Var RtR_LoadNo : String) : Boolean ;
+Begin
+  sp_RtR_Load_is_AR.ParamByName('Confirmed_LoadNo').AsInteger :=  Confirmed_LoadNo ;
+  sp_RtR_Load_is_AR.Active  :=  True ;
+  if not sp_RtR_Load_is_AR.Eof then
+  Begin
+//    RtR_LoadNo  :=  sp_RtR_Load_is_AR.FieldByName('RtR_LoadNo').AsInteger :=  Confirmed_LoadNo ;
+  End
+
+End;
+
+function TdmArrivingLoads.UndoConfirmLoad(const Trading : Integer)  : Boolean;
 const
   LF = #10;
 Var
-  CommitChanges: Boolean;
-  Save_Cursor: TCursor;
+  CommitChanges : Boolean;
+  Save_Cursor   : TCursor;
+  RtR_LoadNo    : String ;
 begin
   CommitChanges := True;
 
@@ -769,10 +785,10 @@ begin
     Try
       if not sq_IsEXTLoadConfirmed.Eof then
       Begin
-        ShowMessage('Ångra ankomstregistrering av kundlast först: ' + LF +
-          ' Lastnr: ' + sq_IsEXTLoadConfirmedConfirmed_LoadNo.AsString + LF +
+        ShowMessage('Cancel confirmation of customer/call off Load first: ' + LF +
+          ' LoadNo: ' + sq_IsEXTLoadConfirmedConfirmed_LoadNo.AsString + LF +
           ' LO: ' + sq_IsEXTLoadConfirmedConfirmed_ShippingPlanNo.AsString + LF
-          + ' Ankomstregistrerad av : ' +
+          + ' Confirmed by: ' +
           sq_IsEXTLoadConfirmedUserName.AsString);
         CommitChanges := False;
         Exit;
@@ -780,6 +796,15 @@ begin
     Finally
       sq_IsEXTLoadConfirmed.Close;
     End;
+
+    if Trading = 2 then
+    begin
+      //Check that the RtR load is not been AR
+      if RtR_Load_is_AR(dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger, RtR_LoadNo) then
+      Begin
+        ShowMessage('Cannot undo because end customer has confirmed their load, End customer loadNo ' + RtR_LoadNo) ;
+      End;
+    end;
 
     Try
       // Undo Confirmation of load arrivals
@@ -811,12 +836,12 @@ begin
         sq_IsLoadInvoiced.Open;
         if not sq_IsLoadInvoiced.Eof then
         Begin
-          ShowMessage('Kan inte ångra, kundlasten: ' + LF +
+          ShowMessage('Cannot undo because end user load: ' + LF +
             sq_IsLoadInvoicedLoadNo.AsString + LF + '  LO: ' +
             sq_IsLoadInvoicedShippingPlanNo.AsString + LF +
-            ' är fakturerad på internfakturanr: ' +
+            ' is invoiced, see internal invoice number: ' +
             sq_IsLoadInvoicedInternalInvoiceNo.AsString + LF +
-            ', ta bort fakturan och försök igen.');
+            ', Remove the invoice and try again.');
           sq_IsLoadInvoiced.Close;
           CommitChanges := False;
           Exit;
@@ -831,7 +856,7 @@ begin
         sq_IsLoadAvraknad.Open;
         if Not sq_IsLoadAvraknad.Eof then
         Begin
-          ShowMessage('Kan inte ångra, lasten är avräknad. Avräkningsnr: ' +
+          ShowMessage('Cannot undo because, the load is settled. Settlement number: ' +
             sq_IsLoadAvraknadPaymentNo.AsString);
           sq_IsLoadAvraknad.Close;
           CommitChanges := False;
@@ -846,8 +871,8 @@ begin
         cds_Confirmed_Pkg_Log.Active := True;
         if cds_Confirmed_Pkg_Log.Eof then
         Begin
-          ShowMessage('Det finns ingen loggfil för lastnr ' +
-            cdsArrivingLoadsLOADNO.AsString + ' kan inte återställas.');
+          ShowMessage('Cannot undo because load number ' +
+            cdsArrivingLoadsLOADNO.AsString + ' because there is no package log file.');
           CommitChanges := False;
           Exit;
         End;
@@ -870,10 +895,10 @@ begin
             if (sq_ChkPkgsLoggLoadNo.AsInteger < sq_ChkPkgsLoadNo.AsInteger) and
               (sq_ChkPkgsLoggLoadNo.AsInteger <> -1) then
             Begin
-              ShowMessage('Kan inte ångra, Paketnr: ' +
+              ShowMessage('Cannot undo because package number: ' +
                 cds_Confirmed_Pkg_LogPackageNo.AsString + '/' +
                 cds_Confirmed_Pkg_LogSupplierCode.AsString +
-                ' är utlastat på lastnr ' + sq_ChkPkgsLoadNo.AsString);
+                ' is loaded on Load number ' + sq_ChkPkgsLoadNo.AsString);
               CommitChanges := False;
               Exit;
             End;
@@ -900,6 +925,7 @@ begin
 
         if CommitChanges = True then
         Begin
+         //RemoveRtRLoad ;
           // Insert packagenumberlogg
           Try
             sq_InsertPkgNoLogg.ParamByName('LoadNo').AsInteger :=
@@ -1013,7 +1039,7 @@ begin
         Begin
           dmsConnector.Rollback;
           ShowMessage
-            ('Ångra ankomstregistrering misslyckades, data återställd.');
+            ('Cancel failed.');
         End;
 
       except
@@ -2446,7 +2472,7 @@ Begin
     if Not sq_IsLoadAvraknad.Eof then
     Begin
       ShowMessage
-        ('Kan inte uppdatera priser här, gå till avräkning och uppdatera där - Avräkningsnr: '
+        ('Cannot update prices here, please go to settlement and update prices there. Settlement number: '
         + sq_IsLoadAvraknadPaymentNo.AsString);
       Result := True;
     End;

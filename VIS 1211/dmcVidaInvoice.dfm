@@ -3557,10 +3557,13 @@ object dmVidaInvoice: TdmVidaInvoice
         '        Left Outer Join PackUnit                PU      ON      ' +
         'PU.TemplateUnitNo       = CSH.InvoiceAdditionUnitNo'
       ''
-      '       '#9'LEFT OUTER JOIN dbo.Booking'#9#9'Bk'
+      '       '#9'LEFT OUTER JOIN dbo.BookingInvoice'#9#9'Bk'
       ''
       ''
-      #9'LEFT OUTER JOIN dbo.Voyage'#9#9'Vg '#9'ON  '#9'Bk.VoyageNo'#9#9'= Vg.VoyageNo'
+      
+        #9'LEFT OUTER JOIN dbo.VoyageInvoice'#9#9'Vg '#9'ON  '#9'Bk.VoyageNo'#9#9'= Vg.V' +
+        'oyageNo'
+      '  AND Bk.InternalInvoiceNo = Bk.InternalInvoiceNo'
       
         #9'LEFT OUTER JOIN dbo.Client'#9#9'SC '#9'ON  '#9'Bk.ShippingCompanyNo '#9'= SC' +
         '.ClientNo'
@@ -3568,6 +3571,7 @@ object dmVidaInvoice: TdmVidaInvoice
         #9'LEFT OUTER JOIN dbo.Carrier            '#9'Cr '#9'ON  '#9'Vg.CarrierNo  ' +
         '  '#9'= Cr.CarrierNo'
       #9#9#9#9#9#9#9'ON  '#9'Bk.ShippingPlanNo '#9'= CSH.ShippingPlanNo'
+      '              AND Bk.InternalInvoiceNo = :InternalInvoiceNo'
       ''
       'WHERE LS.ShippingPlanNo = :ShippingPlanNo'
       'AND LO.CustomerNo = :CustomerNo'
@@ -3582,6 +3586,11 @@ object dmVidaInvoice: TdmVidaInvoice
     Left = 168
     Top = 120
     ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
       item
         Name = 'SHIPPINGPLANNO'
         DataType = ftInteger
@@ -4332,7 +4341,7 @@ object dmVidaInvoice: TdmVidaInvoice
       'UNBo.VolumeUnitName'#9#9#9#9'AS FREIGHT_UNIT,'
       'CUBo.CurrencyName'#9#9#9#9'AS FREIGHT_CURRENCY'
       'From'
-      '       '#9'dbo.Booking'#9#9'Bk'
+      '       '#9'dbo.BookingInvoice'#9#9'Bk'
       
         '       '#9'LEFT OUTER JOIN dbo.UnitName'#9#9#9'UNBo'#9'ON'#9'UNBo.VolumeUnit_N' +
         'o'#9'= BK.FreightCostVolUnit'
@@ -4344,8 +4353,9 @@ object dmVidaInvoice: TdmVidaInvoice
         '       '#9'LEFT OUTER JOIN dbo.VoyageDestination'#9'VD '#9#9'ON'#9'Bk.Booking' +
         'No'#9#9'= VD.BookingNo'
       
-        '       '#9'LEFT OUTER JOIN dbo.Voyage'#9#9#9'Vg '#9'ON  '#9'Bk.VoyageNo'#9#9'= Vg.' +
-        'VoyageNo'
+        '       '#9'LEFT OUTER JOIN dbo.VoyageInvoice'#9#9#9'Vg '#9'ON  '#9'Vg.VoyageNo' +
+        #9#9'= Bk.VoyageNo'
+      '        and Vg.InternalInvoiceNo = Bk.InternalInvoiceNo'
       
         '       '#9'LEFT OUTER JOIN dbo.Client'#9#9#9'SC '#9'ON  '#9'Bk.ShippingCompany' +
         'No '#9'= SC.ClientNo'
@@ -4355,12 +4365,18 @@ object dmVidaInvoice: TdmVidaInvoice
       ''
       'WHERE'
       'Bk.ShippingPlanNo = :ShippingPlanNo'
+      'And Bk.InternalInvoiceNo = :InternalInvoiceNo'
       '')
     Left = 632
     Top = 192
     ParamData = <
       item
         Name = 'SHIPPINGPLANNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'INTERNALINVOICENO'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -16969,5 +16985,167 @@ object dmVidaInvoice: TdmVidaInvoice
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object sp_copyBookingData: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_copyBookingData'
+    Left = 808
+    Top = 1008
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sq_GetNextInvoiceNo_UK: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'SELECT MAX(InvoiceNo) + 1 AS NEXT_INVNO FROM dbo.InvoiceNumber_U' +
+        'K')
+    Left = 224
+    Top = 208
+    object sq_GetNextInvoiceNo_UKNEXT_INVNO: TIntegerField
+      FieldName = 'NEXT_INVNO'
+      Origin = 'NEXT_INVNO'
+      ReadOnly = True
+    end
+  end
+  object sq_GetOrgInvoiceNoByCredit_UK: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'Select InternalInvoiceNo from dbo.Invoice_Credited_UK'
+      'Where NewInternalInvoiceNo = :NewInternalInvoiceNo')
+    Left = 264
+    Top = 928
+    ParamData = <
+      item
+        Name = 'NEWINTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sq_GetOrgInvoiceNoByCredit_UKInternalInvoiceNo: TIntegerField
+      FieldName = 'InternalInvoiceNo'
+      Origin = 'InternalInvoiceNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+  end
+  object sq_InsInvNo_UK: TFDQuery
+    CachedUpdates = True
+    Indexes = <
+      item
+        Active = True
+        Selected = True
+        Name = 'cdsInvoiceNumbersInvNo'
+        Fields = 'InvoiceNo'
+      end>
+    IndexName = 'cdsInvoiceNumbersInvNo'
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'INSERT INTO dbo.InvoiceNumber_UK(InvoiceNo, InternalInvoiceNo, U' +
+        'serCreated, UserModified, DateCreated)'
+      
+        'VALUES(:InvoiceNo, :InternalInvoiceNo, :UserCreated, :UserModifi' +
+        'ed, :DateCreated)'
+      '')
+    Left = 264
+    Top = 984
+    ParamData = <
+      item
+        Name = 'INVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'USERCREATED'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'USERMODIFIED'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'DATECREATED'
+        DataType = ftTimeStamp
+        ParamType = ptInput
+      end>
+  end
+  object cds_PurchaseInvNo_UK: TFDQuery
+    CachedUpdates = True
+    Indexes = <
+      item
+        Active = True
+        Selected = True
+        Name = 'cds_PurchaseInvoiceInvNo'
+        Fields = 'PO_InvoiceNo'
+      end>
+    IndexName = 'cds_PurchaseInvoiceInvNo'
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'Select * '
+      'From dbo.InvoiceNumber_PO_UK')
+    Left = 264
+    Top = 1048
+    object cds_PurchaseInvNo_UKPO_InvoiceNo: TIntegerField
+      FieldName = 'PO_InvoiceNo'
+      Origin = 'PO_InvoiceNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_PurchaseInvNo_UKInternalInvoiceNo: TIntegerField
+      FieldName = 'InternalInvoiceNo'
+      Origin = 'InternalInvoiceNo'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PurchaseInvNo_UKUserCreated: TSmallintField
+      FieldName = 'UserCreated'
+      Origin = 'UserCreated'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PurchaseInvNo_UKUserModified: TSmallintField
+      FieldName = 'UserModified'
+      Origin = 'UserModified'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PurchaseInvNo_UKDateCreated: TSQLTimeStampField
+      FieldName = 'DateCreated'
+      Origin = 'DateCreated'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cds_PurchaseInvNo_UKPrefix: TStringField
+      FieldName = 'Prefix'
+      Origin = 'Prefix'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 10
+    end
   end
 end

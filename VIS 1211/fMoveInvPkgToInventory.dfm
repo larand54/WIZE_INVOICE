@@ -2,12 +2,12 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
   Left = 203
   Top = 155
   Caption = 'Flytta paket'
-  ClientHeight = 700
-  ClientWidth = 1007
+  ClientHeight = 862
+  ClientWidth = 1239
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -15,25 +15,34 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object PanelKontraktHuvud: TPanel
     Left = 0
-    Top = 44
-    Width = 1007
-    Height = 144
+    Top = 48
+    Width = 1239
+    Height = 177
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = 54
     object dxPageControl1: TcxPageControl
       Left = 0
       Top = 0
-      Width = 1007
-      Height = 144
+      Width = 1239
+      Height = 177
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -17
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -42,96 +51,138 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       Properties.CustomButtons.Buttons = <>
       Properties.HideTabs = True
       Properties.TabWidth = 150
-      ClientRectBottom = 143
+      ClientRectBottom = 176
       ClientRectLeft = 1
-      ClientRectRight = 1006
+      ClientRectRight = 1238
       ClientRectTop = 1
       object dxTSMain: TcxTabSheet
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Load'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
-          Left = 32
-          Top = 60
-          Width = 64
-          Height = 16
+          Left = 39
+          Top = 74
+          Width = 80
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lagerplats:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label2: TLabel
-          Left = 32
-          Top = 92
-          Width = 68
-          Height = 16
+          Left = 39
+          Top = 113
+          Width = 89
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lagergrupp:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label3: TLabel
-          Left = 32
-          Top = 32
-          Width = 110
-          Height = 16
+          Left = 39
+          Top = 39
+          Width = 143
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Proforma fakturanr:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object meFakturanr: TcxDBMaskEdit
-          Left = 160
-          Top = 24
+          Left = 197
+          Top = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Fakturanr'
           DataBinding.DataSource = dsProps
           TabOrder = 0
-          Width = 121
+          Width = 149
         end
         object lcPIP: TcxDBLookupComboBox
-          Left = 160
-          Top = 56
+          Left = 197
+          Top = 69
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'PIP'
           DataBinding.DataSource = dsProps
           Properties.ImmediatePost = True
           Properties.ListColumns = <>
           Properties.ListOptions.ShowHeader = False
           TabOrder = 1
-          Width = 345
+          Width = 425
         end
         object lcLIP: TcxDBLookupComboBox
-          Left = 160
-          Top = 88
+          Left = 197
+          Top = 108
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'LIP'
           DataBinding.DataSource = dsProps
           Properties.ImmediatePost = True
           Properties.ListColumns = <>
           Properties.ListOptions.ShowHeader = False
           TabOrder = 2
-          Width = 345
+          Width = 425
         end
       end
     end
   end
   object Panel35: TPanel
     Left = 0
-    Top = 188
-    Width = 1007
-    Height = 512
+    Top = 225
+    Width = 1239
+    Height = 637
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 1
+    ExplicitTop = 231
+    ExplicitHeight = 631
     object Panel4: TPanel
       Left = 1
       Top = 1
-      Width = 1005
-      Height = 510
+      Width = 1237
+      Height = 628
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       Caption = 'Panel4'
@@ -139,23 +190,31 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1005
-        Height = 510
+        Width = 1237
+        Height = 628
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         Caption = 'Panel6'
         TabOrder = 0
         object Panel7: TPanel
           Left = 1
           Top = 1
-          Width = 1003
-          Height = 20
+          Width = 1235
+          Height = 25
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Paket att fytta till vald lagerplats/grupp'
           Color = clMaroon
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
@@ -163,9 +222,13 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
         end
         object grdPkgGrid: TcxGrid
           Left = 1
-          Top = 21
-          Width = 1003
-          Height = 488
+          Top = 26
+          Width = 1235
+          Height = 600
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           TabOrder = 1
           object grdPkgGridDBTableView1: TcxGridDBTableView
@@ -256,15 +319,19 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
   object dxBarDockControl1: TdxBarDockControl
     Left = 0
     Top = 0
-    Width = 1007
-    Height = 44
+    Width = 1239
+    Height = 48
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = dalTop
     BarManager = dxBarManager22
   end
   object dxBarManager22: TdxBarManager
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Microsoft Sans Serif'
     Font.Style = []
     Categories.Strings = (
@@ -3732,47 +3799,42 @@ object formfMoveInvPkgToInventory: TformfMoveInvPkgToInventory
       420061007200310001004D006900630072006F0073006F006600740020005300
       61006E007300200053006500720069006600010001005400610068006F006D00
       61000D000A00730074004D0075006C00740069004C0069006E00650073005F00
-      55006E00690063006F00640065000D000A00640078004200610072004D006100
-      6E006100670065007200320032002E00430061007400650067006F0072006900
-      650073000100440065006600610075006C007400010001000D000A0073007400
-      53007400720069006E00670073005F0055006E00690063006F00640065000D00
-      0A00730074004F00740068006500720053007400720069006E00670073005F00
-      55006E00690063006F00640065000D000A006D007400500072006F0070007300
-      2E00560065007200730069006F006E00010037002E00360033002E0030003000
-      20005300740061006E0064006100720064002000450064006900740069006F00
-      6E00010001000D000A007300740043006F006C006C0065006300740069006F00
-      6E0073005F0055006E00690063006F00640065000D000A007300740043006800
-      6100720053006500740073005F0055006E00690063006F00640065000D000A00
-      540066006F0072006D0066004D006F007600650049006E00760050006B006700
-      54006F0049006E00760065006E0074006F007200790001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00640078005000
-      61006700650043006F006E00740072006F006C00310001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C0031000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A004C006100620065006C00320001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C0033000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A00500061006E0065006C00370001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00640078004200
-      610072004D0061006E00610067006500720032003200010041004E0053004900
+      55006E00690063006F00640065000D000A007300740053007400720069006E00
+      670073005F0055006E00690063006F00640065000D000A00730074004F007400
+      68006500720053007400720069006E00670073005F0055006E00690063006F00
+      640065000D000A007300740043006F006C006C0065006300740069006F006E00
+      73005F0055006E00690063006F00640065000D000A0073007400430068006100
+      720053006500740073005F0055006E00690063006F00640065000D000A005400
+      66006F0072006D0066004D006F007600650049006E00760050006B0067005400
+      6F0049006E00760065006E0074006F0072007900010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A006400780050006100
+      6700650043006F006E00740072006F006C003100010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C0031000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A004C006100620065006C003200010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C0033000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00500061006E0065006C003700010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A006400780042006100
+      72004D0061006E00610067006500720032003200010041004E00530049005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A00640078004200610072004D006100
+      6E006100670065007200320032004200610072003100010041004E0053004900
       5F0043004800410052005300450054000100440045004600410055004C005400
       5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000D000A00640078004200610072004D00
-      61006E006100670065007200320032004200610072003100010041004E005300
-      49005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A00}
+      5F0043004800410052005300450054000D000A00}
   end
 end

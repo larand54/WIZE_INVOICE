@@ -923,6 +923,10 @@ Begin
 
       cdsArrivingLoads.SQL.Add('AND LSP.ConfirmedByReciever = 0') ;
 
+      cdsArrivingLoads.SQL.Add('AND Not exists (select * from dbo.Confirmed_Load cl') ;
+      cdsArrivingLoads.SQL.Add('WHERE') ;
+      cdsArrivingLoads.SQL.Add('cl.NewLoadNo = L.LoadNo)') ;
+
 
       if LONo > -1 then
         cdsArrivingLoads.SQL.Add('AND SP.ShippingPlanNo = ' + IntToStr(LONo));
@@ -1344,6 +1348,13 @@ Begin
       else
         cdsArrivingLoads.SQL.Add('1=1');
 
+{
+        cdsArrivingLoads.SQL.Add('AND Not exists (select * from dbo.Confirmed_Load cl') ;
+        cdsArrivingLoads.SQL.Add('WHERE') ;
+        cdsArrivingLoads.SQL.Add('cl.NewLoadNo = L.LoadNo)') ;
+}
+
+
       if LONo > -1 then
         cdsArrivingLoads.SQL.Add('AND csh.ShippingPlanNo = ' + IntToStr(LONo));
       if LoadNo > -1 then
@@ -1643,7 +1654,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then     cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+    // if thisuser.UserID = 8 then  cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -2557,7 +2568,7 @@ begin
   Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
 
-    if MessageDlg('Vill du exportera till excel?', mtConfirmation,
+    if MessageDlg('Do you want to export to excel?', mtConfirmation,
       [mbYes, mbNo], 0) = mrYes then
     Begin
       ExcelDir := dmsSystem.Get_Dir('ExcelDir');
@@ -2569,7 +2580,7 @@ begin
       Begin
         FileName := SaveDialog1.FileName;
         ExportGridToExcel(FileName, grdLoads, False, False, True, 'xls');
-        ShowMessage('Table exported to Excelfil ' + FileName);
+        ShowMessage('Table exported to Excel file ' + FileName);
       End;
     End;
 
@@ -2615,7 +2626,7 @@ Var
   LoadNo: Integer;
   Save_Cursor: TCursor;
 begin
-  if MessageDlg('Vill du ångra ankomstregistreringen på markerade laster?',
+  if MessageDlg('Do you want to cancel arrival registration on selected loads?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     with dmArrivingLoads do
     Begin
@@ -2643,7 +2654,7 @@ begin
             End
             else
             Begin
-              if UndoConfirmLoad then
+              if UndoConfirmLoad(mtSelectedLoadsTrading.AsInteger) then
               Begin
                 mtSelectedLoads.Edit;
                 mtSelectedLoadsStatus.AsInteger := 0;
@@ -3623,7 +3634,7 @@ Var
   Save_Cursor: TCursor;
 
 begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+  if MessageDlg('Do you want to confirm the arrival on selected loads?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin
@@ -3774,7 +3785,7 @@ Var
   // ObjectType                : Integer ;
   LoadAROK: Boolean;
 begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+  if MessageDlg('Do you want to confirm the arrival on selected loads?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin
@@ -3851,9 +3862,9 @@ begin
                             if mtSelectedLoadsOBJECTTYPE.AsInteger = 0 then
                             Begin
                               if MessageDlg
-                                ('Vill du ändra kvalitet till kvalitet + impregnerat på alla produkter i lastnr '
+                                ('Do you want to change the grade to grade + treated on all products in load number '
                                 + mtSelectedLoadsLoadNo.AsString +
-                                '? (i annat fall går varorna till lagret som de är)',
+                                '? (otherwise the product stay as they are into the inventory)',
                                 mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                                 ChangeToIMPProduct := 2
                               else
@@ -3862,9 +3873,9 @@ begin
                             else if mtSelectedLoadsOBJECTTYPE.AsInteger = 1 then
                             Begin
                               if MessageDlg
-                                ('Vill du ändra kvalitet till kvalitet + impregnerat på alla produkter i lastnr '
+                                ('Do you want to change the grade to grade + treated on all products in load number '
                                 + mtSelectedLoadsLoadNo.AsString +
-                                '? (i annat fall går varorna till lagret som de är)',
+                                '? ((otherwise the product stay as they are into the inventory)',
                                 mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                                 ChangeToIMPProduct := 1
                               else
@@ -3952,7 +3963,7 @@ Var
   fAnkomstRegProgress: TfAnkomstRegProgress;
   Save_Cursor: TCursor;
 begin
-  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+  if MessageDlg('Do you want to confirm arrival of selected loads?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin
@@ -4081,7 +4092,7 @@ Var
   Save_Cursor: TCursor;
   LoadConfirmed: Boolean;
 begin
-  if MessageDlg('Vill du ankomstregistrera markerade trading laster?',
+  if MessageDlg('Do you want to confirm arrival of selected trading loads?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin
@@ -4413,7 +4424,7 @@ Var
   LoadAROK            : Boolean;
 begin
 
-  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+  if MessageDlg('Do you want to confirm arrival of selected loads?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin
@@ -4647,7 +4658,7 @@ Var
   LoadAROK            : Boolean;
 begin
 
-  if MessageDlg('Vill du ankomstregistrera markerade laster?', mtConfirmation,
+  if MessageDlg('Do you want to confirm arrival of selected loads?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
     With dmArrivingLoads do
     Begin

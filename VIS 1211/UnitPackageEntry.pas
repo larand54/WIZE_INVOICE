@@ -1004,7 +1004,7 @@ begin
 
         if NoOfPkgsInSerie > 100 then
           ResultButton := MessageDlg(IntToStr(NoOfPkgsInSerie) +
-            ' paket kommer att läggas upp, är det ok?', mtConfirmation,
+            ' package is going to be created, continue?', mtConfirmation,
             [mbYes, mbNo, mbCancel], 0);
 
         if ResultButton = mrYes then
@@ -1079,7 +1079,7 @@ Var
 begin
   if (UnsavedPkgs) and (SavePkgs = False) then
   Begin
-    ResultButton := MessageDlg('Paket är inte sparade, vill du spara?',
+    ResultButton := MessageDlg('Packages are not saved, do you want to save?',
       mtConfirmation, [mbYes, mbNo, mbCancel], 0);
     if ResultButton = mrYes then
     begin
@@ -1654,7 +1654,7 @@ begin
     Try
       if AntalPaketAttLaggaUpp > 100 then
         ResultButton := MessageDlg(IntToStr(AntalPaketAttLaggaUpp) +
-          ' paket kommer att läggas upp, är det ok?', mtConfirmation,
+          ' packages is going to be created, continue?', mtConfirmation,
           [mbYes, mbNo, mbCancel], 0);
 
       if ResultButton = mrYes then
@@ -2132,11 +2132,11 @@ begin
     +LF+'Datum: '+DateToStr(deRegDate.Date) , mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   }
 
-  if MessageDlg('Vill du spara paket mot ägare och mätpunkt: ' +
+  if MessageDlg('Do you want to save the packages to owner and registration point: ' +
     Trim(lcOWNER.Text) // Producent
     + '/' + Trim(lcREGPOINT.Text) // Mätpunkt
-    + LF + 'Lagerplats: ' + Trim(lcLIPName.Text) + '/' + Trim(lcLIPName.Text) +
-    LF + 'Datum: ' + DateToStr(deRegDate.Date), mtConfirmation, [mbYes, mbNo],
+    + LF + 'Inventoru: ' + Trim(lcLIPName.Text) + '/' + Trim(lcLIPName.Text) +
+    LF + 'Date: ' + DateToStr(deRegDate.Date), mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
 
   Begin
@@ -2211,7 +2211,7 @@ begin
               then
               Begin
                 if MessageDlg
-                  ('Alla paket sparade OK, vill du lägga paketen till lasten?',
+                  ('All packages were saved OK, do you want to put them into the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                 Begin
                   AddPkgsToLoadFromPkgEntry(Sender);
@@ -2228,7 +2228,7 @@ begin
               else
               Begin
                 if MessageDlg
-                  ('Paket kunde inte sparas. Vill du lägga de paket som sparades till lasten?',
+                  ('Some packages could not be saved, do you want to put the packages that were saved ok to the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                   AddPkgsToLoadFromPkgEntry(Sender);
               End;
@@ -2244,7 +2244,7 @@ begin
                 ) then
               Begin
                 if MessageDlg
-                  ('Alla Paket sparade OK, vill du lägga paketen till lasten ?',
+                  ('All packages were saved OK, do you want to put them into the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                 Begin
                   SavePkgs := True;
@@ -2261,7 +2261,7 @@ begin
               else
               Begin
                 if MessageDlg
-                  ('En del paket kunde inte sparas. Vill du lägga de paket som sparades till lasten?',
+                  ('Some packages could not be saved, do you want to put the packages that were saved ok to the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                   AddPkgsToLoadFromPkgEntry(Sender);
                 OKToSave := False;
@@ -2278,7 +2278,7 @@ begin
                 seRunNo.Value, deRegDate.Date) then
               Begin
                 if MessageDlg
-                  ('Alla paket sparade OK, vill du lägga paketen till lasten?',
+                  ('All packages were saved OK, do you want to put them into the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                 Begin
                   AddPkgsToLoadFromPkgEntry(Sender);
@@ -2295,7 +2295,7 @@ begin
               else
               Begin
                 if MessageDlg
-                  ('Paket kunde inte sparas. Vill du lägga de paket som sparades till lasten?',
+                  ('Some packages could not be saved, do you want to put the packages that were saved ok to the load?',
                   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
                   AddPkgsToLoadFromPkgEntry(Sender);
               End;
@@ -2303,7 +2303,7 @@ begin
 
           End
           else
-            ShowMessage('Välj ett lager ');
+            ShowMessage('Please select a inventory.');
 
         End;
         if mtPackages.RecordCount > 0 then
@@ -2313,7 +2313,7 @@ begin
       End; // with
     End
     else
-      ShowMessage('Kan inte spara, ingen mätpunkt vald');
+      ShowMessage('Cannot save because no registration point selected.');
   End;
 end;
 
@@ -2434,7 +2434,7 @@ begin
   Repeat
     if NoOfErrorPkgnr > 0 then
       MessageDlgAnswer := MessageDlg(IntToStr(NoOfErrorPkgnr) +
-        ' paketnr var upptagna, vill du hämta paketnr igen?', mtConfirmation,
+        ' package number were already taken, do you want to try to get some package number again?', mtConfirmation,
         [mbYes, mbNo], 0);
     if MessageDlgAnswer = mrYes then
     Begin
@@ -2483,7 +2483,7 @@ begin
             if NoOfErrorPkgnr > 0 then
               MessageDlgAnswer :=
                 MessageDlg(IntToStr(NoOfErrorPkgnr) +
-                ' paketnr var upptagna, vill du hämta paketnr igen?',
+                ' package number were already taken, do you want to try to get some package number again?',
                 mtConfirmation, [mbYes, mbNo], 0);
             if MessageDlgAnswer = mrYes then
             Begin

@@ -518,13 +518,13 @@ begin
       cds_LO.Edit;
       if cds_LOSupplierNo.IsNull then
       Begin
-        ShowMessage('Välj Leverantör!');
+        ShowMessage('Select supplier!');
         Exit;
       End;
 
       if cds_LOLoadingLocationNo.IsNull then
       Begin
-        ShowMessage('Välj Lastställe!');
+        ShowMessage('Select loading location!');
         Exit;
       End;
 
@@ -952,7 +952,7 @@ begin
   if dmsSystem.DoesLOHaveLoadsConfirmed
     (dmcLO.cds_LOSupplierShipPlanObjectNo.AsInteger) then
   Begin
-    ShowMessage('Kan inte ta bort LO rad som är utlastad och AR');
+    ShowMessage('Cannot remove LO row that is loaded against.');
     Abort;
   End;
 
@@ -993,7 +993,7 @@ begin
 
   if cds_LOCustomerNo.IsNull then
   Begin
-    ShowMessage('Välj en Kund');
+    ShowMessage('Please select a customer.');
     Abort;
   End;
 
@@ -1005,7 +1005,7 @@ begin
 
   if cds_LOShipToInvPointNo.IsNull then
   Begin
-    ShowMessage('Välj en Destination');
+    ShowMessage('Please select destination.');
     Abort;
   End;
 
@@ -1017,13 +1017,13 @@ begin
 
   if cds_LOProductNo.IsNull then
   Begin
-    ShowMessage('Välj en Produkt');
+    ShowMessage('Please select product.');
     Abort;
   End;
 
   if cds_LOProductLengthNo.IsNull then
   Begin
-    ShowMessage('Välj en Längd');
+    ShowMessage('Please select length.');
     Abort;
   End;
 
@@ -1040,7 +1040,7 @@ procedure TdmcLO.cds_LOPostError(DataSet: TDataSet; E: EDatabaseError;
 begin
   if cds_LOCustomerNo.IsNull then
   Begin
-    ShowMessage('Välj en Kund');
+    ShowMessage('Please select customer.');
     Action := daFail;
   End;
 
@@ -1052,7 +1052,7 @@ begin
 
   if cds_LOShipToInvPointNo.IsNull then
   Begin
-    ShowMessage('Välj en Destination');
+    ShowMessage('Please select a destination.');
     Action := daFail;
   End;
 
@@ -1064,13 +1064,13 @@ begin
 
   if cds_LOProductLengthNo.IsNull then
   Begin
-    ShowMessage('Välj en Längd');
+    ShowMessage('Please select length.');
     Action := daFail;
   End;
 
   if cds_LOProductNo.IsNull then
   Begin
-    ShowMessage('Välj en Produkt');
+    ShowMessage('Please select a product.');
     Action := daFail;
   End;
 
@@ -1148,7 +1148,7 @@ procedure TdmcLO.cds_LOReconcileError(DataSet: TFDDataSet; E: EFDException;
 begin
   if cds_LOCustomerNo.IsNull then
   Begin
-    ShowMessage('Välj en Kund');
+    ShowMessage('Please select a customer.');
     Action := raSkip;
   End;
 
@@ -1160,7 +1160,7 @@ begin
 
   if cds_LOShipToInvPointNo.IsNull then
   Begin
-    ShowMessage('Välj en Destination');
+    ShowMessage('Please select a destination.');
     Action := raSkip;
   End;
 
@@ -1172,12 +1172,12 @@ begin
 
   if cds_LOProductLengthNo.IsNull then
   Begin
-    ShowMessage('Välj en Längd');
+    ShowMessage('Please select a length.');
     Action := raSkip;
   End;
   if cds_LOProductNo.IsNull then
   Begin
-    ShowMessage('Välj en Produkt');
+    ShowMessage('Please select a product.');
     Action := raSkip;
   End;
 

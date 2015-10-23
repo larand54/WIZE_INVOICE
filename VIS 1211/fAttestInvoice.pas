@@ -336,7 +336,7 @@ type
     procedure SelectDescription;
     procedure New_cds_Att_Ext_LO;
     Function DataSaved: Boolean;
-    procedure GetBookingData(ShippingPlanNo: Integer);
+    procedure GetBookingData(ShippingPlanNo, InternalInvoiceNo  : Integer);
     procedure tlbAttestServicesClick(InternalInvoiceNo: Integer);
     procedure GetInvoiceData(InternalInvoiceNo: Integer);
     function Save_cds_Att_Ext_ServicesII_is_ok: Boolean;
@@ -393,16 +393,16 @@ begin
     dmVidaInvoice.cds_Att_Ext_ServicesII.Active:= True ;
   }
 
-  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), dmVidaInvoice.cdsInvoiceHead_IIInternalInvoiceNo.AsInteger);
 end;
 
-procedure TfrmAttestInvoice.GetBookingData(ShippingPlanNo: Integer);
+procedure TfrmAttestInvoice.GetBookingData(ShippingPlanNo, InternalInvoiceNo  : Integer);
 begin
   with dmVidaInvoice do
   Begin
     cdsBookingData.Active := False;
-    cdsBookingData.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
-
+    cdsBookingData.ParamByName('ShippingPlanNo').AsInteger      := ShippingPlanNo;
+    cdsBookingData.ParamByName('InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
     cdsBookingData.Active := True;
     TrpID := cdsBookingDataSUPP_REFERENCE.AsString;
   End;
@@ -412,31 +412,31 @@ procedure TfrmAttestInvoice.FormShow(Sender: TObject);
 begin
   SetInvoiceNo(dmVidaInvoice.cdsInvoiceHead_IIInternalInvoiceNo.AsInteger);
   dmVidaInvoice.cdsInvoiceShipToAddress_II.Active := True;
-  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), dmVidaInvoice.cdsInvoiceHead_IIInternalInvoiceNo.AsInteger);
 
   with dmVidaInvoice, dm_Booking, dmsSystem do
   Begin
-    cdsVoyage.Active := True;
+    cdsVoyageInvoice.Active := True;
     cdsCarrier.Active := True;
     cdsShippers.Active := True;
 
-    cdsBooking.Active := False;
-    cdsBooking.ParamByName('ShippingPlanNo').AsInteger :=
+    cdsBookingInvoice.Active := False;
+    cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger :=
       StrToInt(TabControl1.Tabs[TabControl1.TabIndex]);
-    cdsBooking.Active := True;
+    cdsBookingInvoice.Active := True;
 
-    if cdsBooking.Eof then
+    if cdsBookingInvoice.Eof then
     Begin
-      cdsBooking.Active := False;
+      cdsBookingInvoice.Active := False;
       cdsCarrier.Active := False;
       cdsShippers.Active := False;
-      cdsVoyage.Active := False;
+      cdsVoyageInvoice.Active := False;
     End
     else
     Begin
       cdsCarrier.Active := True;
-      cdsVoyage.Active := False;
-      cdsVoyage.Active := True;
+      cdsVoyageInvoice.Active := False;
+      cdsVoyageInvoice.Active := True;
     End;
 
     Label42.Caption := Trim(cdsInvoiceHead_IIAddressLine1.AsString) + ', ' +
@@ -515,10 +515,10 @@ procedure TfrmAttestInvoice.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
 
-  dm_Booking.cdsBooking.DataSource := Nil;
+  dm_Booking.cdsBookingInvoice.DataSource := Nil;
 
   dmVidaInvoice.cds_InvDtl_Att.UpdateOptions.ReadOnly := False;
-  dm_Booking.cdsVoyage.Active := False;
+  dm_Booking.cdsVoyageInvoice.Active := False;
   // dmsSystem.cdsCarrier.Active                     := True ;
   dm_Booking.cdsShippers.Active := True;
 
@@ -659,7 +659,7 @@ begin
       if dmVidaInvoice.cds_Att_Ext_ServicesII.RecordCount > 0 then
         AllRows
       else
-        ShowMessage('Attest huvud fattas');
+        ShowMessage('Attest header is missing.');
 
     Finally
       mt_InvDtl_Att.EnableControls;
@@ -683,7 +683,7 @@ begin
       if dmVidaInvoice.cds_Att_Ext_ServicesII.RecordCount > 0 then
         AllLORows
       else
-        ShowMessage('Attest huvud fattas');
+        ShowMessage('Attest header is missing.');
 
     Finally
       mt_InvDtl_Att.EnableControls;
@@ -717,7 +717,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + eInvNo.Text);
+            ShowMessage('Cannot find invoice number ' + eInvNo.Text);
         End;
       1, 2:
         Begin
@@ -727,7 +727,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + eInvNo.Text);
+            ShowMessage('Cannot find invoice number ' + eInvNo.Text);
         End;
       3:
         Begin
@@ -738,7 +738,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + eInvNo.Text);
+            ShowMessage('Cannot find invoice number ' + eInvNo.Text);
         End;
 
       5:
@@ -749,7 +749,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + eInvNo.Text);
+            ShowMessage('Cannot find invoice number ' + eInvNo.Text);
         End;
     else
       ShowMessage('No luck');
@@ -851,7 +851,7 @@ begin
       GetInvoiceData(InternalInvoiceNo);
     End
     else
-      ShowMessage('Internalfakturanr ' + IntToStr(InternalInvoiceNo) +
+      ShowMessage('Internal invoice number ' + IntToStr(InternalInvoiceNo) +
         ' finns inte.');
   End; // with
 end;
@@ -863,32 +863,32 @@ begin
   dmVidaInvoice.cdsInvoiceShipToAddress_II.Active := False;
   dmVidaInvoice.cdsInvoiceShipToAddress_II.Active := True;
 
-  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+  GetBookingData(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), InternalInvoiceNo);
 
   with dmVidaInvoice, dm_Booking, dmsSystem do
   Begin
-    cdsVoyage.Active := True;
+    cdsVoyageInvoice.Active := True;
 
     cdsCarrier.Active := True;
     cdsShippers.Active := True;
 
-    cdsBooking.Active := False;
-    cdsBooking.ParamByName('ShippingPlanNo').AsInteger :=
+    cdsBookingInvoice.Active := False;
+    cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger :=
       StrToInt(TabControl1.Tabs[TabControl1.TabIndex]);
-    cdsBooking.Active := True;
+    cdsBookingInvoice.Active := True;
 
-    if cdsBooking.Eof then
+    if cdsBookingInvoice.Eof then
     Begin
-      cdsBooking.Active := False;
+      cdsBookingInvoice.Active := False;
       cdsCarrier.Active := False;
       cdsShippers.Active := False;
-      cdsVoyage.Active := False;
+      cdsVoyageInvoice.Active := False;
     End
     else
     Begin
       cdsCarrier.Active := True;
-      cdsVoyage.Active := False;
-      cdsVoyage.Active := True;
+      cdsVoyageInvoice.Active := False;
+      cdsVoyageInvoice.Active := True;
     End;
 
     Label42.Caption := Trim(cdsInvoiceHead_IIAddressLine1.AsString) + ', ' +
@@ -985,7 +985,7 @@ Begin
     if AttestChanged = True then
       Result := True;
     if Result = True then
-      if MessageDlg('Vill du spara?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+      if MessageDlg('Do you want to save?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
       then
         acSaveExecute(Sender);
     AttestChanged := False;
@@ -1012,7 +1012,7 @@ begin
       TabControl1Change(Sender);
     End
     else
-      ShowMessage('Hittar ingen fakturanr för LOnr ' + nfSearchLO.Text);
+      ShowMessage('Cannot find invoice with LO number ' + nfSearchLO.Text);
   End; // with
   nfSearchLO.SelectAll;
   // SetDeleteButton ;
@@ -1105,7 +1105,7 @@ begin
         // lbSave.Enabled:= True ;
       End
       else
-        ShowMessage('Ingen provision finns');
+        ShowMessage('No commission exist.');
 
     Finally
       mt_InvDtl_Att.EnableControls;
@@ -1129,7 +1129,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + IntToStr(InvoiceNo));
+            ShowMessage('Cannot find invoice number ' + IntToStr(InvoiceNo));
         End;
       1, 2:
         Begin
@@ -1139,7 +1139,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + IntToStr(InvoiceNo));
+            ShowMessage('Cannot find invoice number ' + IntToStr(InvoiceNo));
         End;
       3:
         Begin
@@ -1150,7 +1150,7 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + IntToStr(InvoiceNo));
+            ShowMessage('Cannot find invoice number ' + IntToStr(InvoiceNo));
         End;
 
       5:
@@ -1161,10 +1161,10 @@ begin
             TabControl1Change(Sender);
           End
           else
-            ShowMessage('Hittar inte fakturanr ' + IntToStr(InvoiceNo));
+            ShowMessage('Cannot find invoice number ' + IntToStr(InvoiceNo));
         End;
     else
-      ShowMessage('Hittar inte fakturanr ' + IntToStr(InvoiceNo));
+      ShowMessage('Cannot find invoice number ' + IntToStr(InvoiceNo));
     End; // case
   End; // with
 
@@ -1354,7 +1354,7 @@ end;
 
 procedure TfrmAttestInvoice.acDeleteAttestExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du ta bort attesten?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  if MessageDlg('Do you want to delete?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
   then
   Begin
 
@@ -1460,7 +1460,7 @@ begin
         SequensNo := InvoiceAttested
           (frmSelectInvoice.cdsInvoiceListINT_INVNO.AsInteger);
         if SequensNo > 0 then
-          ShowMessage('Fakturan är redan attesterad på attest nr ' +
+          ShowMessage('The invoice is already registered on attests number ' +
             IntToStr(SequensNo))
         else
         Begin
@@ -1504,6 +1504,7 @@ var
 begin
   FormBookingForm := TFormBookingForm.Create(Nil);
   try
+    dm_Booking.InternalInvoiceNo  :=  dmVidaInvoice.mt_InvDtl_AttInternalInvoiceNo.AsInteger ;
     FormBookingForm.CreateCo(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
     FormBookingForm.ReadMeOnly := True;
     FormBookingForm.ShowModal;
@@ -1612,7 +1613,7 @@ begin
 
           End
           else
-            ShowMessage('kan inte hitta mt_AttestRow record!');
+            ShowMessage('Cannot find mt_AttestRow record!');
         End
         else
         Begin
@@ -1649,7 +1650,7 @@ begin
         mt_InvDtl_AttChecked.AsInteger := 0;
         mt_InvDtl_Att.Post;
 
-        ShowMessage('Bara möjligt att attestera mot produktrader.');
+        ShowMessage('Only product rows can be attest.');
       End;
     End // if Save_cds_Att_Ext_ServicesII_is_ok then
     else

@@ -744,7 +744,7 @@ begin
     if not cds_LoadFC.Locate('LastNr', StrToIntDef(nfSearchLoadNo.Text, 0), [])
     then
     Begin
-      ShowMessage('Ingen Match...');
+      ShowMessage('No Match...');
       nfSearchLoadNo.SetFocus;
     End
     else
@@ -801,7 +801,7 @@ begin
       cds_LoadFC.Filtered := True;
       Try
         if cds_LoadFC.RecordCount > 1 then
-          ShowMessage('Det finns flera rader med LO = ' + nfSearchLOnr.Text);
+          ShowMessage('There are many rows for LO number = ' + nfSearchLOnr.Text);
       Finally
         cds_LoadFC.Filtered := False;
       End;
@@ -814,7 +814,7 @@ begin
         // cds_LoadFC.Post ;
       End
       else
-        ShowMessage('Ingen Match...');
+        ShowMessage('No Match...');
       // sq_GetLoadNo.Next ;
       // End ;
       // Finally
@@ -1006,7 +1006,7 @@ procedure TfrmFreightLoad.FormCloseQuery(Sender: TObject;
 begin
   if FinnsMarkeradeLaster = True then
     if MessageDlg
-      ('Du har laster som är markerade! (ej sparade), Vill du avsluta?',
+      ('You have loads selected but not yet saved, do you want to quit anyway?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     Begin
       with dmModule1 do
@@ -1055,7 +1055,7 @@ begin
         Until (Search = True) or (cds_LoadFC.Eof = True);
 
         if Search = False then
-          ShowMessage('Inga fler som matchar...');
+          ShowMessage('No more matches...');
       Finally
         cds_LoadFC.EnableControls;
       End;
@@ -1431,7 +1431,7 @@ Var
 Begin
   if FinnsMarkeradeLaster = True then
     if MessageDlg
-      ('Du har laster som är markerade! (ej sparade), vill du att markeringarna skall försvinna klickar du på yes knappen',
+      ('Click button "Yes" if you want to remove the selections.',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
 
@@ -1499,7 +1499,7 @@ begin
     End; // with
   End
   else
-    ShowMessage('Inga laster markerade');
+    ShowMessage('There are no loads selected.');
 end;
 
 procedure TfrmFreightLoad.acSaveWithOutFFExecute(Sender: TObject);
@@ -1546,7 +1546,7 @@ begin
                 mtShippersShipper.AsString) then;
             End
             else
-              ShowMessage('Fel på avräkningsnr');
+              ShowMessage('Error in settlement.');
             mtShippers.Next;
           End; // While not mtShippers.
 
@@ -1576,7 +1576,7 @@ begin
     End; // with
   End
   else
-    ShowMessage('Inga laster markerade');
+    ShowMessage('No loads selected.');
 end;
 
 procedure TfrmFreightLoad.acSaveToExecute(Sender: TObject);
@@ -1600,7 +1600,7 @@ begin
         if IsSelectedShipperDifferent(Sender) = True then
         Begin
           ShowMessage
-            ('Alla laster måste ha samma lokalafraktförare när ni lägger till laster till en existerande fraktavräkning');
+            ('All loads must have same freight company when adding to an existing freight settlement.');
           Exit;
         End;
         // Select Avräkning
@@ -1626,7 +1626,7 @@ begin
         if Shipper <> mtShippersShipper.AsString then
         Begin
           ShowMessage
-            ('Lokalfraktförare i laster som läggs till måste vara lika som i vald fraktavräkning.');
+            ('Freight company must be the same as it is in the selected settlement.');
           Exit;
         End;
 
@@ -1641,7 +1641,7 @@ begin
               if SaveDetails(Sender, AvrakningsNo,
                 mtShippersShipperNo.AsInteger, mtShippersShipper.AsString) = False
               then
-                ShowMessage('Error spara avräkningsrader.');
+                ShowMessage('Error saving freight settlement rows.');
 
             if cdsLoadFreightCost.ChangeCount > 0 then
             Begin
@@ -1670,7 +1670,7 @@ begin
 
   End
   else
-    ShowMessage('Inga laster markerade');
+    ShowMessage('No loads selected.');
 end;
 
 procedure TfrmFreightLoad.acCloseExecute(Sender: TObject);
@@ -1723,7 +1723,7 @@ begin
             mtShippersShipperNo.AsInteger, mtShippersShipper.AsString) then;
         End
         else
-          ShowMessage('Fel på avräkningsnr');
+          ShowMessage('Error in settlement.');
         mtShippers.Next;
       End; // While not mtShippers.
 
@@ -1781,7 +1781,7 @@ begin
             }
           End
           else
-            ShowMessage('Fel på avräkningsnr');
+            ShowMessage('Error in settlement.');
           mtShippers.Next;
         End; // While not mtShippers.
 
@@ -1891,7 +1891,7 @@ begin
       cds_LoadFC.Filtered := True;
       Try
         if cds_LoadFC.RecordCount > 1 then
-          ShowMessage('Det finns flera rader med FS = ' + teSearchFS.Text);
+          ShowMessage('There are many rows where FS = ' + teSearchFS.Text);
         if cds_LoadFC.RecordCount > 0 then
           LastNr := cds_LoadFCLastNr.AsInteger;
       Finally

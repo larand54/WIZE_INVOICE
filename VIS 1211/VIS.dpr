@@ -33,7 +33,6 @@ uses
   UnitDelTerms in 'UnitDelTerms.pas' {FormDelTerms},
   UnitPaymentTerms in 'UnitPaymentTerms.pas' {FormPaymentTerms},
   UnitCRViewReport in 'UnitCRViewReport.pas' {FormCRViewReport},
-  UnitBookingForm in 'UnitBookingForm.pas' {FormBookingForm},
   dmBooking in 'dmBooking.pas' {dm_Booking: TDataModule},
   UnitCarrier in 'UnitCarrier.pas' {FormCarrier},
   dmcAvrakning in 'dmcAvrakning.pas' {dm_Avrakning: TDataModule},
@@ -159,7 +158,9 @@ uses
   uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
   uPackageSize in 'uPackageSize.pas' {fPackageSize},
   uFR_Log in '..\..\CommonSources\FastReport\uFR_Log.pas',
-  URegionToRegionSelectLIPNo in 'URegionToRegionSelectLIPNo.pas' {fRegionToRegionSelectLIPNo};
+  URegionToRegionSelectLIPNo in 'URegionToRegionSelectLIPNo.pas' {fRegionToRegionSelectLIPNo},
+  UnitBookingForm in 'UnitBookingForm.pas' {FormBookingForm},
+  UnitBookingFormOrg in 'UnitBookingFormOrg.pas' {FormBookingFormOrg};
 
 {$R *.res}
 

@@ -51,11 +51,11 @@ begin
     if StrToInt(Trim(dxMaskPackageNo.Text)) > Const_MAX_PKG_NO then
     Begin
       CanClose := False;
-      ShowMessage('Paket nummer kan inte överskrida ' +
+      ShowMessage('Package number cannot pass ' +
         IntToStr(Const_MAX_PKG_NO));
     End;
   Except
-    ShowMessage('Paket nummer kan inte överskrida ' +
+    ShowMessage('Package number cannot pass ' +
       IntToStr(Const_MAX_PKG_NO));
     CanClose := False;
   End;

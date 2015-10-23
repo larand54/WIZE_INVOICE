@@ -3,12 +3,12 @@ object FormBookingForm: TFormBookingForm
   Top = 147
   ActiveControl = eReadyDate
   Caption = 'BOOKING'
-  ClientHeight = 826
-  ClientWidth = 1083
+  ClientHeight = 1017
+  ClientWidth = 1333
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -18,111 +18,171 @@ object FormBookingForm: TFormBookingForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object PanelTop: TPanel
     Left = 0
     Top = 0
-    Width = 1083
-    Height = 129
+    Width = 1333
+    Height = 159
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 0
     object Label27: TLabel
-      Left = 24
-      Top = 18
-      Width = 51
-      Height = 13
+      Left = 30
+      Top = 22
+      Width = 63
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Bokningnr:'
     end
     object Label28: TLabel
-      Left = 504
-      Top = 12
-      Width = 47
-      Height = 13
+      Left = 620
+      Top = 15
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Redodag:'
     end
     object Label29: TLabel
-      Left = 24
-      Top = 88
-      Width = 31
-      Height = 13
+      Left = 30
+      Top = 108
+      Width = 37
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LO Nr:'
     end
     object Label30: TLabel
-      Left = 264
-      Top = 86
-      Width = 51
-      Height = 13
+      Left = 325
+      Top = 106
+      Width = 63
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lev.villkor:'
     end
     object Label31: TLabel
-      Left = 504
-      Top = 102
-      Width = 43
-      Height = 13
+      Left = 620
+      Top = 126
+      Width = 54
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Notering:'
     end
     object Label32: TLabel
-      Left = 504
-      Top = 34
-      Width = 42
-      Height = 13
+      Left = 620
+      Top = 42
+      Width = 54
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Spedit'#246'r:'
     end
     object Label33: TLabel
-      Left = 504
-      Top = 56
-      Width = 27
-      Height = 13
+      Left = 620
+      Top = 69
+      Width = 33
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Frakt:'
     end
     object Label34: TLabel
-      Left = 504
-      Top = 79
-      Width = 48
-      Height = 13
+      Left = 620
+      Top = 97
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Transport:'
     end
     object Label42: TLabel
-      Left = 24
-      Top = 42
-      Width = 43
-      Height = 13
+      Left = 30
+      Top = 52
+      Width = 51
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kontrakt:'
     end
     object Label43: TLabel
-      Left = 24
-      Top = 66
-      Width = 43
-      Height = 13
+      Left = 30
+      Top = 81
+      Width = 51
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kund ref:'
     end
     object Label44: TLabel
-      Left = 264
-      Top = 16
-      Width = 28
-      Height = 13
+      Left = 325
+      Top = 20
+      Width = 33
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kund:'
     end
     object Label45: TLabel
-      Left = 264
-      Top = 40
-      Width = 31
-      Height = 13
+      Left = 325
+      Top = 49
+      Width = 38
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Agent:'
     end
     object Label46: TLabel
-      Left = 264
-      Top = 64
-      Width = 53
-      Height = 13
+      Left = 325
+      Top = 79
+      Width = 67
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lev.period:'
     end
     object eBookingNo: TcxDBTextEdit
-      Left = 80
-      Top = 10
+      Left = 98
+      Top = 12
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'BookingNo'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Enabled = False
       Properties.ReadOnly = True
       Style.LookAndFeel.Kind = lfFlat
@@ -130,36 +190,48 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 11
-      Width = 169
+      Width = 208
     end
     object eShippingPlanNo: TcxDBTextEdit
-      Left = 80
-      Top = 80
+      Left = 98
+      Top = 98
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'ShippingPlanNo'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Enabled = False
       Style.LookAndFeel.Kind = lfFlat
       StyleDisabled.LookAndFeel.Kind = lfFlat
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 12
-      Width = 169
+      Width = 208
     end
     object eReadyDate: TcxDBTextEdit
-      Left = 560
-      Top = 4
+      Left = 689
+      Top = 5
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'PreliminaryRequestedPeriod'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Style.LookAndFeel.Kind = lfFlat
       StyleDisabled.LookAndFeel.Kind = lfFlat
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 0
-      Width = 169
+      Width = 208
     end
     object leDelTerms: TcxDBLookupComboBox
-      Left = 320
-      Top = 78
+      Left = 394
+      Top = 96
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'DeliveryTermsNo'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -183,25 +255,33 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 14
-      Width = 169
+      Width = 208
     end
     object ePanicNote: TcxDBTextEdit
-      Left = 560
-      Top = 94
+      Left = 689
+      Top = 116
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Panic_Note'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Style.LookAndFeel.Kind = lfFlat
       StyleDisabled.LookAndFeel.Kind = lfFlat
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 6
-      Width = 329
+      Width = 405
     end
     object lcShipper: TcxDBLookupComboBox
-      Left = 560
-      Top = 26
+      Left = 689
+      Top = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'ShippingCompanyNo'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Properties.KeyFieldNames = 'ClientNo'
       Properties.ListColumns = <
         item
@@ -214,25 +294,33 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 1
-      Width = 329
+      Width = 405
     end
     object eFreightCost: TcxDBTextEdit
-      Left = 688
-      Top = 48
+      Left = 847
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'FreightCost'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Style.LookAndFeel.Kind = lfFlat
       StyleDisabled.LookAndFeel.Kind = lfFlat
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 3
-      Width = 73
+      Width = 90
     end
     object lcCurrency: TcxDBLookupComboBox
-      Left = 560
-      Top = 48
+      Left = 689
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'FreightCostCurrency'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Properties.KeyFieldNames = 'CurrencyNo'
       Properties.ListColumns = <
         item
@@ -246,13 +334,17 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 2
-      Width = 121
+      Width = 149
     end
     object lcFreightVolUnit: TcxDBLookupComboBox
-      Left = 768
-      Top = 48
+      Left = 945
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'FreightCostVolUnit'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Properties.KeyFieldNames = 'TemplateUnitNo'
       Properties.ListColumns = <
         item
@@ -266,13 +358,17 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 4
-      Width = 121
+      Width = 149
     end
     object lcTypeofbooking: TcxDBLookupComboBox
-      Left = 560
-      Top = 71
+      Left = 689
+      Top = 87
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'BookingTypeNo'
-      DataBinding.DataSource = dm_Booking.dsBooking
+      DataBinding.DataSource = dm_Booking.dsBookingInvoice
       Properties.KeyFieldNames = 'BookingTypeNo'
       Properties.ListColumns = <
         item
@@ -286,11 +382,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 5
-      Width = 241
+      Width = 297
     end
     object teOrderNoText: TcxDBTextEdit
-      Left = 80
-      Top = 34
+      Left = 98
+      Top = 42
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'OrderNoText'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -300,11 +400,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 13
-      Width = 169
+      Width = 208
     end
     object cxDBTextEdit1: TcxDBTextEdit
-      Left = 80
-      Top = 58
+      Left = 98
+      Top = 71
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Reference'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -314,11 +418,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 15
-      Width = 169
+      Width = 208
     end
     object trCustomer: TcxDBTextEdit
-      Left = 320
-      Top = 8
+      Left = 394
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Customer'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -327,11 +435,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 16
-      Width = 169
+      Width = 208
     end
     object teAgent: TcxDBTextEdit
-      Left = 320
-      Top = 32
+      Left = 394
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Agent'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -340,11 +452,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 8
-      Width = 169
+      Width = 208
     end
     object teETDYearWeek: TcxDBTextEdit
-      Left = 320
-      Top = 56
+      Left = 394
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'ETDYearWeek'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -353,11 +469,15 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 9
-      Width = 65
+      Width = 80
     end
     object teETDWeekEnd: TcxDBTextEdit
-      Left = 392
-      Top = 56
+      Left = 482
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'ETDWeekEnd'
       DataBinding.DataSource = dm_Booking.dsAvropInfo
       Enabled = False
@@ -366,82 +486,122 @@ object FormBookingForm: TFormBookingForm
       StyleFocused.LookAndFeel.Kind = lfFlat
       StyleHot.LookAndFeel.Kind = lfFlat
       TabOrder = 10
-      Width = 65
+      Width = 80
     end
     object cxButton2: TcxButton
-      Left = 928
-      Top = 8
-      Width = 153
-      Height = 41
+      Left = 1142
+      Top = 10
+      Width = 188
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acPrint
       TabOrder = 7
     end
   end
   object PanelBottom: TPanel
     Left = 0
-    Top = 343
-    Width = 1083
-    Height = 483
+    Top = 420
+    Width = 1333
+    Height = 597
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
     object PanelConfirm: TPanel
       Left = 0
-      Top = 375
-      Width = 1083
-      Height = 108
+      Top = 465
+      Width = 1333
+      Height = 132
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       TabOrder = 0
       DesignSize = (
-        1083
-        108)
+        1333
+        132)
       object Label36: TLabel
-        Left = 16
-        Top = 20
-        Width = 70
-        Height = 13
+        Left = 20
+        Top = 25
+        Width = 90
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Spedit'#246'rens id:'
       end
       object Label37: TLabel
-        Left = 280
-        Top = 20
-        Width = 33
-        Height = 13
+        Left = 345
+        Top = 25
+        Width = 40
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Trp ID:'
       end
       object Label38: TLabel
-        Left = 496
-        Top = 20
-        Width = 32
-        Height = 13
+        Left = 610
+        Top = 25
+        Width = 41
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fartyg:'
       end
       object Label39: TLabel
-        Left = 496
-        Top = 44
-        Width = 52
-        Height = 13
+        Left = 610
+        Top = 54
+        Width = 64
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'ETD (F10):'
       end
       object Label40: TLabel
-        Left = 720
-        Top = 44
-        Width = 24
-        Height = 13
+        Left = 886
+        Top = 54
+        Width = 30
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'ETA:'
       end
       object Label41: TLabel
-        Left = 16
-        Top = 44
-        Width = 88
-        Height = 13
+        Left = 20
+        Top = 54
+        Width = 113
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Spedit'#246'rensdatum:'
       end
       object bbNewCarrier: TBitBtn
-        Left = 1051
-        Top = 12
-        Width = 30
-        Height = 24
+        Left = 1294
+        Top = 15
+        Width = 36
+        Height = 29
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = acNewVesselName
         Anchors = [akTop, akRight]
         Glyph.Data = {
@@ -522,72 +682,96 @@ object FormBookingForm: TFormBookingForm
         TabOrder = 6
       end
       object eShippingCompanyBookingID: TcxDBTextEdit
-        Left = 112
-        Top = 12
+        Left = 138
+        Top = 15
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'ShippingCompanyBookingID'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Style.LookAndFeel.Kind = lfFlat
         StyleDisabled.LookAndFeel.Kind = lfFlat
         StyleFocused.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.Kind = lfFlat
         TabOrder = 0
-        Width = 145
+        Width = 178
       end
       object eTrpID: TcxDBTextEdit
-        Left = 320
-        Top = 12
+        Left = 394
+        Top = 15
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'SupplierReference'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Style.LookAndFeel.Kind = lfFlat
         StyleDisabled.LookAndFeel.Kind = lfFlat
         StyleFocused.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.Kind = lfFlat
         TabOrder = 2
-        Width = 153
+        Width = 188
       end
       object eETD: TcxDBDateEdit
-        Left = 568
-        Top = 36
+        Left = 699
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'ETD'
-        DataBinding.DataSource = dm_Booking.dsVoyage
+        DataBinding.DataSource = dm_Booking.dsVoyageInvoice
         Properties.ClearKey = 46
         Style.LookAndFeel.Kind = lfFlat
         StyleDisabled.LookAndFeel.Kind = lfFlat
         StyleFocused.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.Kind = lfFlat
         TabOrder = 4
-        Width = 145
+        Width = 179
       end
       object eETA: TcxDBDateEdit
-        Left = 752
-        Top = 36
+        Left = 926
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'ETA'
-        DataBinding.DataSource = dm_Booking.dsVoyage
+        DataBinding.DataSource = dm_Booking.dsVoyageInvoice
         Properties.ClearKey = 46
         Style.LookAndFeel.Kind = lfFlat
         StyleDisabled.LookAndFeel.Kind = lfFlat
         StyleFocused.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.Kind = lfFlat
         TabOrder = 5
-        Width = 145
+        Width = 178
       end
       object deShipperShipDate: TcxDBDateEdit
-        Left = 112
-        Top = 36
+        Left = 138
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'ShippersShipDate'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Style.LookAndFeel.Kind = lfFlat
         StyleDisabled.LookAndFeel.Kind = lfFlat
         StyleFocused.LookAndFeel.Kind = lfFlat
         StyleHot.LookAndFeel.Kind = lfFlat
         TabOrder = 1
-        Width = 145
+        Width = 178
       end
       object cbvessel: TcxDBComboBox
-        Left = 568
-        Top = 11
+        Left = 699
+        Top = 14
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Carrier'
-        DataBinding.DataSource = dm_Booking.dsVoyage
+        DataBinding.DataSource = dm_Booking.dsVoyageInvoice
         Properties.ClearKey = 46
         Properties.Items.Strings = (
           'AAAAAAAAAAAAAAAA'
@@ -596,20 +780,28 @@ object FormBookingForm: TFormBookingForm
           'DDDDDDDDDDDDDD')
         TabOrder = 3
         OnExit = cbvesselExit
-        Width = 329
+        Width = 405
       end
       object PanelOK: TPanel
         Left = 1
-        Top = 62
-        Width = 1081
-        Height = 45
+        Top = 75
+        Width = 1331
+        Height = 56
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         TabOrder = 7
         object bbOK: TBitBtn
-          Left = 320
-          Top = 7
-          Width = 97
-          Height = 33
+          Left = 394
+          Top = 9
+          Width = 119
+          Height = 40
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acSave
           Caption = 'Spara F3'
           Kind = bkOK
@@ -617,19 +809,27 @@ object FormBookingForm: TFormBookingForm
           TabOrder = 0
         end
         object bbCancel: TBitBtn
-          Left = 680
-          Top = 7
-          Width = 97
-          Height = 33
+          Left = 837
+          Top = 9
+          Width = 119
+          Height = 40
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Kind = bkCancel
           NumGlyphs = 2
           TabOrder = 2
         end
         object BitBtn1: TBitBtn
-          Left = 440
-          Top = 7
-          Width = 225
-          Height = 33
+          Left = 542
+          Top = 9
+          Width = 276
+          Height = 40
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Action = acSetETDandSaveAndExit
           Caption = 'S'#228'tt ETD=dagens datum, st'#228'ng F11'
           Kind = bkOK
@@ -641,23 +841,31 @@ object FormBookingForm: TFormBookingForm
     object PanelFixedNotes: TPanel
       Left = 0
       Top = 0
-      Width = 1083
-      Height = 225
+      Width = 1333
+      Height = 277
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       TabOrder = 1
       DesignSize = (
-        1083
-        225)
+        1333
+        277)
       object Label19: TLabel
-        Left = 15
-        Top = 184
-        Width = 40
-        Height = 13
+        Left = 20
+        Top = 226
+        Width = 48
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Alignment = taRightJustify
         Caption = 'Lasttext:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
@@ -665,82 +873,110 @@ object FormBookingForm: TFormBookingForm
         WordWrap = True
       end
       object Label18: TLabel
-        Left = 15
-        Top = 109
-        Width = 56
-        Height = 13
+        Left = 19
+        Top = 134
+        Width = 68
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Alignment = taRightJustify
         Caption = 'Fakturatext:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label17: TLabel
-        Left = 15
-        Top = 34
-        Width = 41
-        Height = 13
+        Left = 20
+        Top = 42
+        Width = 49
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Alignment = taRightJustify
         Caption = 'LO Text:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object mNoteForLoadSheet: TcxDBMemo
-        Left = 80
-        Top = 152
+        Left = 98
+        Top = 187
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         DataBinding.DataField = 'NoteForLoadSheet'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Properties.ReadOnly = True
         TabOrder = 2
-        Height = 65
-        Width = 970
+        Height = 80
+        Width = 1194
       end
       object mInvoiceText: TcxDBMemo
-        Left = 80
-        Top = 80
+        Left = 98
+        Top = 98
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         DataBinding.DataField = 'InvoiceText'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Properties.ReadOnly = True
         TabOrder = 1
-        Height = 65
-        Width = 970
+        Height = 80
+        Width = 1194
       end
       object mLOText: TcxDBMemo
-        Left = 80
-        Top = 8
+        Left = 98
+        Top = 10
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         DataBinding.DataField = 'LOText'
-        DataBinding.DataSource = dm_Booking.dsBooking
+        DataBinding.DataSource = dm_Booking.dsBookingInvoice
         Properties.ReadOnly = True
         TabOrder = 0
-        Height = 65
-        Width = 970
+        Height = 80
+        Width = 1194
       end
     end
     object PanelTEXT: TPanel
       Left = 0
-      Top = 233
-      Width = 1083
-      Height = 142
+      Top = 285
+      Width = 1333
+      Height = 180
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       Caption = 'PanelTEXT'
       TabOrder = 2
       object grdOrderDocument: TcxGrid
         Left = 1
         Top = 1
-        Width = 1081
-        Height = 140
+        Width = 1331
+        Height = 178
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 0
         LookAndFeel.Kind = lfFlat
@@ -774,9 +1010,13 @@ object FormBookingForm: TFormBookingForm
     end
     object cxSplitter2: TcxSplitter
       Left = 0
-      Top = 225
-      Width = 1083
+      Top = 277
+      Width = 1333
       Height = 8
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       HotZoneClassName = 'TcxMediaPlayer8Style'
       AlignSplitter = salTop
       Control = PanelFixedNotes
@@ -786,9 +1026,13 @@ object FormBookingForm: TFormBookingForm
   end
   object grdLoRows: TcxGrid
     Left = 0
-    Top = 129
-    Width = 1083
-    Height = 206
+    Top = 159
+    Width = 1333
+    Height = 253
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 1
     object grdLoRowsDBTableView1: TcxGridDBTableView
@@ -866,9 +1110,13 @@ object FormBookingForm: TFormBookingForm
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 335
-    Width = 1083
+    Top = 412
+    Width = 1333
     Height = 8
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = grdLoRows

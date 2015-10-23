@@ -2,12 +2,12 @@ object frmAttestInvoice: TfrmAttestInvoice
   Left = 251
   Top = 101
   Caption = 'Attestera Faktura'
-  ClientHeight = 872
-  ClientWidth = 1084
+  ClientHeight = 1059
+  ClientWidth = 1334
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -17,17 +17,21 @@ object frmAttestInvoice: TfrmAttestInvoice
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object dxPageControl1: TcxPageControl
     Left = 0
     Top = 0
-    Width = 1084
-    Height = 132
+    Width = 1334
+    Height = 162
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -15
     Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
@@ -35,95 +39,126 @@ object frmAttestInvoice: TfrmAttestInvoice
     Properties.ActivePage = tsInvoiceHead
     Properties.CustomButtons.Buttons = <>
     Properties.TabWidth = 100
-    ClientRectBottom = 131
+    ClientRectBottom = 161
     ClientRectLeft = 1
-    ClientRectRight = 1083
-    ClientRectTop = 23
+    ClientRectRight = 1333
+    ClientRectTop = 25
     object tsInvoiceHead: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&FAKTURA'
       ImageIndex = 16
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
-        1082
-        108)
+        1332
+        136)
       object Shape2: TShape
         Left = 1
         Top = 2
-        Width = 1079
-        Height = 104
+        Width = 1328
+        Height = 128
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Brush.Color = clMoneyGreen
-        ExplicitWidth = 1087
       end
       object Label1: TLabel
-        Left = 8
-        Top = 27
-        Width = 65
-        Height = 16
+        Left = 10
+        Top = 33
+        Width = 83
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fakturanr:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
         Transparent = True
       end
       object Label2: TLabel
-        Left = 8
-        Top = 53
-        Width = 70
-        Height = 16
+        Left = 10
+        Top = 65
+        Width = 85
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fakt.datum:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object DBText1: TDBText
-        Left = 96
-        Top = 24
-        Width = 65
-        Height = 17
+        Left = 118
+        Top = 30
+        Width = 80
+        Height = 20
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'InvoiceNo'
         DataSource = dmVidaInvoice.dsrcInvoiceNumber
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
       object LCustomer: TLabel
-        Left = 8
-        Top = 6
-        Width = 63
-        Height = 16
+        Left = 10
+        Top = 7
+        Width = 82
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Leverant'#246'r:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object txtCustomer: TDBText
-        Left = 96
-        Top = 6
-        Width = 71
-        Height = 16
+        Left = 118
+        Top = 7
+        Width = 85
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSize = True
         Color = clWhite
         DataField = 'CustomerName'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -131,30 +166,38 @@ object frmAttestInvoice: TfrmAttestInvoice
         Transparent = True
       end
       object LPaymentTerms: TLabel
-        Left = 792
-        Top = 30
-        Width = 46
-        Height = 14
+        Left = 975
+        Top = 37
+        Width = 62
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Betvillkor:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object DBText4: TDBText
-        Left = 850
-        Top = 7
-        Width = 153
-        Height = 34
+        Left = 1046
+        Top = 9
+        Width = 188
+        Height = 41
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'PaymentDescription'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -162,45 +205,57 @@ object frmAttestInvoice: TfrmAttestInvoice
         WordWrap = True
       end
       object DBText42: TDBText
-        Left = 850
-        Top = 43
-        Width = 153
-        Height = 18
+        Left = 1046
+        Top = 53
+        Width = 188
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'Discount1'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label35: TLabel
-        Left = 792
-        Top = 47
-        Width = 34
-        Height = 14
+        Left = 975
+        Top = 58
+        Width = 46
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Kassa:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label6: TLabel
-        Left = 792
-        Top = 65
-        Width = 50
-        Height = 14
+        Left = 975
+        Top = 80
+        Width = 66
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Lev.villkor:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -208,31 +263,39 @@ object frmAttestInvoice: TfrmAttestInvoice
         Transparent = True
       end
       object DBText6: TDBText
-        Left = 850
-        Top = 62
-        Width = 153
-        Height = 17
+        Left = 1046
+        Top = 76
+        Width = 188
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'DeliveryTerm'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label12: TLabel
-        Left = 792
-        Top = 85
-        Width = 57
-        Height = 14
+        Left = 975
+        Top = 105
+        Width = 73
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Agent prov:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -240,61 +303,77 @@ object frmAttestInvoice: TfrmAttestInvoice
         Transparent = True
       end
       object DBText18: TDBText
-        Left = 850
-        Top = 81
-        Width = 101
-        Height = 17
+        Left = 1046
+        Top = 100
+        Width = 124
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'AgentCommission'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label51: TLabel
-        Left = 393
-        Top = 43
-        Width = 47
-        Height = 14
+        Left = 484
+        Top = 53
+        Width = 64
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fraktkost:'
         Color = clMoneyGreen
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label52: TLabel
-        Left = 585
-        Top = 43
-        Width = 9
-        Height = 14
+        Left = 720
+        Top = 53
+        Width = 12
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = ' / '
         Color = clMoneyGreen
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label29: TLabel
-        Left = 393
-        Top = 22
-        Width = 22
-        Height = 14
+        Left = 484
+        Top = 27
+        Width = 27
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'VAT:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -302,65 +381,85 @@ object frmAttestInvoice: TfrmAttestInvoice
         Transparent = True
       end
       object DBText8: TDBText
-        Left = 459
-        Top = 18
-        Width = 125
-        Height = 17
+        Left = 565
+        Top = 22
+        Width = 154
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'VAT'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object DBText13: TDBText
-        Left = 459
-        Top = 61
-        Width = 129
-        Height = 17
+        Left = 565
+        Top = 75
+        Width = 159
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Alignment = taRightJustify
         Color = clWhite
         DataField = 'Commission'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label53: TLabel
-        Left = 393
-        Top = 67
-        Width = 60
-        Height = 14
+        Left = 484
+        Top = 82
+        Width = 86
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Kommission:'
         Color = clMoneyGreen
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object dxDBDateEdit1: TcxDBDateEdit
-        Left = 96
-        Top = 46
+        Left = 118
+        Top = 57
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ParentFont = False
         TabOrder = 0
-        Width = 121
+        Width = 149
       end
       object rgDebitCredit: TDBRadioGroup
-        Left = 8
-        Top = 66
-        Width = 85
-        Height = 31
+        Left = 10
+        Top = 81
+        Width = 104
+        Height = 38
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clMoneyGreen
         Columns = 2
         DataField = 'Debit_Credit'
@@ -368,7 +467,7 @@ object frmAttestInvoice: TfrmAttestInvoice
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         Items.Strings = (
@@ -383,17 +482,21 @@ object frmAttestInvoice: TfrmAttestInvoice
           '1')
       end
       object DBCheckBox1: TDBCheckBox
-        Left = 234
-        Top = 84
-        Width = 88
-        Height = 17
+        Left = 288
+        Top = 103
+        Width = 108
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Snabbfaktura:'
         Color = clMoneyGreen
         DataField = 'QuickInvoice'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -404,17 +507,21 @@ object frmAttestInvoice: TfrmAttestInvoice
         ValueUnchecked = '0'
       end
       object cbCommissionPaidByCustomer: TDBCheckBox
-        Left = 234
-        Top = 22
-        Width = 148
-        Height = 17
+        Left = 288
+        Top = 27
+        Width = 182
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Provision betalas av kund'
         Color = clMoneyGreen
         DataField = 'CommissionPaidByCustomer'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -425,17 +532,21 @@ object frmAttestInvoice: TfrmAttestInvoice
         ValueUnchecked = '0'
       end
       object cbVAT: TDBCheckBox
-        Left = 234
-        Top = 37
-        Width = 88
-        Height = 17
+        Left = 288
+        Top = 46
+        Width = 108
+        Height = 20
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Skatteupplag'
         Color = clMoneyGreen
         DataField = 'VAT_OnInvoice'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -446,17 +557,21 @@ object frmAttestInvoice: TfrmAttestInvoice
         ValueUnchecked = '0'
       end
       object cbFreightInDiscount: TDBCheckBox
-        Left = 234
-        Top = 53
-        Width = 120
-        Height = 17
+        Left = 288
+        Top = 65
+        Width = 148
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fraktv'#228'rde i kassa'
         Color = clMoneyGreen
         DataField = 'FreightInDiscount'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -467,17 +582,21 @@ object frmAttestInvoice: TfrmAttestInvoice
         ValueUnchecked = '0'
       end
       object cbFreightInComm: TDBCheckBox
-        Left = 234
-        Top = 68
-        Width = 132
-        Height = 17
+        Left = 288
+        Top = 84
+        Width = 162
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fraktv'#228'rde i provision'
         Color = clMoneyGreen
         DataField = 'FreightInCommission'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -488,39 +607,59 @@ object frmAttestInvoice: TfrmAttestInvoice
         ValueUnchecked = '0'
       end
       object eFakturaNr: TcxTextEdit
-        Left = 96
-        Top = 21
+        Left = 118
+        Top = 26
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 7
         Text = '000000'
-        Width = 121
+        Width = 149
       end
       object dxDBEdit9: TcxDBTextEdit
-        Left = 457
-        Top = 36
+        Left = 562
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'FREIGHT_CURRENCY'
         DataBinding.DataSource = dmVidaInvoice.ds_BookingData
         TabOrder = 8
-        Width = 65
+        Width = 80
       end
       object dxDBEdit6: TcxDBTextEdit
-        Left = 521
-        Top = 36
+        Left = 641
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'FREIGHTCOST'
         DataBinding.DataSource = dmVidaInvoice.ds_BookingData
         TabOrder = 10
-        Width = 65
+        Width = 80
       end
       object dxDBEdit7: TcxDBTextEdit
-        Left = 594
-        Top = 36
+        Left = 731
+        Top = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'FREIGHT_UNIT'
         DataBinding.DataSource = dmVidaInvoice.ds_BookingData
         TabOrder = 9
-        Width = 65
+        Width = 80
       end
       object lcKonto: TcxDBLookupComboBox
-        Left = 456
-        Top = 80
+        Left = 561
+        Top = 98
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'InvoiceType'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Properties.DropDownListStyle = lsFixedList
@@ -533,11 +672,15 @@ object frmAttestInvoice: TfrmAttestInvoice
         Properties.ListSource = dmVidaInvoice.dsInvoiceType
         TabOrder = 11
         Visible = False
-        Width = 140
+        Width = 173
       end
       object cbInvoiceType: TcxComboBox
-        Left = 96
-        Top = 73
+        Left = 118
+        Top = 90
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Properties.Items.Strings = (
           'VIDA (K1)'
           'Proforma (fakt.senare)'
@@ -547,10 +690,14 @@ object frmAttestInvoice: TfrmAttestInvoice
           'FW')
         Properties.ReadOnly = True
         TabOrder = 12
-        Width = 121
+        Width = 149
       end
     end
     object tsShipToAddress: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'A&DRESSER'
       ImageIndex = 14
       ExplicitLeft = 0
@@ -559,14 +706,18 @@ object frmAttestInvoice: TfrmAttestInvoice
       ExplicitHeight = 0
       object Label10: TLabel
         Left = 2
-        Top = 4
-        Width = 80
-        Height = 15
+        Top = 5
+        Width = 94
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fakturaadress'
         Color = clSilver
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -575,15 +726,19 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
       object Label42: TLabel
         Left = 2
-        Top = 21
-        Width = 209
-        Height = 78
+        Top = 26
+        Width = 258
+        Height = 96
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSize = False
         Caption = 'Label42'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -591,10 +746,14 @@ object frmAttestInvoice: TfrmAttestInvoice
         WordWrap = True
       end
       object grdLevAdr: TcxGrid
-        Left = 288
+        Left = 354
         Top = 0
-        Width = 788
-        Height = 102
+        Width = 970
+        Height = 126
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         TabOrder = 0
         object grdLevAdrDBTableView1: TcxGridDBTableView
@@ -624,6 +783,10 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsAgent: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&AGENT'
       ImageIndex = 15
       ExplicitLeft = 0
@@ -631,68 +794,88 @@ object frmAttestInvoice: TfrmAttestInvoice
       ExplicitWidth = 0
       ExplicitHeight = 0
       object Shape3: TShape
-        Left = 16
-        Top = 3
-        Width = 1177
-        Height = 155
+        Left = 20
+        Top = 4
+        Width = 1448
+        Height = 190
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Brush.Color = clMoneyGreen
       end
       object Label16: TLabel
-        Left = 24
-        Top = 8
-        Width = 38
-        Height = 16
+        Left = 30
+        Top = 10
+        Width = 47
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Agent:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object DBText22: TDBText
-        Left = 160
-        Top = 8
-        Width = 56
-        Height = 16
+        Left = 197
+        Top = 10
+        Width = 68
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSize = True
         Color = clWhite
         DataField = 'AgentName'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label38: TLabel
-        Left = 24
-        Top = 40
-        Width = 87
-        Height = 16
+        Left = 30
+        Top = 49
+        Width = 110
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fakturaaddres:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label43: TLabel
-        Left = 160
-        Top = 40
-        Width = 737
-        Height = 60
+        Left = 197
+        Top = 49
+        Width = 907
+        Height = 74
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         AutoSize = False
         Caption = 'Label43'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -700,6 +883,10 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsNotes: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&NOTES'
       ImageIndex = 11
       ExplicitLeft = 0
@@ -707,30 +894,38 @@ object frmAttestInvoice: TfrmAttestInvoice
       ExplicitWidth = 0
       ExplicitHeight = 0
       object Label11: TLabel
-        Left = 8
-        Top = 8
-        Width = 70
-        Height = 16
+        Left = 10
+        Top = 10
+        Width = 84
+        Height = 19
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Fakturatext:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
       end
       object DBMemo1: TDBMemo
-        Left = 80
-        Top = 8
-        Width = 921
-        Height = 89
+        Left = 98
+        Top = 10
+        Width = 1134
+        Height = 109
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         BevelKind = bkTile
         BorderStyle = bsNone
         DataField = 'InvoiceText'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -738,6 +933,10 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsStickyNote: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&POST IT!'
       ImageIndex = 13
       ExplicitLeft = 0
@@ -745,10 +944,14 @@ object frmAttestInvoice: TfrmAttestInvoice
       ExplicitWidth = 0
       ExplicitHeight = 0
       object DBMemo2: TDBMemo
-        Left = 368
-        Top = 5
-        Width = 177
-        Height = 92
+        Left = 453
+        Top = 6
+        Width = 218
+        Height = 113
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         BevelInner = bvNone
         BorderStyle = bsNone
         Color = clYellow
@@ -756,7 +959,7 @@ object frmAttestInvoice: TfrmAttestInvoice
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -17
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -764,6 +967,10 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsAttestRows: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'tsAttestRows'
       TabVisible = False
       ExplicitLeft = 0
@@ -771,10 +978,14 @@ object frmAttestInvoice: TfrmAttestInvoice
       ExplicitWidth = 0
       ExplicitHeight = 0
       object CheckBox1: TCheckBox
-        Left = 504
-        Top = 32
-        Width = 97
-        Height = 17
+        Left = 620
+        Top = 39
+        Width = 120
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Filter'
         Checked = True
         State = cbChecked
@@ -783,20 +994,28 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsLO: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&LO'
       ExplicitLeft = 0
       ExplicitTop = 0
       ExplicitWidth = 0
       ExplicitHeight = 0
       object Label3: TLabel
-        Left = 647
-        Top = 87
-        Width = 57
-        Height = 14
+        Left = 796
+        Top = 107
+        Width = 78
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Proformanr:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -804,16 +1023,20 @@ object frmAttestInvoice: TfrmAttestInvoice
         Visible = False
       end
       object DBText3: TDBText
-        Left = 736
-        Top = 84
-        Width = 69
-        Height = 17
+        Left = 906
+        Top = 103
+        Width = 85
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'ProformaInvoiceNo'
         DataSource = dmVidaInvoice.dsProformaInvNo
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -821,46 +1044,58 @@ object frmAttestInvoice: TfrmAttestInvoice
         Visible = False
       end
       object Label8: TLabel
-        Left = 480
-        Top = 87
-        Width = 61
-        Height = 14
+        Left = 591
+        Top = 107
+        Width = 80
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Int.fakturanr:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object DBText2: TDBText
-        Left = 568
-        Top = 84
-        Width = 69
-        Height = 17
+        Left = 699
+        Top = 103
+        Width = 85
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'InternalInvoiceNo'
         DataSource = dmVidaInvoice.dsrcInvoiceHead_II
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object DBText12: TDBText
-        Left = 408
-        Top = 84
-        Width = 69
-        Height = 17
+        Left = 502
+        Top = 103
+        Width = 85
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clWhite
         DataField = 'PO_InvoiceNo'
         DataSource = dmVidaInvoice.ds_PurchaseInvNo
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
@@ -868,14 +1103,18 @@ object frmAttestInvoice: TfrmAttestInvoice
         Visible = False
       end
       object Label30: TLabel
-        Left = 320
-        Top = 87
-        Width = 64
-        Height = 14
+        Left = 394
+        Top = 107
+        Width = 87
+        Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'PO fakturanr:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -885,152 +1124,196 @@ object frmAttestInvoice: TfrmAttestInvoice
       object panelLO: TPanel
         Left = 0
         Top = 0
-        Width = 1076
-        Height = 73
+        Width = 1324
+        Height = 90
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelOuter = bvNone
         Color = clMoneyGreen
         TabOrder = 0
         object Label18: TLabel
-          Left = 272
-          Top = 6
-          Width = 30
-          Height = 14
+          Left = 335
+          Top = 7
+          Width = 41
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'LO nr:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText24: TDBText
-          Left = 321
-          Top = 3
-          Width = 48
-          Height = 17
+          Left = 395
+          Top = 4
+          Width = 59
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'ShippingPlanNo'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label22: TLabel
-          Left = 372
-          Top = 5
-          Width = 57
-          Height = 14
+          Left = 458
+          Top = 6
+          Width = 77
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Bokningsnr:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText28: TDBText
-          Left = 434
+          Left = 534
           Top = 2
-          Width = 48
-          Height = 17
+          Width = 59
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'BookingNo'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object DBText29: TDBText
-          Left = 434
-          Top = 23
-          Width = 56
-          Height = 17
+          Left = 534
+          Top = 28
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'FreightCostPerUnit'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label23: TLabel
-          Left = 372
-          Top = 26
-          Width = 51
-          Height = 14
+          Left = 458
+          Top = 32
+          Width = 69
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Frakt/ enh:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label24: TLabel
-          Left = 641
+          Left = 789
           Top = 2
-          Width = 47
-          Height = 14
+          Width = 62
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Totalfrakt:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText30: TDBText
-          Left = 696
+          Left = 857
           Top = -1
-          Width = 65
-          Height = 17
+          Width = 80
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'TotalFreightCost'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label25: TLabel
-          Left = 496
-          Top = 5
-          Width = 56
-          Height = 14
+          Left = 610
+          Top = 6
+          Width = 78
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'BokningsID:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText31: TDBText
-          Left = 551
-          Top = 23
-          Width = 82
-          Height = 17
+          Left = 678
+          Top = 28
+          Width = 101
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'SUPP_REFERENCE'
           DataSource = dmVidaInvoice.ds_BookingData
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
@@ -1038,15 +1321,19 @@ object frmAttestInvoice: TfrmAttestInvoice
           Visible = False
         end
         object Label36: TLabel
-          Left = 272
-          Top = 26
-          Width = 33
-          Height = 14
+          Left = 335
+          Top = 32
+          Width = 43
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Valuta:'
           Color = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
@@ -1054,238 +1341,318 @@ object frmAttestInvoice: TfrmAttestInvoice
           Transparent = True
         end
         object DBText44: TDBText
-          Left = 321
-          Top = 23
-          Width = 48
-          Height = 17
+          Left = 395
+          Top = 28
+          Width = 59
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'CurrencyName'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label15: TLabel
-          Left = 923
-          Top = 24
-          Width = 22
-          Height = 14
+          Left = 1136
+          Top = 30
+          Width = 31
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'ETA:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label14: TLabel
-          Left = 920
-          Top = 3
-          Width = 22
-          Height = 14
+          Left = 1132
+          Top = 4
+          Width = 34
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'ETD:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label13: TLabel
-          Left = 768
-          Top = 27
-          Width = 36
-          Height = 14
+          Left = 945
+          Top = 33
+          Width = 47
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Vessel:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText5: TDBText
-          Left = 551
+          Left = 678
           Top = 2
-          Width = 82
-          Height = 17
+          Width = 101
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Color = clWhite
           DataField = 'BOOKING_ID'
           DataSource = dmVidaInvoice.ds_BookingData
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label4: TLabel
-          Left = 640
-          Top = 26
-          Width = 28
-          Height = 14
+          Left = 788
+          Top = 32
+          Width = 39
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'TrpID:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label5: TLabel
-          Left = 768
-          Top = 6
-          Width = 40
-          Height = 14
+          Left = 945
+          Top = 7
+          Width = 54
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Shipper:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label9: TLabel
-          Left = 496
-          Top = 26
-          Width = 48
-          Height = 14
+          Left = 610
+          Top = 32
+          Width = 64
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Referens:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Visible = False
         end
         object Label17: TLabel
-          Left = 6
-          Top = 10
-          Width = 41
-          Height = 14
+          Left = 7
+          Top = 12
+          Width = 55
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Ordernr:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label19: TLabel
-          Left = 139
-          Top = 10
-          Width = 36
-          Height = 14
+          Left = 171
+          Top = 12
+          Width = 49
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'S'#228'ljare:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label21: TLabel
-          Left = 139
-          Top = 29
-          Width = 38
-          Height = 14
+          Left = 171
+          Top = 36
+          Width = 47
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'V'#229'r ref:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label20: TLabel
-          Left = 3
-          Top = 31
-          Width = 45
-          Height = 14
+          Left = 4
+          Top = 38
+          Width = 59
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Kund ref:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object bbNewCarrier: TBitBtn
-          Left = 1045
-          Top = 50
-          Width = 15
-          Height = 14
+          Left = 1286
+          Top = 62
+          Width = 19
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'ny'
           TabOrder = 0
         end
         object DBEdit2: TDBEdit
-          Left = 688
-          Top = 20
-          Width = 73
-          Height = 20
+          Left = 847
+          Top = 25
+          Width = 90
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           BorderStyle = bsNone
           DataField = 'TrpID'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           TabOrder = 1
         end
         object dxDBEdit1: TcxDBTextEdit
-          Left = 816
+          Left = 1004
           Top = 0
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 2
-          Width = 105
+          Width = 130
         end
         object dxDBEdit2: TcxDBTextEdit
-          Left = 816
-          Top = 20
+          Left = 1004
+          Top = 25
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 3
-          Width = 105
+          Width = 130
         end
         object dxDBMaskEdit1: TcxDBMaskEdit
-          Left = 944
-          Top = -4
+          Left = 1162
+          Top = -5
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 4
-          Width = 97
+          Width = 119
         end
         object dxDBMaskEdit2: TcxDBMaskEdit
-          Left = 944
-          Top = 18
+          Left = 1162
+          Top = 22
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 5
-          Width = 97
+          Width = 119
         end
         object dcOrderNoText: TDBEdit
-          Left = 55
-          Top = 3
-          Width = 80
-          Height = 20
+          Left = 68
+          Top = 4
+          Width = 98
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           BevelEdges = []
           BorderStyle = bsNone
           DataField = 'OrderNoText'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           TabOrder = 6
         end
         object dcSalesMan: TDBEdit
-          Left = 192
+          Left = 236
           Top = 2
-          Width = 57
-          Height = 19
+          Width = 70
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           BevelEdges = []
           BevelInner = bvNone
           BevelOuter = bvNone
@@ -1294,41 +1661,49 @@ object frmAttestInvoice: TfrmAttestInvoice
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           TabOrder = 7
         end
         object dcOurRef: TDBEdit
-          Left = 192
-          Top = 23
-          Width = 73
-          Height = 19
+          Left = 236
+          Top = 28
+          Width = 90
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           BevelEdges = []
           BorderStyle = bsNone
           DataField = 'OurReference'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           TabOrder = 8
         end
         object dcCustRef: TDBEdit
-          Left = 54
-          Top = 25
-          Width = 81
-          Height = 19
+          Left = 66
+          Top = 31
+          Width = 100
+          Height = 23
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           BevelEdges = []
           BorderStyle = bsNone
           DataField = 'Reference'
           DataSource = dmVidaInvoice.dsrcInvoiceLO
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
@@ -1337,6 +1712,10 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
     end
     object tsTotals: TcxTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '&Totals'
       ExplicitLeft = 0
       ExplicitTop = 0
@@ -1345,263 +1724,335 @@ object frmAttestInvoice: TfrmAttestInvoice
       object panelInvoiceTotal: TPanel
         Left = 0
         Top = 0
-        Width = 1076
-        Height = 102
+        Width = 1324
+        Height = 126
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
         object Label26: TLabel
-          Left = 8
-          Top = 4
-          Width = 223
-          Height = 15
+          Left = 10
+          Top = 5
+          Width = 280
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'TOTALT FAKTURA INKL. FRAKT && EXTRA'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText32: TDBText
-          Left = 472
-          Top = 4
-          Width = 129
-          Height = 17
+          Left = 581
+          Top = 5
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Tot_Inv_Inc_Freight_Extras'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label27: TLabel
-          Left = 8
-          Top = 23
-          Width = 159
-          Height = 15
+          Left = 10
+          Top = 28
+          Width = 198
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'SUMMA FRAKT KOSTNADER'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText33: TDBText
-          Left = 472
-          Top = 23
-          Width = 129
-          Height = 17
+          Left = 581
+          Top = 28
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'SUM_FreigthCost'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label28: TLabel
-          Left = 8
-          Top = 42
-          Width = 176
-          Height = 15
+          Left = 10
+          Top = 52
+          Width = 218
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'PRODUKTV'#196'RDE UTAN FRAKT:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText34: TDBText
-          Left = 472
-          Top = 42
-          Width = 129
-          Height = 17
+          Left = 581
+          Top = 52
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Total_Product_Value_No_Freight'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object DBText35: TDBText
-          Left = 80
-          Top = 58
-          Width = 129
-          Height = 17
+          Left = 98
+          Top = 71
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Discount'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object DBText37: TDBText
-          Left = 472
-          Top = 61
-          Width = 129
-          Height = 17
+          Left = 581
+          Top = 75
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Commission'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label34: TLabel
-          Left = 8
-          Top = 80
-          Width = 274
-          Height = 15
+          Left = 10
+          Top = 98
+          Width = 339
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'FAKTURAV'#196'RDE MINUS KASSA OCH PROVISION:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText40: TDBText
-          Left = 472
-          Top = 80
-          Width = 129
-          Height = 17
+          Left = 581
+          Top = 98
+          Width = 159
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Inv_Value_After_Deduct_DIS_COMM'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object DBText21: TDBText
-          Left = 829
-          Top = 50
-          Width = 121
-          Height = 20
+          Left = 1020
+          Top = 62
+          Width = 149
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Inv_Value_To_Be_Paid'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
         end
         object Label41: TLabel
-          Left = 656
-          Top = 52
-          Width = 82
-          Height = 16
+          Left = 807
+          Top = 64
+          Width = 105
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'ATT BETALA:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object DBText9: TDBText
-          Left = 829
-          Top = 26
-          Width = 121
-          Height = 20
+          Left = 1020
+          Top = 32
+          Width = 149
+          Height = 25
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'VAT_Value'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label37: TLabel
-          Left = 656
-          Top = 28
-          Width = 45
-          Height = 16
+          Left = 807
+          Top = 34
+          Width = 56
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'MOMS:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object Label44: TLabel
-          Left = 216
-          Top = 61
-          Width = 71
-          Height = 15
+          Left = 266
+          Top = 75
+          Width = 88
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'PROVISION: '
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object Label45: TLabel
-          Left = 8
-          Top = 58
-          Width = 44
-          Height = 15
+          Left = 10
+          Top = 71
+          Width = 56
+          Height = 17
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'KASSA: '
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -12
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
         end
         object DBText7: TDBText
-          Left = 953
-          Top = 50
-          Width = 52
-          Height = 16
+          Left = 1173
+          Top = 62
+          Width = 66
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           AutoSize = True
           Color = clWhite
           DataField = 'CurrencyName'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentColor = False
@@ -1609,47 +2060,59 @@ object frmAttestInvoice: TfrmAttestInvoice
           Transparent = True
         end
         object Label7: TLabel
-          Left = 656
-          Top = 4
-          Width = 160
-          Height = 16
+          Left = 807
+          Top = 5
+          Width = 204
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'ATT BETALA(utan moms):'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object DBText10: TDBText
-          Left = 829
+          Left = 1020
           Top = 2
-          Width = 121
-          Height = 20
+          Width = 149
+          Height = 25
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taRightJustify
           Color = clWhite
           DataField = 'Inv_Value_To_Be_Paid_2'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
         end
         object DBText11: TDBText
-          Left = 953
+          Left = 1173
           Top = 2
-          Width = 58
-          Height = 16
+          Width = 74
+          Height = 19
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           AutoSize = True
           Color = clWhite
           DataField = 'CurrencyName'
           DataSource = dmVidaInvoice.dsrcInvoiceHead_II
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -13
+          Font.Height = -17
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentColor = False
@@ -1657,15 +2120,19 @@ object frmAttestInvoice: TfrmAttestInvoice
           Transparent = True
         end
         object DBEdit1: TDBEdit
-          Left = 616
-          Top = 4
-          Width = 33
+          Left = 758
+          Top = 5
+          Width = 41
           Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataField = 'TotalInvoice'
           DataSource = dmVidaInvoice.dsrcInvoiceDetail
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -10
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
@@ -1677,13 +2144,17 @@ object frmAttestInvoice: TfrmAttestInvoice
   end
   object TabControl1: TTabControl
     Left = 0
-    Top = 132
-    Width = 1084
-    Height = 19
+    Top = 162
+    Width = 1334
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -10
+    Font.Height = -12
     Font.Name = 'Arial'
     Font.Style = []
     ParentFont = False
@@ -1697,16 +2168,24 @@ object frmAttestInvoice: TfrmAttestInvoice
   end
   object Panel6: TPanel
     Left = 0
-    Top = 151
-    Width = 1084
-    Height = 721
+    Top = 186
+    Width = 1334
+    Height = 873
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 6
     object grdInvDtl: TcxGrid
       Left = 1
       Top = 1
-      Width = 1082
-      Height = 340
+      Width = 1332
+      Height = 407
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 0
       object grdInvDtlDBTableView1: TcxGridDBTableView
@@ -1870,111 +2349,172 @@ object frmAttestInvoice: TfrmAttestInvoice
     end
     object cxSplitter1: TcxSplitter
       Left = 1
-      Top = 341
-      Width = 1082
+      Top = 408
+      Width = 1332
       Height = 8
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       HotZoneClassName = 'TcxMediaPlayer8Style'
       AlignSplitter = salBottom
       Control = Panel7
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object Panel7: TPanel
       Left = 1
-      Top = 349
-      Width = 1082
-      Height = 371
+      Top = 416
+      Width = 1332
+      Height = 456
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       BevelOuter = bvNone
       Caption = 'Panel7'
       TabOrder = 2
       object Panel1: TPanel
         Left = 0
-        Top = 263
-        Width = 1082
-        Height = 108
+        Top = 323
+        Width = 1332
+        Height = 133
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         TabOrder = 0
         object Label31: TLabel
-          Left = 16
-          Top = 33
-          Width = 58
-          Height = 13
+          Left = 20
+          Top = 41
+          Width = 73
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Beskrivning:'
         end
         object Label32: TLabel
-          Left = 16
-          Top = 57
-          Width = 66
-          Height = 13
+          Left = 20
+          Top = 70
+          Width = 79
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lev.fakturanr:'
         end
         object Label33: TLabel
-          Left = 16
-          Top = 80
-          Width = 86
-          Height = 13
+          Left = 20
+          Top = 98
+          Width = 105
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lev.fakturadatum:'
         end
         object Label39: TLabel
-          Left = 265
-          Top = 56
-          Width = 36
-          Height = 13
+          Left = 326
+          Top = 69
+          Width = 47
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Belopp:'
         end
         object Label40: TLabel
-          Left = 265
-          Top = 32
-          Width = 54
-          Height = 13
+          Left = 326
+          Top = 39
+          Width = 67
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Leverant'#246'r:'
         end
         object Label47: TLabel
-          Left = 16
-          Top = 12
-          Width = 39
-          Height = 13
+          Left = 20
+          Top = 15
+          Width = 47
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Attestnr:'
         end
         object Label48: TLabel
-          Left = 264
-          Top = 80
-          Width = 33
-          Height = 13
+          Left = 325
+          Top = 98
+          Width = 41
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Valuta:'
         end
         object Label49: TLabel
-          Left = 951
-          Top = 76
-          Width = 35
-          Height = 13
+          Left = 1170
+          Top = 94
+          Width = 42
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Lev.Nr:'
         end
         object Label50: TLabel
-          Left = 944
-          Top = 92
-          Width = 42
-          Height = 13
+          Left = 1162
+          Top = 113
+          Width = 52
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Valutanr:'
         end
         object Label46: TLabel
-          Left = 584
-          Top = 80
-          Width = 76
-          Height = 13
+          Left = 719
+          Top = 98
+          Width = 94
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Snabbfakturanr:'
         end
         object Label54: TLabel
-          Left = 457
-          Top = 56
-          Width = 115
-          Height = 13
+          Left = 562
+          Top = 69
+          Width = 144
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Totalt belopp lev.faktura'
         end
         object cbDescription: TcxDBComboBox
-          Left = 104
-          Top = 24
+          Left = 128
+          Top = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Description'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Properties.Items.Strings = (
@@ -1984,56 +2524,80 @@ object frmAttestInvoice: TfrmAttestInvoice
           TabOrder = 0
           OnEnter = cbDescriptionEnter
           OnExit = cbDescriptionExit
-          Width = 149
+          Width = 183
         end
         object meSupplier_InvoiceNo: TcxDBMaskEdit
-          Left = 104
-          Top = 48
+          Left = 128
+          Top = 59
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Supplier_InvoiceNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           TabOrder = 1
           OnEnter = meSupplier_InvoiceNoEnter
-          Width = 149
+          Width = 183
         end
         object deSupplier_InvoiceDate: TcxDBDateEdit
-          Left = 104
-          Top = 72
+          Left = 128
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Supplier_InvoiceDate'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           TabOrder = 2
           OnEnter = deSupplier_InvoiceDateEnter
-          Width = 149
+          Width = 183
         end
         object labelSequensNo: TcxDBLabel
-          Left = 104
-          Top = 5
+          Left = 128
+          Top = 6
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'SequensNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Style.StyleController = cxEditStyleController1
-          Height = 19
-          Width = 121
+          Height = 24
+          Width = 149
         end
         object labelSupplierNo: TcxDBLabel
-          Left = 992
-          Top = 72
+          Left = 1221
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'SupplierNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Style.StyleController = cxEditStyleController1
-          Height = 21
-          Width = 81
+          Height = 25
+          Width = 100
         end
         object labelCurrencyNo: TcxDBLabel
-          Left = 992
-          Top = 88
+          Left = 1221
+          Top = 108
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'CurrencyNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Style.StyleController = cxEditStyleController1
-          Height = 21
-          Width = 81
+          Height = 26
+          Width = 100
         end
         object lcSupplierNo: TcxDBLookupComboBox
-          Left = 322
-          Top = 24
+          Left = 396
+          Top = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'SupplierNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Properties.DropDownListStyle = lsFixedList
@@ -2047,20 +2611,28 @@ object frmAttestInvoice: TfrmAttestInvoice
           Properties.ListOptions.ShowHeader = False
           Properties.ListSource = dmsContact.ds_Customers
           TabOrder = 6
-          Width = 231
+          Width = 285
         end
         object meAmountAttested: TcxDBMaskEdit
-          Left = 322
-          Top = 48
+          Left = 396
+          Top = 59
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Amount'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           TabOrder = 7
           OnEnter = meAmountAttestedEnter
-          Width = 95
+          Width = 117
         end
         object lcCurrencyNo: TcxDBLookupComboBox
-          Left = 322
-          Top = 72
+          Left = 396
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'CurrencyNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Properties.KeyFieldNames = 'CurrencyNo'
@@ -2071,40 +2643,56 @@ object frmAttestInvoice: TfrmAttestInvoice
           Properties.ListOptions.ShowHeader = False
           Properties.ListSource = dmsContact.dsCurrency
           TabOrder = 8
-          Width = 97
+          Width = 120
         end
         object meQuick_InvoiceNo: TcxDBMaskEdit
-          Left = 666
-          Top = 71
+          Left = 820
+          Top = 87
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Quick_InvoiceNo'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           TabOrder = 9
-          Width = 117
+          Width = 144
         end
         object memoNote: TcxDBMemo
-          Left = 584
-          Top = 8
+          Left = 719
+          Top = 10
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'Note'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           TabOrder = 10
           OnEnter = memoNoteEnter
-          Height = 57
-          Width = 473
+          Height = 70
+          Width = 582
         end
         object teAmount: TcxDBMaskEdit
-          Left = 459
-          Top = 72
+          Left = 565
+          Top = 89
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           DataBinding.DataField = 'AmountAttested'
           DataBinding.DataSource = dmVidaInvoice.ds_Att_Ext_ServicesII
           Properties.ReadOnly = False
           TabOrder = 11
-          Width = 113
+          Width = 139
         end
         object Button1: TButton
-          Left = 800
-          Top = 72
-          Width = 75
-          Height = 25
+          Left = 985
+          Top = 89
+          Width = 92
+          Height = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Button1'
           TabOrder = 12
           OnClick = Button1Click
@@ -2112,9 +2700,13 @@ object frmAttestInvoice: TfrmAttestInvoice
       end
       object grdAtt: TcxGrid
         Left = 0
-        Top = 62
-        Width = 1082
-        Height = 201
+        Top = 76
+        Width = 1332
+        Height = 247
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         TabOrder = 1
         object grdAttDBTableView1: TcxGridDBTableView
@@ -2261,41 +2853,61 @@ object frmAttestInvoice: TfrmAttestInvoice
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 1082
-        Height = 62
+        Width = 1332
+        Height = 76
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
         object Panel3: TPanel
-          Left = 995
+          Left = 1225
           Top = 0
-          Width = 87
-          Height = 62
+          Width = 107
+          Height = 76
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alRight
           BevelOuter = bvNone
           TabOrder = 0
           object dxBarDockControl2: TdxBarDockControl
             Left = 0
             Top = 0
-            Width = 87
-            Height = 45
+            Width = 107
+            Height = 47
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = dalTop
             BarManager = dxBarManager1
           end
         end
         object Panel4: TPanel
-          Left = 162
+          Left = 199
           Top = 0
-          Width = 833
-          Height = 62
+          Width = 1026
+          Height = 76
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           object dxBarDockControl1: TdxBarDockControl
             Left = 0
             Top = 0
-            Width = 833
-            Height = 45
+            Width = 1026
+            Height = 47
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = dalTop
             BarManager = dxBarManager1
           end
@@ -2303,34 +2915,54 @@ object frmAttestInvoice: TfrmAttestInvoice
         object Panel5: TPanel
           Left = 0
           Top = 0
-          Width = 162
-          Height = 62
+          Width = 199
+          Height = 76
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 2
           object eInvNo: TcxTextEdit
-            Left = 88
+            Left = 108
             Top = 2
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             TabOrder = 0
             OnKeyDown = eInvNoKeyDown
-            Width = 65
+            Width = 80
           end
           object nfSearchLO: TcxTextEdit
-            Left = 88
-            Top = 26
+            Left = 108
+            Top = 32
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             TabOrder = 1
             OnKeyDown = nfSearchLOKeyDown
-            Width = 65
+            Width = 80
           end
           object cxLabel1: TcxLabel
-            Left = 3
-            Top = 8
+            Left = 4
+            Top = 10
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'S'#246'k faktnr: F7'
             FocusControl = eInvNo
           end
           object cxLabel2: TcxLabel
-            Left = 3
-            Top = 32
+            Left = 4
+            Top = 39
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'S'#246'k LONr: s+F7'
             FocusControl = nfSearchLO
           end
@@ -2341,7 +2973,7 @@ object frmAttestInvoice: TfrmAttestInvoice
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
@@ -3851,7 +4483,7 @@ object frmAttestInvoice: TfrmAttestInvoice
   object cxStyleRepository1: TcxStyleRepository
     Left = 328
     Top = 271
-    PixelsPerInch = 96
+    PixelsPerInch = 120
     object cxStyleYellow: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clYellow
@@ -3866,7 +4498,7 @@ object frmAttestInvoice: TfrmAttestInvoice
     Style.Color = clYellow
     Left = 208
     Top = 263
-    PixelsPerInch = 96
+    PixelsPerInch = 120
   end
   object cxGridPopupMenu1: TcxGridPopupMenu
     Grid = grdInvDtl
@@ -4427,410 +5059,407 @@ object frmAttestInvoice: TfrmAttestInvoice
       0D000A0072006700440065006200690074004300720065006400690074002E00
       560061006C00750065007300010030002C003100010001000D000A0054006100
       620043006F006E00740072006F006C0031002E00540061006200730001003100
-      2C003200010001000D000A00640078004200610072004D0061006E0061006700
-      6500720031002E00430061007400650067006F00720069006500730001004400
-      65006600610075006C007400010001000D000A006300620049006E0076006F00
-      69006300650054007900700065002E00500072006F0070006500720074006900
-      650073002E004900740065006D00730001002200560049004400410020002800
-      4B003100290022002C002200500072006F0066006F0072006D00610020002800
-      660061006B0074002E00730065006E00610072006500290022002C0022005000
-      72006F0066006F0072006D0061002000280066006C0079007400740061002000
-      70006B007400290022002C0049006E006B00F60070007300660061006B007400
-      7500720061002C002200550053004100200028004B003200290022002C004600
-      5700010001000D000A0063006200440065007300630072006900700074006900
-      6F006E002E00500072006F0070006500720074006900650073002E0049007400
-      65006D00730001004100720062006500740065002C0056006100720061000100
-      01000D000A007300740053007400720069006E00670073005F0055006E006900
-      63006F00640065000D000A00730074004F007400680065007200530074007200
-      69006E00670073005F0055006E00690063006F00640065000D000A0044004200
-      43006800650063006B0042006F00780031002E00560061006C00750065004300
-      6800650063006B006500640001003100010001000D000A004400420043006800
-      650063006B0042006F00780031002E00560061006C007500650055006E006300
-      6800650063006B006500640001003000010001000D000A006300620043006F00
-      6D006D0069007300730069006F006E0050006100690064004200790043007500
-      730074006F006D00650072002E00560061006C00750065004300680065006300
-      6B006500640001003100010001000D000A006300620043006F006D006D006900
-      7300730069006F006E0050006100690064004200790043007500730074006F00
-      6D00650072002E00560061006C007500650055006E0063006800650063006B00
-      6500640001003000010001000D000A00630062005600410054002E0056006100
-      6C007500650043006800650063006B006500640001003100010001000D000A00
-      630062005600410054002E00560061006C007500650055006E00630068006500
-      63006B006500640001003000010001000D000A00630062004600720065006900
-      67006800740049006E0044006900730063006F0075006E0074002E0056006100
-      6C007500650043006800650063006B006500640001003100010001000D000A00
-      63006200460072006500690067006800740049006E0044006900730063006F00
-      75006E0074002E00560061006C007500650055006E0063006800650063006B00
-      6500640001003000010001000D000A0063006200460072006500690067006800
-      740049006E0043006F006D006D002E00560061006C0075006500430068006500
-      63006B006500640001003100010001000D000A00630062004600720065006900
-      67006800740049006E0043006F006D006D002E00560061006C00750065005500
-      6E0063006800650063006B006500640001003000010001000D000A0065004600
-      61006B0074007500720061004E0072002E005400650078007400010030003000
-      3000300030003000010001000D000A007300740043006F006C006C0065006300
-      740069006F006E0073005F0055006E00690063006F00640065000D000A006C00
-      63004B006F006E0074006F002E00500072006F00700065007200740069006500
-      73002E004C0069007300740043006F006C0075006D006E0073005B0030005D00
-      2E00430061007000740069006F006E00010049006E0076006F00690063006500
-      54007900700065004E0061006D006500010001000D000A006C00630053007500
-      700070006C006900650072004E006F002E00500072006F007000650072007400
-      6900650073002E004C0069007300740043006F006C0075006D006E0073005B00
-      30005D002E00430061007000740069006F006E00010043006C00690065006E00
-      74004E0061006D006500010001000D000A006C00630043007500720072006500
-      6E00630079004E006F002E00500072006F007000650072007400690065007300
-      2E004C0069007300740043006F006C0075006D006E0073005B0030005D002E00
-      430061007000740069006F006E000100430075007200720065006E0063007900
-      4E0061006D006500010001000D000A0073007400430068006100720053006500
-      740073005F0055006E00690063006F00640065000D000A005400660072006D00
-      41007400740065007300740049006E0076006F00690063006500010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A006400
-      7800500061006700650043006F006E00740072006F006C003100010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004C00
-      6100620065006C0031000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000D000A004C006100620065006C003200010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004400
-      4200540065007800740031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C0043007500730074006F006D006500
-      72000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A0074007800740043007500730074006F006D006500720001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F0043004800410052005300450054000D000A00
-      4C005000610079006D0065006E0074005400650072006D007300010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004400
-      4200540065007800740034000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A0044004200540065007800740034003200
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00330035000100440045004600410055004C00
+      2C003200010001000D000A006300620049006E0076006F006900630065005400
+      7900700065002E00500072006F0070006500720074006900650073002E004900
+      740065006D007300010022005600490044004100200028004B00310029002200
+      2C002200500072006F0066006F0072006D00610020002800660061006B007400
+      2E00730065006E00610072006500290022002C002200500072006F0066006F00
+      72006D0061002000280066006C007900740074006100200070006B0074002900
+      22002C0049006E006B00F60070007300660061006B0074007500720061002C00
+      2200550053004100200028004B003200290022002C0046005700010001000D00
+      0A00630062004400650073006300720069007000740069006F006E002E005000
+      72006F0070006500720074006900650073002E004900740065006D0073000100
+      4100720062006500740065002C005600610072006100010001000D000A007300
+      740053007400720069006E00670073005F0055006E00690063006F0064006500
+      0D000A00730074004F00740068006500720053007400720069006E0067007300
+      5F0055006E00690063006F00640065000D000A00440042004300680065006300
+      6B0042006F00780031002E00560061006C007500650043006800650063006B00
+      6500640001003100010001000D000A004400420043006800650063006B004200
+      6F00780031002E00560061006C007500650055006E0063006800650063006B00
+      6500640001003000010001000D000A006300620043006F006D006D0069007300
+      730069006F006E0050006100690064004200790043007500730074006F006D00
+      650072002E00560061006C007500650043006800650063006B00650064000100
+      3100010001000D000A006300620043006F006D006D0069007300730069006F00
+      6E0050006100690064004200790043007500730074006F006D00650072002E00
+      560061006C007500650055006E0063006800650063006B006500640001003000
+      010001000D000A00630062005600410054002E00560061006C00750065004300
+      6800650063006B006500640001003100010001000D000A006300620056004100
+      54002E00560061006C007500650055006E0063006800650063006B0065006400
+      01003000010001000D000A006300620046007200650069006700680074004900
+      6E0044006900730063006F0075006E0074002E00560061006C00750065004300
+      6800650063006B006500640001003100010001000D000A006300620046007200
+      6500690067006800740049006E0044006900730063006F0075006E0074002E00
+      560061006C007500650055006E0063006800650063006B006500640001003000
+      010001000D000A0063006200460072006500690067006800740049006E004300
+      6F006D006D002E00560061006C007500650043006800650063006B0065006400
+      01003100010001000D000A006300620046007200650069006700680074004900
+      6E0043006F006D006D002E00560061006C007500650055006E00630068006500
+      63006B006500640001003000010001000D000A006500460061006B0074007500
+      720061004E0072002E0054006500780074000100300030003000300030003000
+      010001000D000A007300740043006F006C006C0065006300740069006F006E00
+      73005F0055006E00690063006F00640065000D000A006C0063004B006F006E00
+      74006F002E00500072006F0070006500720074006900650073002E004C006900
+      7300740043006F006C0075006D006E0073005B0030005D002E00430061007000
+      740069006F006E00010049006E0076006F006900630065005400790070006500
+      4E0061006D006500010001000D000A006C00630053007500700070006C006900
+      650072004E006F002E00500072006F0070006500720074006900650073002E00
+      4C0069007300740043006F006C0075006D006E0073005B0030005D002E004300
+      61007000740069006F006E00010043006C00690065006E0074004E0061006D00
+      6500010001000D000A006C006300430075007200720065006E00630079004E00
+      6F002E00500072006F0070006500720074006900650073002E004C0069007300
+      740043006F006C0075006D006E0073005B0030005D002E004300610070007400
+      69006F006E000100430075007200720065006E00630079004E0061006D006500
+      010001000D000A0073007400430068006100720053006500740073005F005500
+      6E00690063006F00640065000D000A005400660072006D004100740074006500
+      7300740049006E0076006F006900630065000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A0064007800500061006700
+      650043006F006E00740072006F006C0031000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
       54005F0043004800410052005300450054000D000A004C006100620065006C00
-      36000100440045004600410055004C0054005F00430048004100520053004500
+      31000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A004400420054006500780074003600010044004500460041005500
-      4C0054005F004300480041005200530045005400010044004500460041005500
-      4C0054005F004300480041005200530045005400010044004500460041005500
-      4C0054005F0043004800410052005300450054000D000A004C00610062006500
-      6C00310032000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A0044004200540065007800740031003800010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004C00
-      6100620065006C00350031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C006100620065006C00350032000100
-      440045004600410055004C0054005F0043004800410052005300450054000100
-      440045004600410055004C0054005F0043004800410052005300450054000100
-      440045004600410055004C0054005F0043004800410052005300450054000D00
-      0A004C006100620065006C00320039000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000D000A00440042005400650078007400
-      38000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A004400420054006500780074003100330001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C00350033000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A007200670044006500620069007400430072006500
-      6400690074000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A004400420043006800650063006B0042006F0078003100
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A006300620043006F006D006D0069007300730069006F006E0050006100
-      690064004200790043007500730074006F006D00650072000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0063006200
-      5600410054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A0063006200460072006500690067006800740049006E00
-      44006900730063006F0075006E0074000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000D000A00630062004600720065006900
-      67006800740049006E0043006F006D006D000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A004C006100620065006C00
-      310030000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A004C006100620065006C003400320001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C00310036000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004400420054006500780074003200320001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F0043004800410052005300450054000D000A00
-      4C006100620065006C00330038000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004C006100620065006C0034003300
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00310031000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A00440042004D0065006D00
-      6F0031000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00440042004D0065006D006F00320001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C0033000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A0044004200540065007800740033000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A004C006100
-      620065006C0038000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004400420054006500780074003200010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004400
-      42005400650078007400310032000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004C006100620065006C0033003000
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00310038000100440045004600410055004C00
+      54000D000A004C006100620065006C0032000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
       54005F0043004800410052005300450054000D000A0044004200540065007800
-      7400320034000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A004C006100620065006C00320032000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0044004200
-      5400650078007400320038000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A0044004200540065007800740032003900
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00320033000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A004C006100620065006C00
-      320034000100440045004600410055004C0054005F0043004800410052005300
+      740031000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00440042005400650078007400330030000100440045004600
+      450054000D000A004C0043007500730074006F006D0065007200010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A007400
+      7800740043007500730074006F006D0065007200010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00500061007900
+      6D0065006E0074005400650072006D0073000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A0044004200540065007800
+      740034000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00440042005400650078007400340032000100440045004600
       410055004C0054005F0043004800410052005300450054000100440045004600
       410055004C0054005F0043004800410052005300450054000100440045004600
       410055004C0054005F0043004800410052005300450054000D000A004C006100
-      620065006C00320035000100440045004600410055004C0054005F0043004800
+      620065006C00330035000100440045004600410055004C0054005F0043004800
       410052005300450054000100440045004600410055004C0054005F0043004800
       410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000D000A00440042005400650078007400330031000100
+      410052005300450054000D000A004C006100620065006C003600010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A004400
+      4200540065007800740036000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000D000A004C006100620065006C00310032000100
       440045004600410055004C0054005F0043004800410052005300450054000100
       440045004600410055004C0054005F0043004800410052005300450054000100
       440045004600410055004C0054005F0043004800410052005300450054000D00
-      0A004C006100620065006C00330036000100440045004600410055004C005400
+      0A00440042005400650078007400310038000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A004C006100620065006C00
+      350031000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A004C006100620065006C003500320001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F0043004800410052005300450054000D000A004C0061006200
+      65006C00320039000100440045004600410055004C0054005F00430048004100
+      52005300450054000100440045004600410055004C0054005F00430048004100
+      52005300450054000100440045004600410055004C0054005F00430048004100
+      52005300450054000D000A004400420054006500780074003800010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A004400
+      42005400650078007400310033000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A004C006100620065006C0035003300
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A0072006700440065006200690074004300720065006400690074000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A004400420043006800650063006B0042006F00780031000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A0063006200
+      43006F006D006D0069007300730069006F006E00500061006900640042007900
+      43007500730074006F006D00650072000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00630062005600410054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A0063006200460072006500690067006800740049006E004400690073006300
+      6F0075006E0074000100440045004600410055004C0054005F00430048004100
+      52005300450054000100440045004600410055004C0054005F00430048004100
+      52005300450054000100440045004600410055004C0054005F00430048004100
+      52005300450054000D000A006300620046007200650069006700680074004900
+      6E0043006F006D006D000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A004C006100620065006C003100300001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      4C006100620065006C00340032000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A004C006100620065006C0031003600
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A0044004200540065007800740032003200010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C00330038000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A004C006100620065006C00340033000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A004C006100
+      620065006C00310031000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A00440042004D0065006D006F00310001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      440042004D0065006D006F0032000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A004C006100620065006C0033000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A0044004200540065007800740033000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A004C006100620065006C003800
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A0044004200540065007800740032000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A0044004200540065007800
+      7400310032000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A004C006100620065006C00330030000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A004C006100
+      620065006C00310038000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A00440042005400650078007400320034000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A004C006100620065006C00320032000100440045004600410055004C005400
       5F0043004800410052005300450054000100440045004600410055004C005400
       5F0043004800410052005300450054000100440045004600410055004C005400
       5F0043004800410052005300450054000D000A00440042005400650078007400
-      340034000100440045004600410055004C0054005F0043004800410052005300
+      320038000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A004C006100620065006C003100350001004400450046004100
+      450054000D000A00440042005400650078007400320039000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A004C006100
+      620065006C00320033000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A004C006100620065006C003200340001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      440042005400650078007400330030000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A004C006100620065006C003200
+      35000100440045004600410055004C0054005F00430048004100520053004500
+      54000100440045004600410055004C0054005F00430048004100520053004500
+      54000100440045004600410055004C0054005F00430048004100520053004500
+      54000D000A004400420054006500780074003300310001004400450046004100
       55004C0054005F00430048004100520053004500540001004400450046004100
       55004C0054005F00430048004100520053004500540001004400450046004100
       55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C00310034000100440045004600410055004C0054005F00430048004100
+      65006C00330036000100440045004600410055004C0054005F00430048004100
       52005300450054000100440045004600410055004C0054005F00430048004100
       52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004C006100620065006C0031003300010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A004400
-      4200540065007800740035000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C006100620065006C00340001004400
+      52005300450054000D000A004400420054006500780074003400340001004400
       45004600410055004C0054005F00430048004100520053004500540001004400
       45004600410055004C0054005F00430048004100520053004500540001004400
       45004600410055004C0054005F0043004800410052005300450054000D000A00
-      4C006100620065006C0035000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C006100620065006C00390001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F0043004800410052005300450054000D000A00
-      4C006100620065006C00310037000100440045004600410055004C0054005F00
+      4C006100620065006C00310035000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004C006100620065006C0031003900
+      43004800410052005300450054000D000A004C006100620065006C0031003400
       0100440045004600410055004C0054005F004300480041005200530045005400
       0100440045004600410055004C0054005F004300480041005200530045005400
       0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00320031000100440045004600410055004C00
+      0D000A004C006100620065006C00310033000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
       54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A004C006100620065006C00
-      320030000100440045004600410055004C0054005F0043004800410052005300
+      54005F0043004800410052005300450054000D000A0044004200540065007800
+      740035000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00440042004500640069007400320001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00640063004F00
-      72006400650072004E006F005400650078007400010044004500460041005500
+      450054000D000A004C006100620065006C003400010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
-      4C0054005F0043004800410052005300450054000D000A006400630053006100
-      6C00650073004D0061006E000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00640063004F0075007200520065006600
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A0064006300430075007300740052006500660001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C00320036000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004400420054006500780074003300320001004400
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C0035000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A004C006100620065006C003900010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C00310037000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A004C006100620065006C00310039000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A004C006100
+      620065006C00320031000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A004C006100620065006C003200300001004400
       45004600410055004C0054005F00430048004100520053004500540001004400
       45004600410055004C0054005F00430048004100520053004500540001004400
       45004600410055004C0054005F0043004800410052005300450054000D000A00
-      4C006100620065006C00320037000100440045004600410055004C0054005F00
+      44004200450064006900740032000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004400420054006500780074003300
-      33000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A004C006100620065006C0032003800010044004500460041005500
+      43004800410052005300450054000D000A00640063004F007200640065007200
+      4E006F0054006500780074000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000D000A0064006300530061006C00650073004D00
+      61006E000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00640063004F00750072005200650066000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A0064006300
+      43007500730074005200650066000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A004C006100620065006C0032003600
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A0044004200540065007800740033003200010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004C00610062006500
+      6C00320037000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A0044004200540065007800740033003300010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A004C00
+      6100620065006C00320038000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000100440045004600410055004C0054005F004300
+      4800410052005300450054000D000A0044004200540065007800740033003400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A0044004200540065007800740033003500010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F004300480041005200530045005400010044004500460041005500
       4C0054005F0043004800410052005300450054000D000A004400420054006500
-      78007400330034000100440045004600410055004C0054005F00430048004100
+      78007400330037000100440045004600410055004C0054005F00430048004100
       52005300450054000100440045004600410055004C0054005F00430048004100
       52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004400420054006500780074003300350001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F0043004800410052005300450054000D000A00
-      440042005400650078007400330037000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000100440045004600410055004C005400
-      5F0043004800410052005300450054000D000A004C006100620065006C003300
-      34000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A004400420054006500780074003400300001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A00440042005400
-      650078007400320031000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000100440045004600410055004C0054005F0043004800
-      410052005300450054000D000A004C006100620065006C003400310001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F0043004800410052005300450054000D000A00
-      44004200540065007800740039000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004C006100620065006C0033003700
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A004C006100620065006C00340034000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A004C006100620065006C00
-      340035000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00440042005400650078007400370001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C0037000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A0044004200540065007800740031003000010044004500
+      52005300450054000D000A004C006100620065006C0033003400010044004500
       4600410055004C0054005F004300480041005200530045005400010044004500
       4600410055004C0054005F004300480041005200530045005400010044004500
       4600410055004C0054005F0043004800410052005300450054000D000A004400
-      42005400650078007400310031000100440045004600410055004C0054005F00
+      42005400650078007400340030000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
       43004800410052005300450054000100440045004600410055004C0054005F00
-      43004800410052005300450054000D000A004400420045006400690074003100
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A0054006100620043006F006E00740072006F006C003100010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F004300480041005200530045005400010044004500
-      4600410055004C0054005F0043004800410052005300450054000D000A006400
-      78004200610072004D0061006E00610067006500720031000100440045004600
+      43004800410052005300450054000D000A004400420054006500780074003200
+      31000100440045004600410055004C0054005F00430048004100520053004500
+      54000100440045004600410055004C0054005F00430048004100520053004500
+      54000100440045004600410055004C0054005F00430048004100520053004500
+      54000D000A004C006100620065006C0034003100010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F004300480041005200530045005400010044004500460041005500
+      4C0054005F0043004800410052005300450054000D000A004400420054006500
+      7800740039000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A004C006100620065006C00330037000100440045004600
       410055004C0054005F0043004800410052005300450054000100440045004600
       410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0064007800
-      4200610072004D0061006E006100670065007200310042006100720031000100
+      410055004C0054005F0043004800410052005300450054000D000A004C006100
+      620065006C00340034000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A004C006100620065006C003400350001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      44004200540065007800740037000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000100440045004600410055004C0054005F00
+      43004800410052005300450054000D000A004C006100620065006C0037000100
       440045004600410055004C0054005F0043004800410052005300450054000100
       440045004600410055004C0054005F0043004800410052005300450054000100
       440045004600410055004C0054005F0043004800410052005300450054000D00
-      0A00640078004200610072004D0061006E006100670065007200310042006100
-      720032000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00630078005300740079006C006500590065006C006C006F00
-      77000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A00}
+      0A00440042005400650078007400310030000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A0044004200540065007800
+      7400310031000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A0044004200450064006900740031000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A0054006100
+      620043006F006E00740072006F006C0031000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000100440045004600410055004C00
+      54005F0043004800410052005300450054000D000A0064007800420061007200
+      4D0061006E00610067006500720031000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00640078004200610072004D00
+      61006E0061006700650072003100420061007200310001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F00430048004100520053004500540001004400450046004100
+      55004C0054005F0043004800410052005300450054000D000A00640078004200
+      610072004D0061006E0061006700650072003100420061007200320001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00
+      630078005300740079006C006500590065006C006C006F007700010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A00}
   end
 end

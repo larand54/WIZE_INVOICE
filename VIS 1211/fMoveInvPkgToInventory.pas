@@ -434,7 +434,7 @@ begin
 
   if (mtPropsLIPNo.AsInteger = -1) then
   Begin
-    ShowMessage('Välj ett lager!');
+    ShowMessage('Select a inventory.');
     Exit;
   End;
 
@@ -443,12 +443,12 @@ begin
     // InternalInvoiceNo:= ProformaInvNoExist ;
     if ProformaInvNoExist > 0 then
     Begin
-      ShowMessage('Fakturanr ' + mtPropsFakturanr.AsString +
-        ' är taget, använd ett annat!');
+      ShowMessage('Invoice number ' + mtPropsFakturanr.AsString +
+        ' is taken, please use another one.');
       Exit;
     End;
 
-    if MessageDlg('Vill du flytta paketen till lager ' + lcPIP.Text + '/' +
+    if MessageDlg('Do you want to move the packages to inventory ' + lcPIP.Text + '/' +
       lcLIP.Text, mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     Begin
 
@@ -507,13 +507,13 @@ begin
             if myRollBack = True then
             Begin
               dmsConnector.Rollback;
-              ShowMessage('Problem att flytta paket, operation rollbacked.');
+              ShowMessage('Problem to move packages, operation rollbacked.');
             End
             else
             Begin
               dmsConnector.Commit;
               InvoiceNoAssigned := True;
-              ShowMessage('Paket flyttade till lager ' + lcLIP.Text);
+              ShowMessage('Packages moved to inventory ' + lcLIP.Text);
             End;
 
           Except
@@ -521,7 +521,7 @@ begin
             Begin
               dmsConnector.Rollback;
               dmsSystem.FDoLog(E.Message);
-              ShowMessage('Problem att flytta paket, operation rollbacked. ' +
+              ShowMessage('Problem to move packages, operation rollbacked. ' +
                 E.Message);
               Raise;
             End;
@@ -534,7 +534,7 @@ begin
       End;
     End // if StrToInt(eProformaNo.Text) > 0 then
     else
-      ShowMessage('Ange Proforma fakturanummer!');
+      ShowMessage('Please enter Proforma invoice number.');
   End; // if..
 end;
 
@@ -548,7 +548,7 @@ begin
 
   if (mtPropsLIPNo.AsInteger < 1) or (mtPropsLIPNo.IsNull) then
   Begin
-    ShowMessage('Välj ett lager!');
+    ShowMessage('Please select a inventory.');
     Exit;
   End;
 
@@ -612,7 +612,7 @@ begin
         Begin
           dmsConnector.Commit;
           InvoiceNoAssigned := True;
-          ShowMessage('Paket flyttade till lager ' + lcLIP.Text);
+          ShowMessage('Packages moved to inventory ' + lcLIP.Text);
           if mtProps.State in [dsBrowse] then
             mtProps.Edit;
           mtPropsFakturanr.AsInteger := GetGetProFormInvNo(InternalInvoiceNo);
@@ -624,7 +624,7 @@ begin
         Begin
           dmsConnector.Rollback;
           dmsSystem.FDoLog(E.Message);
-          ShowMessage('Problem att flytta paket, operation rollbacked. ' +
+          ShowMessage('Problem to move packages, operation rollbacked. ' +
             E.Message);
           Raise;
         End;

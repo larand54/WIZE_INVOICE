@@ -612,7 +612,7 @@ type
     Function InvoiceSaved: Boolean;
     procedure PrintKundSpecifikFaktura(const RapportNamn: String);
     procedure DeleteInvoice(Sender: TObject);
-    procedure GetBookingData(Sender: TObject; ShippingPlanNo: Integer);
+    procedure GetBookingData(Sender: TObject; ShippingPlanNo, InternalInvoiceNo : Integer);
     // function  IsInvoiced(Sender: TObject) : Boolean ;
     // function  GetNextInvoice_DetailNo : Integer ;
     Procedure AddFreigthCost;
@@ -696,7 +696,7 @@ begin
     dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsString +
     ' AND ShippingPlanNo = ' + TabControl1.Tabs[TabControl1.TabIndex];
 
-  GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+  GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 end;
 
 procedure TfrmInvoice.Summarize(Sender: TObject);
@@ -1111,12 +1111,13 @@ Begin
   End; // with
 End;
 
-procedure TfrmInvoice.GetBookingData(Sender: TObject; ShippingPlanNo: Integer);
+procedure TfrmInvoice.GetBookingData(Sender: TObject; ShippingPlanNo, InternalInvoiceNo: Integer);
 begin
   with dmVidaInvoice do
   Begin
     cdsBookingData.Active := False;
-    cdsBookingData.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
+    cdsBookingData.ParamByName('ShippingPlanNo').AsInteger    := ShippingPlanNo ;
+    cdsBookingData.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
     cdsBookingData.Active := True;
     TrpID := cdsBookingDataSUPP_REFERENCE.AsString;
     if cdsBookingData.RecordCount = 0 then
@@ -1142,7 +1143,7 @@ begin
 
   dmVidaInvoice.cdsInvoiceShipToAddress.Active := True;
 
-  GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+  GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
 
   with dmVidaInvoice, dm_Booking, dmsSystem do
   Begin
@@ -1156,27 +1157,27 @@ begin
       cds_LIP.Filter := 'PIPNo = ' + cds_IH_SpecLoadPIPNo.AsString;
     cds_LIP.Filtered := True;
 
-    cdsVoyage.Active := True;
+    cdsVoyageInvoice.Active := True;
     cdsCarrier.Active := True;
     cdsShippers.Active := True;
 
-    cdsBooking.Active := False;
-    cdsBooking.ParamByName('ShippingPlanNo').AsInteger :=
+    cdsBookingInvoice.Active := False;
+    cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger :=
       StrToInt(TabControl1.Tabs[TabControl1.TabIndex]);
-    cdsBooking.Active := True;
+    cdsBookingInvoice.Active := True;
 
-    if cdsBooking.Eof then
+    if cdsBookingInvoice.Eof then
     Begin
-      cdsBooking.Active := False;
+      cdsBookingInvoice.Active := False;
       cdsCarrier.Active := False;
       cdsShippers.Active := False;
-      cdsVoyage.Active := False;
+      cdsVoyageInvoice.Active := False;
     End
     else
     Begin
       cdsCarrier.Active := True;
-      cdsVoyage.Active := False;
-      cdsVoyage.Active := True;
+      cdsVoyageInvoice.Active := False;
+      cdsVoyageInvoice.Active := True;
     End;
 
     Label42.Caption := Trim(cdsInvoiceHeadAddressLine1.AsString) + ', ' +
@@ -1417,7 +1418,7 @@ procedure TfrmInvoice.bbNewCarrierClick(Sender: TObject);
 var
   FormCarrier: TFormCarrier;
 begin
-  if dm_Booking.cdsBooking.Active = True then
+  if dm_Booking.cdsBookingInvoice.Active = True then
   Begin
     FormCarrier := TFormCarrier.Create(Nil);
     Try
@@ -1450,7 +1451,7 @@ begin
   // if not InvoiceSaved then
   if StrToIntDef(lInvoiceNo.Caption, 0) = 0 then
   Begin
-    if MessageDlg('Fakturan är preliminär, vill du ta bort den?',
+    if MessageDlg('This is a preliminary invoice, do you want to delete it?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
       CanClose := True;
@@ -1500,11 +1501,11 @@ begin
 
     dmVidaInvoice.cds_LoadPackagesII.Active := False;
 
-    dm_Booking.cdsBooking.DataSource := Nil;
+    dm_Booking.cdsBookingInvoice.DataSource := Nil;
 
     dmVidaInvoice.cdsInvoiceDetail.UpdateOptions.ReadOnly := False;
 
-    dm_Booking.cdsVoyage.Active := False;
+    dm_Booking.cdsVoyageInvoice.Active := False;
     dmsSystem.cdsCarrier.Active := True;
     dm_Booking.cdsShippers.Active := True;
 
@@ -1534,7 +1535,7 @@ begin
       End
       else
         ShowMessage
-          ('Kan inte ta bort faktura som har tilldelats ett fakturanummer.');
+          ('Cannot delete an invoice that has a invoice number asssigned.');
     End;
   finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }
@@ -1961,6 +1962,7 @@ var
 begin
   FormBookingForm := TFormBookingForm.Create(Nil);
   try
+    dm_Booking.InternalInvoiceNo  :=  dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
     FormBookingForm.CreateCo(StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
 
     { if acGetInvoiceNo.Enabled then
@@ -1970,24 +1972,24 @@ begin
 
     if acGetInvoiceNo.Enabled then
     Begin
-      FormBookingForm.lcCurrency.Properties.ReadOnly := False;
-      FormBookingForm.eFreightCost.Properties.ReadOnly := False;
-      FormBookingForm.lcFreightVolUnit.Properties.ReadOnly := False;
+      FormBookingForm.lcCurrency.Properties.ReadOnly        := False;
+      FormBookingForm.eFreightCost.Properties.ReadOnly      := False;
+      FormBookingForm.lcFreightVolUnit.Properties.ReadOnly  := False;
     End
     else
     Begin
-      FormBookingForm.lcCurrency.Properties.ReadOnly := True;
-      FormBookingForm.eFreightCost.Properties.ReadOnly := True;
-      FormBookingForm.lcFreightVolUnit.Properties.ReadOnly := True;
+      FormBookingForm.lcCurrency.Properties.ReadOnly        := True;
+      FormBookingForm.eFreightCost.Properties.ReadOnly      := True;
+      FormBookingForm.lcFreightVolUnit.Properties.ReadOnly  := True;
     End;
 
     FormBookingForm.ShowModal;
     if FormBookingForm.ReadMeOnly = False then
     Begin
-      GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+      GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]), dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
       if dmVidaInvoice.cdsInvoiceHeadQuickInvoice.AsInteger = 0 then
         ShowMessage
-          ('Om fraktkostnaden har ändrats: stäng fakturan utan att spara och skapa den åter från avropslistan. (är den sparad gå till fakturalistan och ta bort den)');
+          ('If freight cost changed then you need to create the invoice again.');
       if FormBookingForm.BookingNo <> -1 then
       Begin
         if dmVidaInvoice.cdsInvoiceLO.State in [dsBrowse] then
@@ -2046,7 +2048,7 @@ begin
   Msg := dmVidaInvoice.Check_DoesInvoiceValueCorrespondWith_Debit_Credit;
   if Length(Msg) = 0 then
   Begin
-    if MessageDlg('Har du kontrollerat Fakturan?', mtConfirmation,
+    if MessageDlg('Did you check the invoice?', mtConfirmation,
       [mbYes, mbNo], 0) = mrYes then
     Begin
       { if (dmVidaInvoice.cdsInvoiceHeadInvoiceType.AsInteger = 0) or
@@ -2066,7 +2068,7 @@ begin
 
       if DoesInvoiceRowsHaveValues = False then
       Begin
-        ShowMessage('En eller flera fakturarader saknar värde, åtgärda.');
+        ShowMessage('One or many invoice rows are missing value, please correct.');
         Exit;
       End;
 
@@ -2095,7 +2097,7 @@ begin
           End;
         End // OkAttAndraFakturaDatum  := ControlInvDateForInvoice ;
         else
-          ShowMessage('Faktura datum i konflikt med senaste inventeringen.');
+          ShowMessage('Invoice date is in conflict with the latest inventory count.');
       End; // With
     End; // if
   End
@@ -2167,7 +2169,7 @@ begin
     FakturaDatumDag := DayOfTheMonth(cdsInvoiceHeadInvoiceDate.AsDateTime);
 
     if DagensDag <> FakturaDatumDag then
-      if MessageDlg('Vill du ändra till dagens datum?', mtConfirmation,
+      if MessageDlg('Do you want to change to todays date?', mtConfirmation,
         [mbYes, mbNo], 0) = mrYes then
       begin
         if cdsInvoiceHead.State = dsBrowse then
@@ -2177,7 +2179,7 @@ begin
 
     if (cdsInvoiceHeadFreeDelMonth.AsInteger = 1) and
       (cdsInvoiceHeadDueDate.isNull) then
-      ShowMessage('Duedate är tom');
+      ShowMessage('Due date is empty.');
 
   End;
 
@@ -2190,27 +2192,27 @@ begin
   Begin
     if Abs(dmVidaInvoice.cdsInvoiceHeadTotal_Product_Value_No_Freight.AsFloat) /
       Abs(dmVidaInvoice.cdsInvoiceHeadSUM_FreigthCost.AsFloat) > 150 then
-      ShowMessage('Kolla din fraktkostnad.');
+      ShowMessage('Please check your freight cost.');
   End;
 
   if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat > 0) and
     (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 1) then
     ShowMessage
-      ('Notera, fakturan är markerad som kredit men beloppet är positivt.');
+      ('Note, the invoice is marked as a credit but the amount is positive.');
 
   if (dmVidaInvoice.cdsInvoiceHeadInv_Value_To_Be_Paid_2.AsFloat < 0) and
     (dmVidaInvoice.cdsInvoiceHeadDebit_Credit.AsInteger = 0) then
     ShowMessage
-      ('Notera, fakturan är markerad som debit men beloppet är negativt.');
+      ('Note, the invoice is marked a debit but the amount is negative.');
 
   if dmVidaInvoice.cdsInvoiceHeadCurrencyName.AsString <= '' then
   Begin
-    ShowMessage('Valuta saknas, kan ej spara.');
+    ShowMessage('Cannot save because currency is missing.');
     Exit;
   End;
   if dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger < 1 then
   Begin
-    ShowMessage('Kund saknas, kan ej spara.');
+    ShowMessage('Cannot save because customer is missing.');
     Exit;
   End;
 
@@ -2624,7 +2626,7 @@ begin
       End;
     End // if..
     else
-      ShowMessage('Kan inte ändra kund, (bara tillåtet i snabbfaktura)');
+      ShowMessage('Not allowed to change customer, only allowed in quick invoice.');
   End; // with
 end;
 
@@ -2872,7 +2874,7 @@ begin
       dmsContact.GetClientDocPrefs(ClientNo, DocTyp, ReportName, numberOfCopy,
         promptUser, collated, PrinterSetup);
       if (Length(ReportName) < 4) then Begin
-        ShowMessage('Rapporten finns inte upplagd på klienten');
+        ShowMessage('The report is not assigned to the client.');
         Exit;
       End; // if
 
@@ -2999,7 +3001,7 @@ begin
         FreeAndNil(RC);
       End;
       if not (FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile)) then begin
-        ShowMessage('Rapportfil(er) skapades ej!');
+        ShowMessage('Report files were not created.');
         Exit;
       end;
     end
@@ -3050,7 +3052,7 @@ begin
     End;
   End
   else
-    ShowMessage('Emailadress saknas för klienten!');
+    ShowMessage('Email address is missing for the client.');
 end;
 
 procedure TfrmInvoice.acPrintTrpOrderExecute(Sender: TObject);
@@ -3203,7 +3205,7 @@ begin
         frmAttestInvoice.ShowModal;
       End
       else
-        ShowMessage('Kan inte fokusera internal fakturanr ' +
+        ShowMessage('Cannot focus internal invoice number ' +
           cdsInvoiceHeadInternalInvoiceNo.AsString);
 
     Finally
@@ -3245,7 +3247,7 @@ begin
     if dmVidaInvoice.cdsInvoiceDetailTypeOfRow.AsInteger = 2 then
       cdsInvoiceDetail.Delete
     else
-      ShowMessage('Kan inte ta bort fakturarader');
+      ShowMessage('Cannot remove invoice rows.');
   End;
 end;
 
@@ -3566,7 +3568,7 @@ procedure TfrmInvoice.acAddPackagesToLoadExecute(Sender: TObject);
 begin
   // if IsInvoiced(Sender) then exit ;
   // if Invoiced then Exit ;
-  if MessageDlg('Vill du spara ändringar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  if MessageDlg('Do you want to save your changes?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
   then
     with dmVidaInvoice do
     Begin
@@ -3721,7 +3723,7 @@ procedure TfrmInvoice.acAddPackagesToInventoryExecute(Sender: TObject);
 begin
   // if IsInvoiced(Sender) then exit ;
   // if Invoiced then Exit ;
-  if MessageDlg('Vill du spara ändringar?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+  if MessageDlg('Do you want to save your changes?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
   then
     with dmVidaInvoice do
     Begin
@@ -4772,7 +4774,7 @@ BEGIN
           Try
             if sq_LoadToInvoice.Eof then
             Begin
-              ShowMessage('Finns inga laster att fakturera.');
+              ShowMessage('There are no loads to invoice.');
               Exit;
             End;
           Finally
@@ -4800,27 +4802,27 @@ BEGIN
             cdsInvoiceHeadCustomerNo.AsInteger; // Avrop customerNo
           sq_GetLoadIDII.Open;
 
-          cdsBooking.Active := False;
-          cdsBooking.ParamByName('ShippingPlanNo').AsInteger :=
+          cdsBookingInvoice.Active := False;
+          cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger :=
             sq_LONoInInvoiceShippingPlanNo.AsInteger;
           // Juli 6 2006 daMoLM1.cdsAvropShippingPlanNo.AsInteger ;
-          cdsBooking.Active := True;
+          cdsBookingInvoice.Active := True;
 
-          if cdsBooking.RecordCount > 0 then
+          if cdsBookingInvoice.RecordCount > 0 then
           Begin
-            cdsBooking.Edit;
-            cdsBookingSupplierReference.AsString :=
+            cdsBookingInvoice.Edit;
+            cdsBookingInvoiceSupplierReference.AsString :=
               sq_GetLoadIDIILoadID.AsString;
-            cdsBooking.Post;
-            if cdsBooking.ChangeCount > 0 then
+            cdsBookingInvoice.Post;
+            if cdsBookingInvoice.ChangeCount > 0 then
             Begin
-              cdsBooking.ApplyUpdates(0);
-              cdsBooking.CommitUpdates;
+              cdsBookingInvoice.ApplyUpdates(0);
+              cdsBookingInvoice.CommitUpdates;
             End;
           End;
 
           sq_GetLoadIDII.Close;
-          cdsBooking.Active := False;
+          cdsBookingInvoice.Active := False;
         End; // with dm_Booking
 
         // Start Transaction
@@ -5034,7 +5036,7 @@ begin
           if cds_IH_SpecLoadLIPNo.AsInteger > 1 then
             AddLagerPkg
           else
-            ShowMessage('Lagergrupp saknas');
+            ShowMessage('Inventory group is missing.');
         End;
         eSearchPkgNo.Text := '';
       End;
@@ -5169,7 +5171,7 @@ begin
   else if dmVidaInvoice.cds_IH_SpecLoadLIPNo.AsInteger > 1 then
     AddLagerPkg
   else
-    ShowMessage('Lagergrupp saknas');
+    ShowMessage('Inventory group is missing.');
 end;
 
 procedure TfrmInvoice.grdSelectedPkgsDBTableView1DblClick(Sender: TObject);
@@ -5300,7 +5302,7 @@ begin
       else if dmVidaInvoice.cds_IH_SpecLoadLIPNo.AsInteger > 1 then
         AddLagerPkg
       else
-        ShowMessage('Lagergrupp saknas');
+        ShowMessage('Inventory group is missing.');
     End; // if (Key = 32) and (cds_LoadPackages.Active) and (cds_LoadPackages.RecordCount > 0) then
   End; // With
 end;
@@ -5337,8 +5339,8 @@ Begin
       // SUM Product details
       // kolla varför värde inte skapas i snabbfaktura
       if cdsInvoiceDetailProductValue.AsFloat = 0 then
-        ShowMessage('Värde saknas i rad ' + cdsInvoiceDetailInvoiceDetailNo.
-          AsString + '.  Produkt: ' + cdsInvoiceDetailProductDescription.
+        ShowMessage('Value is missing in row ' + cdsInvoiceDetailInvoiceDetailNo.
+          AsString + '.  Product: ' + cdsInvoiceDetailProductDescription.
           AsString);
       cdsInvoiceDetail.Next;
     End;
@@ -5548,7 +5550,7 @@ begin
     dmsContact.GetClientDocPrefs(clientNo, DocTyp, ReportName, numberOfCopy,
                                   promptUser, collated, PrinterSetup);
     if (Length(ReportName) < 4) then Begin
-      ShowMessage('Rapporten finns inte upplagd på klienten');
+      ShowMessage('The report is not assigned to the client.');
       Exit;
     End; // if
 
@@ -5595,7 +5597,7 @@ begin
         End; // if cds_LoadPackagesIINoOfPackages.AsInteger = 2 then
       End // if cds_LoadPackagesII.Locate('PACKAGENO', StrToIntDef(Trim(tePkgNo.Text),0), []) then
       else
-        ShowMessage('Hittar inte paketnr ' + tePkgNo.Text);
+        ShowMessage('Cannot find package number ' + tePkgNo.Text);
   End; // with dmVidaInvoice do
 End;
 
@@ -5794,7 +5796,7 @@ End;
 
 procedure TfrmInvoice.acEDIExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du skicka fakturan som EDI meddelande till kunden?',
+  if MessageDlg('Do you want to send the invoice as a EDI message to the customer?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     dmVidaInvoice.SendInvoiceAsEDI
@@ -5854,7 +5856,7 @@ begin
         FreeAndNil(RC);
       End;
       if not (FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile)) then begin
-        ShowMessage('Rapportfil(er) skapades ej!');
+        ShowMessage('The report files were not created.');
         Exit;
       end;
     end
@@ -5902,7 +5904,7 @@ begin
     End;
   End
   else
-    ShowMessage('Emailadress saknas för klienten!');
+    ShowMessage('Email address is missing for the client.');
 end;
 
 procedure TfrmInvoice.lcLIPEnter(Sender: TObject);

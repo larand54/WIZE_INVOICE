@@ -1490,7 +1490,7 @@ var
   Save_Cursor: TCursor;
   FileName: String;
 begin
-  if MessageDlg('Vill du exportera till excel?', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to export to excel?', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
   Begin
     Save_Cursor := Screen.Cursor;
@@ -1505,7 +1505,7 @@ begin
 
       Try
         ExportGridToExcel(FileName, grdPortLoads, False, False, True, 'xls');
-        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+        ShowMessage('Table exportered to Excel file ' + FileName);
       Except
       End;
       // End ;
@@ -2140,7 +2140,7 @@ begin
         cds_PropsOwnerNo.AsInteger, S);
 
     if LoadNo > -1 then
-      ShowMessage('Paketnr ' + ePkgNo.Text + ' finns på lastnr ' +
+      ShowMessage('Package number ' + ePkgNo.Text + ' is present on load number ' +
         IntToStr(LoadNo));
   Finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }

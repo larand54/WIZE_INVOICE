@@ -308,15 +308,17 @@ const
   cDebit = 0;
   cCredit = 1;
 
-  NORMAL_INVOICE = 0;
-  PROFORMA_REAL_INVOICE_LATER = 1;
+  NORMAL_INVOICE                  = 0;
+  PROFORMA_REAL_INVOICE_LATER     = 1;
   PROFORMA_MOVE_PKGS_TO_INVENTORY = 2;
-  PURCHASE_INVOICE = 3;
-  USA_INVOICE = 4;
-  FW_INVOICE = 5;
-  AGENT_INVOICE = 6;
-  VTA_INVOICE = 7;
-  BORGSTENA_INVOICE = 8;
+  PURCHASE_INVOICE                = 3;
+  USA_INVOICE                     = 4;
+  FW_INVOICE                      = 5;
+  AGENT_INVOICE                   = 6;
+  VTA_INVOICE                     = 7;
+  BORGSTENA_INVOICE               = 8;
+  UK_INVOICE                      = 9 ;
+  UK_INVOICE_PO                   = 10 ;
 
   SHOW_LO_LENGTHS = 0;
   SHOW_ALL_LENGTHS = 1;

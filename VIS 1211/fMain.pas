@@ -925,7 +925,7 @@ begin
   Begin
     if FormOpen then
     Begin
-      ShowMessage('Stäng alla formulär först!');
+      ShowMessage('Close all forms first.');
       Exit;
     End;
     OKHelpBottomDlg := TOKHelpBottomDlg.Create(nil);

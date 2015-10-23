@@ -54,7 +54,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         BevelOuter = bvNone
         TabOrder = 0
         object Label1: TLabel
-          Left = 32
+          Left = 7
           Top = 15
           Width = 42
           Height = 16
@@ -66,7 +66,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           OnDblClick = Label1DblClick
         end
         object Label2: TLabel
-          Left = 22
+          Left = 7
           Top = 43
           Width = 53
           Height = 16
@@ -77,7 +77,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'Utlastad:'
         end
         object Label3: TLabel
-          Left = 33
+          Left = 7
           Top = 70
           Width = 40
           Height = 16
@@ -88,7 +88,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'Status:'
         end
         object Label4: TLabel
-          Left = 310
+          Left = 287
           Top = 15
           Width = 44
           Height = 16
@@ -99,7 +99,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'Last ID:'
         end
         object Label5: TLabel
-          Left = 336
+          Left = 287
           Top = 43
           Width = 20
           Height = 16
@@ -110,7 +110,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'FS:'
         end
         object Label6: TLabel
-          Left = 597
+          Left = 588
           Top = 15
           Width = 96
           Height = 16
@@ -121,7 +121,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'Lokalfraktf'#246'rare:'
         end
         object Label7: TLabel
-          Left = 662
+          Left = 588
           Top = 43
           Width = 30
           Height = 16
@@ -132,7 +132,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Caption = 'Fr'#229'n:'
         end
         object Label8: TLabel
-          Left = 672
+          Left = 588
           Top = 70
           Width = 21
           Height = 16
@@ -521,7 +521,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
       Align = alRight
       TabOrder = 1
       object cxLabel1: TcxLabel
-        Left = 22
+        Left = 8
         Top = 21
         Margins.Left = 4
         Margins.Top = 4
@@ -530,7 +530,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Caption = 'Lagerst'#228'lle:'
       end
       object cxLabel2: TcxLabel
-        Left = 22
+        Left = 8
         Top = 46
         Margins.Left = 4
         Margins.Top = 4

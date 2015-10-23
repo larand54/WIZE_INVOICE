@@ -490,7 +490,7 @@ begin
     if ThisUser.UserID <> 8 then
       if Is_Load_Confirmed(cds_LoadHeadLoadNo.AsInteger) then
       Begin
-        ShowMessage('Kan inte spara för att lasten är ankomstregistrerad');
+        ShowMessage('Cannot save because the load is confirmed arrived.');
         Exit;
       End;
 
@@ -1041,14 +1041,14 @@ begin
       if cds_LoadPackagesPACKAGENO.AsInteger < 1 then
       Begin
         Result := False;
-        ShowMessage('Paketnr saknas på rad ' +
+        ShowMessage('Package number is missing in row ' +
           cds_LoadPackagesLoadDetailNo.AsString);
         Exit;
       End;
       if cds_LoadPackagesSupplierCode.AsString < '0' then
       Begin
         Result := False;
-        ShowMessage('Leverantörskod saknas på rad ' +
+        ShowMessage('Package prefix is missing in row ' +
           cds_LoadPackagesLoadDetailNo.AsString);
         Exit;
       End;
@@ -1165,9 +1165,9 @@ end;
 procedure TdmLoadEntrySSP.cds_LoadPackages1PostError(DataSet: TDataSet;
   E: EDatabaseError; var Action: TDataAction);
 begin
-  ShowMessage('System Error. Paketnr ' + DataSet.FieldByName('PACKAGENO')
+  ShowMessage('System Error. Package number ' + DataSet.FieldByName('PACKAGENO')
     .AsString + '/' + DataSet.FieldByName('SupplierCode').AsString +
-    ' är redan inmatat' + ' Original Message: ' + E.Message);
+    ' is already assigned.' + ' Original Message: ' + E.Message);
   Action := daAbort;
 end;
 
@@ -1319,7 +1319,7 @@ procedure TdmLoadEntrySSP.cds_LoadHeadBeforePost(DataSet: TDataSet);
 begin
   if SQLTimeStampToDateTime(cds_LoadHeadLoadedDate.AsSQLTimeStamp) > Now then
   Begin
-    ShowMessage('Utlastat datum är inom stängd period, var vänlig justera.');
+    ShowMessage('Loading date is inside a finished (not allowed) period, please adjust.');
     Abort;
   End;
 end;
@@ -1344,7 +1344,7 @@ begin
   if cds_LoadHeadLoadNo.AsInteger < 1 then
   Begin
     Abort;
-    ShowMessage('Spara lasten först.');
+    ShowMessage('Save the load first.');
     Exit;
   End;
   cds_LoadPackagesPkg_State.AsInteger         := NEW_PACKAGE;
@@ -1431,8 +1431,8 @@ procedure TdmLoadEntrySSP.cds_LoadPackagesPostError(DataSet: TDataSet;
 begin
   dmsSystem.FDoLog(E.Message + '  unit: ' + dmLoadEntrySSP.Name);
 
-  ShowMessage('Paketnumret ' + DataSet.FieldByName('PACKAGENO').AsString +
-    ' är inte unikt i lasten.');
+  ShowMessage('Package number ' + DataSet.FieldByName('PACKAGENO').AsString +
+    ' is not unique in the load.');
 
   // Action  := daAbort ;
   Action := daFail;

@@ -1,7 +1,7 @@
 object dmArrivingLoads: TdmArrivingLoads
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 917
+  Height = 945
   Width = 1189
   object dsrcArrivingLoads: TDataSource
     DataSet = cdsArrivingLoads
@@ -1604,8 +1604,8 @@ object dmArrivingLoads: TdmArrivingLoads
       'FROM   dbo.Loads'
       ''
       'WHERE LoadNo = :LoadNo')
-    Left = 1056
-    Top = 808
+    Left = 1064
+    Top = 864
     ParamData = <
       item
         Name = 'LOADNO'
@@ -1909,8 +1909,8 @@ object dmArrivingLoads: TdmArrivingLoads
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_PackageTypeDetail'
-    Left = 1048
-    Top = 656
+    Left = 1056
+    Top = 712
     ParamData = <
       item
         Position = 1
@@ -1930,8 +1930,8 @@ object dmArrivingLoads: TdmArrivingLoads
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_Populate_One_PackageTypeLengths'
-    Left = 1048
-    Top = 704
+    Left = 1056
+    Top = 760
     ParamData = <
       item
         Position = 1
@@ -1951,8 +1951,8 @@ object dmArrivingLoads: TdmArrivingLoads
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     StoredProcName = 'dbo.vida_PackageTotals'
-    Left = 1048
-    Top = 752
+    Left = 1056
+    Top = 808
     ParamData = <
       item
         Position = 1
@@ -5772,5 +5772,15 @@ object dmArrivingLoads: TdmArrivingLoads
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object sp_isRtRLoadAR: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    Left = 1056
+    Top = 392
+  end
+  object sp_RtR_Load_is_AR: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    Left = 1056
+    Top = 640
   end
 end

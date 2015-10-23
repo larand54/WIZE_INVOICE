@@ -1029,14 +1029,14 @@ begin
       if cds_LoadPackagesPACKAGENO.AsInteger < 1 then
       Begin
         Result := False;
-        ShowMessage('Paketnr saknas på rad ' +
+        ShowMessage('Package number is missing in row ' +
           cds_LoadPackagesLoadDetailNo.AsString);
         Exit;
       End;
       if cds_LoadPackagesSupplierCode.AsString < '0' then
       Begin
         Result := False;
-        ShowMessage('Leverantörskod saknas på rad ' +
+        ShowMessage('Package prefix is missing in row ' +
           cds_LoadPackagesLoadDetailNo.AsString);
         Exit;
       End;
@@ -1150,9 +1150,9 @@ end;
 procedure TdmLoadEntryCSD.cds_LoadPackages1PostError(DataSet: TDataSet;
   E: EDatabaseError; var Action: TDataAction);
 begin
-  ShowMessage('System Error. Paketnr ' + DataSet.FieldByName('PACKAGENO')
+  ShowMessage('System Error. Package number ' + DataSet.FieldByName('PACKAGENO')
     .AsString + '/' + DataSet.FieldByName('SupplierCode').AsString +
-    ' är redan inmatat' + ' Original Message: ' + E.Message);
+    ' is already assigned to the load. ' + ' Original Message: ' + E.Message);
   Action := daAbort;
 end;
 
@@ -1218,7 +1218,7 @@ begin
   if cds_LoadHeadLoadNo.AsInteger < 1 then
   Begin
     Abort;
-    ShowMessage('Spara lasten först.');
+    ShowMessage('Please save the load first.');
     Exit;
   End;
   cds_LoadPackagesPkg_State.AsInteger := NEW_PACKAGE;
@@ -1302,8 +1302,8 @@ procedure TdmLoadEntryCSD.cds_LoadPackagesPostError(DataSet: TDataSet;
 begin
   dmsSystem.FDoLog(E.Message + '  unit: ' + dmLoadEntryCSD.Name);
 
-  ShowMessage('Paketnumret ' + DataSet.FieldByName('PACKAGENO').AsString +
-    ' är inte unikt i lasten.');
+  ShowMessage('Package number ' + DataSet.FieldByName('PACKAGENO').AsString +
+    ' is not unique in the load.');
 
   Action := daAbort;
 end;

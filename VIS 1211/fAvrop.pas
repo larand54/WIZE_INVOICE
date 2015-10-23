@@ -543,7 +543,7 @@ uses
   dmsVidaContact, dmcVidaSystem, UnitLoadEntryCSD, dmsVidaSystem,
   UnitCRExportOneReport, uSendMapiMail, uTradingLinkMult, uEntryField,
   uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages, udmLanguage,
-  udmFR, uReport, uReportController;
+  udmFR, uReport, uReportController, UnitBookingFormOrg;
 
 procedure TfrmAvrop.CreateCo(CompanyNo: Integer);
 begin
@@ -1665,26 +1665,28 @@ Var
       if ThisUser.UserID = 8 then
         mLog.Lines.Add(Datetimetostr(now) + ':  ' + 'sq_GetLoadID.Open');
 
-      cdsBooking.Active := False;
-      cdsBooking.ParamByName('ShippingPlanNo').AsInteger :=
+      cdsBookingInvoice.Active := False;
+      cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger :=
         mtCompSelRowsLONo.AsInteger;
+      cdsBookingInvoice.ParamByName('InternalInvoiceNo').AsInteger :=
+        cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
       // Juli 6 2006 daMoLM1.cdsAvropShippingPlanNo.AsInteger ;
-      cdsBooking.Active := True;
+      cdsBookingInvoice.Active := True;
       Try
 
-        if (cdsBooking.RecordCount > 0) and (sq_GetLoadID.Active) and
+        if (cdsBookingInvoice.RecordCount > 0) and (sq_GetLoadID.Active) and
           (sq_GetLoadID.RecordCount > 0) and
           (Length(sq_GetLoadIDLoadID.AsString) > 0) and
           (not sq_GetLoadIDLoadID.IsNull) then
         Begin
-          cdsBooking.Edit;
+          cdsBookingInvoice.Edit;
 
-          cdsBookingSupplierReference.AsString := sq_GetLoadIDLoadID.AsString;
-          cdsBooking.Post;
-          if cdsBooking.ChangeCount > 0 then
+          cdsBookingInvoiceSupplierReference.AsString := sq_GetLoadIDLoadID.AsString;
+          cdsBookingInvoice.Post;
+          if cdsBookingInvoice.ChangeCount > 0 then
           Begin
-            cdsBooking.ApplyUpdates(0);
-            cdsBooking.CommitUpdates;
+            cdsBookingInvoice.ApplyUpdates(0);
+            cdsBookingInvoice.CommitUpdates;
           End;
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' +
@@ -1693,10 +1695,30 @@ Var
 
       Finally
         sq_GetLoadID.Close;
-        cdsBooking.Active := False;
+        cdsBookingInvoice.Active := False;
       End;
     End; // with dm_Booking
   End; // Proc
+
+  procedure CopyBookingData ;
+  Begin
+    with dmVidaInvoice do
+    begin
+     //Copy present booking to BookingInvoice
+      Try
+      sp_copyBookingData.ParamByName('@LONo').AsInteger               :=  mtCompSelRowsLONo.AsInteger ;
+      sp_copyBookingData.ParamByName('@InternalInvoiceNo').AsInteger  :=  cdsInvoiceHeadInternalInvoiceNo.AsInteger ;
+      sp_copyBookingData.ExecProc ;
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    end;
+  End;
 
   procedure AddLOData;
   Begin
@@ -1710,6 +1732,7 @@ Var
           mtCompSelRowsLONo.AsInteger;
         sq_GetLOData.ParamByName('CustomerNo').AsInteger :=
           cdsInvoiceHeadCustomerNo.AsInteger;
+        sq_GetLOData.ParamByName('InternalInvoiceNo').AsInteger :=   cdsInvoiceHeadInternalInvoiceNo.AsInteger;
         sq_GetLOData.Open;
         if ThisUser.UserID = 8 then
           mLog.Lines.Add(Datetimetostr(now) + ':  ' + 'sq_GetLOData.Open');
@@ -2646,6 +2669,7 @@ BEGIN
                 mtCompSelRows.First;
                 While not mtCompSelRows.Eof do
                 Begin
+                  CopyBookingData ;
                   AddLOData;
                   y := 1; // use this for InvoiceDetailNo
                   // ADD INVOICE DETAIL for an Additional costs if such exist for current ShippingPlanNo Number
@@ -3401,12 +3425,12 @@ end;
 
 procedure TfrmAvrop.ac_BookingExecute(Sender: TObject);
 var
-  FormBookingForm: TFormBookingForm;
+  FormBookingForm: TFormBookingFormOrg;
 begin
   if (daMoLM1.cdsAvrop.Active) and (daMoLM1.cdsAvrop.RecordCount > 0) then
   Begin
 
-    FormBookingForm := TFormBookingForm.Create(Nil);
+    FormBookingForm := TFormBookingFormOrg.Create(Nil);
     try
       FormBookingForm.CreateCo(grdcxAvropDBBandedTableView1.DataController.
         DataSet.FieldByName('ShippingPlanNo').AsInteger);
@@ -5441,7 +5465,7 @@ Var
   DeleteTdmVidaInvoice: Boolean;
 begin
   if MessageDlg
-    ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+    ('Attests created against the invoice will be deleted if the invoice is deleted, do you want to continue?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     With dmVidaInvoice, daMoLM1 do
     Begin
@@ -5462,7 +5486,7 @@ begin
 
       Try
 
-        if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+        if MessageDlg('Are you sure you want to delete the invoice?',
           mtConfirmation, [mbYes, mbNo], 0) = mrYes then
         Begin
           cdsInvoiceNumber.Active := True;

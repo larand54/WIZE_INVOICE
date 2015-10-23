@@ -668,6 +668,9 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Margins.Right = 4
       Margins.Bottom = 4
       Caption = 'Notering'
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0

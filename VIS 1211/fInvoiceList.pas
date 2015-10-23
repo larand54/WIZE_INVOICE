@@ -378,6 +378,8 @@ type
     dxBarButton52: TdxBarButton;
     dxBarLargeButton14: TdxBarLargeButton;
     acJusteraUSAfakturor: TAction;
+    dxBarLargeButton15: TdxBarLargeButton;
+    acBooking: TAction;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -495,6 +497,7 @@ type
     procedure acAustraliaContainerExportExecute(Sender: TObject);
     procedure acAusExportCustomerInfoExecute(Sender: TObject);
     procedure acJusteraUSAfakturorExecute(Sender: TObject);
+    procedure acBookingExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -551,7 +554,8 @@ uses
   UnitCRPrintOneReport, dmc_ImportWoodx, MainU, dmsVidaSystem,
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
   uSokAvropMall, uEntryField, uVerifikationLogg, uAccInv,
-  UnitdmModule1, udmLanguage, uReport, uReportController;
+  UnitdmModule1, udmLanguage, uReport, uReportController, UnitBookingForm,
+  dmBooking;
 
 {$R *.dfm}
 
@@ -617,6 +621,10 @@ begin
     dmVidaInvoice := TdmVidaInvoice.Create(nil);
   dmsSystem.AssignDMToThisWork('TfrmInvoiceList', 'dmVidaInvoice');
 
+  if (not Assigned(dm_Booking)) then
+    dm_Booking := Tdm_Booking.Create(nil);
+  dmsSystem.AssignDMToThisWork('TfrmInvoice', 'dm_Booking');
+
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
 
   ccbInvoiceType.Properties.Items.Clear;
@@ -641,13 +649,19 @@ begin
     dmVidaInvoice.Free;
     dmVidaInvoice := Nil;
   End;
+
+  if dmsSystem.DeleteAssigned('TfrmInvoice', 'dm_Booking') = True then
+  Begin
+    dm_Booking.Free;
+    dm_Booking := Nil;
+  End;
 end;
 
 procedure TfrmInvoiceList.DeleteInvoiceNoAndInvoice(Sender: TObject);
 begin
   if dmVidaInvoice.cdsInvoiceListINVOICE_KONTO.AsString = 'DEBIT' then
   Begin
-    if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+    if MessageDlg('Are you sure you want to delete the invoice?',
       mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     Begin
       With dmVidaInvoice do
@@ -683,7 +697,7 @@ begin
           dmsConnector.Commit;
         Except
           dmsConnector.Rollback;
-          ShowMessage('Misslyckades med att ta bort fakturan.');
+          ShowMessage('Failed to delete the invoice.');
         End;
         cdsInvoiceList.Active := False;
         cdsInvoiceList.Active := True;
@@ -692,7 +706,7 @@ begin
     End;
   End
   else
-    ShowMessage('Kan inte ta bort kredit faktura.');
+    ShowMessage('Cannot delete a credit invoice.');
 end;
 
 procedure TfrmInvoiceList.dxBarButton43Click(Sender: TObject);
@@ -828,7 +842,7 @@ Var
   x: Integer;
   // fInvoiceWizard  : TfInvoiceWizard;
 begin
-  if MessageDlg('Vill du skapa snabbfaktura? ', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to create a quick invoice? ', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
     with dmVidaInvoice do
     Begin
@@ -1032,14 +1046,14 @@ End;
 procedure TfrmInvoiceList.acDeleteInvoiceExecute(Sender: TObject);
 begin
   if MessageDlg
-    ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+    ('Attests created against the invoice will be deleted if the invoice is deleted, do you want to continue?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     With dmVidaInvoice do
     Begin
 
       Try
 
-        if MessageDlg('Är du säker på att du vill ta bort fakturan?',
+        if MessageDlg('Are you sure you want to delete the invoice?',
           mtConfirmation, [mbYes, mbNo], 0) = mrYes then
         Begin
           cdsInvoiceNumber.Active := True;
@@ -1088,7 +1102,7 @@ begin
       DatumString := DatumString + inttostr(Day);
 
     Credit_Int_Inv_No := 0;
-    if MessageDlg('Vill du kreditera faktura nr ' +
+    if MessageDlg('Do you want to credit the invoice number ' +
       cdsInvoiceListINVOICE_NO.AsString + ' ?', mtConfirmation,
       [mbYes, mbNo, mbCancel], 0) = mrYes then
     Begin
@@ -1216,7 +1230,7 @@ Var
   Save_Cursor: TCursor;
   InvoiceGroupNo, x: Integer;
 begin
-  if MessageDlg('Vill skapa samlingsfaktura? ', mtConfirmation,
+  if MessageDlg('Do you want to create a invoice group? ', mtConfirmation,
     [mbYes, mbNo, mbCancel], 0) = mrYes then
     with dmVidaInvoice do
     begin
@@ -1313,9 +1327,9 @@ begin
             else
             Begin
               dmsConnector.Commit;
-              if MessageDlg('SamlingsfakturaNr ' +
+              if MessageDlg('Invoice group number ' +
                 cds_InvoiceGroupInvoiceGroupNo.AsString +
-                ' skapad. Vill du skriva ut?', mtConfirmation, [mbYes, mbNo], 0)
+                ' is created. Do you want to print out?', mtConfirmation, [mbYes, mbNo], 0)
                 = mrYes then
                 printSamlingsFaktura(InvoiceGroupNo);
             End;
@@ -1476,7 +1490,7 @@ begin
     (dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 3) then
   Begin
     if MessageDlg
-      ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+      ('Attests created against the invoice will be deleted if the invoice is deleted, do you want to continue??',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
 
@@ -1489,7 +1503,7 @@ begin
           if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
           Begin
             if MessageDlg
-              ('Fakturan har ett nummer tilldelat, vill du ta bort det och fakturan?',
+              ('The invoice is assigned a number, do you still want to remove the invoice?',
               mtConfirmation, [mbYes, mbNo], 0) = mrYes then
               DeleteInvoiceNoAndInvoice(Sender);
           End
@@ -1505,7 +1519,7 @@ begin
     End;
   End
   else
-    ShowMessage('Endast VIDA_NUM fakturor kan tas bort.');
+    ShowMessage('Only VIDA_NUM invoices can be deleted.');
 end;
 
 procedure TfrmInvoiceList.acPrintClientsInvoiceExecute(Sender: TObject);
@@ -1554,7 +1568,7 @@ begin
   if dmVidaInvoice.cdsInvoiceListInvoiceType.AsInteger = 2 then
   Begin
     if MessageDlg
-      ('Attester gjorda mot fakturan försvinner om fakturan tas bort, vill du fortsätta?',
+      ('Attests created against the invoice will be deleted if the invoice is deleted, do you want to continue?',
       mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;
 
@@ -1567,7 +1581,7 @@ begin
           if dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsInteger > 0 then
           Begin
             if MessageDlg
-              ('Vill du ta makulera fakturan och ta bort (avaktivera) paketen från proforma lagret?',
+              ('Do you want to delete the invoice and remove the packages from the proforma inventory',
               mtConfirmation, [mbYes, mbNo], 0) = mrYes then
               DeleteInvoiceNoAndInvoice(Sender);
           End
@@ -1583,7 +1597,7 @@ begin
     End;
   End
   else
-    ShowMessage('Endast Proforma fakturor kan ångras.');
+    ShowMessage('Only Proforma invoice can be cancelled.');
 end;
 
 procedure TfrmInvoiceList.acCancelProformaInvoiceUpdate(Sender: TObject);
@@ -2100,7 +2114,7 @@ procedure TfrmInvoiceList.acAustraliaContainerExportExecute(Sender: TObject);
 var
   fAccInv: TfAccInv;
 begin
-  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to export?', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
   Begin
     fAccInv := TfAccInv.Create(nil);
@@ -2127,7 +2141,7 @@ procedure TfrmInvoiceList.acAustraliaExportExecute(Sender: TObject);
 var
   fAccInv: TfAccInv;
 begin
-  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to export?', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
   Begin
     fAccInv := TfAccInv.Create(nil);
@@ -2148,6 +2162,69 @@ begin
       FreeAndNil(fAccInv);
     End;
   End;
+end;
+
+procedure TfrmInvoiceList.acBookingExecute(Sender: TObject);
+var
+  FormBookingForm: TFormBookingForm;
+begin
+  FormBookingForm := TFormBookingForm.Create(Nil);
+  try
+    dm_Booking.InternalInvoiceNo  :=  dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger ;
+    FormBookingForm.CreateCo(dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+
+//    if acGetInvoiceNo.Enabled then
+//    Begin
+      FormBookingForm.lcCurrency.Properties.ReadOnly        := False;
+      FormBookingForm.eFreightCost.Properties.ReadOnly      := False;
+      FormBookingForm.lcFreightVolUnit.Properties.ReadOnly  := False;
+{
+      End
+      else
+      Begin
+        FormBookingForm.lcCurrency.Properties.ReadOnly        := True;
+        FormBookingForm.eFreightCost.Properties.ReadOnly      := True;
+        FormBookingForm.lcFreightVolUnit.Properties.ReadOnly  := True;
+      End;
+
+}
+    FormBookingForm.ShowModal;
+
+(*
+        if FormBookingForm.ReadMeOnly = False then
+        Begin
+     //     GetBookingData(Sender, StrToInt(TabControl1.Tabs[TabControl1.TabIndex]));
+          if dmVidaInvoice.cdsInvoiceHeadQuickInvoice.AsInteger = 0 then
+            ShowMessage
+              ('Om fraktkostnaden har ändrats: stäng fakturan utan att spara och skapa den åter från avropslistan. (är den sparad gå till fakturalistan och ta bort den)');
+          if FormBookingForm.BookingNo <> -1 then
+          Begin
+            if dmVidaInvoice.cdsInvoiceLO.State in [dsBrowse] then
+              dmVidaInvoice.cdsInvoiceLO.Edit;
+            dmVidaInvoice.cdsInvoiceLOBookingNo.AsInteger :=
+              FormBookingForm.BookingNo;
+
+            dmVidaInvoice.cdsInvoiceLO.Post;
+          End; // if FormBookingForm.BookingNo <> -1 then
+    {
+            if dmVidaInvoice.cdsInvoiceHeadQuickInvoice.AsInteger = 1 then
+              AddFreigthCost;
+    }
+        End;
+*)
+
+{
+      if TrpID <> dmVidaInvoice.cdsInvoiceLOTrpID.AsString then
+      Begin
+        dmVidaInvoice.cdsInvoiceLO.Edit;
+        dmVidaInvoice.cdsInvoiceLOTrpID.AsString := TrpID;
+        dmVidaInvoice.cdsInvoiceLO.Post;
+      End;
+}
+
+  finally
+    FreeAndNil(FormBookingForm);
+  end;
 end;
 
 procedure TfrmInvoiceList.acDeleteInvoiceUpdate(Sender: TObject);
@@ -2351,7 +2428,7 @@ procedure TfrmInvoiceList.acAusExportCustomerInfoExecute(Sender: TObject);
 var
   fAccInv: TfAccInv;
 begin
-  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to export?', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
   Begin
     fAccInv := TfAccInv.Create(nil);
@@ -2522,7 +2599,7 @@ begin
     if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
-        ('Emailadress saknas för klienten, ange adressen i mailet(outlook)');
+        ('Email address is missing for the client.');
     End;
     if Length(MailToAddress) > 0 then Begin
 
@@ -2554,7 +2631,7 @@ begin
         End;
         if not(FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile))
         then begin
-          ShowMessage('Rapportfil(er) skapades ej!');
+          ShowMessage('Report file were not created.');
           Exit;
         end;
       end
@@ -2597,7 +2674,7 @@ begin
       End;
     End
     else
-      ShowMessage('Emailadress saknas för klienten!');
+      ShowMessage('Email address is missing for the client.');
   End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
@@ -2624,7 +2701,7 @@ begin
     if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
-        ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+        ('Email address is missing for the client.');
     End;
     if Length(MailToAddress) > 0 then Begin
       if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
@@ -2654,7 +2731,7 @@ begin
         End;
         if not(FileExists(ExportTrpBrevFile) and FileExists(ExportSpecFile))
         then begin
-          ShowMessage('Rapportfil(er) skapades ej!');
+          ShowMessage('Report files were not created.');
           Exit;
         end;
       end
@@ -2698,7 +2775,7 @@ begin
       End;
     End
     else
-      ShowMessage('Emailadress saknas för klienten!');
+      ShowMessage('Email address is missing for the client.');
   End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
@@ -2815,7 +2892,7 @@ begin
     dmsContact.GetClientDocPrefs(ClientNo, cFaktura, ReportName, numberOfCopy,
       promptUser, collated, PrinterSetup);
     if (Length(ReportName) < 4) then Begin
-      ShowMessage('Rapporten finns inte upplagd på klienten');
+      ShowMessage('The report is not assigned to the client.');
       Exit;
     End; // if
 
@@ -2876,7 +2953,7 @@ begin
     dmsContact.GetClientDocPrefs
       (clientNo, cPkgSpec, ReportName, numberOfCopy, promptUser, collated, PrinterSetup);
     if (Length(ReportName) < 4) then Begin
-      ShowMessage('Rapporten finns inte upplagd på klienten');
+      ShowMessage('The report is not assigned the client.');
       Exit;
     End; // if
       FormCRViewReport := TFormCRViewReport.Create(Nil);
@@ -2908,7 +2985,7 @@ Var
   Params: TCMParams;
 begin
   x := 0;
-  if MessageDlg('Vill du skriva ut alla kreditfakturor gjorda under 2008?',
+  if MessageDlg('Do you want to print all credit invoices created in 2008?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     With dmVidaInvoice do Begin
       sq_CreditInv.Open;
@@ -3503,7 +3580,7 @@ begin
       if GetMarkedInvoiceAndLOToCredit then
       Begin
         Credit_Int_Inv_No := 0;
-        if MessageDlg('Vill du delkreditera faktura nr ' +
+        if MessageDlg('Do you want to partly credit invoice number ' +
           cdsInvoiceListINVOICE_NO.AsString + ' ?', mtConfirmation,
           [mbYes, mbNo, mbCancel], 0) = mrYes then
         Begin
@@ -3526,9 +3603,9 @@ begin
                 if cdsInvoice_Credited.Locate('InternalInvoiceNo',
                   cdsInvoiceListInternalInvoiceNo.AsInteger, []) then
                 Begin
-                  ShowMessage('Info, fakturan är krediterad tidigare av ' +
+                  ShowMessage('Info, the invoice is already been credited by ' +
                     cdsInvoice_CreditedCreatedUser.AsString +
-                    '  Se internt fakturanr : ' +
+                    '  See internal invoice number : ' +
                     cdsInvoice_CreditedNewInternalInvoiceNo.AsString);
                 End;
                 Credit_Int_Inv_No := CreateDELCreditInvoiceByCopyDebitInvoice
@@ -3536,19 +3613,19 @@ begin
                   cdsInvoiceListInternalInvoiceNo.AsInteger, DatumString);
               End
               else
-                ShowMessage('Preliminära fakturor kan inte krediteras.');
+                ShowMessage('Preliminary invoices cannot be credited.');
 
             Finally
 
-              cdsInvoiceLO.Filtered := False;
-              cdsInvoiceLO.Active := False;
-              cdsInvoiceDetail.Filtered := False;
-              cdsInvoiceDetail.Filter := '';
-              cdsInvoiceDetail.Active := False;
-              cdsInvoice_Credited.Active := False;
-              cdsInvoiceNumber.Active := False;
-              sq_InvoiceNos.Active := True;
-              cdsInvoiceShipTo.Active := False;
+              cdsInvoiceLO.Filtered       := False;
+              cdsInvoiceLO.Active         := False;
+              cdsInvoiceDetail.Filtered   := False;
+              cdsInvoiceDetail.Filter     := '';
+              cdsInvoiceDetail.Active     := False;
+              cdsInvoice_Credited.Active  := False;
+              cdsInvoiceNumber.Active     := False;
+              sq_InvoiceNos.Active        := True;
+              cdsInvoiceShipTo.Active     := False;
               if Credit_Int_Inv_No > 0 then
               Begin
                 OpenInvoice(Credit_Int_Inv_No,
@@ -3559,13 +3636,13 @@ begin
 
           End
           else
-            ShowMessage('Kan inte kreditera en kreditfaktura.');
+            ShowMessage('Cannot credit a credit.');
         End;
 
       End // if GetMarkedInvoiceAndLOToCredit
       else
         ShowMessage
-          ('Endast EN faktura kan krediteras, du kan däremot välja flera lastordernr från ett fakturanr.');
+          ('Only one invoice can be credited.');
     Finally
       amt_Credit.Active := False;
     End;
@@ -3836,7 +3913,7 @@ begin
         End;
         if not(FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile))
         then begin
-          ShowMessage('Rapportfil(er) skapades ej!');
+          ShowMessage('Report files were not created.');
           Exit;
         end;
       end
@@ -3886,13 +3963,13 @@ begin
       End;
     End // if Length(MailToAddress) > 0 then
     else
-      ShowMessage('Emailadress saknas för klienten!');
+      ShowMessage('Email address is missing for the client.');
   End; // if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
 end;
 
 procedure TfrmInvoiceList.acTransferInvoicesExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du överföra markerade fakturor?', mtConfirmation,
+  if MessageDlg('Do you want to transfer selected invoices?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   Begin
     mtSelectedInvoices.Active := False;
@@ -5270,7 +5347,7 @@ begin
   // if (fSokAvropMall.ShowModal = mrOK) and
   if (cds_PropsInv.RecordCount > 0) AND (cds_PropsInvName.AsString > '') then
   Begin
-    if MessageDlg('Vill du spara aktuella inställningar som mall ' +
+    if MessageDlg('Do you want to save current setup as a template ' +
       cds_PropsInvForm.AsString + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
     then
     Begin
@@ -5292,7 +5369,7 @@ begin
 
   End // if fSokAvropMall.ShowModal = mrOK then
   else
-    ShowMessage('Finns ingen mall att spara, använd "Spara mall som"');
+    ShowMessage('There is no template to save, use "Save template as"');
   // Finally
   // FreeAndNil(fSokAvropMall) ;
   // End ;
@@ -5319,12 +5396,12 @@ Var
 begin
   fEntryField := TfEntryField.Create(nil);
   Try
-    fEntryField.Caption := 'Spara mall';
-    fEntryField.Label1.Caption := 'Mall namn:';
+    fEntryField.Caption                       := 'Save template';
+    fEntryField.Label1.Caption                := 'Template name:';
     fEntryField.eNoofpkgs.Properties.EditMask := '';
     if fEntryField.ShowModal = mrOk then
     Begin
-      if MessageDlg('Vill göra en ny mall? ' + fEntryField.eNoofpkgs.Text + '?',
+      if MessageDlg('Do you want to make a new template? ' + fEntryField.eNoofpkgs.Text + '?',
         mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       Begin
         if (cds_PropsInv.Active) and (cds_PropsInv.RecordCount > 0) then
@@ -5468,7 +5545,7 @@ begin
   else
   Begin
     ShowMessage
-      ('Du har ingen mall angiven som standard eller inga mallar alls, öppna och sätt en mall som standard eller skapa en ny mall');
+      ('You have no template set as standard or no template at all. Please open a template and set it as standard or create a new template') ;
     if cds_PropsInv.Active then
       cds_PropsInv.Active := False;
   End;
@@ -5636,7 +5713,7 @@ begin
       FileName := SaveDialog2.FileName;
       Try
         ExportGridToExcel(FileName, grdFaktura, False, False, True, 'xls');
-        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+        ShowMessage('Table exported to excel file ' + FileName);
       Except
       End;
     End;
@@ -5673,7 +5750,7 @@ end;
 
 procedure TfrmInvoiceList.acReCalcInvoiceExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du kalkylera om markerade fakturor?', mtConfirmation,
+  if MessageDlg('Do you want to recalculate selected invoices?', mtConfirmation,
     [mbYes, mbNo], 0) = mrYes then
   Begin
     mtSelectedInvoices.Active := False;
@@ -6349,7 +6426,7 @@ end;
 
 procedure TfrmInvoiceList.acGetKontoNrExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du tilldela kontonr på markerade fakturor?',
+  if MessageDlg('Do you want to try to assign account numbers to selected invoices?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     mtSelectedInvoices.Active := False;
@@ -6533,7 +6610,7 @@ procedure TfrmInvoiceList.acLenaExportExecute(Sender: TObject);
 var
   fAccInv: TfAccInv;
 begin
-  if MessageDlg('Exportera, vill du fortsätta?', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to export?', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
   Begin
     fAccInv := TfAccInv.Create(nil);
@@ -6555,7 +6632,7 @@ end;
 
 procedure TfrmInvoiceList.acSendEDIMessageExecute(Sender: TObject);
 begin
-  if MessageDlg('Vill du skicka fakturan som EDI meddelande till kunden?',
+  if MessageDlg('Do you want to send the invoice as a EDI message to the customer?',
     mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   Begin
     dmVidaInvoice.SendInvoiceAsEDI
@@ -6577,7 +6654,7 @@ Var // frmInvoice      : TfrmInvoice ;
   OpenInternalInvoiceNo, x: Integer;
   fInvoiceWizard: TfInvoiceWizard;
 begin
-  if MessageDlg('Vill du skapa snabbfaktura? ', mtConfirmation, [mbYes, mbNo],
+  if MessageDlg('Do you want to create a quick invoice? ', mtConfirmation, [mbYes, mbNo],
     0) = mrYes then
     with dmVidaInvoice do
     Begin

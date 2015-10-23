@@ -848,26 +848,26 @@ procedure TdmsContact.cds_AdrSearchBeforePost(DataSet: TDataSet);
 begin
   if cds_AdrSearchAddressName.IsNull then
   Begin
-    ShowMessage('Adressnamn saknas');
+    ShowMessage('Adress name is missing');
     Abort;
   End;
 
   if cds_AdrSearchCityNo.IsNull then
   Begin
-    ShowMessage('Ort saknas');
+    ShowMessage('City is missing.');
     Abort;
   End;
 
   if cds_AdrSearchCountryNo.IsNull then
   Begin
-    ShowMessage('Land saknas');
+    ShowMessage('Country is missing.');
     Abort;
   End;
 
   if FinnsAddressName(cds_AdrSearchAddressNo.AsInteger,
     cds_AdrSearchAddressName.AsString) = True then
   Begin
-    ShowMessage('Varning, adressnamnet är taget');
+    ShowMessage('Warning, adress name is already taken.');
     // Abort ;
   End;
 end;

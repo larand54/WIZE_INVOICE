@@ -4,12 +4,12 @@ object fLastLista: TfLastLista
   Align = alClient
   BorderStyle = bsNone
   Caption = 'fLastLista'
-  ClientHeight = 594
-  ClientWidth = 964
+  ClientHeight = 731
+  ClientWidth = 1186
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -17,34 +17,50 @@ object fLastLista: TfLastLista
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 964
-    Height = 65
+    Width = 1186
+    Height = 80
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
-      Left = 8
-      Top = 16
-      Width = 25
-      Height = 13
+      Left = 10
+      Top = 20
+      Width = 31
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Verk:'
     end
     object Label2: TLabel
-      Left = 8
-      Top = 40
-      Width = 52
-      Height = 13
+      Left = 10
+      Top = 49
+      Width = 65
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Laster fom:'
     end
     object bbUppdatera: TBitBtn
-      Left = 240
-      Top = 8
-      Width = 138
-      Height = 41
+      Left = 295
+      Top = 10
+      Width = 170
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Uppdatera'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -103,10 +119,14 @@ object fLastLista: TfLastLista
       OnClick = bbUppdateraClick
     end
     object bbSkrivut: TBitBtn
-      Left = 378
-      Top = 8
-      Width = 138
-      Height = 41
+      Left = 465
+      Top = 10
+      Width = 170
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Skriv ut (utan pktnr)'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -165,10 +185,14 @@ object fLastLista: TfLastLista
       OnClick = bbSkrivutClick
     end
     object bbClose: TBitBtn
-      Left = 654
-      Top = 8
-      Width = 138
-      Height = 41
+      Left = 805
+      Top = 10
+      Width = 170
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'St'#228'ng'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -227,10 +251,14 @@ object fLastLista: TfLastLista
       OnClick = bbCloseClick
     end
     object bbSkrivUtMedPktNr: TBitBtn
-      Left = 516
-      Top = 8
-      Width = 138
-      Height = 41
+      Left = 635
+      Top = 10
+      Width = 170
+      Height = 50
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Skriv ut (med pktnr)'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -289,30 +317,42 @@ object fLastLista: TfLastLista
       OnClick = bbSkrivUtMedPktNrClick
     end
     object lcVerk: TcxDBLookupComboBox
-      Left = 80
-      Top = 8
+      Left = 98
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Verk'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       Properties.ListColumns = <>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 4
-      Width = 145
+      Width = 179
     end
     object deStartPeriod: TcxDBDateEdit
-      Left = 80
-      Top = 32
+      Left = 98
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'StartPeriod'
       DataBinding.DataSource = ds_Props
       TabOrder = 5
-      Width = 145
+      Width = 179
     end
   end
   object grdLastLista: TcxGrid
     Left = 0
-    Top = 65
-    Width = 964
-    Height = 205
+    Top = 80
+    Width = 1186
+    Height = 252
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 1
     object grdLastListaDBTableView1: TcxGridDBTableView
@@ -440,25 +480,37 @@ object fLastLista: TfLastLista
   end
   object Panel2: TPanel
     Left = 0
-    Top = 278
-    Width = 964
-    Height = 316
+    Top = 340
+    Width = 1186
+    Height = 391
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 2
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 962
-      Height = 25
+      Width = 1184
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Caption = 'Paket'
       TabOrder = 0
     end
     object grdLoadPackages: TcxGrid
       Left = 1
-      Top = 26
-      Width = 962
-      Height = 289
+      Top = 32
+      Width = 1184
+      Height = 358
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 1
       object grdLoadPackagesDBTableView1: TcxGridDBTableView
@@ -562,9 +614,13 @@ object fLastLista: TfLastLista
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 270
-    Width = 964
+    Top = 332
+    Width = 1186
     Height = 8
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = grdLastLista
@@ -574,8 +630,8 @@ object fLastLista: TfLastLista
   object imglistActions: TImageList
     Height = 24
     Width = 24
-    Left = 480
-    Top = 216
+    Left = 576
+    Top = 136
     Bitmap = {
       494C01010D001100040018001800FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000600000006000000001002000000000000090
@@ -1773,16 +1829,16 @@ object fLastLista: TfLastLista
       000000000000}
   end
   object PopupMenu2: TPopupMenu
-    Left = 288
-    Top = 344
+    Left = 376
+    Top = 264
     object PackageInfo1: TMenuItem
       Caption = 'Paket info'
       OnClick = PackageInfo1Click
     end
   end
   object il_LastStatus: TImageList
-    Left = 424
-    Top = 176
+    Left = 480
+    Top = 128
     Bitmap = {
       494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -1940,16 +1996,16 @@ object fLastLista: TfLastLista
     SortID = 0
     SubLanguageID = 1
     LocaleID = 1024
-    Left = 336
-    Top = 280
+    Left = 376
+    Top = 200
     object mtMarkedRowsLoadNo: TIntegerField
       FieldName = 'LoadNo'
     end
   end
   object ds_Props: TDataSource
     DataSet = cds_Props
-    Left = 424
-    Top = 264
+    Left = 472
+    Top = 256
   end
   object cds_Props: TFDQuery
     AfterInsert = cds_PropsAfterInsert
@@ -1960,8 +2016,8 @@ object fLastLista: TfLastLista
       'Select * FROM dbo.userprops'
       'WHERE UserID = :UserID'
       'AND Form = :Form')
-    Left = 424
-    Top = 216
+    Left = 472
+    Top = 192
     ParamData = <
       item
         Name = 'USERID'
@@ -2297,8 +2353,8 @@ object fLastLista: TfLastLista
   object cxGridPopupMenu2: TcxGridPopupMenu
     Grid = grdLoadPackages
     PopupMenus = <>
-    Left = 384
-    Top = 398
+    Left = 240
+    Top = 134
   end
   object siLangLinked_fLastLista: TsiLangLinked
     Version = '7.2'
@@ -2393,8 +2449,8 @@ object fLastLista: TfLastLista
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 472
-    Top = 280
+    Left = 576
+    Top = 200
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066004C006100730074004C0069007300740061000100
@@ -2603,30 +2659,27 @@ object fLastLista: TfLastLista
       650073005F0055006E00690063006F00640065000D000A007300740053007400
       720069006E00670073005F0055006E00690063006F00640065000D000A007300
       74004F00740068006500720053007400720069006E00670073005F0055006E00
-      690063006F00640065000D000A006D0074004D00610072006B00650064005200
-      6F00770073002E00560065007200730069006F006E00010037002E0036003300
-      2E003000300020005300740061006E0064006100720064002000450064006900
-      740069006F006E00010001000D000A007300740043006F006C006C0065006300
-      740069006F006E0073005F0055006E00690063006F00640065000D000A006700
-      720064004C006100730074004C00690073007400610044004200540061006200
-      6C006500560069006500770031005300540041005400550053002E0050007200
-      6F0070006500720074006900650073002E004900740065006D0073005B003000
-      5D002E004400650073006300720069007000740069006F006E00010050007200
-      65006C0069006D0069006E00E4007200010001000D000A006700720064004C00
-      6100730074004C006900730074006100440042005400610062006C0065005600
-      69006500770031005300540041005400550053002E00500072006F0070006500
-      720074006900650073002E004900740065006D0073005B0031005D002E004400
-      650073006300720069007000740069006F006E000100500072006F0062006C00
-      65006D00010001000D000A006700720064004C006100730074004C0069007300
-      74006100440042005400610062006C0065005600690065007700310053005400
-      41005400550053002E00500072006F0070006500720074006900650073002E00
-      4900740065006D0073005B0032005D002E004400650073006300720069007000
-      740069006F006E0001004100760073006C007500740061006400010001000D00
-      0A0073007400430068006100720053006500740073005F0055006E0069006300
-      6F00640065000D000A00540066004C006100730074004C006900730074006100
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A00}
+      690063006F00640065000D000A007300740043006F006C006C00650063007400
+      69006F006E0073005F0055006E00690063006F00640065000D000A0067007200
+      64004C006100730074004C006900730074006100440042005400610062006C00
+      6500560069006500770031005300540041005400550053002E00500072006F00
+      70006500720074006900650073002E004900740065006D0073005B0030005D00
+      2E004400650073006300720069007000740069006F006E000100500072006500
+      6C0069006D0069006E00E4007200010001000D000A006700720064004C006100
+      730074004C006900730074006100440042005400610062006C00650056006900
+      6500770031005300540041005400550053002E00500072006F00700065007200
+      74006900650073002E004900740065006D0073005B0031005D002E0044006500
+      73006300720069007000740069006F006E000100500072006F0062006C006500
+      6D00010001000D000A006700720064004C006100730074004C00690073007400
+      6100440042005400610062006C00650056006900650077003100530054004100
+      5400550053002E00500072006F0070006500720074006900650073002E004900
+      740065006D0073005B0032005D002E0044006500730063007200690070007400
+      69006F006E0001004100760073006C007500740061006400010001000D000A00
+      73007400430068006100720053006500740073005F0055006E00690063006F00
+      640065000D000A00540066004C006100730074004C0069007300740061000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A00}
   end
 end

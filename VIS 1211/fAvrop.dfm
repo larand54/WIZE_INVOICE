@@ -838,7 +838,7 @@ object frmAvrop: TfrmAvrop
     Align = alTop
     TabOrder = 1
     object Label3: TLabel
-      Left = 502
+      Left = 542
       Top = 20
       Width = 56
       Height = 16
@@ -849,7 +849,7 @@ object frmAvrop: TfrmAvrop
       Caption = 'Marknad:'
     end
     object Label4: TLabel
-      Left = 748
+      Left = 788
       Top = 20
       Width = 85
       Height = 16
@@ -871,7 +871,7 @@ object frmAvrop: TfrmAvrop
       Caption = 'S'#246'k LONr:'
     end
     object LabelKlient: TLabel
-      Left = 502
+      Left = 542
       Top = 49
       Width = 33
       Height = 16
@@ -882,7 +882,7 @@ object frmAvrop: TfrmAvrop
       Caption = 'Kund:'
     end
     object Label7: TLabel
-      Left = 748
+      Left = 788
       Top = 49
       Width = 61
       Height = 16
@@ -904,7 +904,7 @@ object frmAvrop: TfrmAvrop
       Caption = 'S'#246'k Er ref:'
     end
     object eSearchLONr: TEdit
-      Left = 79
+      Left = 119
       Top = 11
       Width = 168
       Height = 23
@@ -947,7 +947,7 @@ object frmAvrop: TfrmAvrop
       OnClick = bLogClick
     end
     object Button1: TButton
-      Left = 386
+      Left = 426
       Top = 39
       Width = 93
       Height = 31
@@ -960,7 +960,7 @@ object frmAvrop: TfrmAvrop
       OnClick = Button1Click
     end
     object eSearchErReferens: TEdit
-      Left = 79
+      Left = 119
       Top = 41
       Width = 168
       Height = 23
@@ -975,7 +975,7 @@ object frmAvrop: TfrmAvrop
       OnKeyDown = eSearchErReferensKeyDown
     end
     object lcMarknad: TcxDBLookupComboBox
-      Left = 567
+      Left = 607
       Top = 10
       Margins.Left = 4
       Margins.Top = 4
@@ -997,7 +997,7 @@ object frmAvrop: TfrmAvrop
       Width = 168
     end
     object lcKund: TcxDBLookupComboBox
-      Left = 567
+      Left = 607
       Top = 39
       Margins.Left = 4
       Margins.Top = 4
@@ -1015,7 +1015,7 @@ object frmAvrop: TfrmAvrop
       Width = 168
     end
     object lcSR: TcxDBLookupComboBox
-      Left = 837
+      Left = 877
       Top = 10
       Margins.Left = 4
       Margins.Top = 4
@@ -1050,7 +1050,7 @@ object frmAvrop: TfrmAvrop
       Width = 80
     end
     object rgOrderTypeNo: TcxDBRadioGroup
-      Left = 256
+      Left = 296
       Top = 6
       Margins.Left = 4
       Margins.Top = 4
@@ -1074,7 +1074,7 @@ object frmAvrop: TfrmAvrop
       Width = 110
     end
     object icStatus: TcxDBImageComboBox
-      Left = 384
+      Left = 424
       Top = 10
       Margins.Left = 4
       Margins.Top = 4
@@ -1132,7 +1132,7 @@ object frmAvrop: TfrmAvrop
       Width = 80
     end
     object lcSaljgrupp: TcxDBLookupComboBox
-      Left = 837
+      Left = 877
       Top = 39
       Margins.Left = 4
       Margins.Top = 4

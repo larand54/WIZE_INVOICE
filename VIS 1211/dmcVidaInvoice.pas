@@ -1563,6 +1563,19 @@ type
     sp_GetKundResKontra: TFDStoredProc;
     sp_JusteraUSAFakturor: TFDStoredProc;
     sp_GetInvoiceHeadData: TFDStoredProc;
+    sp_copyBookingData: TFDStoredProc;
+    sq_GetNextInvoiceNo_UK: TFDQuery;
+    sq_GetNextInvoiceNo_UKNEXT_INVNO: TIntegerField;
+    sq_GetOrgInvoiceNoByCredit_UK: TFDQuery;
+    sq_GetOrgInvoiceNoByCredit_UKInternalInvoiceNo: TIntegerField;
+    sq_InsInvNo_UK: TFDQuery;
+    cds_PurchaseInvNo_UK: TFDQuery;
+    cds_PurchaseInvNo_UKPO_InvoiceNo: TIntegerField;
+    cds_PurchaseInvNo_UKInternalInvoiceNo: TIntegerField;
+    cds_PurchaseInvNo_UKUserCreated: TSmallintField;
+    cds_PurchaseInvNo_UKUserModified: TSmallintField;
+    cds_PurchaseInvNo_UKDateCreated: TSQLTimeStampField;
+    cds_PurchaseInvNo_UKPrefix: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1621,19 +1634,21 @@ type
     { Private declarations }
     GlobalLoadDetailNo: Integer;
     lbList: TStringList;
+    function  AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo
+  : Integer): Integer;
+    procedure AssignUK_Sales_InvoiceNumber(const InternalInvoiceNo  : Integer);
     function  GetKundResKontra(const Object5  : String;const CountryNo  : Integer) : String ;
-    function GetAvdelning(const ClientNo: Integer;
-      const KontoNr: String): String;
+    function  GetAvdelning(const ClientNo: Integer;
+              const KontoNr: String): String;
     procedure DeleteInvoiceEDI(const InternalInvoiceNo: Integer);
     procedure Assign_BORGSTENA_InvoiceNumber(const InternalInvoiceNo: Integer);
     procedure AssignVTAInvoiceNumber(const InternalInvoiceNo: Integer);
-    function GetInvoiceNoOfMaxKeyTable(const InvoiceSerie: String): Integer;
+    function  GetInvoiceNoOfMaxKeyTable(const InvoiceSerie: String): Integer;
     procedure AssignAGENTInvoiceNumber(const InternalInvoiceNo: Integer);
-    function GetFreightCostinCDS(const InclInPrice: Integer): Double;
-    function GetAM3PerLO: Double;
-    Function GetPOCountryNoPartII(const LONo: Integer): Integer;
-    procedure vis_CopyLoad(const InternalInvoiceNo, NewInternalInvoiceNo
-      : Integer);
+    function  GetFreightCostinCDS(const InclInPrice: Integer): Double;
+    function  GetAM3PerLO: Double;
+    Function  GetPOCountryNoPartII(const LONo: Integer): Integer;
+    procedure vis_CopyLoad(const InternalInvoiceNo, NewInternalInvoiceNo : Integer);
     procedure InsertInvoiceNo(const InvoiceNo, InternalInvoiceNo: Integer);
     Function GetPOCountryNo(const SalesShippingPlanNo: Integer): Integer;
     procedure InsertAttest(const QInvNo: Integer);
@@ -1860,7 +1875,253 @@ Begin
       AssignVTAInvoiceNumber(InternalInvoiceNo);
     BORGSTENA_INVOICE:
       Assign_BORGSTENA_InvoiceNumber(InternalInvoiceNo);
+
+    UK_INVOICE:
+      AssignUK_Sales_InvoiceNumber(InternalInvoiceNo);
+
+    UK_INVOICE_PO:
+      AssignPurchase_UKInvoiceNumber(InternalInvoiceNo);
   End;
+End;
+
+function TdmVidaInvoice.AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo
+  : Integer): Integer;
+Var
+  FormEnterInvoiceNo: TFormEnterInvoiceNo;
+Begin
+  Result := -1;
+  with dmVidaInvoice do
+  Begin
+    cds_PurchaseInvNo_UK.Active := True;
+    Try
+      if cds_PurchaseInvNo_UK.Locate('InternalInvoiceNo', InternalInvoiceNo, [])
+      then
+      Begin
+        Result := 1; // Invoice Number Record already exist
+        showmessage('Purchase order invoice number already assigned..');
+        Exit;
+      End
+      else
+      Begin
+        FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
+
+        Try
+          FormEnterInvoiceNo.Caption := 'Enter PO invoice number';
+          FormEnterInvoiceNo.ePrefix.Visible := True;
+          FormEnterInvoiceNo.LPrefix.Visible := True;
+          if FormEnterInvoiceNo.ShowModal = MrOK then
+          Begin;
+            cds_PurchaseInvNo_UK.Insert;
+            cds_PurchaseInvNo_UKInternalInvoiceNo.AsInteger := InternalInvoiceNo;
+            cds_PurchaseInvNo_UKPO_InvoiceNo.AsInteger :=
+              StrToInt(FormEnterInvoiceNo.eFakturanr.Text);
+            cds_PurchaseInvNo_UKPrefix.AsString := FormEnterInvoiceNo.ePrefix.Text;
+            cds_PurchaseInvNo_UKUserCreated.AsInteger := ThisUser.UserID;
+            cds_PurchaseInvNo_UKUserModified.AsInteger := ThisUser.UserID;
+            cds_PurchaseInvNo_UKDateCreated.AsSQLTimeStamp :=
+              DateTimeToSQLTimeStamp(Now);
+            cds_PurchaseInvNo_UK.Post;
+            if cds_PurchaseInvNo_UK.ChangeCount > 0 then
+            Begin
+              cds_PurchaseInvNo_UK.ApplyUpdates(0);
+              cds_PurchaseInvNo_UK.CommitUpdates;
+            End;
+            Result := 0;
+          End;
+
+          PkgLogInvoiced(InternalInvoiceNo, 25);
+
+        Finally
+          FormEnterInvoiceNo.Free;
+        End;
+      End;
+    Finally
+      cds_PurchaseInvNo_UK.Active := False;
+    End;
+  End; // with
+End;
+
+procedure TdmVidaInvoice.AssignUK_Sales_InvoiceNumber(const InternalInvoiceNo
+  : Integer);
+Var
+  mrResult: Word;
+  InvoiceNo, OrgInternalInvoiceNo, QInvNo: Integer;
+  FormEnterInvoiceNo: TFormEnterInvoiceNo;
+
+  Function GetInvNo: Integer;
+  Begin
+    // sq_GetNextInvoiceNo.Close ;
+    sq_GetNextInvoiceNo_UK.Open;
+    Try
+      Result := sq_GetNextInvoiceNo_UKNEXT_INVNO.AsInteger;
+    Finally
+      sq_GetNextInvoiceNo_UK.Close;
+    End;
+  End;
+
+procedure InsertInvoiceNo_UK(const InvoiceNo, InternalInvoiceNo
+  : Integer);
+Begin
+  Try
+    sq_InsInvNo_UK.ParamByName('InvoiceNo').AsInteger         := InvoiceNo;
+    sq_InsInvNo_UK.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo;
+    sq_InsInvNo_UK.ParamByName('UserCreated').AsInteger       := ThisUser.UserID;
+    sq_InsInvNo_UK.ParamByName('UserModified').AsInteger      := ThisUser.UserID;
+    sq_InsInvNo_UK.ParamByName('DateCreated').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now);
+    sq_InsInvNo_UK.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+  Function GetOrgInvoiceNoByCreditInternalInvoiceNo: Integer;
+  Begin
+    Try
+      sq_GetOrgInvoiceNoByCredit_UK.ParamByName('NewInternalInvoiceNo').AsInteger
+        := InternalInvoiceNo;
+      sq_GetOrgInvoiceNoByCredit_UK.Active := True;
+      if not sq_GetOrgInvoiceNoByCredit_UK.Eof then
+        Result := sq_GetOrgInvoiceNoByCredit_UKInternalInvoiceNo.AsInteger
+      else
+        Result := -1;
+    Finally
+      sq_GetOrgInvoiceNoByCredit_UK.Active := False;
+    End;
+  End;
+
+  procedure Insert_PkgType_Invoice;
+  Begin
+    // sq_InvLOs.ParamByName('InternalInvoiceNo').AsInteger  := InternalInvoiceNo ;
+    // sq_InvLOs.Active := True ;
+    // Try
+    // sq_InvLOs.First ;
+    // While not sq_InvLOs.Eof do
+    // Begin
+    Try
+      sq_PkgType_InvoiceForCredit.ParamByName('InternalInvoiceNo').AsInteger :=
+        InternalInvoiceNo;
+      // sq_PkgType_Invoice.ParamByName('SupplierNo').AsInteger        := cdsInvoiceHeadSupplierNo.AsInteger ;//VIDA_WOOD_CLIENTNO ;
+      // sq_PkgType_Invoice.ParamByName('ShippingPlanNo').AsInteger    := sq_InvLOsShippingPlanNo.AsInteger ;
+      // sq_PkgType_Invoice.ParamByName('CustomerNo').AsInteger        := cdsInvoiceHeadCustomerNo.AsInteger ; // Avrop customerNo
+      sq_PkgType_InvoiceForCredit.ExecSQL;
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog(E.Message);
+        // ShowMessage(E.Message);
+        Raise;
+      End;
+    end;
+    // sq_InvLOs.Next ;
+    // End ;//While..
+    // Finally
+    // sq_InvLOs.Active  := False ;
+    // End ;
+  End;
+
+// Main AssignNormalInvoiceNumber
+Begin
+  // Result:= -1 ;
+  with dmVidaInvoice do
+  Begin
+    OrgInternalInvoiceNo := GetOrgInvoiceNoByCreditInternalInvoiceNo;
+
+    InvoiceNo := GetInvoiceNo(InternalInvoiceNo, UK_INVOICE);
+    if InvoiceNo > 0 then
+    Begin
+      showmessage('Invoice number (' + inttostr(InvoiceNo) + ') already assigned.');
+      Exit;
+    End
+    else
+    Begin
+      mrResult := MessageDlg
+        ('Click Yes to generate invoice number automatically, or click no to enter the invoice number manually ',
+        mtConfirmation, [mbYes, mbNo, mbCancel], 0);
+      if mrResult = mrNo then
+      Begin
+        FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
+        Try
+          FormEnterInvoiceNo.Caption := 'Ange fakturanr';
+          if FormEnterInvoiceNo.ShowModal = MrOK then
+          Begin;
+            // START A TRANSACTION
+            dmsConnector.StartTransaction;
+            Try
+              if StrToInt(FormEnterInvoiceNo.eFakturanr.Text) > 0 then
+              Begin
+                InsertInvoiceNo_UK(StrToInt(FormEnterInvoiceNo.eFakturanr.Text),
+                  InternalInvoiceNo);
+                if (cdsInvoiceHeadDebit_Credit.AsInteger = cCredit) and
+                  (cdsInvoiceHeadDelKredit.AsInteger = 0) then
+                Begin
+                  vis_CopyLoad(OrgInternalInvoiceNo, // Old OrgInternalInvoiceNo
+                    InternalInvoiceNo); // NewInternalInvoiceNo
+                  Insert_PkgType_Invoice;
+                End;
+                if cdsInvoiceHeadDelKredit.AsInteger = 1 then
+                  InsertAttest(StrToInt(FormEnterInvoiceNo.eFakturanr.Text));
+              End;
+
+              PkgLogInvoiced(InternalInvoiceNo, 25);
+
+              dmsConnector.Commit;
+            Except
+              On E: Exception do
+              Begin
+                dmsConnector.Rollback;
+                dmsSystem.FDoLog(E.Message);
+                Raise;
+              End;
+            End;
+          End;
+
+        Finally
+          FormEnterInvoiceNo.Free;
+        End;
+      End // End of Manual invoice number entry
+      else if mrResult = mrYes then
+      Begin // Auto invoice number
+        if MessageDlg('Do you want to continue generating the invoice number automatically?', mtConfirmation,
+          [mbYes, mbNo], 0) = mrYes then
+        Begin
+          // START A TRANSACTION
+          dmsConnector.StartTransaction;
+          Try
+            QInvNo := GetInvNo;
+
+            if QInvNo > 0 then
+            Begin
+              InsertInvoiceNo_UK(QInvNo, InternalInvoiceNo);
+              if (cdsInvoiceHeadDebit_Credit.AsInteger = cCredit) and
+                (cdsInvoiceHeadDelKredit.AsInteger = 0) and
+                (OrgInternalInvoiceNo > 0) then
+              Begin
+                vis_CopyLoad(OrgInternalInvoiceNo, // Old OrgInternalInvoiceNo
+                  InternalInvoiceNo); // NewInternalInvoiceNo
+                Insert_PkgType_Invoice;
+              End;
+              if cdsInvoiceHeadDelKredit.AsInteger = 1 then
+                InsertAttest(QInvNo);
+            End;
+            dmsConnector.Commit;
+          Except
+            On E: Exception do
+            Begin
+              dmsConnector.Rollback;
+              dmsSystem.FDoLog(E.Message);
+              Raise;
+            End;
+          End;
+
+        End;
+      End;
+    End;
+
+  End; // with
 End;
 
 procedure TdmVidaInvoice.Assign_BORGSTENA_InvoiceNumber(const InternalInvoiceNo
@@ -1959,19 +2220,19 @@ Begin
     if InvoiceNo > 0 then
     Begin
       // LG_lang
-      showmessage('Fakturanr redan kopplat mot fakturan!');
+      showmessage('Invoice number already assigned.');
       Exit;
     End
     else
     Begin
       mrResult := MessageDlg
-        ('Klicka Yes för att generera Faktura numret automatiskt, klicka No för att mata in manuellt faktura nummer ',
+        ('Click Yes to generate invoice number automatically, or click no to enter the invoice number manually ',
         mtConfirmation, [mbYes, mbNo, mbCancel], 0);
       if mrResult = mrNo then
       Begin
         FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
         Try
-          FormEnterInvoiceNo.Caption := 'Ange fakturanr';
+          FormEnterInvoiceNo.Caption := 'Enter the invoice number';
           if FormEnterInvoiceNo.ShowModal = MrOK then
           Begin;
             // START A TRANSACTION
@@ -2011,7 +2272,7 @@ Begin
       End // End of Manual invoice number entry
       else if mrResult = mrYes then
       Begin // Auto invoice number
-        if MessageDlg('Automatiskt Faktura nummer, fortsätta?', mtConfirmation,
+        if MessageDlg('Do you want to continue generating the invoice number automatically?', mtConfirmation,
           [mbYes, mbNo], 0) = mrYes then
         Begin
           // START A TRANSACTION
@@ -2061,7 +2322,7 @@ Begin
     Try
       if cds_InvNoAGENT.Locate('InternalInvoiceNo', InternalInvoiceNo, []) then
       Begin
-        showmessage('Ett fakturanr är redan tilldelad fakturan.');
+        showmessage('Invoice number already assigned.');
         Exit;
       End
       else
@@ -2069,7 +2330,7 @@ Begin
         FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
 
         Try
-          FormEnterInvoiceNo.Caption := 'Ange fakturanr';
+          FormEnterInvoiceNo.Caption := 'Enter a invoice number';
           FormEnterInvoiceNo.ePrefix.Visible := True;
           FormEnterInvoiceNo.LPrefix.Visible := True;
           if FormEnterInvoiceNo.ShowModal = MrOK then
@@ -2178,13 +2439,13 @@ Begin
     InvoiceNo := GetInvoiceNo(InternalInvoiceNo, 0);
     if InvoiceNo > 0 then
     Begin
-      showmessage('Fakturanr redan kopplat mot fakturan!');
+      showmessage('Invoice number already assigned.');
       Exit;
     End
     else
     Begin
       mrResult := MessageDlg
-        ('Klicka Yes för att generera Faktura numret automatiskt, klicka No för att mata in manuellt faktura nummer ',
+        ('Click Yes to generate invoice number automatically, or click no to enter the invoice number manually ',
         mtConfirmation, [mbYes, mbNo, mbCancel], 0);
       if mrResult = mrNo then
       Begin
@@ -2230,7 +2491,7 @@ Begin
       End // End of Manual invoice number entry
       else if mrResult = mrYes then
       Begin // Auto invoice number
-        if MessageDlg('Automatiskt Faktura nummer, fortsätta?', mtConfirmation,
+        if MessageDlg('Do you want to continue generating the invoice number automatically?', mtConfirmation,
           [mbYes, mbNo], 0) = mrYes then
         Begin
           // START A TRANSACTION
@@ -2433,7 +2694,7 @@ Begin
       then
       Begin
         Result := 1; // Invoice Number Record already exist
-        showmessage('Inköpsfakturanr är redan tilldelad fakturan.');
+        showmessage('Purchase order invoice number already assigned..');
         Exit;
       End
       else
@@ -2441,7 +2702,7 @@ Begin
         FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
 
         Try
-          FormEnterInvoiceNo.Caption := 'Ange inköpsfakturanr';
+          FormEnterInvoiceNo.Caption := 'Enter PO invoice number';
           FormEnterInvoiceNo.ePrefix.Visible := True;
           FormEnterInvoiceNo.LPrefix.Visible := True;
           if FormEnterInvoiceNo.ShowModal = MrOK then
@@ -2558,19 +2819,19 @@ Begin
     InvoiceNo := GetInvoiceNo(InternalInvoiceNo, 0);
     if InvoiceNo > 0 then
     Begin
-      showmessage('Fakturanr redan kopplat mot fakturan!');
+      showmessage('Invoice number already assigned.');
       Exit;
     End
     else
     Begin
       mrResult := MessageDlg
-        ('Klicka Yes för att generera Faktura numret automatiskt, klicka No för att mata in manuellt faktura nummer ',
+        ('Click Yes to generate invoice number automatically, or click no to enter the invoice number manually ',
         mtConfirmation, [mbYes, mbNo, mbCancel], 0);
       if mrResult = mrNo then
       Begin
         FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
         Try
-          FormEnterInvoiceNo.Caption := 'Ange fakturanr';
+          FormEnterInvoiceNo.Caption := 'Enter the invoice number';
           if FormEnterInvoiceNo.ShowModal = MrOK then
           Begin;
             // START A TRANSACTION
@@ -2611,7 +2872,7 @@ Begin
       End // Manual invoice number entry
       else if mrResult = mrYes then
       Begin // Auto invoice number
-        if MessageDlg('Automatiskt Faktura nummer, fortsätta?', mtConfirmation,
+        if MessageDlg('Do you want to continue generating the invoice number automatically?', mtConfirmation,
           [mbYes, mbNo], 0) = mrYes then
         Begin
           // START A TRANSACTION
@@ -3115,6 +3376,8 @@ procedure TdmVidaInvoice.DataModuleCreate(Sender: TObject);
 begin
   fInternalInvoiceNo := -1;
   mtInvoiceType.Active := True;
+  mtInvoiceType.InsertRecord([10, 'UK Purchase']);
+  mtInvoiceType.InsertRecord([9, 'VIDA UK']);
   mtInvoiceType.InsertRecord([8, 'BKO']);
   mtInvoiceType.InsertRecord([7, 'VTA']);
   mtInvoiceType.InsertRecord([6, 'AGENT']);
@@ -3400,6 +3663,9 @@ End;
   5 FW (K4)
   ALLA }
 
+
+// Select InvoiceNo FROM [dbo].[InvoiceNos]
+// WHERE InternalInvoiceNo = :InternalInvoiceNo
 function TdmVidaInvoice.GetInvoiceNo(const InternalInvoiceNo,
   InvoiceType: Integer): Integer;
 begin
@@ -4117,9 +4383,9 @@ Begin
     QExport3ASCII1.Execute;
     QExport3XLS1.FileName := FileNameExcel;
     QExport3XLS1.Execute;
-    showmessage('Filerna exporterade till ' + FileName + ' resp. ' +
+    showmessage('Files exportered to ' + FileName + ' resp. ' +
       FileNameExcel + LF + '' + LF + '' +
-      '  OBS!Kontrollera filerna innan du skickar dem!');
+      '  NOTE! please check the export files before sending them!');
   Finally
     cds_ExportTyp1.Active := False;
   End;
@@ -4171,7 +4437,7 @@ begin
   Begin
     MailToAddress := 'ange@adress.nu';
     showmessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing for the client.');
   End;
 
   if Length(MailToAddress) > 0 then
@@ -4251,7 +4517,7 @@ begin
     End;
   End
   else
-    showmessage('Emailadress saknas för klienten!');
+    showmessage('Email address is missing for the client.');
   // End ;//if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
 end;
 
@@ -7793,17 +8059,17 @@ begin
 
         if Length(Trim(ResKontraSerie)) = 0 then
         Begin
-          showmessage('Reskontraserie kan inte bestämmas för fakturanr ' +
+          showmessage('"Reskontraserie" could not be determined for invoice number ' +
             IntToStr(InvoiceNo));
           Exit;
         End;
 
         if Length(Trim(xorID)) = 0 then
         Begin
-          showmessage('Fakturanr ' + IntToStr(InvoiceNo) +
-            ' kan inte överföras, för att kund ' +
+          showmessage('Invoice number ' + IntToStr(InvoiceNo) +
+            ' could not be transferred, because customer ' +
             Trim(sp_InvTotalsCustomerName.AsString) +
-            ' har inget xorID i rolltypen kund');
+            ' is missing xorID for roll type customer.');
           Exit;
         End;
 
@@ -8058,8 +8324,8 @@ begin
           Try
             if sq_invoiceTrf.FieldByName('Invno').AsInteger > 1 then
             Begin
-              showmessage('Faktura nr ' + IntToStr(InvoiceNo) +
-                ' är redan i loggen.');
+              showmessage('Invoice number ' + IntToStr(InvoiceNo) +
+                ' is already in the log.');
               Exit;
             End;
           Finally
@@ -8276,7 +8542,7 @@ begin
 
       End // sp_InvTotals
       else
-        showmessage('Fakturan saknar värden.');
+        showmessage('The invoice are missing values.');
     Finally
       sp_InvTotals.Active := False;
     End;
@@ -9562,7 +9828,7 @@ begin
         cds_InsertToInvoiceEDI.ParamByName('DateCreated').AsSQLTimeStamp :=
           DateTimeToSQLTimeStamp(Now);
         cds_InsertToInvoiceEDI.ExecSQL;
-        showmessage('EDI på väg.');
+        showmessage('EDI on the way.');
       except
         On E: Exception do
         Begin
@@ -9802,5 +10068,7 @@ Begin
   Screen.Cursor := Save_Cursor ;
   End ;
 End;
+
+
 
 end.

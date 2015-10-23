@@ -1255,13 +1255,13 @@ begin
   // (mtPackages.FieldByName('ACT_WIDTH').IsNull) or  (mtPackages.FieldByName('ACT_WIDTH').AsFloat < 1))
   // AND (mtpackages.Fields[cVaruslag].AsInteger <> 2)) then
   Begin
-    ShowMessage('Otillåten dimension!');
+    ShowMessage('unkowned dimension!');
     Abort;
   End;
 
   if Length(Trim(SupplierCode)) = 0 then
   Begin
-    ShowMessage('Verkkod saknas.');
+    ShowMessage('Prefix missing.');
     Abort;
   End;
   ChangeNoOfPcsEvent := False;

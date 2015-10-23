@@ -570,7 +570,7 @@ Begin
     Add('SUPP.ClientName,');
     Add('CUST.ClientName');
 
-    // if ThisUser.UserID = 8 then  SaveToFile('sq_VerkLaster.txt');
+    // if ThisUser.UserID = 8 then    SaveToFile('sq_VerkLaster.txt');
   End;
 
 End;

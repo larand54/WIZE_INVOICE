@@ -321,7 +321,7 @@ var
 implementation
 
 uses VidaUser, dmSokFormular, dmcVidaOrder, dmsVidaContact,
-  UnitBookingForm, UnitCRViewReport, dmsDataConn, VidaConst,
+  UnitBookingFormorg, UnitCRViewReport, dmsDataConn, VidaConst,
   dmsVidaSystem, uSokAvropMall, UnitCRExportOneReport, uSendMapiMail,
   uEntryField, dmBooking, udmLanguage, uReport, uReportController;
 
@@ -1005,7 +1005,7 @@ begin
       End; // with
     End // if (cds_PropsCopyPcs.AsInteger > -1) and (not cds_PropsCopyPcs.IsNull) then
     else
-      ShowMessage('Ange minst urval på avropstatus.');
+      ShowMessage('At least select call off status.');
 
   Finally
     Screen.Cursor := Save_Cursor;
@@ -1051,7 +1051,7 @@ begin
     Begin
       FileName := SaveDialog1.FileName;
       ExportGridToExcel(FileName, grdAvropSok, False, False, True, 'xls');
-      ShowMessage('Tabell exporterad till Excelfil ' + FileName);
+      ShowMessage('Table exportered to Excel file ' + FileName);
     End;
   Finally
     Screen.Cursor := Save_Cursor;
@@ -1079,7 +1079,7 @@ end;
 
 procedure TfrmSokAvropFormular.acBookingExecute(Sender: TObject);
 var
-  FormBookingForm: TFormBookingForm;
+  FormBookingForm: TFormBookingFormorg;
 begin
   acSaveExecute(Sender);
 
@@ -1087,7 +1087,7 @@ begin
     dm_Booking := Tdm_Booking.Create(nil);
   dmsSystem.AssignDMToThisWork('TfrmSokAvropFormular', 'dm_Booking');
 
-  FormBookingForm := TFormBookingForm.Create(Nil);
+  FormBookingForm := TFormBookingFormorg.Create(Nil);
   try
     FormBookingForm.CreateCo(grdAvropSokDBBandedTableView1.DataController.
       DataSource.DataSet.FieldByName('LO').AsInteger);
@@ -1120,7 +1120,7 @@ procedure TfrmSokAvropFormular.FormCloseQuery(Sender: TObject;
 begin
   if DataSaved = False then
   Begin
-    if MessageDlg('Ändringar ej sparade, vill du stänga?', mtConfirmation,
+    if MessageDlg('Changes are not saved, do you want to continue closing anyway?', mtConfirmation,
       [mbYes, mbNo], 0) = mrYes then
     Begin
       With dm_SokFormular do
@@ -1300,7 +1300,7 @@ begin
     else
     Begin
       ShowMessage
-        ('Du har ingen mall angiven som standard eller inga mallar alls, öppna och sätt en mall som standard eller skapa en ny mall');
+        ('You have no template set as standard or no templates at all, open and set a template as standard or create a new template') ;
       if cds_Props.Active then
         cds_Props.Active := False;
     End;
@@ -1331,7 +1331,7 @@ begin
     if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
-        ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+        ('Email address missing, enter the address direct in the mail(outlook).');
     End;
 {$IFDEF TEST_WITH_EMAIL}
     if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
@@ -1402,7 +1402,7 @@ begin
       End;
     End
     else
-      ShowMessage('Emailadress saknas för klienten!');
+      ShowMessage('Email address missing.');
   End; // With dm_SokFormular do
 end;
 
@@ -1429,7 +1429,7 @@ begin
     if Length(MailToAddress) = 0 then Begin
       MailToAddress := 'ange@adress.nu';
       ShowMessage
-        ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+        ('Email address missing, enter the address direct in the mail(outlook).');
     End;
     if Length(MailToAddress) > 0 then Begin
       // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
@@ -1491,7 +1491,7 @@ begin
       End;
     End
     else
-      ShowMessage('Emailadress saknas för klienten!');
+      ShowMessage('Email address missing.');
   End; // With dm_SokFormular do
 end;
 
@@ -1530,7 +1530,7 @@ begin
     // if (fSokAvropMall.ShowModal = mrOK) and
     if (cds_Props.RecordCount > 0) AND (cds_PropsName.AsString > '') then
     Begin
-      if MessageDlg('Vill du spara aktuella inställningar som mall ' +
+      if MessageDlg('Do you want to save the current setup as a template ' +
         cds_PropsForm.AsString + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
       then
       Begin
@@ -1583,7 +1583,7 @@ begin
       if Length(MailToAddress) = 0 then Begin
         MailToAddress := 'ange@adress.nu';
         ShowMessage
-          ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+          ('Email address missing, enter the address direct in the mail(outlook).');
       End;
 
       if Length(MailToAddress) > 0 then Begin
@@ -1608,7 +1608,7 @@ begin
               SetLength(Attach, I + 1);
               Attach[I] := ExportFile + intToStr(AA[I]) + '.pdf';
               if not FileExists(Attach[I]) then begin
-                Showmessage('Fil: '+Attach[I] + 'har ej skapats. Mail avbryts!');
+                Showmessage('File: '+Attach[I] + ' has not been created. Operation aborted.');
                 Screen.Cursor := Save_Cursor;
                 exit;
               end;
@@ -1662,11 +1662,11 @@ begin
         End;
       End
       else
-        ShowMessage('Emailadress saknas för klienten!');
+        ShowMessage('Email address missing.');
     End; // With dm_SokFormular do
   end // GetSelectedLOnos
   else
-    ShowMessage('Måste vara samma Speditör på alla rader!');
+    ShowMessage('Must be same freight company on all rows.');
 end;
 
 function TfrmSokAvropFormular.GetSelectedLONos: Boolean;
@@ -1762,7 +1762,7 @@ begin
       if fEntryField.ShowModal = mrOK then
       // if (cds_Props.RecordCount > 0) AND (cds_PropsName.AsString > '') then
       Begin
-        if MessageDlg('Vill du spara aktuella inställningar som mall ' +
+        if MessageDlg('Do you want to save the current setup in template ' +
           fEntryField.eNoofpkgs.Text + '?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
         then
         Begin

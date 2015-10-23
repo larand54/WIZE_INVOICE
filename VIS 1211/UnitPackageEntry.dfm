@@ -395,6 +395,7 @@ object frmPackageEntry: TfrmPackageEntry
     AlignSplitter = salBottom
     Control = Panel1
     ExplicitTop = 343
+    ExplicitWidth = 8
   end
   object Panel2: TPanel
     Left = 0

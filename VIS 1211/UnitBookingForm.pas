@@ -175,26 +175,26 @@ Begin
   Result := True;
   with dm_Booking do
   Begin
-    if cdsVoyage.State in [dsEdit, dsInsert] then
+    if cdsVoyageInvoice.State in [dsEdit, dsInsert] then
       Result := False;
-    if cdsVoyage.ChangeCount > 0 then
+    if cdsVoyageInvoice.ChangeCount > 0 then
       Result := False;
 
-    if cdsBooking.State in [dsEdit, dsInsert] then
+    if cdsBookingInvoice.State in [dsEdit, dsInsert] then
       Result := False;
-    if cdsBooking.ChangeCount > 0 then
+    if cdsBookingInvoice.ChangeCount > 0 then
       Result := False;
   End;
 End;
 
-procedure TFormBookingForm.CreateCo(const ShippingPlanNo: Integer);
+procedure TFormBookingForm.CreateCo(const ShippingPlanNo : Integer);
 begin
   dmsSystem.LoadGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoRows.Name,
     grdLoRowsDBTableView1);
 
   with dm_Booking do
   Begin
-    cdsVoyage.Active := True;
+    cdsVoyageInvoice.Active := True;
 
     cdsAvropInfo.Active := False;
     cdsAvropInfo.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
@@ -206,31 +206,33 @@ begin
       ShippingPlanNo;
     cdsBookingProducts.Active := True;
 
-    cdsBooking.Active := False;
-    cdsBooking.ParamByName('ShippingPlanNo').AsInteger := ShippingPlanNo;
-    cdsBooking.Active := True;
+    cdsBookingInvoice.Active := False;
+    cdsBookingInvoice.ParamByName('ShippingPlanNo').AsInteger    := ShippingPlanNo;
+    cdsBookingInvoice.ParamByName('InternalInvoiceNo').AsInteger := dm_Booking.InternalInvoiceNo ;
+    cdsBookingInvoice.Active := True;
 
     LoadVessels;
 
-    if not cdsBooking.Eof then
+    if not cdsBookingInvoice.Eof then
     Begin
       // Existing booking found
-      cdsVoyage.Active := False;
-      cdsVoyage.ParamByName('VoyageNo').AsInteger :=
-        cdsBookingBookingNo.AsInteger;
-      cdsVoyage.Active := True;
+      cdsVoyageInvoice.Active := False;
+      cdsVoyageInvoice.ParamByName('VoyageNo').AsInteger           := cdsBookingInvoiceBookingNo.AsInteger ;
 
-      if (cdsVoyage.RecordCount = 0) or
-        ((cdsVoyage.RecordCount = 1) and (cdsVoyageVoyageno.AsInteger <>
-        cdsBookingBookingNo.AsInteger)) then
+      cdsVoyageInvoice.ParamByName('InternalInvoiceNo').AsInteger  := dm_Booking.InternalInvoiceNo ;
+      cdsVoyageInvoice.Active := True;
+
+      if (cdsVoyageInvoice.RecordCount = 0) or
+        ((cdsVoyageInvoice.RecordCount = 1) and (cdsVoyageInvoiceVoyageno.AsInteger <>
+        cdsBookingInvoiceBookingNo.AsInteger)) then
       Begin
-        cdsVoyage.Insert;
+        cdsVoyageInvoice.Insert;
         // cdsVoyageVoyageNo.AsInteger     := dmsConnector.NextMaxNo('Voyage') ;
-        cdsVoyageCarrierNo.AsInteger := 0;
+        cdsVoyageInvoiceCarrierNo.AsInteger := 0;
         // cdsVoyageCreatedUser.AsInteger:= ThisUser.UserID ;
         // cdsVoyageModifiedUser.AsInteger:= ThisUser.UserID ;
         // cdsVoyageDateCreated.AsSQLTimeStamp:= DateTimeToSQLTimeStamp(Now) ;
-        cdsVoyage.Post;
+        cdsVoyageInvoice.Post;
 
         // cdsBooking.Edit ;
         // cdsBookingVoyageNo.AsInteger:= cdsVoyageVoyageNo.AsInteger ;
@@ -244,23 +246,24 @@ begin
     End // if cdsVoyage.RecordCount = 0 then
     else
     Begin
-      cdsBooking.Insert;
-      cdsBookingBookingNo.AsInteger := dmsConnector.NextMaxNo('Booking');
-      cdsBookingShippingPlanNo.AsInteger := ShippingPlanNo;
-      cdsBookingLOText.AsVariant := cdsAvropInfoLOText.AsVariant;
-      cdsBookingInvoiceText.AsVariant := cdsAvropInfoInvoiceText.AsVariant;
-      cdsBookingNoteForLoadSheet.AsVariant :=
+      cdsBookingInvoice.Insert;
+      cdsBookingInvoiceBookingNo.AsInteger         := dmsConnector.NextMaxNo('Booking');
+      cdsBookingInvoiceInternalInvoiceNo.AsInteger := dm_Booking.InternalInvoiceNo ;
+      cdsBookingInvoiceShippingPlanNo.AsInteger    := ShippingPlanNo;
+      cdsBookingInvoiceLOText.AsVariant            := cdsAvropInfoLOText.AsVariant;
+      cdsBookingInvoiceInvoiceText.AsVariant       := cdsAvropInfoInvoiceText.AsVariant;
+      cdsBookingInvoiceNoteForLoadSheet.AsVariant  :=
         cdsAvropInfoNoteForLoadSheet.AsVariant;
-      cdsBookingVoyageNo.AsInteger := cdsBookingBookingNo.AsInteger;
-      cdsBooking.Post;
+      cdsBookingInvoiceVoyageNo.AsInteger          := cdsBookingInvoiceBookingNo.AsInteger;
+      cdsBookingInvoice.Post;
 
-      cdsVoyage.Insert;
+      cdsVoyageInvoice.Insert;
       // cdsVoyageVoyageNo.AsInteger          := dmsConnector.NextMaxNo('Voyage') ;
-      cdsVoyageCarrierNo.AsInteger := 0;
+      cdsVoyageInvoiceCarrierNo.AsInteger := 0;
       // cdsVoyageCreatedUser.AsInteger       := ThisUser.UserID ;
       // cdsVoyageModifiedUser.AsInteger      := ThisUser.UserID ;
       // cdsVoyageDateCreated.AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now) ;
-      cdsVoyage.Post;
+      cdsVoyageInvoice.Post;
     End;
   End; // with
 end;
@@ -270,20 +273,20 @@ begin
   BookingNo := -1;
   with dm_Booking, dmsContact, dmsSystem do
   Begin
-    cdsDelTerms.Active := False;
-    cdsDelTerms.Active := True;
+    cdsDelTerms.Active  := False;
+    cdsDelTerms.Active  := True;
 
     cds_Currency.Active := True;
     cdsPriceUnit.Active := True;
 
-    cdsCarrier.Active := True;
+    cdsCarrier.Active     := True;
     cdsBookingType.Active := True;
-    cds_volunit.Active := True;
-    cdsCurrency.Active := True;
+    cds_volunit.Active    := True;
+    cdsCurrency.Active    := True;
 
-    cdsBooking.Active := True;
-    cdsShippers.Active := True;
-    cdsVoyage.Active := True;
+    cdsBookingInvoice.Active   := True;
+    cdsShippers.Active  := True;
+    cdsVoyageInvoice.Active    := True;
   End;
 
   ReadMeOnly := False;
@@ -326,23 +329,23 @@ begin
   Begin
     CheckSaveVessel;
 
-    if cdsBooking.State in [dsEdit, dsInsert] then
-      cdsBooking.Post;
-    if cdsBooking.ChangeCount > 0 then
+    if cdsBookingInvoice.State in [dsEdit, dsInsert] then
+      cdsBookingInvoice.Post;
+    if cdsBookingInvoice.ChangeCount > 0 then
     Begin
-      cdsBooking.ApplyUpdates(0);
-      cdsBooking.CommitUpdates;
+      cdsBookingInvoice.ApplyUpdates(0);
+      cdsBookingInvoice.CommitUpdates;
     End;
 
-    if cdsVoyage.State in [dsEdit, dsInsert] then
-      cdsVoyage.Post;
-    if cdsVoyage.ChangeCount > 0 then
+    if cdsVoyageInvoice.State in [dsEdit, dsInsert] then
+      cdsVoyageInvoice.Post;
+    if cdsVoyageInvoice.ChangeCount > 0 then
     Begin
-      cdsVoyage.ApplyUpdates(0);
-      cdsVoyage.CommitUpdates;
+      cdsVoyageInvoice.ApplyUpdates(0);
+      cdsVoyageInvoice.CommitUpdates;
     End;
 
-    BookingNo := cdsBookingBookingNo.AsInteger;
+    BookingNo := cdsBookingInvoiceBookingNo.AsInteger;
   End;
 end;
 
@@ -373,7 +376,7 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@ShippingPlanNo',
-        dm_Booking.cdsBookingShippingPlanNo.AsInteger);
+        dm_Booking.cdsBookingInvoiceShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
@@ -384,7 +387,7 @@ begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
     Try
       SetLength(A, 1);
-      A[0] := dm_Booking.cdsBookingShippingPlanNo.AsInteger;
+      A[0] := dm_Booking.cdsBookingInvoiceShippingPlanNo.AsInteger;
       if OrderType = 0 then
         FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
       else
@@ -408,9 +411,9 @@ begin
     cds_volunit.Active := False;
     cdsCurrency.Active := False;
 
-    cdsBooking.Active := False;
+    cdsBookingInvoice.Active := False;
     cdsShippers.Active := False;
-    cdsVoyage.Active := False;
+    cdsVoyageInvoice.Active := False;
     cdsAvropInfo.Active := False;
     dmsSystem.StoreGridLayout(ThisUser.UserID, Self.Name + '/' + grdLoRows.Name,
       grdLoRowsDBTableView1);
@@ -483,16 +486,16 @@ begin
     if Length(Trim(cbvessel.text)) > 0 then
     Begin
       CarrierNo := dmsSystem.GetCarrierNo(cbvessel.text);
-      if cdsVoyage.State = dsBrowse then
-        cdsVoyage.Edit;
-      cdsVoyageCarrierNo.AsInteger := CarrierNo;
-      cdsVoyage.Post;
+      if cdsVoyageInvoice.State = dsBrowse then
+        cdsVoyageInvoice.Edit;
+      cdsVoyageInvoiceCarrierNo.AsInteger := CarrierNo;
+      cdsVoyageInvoice.Post;
     End // if Length(Trim(cbvessel.text)) > 0 then
     else
     Begin
-      cdsVoyage.Edit;
-      cdsVoyageCarrierNo.Clear;
-      cdsVoyage.Post;
+      cdsVoyageInvoice.Edit;
+      cdsVoyageInvoiceCarrierNo.Clear;
+      cdsVoyageInvoice.Post;
     End;
   End; // with dm_Booking do
 end;
@@ -501,12 +504,12 @@ procedure TFormBookingForm.SetETDDate;
 Begin
   with dm_Booking do
   Begin
-    if (cdsVoyage.Active) and (cdsVoyage.RecordCount > 0) then
+    if (cdsVoyageInvoice.Active) and (cdsVoyageInvoice.RecordCount > 0) then
     Begin
-      if cdsVoyage.State in [dsBrowse] then
-        cdsVoyage.Edit;
-      cdsVoyageETD.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
-      cdsVoyage.Post;
+      if cdsVoyageInvoice.State in [dsBrowse] then
+        cdsVoyageInvoice.Edit;
+      cdsVoyageInvoiceETD.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
+      cdsVoyageInvoice.Post;
     End;
   End; // With
 End;

@@ -3,8 +3,8 @@ inherited frmKP_List: TfrmKP_List
   Top = 109
   ActiveControl = lcKund
   Caption = 'frmKP_List'
-  ClientHeight = 820
-  ClientWidth = 1078
+  ClientHeight = 1009
+  ClientWidth = 1327
   OldCreateOrder = True
   PopupMenu = pmShortcut
   OnCloseQuery = FormCloseQuery
@@ -13,13 +13,17 @@ inherited frmKP_List: TfrmKP_List
   ExplicitTop = -90
   ExplicitWidth = 1078
   ExplicitHeight = 820
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object grdKPList: TcxGrid [0]
     Left = 0
-    Top = 89
-    Width = 1078
-    Height = 731
+    Top = 110
+    Width = 1327
+    Height = 899
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
     object grdKPListDBTableView1: TcxGridDBTableView
@@ -179,37 +183,57 @@ inherited frmKP_List: TfrmKP_List
     end
   end
   inherited Panel6: TPanel
-    Width = 1078
-    Height = 89
+    Width = 1327
+    Height = 110
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 1
-    ExplicitWidth = 1078
-    ExplicitHeight = 89
+    ExplicitWidth = 1327
+    ExplicitHeight = 110
     inherited Panel7: TPanel
-      Left = 478
-      Width = 530
-      Height = 89
+      Left = 588
+      Width = 653
+      Height = 110
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alClient
-      ExplicitLeft = 478
-      ExplicitWidth = 530
-      ExplicitHeight = 89
+      ExplicitLeft = 588
+      ExplicitWidth = 653
+      ExplicitHeight = 110
       inherited dxBarDockControl1: TdxBarDockControl
-        Width = 528
-        Height = 45
-        ExplicitWidth = 528
-        ExplicitHeight = 45
+        Width = 651
+        Height = 47
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        ExplicitWidth = 651
+        ExplicitHeight = 47
       end
     end
     inherited Panel8: TPanel
       Left = 0
-      Width = 478
-      Height = 89
+      Width = 588
+      Height = 110
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alLeft
       ExplicitLeft = 0
-      ExplicitWidth = 478
-      ExplicitHeight = 89
+      ExplicitWidth = 588
+      ExplicitHeight = 110
       object lcKund: TcxDBLookupComboBox
-        Left = 96
-        Top = 8
+        Left = 118
+        Top = 10
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Kund'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -217,11 +241,15 @@ inherited frmKP_List: TfrmKP_List
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 0
-        Width = 353
+        Width = 435
       end
       object cbAvropStatus: TcxDBImageComboBox
-        Left = 96
-        Top = 56
+        Left = 118
+        Top = 69
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Status'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -236,21 +264,33 @@ inherited frmKP_List: TfrmKP_List
             Value = 2
           end>
         TabOrder = 2
-        Width = 353
+        Width = 435
       end
       object cxLabel1: TcxLabel
-        Left = 32
-        Top = 61
+        Left = 39
+        Top = 75
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Avropstatus:'
       end
       object cxLabel2: TcxLabel
-        Left = 32
-        Top = 15
+        Left = 39
+        Top = 18
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Kund:'
       end
       object lcAgent: TcxDBLookupComboBox
-        Left = 96
-        Top = 32
+        Left = 118
+        Top = 39
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Agent'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -258,30 +298,46 @@ inherited frmKP_List: TfrmKP_List
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 1
-        Width = 353
+        Width = 435
       end
       object cxLabel3: TcxLabel
-        Left = 32
-        Top = 38
+        Left = 39
+        Top = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Agent:'
       end
     end
     inherited Panel9: TPanel
-      Left = 1008
-      Height = 89
-      ExplicitLeft = 1008
-      ExplicitHeight = 89
+      Left = 1241
+      Height = 110
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ExplicitLeft = 1241
+      ExplicitHeight = 110
       object cxButton1: TcxButton [0]
-        Left = 88
-        Top = 8
-        Width = 89
-        Height = 41
+        Left = 108
+        Top = 10
+        Width = 110
+        Height = 50
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Action = atExit
         TabOrder = 0
       end
       inherited dxBarDockControl2: TdxBarDockControl
-        Height = 45
-        ExplicitHeight = 45
+        Height = 47
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        ExplicitHeight = 47
       end
     end
   end
@@ -1534,41 +1590,36 @@ inherited frmKP_List: TfrmKP_List
       6E0061006700650072003100420061007200320001005300650067006F006500
       200055004900010001005400610068006F006D00610001000D000A0073007400
       4D0075006C00740069004C0069006E00650073005F0055006E00690063006F00
-      640065000D000A00640078004200610072004D0061006E006100670065007200
-      31002E00430061007400650067006F0072006900650073000100440065006600
-      610075006C0074000100010001000D000A007300740053007400720069006E00
-      670073005F0055006E00690063006F00640065000D000A00730074004F007400
-      68006500720053007400720069006E00670073005F0055006E00690063006F00
-      640065000D000A006300640073004B0050005F004C006900730074002E005300
-      74006F00720065006400500072006F0063004E0061006D006500010064006200
-      6F002E005600490053005F004B0050005F004C004900530054005F0049004900
-      0100010001000D000A007300740043006F006C006C0065006300740069006F00
-      6E0073005F0055006E00690063006F00640065000D000A006300620041007600
-      72006F0070005300740061007400750073002E00500072006F00700065007200
-      74006900650073002E004900740065006D0073005B0030005D002E0044006500
-      73006300720069007000740069006F006E00010041006B007400690076000100
-      010001000D000A00630062004100760072006F00700053007400610074007500
-      73002E00500072006F0070006500720074006900650073002E00490074006500
-      6D0073005B0031005D002E004400650073006300720069007000740069006F00
-      6E0001004100760073006C0075007400610064000100010001000D000A007300
-      7400430068006100720053006500740073005F0055006E00690063006F006400
-      65000D000A005400660072006D004B0050005F004C0069007300740001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001000D00
-      0A00640078004200610072004D0061006E006100670065007200310001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001004400
-      45004600410055004C0054005F00430048004100520053004500540001000D00
-      0A00640078004200610072004D0061006E006100670065007200310042006100
-      720031000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000100440045004600410055004C0054005F0043004800410052005300
-      4500540001000D000A00640078004200610072004D0061006E00610067006500
-      7200310042006100720032000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      48004100520053004500540001000D000A00}
+      640065000D000A007300740053007400720069006E00670073005F0055006E00
+      690063006F00640065000D000A00730074004F00740068006500720053007400
+      720069006E00670073005F0055006E00690063006F00640065000D000A007300
+      740043006F006C006C0065006300740069006F006E0073005F0055006E006900
+      63006F00640065000D000A00630062004100760072006F007000530074006100
+      7400750073002E00500072006F0070006500720074006900650073002E004900
+      740065006D0073005B0030005D002E0044006500730063007200690070007400
+      69006F006E00010041006B007400690076000100010001000D000A0063006200
+      4100760072006F0070005300740061007400750073002E00500072006F007000
+      6500720074006900650073002E004900740065006D0073005B0031005D002E00
+      4400650073006300720069007000740069006F006E0001004100760073006C00
+      75007400610064000100010001000D000A007300740043006800610072005300
+      6500740073005F0055006E00690063006F00640065000D000A00540066007200
+      6D004B0050005F004C006900730074000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F00430048004100520053004500540001000D000A0064007800420061007200
+      4D0061006E00610067006500720031000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F00430048004100520053004500540001000D000A0064007800420061007200
+      4D0061006E006100670065007200310042006100720031000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F00430048004100520053004500540001000D000A006400
+      78004200610072004D0061006E00610067006500720031004200610072003200
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      01000D000A00}
   end
   object cdsKP_List: TFDStoredProc
     Connection = dmsConnector.FDConnection1

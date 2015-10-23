@@ -447,8 +447,8 @@ object frmInvoice: TfrmInvoice
           OnClick = lFakturaAdressClick
         end
         object lcSR: TcxDBLookupComboBox
-          Left = 447
-          Top = 10
+          Left = 446
+          Top = 8
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -867,9 +867,6 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 34
@@ -1106,9 +1103,6 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&NOTERING'
       ImageIndex = 11
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -1134,9 +1128,6 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&POST IT!'
       ImageIndex = 13
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 492
         Top = 6
@@ -1167,9 +1158,6 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&SPEC'
       ImageIndex = 5
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -1739,7 +1727,6 @@ object frmInvoice: TfrmInvoice
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
-        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0
@@ -4428,7 +4415,7 @@ object frmInvoice: TfrmInvoice
         ParentFont = False
       end
       object Label25: TLabel
-        Left = 670
+        Left = 660
         Top = 12
         Width = 100
         Height = 17
@@ -4446,7 +4433,7 @@ object frmInvoice: TfrmInvoice
       end
       object DBText31: TDBText
         Left = 763
-        Top = 37
+        Top = 35
         Width = 160
         Height = 21
         Margins.Left = 4
@@ -4557,7 +4544,7 @@ object frmInvoice: TfrmInvoice
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 670
+        Left = 660
         Top = 70
         Width = 39
         Height = 17
@@ -4574,7 +4561,7 @@ object frmInvoice: TfrmInvoice
         ParentFont = False
       end
       object Label9: TLabel
-        Left = 670
+        Left = 660
         Top = 41
         Width = 64
         Height = 17
@@ -7057,8 +7044,8 @@ object frmInvoice: TfrmInvoice
     end
   end
   object pmExport: TPopupMenu
-    Left = 672
-    Top = 397
+    Left = 680
+    Top = 469
     object EXPORT1: TMenuItem
       Caption = '***** EXPORT *****'
     end

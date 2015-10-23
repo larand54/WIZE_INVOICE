@@ -291,7 +291,7 @@ begin
       Try
         ExportGridToExcel(FileName, grdShippingInstruct, False, False,
           True, 'xls');
-        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+        ShowMessage('Table exported to Excel file ' + FileName);
       Except
       End;
     End;

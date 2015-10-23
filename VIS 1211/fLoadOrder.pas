@@ -617,7 +617,7 @@ uses
   VidaType,
   VidaUser,
   VidaUtils, UnitCRViewReport,
-  UnitLoadEntrySSP, UnitBookingForm, dmsVidaContact, dmcVidaSystem,
+  UnitLoadEntrySSP, UnitBookingFormorg, dmsVidaContact, dmcVidaSystem,
   dmcLoadEntrySSP, dmc_ArrivingLoads, dmsDataConn, uEntryField,
   dmsVidaSystem, UnitCRPrintReport,
   //uLOLengths,
@@ -1827,7 +1827,7 @@ Begin
 
   if (dmcOrder.cdsSawmillLoadOrders.ChangeCount > 0) OR
     (dmcOrder.cdsBooking.ChangeCount > 0) then
-    if MessageDlg('Vill du spara ändringar?', mtConfirmation, [mbYes, mbNo], 0)
+    if MessageDlg('Do you want to save the changes?', mtConfirmation, [mbYes, mbNo], 0)
       = mrYes then
       acSaveChangesExecute(Sender)
     else
@@ -1916,9 +1916,9 @@ begin
       (dmcOrder.cds_PropsVerkNo.AsInteger,
       StrToIntDef(Trim(teSearchLONo.Text), 0));
     if ShippingPlanNo > 1 then
-      if MessageDlg('Hittade inte LONr ' + Trim(teSearchLONo.Text) +
-        ', det finns däremot en add LO nr ' + IntToStr(ShippingPlanNo) +
-        ' kopplad till den, vill du hämta den?', mtConfirmation, [mbYes, mbNo],
+      if MessageDlg('Did not find the LO number ' + Trim(teSearchLONo.Text) +
+        ', altough there is a ADD LO number ' + IntToStr(ShippingPlanNo) +
+        ' assigned to it, do you want to get it?', mtConfirmation, [mbYes, mbNo],
         0) = mrYes then
       Begin
         teSearchLONo.Text := IntToStr(ShippingPlanNo);
@@ -3502,7 +3502,7 @@ begin
           if (Status = STATUS_COMPLETE) and (dmcOrder.LoadStatusOK = False) then
           Begin
             ShowMessage
-              ('Kan inte avsluta LO för att det finns laster som inte är avslutade eller inga laster alls.');
+              ('Cannot finish LO because there are loads not set to complete, or there are no loads at all.');
           End
           else
           Begin
@@ -3725,7 +3725,7 @@ begin
 
       Try
         ExportGridToExcel(FileName, grdLO, False, False, True, 'xls');
-        ShowMessage('Tabell exporterad till Excel fil ' + FileName);
+        ShowMessage('Table exported to Excel file ' + FileName);
       Except
       End;
     End;
@@ -4240,9 +4240,9 @@ end;
 
 procedure TfrmLoadOrder.acBookingExecute(Sender: TObject);
 var
-  FormBookingForm: TFormBookingForm;
+  FormBookingForm: TFormBookingFormorg;
 begin
-  FormBookingForm := TFormBookingForm.Create(Nil);
+  FormBookingForm := TFormBookingFormorg.Create(Nil);
   try
 
     FormBookingForm.CreateCo(grdLODBTableView1.DataController.DataSet.
@@ -4710,7 +4710,7 @@ begin
               .AsInteger, StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0));
 
             GetLO(StrToIntDef(Trim(fEntryField.eNoofpkgs.Text), 0), Sender);
-            ShowMessage('LOnr ändrat i lasten ');
+            ShowMessage('LO number changed in the load.');
             // if dmcOrder.cdsLoadsForLO.Locate('LoadNo', LoadNo, []) then
             if dmcOrder.FindLoadRecord(LoadNo) then
               acOpenLoadExecute(Sender);
@@ -4724,8 +4724,8 @@ begin
           End;
         End // if dmcOrder.ValidLO(StrToIntDef(Trim(fEntryField.eNoofpkgs.Text),0)) then
         else
-          ShowMessage('LOnr ' + fEntryField.eNoofpkgs.Text +
-            ' finns ej eller så skiljer sig leverantör eller lastställe från det LOnr lasten har.');
+          ShowMessage('LO number ' + fEntryField.eNoofpkgs.Text +
+            ' does not seem to exist.');
     End;
   Finally
     FreeAndNil(fEntryField);
@@ -5254,7 +5254,7 @@ begin
       if dmcOrder.FindLoadRecord(StrToIntDef(Trim(teSearchLoadNo.Text), 0)) then
         acOpenLoadExecute(Sender)
       else
-        ShowMessage('Lastnr ' + teSearchLoadNo.Text + ' kan ej lokaliseras.');
+        ShowMessage('Load number ' + teSearchLoadNo.Text + ' cannot be found.');
       teSearchLONo.Text := '';
       teSearchLoadNo.Text := '';
     Finally
@@ -5454,7 +5454,7 @@ begin
   if Length(MailToAddress) = 0 then Begin
     MailToAddress := 'ange@adress.nu';
     ShowMessage
-      ('Emailadress saknas för klienten, ange adressen direkt i mailet(outlook)');
+      ('Email address is missing, please enter the address direct in the mail(outlook)');
   End;
   if Length(MailToAddress) > 0 then begin
     if grdLODBTableView1.DataController.DataSet.FieldByName('ObjectType')
@@ -5538,7 +5538,7 @@ begin
     End;
   End
   else
-    ShowMessage('Emailadress saknas för klienten!');
+    ShowMessage('Email address is missing.');
 end;
 
 procedure TfrmLoadOrder.grdLODBTableView1DblClick(Sender: TObject);

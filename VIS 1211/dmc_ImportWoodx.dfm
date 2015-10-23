@@ -127,7 +127,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
   end
   object ds_ProdLength: TDataSource
     DataSet = cds_ProdLength
-    Left = 792
+    Left = 816
     Top = 80
   end
   object ds_DMWH: TDataSource
@@ -974,7 +974,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
       'Update dbo.Client'
       'Set PartyIdentifier = '#39#39
       'WHERE PartyIdentifier = :PartyIdentifier')
-    Left = 792
+    Left = 816
     Top = 224
     ParamData = <
       item
@@ -992,7 +992,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
       'Set PartyIdentifier = :PartyIdentifier,'
       'PartyIdentifierType = :PartyIdentifierType'
       'WHERE ClientNo = :ClientNo')
-    Left = 792
+    Left = 816
     Top = 168
     ParamData = <
       item
@@ -1020,7 +1020,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
       'FROM dbo.LengthSpecification2 LS '
       'WHERE'
       'LS.DeliveryMessageNumber = :DeliveryMessageNumber')
-    Left = 688
+    Left = 712
     Top = 32
     ParamData = <
       item
@@ -1505,7 +1505,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
         'GroupNo'
       ''
       'WHERE pd.ProductNo = :ProductNo')
-    Left = 880
+    Left = 904
     Top = 32
     ParamData = <
       item
@@ -1547,7 +1547,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select * FROM dbo.ProductLength')
-    Left = 792
+    Left = 816
     Top = 32
     object cds_ProdLengthProductLengthNo: TIntegerField
       FieldName = 'ProductLengthNo'
@@ -3913,7 +3913,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
     SortID = 0
     SubLanguageID = 1
     LocaleID = 1024
-    Left = 968
+    Left = 992
     Top = 29
     object mtVisKlientClientNo: TIntegerField
       FieldName = 'ClientNo'

@@ -2038,8 +2038,8 @@ object dmsConnector: TdmsConnector
   object FDStoredProc1: TFDStoredProc
     Connection = FDConnection1
     StoredProcName = 'dbo.vis_InqLevelThree_v3'
-    Left = 472
-    Top = 264
+    Left = 464
+    Top = 240
     ParamData = <
       item
         Position = 1
@@ -2059,8 +2059,8 @@ object dmsConnector: TdmsConnector
   object sp_GetUserStartHost: TFDStoredProc
     Connection = FDConnection1
     StoredProcName = 'vis_GetUserStartHost_v2'
-    Left = 469
-    Top = 328
+    Left = 461
+    Top = 288
     ParamData = <
       item
         Position = 1

@@ -277,7 +277,7 @@ begin
   CanClose := True;
   if DataSaved = False then
   Begin
-    MessageIndex := MessageDlg('Ändringar är inte sparade, vill du spara?',
+    MessageIndex := MessageDlg('Do you want to save the changes?',
       mtConfirmation, [mbYes, mbNo, mbCancel], 0);
     Case MessageIndex of
       mrYes:
@@ -425,7 +425,7 @@ begin
     if dmVidaInvoice.cdsInvoiceDetailTypeOfRow.AsInteger = 2 then
       cdsInvoiceDetail.Delete
     else
-      ShowMessage('Kan inte ta bort fakturarader');
+      ShowMessage('Cannot remove invoice rows');
   End;
 end;
 
@@ -1059,7 +1059,7 @@ procedure TfInvoiceWizard.acCancelChangesExecute(Sender: TObject);
 begin
   With dmVidaInvoice do
   Begin
-    if MessageDlg('Vill du avbryta?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+    if MessageDlg('Do you want to cancel', mtConfirmation, [mbYes, mbNo], 0) = mrYes
     then
       DeleteInvoice(cdsInvoiceHeadInternalInvoiceNo.AsInteger)
     else
