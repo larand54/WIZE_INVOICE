@@ -747,13 +747,18 @@ end;
 
 function TdmArrivingLoads.RtR_Load_is_AR(Const Confirmed_LoadNo : Integer;Var RtR_LoadNo : String) : Boolean ;
 Begin
-  sp_RtR_Load_is_AR.ParamByName('Confirmed_LoadNo').AsInteger :=  Confirmed_LoadNo ;
+  sp_RtR_Load_is_AR.ParamByName('@Confirmed_LoadNo').AsInteger :=  Confirmed_LoadNo ;
   sp_RtR_Load_is_AR.Active  :=  True ;
   if not sp_RtR_Load_is_AR.Eof then
   Begin
-//    RtR_LoadNo  :=  sp_RtR_Load_is_AR.FieldByName('RtR_LoadNo').AsInteger :=  Confirmed_LoadNo ;
+    RtR_LoadNo  :=  sp_RtR_Load_is_AR.FieldByName('NewLoadNo').AsString ;
+    Result      :=  True ;
   End
-
+    else
+     Begin
+      RtR_LoadNo  :=  '-1' ;
+      Result      :=  False ;
+     End;
 End;
 
 function TdmArrivingLoads.UndoConfirmLoad(const Trading : Integer)  : Boolean;

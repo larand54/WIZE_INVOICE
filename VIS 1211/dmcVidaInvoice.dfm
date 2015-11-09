@@ -4354,7 +4354,7 @@ object dmVidaInvoice: TdmVidaInvoice
         'No'#9#9'= VD.BookingNo'
       
         '       '#9'LEFT OUTER JOIN dbo.VoyageInvoice'#9#9#9'Vg '#9'ON  '#9'Vg.VoyageNo' +
-        #9#9'= Bk.VoyageNo'
+        #9#9'= Bk.BookingNo'
       '        and Vg.InternalInvoiceNo = Bk.InternalInvoiceNo'
       
         '       '#9'LEFT OUTER JOIN dbo.Client'#9#9#9'SC '#9'ON  '#9'Bk.ShippingCompany' +

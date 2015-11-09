@@ -19,8 +19,6 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object cxSplitter1: TcxSplitter
@@ -37,7 +35,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Control = grdLoads
     Color = clMaroon
     ParentColor = False
-    ExplicitWidth = 8
   end
   object grdLoads: TcxGrid
     Left = 0

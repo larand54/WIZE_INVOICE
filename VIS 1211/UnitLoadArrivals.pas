@@ -832,14 +832,14 @@ Begin
         cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
         cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan SP on SP.shippingplanno = LSP.shippingplanno');
         cdsArrivingLoads.SQL.Add('and SP.SupplierNo = L.SupplierNo') ;
+        cdsArrivingLoads.SQL.Add('and SP.LoadingLocationNo = LSP.LoadingLocationNo') ;
       //  cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on sp.SupplierShipPlanObjectNo = ld.Defsspno');
 
         if (LONo = -1) and (LoadNo = -1) then
-          if bcConfirmed.ItemIndex = 2 then
+          if bcConfirmed.ItemIndex > 0 then
           Begin
             cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
-            cdsArrivingLoads.SQL.Add
-              ('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
+            cdsArrivingLoads.SQL.Add('cl.Confirmed_LoadNo = lsp.LoadNo AND cl.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo');
           End;
 
 
@@ -923,9 +923,14 @@ Begin
 
       cdsArrivingLoads.SQL.Add('AND LSP.ConfirmedByReciever = 0') ;
 
-      cdsArrivingLoads.SQL.Add('AND Not exists (select * from dbo.Confirmed_Load cl') ;
-      cdsArrivingLoads.SQL.Add('WHERE') ;
-      cdsArrivingLoads.SQL.Add('cl.NewLoadNo = L.LoadNo)') ;
+
+        if (LONo = -1) and (LoadNo = -1) then
+          if bcConfirmed.ItemIndex > 0 then
+          Begin
+            cdsArrivingLoads.SQL.Add('AND Not exists (select * from dbo.Confirmed_Load cl') ;
+            cdsArrivingLoads.SQL.Add('WHERE') ;
+            cdsArrivingLoads.SQL.Add('cl.NewLoadNo = L.LoadNo)') ;
+          End;
 
 
       if LONo > -1 then
@@ -974,10 +979,14 @@ Begin
           cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
           if (LONo = -1) and (LoadNo = -1) then
           Begin
-            cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
-              QuotedStr(DateTimeToStr(deStartPeriod.Date)));
-            cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
-              QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+{
+              cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
+                QuotedStr(DateTimeToStr(deStartPeriod.Date)));
+              cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
+                QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+}
           End;
         End
         else
@@ -985,14 +994,9 @@ Begin
           if bcConfirmed.ItemIndex = 2 then // lbConfirmLoad.Enabled = True then
           Begin
             cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
-            cdsArrivingLoads.SQL.Add('AND cl.CreatedUser = ' +
-              IntToStr(ThisUser.UserID));
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' +
-              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
-              DateTimeToSQLTimeStamp(deStartPeriod.Date))));
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' +
-              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
-              DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+            cdsArrivingLoads.SQL.Add('AND cl.CreatedUser = ' + IntToStr(ThisUser.UserID));
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deEndPeriod.Date))));
           End;
       End; // if(LONo = -1) and (LoadNo = -1) then
 
@@ -1089,9 +1093,10 @@ Begin
  //       cdsArrivingLoads.SQL.Add('inner join dbo.loaddetail ld on ld.LoadNo = lsp.LoadNo and ld.shippingplanno = LSP.shippingplanno');
         cdsArrivingLoads.SQL.Add('inner join dbo.SupplierShippingPlan       SP on SP.shippingplanno = LSP.shippingplanno');
         cdsArrivingLoads.SQL.Add('and SP.SupplierNo = L.SupplierNo') ;
+        cdsArrivingLoads.SQL.Add('and SP.LoadingLocationNo = LSP.LoadingLocationNo') ;
         if (LONo = -1) and (LoadNo = -1) then
         Begin
-          if bcConfirmed.ItemIndex = 2 then
+          if bcConfirmed.ItemIndex > 0 then
           Begin
             cdsArrivingLoads.SQL.Add('INNER JOIN dbo.Confirmed_Load cl on ');
             cdsArrivingLoads.SQL.Add
@@ -1212,10 +1217,19 @@ Begin
           cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
           if (LONo = -1) and (LoadNo = -1) then
           Begin
-            cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
-              QuotedStr(DateTimeToStr(deStartPeriod.Date)));
-            cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
-              QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+{
+              cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
+                QuotedStr(DateTimeToStr(deStartPeriod.Date)));
+              cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
+                QuotedStr(DateTimeToStr(deEndPeriod.Date)));
+}
+
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' +
+              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+              DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' +
+              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+              DateTimeToSQLTimeStamp(deEndPeriod.Date))));
           End;
         End
         else if bcConfirmed.ItemIndex = 2 then
@@ -1654,7 +1668,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-    // if thisuser.UserID = 8 then  cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+   if thisuser.UserID = 258 then cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -4652,7 +4666,7 @@ Var
   // formConfirmManyIntLoads   : TformConfirmManyIntLoads ;
   fSelectLIP          : TfRegionToRegionSelectLIPNo ;
   fAnkomstRegProgress : TfAnkomstRegProgress;
-  Save_Cursor         : TCursor;
+ // Save_Cursor         : TCursor;
   // ChangeToIMPProduct        : Boolean ;
   ObjectType          : Integer;
   LoadAROK            : Boolean;

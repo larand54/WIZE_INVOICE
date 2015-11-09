@@ -198,6 +198,14 @@ type
     icStatus: TcxDBImageComboBox;
     grdAvrRowsDBTableView1AR_AV: TcxGridDBColumn;
     siLangLinked_frmGjordaAvrakningar: TsiLangLinked;
+    dxBarLargeButton12: TdxBarLargeButton;
+    acSetToComplete: TAction;
+    dxBarPopupMenu1: TdxBarPopupMenu;
+    dxBarButton1: TdxBarButton;
+    acAvslutad: TAction;
+    acGodkand: TAction;
+    dxBarButton2: TdxBarButton;
+    dxBarButton3: TdxBarButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure Paymentrecieved1Click(Sender: TObject);
@@ -235,6 +243,9 @@ type
     procedure cds_PropsVerkNoChange(Sender: TField);
     procedure cds_PropsStatusChange(Sender: TField);
     procedure cds_PropsAfterInsert(DataSet: TDataSet);
+    procedure acSetToCompleteExecute(Sender: TObject);
+    procedure acAvslutadExecute(Sender: TObject);
+    procedure acGodkandExecute(Sender: TObject);
   private
     { Private declarations }
     ExcelDir: String;
@@ -560,6 +571,34 @@ begin
   acAngraAndringar.Enabled := not DataSparat;
 end;
 
+procedure TfrmGjordaAvrakningar.acAvslutadExecute(Sender: TObject);
+begin
+  With dm_Avrakning do
+  Begin
+    if (cdsPaymentHeadSenderStatus.AsInteger = 1) then
+    Begin
+//      ShowMessage('Info: Alla priser kommer nu att uppdateras.');
+      if cdsPaymentHead.State in [dsBrowse] then
+        cdsPaymentHead.Edit ;
+      cdsPaymentHeadSenderStatus.AsInteger  :=  2 ;
+      if cdsPaymentHead.State in [dsEdit, dsInsert] then
+        cdsPaymentHead.Post;
+//      if cdsPaymentHeadSenderStatus.AsInteger = 1 then
+//        UpdateAllPricesExecute;
+      if cdsPaymentHead.ChangeCount > 0 then
+      Begin
+        cdsPaymentHead.ApplyUpdates(0);
+        cdsPaymentHead.CommitUpdates;
+      End;
+    End
+    else
+    Begin
+//      acAngraAndringarExecute(Sender);
+      ShowMessage('Sätt avräkningen till "Stängd" först.');
+    End;
+  End;
+end;
+
 procedure TfrmGjordaAvrakningar.acDeleteAvrakningExecute(Sender: TObject);
 Var
   SupplierNo: Integer;
@@ -617,6 +656,40 @@ begin
   End;
 end;
 
+procedure TfrmGjordaAvrakningar.acSetToCompleteExecute(Sender: TObject);
+begin
+  With dm_Avrakning do
+  Begin
+   if (cdsPaymentHeadSenderStatus.AsInteger = 0) then
+   Begin
+
+    if (AllLoadsAttesterad) then
+    Begin
+      ShowMessage('Info: Alla priser kommer nu att uppdateras.');
+      if cdsPaymentHead.State in [dsBrowse] then
+        cdsPaymentHead.Edit ;
+      cdsPaymentHeadSenderStatus.AsInteger  :=  1 ;
+      if cdsPaymentHead.State in [dsEdit, dsInsert] then
+        cdsPaymentHead.Post;
+      if cdsPaymentHeadSenderStatus.AsInteger = 1 then
+        UpdateAllPricesExecute;
+      if cdsPaymentHead.ChangeCount > 0 then
+      Begin
+        cdsPaymentHead.ApplyUpdates(0);
+        cdsPaymentHead.CommitUpdates;
+      End;
+    End
+    else
+    Begin
+//      acAngraAndringarExecute(Sender);
+      ShowMessage('Alla rader är inte attesterade av säljaren, kan ej avsluta');
+    End;
+   End
+    else
+      ShowMessage('Bara avräkning som är öppen kan sättas till "Stängd".') ;
+  End;
+end;
+
 procedure TfrmGjordaAvrakningar.acExportToExcelExecute(Sender: TObject);
 var
   Save_Cursor: TCursor;
@@ -649,6 +722,34 @@ begin
   Begin
     acExportToExcel.Enabled := (cdsPaymentHead.Active) and
       (cdsPaymentHead.RecordCount > 0);
+  End;
+end;
+
+procedure TfrmGjordaAvrakningar.acGodkandExecute(Sender: TObject);
+begin
+  With dm_Avrakning do
+  Begin
+    if (cdsPaymentHeadSenderStatus.AsInteger = 2) then
+    Begin
+//      ShowMessage('Info: Alla priser kommer nu att uppdateras.');
+      if cdsPaymentHead.State in [dsBrowse] then
+        cdsPaymentHead.Edit ;
+      cdsPaymentHeadSenderStatus.AsInteger  :=  3 ;
+      if cdsPaymentHead.State in [dsEdit, dsInsert] then
+        cdsPaymentHead.Post;
+//      if cdsPaymentHeadSenderStatus.AsInteger = 1 then
+//        UpdateAllPricesExecute;
+      if cdsPaymentHead.ChangeCount > 0 then
+      Begin
+        cdsPaymentHead.ApplyUpdates(0);
+        cdsPaymentHead.CommitUpdates;
+      End;
+    End
+    else
+    Begin
+//      acAngraAndringarExecute(Sender);
+      ShowMessage('Sätt avräkningen till "Avslutad" först.');
+    End;
   End;
 end;
 

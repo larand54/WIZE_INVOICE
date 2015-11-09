@@ -5780,7 +5780,21 @@ object dmArrivingLoads: TdmArrivingLoads
   end
   object sp_RtR_Load_is_AR: TFDStoredProc
     Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_RtR_Load_is_AR'
     Left = 1056
     Top = 640
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@Confirmed_LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

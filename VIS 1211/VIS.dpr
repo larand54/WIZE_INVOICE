@@ -153,14 +153,13 @@ uses
   DeliveryMessageWoodV2R31 in 'Aug 31B dbExpress\DeliveryMessageWoodV2R31.pas',
   PackageExportU in 'Aug 31B dbExpress\PackageExportU.pas',
   PackageImportU in 'Aug 31B dbExpress\PackageImportU.pas',
-  udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
-  uReport in '..\..\CommonSources\FastReport\uReport.pas',
-  uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
   uPackageSize in 'uPackageSize.pas' {fPackageSize},
-  uFR_Log in '..\..\CommonSources\FastReport\uFR_Log.pas',
   URegionToRegionSelectLIPNo in 'URegionToRegionSelectLIPNo.pas' {fRegionToRegionSelectLIPNo},
   UnitBookingForm in 'UnitBookingForm.pas' {FormBookingForm},
-  UnitBookingFormOrg in 'UnitBookingFormOrg.pas' {FormBookingFormOrg};
+  UnitBookingFormOrg in 'UnitBookingFormOrg.pas' {FormBookingFormOrg},
+  udmFR in '..\..\CommonSources\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
+  uReport in '..\..\CommonSources\CommonSources\FastReport\uReport.pas',
+  uReportController in '..\..\CommonSources\CommonSources\FastReport\uReportController.pas';
 
 {$R *.res}
 

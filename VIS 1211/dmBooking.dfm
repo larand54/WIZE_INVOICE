@@ -19,7 +19,7 @@ object dm_Booking: Tdm_Booking
   end
   object dsVoyageInvoice: TDataSource
     DataSet = cdsVoyageInvoice
-    Left = 128
+    Left = 136
     Top = 336
   end
   object dsAvropInfo: TDataSource
@@ -304,7 +304,7 @@ object dm_Booking: Tdm_Booking
       'Select * from dbo.VoyageInvoice'
       'Where VoyageNo = :VoyageNo'
       'AND InternalInvoiceNo = :InternalInvoiceNo')
-    Left = 128
+    Left = 136
     Top = 280
     ParamData = <
       item
