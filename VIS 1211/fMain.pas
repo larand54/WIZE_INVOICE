@@ -300,7 +300,7 @@ uses
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
 //  PrintUnit,  PreviewForm,
   udmLanguage, ufrmChangeLanguage,
-  dmsVidaContact, uReportController;
+  dmsVidaContact, uReportController, udmFR;
 
 {$R *.DFM}
 
@@ -605,7 +605,10 @@ begin
    dmLanguage.siLangDispatcher1.ActiveLanguage := LanguageNo ;
    dmLanguage.siLangDispatcher1.LoadAllFromFile(dmLanguage.siLangDispatcher1.FileName);
   End;
+  // Setup FastReport using this program DB-Connector
+  dmFR.SetupConnection(dmsConnector.FDConnection1);
 
+  // Update the caption line
   Caption  := lCaption ;
 end;
 

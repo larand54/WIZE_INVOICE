@@ -157,9 +157,9 @@ uses
   URegionToRegionSelectLIPNo in 'URegionToRegionSelectLIPNo.pas' {fRegionToRegionSelectLIPNo},
   UnitBookingForm in 'UnitBookingForm.pas' {FormBookingForm},
   UnitBookingFormOrg in 'UnitBookingFormOrg.pas' {FormBookingFormOrg},
-  udmFR in '..\..\CommonSources\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
-  uReport in '..\..\CommonSources\CommonSources\FastReport\uReport.pas',
-  uReportController in '..\..\CommonSources\CommonSources\FastReport\uReportController.pas';
+  udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
+  uReport in '..\..\CommonSources\FastReport\uReport.pas',
+  uReportController in '..\..\CommonSources\FastReport\uReportController.pas';
 
 {$R *.res}
 
