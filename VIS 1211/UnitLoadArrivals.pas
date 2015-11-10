@@ -979,14 +979,14 @@ Begin
           cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
           if (LONo = -1) and (LoadNo = -1) then
           Begin
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deStartPeriod.Date))));
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deEndPeriod.Date))));
-{
+//            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+//            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' + QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss', DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+
               cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
                 QuotedStr(DateTimeToStr(deStartPeriod.Date)));
               cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
                 QuotedStr(DateTimeToStr(deEndPeriod.Date)));
-}
+
           End;
         End
         else
@@ -1002,6 +1002,7 @@ Begin
 
       // UNION
       cdsArrivingLoads.SQL.Add('UNION');
+
 
       cdsArrivingLoads.SQL.Add('SELECT DISTINCT  1 AS EGEN,') ;
       cdsArrivingLoads.SQL.Add('(Select SalesShippingPlanNo FROM dbo.CSHTradingLink ctl') ;
