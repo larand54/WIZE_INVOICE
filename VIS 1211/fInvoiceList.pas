@@ -1814,37 +1814,48 @@ Var
   RC: TCMReportController;
   Params: TCMParams;
   RepNo: Integer;
+  Save_Cursor: TCursor;
 begin
-  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
-    Exit;
-  dmsContact.InsertUserIssueReport(thisuser.userid,
-    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
-  if uReportController.useFR then begin
+  try
+    Save_Cursor := Screen.Cursor;
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+      Exit;
+    dmsContact.InsertUserIssueReport(ThisUser.userid,
+      dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    if uReportController.useFR then
+    begin
 
-    RepNo := 42; // Trp_Brev.fr3
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-      FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
+      RepNo := 42; // Trp_Brev.fr3
+      RC := TCMReportController.Create;
+      try
+        Params := TCMParams.Create();
+        Params.Add('@INVOICENO',
+          dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+        RC.RunReport(RepNo, Params, frPreview, 0);
+      finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      end;
+    end
+    else
+    begin
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRViewReport.CreateCo('TRP_BREV.RPT', A);
+        if FormCRViewReport.ReportFound then
+        Begin
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+    end;
+  finally
+    Screen.Cursor := Save_Cursor;
   end;
+
 end;
 
 procedure TfrmInvoiceList.acSpecifikatinUtanPaketNrExecute(Sender: TObject);
@@ -2866,48 +2877,58 @@ var
   RC: TCMReportController;
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
+  Save_Cursor: TCursor;
 begin
-  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
-    Exit;
-
-  RoleType := -1;
-  DocTyp := cFaktura;
-  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
-
-  if uReportController.useFR then begin
-
-    Params := TCMParams.Create();
-    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
-      AsInteger);
-
-    RC := TCMReportController.Create;
-    Try
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    End;
-  end
-  else begin
-    dmsContact.GetClientDocPrefs(ClientNo, cFaktura, ReportName, numberOfCopy,
-      promptUser, collated, PrinterSetup);
-    if (Length(ReportName) < 4) then Begin
-      ShowMessage('The report is not assigned to the client.');
+  try
+    Save_Cursor := Screen.Cursor;
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
       Exit;
-    End; // if
 
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-      FormCRViewReport.CreateCo(ReportName, A);
+    RoleType := -1;
+    DocTyp := cFaktura;
+    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
 
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
+    if uReportController.useFR then
+    begin
+
+      Params := TCMParams.Create();
+      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
+        AsInteger);
+
+      RC := TCMReportController.Create;
+      Try
+        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+      Finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+    end
+    else
+    begin
+      dmsContact.GetClientDocPrefs(ClientNo, cFaktura, ReportName, numberOfCopy,
+        promptUser, collated, PrinterSetup);
+      if (Length(ReportName) < 4) then
+      Begin
+        ShowMessage('The report is not assigned to the client.');
+        Exit;
+      End; // if
+
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+        FormCRViewReport.CreateCo(ReportName, A);
+
+        if FormCRViewReport.ReportFound then
+        Begin
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
+      End;
+    end;
+  finally
+    Screen.Cursor := Save_Cursor;
   end;
 end;
 
