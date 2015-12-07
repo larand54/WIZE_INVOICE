@@ -1408,8 +1408,11 @@ Var
               sq_GetInvoiceHeadDataDestinationText.AsString;
             cdsInvoiceHeadResponsibleSeller.AsInteger :=
               sq_GetInvoiceHeadDataResponsibleSeller.AsInteger;
-            cdsInvoiceHeadTrading.AsInteger :=
-              sq_GetInvoiceHeadDataTrading.AsInteger;
+            if sq_GetInvoiceHeadDataTrading.AsInteger > 1 then
+            cdsInvoiceHeadTrading.AsInteger := 0
+            else
+            cdsInvoiceHeadTrading.AsInteger := sq_GetInvoiceHeadDataTrading.AsInteger ;
+
             cdsInvoiceHeadQuickInvoice.AsInteger := 0;
             cdsInvoiceHeadInternalInvoiceNo.AsInteger := InternalInvoiceNo;
             // dmsConnector.NextMaxNo('InvoiceHeader'); //dmsConnector.NextIDinTable('InvoiceHeader') ;

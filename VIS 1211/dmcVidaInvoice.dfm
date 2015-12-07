@@ -17148,4 +17148,52 @@ object dmVidaInvoice: TdmVidaInvoice
       Size = 10
     end
   end
+  object cds_PurchaseInvNo_VP: TFDQuery
+    Active = True
+    CachedUpdates = True
+    Indexes = <
+      item
+        Active = True
+        Selected = True
+        Name = 'cds_PurchaseInvoiceInvNoVP'
+        Fields = 'PO_InvoiceNo'
+      end>
+    IndexName = 'cds_PurchaseInvoiceInvNoVP'
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'Select * '
+      'From dbo.InvoiceNumber_PO_VP')
+    Left = 752
+    Top = 936
+    object cds_PurchaseInvNo_VPPO_InvoiceNo: TIntegerField
+      FieldName = 'PO_InvoiceNo'
+      Origin = 'PO_InvoiceNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_PurchaseInvNo_VPInternalInvoiceNo: TIntegerField
+      FieldName = 'InternalInvoiceNo'
+      Origin = 'InternalInvoiceNo'
+    end
+    object cds_PurchaseInvNo_VPUserCreated: TIntegerField
+      FieldName = 'UserCreated'
+      Origin = 'UserCreated'
+    end
+    object cds_PurchaseInvNo_VPUserModified: TIntegerField
+      FieldName = 'UserModified'
+      Origin = 'UserModified'
+    end
+    object cds_PurchaseInvNo_VPDateCreated: TSQLTimeStampField
+      FieldName = 'DateCreated'
+      Origin = 'DateCreated'
+    end
+    object cds_PurchaseInvNo_VPPrefix: TStringField
+      FieldName = 'Prefix'
+      Origin = 'Prefix'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 50
+    end
+  end
 end

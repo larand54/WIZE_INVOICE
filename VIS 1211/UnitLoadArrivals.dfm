@@ -414,7 +414,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.OnChange = bcConfirmedPropertiesChange
         TabOrder = 2
         Text = 'Att ankomstregistrera'
-        Width = 181
+        Width = 195
       end
       object cxLabel1: TcxLabel
         Left = 299
@@ -529,8 +529,9 @@ object frmLoadArrivals: TfrmLoadArrivals
         DataBinding.DataSource = ds_Props
         Enabled = False
         Properties.ImmediatePost = True
+        Properties.Kind = ckDateTime
         TabOrder = 3
-        Width = 181
+        Width = 195
       end
       object deEndPeriod: TcxDBDateEdit
         Left = 96
@@ -543,8 +544,9 @@ object frmLoadArrivals: TfrmLoadArrivals
         DataBinding.DataSource = ds_Props
         Enabled = False
         Properties.ImmediatePost = True
+        Properties.Kind = ckDateTime
         TabOrder = 4
-        Width = 181
+        Width = 195
       end
       object cbAllaVerk: TcxDBCheckBox
         Left = 188

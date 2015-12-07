@@ -319,6 +319,7 @@ const
   BORGSTENA_INVOICE               = 8;
   UK_INVOICE                      = 9 ;
   UK_INVOICE_PO                   = 10 ;
+  VP_INVOICE_PO                   = 11 ;
 
   SHOW_LO_LENGTHS = 0;
   SHOW_ALL_LENGTHS = 1;

@@ -747,6 +747,7 @@ end;
 
 function TdmArrivingLoads.RtR_Load_is_AR(Const Confirmed_LoadNo : Integer;Var RtR_LoadNo : String) : Boolean ;
 Begin
+  sp_RtR_Load_is_AR.Active  :=  False ;
   sp_RtR_Load_is_AR.ParamByName('@Confirmed_LoadNo').AsInteger :=  Confirmed_LoadNo ;
   sp_RtR_Load_is_AR.Active  :=  True ;
   if not sp_RtR_Load_is_AR.Eof then
@@ -808,6 +809,7 @@ begin
       if RtR_Load_is_AR(dmArrivingLoads.cdsArrivingLoadsLOADNO.AsInteger, RtR_LoadNo) then
       Begin
         ShowMessage('Cannot undo because end customer has confirmed their load, End customer loadNo ' + RtR_LoadNo) ;
+        Exit ;
       End;
     end;
 
@@ -993,12 +995,13 @@ begin
 
           // Delete Confirmed_Load record for Old Load
           Try
+           delAR_RtRLoad(cdsArrivingLoadsLOADNO.AsInteger) ;
             sq_DeleteConfirmed_Load_Entry.ParamByName('LoadNo').AsInteger :=
               cdsArrivingLoadsLOADNO.AsInteger;
             // if sq_DeleteConfirmed_Load_Entry.ExecSQL(False) = -1 then CommitChanges:= False ;
             sq_DeleteConfirmed_Load_Entry.ExecSQL;
 
-            delAR_RtRLoad(cdsArrivingLoadsLOADNO.AsInteger) ;
+
           except
             On E: Exception do
             Begin

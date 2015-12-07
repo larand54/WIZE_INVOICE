@@ -1576,6 +1576,13 @@ type
     cds_PurchaseInvNo_UKUserModified: TSmallintField;
     cds_PurchaseInvNo_UKDateCreated: TSQLTimeStampField;
     cds_PurchaseInvNo_UKPrefix: TStringField;
+    cds_PurchaseInvNo_VP: TFDQuery;
+    cds_PurchaseInvNo_VPPO_InvoiceNo: TIntegerField;
+    cds_PurchaseInvNo_VPInternalInvoiceNo: TIntegerField;
+    cds_PurchaseInvNo_VPUserCreated: TIntegerField;
+    cds_PurchaseInvNo_VPUserModified: TIntegerField;
+    cds_PurchaseInvNo_VPDateCreated: TSQLTimeStampField;
+    cds_PurchaseInvNo_VPPrefix: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1634,8 +1641,8 @@ type
     { Private declarations }
     GlobalLoadDetailNo: Integer;
     lbList: TStringList;
-    function  AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo
-  : Integer): Integer;
+    function  AssignPurchase_VPInvoiceNumber(const InternalInvoiceNo  : Integer): Integer;
+    function  AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo : Integer): Integer;
     procedure AssignUK_Sales_InvoiceNumber(const InternalInvoiceNo  : Integer);
     function  GetKundResKontra(const Object5  : String;const CountryNo  : Integer) : String ;
     function  GetAvdelning(const ClientNo: Integer;
@@ -1881,7 +1888,67 @@ Begin
 
     UK_INVOICE_PO:
       AssignPurchase_UKInvoiceNumber(InternalInvoiceNo);
+
+    VP_INVOICE_PO:
+      AssignPurchase_VPInvoiceNumber(InternalInvoiceNo);
   End;
+End;
+
+function TdmVidaInvoice.AssignPurchase_VPInvoiceNumber(const InternalInvoiceNo
+  : Integer): Integer;
+Var
+  FormEnterInvoiceNo: TFormEnterInvoiceNo;
+Begin
+  Result := -1;
+  with dmVidaInvoice do
+  Begin
+    cds_PurchaseInvNo_VP.Active := True;
+    Try
+      if cds_PurchaseInvNo_VP.Locate('InternalInvoiceNo', InternalInvoiceNo, [])
+      then
+      Begin
+        Result := 1; // Invoice Number Record already exist
+        showmessage('Purchase order invoice number already assigned..');
+        Exit;
+      End
+      else
+      Begin
+        FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
+
+        Try
+          FormEnterInvoiceNo.Caption := 'Enter PO invoice number';
+          FormEnterInvoiceNo.ePrefix.Visible := True;
+          FormEnterInvoiceNo.LPrefix.Visible := True;
+          if FormEnterInvoiceNo.ShowModal = MrOK then
+          Begin;
+            cds_PurchaseInvNo_VP.Insert;
+            cds_PurchaseInvNo_VPInternalInvoiceNo.AsInteger := InternalInvoiceNo;
+            cds_PurchaseInvNo_VPPO_InvoiceNo.AsInteger :=
+              StrToInt(FormEnterInvoiceNo.eFakturanr.Text);
+            cds_PurchaseInvNo_VPPrefix.AsString := FormEnterInvoiceNo.ePrefix.Text;
+            cds_PurchaseInvNo_VPUserCreated.AsInteger := ThisUser.UserID;
+            cds_PurchaseInvNo_VPUserModified.AsInteger := ThisUser.UserID;
+            cds_PurchaseInvNo_VPDateCreated.AsSQLTimeStamp :=
+              DateTimeToSQLTimeStamp(Now);
+            cds_PurchaseInvNo_VP.Post;
+            if cds_PurchaseInvNo_VP.ChangeCount > 0 then
+            Begin
+              cds_PurchaseInvNo_VP.ApplyUpdates(0);
+              cds_PurchaseInvNo_VP.CommitUpdates;
+            End;
+            Result := 0;
+          End;
+
+          PkgLogInvoiced(InternalInvoiceNo, 25);
+
+        Finally
+          FormEnterInvoiceNo.Free;
+        End;
+      End;
+    Finally
+      cds_PurchaseInvNo_VP.Active := False;
+    End;
+  End; // with
 End;
 
 function TdmVidaInvoice.AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo
@@ -3376,6 +3443,7 @@ procedure TdmVidaInvoice.DataModuleCreate(Sender: TObject);
 begin
   fInternalInvoiceNo := -1;
   mtInvoiceType.Active := True;
+  mtInvoiceType.InsertRecord([11, 'VP Purchase']);
   mtInvoiceType.InsertRecord([10, 'UK Purchase']);
   mtInvoiceType.InsertRecord([9, 'VIDA UK']);
   mtInvoiceType.InsertRecord([8, 'BKO']);
@@ -9630,7 +9698,7 @@ Function TdmVidaInvoice.GetInvoiceTypeFromBinding(const SalesRegionNo,
   OrderType: Integer): Integer;
 Begin
   sq_InvoiceType.ParamByName('SalesRegionNo').AsInteger := SalesRegionNo;
-  sq_InvoiceType.ParamByName('OrderType').AsInteger := OrderType;
+  sq_InvoiceType.ParamByName('OrderType').AsInteger     := OrderType;
   sq_InvoiceType.Active := True;
   Try
     if not sq_InvoiceType.Eof then

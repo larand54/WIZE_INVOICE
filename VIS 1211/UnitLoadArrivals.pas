@@ -927,9 +927,9 @@ Begin
         if (LONo = -1) and (LoadNo = -1) then
           if bcConfirmed.ItemIndex > 0 then
           Begin
-            cdsArrivingLoads.SQL.Add('AND Not exists (select * from dbo.Confirmed_Load cl') ;
+            cdsArrivingLoads.SQL.Add('AND exists (select * from dbo.Confirmed_Load cl') ;
             cdsArrivingLoads.SQL.Add('WHERE') ;
-            cdsArrivingLoads.SQL.Add('cl.NewLoadNo = L.LoadNo)') ;
+            cdsArrivingLoads.SQL.Add('cl.Confirmed_LoadNo = L.LoadNo)') ;
           End;
 
 
@@ -965,7 +965,7 @@ Begin
 
 //      cdsArrivingLoads.SQL.Add('AND SP.ObjectType <> 1');
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType IN (0,2)');
+      cdsArrivingLoads.SQL.Add('AND SP.ObjectType IN (2)');
 
       if (LONo = -1) and (LoadNo = -1) then
       Begin
@@ -1202,7 +1202,7 @@ Begin
           cdsArrivingLoads.SQL.Add('AND SP.SupplierNo = ' +
             cds_PropsClientNo.AsString);
 
-      cdsArrivingLoads.SQL.Add('AND SP.ObjectType = 1');
+      cdsArrivingLoads.SQL.Add('AND SP.ObjectType in (0, 1)');
 
  //     cdsArrivingLoads.SQL.Add('AND SP.ObjectType <= 3');
 
@@ -1218,19 +1218,21 @@ Begin
           cdsArrivingLoads.SQL.Add('AND L.LoadAR = 1');
           if (LONo = -1) and (LoadNo = -1) then
           Begin
-{
+
               cdsArrivingLoads.SQL.Add('AND L.LoadedDate >= ' +
                 QuotedStr(DateTimeToStr(deStartPeriod.Date)));
               cdsArrivingLoads.SQL.Add('AND L.LoadedDate <= ' +
                 QuotedStr(DateTimeToStr(deEndPeriod.Date)));
-}
 
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' +
-              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
-              DateTimeToSQLTimeStamp(deStartPeriod.Date))));
-            cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' +
-              QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
-              DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+
+{
+              cdsArrivingLoads.SQL.Add('AND cl.DateCreated >= ' +
+                QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+                DateTimeToSQLTimeStamp(deStartPeriod.Date))));
+              cdsArrivingLoads.SQL.Add('AND cl.DateCreated <= ' +
+                QuotedStr(SqlTimeStampToStr('yyyy-mm-dd hh:mm:ss',
+                DateTimeToSQLTimeStamp(deEndPeriod.Date))));
+}
           End;
         End
         else if bcConfirmed.ItemIndex = 2 then
@@ -1669,7 +1671,7 @@ Begin
         ('AND cl2.Confirmed_ShippingPlanNo = LSP.ShippingPlanNo)');
     End;
 
-   if thisuser.UserID = 258 then cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
+   //if thisuser.UserID = 258 then   cdsArrivingLoads.SQL.SaveToFile('cdsArrivingLoads.TXT');
   End;
 End;
 
@@ -2063,6 +2065,8 @@ begin
 
         ColIdx := grdLoadsDBTableView1.DataController.GetItemByFieldName
           ('AVROP_CUSTOMERNO').Index;
+        if grdLoadsDBTableView1.DataController.Values
+          [RecIDX, ColIdx] <> null then
         AvropCustomerNo := grdLoadsDBTableView1.DataController.Values
           [RecIDX, ColIdx];
 
