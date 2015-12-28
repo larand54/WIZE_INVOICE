@@ -7978,9 +7978,9 @@ begin
           mt_VerLoggUtlandsBelopp.AsFloat := sp_InvTotalsVAT_FOR.AsFloat * -1;
         End;
 
-        mt_VerLoggText.AsString := XorID_KundNamn;
-        mt_VerLoggRadOrder.AsInteger := 4;
-        mt_VerLoggVatCode.AsInteger := 0;
+        mt_VerLoggText.AsString       := XorID_KundNamn;
+        mt_VerLoggRadOrder.AsInteger  := 4;
+        mt_VerLoggVatCode.AsInteger   := 0;
         mt_VerLogg.Post;
         // SLUT MOMS
 
@@ -7988,8 +7988,8 @@ begin
         While not sp_InvTotals.Eof do
         Begin
           mt_VerLogg.Insert;
-          mt_VerLoggKonto.AsString := sp_InvTotalsVaruKonto.AsString;
-          mt_VerLoggNamn.AsString := sp_InvTotalsNamn.AsString;
+          mt_VerLoggKonto.AsString  := sp_InvTotalsVaruKonto.AsString;
+          mt_VerLoggNamn.AsString   := sp_InvTotalsNamn.AsString;
           mt_VerLoggValuta.AsString := sp_InvTotalsCurr.AsString;
           if sp_InvTotalsProduktVardeFOR.AsFloat <> 0 then
             mt_VerLoggKurs.AsFloat := sp_InvTotalsProduktVardeSEK.AsFloat /
