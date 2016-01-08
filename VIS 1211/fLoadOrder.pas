@@ -952,6 +952,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -1013,6 +1014,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -3076,6 +3078,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language
+        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger));
       Params.Add('@LoadNo',
           grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
@@ -3182,6 +3186,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language
+        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger));
       Params.Add('@LoadNo',
         grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
         .AsInteger);
@@ -4098,6 +4104,7 @@ begin
     RepNo := 623; // SPEC_ALLA_LASTER_III.fr3 (623)
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -4168,6 +4175,7 @@ begin
     RepNo := 625; // SPEC_ALLA_LASTER_VERK_III.fr3 (625)
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -4383,6 +4391,7 @@ begin
     Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
     Params := TCMParams.Create();
+    Params.Add('@Language', ThisUser.UserID);
     Params.Add('@ShippingPlanNo',
       grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
       .AsInteger);
@@ -4451,6 +4460,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
+    Params.Add('@Language', ThisUser.UserID);
     Params.Add('@ShippingPlanNo', ShippingPlanNo);
     Params.Add('@SupplierNo', -1);
 
@@ -4967,6 +4977,7 @@ begin
     Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
     Params := TCMParams.Create();
+    Params.Add('@Language', ThisUser.UserID);
     Params.Add('@LoadNo',
       grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsInteger);
 
@@ -5484,6 +5495,8 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language
+        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger));
       Params.Add('@ShippingPlanNo',
         grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
         .AsInteger);

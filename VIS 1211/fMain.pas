@@ -494,7 +494,17 @@ End;
 procedure TfrmMain.ChangeUserSettingsOnStartUp ;
 Var HostName : String ;
 Begin
- HostName := dmsConnector.GetHostName(ThisUser.UserID) ;
+   {$IFDEF DEBUG}
+  if copy(GetEnvironmentVariable('COMPUTERNAME'),1,6) = 'CARMAK' then begin
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      HostName := 'ALVESQL03'
+    else
+      HostName := dmsConnector.GetHostName(ThisUser.UserID) ;
+    exit;
+  end;
+  {$ELSE}
+      HostName := dmsConnector.GetHostName(ThisUser.UserID) ;
+  {$ENDIF}
  if Length(HostName) > 0 then
  Begin
   ThisUser.Database := HostName ;

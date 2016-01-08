@@ -3490,6 +3490,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
@@ -3536,6 +3537,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       Params.Add('@SupplierNo', -1);
       RC.RunReport(RepNo,Params,frPreview,0);
@@ -3579,6 +3581,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -4076,6 +4079,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
@@ -4257,6 +4261,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
       dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
         daMoLM1.cdsLoadsLoadNo.AsInteger;
@@ -4604,6 +4609,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4651,6 +4657,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4718,6 +4725,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4766,6 +4774,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4951,6 +4960,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
@@ -5045,6 +5055,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
 
       RC := TCMReportController.Create;
@@ -5136,6 +5147,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.UserID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       Params.Add('@SupplierNo', -1);
 
@@ -5235,6 +5247,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@LoadNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;
@@ -5560,6 +5573,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@ShippingPlanNo',daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -5629,6 +5643,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
+      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
 
       RC := TCMReportController.Create;

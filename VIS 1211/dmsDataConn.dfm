@@ -1848,7 +1848,6 @@ object dmsConnector: TdmsConnector
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
-    ScreenCursor = gcrHourGlass
     Left = 464
     Top = 128
   end
