@@ -2584,6 +2584,7 @@ begin
     End;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -3738,6 +3739,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -4018,6 +4020,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
+    Params.Add('@Language', ThisUser.LanguageID);
     Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
     RC := TCMReportController.Create;
 
@@ -4130,6 +4133,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -5826,6 +5830,7 @@ begin
       if uReportController.useFR then begin
 
         Params := TCMParams.Create();
+        Params.Add('@Language', ThisUser.LanguageID);
         Params.Add('@LoadNo',
           dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
 

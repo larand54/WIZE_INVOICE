@@ -2253,6 +2253,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       Try
         dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
@@ -3399,6 +3400,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -3688,6 +3690,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger);
       Try
         dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=

@@ -17149,7 +17149,6 @@ object dmVidaInvoice: TdmVidaInvoice
     end
   end
   object cds_PurchaseInvNo_VP: TFDQuery
-    Active = True
     CachedUpdates = True
     Indexes = <
       item

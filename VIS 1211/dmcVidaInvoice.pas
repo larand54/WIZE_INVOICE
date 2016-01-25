@@ -4517,6 +4517,7 @@ begin
      begin
 
       params := TCMParams.Create();
+      Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
       Params.Add('@INVOICENO',IntInvNo);
 
       RC := TCMReportController.create;
@@ -10006,7 +10007,8 @@ begin
   Begin
     if uReportController.useFR then begin
 
-      params := TCMParams.Create();
+      Params := TCMParams.Create();
+      Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
       Params.Add('@INVOICENO',InternalInvoiceNo);
 
       RC := TCMReportController.Create;

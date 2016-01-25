@@ -1198,6 +1198,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -1798,6 +1799,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
         AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
@@ -1903,6 +1905,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.
         AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);

@@ -670,20 +670,17 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 240
-      ExplicitWidth = 1006
       object dxBarDockControl1: TdxBarDockControl
         Left = 0
         Top = 0
         Width = 1021
-        Height = 48
+        Height = 49
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
-        ExplicitWidth = 932
       end
     end
     object Panel7: TPanel
@@ -1437,7 +1434,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

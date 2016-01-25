@@ -528,6 +528,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      params.Add('@Language', thisUser.LanguageID);
       Params.Add('@PaymentNo', dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally

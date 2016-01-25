@@ -32,8 +32,9 @@ object fLoadEntryCSD: TfLoadEntryCSD
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 265
-    ClientRectRight = 1275
+    ClientRectBottom = 261
+    ClientRectLeft = 4
+    ClientRectRight = 1271
     ClientRectTop = 27
     object tsLoadData: TcxTabSheet
       Margins.Left = 4
@@ -44,7 +45,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1275
+        Width = 1267
         Height = 90
         Margins.Left = 4
         Margins.Top = 4
@@ -289,8 +290,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 190
-        Width = 1275
+        Top = 186
+        Width = 1267
         Height = 48
         Margins.Left = 4
         Margins.Top = 4
@@ -331,8 +332,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       object grdLO: TcxGrid
         Left = 0
         Top = 90
-        Width = 1275
-        Height = 100
+        Width = 1267
+        Height = 96
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -457,6 +458,10 @@ object fLoadEntryCSD: TfLoadEntryCSD
       Margins.Right = 4
       Margins.Bottom = 4
       Caption = 'NOTE'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
@@ -468,8 +473,10 @@ object fLoadEntryCSD: TfLoadEntryCSD
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         TabOrder = 0
-        Height = 238
-        Width = 1275
+        ExplicitWidth = 1275
+        ExplicitHeight = 238
+        Height = 234
+        Width = 1267
       end
     end
   end
@@ -500,7 +507,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 906
-        Height = 47
+        Height = 51
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -584,7 +591,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         Left = 1
         Top = 1
         Width = 75
-        Height = 47
+        Height = 51
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -1584,7 +1591,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

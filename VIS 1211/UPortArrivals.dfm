@@ -17,8 +17,6 @@ object frmPortArrivals: TfrmPortArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object grdPortPkgs: TcxGrid
@@ -196,7 +194,6 @@ object frmPortArrivals: TfrmPortArrivals
     Control = grdPortPkgs
     Color = clMaroon
     ParentColor = False
-    ExplicitTop = 468
   end
   object grdPortLoads: TcxGrid
     Left = 0
@@ -209,7 +206,6 @@ object frmPortArrivals: TfrmPortArrivals
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 2
-    ExplicitHeight = 403
     object grdPortLoadsDBTableView1: TcxGridDBTableView
       PopupMenu = pmLoads
       Navigator.Buttons.CustomButtons = <>
@@ -445,7 +441,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 605
-        Height = 47
+        Height = 51
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -469,7 +465,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 73
-        Height = 47
+        Height = 51
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -539,7 +535,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 313
         Top = 4
         Width = 57
-        Height = 21
+        Height = 24
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -552,7 +548,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 394
         Top = 4
         Width = 58
-        Height = 21
+        Height = 24
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -659,7 +655,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 512
         Top = 4
         Width = 58
-        Height = 21
+        Height = 24
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -681,7 +677,7 @@ object frmPortArrivals: TfrmPortArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

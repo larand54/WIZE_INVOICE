@@ -65,8 +65,9 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 266
-    ClientRectRight = 1372
+    ClientRectBottom = 262
+    ClientRectLeft = 4
+    ClientRectRight = 1368
     ClientRectTop = 27
     object tsLoadData: TcxTabSheet
       Margins.Left = 4
@@ -76,8 +77,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Caption = 'Leveranshuvud'
       object Splitter1: TSplitter
         Left = 0
-        Top = 179
-        Width = 1372
+        Top = 175
+        Width = 1364
         Height = 4
         Cursor = crVSplit
         Margins.Left = 4
@@ -88,11 +89,12 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Color = clBlack
         ParentColor = False
         ExplicitTop = 176
+        ExplicitWidth = 1372
       end
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1372
+        Width = 1364
         Height = 91
         Margins.Left = 4
         Margins.Top = 4
@@ -425,8 +427,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 183
-        Width = 1372
+        Top = 179
+        Width = 1364
         Height = 56
         Margins.Left = 4
         Margins.Top = 4
@@ -472,8 +474,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       object grdLO: TcxGrid
         Left = 0
         Top = 91
-        Width = 1372
-        Height = 88
+        Width = 1364
+        Height = 84
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -668,6 +670,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Margins.Right = 4
       Margins.Bottom = 4
       Caption = 'Notering'
+      ExplicitLeft = 0
       ExplicitTop = 0
       ExplicitWidth = 0
       ExplicitHeight = 0
@@ -682,8 +685,10 @@ object fLoadEntrySSP: TfLoadEntrySSP
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntrySSP.ds_LoadHead
         TabOrder = 0
-        Height = 239
-        Width = 1372
+        ExplicitWidth = 1372
+        ExplicitHeight = 239
+        Height = 235
+        Width = 1364
       end
     end
   end
@@ -714,7 +719,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 1255
-        Height = 48
+        Height = 49
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -762,7 +767,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 79
-        Height = 48
+        Height = 49
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -1955,7 +1960,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False

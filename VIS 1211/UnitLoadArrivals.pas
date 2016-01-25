@@ -2159,6 +2159,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language',  dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
       Try
@@ -2793,6 +2795,8 @@ begin
 
       Screen.Cursor := crHourGlass; { Show hourglass cursor }
       Params := TCMParams.Create();
+      Params.Add('@Language',  dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
 
@@ -3326,6 +3330,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language',  dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);
       Try
@@ -3447,6 +3453,8 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
+      Params.Add('@Language',  dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
       Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
       RC.RunReport(RepNo, Params, frPrint, 0);
       Try

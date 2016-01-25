@@ -2,7 +2,7 @@ object frmInvoice: TfrmInvoice
   Left = 206
   Top = 124
   Caption = 'FAKTURA'
-  ClientHeight = 1056
+  ClientHeight = 1027
   ClientWidth = 1408
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -40,8 +40,9 @@ object frmInvoice: TfrmInvoice
     Properties.TabWidth = 150
     LookAndFeel.Kind = lfUltraFlat
     OnPageChanging = pgInvoicePageChanging
-    ClientRectBottom = 246
-    ClientRectRight = 1408
+    ClientRectBottom = 242
+    ClientRectLeft = 4
+    ClientRectRight = 1404
     ClientRectTop = 28
     object tsInvoiceHead: TcxTabSheet
       Margins.Left = 4
@@ -53,7 +54,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceHead: TPanel
         Left = 0
         Top = 0
-        Width = 1408
+        Width = 1400
         Height = 197
         Margins.Left = 4
         Margins.Top = 4
@@ -867,6 +868,10 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 34
@@ -999,13 +1004,16 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&AGENT'
       ImageIndex = 15
+      ExplicitLeft = 0
+      ExplicitWidth = 1408
+      ExplicitHeight = 218
       DesignSize = (
-        1408
-        218)
+        1400
+        214)
       object Shape3: TShape
         Left = 5
         Top = 4
-        Width = 1397
+        Width = 1389
         Height = 190
         Margins.Left = 4
         Margins.Top = 4
@@ -1013,6 +1021,7 @@ object frmInvoice: TfrmInvoice
         Margins.Bottom = 4
         Anchors = [akLeft, akTop, akRight]
         Brush.Color = clMoneyGreen
+        ExplicitWidth = 1397
       end
       object DBText22: TDBText
         Left = 89
@@ -1103,6 +1112,10 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&NOTERING'
       ImageIndex = 11
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -1117,8 +1130,10 @@ object frmInvoice: TfrmInvoice
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        Height = 218
-        Width = 1408
+        ExplicitWidth = 1408
+        ExplicitHeight = 218
+        Height = 214
+        Width = 1400
       end
     end
     object tsStickyNote: TcxTabSheet
@@ -1128,6 +1143,10 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&POST IT!'
       ImageIndex = 13
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 492
         Top = 6
@@ -1158,10 +1177,14 @@ object frmInvoice: TfrmInvoice
       Margins.Bottom = 4
       Caption = '&SPEC'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 1408
+        Width = 1400
         Height = 39
         Margins.Left = 4
         Margins.Top = 4
@@ -1170,6 +1193,7 @@ object frmInvoice: TfrmInvoice
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 1408
         object eSearchPkgNo: TcxTextEdit
           Left = 278
           Top = 2
@@ -1425,7 +1449,7 @@ object frmInvoice: TfrmInvoice
       object grdPackageSpec: TcxGrid
         Left = 0
         Top = 39
-        Width = 1408
+        Width = 1400
         Height = 227
         Margins.Left = 4
         Margins.Top = 4
@@ -1433,6 +1457,7 @@ object frmInvoice: TfrmInvoice
         Margins.Bottom = 4
         Align = alTop
         TabOrder = 1
+        ExplicitWidth = 1408
         object grdPackageSpecDBTableView1: TcxGridDBTableView
           OnDblClick = grdPackageSpecDBTableView1DblClick
           OnKeyDown = grdPackageSpecDBTableView1KeyDown
@@ -1716,7 +1741,7 @@ object frmInvoice: TfrmInvoice
       object cxSplitter2: TcxSplitter
         Left = 0
         Top = 266
-        Width = 1408
+        Width = 1400
         Height = 8
         Margins.Left = 4
         Margins.Top = 4
@@ -1727,11 +1752,12 @@ object frmInvoice: TfrmInvoice
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
+        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0
         Top = 274
-        Width = 1408
+        Width = 1400
         Height = 16
         Margins.Left = 4
         Margins.Top = 4
@@ -1745,9 +1771,9 @@ object frmInvoice: TfrmInvoice
         Properties.TabHeight = 30
         Properties.TabWidth = 200
         LookAndFeel.Kind = lfUltraFlat
-        ClientRectBottom = 18
-        ClientRectRight = 1408
-        ClientRectTop = 18
+        ExplicitWidth = 1408
+        ClientRectRight = 0
+        ClientRectTop = 0
         object tsKortSkeppSpec: TcxTabSheet
           Margins.Left = 4
           Margins.Top = 4
@@ -1755,10 +1781,12 @@ object frmInvoice: TfrmInvoice
           Margins.Bottom = 4
           Caption = 'Kortskeppningsspec'
           ImageIndex = 18
+          ExplicitTop = 18
+          ExplicitWidth = 1408
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 1408
+            Width = 0
             Height = 0
             Margins.Left = 4
             Margins.Top = 4
@@ -1767,10 +1795,11 @@ object frmInvoice: TfrmInvoice
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitWidth = 1408
             object Panel5: TPanel
               Left = 0
               Top = 0
-              Width = 1408
+              Width = 0
               Height = 41
               Margins.Left = 4
               Margins.Top = 4
@@ -1779,6 +1808,7 @@ object frmInvoice: TfrmInvoice
               Align = alTop
               BevelOuter = bvNone
               TabOrder = 0
+              ExplicitWidth = 1408
               object bAdd: TcxButton
                 Left = 20
                 Top = 5
@@ -1971,7 +2001,7 @@ object frmInvoice: TfrmInvoice
             object grdSelectedPkgs: TcxGrid
               Left = 0
               Top = 41
-              Width = 1408
+              Width = 0
               Height = 290
               Margins.Left = 4
               Margins.Top = 4
@@ -1979,6 +2009,7 @@ object frmInvoice: TfrmInvoice
               Margins.Bottom = 4
               Align = alClient
               TabOrder = 1
+              ExplicitWidth = 1408
               object grdSelectedPkgsDBTableView1: TcxGridDBTableView
                 OnDblClick = grdSelectedPkgsDBTableView1DblClick
                 Navigator.Buttons.CustomButtons = <>
@@ -2191,10 +2222,12 @@ object frmInvoice: TfrmInvoice
           Margins.Bottom = 4
           Caption = 'Lager'
           ImageIndex = 19
+          ExplicitTop = 18
+          ExplicitWidth = 1408
           object Panel7: TPanel
             Left = 0
             Top = 0
-            Width = 1408
+            Width = 0
             Height = 0
             Margins.Left = 4
             Margins.Top = 4
@@ -2203,10 +2236,11 @@ object frmInvoice: TfrmInvoice
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitWidth = 1408
             object Panel8: TPanel
               Left = 0
               Top = 0
-              Width = 1408
+              Width = 0
               Height = 41
               Margins.Left = 4
               Margins.Top = 4
@@ -2215,6 +2249,7 @@ object frmInvoice: TfrmInvoice
               Align = alTop
               BevelOuter = bvNone
               TabOrder = 0
+              ExplicitWidth = 1408
               object cxButton3: TcxButton
                 Left = 20
                 Top = 6
@@ -2437,7 +2472,7 @@ object frmInvoice: TfrmInvoice
             object grdToInventory: TcxGrid
               Left = 0
               Top = 41
-              Width = 1408
+              Width = 0
               Height = 290
               Margins.Left = 4
               Margins.Top = 4
@@ -2445,6 +2480,7 @@ object frmInvoice: TfrmInvoice
               Margins.Bottom = 4
               Align = alClient
               TabOrder = 1
+              ExplicitWidth = 1408
               object grdToInventoryDBTableView1: TcxGridDBTableView
                 OnDblClick = grdToInventoryDBTableView1DblClick
                 Navigator.Buttons.CustomButtons = <>
@@ -3340,7 +3376,7 @@ object frmInvoice: TfrmInvoice
     Left = 0
     Top = 316
     Width = 1408
-    Height = 740
+    Height = 711
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -3349,7 +3385,7 @@ object frmInvoice: TfrmInvoice
     TabOrder = 2
     object panelInvoiceTotal: TPanel
       Left = 1
-      Top = 584
+      Top = 555
       Width = 1406
       Height = 155
       Margins.Left = 4
@@ -3771,7 +3807,7 @@ object frmInvoice: TfrmInvoice
       Left = 1
       Top = 118
       Width = 1406
-      Height = 466
+      Height = 437
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -7105,7 +7141,7 @@ object frmInvoice: TfrmInvoice
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

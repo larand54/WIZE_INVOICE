@@ -1351,6 +1351,7 @@ begin
 
       if uReportController.useFR then begin
         Params := TCMParams.Create();
+        Params.Add('@Language', ThisUser.LanguageID);
         Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
         DocTyp := ReportType;
         RC := TCMReportController.Create;
@@ -1444,6 +1445,7 @@ begin
       DeleteFile(ExportFile);
       if uReportController.useFR then begin
         Params := TCMParams.Create();
+        Params.Add('@Language', ThisUser.LanguageID);
         Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
         DocTyp := ReportType;
         RC := TCMReportController.Create;
@@ -1601,6 +1603,8 @@ begin
           RC := TCMReportController.Create;
           Try
             for I := 0 to High(AA) do Begin
+              Params.Clear;
+              Params.Add('@Language', ThisUser.LanguageID);
               Params.Add('@SHIPPINGPLANNO', AA[I]);
               RC.setExportFile(ExportFile + intToStr(AA[I]) + '.pdf');
               RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
