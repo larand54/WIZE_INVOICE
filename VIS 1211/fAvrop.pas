@@ -3490,7 +3490,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
@@ -3537,7 +3537,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       Params.Add('@SupplierNo', -1);
       RC.RunReport(RepNo,Params,frPreview,0);
@@ -3581,7 +3581,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
@@ -4609,7 +4609,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4657,7 +4657,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4721,11 +4721,14 @@ begin
     Exit;
 
   if uReportController.useFR then begin
-    RepNo := 289; // LASTORDER_VERK_NOTE_ver3.fr3 (578)((289-DocType=3))
+    if ThisUser.LanguageID = cSwedish then
+      RepNo := 578  // LASTORDER_VERK_NOTE_ver3_SV.fr3 // RepNo=578
+    else
+      RepNo := 529; // LASTORDER_VERK_NOTE_ver3_SV.fr3 // RepNo=529
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -4774,7 +4777,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
         ('ShippingPlanNo').AsInteger);
@@ -5147,7 +5150,7 @@ begin
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       Params.Add('@SupplierNo', -1);
 

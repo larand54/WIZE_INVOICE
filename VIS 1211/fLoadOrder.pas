@@ -952,7 +952,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -1014,7 +1014,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -4104,7 +4104,7 @@ begin
     RepNo := 623; // SPEC_ALLA_LASTER_III.fr3 (623)
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -4175,7 +4175,7 @@ begin
     RepNo := 625; // SPEC_ALLA_LASTER_VERK_III.fr3 (625)
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.UserID);
+      Params.Add('@Language', ThisUser.LanguageID);
       Params.Add('@ShippingPlanNo',
         grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
         .AsInteger);
@@ -4391,7 +4391,7 @@ begin
     Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
     Params := TCMParams.Create();
-    Params.Add('@Language', ThisUser.UserID);
+    Params.Add('@Language', ThisUser.LanguageID);
     Params.Add('@ShippingPlanNo',
       grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
       .AsInteger);
@@ -4405,9 +4405,15 @@ begin
         RepNo := 291 // Lastorder_inkop_NOTE_STATUS_ver2.fr3 (291)
       else Begin
         if dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2 then
-          RepNo := 599 // LASTORDER_NOTE_STATUS_ver3.fr3 (599)
+          if ThisUser.LanguageID = cSwedish then
+            RepNo := 599 // LASTORDER_NOTE_STATUS_ver3_SV.fr3 (599)
+          else
+            RepNo := 507
         else
-          RepNo := 579; // LASTORDER_VERK_NOTE_STATUS_ver3.fr3 (579)
+          if ThisUser.LanguageID = cSwedish then
+            RepNo := 528 // LASTORDER_VERK_NOTE_STATUS_ver3_SV.fr3 (528)
+          else
+            repNo := 530 // LASTORDER_VERK_NOTE_STATUS_ver3_ENG.fr3 (530)
       End;
       RC.RunReport(RepNo, Params, frPreview, 0);
     Finally
@@ -4460,7 +4466,7 @@ begin
   if uReportController.useFR then begin
 
     Params := TCMParams.Create();
-    Params.Add('@Language', ThisUser.UserID);
+    Params.Add('@Language', ThisUser.LanguageID);
     Params.Add('@ShippingPlanNo', ShippingPlanNo);
     Params.Add('@SupplierNo', -1);
 
@@ -4977,7 +4983,7 @@ begin
     Screen.Cursor := crSQLWait; { Show hourglass cursor }
 
     Params := TCMParams.Create();
-    Params.Add('@Language', ThisUser.UserID);
+    Params.Add('@Language', ThisUser.LanguageID);
     Params.Add('@LoadNo',
       grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsInteger);
 
