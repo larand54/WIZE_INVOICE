@@ -159,7 +159,8 @@ uses
   UnitBookingFormOrg in 'UnitBookingFormOrg.pas' {FormBookingFormOrg},
   udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
   uReport in '..\..\CommonSources\FastReport\uReport.pas',
-  uReportController in '..\..\CommonSources\FastReport\uReportController.pas';
+  uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
+  uFRConstants in '..\..\CommonSources\FastReport\uFRConstants.pas';
 
 {$R *.res}
 

@@ -5460,7 +5460,10 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
+  Lang: integer;
 begin
+  Lang := dmsContact.Client_Language
+        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger);
   if (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger > 0) and
     (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.IsNull = False) then
     MailToAddress := dmsContact.GetEmailAddress
@@ -5490,20 +5493,19 @@ begin
           Raise;
         End;
       end;
+      if Lang = cSwedish then
+        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+      else
+        ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
     end;
 
-    if dmsContact.Client_Language
-      (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger) = cSwedish then
-      ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
-    else
-      ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
 
     if uReportController.useFR then begin
-
+      ExportFile := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
+          FieldByName('LoadNo').AsString;
       Params := TCMParams.Create();
-      Params.Add('@Language', dmsContact.Client_Language
-        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger));
-      Params.Add('@ShippingPlanNo',
+      Params.Add('@Language', Lang);
+      Params.Add('@LoadNo',
         grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
         .AsInteger);
       // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;

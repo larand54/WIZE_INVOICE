@@ -2143,7 +2143,12 @@ begin
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
     else Begin
-      RepNo := 43; // TALLY_VER3_NOTE.fr3 (43)
+      if dmsContact.Client_Language
+        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
+      then
+        RepNo := 43 // TALLY_VER3_NOTE.fr3 (43)
+      else
+        RepNo := 56; // TALLY_eng_VER3_NOTE.fr3 (56)
       Try
         dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
           dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
@@ -2734,12 +2739,6 @@ begin
   ExcelDir := dmsSystem.Get_Dir('ExcelDir');
   MailToAddress2 := '';
   MailToAddress := '';
-{$IFDEF DEBUG}
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
-    MailToAddress := 'larand54@gmail.com;';
-    MailToAddress2 := 'larand54@yahoo.se';
-  end;
-{$ELSE}
   if (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger > 0) and
     (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = False) then
     MailToAddress := dmsContact.GetEmailAddress_Utlastad
@@ -2756,7 +2755,6 @@ begin
   MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
     (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
 
-{$ENDIF}
   if Length(MailToAddress2) > 0 then Begin
     if MailToAddress = 'ange@adress.nu' then
       MailToAddress := MailToAddress2
