@@ -18,8 +18,6 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Panel3: TPanel
@@ -413,7 +411,6 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel6
-    ExplicitWidth = 8
   end
   object Panel7: TPanel
     Left = 0
