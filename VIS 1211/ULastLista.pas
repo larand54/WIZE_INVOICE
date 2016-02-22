@@ -548,7 +548,7 @@ Begin
     // Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo') ;
     Add('INNER JOIN dbo.SupplierShippingPlan       SP   ON  SP.SupplierShipPlanObjectNo = LD.defsspno');
     Add('					AND     L.supplierno 		= SP.SUPPLIERno');
-    Add('					AND     L.CustomerNo 		= SP.CustomerNo');
+ //   Add('					AND     L.CustomerNo 		= SP.CustomerNo');
 
     Add('LEFT OUTER JOIN dbo.CITY                     Shipto         ON ShipTo.CityNo 	           = SP.ShipToInvPointNo');
     Add('LEFT OUTER JOIN dbo.CITY                     Loading         ON Loading.CityNo 	           = SP.LoadingLocationNo');

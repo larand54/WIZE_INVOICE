@@ -3072,4 +3072,23 @@ object dmsProduct: TdmsProduct
     Left = 272
     Top = 504
   end
+  object sp_IsLengthNoAgroup: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_IsLengthNoAgroup'
+    Left = 432
+    Top = 504
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@ProductLengthNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end

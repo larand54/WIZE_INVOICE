@@ -4298,4 +4298,13 @@ object dmsSystem: TdmsSystem
       ProviderFlags = [pfInUpdate]
     end
   end
+  object cxSchedulerStorage1: TcxSchedulerStorage
+    CustomFields = <
+      item
+        Name = 'Aaa'
+      end>
+    Resources.Items = <>
+    Left = 872
+    Top = 336
+  end
 end

@@ -507,7 +507,7 @@ object dmArrivingLoads: TdmArrivingLoads
     DataSet = cds_verkLaster
     OnDataChange = ds_verkLasterDataChange
     Left = 368
-    Top = 80
+    Top = 64
   end
   object ds_VerkLastPkgs: TDataSource
     DataSet = cds_VerkLastPkgs
@@ -1392,7 +1392,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'CUST.ClientName'
       '')
     Left = 368
-    Top = 32
+    Top = 16
     object cds_verkLasterLASTNR: TIntegerField
       DisplayLabel = 'Lastnr'
       FieldName = 'LASTNR'

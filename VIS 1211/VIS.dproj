@@ -3,7 +3,7 @@
         <ProjectGuid>{44411B54-35B5-4DF9-8ADF-E73EDFC21DE0}</ProjectGuid>
         <MainSource>VIS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
@@ -977,21 +977,21 @@
                     <VersionInfoKeys Name="Comments"/>
                 </VersionInfoKeys>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSLnksRS20.bpl">ExpressPrinting System ReportLinks (Standard) by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxPivotGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressPivotGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxTLLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressQuantumTreeList by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxSchedulerLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressScheduler by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxVGridLnkRS20.bpl">ExpressPrinting System ReportLink for ExpressVerticalGrid by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxDBOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressDBOrgChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSLnksRS20.bpl">ExpressPrinting System ReportLinks (Standard) by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxFCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressFlowChart by Developer Express Inc.</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxDBOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressDBOrgChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSdxOCLnkRS20.bpl">ExpressPrinting System ReportLinks for ExpressOrgChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPSDBTeeChartRS20.bpl">ExpressPrinting System ReportLink for DBTeeChart by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dxPScxPCProdRS20.bpl">ExpressPrinting System ContainerProducer for ExpressPageControl by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxCommonRS20.bpl">ExpressPrinting System Cross Platform Library by Developer Express Inc.</Excluded_Packages>
                     <Excluded_Packages Name="C:\Program Files (x86)\DevExpress VCL\Library\RS20\dcldxPScxExtCommonRS20.bpl">ExpressPrinting System Extended Cross Platform Library by Developer Express Inc.</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\RemObjects Software\Hydra for Delphi\Dcu\D20\win32\Hydra_IDE_D20.bpl">RemObjects Hydra - IDE Integration</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\RemObjects Software\Hydra for Delphi\Dcu\D20\win32\Hydra_IDE_D20.bpl">RemObjects Hydra - IDE Integration</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>

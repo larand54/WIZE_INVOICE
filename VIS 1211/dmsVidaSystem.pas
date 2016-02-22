@@ -11,7 +11,8 @@ uses
   FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async,
-  FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet, SqlTimSt;
+  FireDAC.DApt, FireDAC.Comp.Client, FireDAC.Comp.DataSet, SqlTimSt, cxClasses,
+  cxSchedulerStorage;
 
 type
   TAmbiguityEvent = procedure(Sender: TObject; DataSource: TDataSource;
@@ -437,6 +438,7 @@ type
     cds_PackageSizeDateCreated: TSQLTimeStampField;
     cds_PackageSizeCreatedUser: TIntegerField;
     cds_PackageSizeAct: TIntegerField;
+    cxSchedulerStorage1: TcxSchedulerStorage;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);

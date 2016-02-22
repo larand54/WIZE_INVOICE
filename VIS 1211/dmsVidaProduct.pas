@@ -141,6 +141,7 @@ type
     sq_DelTempPkgs: TFDQuery;
     sp_NewPkgNo_Price_NoPP: TFDStoredProc;
     QExport4ASCII1: TQExport4ASCII;
+    sp_IsLengthNoAgroup: TFDStoredProc;
     procedure mtPackagesAfterPost(DataSet: TDataSet);
     procedure mtPackagesAfterInsert(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
@@ -1962,18 +1963,35 @@ End;
 function TdmsProduct.DoesLOHaveFixedLength: Boolean;
 Begin
   Result := False;
+  Try
   mtLO_Records.First;
   While not mtLO_Records.Eof do
   Begin
-    if (mtLO_RecordsProductLengthNo.AsInteger <> 453) and
-      (mtLO_RecordsProductLengthNo.AsInteger <> 533) and
-      (mtLO_RecordsProductLengthNo.AsInteger <> 1831) and
-      (mtLO_RecordsProductLengthNo.AsInteger <> 1960) and
-      (mtLO_RecordsProductLengthNo.AsInteger <> 3187) and
-      (mtLO_RecordsProductLengthNo.AsInteger <> 3190) then
-      Result := True;
-    mtLO_Records.Next;
+   sp_IsLengthNoAgroup.Active := False ;
+   sp_IsLengthNoAgroup.ParamByName('@ProductLengthNo').AsInteger := mtLO_RecordsProductLengthNo.AsInteger ;
+   sp_IsLengthNoAgroup.Active := True ;
+
+   if not sp_IsLengthNoAgroup.Eof then
+   Begin
+     if sp_IsLengthNoAgroup.FieldByName('ProductLengthGroupNo').AsInteger = 0 then
+      Result  := True
+   End;
+
+{
+      if (mtLO_RecordsProductLengthNo.AsInteger <> 453) and
+        (mtLO_RecordsProductLengthNo.AsInteger <> 533) and
+        (mtLO_RecordsProductLengthNo.AsInteger <> 1831) and
+        (mtLO_RecordsProductLengthNo.AsInteger <> 1960) and
+        (mtLO_RecordsProductLengthNo.AsInteger <> 3187) and
+        (mtLO_RecordsProductLengthNo.AsInteger <> 3190) then
+        Result := True;
+
+}    mtLO_Records.Next;
   End; // while
+
+  Finally
+    sp_IsLengthNoAgroup.Active := False ;
+  End;
 End;
 
 Function TdmsProduct.GetNoOfLengthsInPackage(Var ProductLengthNo
