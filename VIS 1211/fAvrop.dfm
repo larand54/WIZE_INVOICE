@@ -1534,7 +1534,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 1111
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -1559,7 +1559,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 80
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -1595,8 +1595,8 @@ object frmAvrop: TfrmAvrop
     Width = 1449
   end
   object DBRichEdit_InvoiceText: TDBRichEdit
-    Left = 0
-    Top = 603
+    Left = 73
+    Top = 537
     Width = 1518
     Height = 196
     Margins.Left = 4
@@ -3421,7 +3421,7 @@ object frmAvrop: TfrmAvrop
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

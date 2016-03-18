@@ -380,13 +380,13 @@ object daMoLM1: TdaMoLM1
       'dbo.SupplierShippingPlan SP'
       #9'INNER JOIN dbo.Client'#9#9#9#9'SC '#9'ON  '#9'SP.SupplierNo '#9#9'= SC.ClientNo'
       
-        #9'INNER JOIN dbo.PackUnit '#9#9#9'PU'#9'ON '#9'PU.TemplateUnitNo '#9'= SP.Price' +
-        'UnitNo'
-      #9'INNER JOIN dbo.Currency'#9#9#9#9'CU'#9'ON'#9'CU.CurrencyNo'#9#9'= SP.CurrencyNo'
+        #9'LEFT JOIN dbo.PackUnit '#9#9#9'PU'#9'ON '#9'PU.TemplateUnitNo '#9'= SP.PriceU' +
+        'nitNo'
+      #9'LEFT JOIN dbo.Currency'#9#9#9#9'CU'#9'ON'#9'CU.CurrencyNo'#9#9'= SP.CurrencyNo'
       ''
       
-        #9'INNER JOIN dbo.UnitName             '#9#9'UN  '#9'ON  '#9'SP.VolumeUnitNo' +
-        '            = UN.VolumeUnit_No'
+        #9'LEFT JOIN dbo.UnitName             '#9#9'UN  '#9'ON  '#9'SP.VolumeUnitNo ' +
+        '           = UN.VolumeUnit_No'
       
         #9'LEFT OUTER JOIN dbo.LogicalInventoryPoint '#9'LI '#9'ON  '#9'LI.LogicalI' +
         'nventoryPointNo = SP.ShipToInvPointNo'
@@ -421,10 +421,7 @@ object daMoLM1: TdaMoLM1
       
         'WHERE  SP.CustShipPlanDetailObjectNo = :CustShipPlanDetailObject' +
         'No'
-      ' '
-      ' '
-      ' '
-      '')
+      'AND SP.ObjectType = 2')
     Left = 112
     Top = 40
     ParamData = <
