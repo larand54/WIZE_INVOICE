@@ -322,6 +322,10 @@ object frmLoadArrivals: TfrmLoadArrivals
         DataBinding.FieldName = 'OriginalLoadNo'
         PropertiesClassName = 'TcxLabelProperties'
       end
+      object grdLoadsDBTableView1OriginalInvoiceNo: TcxGridDBColumn
+        DataBinding.FieldName = 'OriginalInvoiceNo'
+        PropertiesClassName = 'TcxLabelProperties'
+      end
     end
     object grdLoadsLevel1: TcxGridLevel
       GridView = grdLoadsDBTableView1
@@ -354,7 +358,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 838
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -378,7 +382,7 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 1
         Top = 1
         Width = 75
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -918,7 +922,7 @@ object frmLoadArrivals: TfrmLoadArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

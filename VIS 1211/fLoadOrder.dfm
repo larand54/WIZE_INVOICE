@@ -20,6 +20,8 @@ object frmLoadOrder: TfrmLoadOrder
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object pnlBottomGrid: TPanel
@@ -530,6 +532,7 @@ object frmLoadOrder: TfrmLoadOrder
       Control = pcLoadOrder
       Color = clMaroon
       ParentColor = False
+      ExplicitWidth = 8
     end
     object pcLoadOrder: TcxPageControl
       Left = 0
@@ -557,6 +560,8 @@ object frmLoadOrder: TfrmLoadOrder
         Margins.Bottom = 4
         Caption = 'Last'
         ImageIndex = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object PanelLoadDetail: TPanel
           Left = 0
           Top = 0
@@ -1982,7 +1987,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 1195
-        Height = 51
+        Height = 47
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -2020,7 +2025,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 78
-        Height = 51
+        Height = 47
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -2033,7 +2038,7 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -7040,7 +7045,6 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -7054,8 +7058,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42377.440662650460000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42457.919797025460000000
       BuiltInReportLink = True
     end
   end

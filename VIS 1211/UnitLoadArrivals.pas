@@ -316,6 +316,7 @@ type
     grdLoadsDBTableView1OriginalLO: TcxGridDBColumn;
     grdLoadsDBTableView1OriginalLoadNo: TcxGridDBColumn;
     mtSelectedLoadsTrading: TIntegerField;
+    grdLoadsDBTableView1OriginalInvoiceNo: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -826,7 +827,12 @@ Begin
       cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
       cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
       cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
-      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
+      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed,') ;
+
+      cdsArrivingLoads.SQL.Add('(Select inos.InvoiceNo FROM  dbo.Confirmed_Load cl') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.Invoiced_Load il on il.LoadNo = cl.Confirmed_LoadNo') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.InvoiceNos inos on inos.InternalInvoiceNo = il.InternalInvoiceNo') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl.NewLoadNo = L.LoadNo) AS OriginalInvoiceNo') ;
 
         cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
         cdsArrivingLoads.SQL.Add('INNER JOIN dbo.LoadShippingPlan LSP 		ON 	LSP.LoadNo = L.LoadNo');
@@ -1083,10 +1089,15 @@ Begin
       cdsArrivingLoads.SQL.Add('LV.intNM3, LV.AM3, LV.Pcs, LV.Pkgs');
       cdsArrivingLoads.SQL.Add(',SC.ClientName, Bt.BookingType,');
 
-   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
-   cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
-   cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
-   cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
+     cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
+     cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
+     cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
+     cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed,') ;
+
+      cdsArrivingLoads.SQL.Add('(Select inos.InvoiceNo FROM  dbo.Confirmed_Load cl') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.Invoiced_Load il on il.LoadNo = cl.Confirmed_LoadNo') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.InvoiceNos inos on inos.InternalInvoiceNo = il.InternalInvoiceNo') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl.NewLoadNo = L.LoadNo) AS OriginalInvoiceNo') ;
 
 
         cdsArrivingLoads.SQL.Add('FROM dbo.Loads L');
@@ -1319,7 +1330,12 @@ Begin
       cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
       cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
       cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
-      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
+      cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed,') ;
+
+      cdsArrivingLoads.SQL.Add('(Select inos.InvoiceNo FROM  dbo.Confirmed_Load cl') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.Invoiced_Load il on il.LoadNo = cl.Confirmed_LoadNo') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.InvoiceNos inos on inos.InternalInvoiceNo = il.InternalInvoiceNo') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl.NewLoadNo = L.LoadNo) AS OriginalInvoiceNo') ;
 //* ===================== FROM ==================== */
       cdsArrivingLoads.SQL.Add('FROM  dbo.CustomerShippingPlanDetails CSD') ;
       cdsArrivingLoads.SQL.Add('INNER JOIN dbo.CustomerShippingPlanHeader CSH	ON CSH.ShippingPlanNo = CSD.ShippingPlanNo') ;
@@ -1533,7 +1549,12 @@ Begin
    cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.LoadDetail LD') ;
    cdsArrivingLoads.SQL.Add('WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,') ;
    cdsArrivingLoads.SQL.Add('(Select Count(*) FROM dbo.PackageARConfirmed PC') ;
-   cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed') ;
+   cdsArrivingLoads.SQL.Add('WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed,') ;
+
+      cdsArrivingLoads.SQL.Add('(Select inos.InvoiceNo FROM  dbo.Confirmed_Load cl') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.Invoiced_Load il on il.LoadNo = cl.Confirmed_LoadNo') ;
+      cdsArrivingLoads.SQL.Add('inner join dbo.InvoiceNos inos on inos.InternalInvoiceNo = il.InternalInvoiceNo') ;
+      cdsArrivingLoads.SQL.Add('WHERE cl.NewLoadNo = L.LoadNo) AS OriginalInvoiceNo') ;
 
 
     cdsArrivingLoads.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
@@ -2415,7 +2436,7 @@ begin
     if grdLoadsDBTableView1.Controller.SelectedRecordCount > 0 then
     Begin
      if AreMarkedLoadsSameObjectTypeRegionToRegion then
-      ConfirmManyLoadsRegionToRegion(Sender)
+     ConfirmManyLoadsRegionToRegion(Sender)
       else
       if AreMarkedLoadsSameObjectTypeAndNOTEGEN then
         // External customer AR loads purchased of VW
@@ -2599,13 +2620,14 @@ begin
     Begin
       ExcelDir := dmsSystem.Get_Dir('ExcelDir');
 
-      SaveDialog1.Filter := 'Excel files (*.xls)|*.xls';
-      SaveDialog1.DefaultExt := 'xls';
+      SaveDialog1.Filter := 'Excel files (*.xlsx)|*.xlsx';
+      SaveDialog1.DefaultExt := 'xlsx';
       SaveDialog1.InitialDir := ExcelDir;
       if SaveDialog1.Execute then
       Begin
         FileName := SaveDialog1.FileName;
-        ExportGridToExcel(FileName, grdLoads, False, False, True, 'xls');
+    //    ExportGridToExcel(FileName, grdLoads, False, False, True, 'xls');
+        ExportGridToXLSX(FileName, grdLoads, true,true,true,'xlsx');
         ShowMessage('Table exported to Excel file ' + FileName);
       End;
     End;
@@ -4674,11 +4696,8 @@ end;
 procedure TfrmLoadArrivals.ConfirmManyLoadsRegionToRegion(Sender: TObject) ;
 Var
   LIPNo               : Integer;
-  // formConfirmManyIntLoads   : TformConfirmManyIntLoads ;
   fSelectLIP          : TfRegionToRegionSelectLIPNo ;
   fAnkomstRegProgress : TfAnkomstRegProgress;
- // Save_Cursor         : TCursor;
-  // ChangeToIMPProduct        : Boolean ;
   ObjectType          : Integer;
   LoadAROK            : Boolean;
 begin

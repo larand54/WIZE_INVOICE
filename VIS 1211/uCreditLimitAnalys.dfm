@@ -5,12 +5,12 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
   Align = alClient
   BorderStyle = bsNone
   Caption = 'KREDIT ANALYS'
-  ClientHeight = 619
-  ClientWidth = 1026
+  ClientHeight = 762
+  ClientWidth = 1263
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -19,13 +19,19 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 120
+  TextHeight = 16
   object grdKreditOverdue: TcxGrid
     Left = 0
-    Top = 86
-    Width = 1026
-    Height = 533
+    Top = 106
+    Width = 1263
+    Height = 656
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 1
     object grdKreditOverdueDBTableView1: TcxGridDBTableView
@@ -118,14 +124,18 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1026
-    Height = 18
+    Width = 1263
+    Height = 22
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Caption = 'KREDIT ANALYS'
     Color = clMaroon
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
-    Font.Height = -11
+    Font.Height = -15
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
@@ -133,72 +143,112 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
   end
   object Panel2: TPanel
     Left = 0
-    Top = 18
-    Width = 1026
-    Height = 68
+    Top = 22
+    Width = 1263
+    Height = 84
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 6
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 264
-      Height = 66
+      Width = 325
+      Height = 82
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 262
-        Height = 45
+        Width = 323
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel4: TPanel
-      Left = 926
+      Left = 1140
       Top = 1
-      Width = 99
-      Height = 66
+      Width = 122
+      Height = 82
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alRight
       TabOrder = 1
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 97
-        Height = 45
+        Width = 120
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel5: TPanel
-      Left = 265
+      Left = 326
       Top = 1
-      Width = 661
-      Height = 66
+      Width = 814
+      Height = 82
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 2
       object MaskEdit2: TMaskEdit
-        Left = 316
-        Top = 34
-        Width = 121
+        Left = 389
+        Top = 42
+        Width = 149
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 0
         Text = ''
         OnKeyDown = MaskEdit2KeyDown
       end
       object cxLabel1: TcxLabel
-        Left = 232
-        Top = 40
+        Left = 286
+        Top = 49
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'S'#246'k grupp:'
       end
       object cxLabel2: TcxLabel
-        Left = 16
-        Top = 16
+        Left = 20
+        Top = 20
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Visa kunder som har '#246'verskridit kreditgr'#228'nsen med mer '#228'n'
       end
       object cxMaskEdit1: TcxMaskEdit
-        Left = 316
-        Top = 8
+        Left = 389
+        Top = 10
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Properties.MaskKind = emkRegExpr
         Properties.EditMask = '\d+'
         Properties.MaxLength = 0
@@ -206,22 +256,26 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
         TabOrder = 3
         Text = '0'
         OnKeyDown = cxMaskEdit1KeyDown
-        Width = 121
+        Width = 149
       end
       object cbExlK2: TcxCheckBox
-        Left = 16
-        Top = 40
+        Left = 20
+        Top = 49
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Exkludera K2'
         TabOrder = 4
         Visible = False
-        Width = 121
+        Width = 149
       end
     end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     CanCustomize = False
@@ -1786,35 +1840,33 @@ object frmCreditLimitAnalys: TfrmCreditLimitAnalys
       610072004D0061006E0061006700650072003100420061007200320001005300
       650067006F006500200055004900010001005400610068006F006D0061000D00
       0A00730074004D0075006C00740069004C0069006E00650073005F0055006E00
-      690063006F00640065000D000A00640078004200610072004D0061006E006100
-      67006500720031002E00430061007400650067006F0072006900650073000100
-      440065006600610075006C007400010001000D000A0073007400530074007200
-      69006E00670073005F0055006E00690063006F00640065000D000A0073007400
-      4F00740068006500720053007400720069006E00670073005F0055006E006900
-      63006F00640065000D000A00630078004D00610073006B004500640069007400
-      31002E00540065007800740001003000010001000D000A007300740043006F00
-      6C006C0065006300740069006F006E0073005F0055006E00690063006F006400
-      65000D000A0073007400430068006100720053006500740073005F0055006E00
-      690063006F00640065000D000A005400660072006D0043007200650064006900
-      74004C0069006D006900740041006E0061006C00790073000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000100440045004600
-      410055004C0054005F0043004800410052005300450054000D000A0050006100
-      6E0065006C0031000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A00640078004200610072004D0061006E0061006700
-      6500720031000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000100440045004600410055004C0054005F004300480041005200
-      5300450054000D000A00640078004200610072004D0061006E00610067006500
-      7200310042006100720031000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00640078004200610072004D0061006E00
-      6100670065007200310042006100720032000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000100440045004600410055004C00
-      54005F0043004800410052005300450054000D000A00}
+      690063006F00640065000D000A007300740053007400720069006E0067007300
+      5F0055006E00690063006F00640065000D000A00730074004F00740068006500
+      720053007400720069006E00670073005F0055006E00690063006F0064006500
+      0D000A00630078004D00610073006B00450064006900740031002E0054006500
+      7800740001003000010001000D000A007300740043006F006C006C0065006300
+      740069006F006E0073005F0055006E00690063006F00640065000D000A007300
+      7400430068006100720053006500740073005F0055006E00690063006F006400
+      65000D000A005400660072006D004300720065006400690074004C0069006D00
+      6900740041006E0061006C00790073000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00500061006E0065006C003100
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0100440045004600410055004C0054005F004300480041005200530045005400
+      0D000A00640078004200610072004D0061006E00610067006500720031000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000100
+      440045004600410055004C0054005F0043004800410052005300450054000D00
+      0A00640078004200610072004D0061006E006100670065007200310042006100
+      720031000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000100440045004600410055004C0054005F0043004800410052005300
+      450054000D000A00640078004200610072004D0061006E006100670065007200
+      310042006100720032000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000100440045004600410055004C0054005F0043004800
+      410052005300450054000D000A00}
   end
 end

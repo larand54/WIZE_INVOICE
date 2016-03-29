@@ -380,6 +380,7 @@ type
     acJusteraUSAfakturor: TAction;
     dxBarLargeButton15: TdxBarLargeButton;
     acBooking: TAction;
+    cxButton2: TcxButton;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -498,6 +499,7 @@ type
     procedure acAusExportCustomerInfoExecute(Sender: TObject);
     procedure acJusteraUSAfakturorExecute(Sender: TObject);
     procedure acBookingExecute(Sender: TObject);
+    procedure cxButton2Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -5703,6 +5705,14 @@ begin
   End;
 end;
 
+procedure TfrmInvoiceList.cxButton2Click(Sender: TObject);
+begin
+  With dmVidaInvoice do
+  Begin
+    CopyOrderToNewPO(cdsInvoiceListInternalInvoiceNo.AsInteger) ;
+  End;
+end;
+
 procedure TfrmInvoiceList.acPrintFRInvoiceExecute(Sender: TObject);
 begin
 {Var
@@ -5738,14 +5748,15 @@ begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-    SaveDialog2.Filter := 'Excel files (*.xls)|*.xls';
-    SaveDialog2.DefaultExt := 'xls';
+    SaveDialog2.Filter := 'Excel files (*.xlsx)|*.xlsx';
+    SaveDialog2.DefaultExt := 'xlsx';
     SaveDialog2.InitialDir := ExcelDir;
     if SaveDialog2.Execute then
     Begin
       FileName := SaveDialog2.FileName;
       Try
-        ExportGridToExcel(FileName, grdFaktura, False, False, True, 'xls');
+  //      ExportGridToExcel(FileName, grdFaktura, False, False, True, 'xls');
+        ExportGridToXLSX(FileName, grdFaktura, true,true,true,'xlsx');
         ShowMessage('Table exported to excel file ' + FileName);
       Except
       End;

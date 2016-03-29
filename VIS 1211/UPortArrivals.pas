@@ -1502,10 +1502,11 @@ begin
       // SaveDialog2.InitialDir:= ExcelDir ;
       // if SaveDialog2.Execute then
       // Begin
-      FileName := 'C:\AnkomstLast.XLS'; // SaveDialog2.FileName ;
+      FileName := 'C:\AnkomstLast.xlsx'; // SaveDialog2.FileName ;
 
       Try
-        ExportGridToExcel(FileName, grdPortLoads, False, False, True, 'xls');
+       // ExportGridToExcel(FileName, grdPortLoads, False, False, True, 'xls');
+        ExportGridToXLSX(FileName, grdPortLoads, true,true,true,'xlsx');
         ShowMessage('Table exportered to Excel file ' + FileName);
       Except
       End;

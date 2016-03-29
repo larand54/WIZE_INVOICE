@@ -61,7 +61,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 1330
-          Height = 49
+          Height = 48
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -85,7 +85,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 86
-          Height = 49
+          Height = 48
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -730,6 +730,16 @@ object frmInvoiceList: TfrmInvoiceList
           Margins.Right = 4
           Margins.Bottom = 4
           Caption = 'cxLabel1'
+        end
+        object cxButton2: TcxButton
+          Left = 1208
+          Top = 8
+          Width = 97
+          Height = 49
+          Caption = 'Kopiera till ink'#246'psregion'
+          TabOrder = 27
+          WordWrap = True
+          OnClick = cxButton2Click
         end
       end
     end
@@ -1574,7 +1584,7 @@ object frmInvoiceList: TfrmInvoiceList
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

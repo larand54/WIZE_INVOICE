@@ -20,6 +20,8 @@ object frmAvrop: TfrmAvrop
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Splitter1: TSplitter
@@ -1595,8 +1597,8 @@ object frmAvrop: TfrmAvrop
     Width = 1449
   end
   object DBRichEdit_InvoiceText: TDBRichEdit
-    Left = 73
-    Top = 537
+    Left = 49
+    Top = 641
     Width = 1518
     Height = 196
     Margins.Left = 4

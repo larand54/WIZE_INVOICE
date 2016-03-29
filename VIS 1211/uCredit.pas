@@ -343,14 +343,15 @@ begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-    SaveDialog1.Filter := 'Excel files (*.xls)|*.xls';
-    SaveDialog1.DefaultExt := 'xls';
+    SaveDialog1.Filter := 'Excel files (*.xlsx)|*.xlsx';
+    SaveDialog1.DefaultExt := 'xlsx';
     SaveDialog1.InitialDir := dmsSystem.Get_Dir('ExcelDir');
     // dmsSystem.GetSystemProp('ExcelDir') ;
     if SaveDialog1.Execute then
     Begin
       FileName := SaveDialog1.FileName;
-      ExportGridToExcel(FileName, grdKredit, False, False, True, 'xls');
+//      ExportGridToExcel(FileName, grdKredit, False, False, True, 'xls');
+      ExportGridToXLSX(FileName, grdKredit, true,true,true,'xlsx');
       ShowMessage('Table exported to Excel file ' + FileName);
     End;
   Finally

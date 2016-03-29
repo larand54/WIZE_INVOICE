@@ -536,6 +536,7 @@ object dmArrivingLoads: TdmArrivingLoads
     Top = 528
   end
   object cdsArrivingLoads: TFDQuery
+    Active = True
     CachedUpdates = True
     Indexes = <
       item
@@ -628,7 +629,15 @@ object dmArrivingLoads: TdmArrivingLoads
       '(Select Count(*) FROM dbo.LoadDetail LD'
       'WHERE LD.LoadNo = L.LoadNo) AS NoOfPackages,'
       '(Select Count(*) FROM dbo.PackageARConfirmed PC'
-      'WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed'
+      'WHERE PC.LoadNo = L.LoadNo) AS PackagesConfirmed,'
+      '(Select inos.InvoiceNo FROM  dbo.Confirmed_Load cl'
+      
+        'inner join dbo.Invoiced_Load il on il.LoadNo = cl.Confirmed_Load' +
+        'No'
+      
+        'inner join dbo.InvoiceNos inos on inos.InternalInvoiceNo = il.In' +
+        'ternalInvoiceNo'
+      'WHERE cl.NewLoadNo = L.LoadNo) AS OriginalInvoiceNo'
       ''
       ''
       ''
@@ -968,6 +977,11 @@ object dmArrivingLoads: TdmArrivingLoads
     object cdsArrivingLoadsOriginalLoadNo: TIntegerField
       FieldName = 'OriginalLoadNo'
       Origin = 'OriginalLoadNo'
+      ReadOnly = True
+    end
+    object cdsArrivingLoadsOriginalInvoiceNo: TIntegerField
+      FieldName = 'OriginalInvoiceNo'
+      Origin = 'OriginalInvoiceNo'
       ReadOnly = True
     end
   end

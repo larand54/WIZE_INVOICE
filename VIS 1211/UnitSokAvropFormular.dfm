@@ -18,6 +18,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Panel1: TPanel
@@ -848,7 +850,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 1063
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -905,7 +907,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 102
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -918,7 +920,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -2571,6 +2573,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     object dxComponentPrinter1Link1: TdxGridReportLink
       Active = True
       Component = grdAvropSok
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -2584,7 +2587,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42394.599653553240000000
+      ReportDocument.CreationDate = 42457.920457500000000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       OptionsView.Footers = False
       OptionsView.BandHeaders = False
       OptionsView.Caption = False

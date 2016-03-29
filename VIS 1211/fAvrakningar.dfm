@@ -18,6 +18,8 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Panel3: TPanel
@@ -674,7 +676,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
         Left = 0
         Top = 0
         Width = 1021
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -787,6 +789,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel3
+    ExplicitWidth = 8
   end
   object Panel2: TPanel
     Left = 0
@@ -1434,7 +1437,7 @@ object frmGjordaAvrakningar: TfrmGjordaAvrakningar
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

@@ -216,13 +216,14 @@ begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crHourGlass; { Show hourglass cursor }
   Try
-    SaveDialog1.Filter := 'Excel files (*.xls)|*.xls';
-    SaveDialog1.DefaultExt := 'xls';
+    SaveDialog1.Filter := 'Excel files (*.xlsx)|*.xlsx';
+    SaveDialog1.DefaultExt := 'xlsx';
     SaveDialog1.InitialDir := dmsSystem.Get_Dir('ExcelDir');
     if SaveDialog1.Execute then
     Begin
       FileName := SaveDialog1.FileName;
-      ExportGridToExcel(FileName, grdInvPaid, False, False, True, 'xls');
+//      ExportGridToExcel(FileName, grdInvPaid, False, False, True, 'xls');
+      ExportGridToXLSX(FileName, grdInvPaid, true,true,true,'xlsx');
       ShowMessage('Tabell exporterad till Excel fil ' + FileName);
     End;
   Finally

@@ -1583,6 +1583,16 @@ type
     cds_PurchaseInvNo_VPUserModified: TIntegerField;
     cds_PurchaseInvNo_VPDateCreated: TSQLTimeStampField;
     cds_PurchaseInvNo_VPPrefix: TStringField;
+    sp_CopyOrderRtR: TFDStoredProc;
+    sp_copyAvrop: TFDStoredProc;
+    cdsInvoiceOrderNos: TFDQuery;
+    cdsInvoiceLONos: TFDQuery;
+    cdsInvoiceOrderNosOrderNo: TIntegerField;
+    cdsInvoiceLONosShippingPlanNo: TIntegerField;
+    cds_LoadsInInvoice: TFDQuery;
+    cds_LoadsInInvoiceLoadNo: TIntegerField;
+    cds_LoadsInInvoicePOShippingPlanNo: TIntegerField;
+    sp_CopySalesLoadToPO: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1641,6 +1651,8 @@ type
     { Private declarations }
     GlobalLoadDetailNo: Integer;
     lbList: TStringList;
+    procedure CopyLoads(const InternalInvoiceNo  : Integer) ;
+    procedure CopyAvrop(const InternalInvoiceNo, CopyToOrderNo, SalesOrderNo : Integer) ;
     function  AssignPurchase_VPInvoiceNumber(const InternalInvoiceNo  : Integer): Integer;
     function  AssignPurchase_UKInvoiceNumber(const InternalInvoiceNo : Integer): Integer;
     procedure AssignUK_Sales_InvoiceNumber(const InternalInvoiceNo  : Integer);
@@ -1712,6 +1724,7 @@ type
     vouno, logno: Integer;
     serie: String;
     ldglogwrite_logerror, vourowlog_logerror: Integer;
+    procedure CopyOrderToNewPO(const InternalInvoiceNo : Integer) ;
     procedure JusteraUSAFakturor ;
     procedure STORE_ExportInvoiceData(mtSelectedInvoices: TkbmMemTable);
     procedure DEL_ExportInvoiceData;
@@ -10138,6 +10151,140 @@ Begin
   Screen.Cursor := Save_Cursor ;
   End ;
 End;
+
+procedure TdmVidaInvoice.CopyOrderToNewPO(const InternalInvoiceNo : Integer) ;
+Var Save_Cursor       : TCursor;
+    CopyToOrderNo     : Integer ;
+Begin
+ Save_Cursor    := Screen.Cursor;
+ Screen.Cursor  := crSQLWait;    { Show hourglass cursor }
+ Try
+{
+   if cds_TLMSales.Locate('SalesOrderNo', sOrderNo, []) then
+   Begin
+    ShowMessage('Sales contract already linked to purchase order ' + cds_TLMSalesOrderNoText.AsString) ;
+    Result  := -1 ;
+    Exit ;
+   End;
+}
+
+ cdsInvoiceOrderNos.Active  := False ;
+ cdsInvoiceOrderNos.ParamByName('InternalInvoiceNo').AsInteger  := InternalInvoiceNo ;
+ cdsInvoiceOrderNos.Active  := True ;
+ Try
+ cdsInvoiceOrderNos.First ;
+ while not cdsInvoiceOrderNos.eof do
+ Begin
+
+   Try
+   sp_CopyOrderRtR.ParamByName('@SrcOrderNo').AsInteger  := cdsInvoiceOrderNosOrderNo.AsInteger ; //sales orderno
+   sp_CopyOrderRtR.ParamByName('@CopyCSP').AsInteger     := 0 ;//Do not copy avrop at this stage
+   sp_CopyOrderRtR.ParamByName('@CopyLO').AsInteger      := 0 ;//Do not copy LO at this stage
+   sp_CopyOrderRtR.ParamByName('@CreateUser').AsInteger  := ThisUser.UserID ;
+   sp_CopyOrderRtR.ParamByName('@OrderType').AsInteger   := 1 ;//PO ordertype
+   sp_CopyOrderRtR.ParamByName('@Trading').AsInteger     := 2 ;//Region to Region
+   sp_CopyOrderRtR.ExecProc ;
+   CopyToOrderNo  := sp_CopyOrderRtR.ParamByName('@NewOrderNo').AsInteger ;
+   sp_CopyOrderRtR.Close ;
+   Except
+     On E: Exception do
+     Begin
+      dmsSystem.FDoLog(E.Message) ;
+      ShowMessage('sp_CopyOrder: ' + E.Message) ;
+      Raise ;
+     End
+   End ;
+   CopyAvrop(InternalInvoiceNo, CopyToOrderNo, cdsInvoiceOrderNosOrderNo.AsInteger) ;
+   cdsInvoiceOrderNos.Next ;
+ End;
+
+ CopyLoads(InternalInvoiceNo) ;
+
+ Finally
+   cdsInvoiceOrderNos.Active  := False ;
+ End;
+
+{
+   if not cds_TLMSales.Locate('SalesOrderNo', sOrderNo, []) then
+   Begin
+    cds_TLMSales.Insert ;
+    cds_TLMSalesSalesOrderNo.AsInteger    := sOrderNo ;
+    cds_TLMSalesPOOrderNo.AsInteger       := Result ;
+    cds_TLMSales.Post ;
+    if cds_TLMSales.ChangeCount > 0 then
+    Begin
+     cds_TLMSales.ApplyUpdates(0) ;
+     cds_TLMSales.CommitUpdates ;
+    End ;
+   End ;
+}
+ Finally
+  Screen.Cursor:= Save_Cursor ;
+ End ;
+End ;
+
+procedure TdmVidaInvoice.CopyAvrop(const InternalInvoiceNo, CopyToOrderNo, SalesOrderNo  : Integer) ;
+Begin
+ cdsInvoiceLONos.ParamByName('InternalInvoiceNo').AsInteger :=  InternalInvoiceNo ;
+ cdsInvoiceLONos.ParamByName('OrderNo').AsInteger           :=  SalesOrderNo ;
+ cdsInvoiceLONos.Active := True ;
+ Try
+ cdsInvoiceLONos.First ;
+ while not cdsInvoiceLONos.Eof do
+ Begin
+   Try
+   sp_copyAvrop.ParamByName('@SrcOrderNo').AsInteger          := SalesOrderNo ;
+   sp_copyAvrop.ParamByName('@SrcShippingPlanNo').AsInteger   := cdsInvoiceLONosShippingPlanNo.AsInteger ;
+   sp_copyAvrop.ParamByName('@CreateUser').AsInteger          := ThisUser.UserID ;
+   sp_copyAvrop.ParamByName('@NewOrderNo').AsInteger          := CopyToOrderNo ;
+   sp_copyAvrop.ParamByName('@Trading').AsInteger             := 0 ;//Trading ;
+   sp_copyAvrop.ExecProc ;
+   Except
+     On E: Exception do
+     Begin
+      dmsSystem.FDoLog(E.Message) ;
+      ShowMessage('sp_copyAvrop: ' + E.Message) ;
+     End
+   End ;
+   cdsInvoiceLONos.Next ;
+ End;
+ Finally
+   cdsInvoiceLONos.Active := False ;
+ End;
+End ;
+
+procedure TdmVidaInvoice.CopyLoads(const InternalInvoiceNo  : Integer) ;
+Begin
+ cds_LoadsInInvoice.ParamByName('InternalInvoiceNo').AsInteger :=  InternalInvoiceNo ;
+ cds_LoadsInInvoice.Active := True ;
+ Try
+ cds_LoadsInInvoice.First ;
+ while not cds_LoadsInInvoice.Eof do
+ Begin
+  Try
+    sp_CopySalesLoadToPO.ParamByName('@SrcLoadNo').AsInteger  := cds_LoadsInInvoiceLoadNo.AsInteger ;
+    sp_CopySalesLoadToPO.ParamByName('@NewLONo').AsInteger    := cds_LoadsInInvoicePOShippingPlanNo.AsInteger ;
+    sp_CopySalesLoadToPO.ParamByName('@CreateUser').AsInteger := ThisUser.UserID;
+    sp_CopySalesLoadToPO.ParamByName('@Insert_Confirmed_Load').AsInteger :=  1 ;
+    sp_CopySalesLoadToPO.ExecProc ;
+//      Insert_Confirmed_Load;
+//    Result := sp_CopySalesLoadToPO.ParamByName('@NewLoadNo').AsInteger;
+
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+   cds_LoadsInInvoice.Next ;
+ End;
+
+ Finally
+   cds_LoadsInInvoice.Active := False ;
+ End;
+End ;
 
 
 

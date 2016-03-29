@@ -2,7 +2,7 @@ object dmVidaInvoice: TdmVidaInvoice
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 1105
+  Height = 1183
   Width = 1206
   object dsrcInvoiceHead: TDataSource
     DataSet = cdsInvoiceHead
@@ -17194,5 +17194,233 @@ object dmVidaInvoice: TdmVidaInvoice
       Required = True
       Size = 50
     end
+  end
+  object sp_CopyOrderRtR: TFDStoredProc
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    StoredProcName = 'dbo.vis_CopyOrderRtR'
+    Left = 920
+    Top = 1064
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SrcOrderNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@CopyCSP'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@CopyLO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 6
+        Name = '@Trading'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 7
+        Name = '@OrderType'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 8
+        Name = '@NewOrderNo'
+        DataType = ftInteger
+        ParamType = ptInputOutput
+      end>
+  end
+  object sp_copyAvrop: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_CopyAvrop_II'
+    Left = 920
+    Top = 1008
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SrcOrderNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@SrcShippingPlanNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@NewOrderNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 6
+        Name = '@Trading'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object cdsInvoiceOrderNos: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'SELECT Distinct csh.OrderNo FROM dbo.INVOICELO ILO'
+      
+        'inner join dbo.CustomerShippingPlanHeader csh on csh.ShippingPla' +
+        'nNo = ILO.ShippingPlanNo'
+      'WHERE '
+      'ILO.InternalInvoiceNo = :InternalInvoiceNo')
+    Left = 1072
+    Top = 1072
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cdsInvoiceOrderNosOrderNo: TIntegerField
+      FieldName = 'OrderNo'
+      Origin = 'OrderNo'
+      Required = True
+    end
+  end
+  object cdsInvoiceLONos: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'SELECT Distinct ILO.ShippingPlanNo FROM dbo.INVOICELO ILO'
+      
+        'inner join dbo.CustomerShippingPlanHeader csh on csh.ShippingPla' +
+        'nNo = ILO.ShippingPlanNo'
+      'WHERE '
+      'ILO.InternalInvoiceNo = :InternalInvoiceNo'
+      'AND csh.OrderNo = :OrderNo')
+    Left = 808
+    Top = 1072
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'ORDERNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cdsInvoiceLONosShippingPlanNo: TIntegerField
+      FieldName = 'ShippingPlanNo'
+      Origin = 'ShippingPlanNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+  end
+  object cds_LoadsInInvoice: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      
+        ' select IL.LoadNo, stl.POShippingPlanNo FROM dbo.Invoiced_Load I' +
+        'L'
+      
+        'Inner Join dbo.CSHTradingLink stl on stl.SalesShippingPlanNo = I' +
+        'L.ShippingPlanNo'
+      'WHERE IL.InternalInvoiceNo = :InternalInvoiceNo')
+    Left = 672
+    Top = 1080
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cds_LoadsInInvoiceLoadNo: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'LoadNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_LoadsInInvoicePOShippingPlanNo: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'POShippingPlanNo'
+      Required = True
+    end
+  end
+  object sp_CopySalesLoadToPO: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_CopySalesLoadToPO'
+    Left = 552
+    Top = 1104
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@SrcLoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@NewLONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@CreateUser'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@NewLoadNo'
+        DataType = ftInteger
+        ParamType = ptInputOutput
+      end
+      item
+        Position = 6
+        Name = '@Insert_Confirmed_Load'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

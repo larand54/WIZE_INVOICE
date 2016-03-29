@@ -441,7 +441,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 605
-        Height = 51
+        Height = 47
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -465,7 +465,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 73
-        Height = 51
+        Height = 47
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -677,7 +677,7 @@ object frmPortArrivals: TfrmPortArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

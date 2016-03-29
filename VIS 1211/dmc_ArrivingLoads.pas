@@ -573,6 +573,7 @@ type
     sp_delAR_RtRLoad: TFDStoredProc;
     sp_isRtRLoadAR: TFDStoredProc;
     sp_RtR_Load_is_AR: TFDStoredProc;
+    cdsArrivingLoadsOriginalInvoiceNo: TIntegerField;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
