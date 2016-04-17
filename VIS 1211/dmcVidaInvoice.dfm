@@ -17354,8 +17354,8 @@ object dmVidaInvoice: TdmVidaInvoice
     Connection = dmsConnector.FDConnection1
     SQL.Strings = (
       
-        ' select IL.LoadNo, stl.POShippingPlanNo FROM dbo.Invoiced_Load I' +
-        'L'
+        ' select Distinct IL.LoadNo, stl.POShippingPlanNo FROM dbo.Invoic' +
+        'ed_Load IL'
       
         'Inner Join dbo.CSHTradingLink stl on stl.SalesShippingPlanNo = I' +
         'L.ShippingPlanNo'
