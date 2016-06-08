@@ -17423,4 +17423,29 @@ object dmVidaInvoice: TdmVidaInvoice
         ParamType = ptInput
       end>
   end
+  object sp_GetInvoiceSumVal: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_GetInvoiceSumVal'
+    Left = 264
+    Top = 1104
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end

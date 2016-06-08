@@ -610,6 +610,11 @@
         <DCCReference Include="..\..\CommonSources\FastReport\uReport.pas"/>
         <DCCReference Include="..\..\CommonSources\FastReport\uReportController.pas"/>
         <DCCReference Include="..\..\CommonSources\FastReport\uFRConstants.pas"/>
+        <DCCReference Include="..\..\CommonSources\DelphiLogg\uDBLogg.pas"/>
+        <DCCReference Include="..\..\CommonSources\DelphiLogg\uIDBLogg.pas"/>
+        <DCCReference Include="..\..\CommonSources\DelphiLogg\uIDBConnector.pas"/>
+        <DCCReference Include="..\..\CommonSources\DelphiLogg\uILogger.pas"/>
+        <DCCReference Include="..\..\CommonSources\DelphiLogg\uLogger.pas"/>
         <None Include="VIS.todo"/>
         <None Include="ModelSupport_VIS\default.txaPackage"/>
         <None Include="ModelSupport_VIS\default.txvpck"/>

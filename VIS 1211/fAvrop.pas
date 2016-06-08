@@ -859,58 +859,76 @@ Var
   OrderNos, LONos: TStringList;
 
   // For each ShippingPlanNo # ADD INVOICE DETAIL - Products from Loads
-  function GetTotalUnitsForLO(const FieldName: String): Double;
-  Var
+ function GetTotalUnitsForLO(const FieldName: String): Double;
+   Var
     NoOfUnits: Extended;
   Begin
     with dmVidaInvoice do
     begin
-      Try
-        Result := 0;
-        NoOfUnits := 0;
+      sp_GetInvoiceSumVal.ParamByName('@InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
+      sp_GetInvoiceSumVal.ParamByName('@LONo').AsInteger                := cdsInvoiceLOShippingPlanNo.AsInteger;
+      sp_GetInvoiceSumVal.Active  := True ;
+      Result  := sp_GetInvoiceSumVal.FieldByName(FieldName).AsFloat;
 
-        sq_GetInvoiceDetailData.Close;
-        sq_GetInvoiceDetailData.ParamByName('CustomerNo').AsInteger :=
-          cdsInvoiceHeadCustomerNo.AsInteger;
-        // daMoLM1.cdsAvropCLIENTNO.AsInteger ; // Avrop customerNo
-        sq_GetInvoiceDetailData.ParamByName('ShippingPlanNo').AsInteger :=
-          cdsInvoiceLOShippingPlanNo.AsInteger;
-        sq_GetInvoiceDetailData.ParamByName('InternalInvoiceNo').AsInteger :=
-          InternalInvoiceNo;
-        sq_GetInvoiceDetailData.Open;
-        if ThisUser.UserID = 8 then
-          mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-            '3After sq_GetInvoiceDetailData.Open');
-        While not sq_GetInvoiceDetailData.Eof do
-        Begin
+      sp_GetInvoiceSumVal.Active  := False ;
+    end;
+    end;
+
+(*
+
+    function GetTotalUnitsForLO(const FieldName: String): Double;
+    Var
+      NoOfUnits: Extended;
+    Begin
+      with dmVidaInvoice do
+      begin
+        Try
+          Result := 0;
+          NoOfUnits := 0;
+
+          sq_GetInvoiceDetailData.Close;
+          sq_GetInvoiceDetailData.ParamByName('CustomerNo').AsInteger :=
+            cdsInvoiceHeadCustomerNo.AsInteger;
+          // daMoLM1.cdsAvropCLIENTNO.AsInteger ; // Avrop customerNo
+          sq_GetInvoiceDetailData.ParamByName('ShippingPlanNo').AsInteger :=
+            cdsInvoiceLOShippingPlanNo.AsInteger;
+          sq_GetInvoiceDetailData.ParamByName('InternalInvoiceNo').AsInteger :=
+            InternalInvoiceNo;
+          sq_GetInvoiceDetailData.Open;
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-              '3cdsInvoiceDetailNominalWidthINCH.AsString=' +
-              cdsInvoiceDetailNominalWidthINCH.AsString);
+              '3After sq_GetInvoiceDetailData.Open');
+          While not sq_GetInvoiceDetailData.Eof do
+          Begin
+            if ThisUser.UserID = 8 then
+              mLog.Lines.Add(Datetimetostr(now) + ':  ' +
+                '3cdsInvoiceDetailNominalWidthINCH.AsString=' +
+                cdsInvoiceDetailNominalWidthINCH.AsString);
 
-          NoOfUnits := NoOfUnits + sq_GetInvoiceDetailData.FieldByName
-            (FieldName).AsFloat;
+            NoOfUnits := NoOfUnits + sq_GetInvoiceDetailData.FieldByName
+              (FieldName).AsFloat;
 
-          if ThisUser.UserID = 8 then
-            mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-              'After TempLineMet_ACT');
+            if ThisUser.UserID = 8 then
+              mLog.Lines.Add(Datetimetostr(now) + ':  ' +
+                'After TempLineMet_ACT');
 
-          sq_GetInvoiceDetailData.Next;
-          y := Succ(y);
-        End; // While not sq_GetInvoiceDetailData.Eof do
-        sq_GetInvoiceDetailData.Close;
+            sq_GetInvoiceDetailData.Next;
+            y := Succ(y);
+          End; // While not sq_GetInvoiceDetailData.Eof do
+          sq_GetInvoiceDetailData.Close;
 
-        Result := NoOfUnits;
-      except
-        On E: Exception do
-        Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    End; // with
-  End;
+          Result := NoOfUnits;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+      End; // with
+    End;
+*)
 
 // Fraktkostnad per LO
   Function GetTotalFraktKostnadPerLO: Double;

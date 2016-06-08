@@ -160,7 +160,12 @@ uses
   udmFR in '..\..\CommonSources\FastReport\udmFR.pas' {dmFR: TDataModule},
   uReport in '..\..\CommonSources\FastReport\uReport.pas',
   uReportController in '..\..\CommonSources\FastReport\uReportController.pas',
-  uFRConstants in '..\..\CommonSources\FastReport\uFRConstants.pas';
+  uFRConstants in '..\..\CommonSources\FastReport\uFRConstants.pas',
+  uDBLogg in '..\..\CommonSources\DelphiLogg\uDBLogg.pas',
+  uIDBLogg in '..\..\CommonSources\DelphiLogg\uIDBLogg.pas',
+  uIDBConnector in '..\..\CommonSources\DelphiLogg\uIDBConnector.pas',
+  uILogger in '..\..\CommonSources\DelphiLogg\uILogger.pas',
+  uLogger in '..\..\CommonSources\DelphiLogg\uLogger.pas';
 
 {$R *.res}
 

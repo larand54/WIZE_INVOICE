@@ -21,9 +21,9 @@ object frmMain: TfrmMain
   TextHeight = 16
   object Panel1: TPanel
     Left = 0
-    Top = 193
+    Top = 169
     Width = 1509
-    Height = 682
+    Height = 706
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -34,7 +34,7 @@ object frmMain: TfrmMain
       Left = 1
       Top = 1
       Width = 1507
-      Height = 680
+      Height = 704
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -48,7 +48,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 1509
-    Height = 193
+    Height = 169
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -147,7 +147,6 @@ object frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
-      Active = True
       Caption = 'Lastorder'
       Groups = <
         item
@@ -156,6 +155,7 @@ object frmMain: TfrmMain
       Index = 1
     end
     object dxRibbon1Tab3: TdxRibbonTab
+      Active = True
       Caption = 'Ekonomi'
       Groups = <
         item
@@ -3135,7 +3135,7 @@ object frmMain: TfrmMain
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

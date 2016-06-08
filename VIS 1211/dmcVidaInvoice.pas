@@ -1593,6 +1593,7 @@ type
     cds_LoadsInInvoiceLoadNo: TIntegerField;
     cds_LoadsInInvoicePOShippingPlanNo: TIntegerField;
     sp_CopySalesLoadToPO: TFDStoredProc;
+    sp_GetInvoiceSumVal: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
