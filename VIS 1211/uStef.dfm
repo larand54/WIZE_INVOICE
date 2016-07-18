@@ -17,8 +17,6 @@ object fStef: TfStef
   OnClose = FormClose
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Panel2: TPanel
@@ -139,20 +137,25 @@ object fStef: TfStef
     end
   end
   object CRViewer91: TCrystalActiveXReportViewer
-    Left = 620
-    Top = 581
-    Width = 237
-    Height = 236
+    Left = 0
+    Top = 68
+    Width = 1279
+    Height = 810
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
+    Align = alClient
     TabOrder = 5
+    ExplicitLeft = 620
+    ExplicitTop = 581
+    ExplicitWidth = 240
+    ExplicitHeight = 240
     ControlData = {
-      10070000D8130000D81300000B00FFFF0B00FFFF0B00FFFF0B00FFFF0B00FFFF
+      10070000C0690000F94200000B00FFFF0B00FFFF0B00FFFF0B00FFFF0B00FFFF
       0B00FFFF0B00FFFF0B00FFFF0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
       0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF08000200000000000B00FFFF
-      0B00FFFF0B0000000B0000000B00FFFF0B00FFFF13001D0400000B000000}
+      0B00FFFF0B0000000B0000000B00FFFF0B00FFFF13001D040000}
   end
   object ImageList1: TImageList
     Height = 24
