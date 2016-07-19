@@ -3291,6 +3291,12 @@ Begin
         End;
         cds_LoadPackages.Next;
       End;
+      if cds_LoadPackages.ChangeCount > 0 then
+      Begin
+        cds_LoadPackages.ApplyUpdates(0);
+        cds_LoadPackages.CommitUpdates;
+      End;
+
     Finally
       cds_LoadPackages.EnableControls;
     End;
@@ -3346,7 +3352,7 @@ Begin
     if (cds_LoadHeadSenderLoadStatus.AsInteger = 2) and (not ControlInvDate) and
       (DoingCreditingPkgs = False) then
     Begin
-      if cds_LoadHead.State in [dsBrowse] then
+{      if cds_LoadHead.State in [dsBrowse] then
         cds_LoadHead.Edit;
       cds_LoadHeadSenderLoadStatus.AsInteger := 0;
       cds_LoadHead.Post;
@@ -3354,10 +3360,10 @@ Begin
       Begin
         cds_LoadHead.ApplyUpdates(0);
         cds_LoadHead.CommitUpdates;
-      End;
+      End; }
 
       ShowMessage
-        ('The load cannot be set to complete because loading date is either before inventory count date or max date were the inventory group is present.');
+        ('The load loading date is either before inventory-count date or max date were the inventory group is present.');
     End;
 
   End; // With
