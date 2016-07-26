@@ -15,7 +15,7 @@ object daMoLM1: TdaMoLM1
   end
   object dsrcExtraLO: TDataSource
     DataSet = cdsExtraLO
-    Left = 184
+    Left = 192
     Top = 96
   end
   object dsrcLoads: TDataSource
@@ -659,7 +659,7 @@ object daMoLM1: TdaMoLM1
       'WHERE  '
       'IC.LO_No = :LONo'
       'and SP.ObjectType = 1')
-    Left = 184
+    Left = 192
     Top = 40
     ParamData = <
       item

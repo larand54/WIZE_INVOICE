@@ -429,6 +429,7 @@ type
     cdsSawmillLoadOrdersLoadedNM3: TFloatField;
     sp_SetLOStatus: TFDStoredProc;
     sp_grade: TFDStoredProc;
+    sp_validLONo: TFDStoredProc;
 
     procedure provSawMillLoadOrdersGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -778,23 +779,23 @@ Begin
   else
     SupplierNo := cdsLoadsForLOSupplierNo.AsInteger;
 
-  sq_ValidLONr.ParamByName('LONo').AsInteger := LONo;
+  sp_ValidLONo.ParamByName('@LONo').AsInteger := LONo;
   if dmsContact.ThisUserIsRoleType(ThisUser.CompanyNo, cSalesRegion) then
-    sq_ValidLONr.ParamByName('SupplierNo').AsInteger := SupplierNo
+    sp_ValidLONo.ParamByName('@SupplierNo').AsInteger := SupplierNo
   else
-    sq_ValidLONr.ParamByName('SupplierNo').AsInteger := SupplierNo;
-  sq_ValidLONr.ParamByName('ProductNo').AsInteger :=
+    sp_ValidLONo.ParamByName('@SupplierNo').AsInteger := SupplierNo;
+  sp_ValidLONo.ParamByName('@ProductNo').AsInteger :=
     cdsSawmillLoadOrdersProductNo.AsInteger;
-  sq_ValidLONr.ParamByName('LoadingLocationNo').AsInteger :=
+  sp_ValidLONo.ParamByName('@LoadingLocationNo').AsInteger :=
     cdsSawmillLoadOrdersLoadingLocationNo.AsInteger;
 
-  sq_ValidLONr.Open;
+  sp_ValidLONo.Open;
   Try
-    if (not sq_ValidLONr.Eof) and (sq_ValidLONrShippingPlanNo.AsInteger > 0)
+    if (not sp_ValidLONo.Eof) and (sp_ValidLONo.FieldByName('ShippingPlanNo').AsInteger > 0)
     then
     Begin
-      if (sq_ValidLONrSupplierNo.AsInteger = SupplierNo) and
-        (sq_ValidLONrLoadingLocationNo.AsInteger =
+      if (sp_ValidLONo.FieldByName('SupplierNo').AsInteger = SupplierNo) and
+        (sp_ValidLONo.FieldByName('LoadingLocationNo').AsInteger =
         cdsSawmillLoadOrdersLoadingLocationNo.AsInteger) then
         Result := TRUE
       else
@@ -803,7 +804,7 @@ Begin
     else
       Result := False;
   Finally
-    sq_ValidLONr.Close;
+    sp_ValidLONo.Close;
   End;
 End;
 

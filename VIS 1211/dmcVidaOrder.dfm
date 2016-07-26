@@ -3713,4 +3713,41 @@ object dmcOrder: TdmcOrder
         ParamType = ptInput
       end>
   end
+  object sp_validLONo: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_validLONo'
+    Left = 272
+    Top = 320
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@SupplierNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@ProductNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@LoadingLocationNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end
