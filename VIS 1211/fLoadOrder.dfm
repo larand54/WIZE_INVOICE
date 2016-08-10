@@ -20,8 +20,6 @@ object frmLoadOrder: TfrmLoadOrder
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object pnlBottomGrid: TPanel
@@ -532,7 +530,6 @@ object frmLoadOrder: TfrmLoadOrder
       Control = pcLoadOrder
       Color = clMaroon
       ParentColor = False
-      ExplicitWidth = 8
     end
     object pcLoadOrder: TcxPageControl
       Left = 0
@@ -560,8 +557,6 @@ object frmLoadOrder: TfrmLoadOrder
         Margins.Bottom = 4
         Caption = 'Last'
         ImageIndex = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object PanelLoadDetail: TPanel
           Left = 0
           Top = 0
@@ -2124,6 +2119,10 @@ object frmLoadOrder: TfrmLoadOrder
         item
           Visible = True
           ItemName = 'dxBarLargeButton3'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton11'
         end>
       MultiLine = True
       OldName = 'Custom 1'
@@ -2274,6 +2273,10 @@ object frmLoadOrder: TfrmLoadOrder
     end
     object dxBarButton31: TdxBarButton
       Action = acSetKLU
+      Category = 0
+    end
+    object dxBarLargeButton11: TdxBarLargeButton
+      Action = acPkgsUsedByVidaPackaging
       Category = 0
     end
     object bPrintHyvelOrder: TdxBarButton
@@ -5902,6 +5905,10 @@ object frmLoadOrder: TfrmLoadOrder
       Caption = 'Rensa filter'
       OnExecute = acClearFilterExecute
     end
+    object acPkgsUsedByVidaPackaging: TAction
+      Caption = 'Paket f'#246'rbrukade av VP'
+      OnExecute = acPkgsUsedByVidaPackagingExecute
+    end
   end
   object pmPrint: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -7045,6 +7052,7 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -7058,7 +7066,8 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42457.919797025460000000
+      ReportDocument.CreationDate = 42578.337159016210000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -7162,21 +7171,21 @@ object frmLoadOrder: TfrmLoadOrder
     Top = 420
   end
   object SaveDialog1: TSaveDialog
-    Left = 264
+    Left = 248
     Top = 296
   end
   object OpenDialog1: TOpenDialog
-    Left = 264
+    Left = 248
     Top = 344
   end
   object SaveDialog2: TSaveDialog
-    Left = 264
-    Top = 392
+    Left = 248
+    Top = 400
   end
   object PopupMenu1: TPopupMenu
     Images = imglistActions
-    Left = 72
-    Top = 448
+    Left = 56
+    Top = 488
     object Ny1: TMenuItem
       Action = acSetToNEW
     end
@@ -7230,8 +7239,8 @@ object frmLoadOrder: TfrmLoadOrder
   end
   object cxLookAndFeelController1: TcxLookAndFeelController
     Kind = lfFlat
-    Left = 72
-    Top = 502
+    Left = 56
+    Top = 542
   end
   object Timer1: TTimer
     Enabled = False
@@ -7275,7 +7284,7 @@ object frmLoadOrder: TfrmLoadOrder
   end
   object cxShellBrowserDialog1: TcxShellBrowserDialog
     Left = 360
-    Top = 391
+    Top = 399
   end
   object mtImportedLoads: TkbmMemTable
     DesignActivation = True
@@ -7308,7 +7317,7 @@ object frmLoadOrder: TfrmLoadOrder
   end
   object cxStyleRepository1: TcxStyleRepository
     Left = 488
-    Top = 391
+    Top = 399
     PixelsPerInch = 120
     object cxStyle1clYellow: TcxStyle
       AssignedValues = [svColor, svFont]

@@ -355,6 +355,46 @@ type
     sp_vis_CopyLOToInternalLO: TFDStoredProc;
     sp_Vis_CopyToInternalLO_Load: TFDStoredProc;
     sp_SetPkgStatusInLoad: TFDStoredProc;
+    mtVerkforLO: TkbmMemTable;
+    mtVerkforLOVerkNo: TIntegerField;
+    mtVerkforLOShipToInvPointNo: TIntegerField;
+    mtVerkforLOVERK: TStringField;
+    mtVerkforLOLEVTILL: TStringField;
+    mtVerkforLOLIPNo: TIntegerField;
+    mtVerkforLOLIPName: TStringField;
+    ds_mtVerkForLO: TDataSource;
+    cds_Pref: TFDQuery;
+    cds_PrefVATNo: TStringField;
+    cds_PrefClientNo: TIntegerField;
+    cds_PrefRoleType: TIntegerField;
+    cds_PrefDefaultShippingAddressNo: TIntegerField;
+    cds_PrefDefaultDeliveryTermsNo: TIntegerField;
+    cds_PrefDefaultPaymentTermsNo: TIntegerField;
+    cds_PrefDefaultCurrencyNo: TIntegerField;
+    cds_PrefDefaultPriceUnitNo: TIntegerField;
+    cds_PrefDefaultVolumeUnitNo: TIntegerField;
+    cds_PrefInvoiceText: TStringField;
+    cds_PrefDefaultAgentNo: TIntegerField;
+    cds_PrefLoadingLocationNo: TIntegerField;
+    cds_PrefLanguageCode: TIntegerField;
+    cds_PrefProdDisplayFormat: TIntegerField;
+    cds_PrefLengthFormat: TIntegerField;
+    cds_PrefDefaultBillingAddressNo: TIntegerField;
+    cds_PrefSequenceNo: TIntegerField;
+    cds_PrefDateCreated: TSQLTimeStampField;
+    cds_PrefCreatedUser: TSmallintField;
+    cds_PrefModifiedUser: TSmallintField;
+    cds_PrefPhone1: TStringField;
+    cds_PrefPhone2: TStringField;
+    cds_PrefPhone3: TStringField;
+    cds_PrefFax: TStringField;
+    cds_PrefEmail: TStringField;
+    cds_PrefDefaultDestinationNo: TIntegerField;
+    cds_PrefSendInvoiceToAgent: TSmallintField;
+    cds_PrefVAT_OnInvoice: TSmallintField;
+    cds_PrefCommisionInDiscount: TIntegerField;
+    cds_PrefFreightInDiscount: TIntegerField;
+    cds_PrefStatistikLandNr: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
     procedure dspLORowsGetTableName(Sender: TObject; DataSet: TDataSet;
@@ -375,10 +415,13 @@ type
     procedure cds_LoadHeadSupplierNoChange(Sender: TField);
     procedure cds_LoadPackagesPostError(DataSet: TDataSet; E: EDatabaseError;
       var Action: TDataAction);
+    procedure mtVerkforLOVerkNoChange(Sender: TField);
+    procedure mtVerkforLOShipToInvPointNoChange(Sender: TField);
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
     NewInternalInvoiceNo, NewLoadNo: Integer;
+    Function  GetLIPNoForCityNo(const CityNo, OwnerNo : Integer) : Integer ;
     procedure SetAllPkgsInLoadToNotActiveInInventory(const LoadNo: Integer);
     procedure AddPkgsToTempTable;
     function DuplicatePackageNo(const PackageNo: Integer;
@@ -403,24 +446,25 @@ type
     // GlobalLoadDetailNo : Integer ;
     FSalesRegionNo, LogicalTransferInventoryNo, FCustomerNo: Integer;
     pIsLoadInvoiced: Boolean;
-    function CreateVerkLoad(const NewLO, OldLO: Integer): Integer;
-    function CreateInternalLO(const OldLONo: Integer): Integer;
-    function VerkLoadExists(const LoadNo: Integer): Integer;
+    procedure GetPref_ForVerk ;
+    function  CreateVerkLoad(const NewLO, OldLO: Integer): Integer;
+    function  CreateInternalLO(const CustomerNo, ShipToCityNo, ShipToLIPNo, OldLoadNo, OldLONo: Integer): Integer;
+    function  VerkLoadExists(const LoadNo: Integer): Integer;
     procedure CreateCreditInvoice;
     procedure CreateCreditLoad;
     procedure Delete_SortingOrderMarkedPkgs;
     procedure csdUnit_OpenLagerLookup;
-    Function GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo: Integer): Integer;
-    Function IsLoadMadeInAvrop(const LoadNo: Integer): Boolean;
-    Function DoesLOHavePackages(const LONo: Integer): Boolean;
-    function GetPkgsNos(const packagecodeno: String;
+    Function  GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo: Integer): Integer;
+    Function  IsLoadMadeInAvrop(const LoadNo: Integer): Boolean;
+    Function  DoesLOHavePackages(const LONo: Integer): Boolean;
+    function  GetPkgsNos(const packagecodeno: String;
       const noofpkgs, LogicalInventoryPointNo: Integer): Integer;
     procedure DeleteONELoad(const LoadNo: Integer);
-    function IS_Packages_OK: Boolean;
+    function  IS_Packages_OK: Boolean;
     Procedure Get_LO_LinesMatched(const PackageNo: Integer;
       const Supp_Code: String3);
     procedure SaveLOData(LoadNo: Integer);
-    function PkgNoToSuppCode(const PkgNo, InventoryOwner, PIPNo: Integer;
+    function  PkgNoToSuppCode(const PkgNo, InventoryOwner, PIPNo: Integer;
       var SupplierNo: Integer; var ProductNo: Integer;
       Var ProductLengthNo, NoOfLengths: Integer): String3;
     property OnAmbiguousPkgNo: TAmbiguityEvent read FOnAmbiguousPkgNo
@@ -677,6 +721,55 @@ begin
     End
     else
       cds_LoadHead.CommitUpdates;
+end;
+
+Function TdmLoadEntryCSD.GetLIPNoForCityNo(const CityNo, OwnerNo : Integer) : Integer ;
+Begin
+ With dmsContact do
+ Begin
+  cds_GrpInv.Filter   := 'CityNo = ' + inttostr(CityNo) + ' AND OwnerNo = ' + inttostr(OwnerNo) ;
+  cds_GrpInv.Filtered := True ;
+  Try
+  if cds_GrpInv.RecordCount >= 1 then
+   Result:= cds_GrpInvLIPNo.AsInteger
+    else
+     Result:= -1 ;
+  Finally
+   cds_GrpInv.Filtered := False ;
+  End ;
+ End ;
+End ;
+
+procedure TdmLoadEntryCSD.mtVerkforLOShipToInvPointNoChange(Sender: TField);
+Var LIPNo : Integer ;
+begin
+ mtVerkforLOLIPNo.Clear ;// .AsInteger   := -1 ;
+ mtVerkforLOLIPName.AsString  := '' ;
+
+ With dmsContact do
+ Begin
+   cds_GrpInv.Filter    := 'CityNo = ' + mtVerkforLOShipToInvPointNo.AsString + ' AND OwnerNo = ' + inttostr(mtVerkforLOVerkNo.AsInteger) ;
+   cds_GrpInv.Filtered  :=  True ;
+ End;
+
+end;
+
+procedure TdmLoadEntryCSD.mtVerkforLOVerkNoChange(Sender: TField);
+begin
+ //if cds_OrderHdrOrderType.AsInteger <> c_Sales then
+//  mtVerkforLOShipToInvPointNo.AsInteger := -1;
+// GetPref_ForVerk ;
+
+ With dmsContact do
+ Begin
+  cds_PhysInvByCityNo.Filtered:= True ;
+  Try
+  if mtVerkforLOVerkNo.AsInteger > 0 then
+   cds_PhysInvByCityNo.Filter:= 'OwnerNo = '  + mtVerkforLOVerkNo.AsString ;
+  Except
+   cds_PhysInvByCityNo.Filtered:= False ;
+  End ;
+ End ;
 end;
 
 procedure TdmLoadEntryCSD.SaveLoadPkgs(const WhenPosted: TDateTime;
@@ -1394,12 +1487,15 @@ Begin
   End;
 End;
 
-function TdmLoadEntryCSD.CreateInternalLO(const OldLONo: Integer): Integer;
+function TdmLoadEntryCSD.CreateInternalLO(const CustomerNo, ShipToCityNo, ShipToLIPNo, OldLoadNo, OldLONo: Integer): Integer;
 Begin
   Try
-    sp_vis_CopyLOToInternalLO.ParamByName('@OldLO').AsInteger := OldLONo;
-    sp_vis_CopyLOToInternalLO.ParamByName('@UserID').AsInteger :=
-      ThisUser.UserID;
+    sp_vis_CopyLOToInternalLO.ParamByName('@CustomerNo').AsInteger   := CustomerNo ;
+    sp_vis_CopyLOToInternalLO.ParamByName('@ShipToCityNo').AsInteger := ShipToCityNo ;
+    sp_vis_CopyLOToInternalLO.ParamByName('@ShipToLIPNo').AsInteger  := ShipToLIPNo ;
+    sp_vis_CopyLOToInternalLO.ParamByName('@OldLoadNo').AsInteger    := OldLoadNo ;
+    sp_vis_CopyLOToInternalLO.ParamByName('@OldLO').AsInteger        := OldLONo;
+    sp_vis_CopyLOToInternalLO.ParamByName('@UserID').AsInteger       := ThisUser.UserID;
     sp_vis_CopyLOToInternalLO.ExecProc;
     Result := sp_vis_CopyLOToInternalLO.ParamByName('@NewLO').AsInteger
   except
@@ -1431,5 +1527,22 @@ Begin
     End;
   end;
 End;
+
+procedure TdmLoadEntryCSD.GetPref_ForVerk ;
+Begin
+ cds_Pref.Active:= False ;
+ Try
+   cds_Pref.ParamByName('ClientNo').AsInteger:= mtVerkforLOVerkNo.AsInteger ;
+   cds_Pref.ParamByName('RoleType').AsInteger:= cInternal_Mill ;
+   cds_Pref.Active:= True ;
+   if cds_Pref.RecordCount > 0 then
+   Begin
+//    dmsContact.cds_LL_Verk.Filter:= 'OwnerNo = '+mtVerkforLOVerkNo.AsString ;
+    //mtVerkforLOLoadingLocationNo.AsInteger  := cds_PrefLoadingLocationNo.AsInteger ;
+   End ;
+ Finally
+  cds_Pref.Active:= False ;
+ End ;
+End ;
 
 end.

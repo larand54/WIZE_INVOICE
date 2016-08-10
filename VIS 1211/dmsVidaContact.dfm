@@ -2509,4 +2509,157 @@ object dmsContact: TdmsContact
         ParamType = ptInput
       end>
   end
+  object sp_VerkBySR: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_VerkBySR'
+    Left = 872
+    Top = 624
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@SRNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object ds_LL_Verk: TDataSource
+    DataSet = cds_LL_Verk
+    Left = 1000
+    Top = 632
+  end
+  object cds_LL_Verk: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'SELECT distinct PH.PhyInvPointNameNo, '
+      'CASE WHEN FD.AddressName IS NULL THEN'
+      ' CY.CITYNAME'
+      ' ELSE'
+      
+        ' CY.CITYNAME + '#39' [*'#39' + ISNull(FD.AddressName,'#39#39') + '#39'*]'#39' END AS C' +
+        'ityName, PH.OwnerNo, FD.AddressName, LL.AddressNo'
+      'FROM'
+      'dbo.Client SR'
+      
+        'Inner Join dbo.PHYSICALINVENTORYPOINT PH ON PH.OwnerNo = SR.Clie' +
+        'ntNo'
+      'Inner Join dbo.CITY CY ON'#9'CY.CITYNO = PH.PhyInvPointNameNo'
+      'Left outer join dbo.Client_LoadingLocation LL '
+      'Inner Join dbo.CompanyAddress CA on CA.AddressNo = LL.AddressNo'
+      'Inner Join dbo.[Address]  FD on FD.AddressNo = CA.AddressNo'
+      
+        'ON LL.ClientNo = SR.ClientNo AND LL.PhyInvPointNameNo = PH.PhyIn' +
+        'vPointNameNo'
+      ''
+      'WHERE PH.SequenceNo = 1'
+      ''
+      'ORDER BY CASE WHEN FD.AddressName IS NULL THEN'
+      ' CY.CITYNAME'
+      ' ELSE'
+      ' CY.CITYNAME + '#39' [*'#39' + ISNull(FD.AddressName,'#39#39') + '#39'*]'#39' END ')
+    Left = 1000
+    Top = 568
+    object cds_LL_VerkPhyInvPointNameNo: TIntegerField
+      FieldName = 'PhyInvPointNameNo'
+      Origin = 'OwnerNo'
+    end
+    object cds_LL_VerkOwnerNo: TIntegerField
+      FieldName = 'OwnerNo'
+      Origin = 'OwnerNo'
+    end
+    object cds_LL_VerkCityName: TStringField
+      FieldName = 'CityName'
+      Origin = 'CityName'
+      ReadOnly = True
+      Size = 135
+    end
+    object cds_LL_VerkAddressNo: TIntegerField
+      FieldName = 'AddressNo'
+      Origin = 'AddressNo'
+    end
+  end
+  object cds_PhysInvByCityNo: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'SELECT distinct PH.PhyInvPointNameNo, CY.CITYNAME, PH.OwnerNo'
+      'FROM'
+      'Client SR'
+      'Inner Join PHYSICALINVENTORYPOINT PH ON PH.OwnerNo = SR.ClientNo'
+      'Inner Join CITY CY ON'#9'CY.CITYNO = PH.PhyInvPointNameNo'
+      'WHERE PH.SequenceNo = 1'
+      ''
+      'ORDER BY CY.CITYNAME')
+    Left = 992
+    Top = 432
+    object cds_PhysInvByCityNoPhyInvPointNameNo: TIntegerField
+      FieldName = 'PhyInvPointNameNo'
+      Origin = 'PhyInvPointNameNo'
+    end
+    object cds_PhysInvByCityNoCITYNAME: TStringField
+      FieldName = 'CITYNAME'
+      Origin = 'CITYNAME'
+      Size = 50
+    end
+    object cds_PhysInvByCityNoOwnerNo: TIntegerField
+      FieldName = 'OwnerNo'
+      Origin = 'OwnerNo'
+    end
+  end
+  object ds_PhysInvByCityNo: TDataSource
+    DataSet = cds_PhysInvByCityNo
+    Left = 992
+    Top = 480
+  end
+  object ds_GrpInv: TDataSource
+    DataSet = cds_GrpInv
+    Left = 768
+    Top = 656
+  end
+  object cds_GrpInv: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'Select LIP.LogicalInventoryPointNo AS LIPNo, LIP.LogicalInventor' +
+        'yName AS LIPName,'
+      'PIP.PhyInvPointNameNo AS CityNo, PIP.OwnerNo'
+      'FROM'
+      'dbo.PhysicalInventoryPoint PIP'
+      
+        'Inner Join dbo.LogicalInventoryPoint LIP on LIP.PhysicalInventor' +
+        'yPointNo = PIP.PhysicalInventoryPointNo'
+      'Where LIP.SequenceNo = 1'
+      'AND PIP.SequenceNo = 1')
+    Left = 768
+    Top = 608
+    object cds_GrpInvLIPNo: TIntegerField
+      FieldName = 'LIPNo'
+      Origin = 'LIPNo'
+      Required = True
+    end
+    object cds_GrpInvLIPName: TStringField
+      FieldName = 'LIPName'
+      Origin = 'LIPName'
+      Size = 50
+    end
+    object cds_GrpInvCityNo: TIntegerField
+      FieldName = 'CityNo'
+      Origin = 'CityNo'
+    end
+    object cds_GrpInvOwnerNo: TIntegerField
+      FieldName = 'OwnerNo'
+      Origin = 'OwnerNo'
+    end
+  end
 end

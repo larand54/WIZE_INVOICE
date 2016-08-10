@@ -377,6 +377,7 @@ LG *)
   private
     { Private declarations }
     DoingCreditingPkgs, LoadEnabled, AddingPkgsFromPkgEntry: Boolean;
+    procedure CreateInternalLODialog(Sender: TObject);
     procedure SetSpecialLoadEnabled ;
     Procedure EnabledTheLoad;
     procedure SetMarkedPkgsAsCreditPackages(Sender: TObject);
@@ -476,7 +477,7 @@ uses VidaConst, dlgPickPkg,
   uScanLoadPkgNo, uEntryField, dmsDataConn, dmcLoadEntryCSD,
   uSelectLoadPlanDest,
   dmsVidaProduct, UnitPackageEntry, dmcVidaInvoice, VidaUtils,
-  uPickVPPkgs, udmLanguage, uReport, uReportController;
+  uPickVPPkgs, udmLanguage, uReport, uReportController, uSelectVerkandShipTo;
 
 {$R *.dfm}
 { TfrmLoadEntry }
@@ -1959,13 +1960,16 @@ var
       if cds_LoadPackagesVaruslag.AsInteger = 0 then
       Begin
         Result := BAD_LENGTH;
+        if dmsSystem.IsLengthLengthGroup(cdsLORowsProductLengthNo.AsInteger) then
+{
 
-        if (cdsLORowsProductLengthNo.AsInteger = 453) or
-          (cdsLORowsProductLengthNo.AsInteger = 533) or
-          (cdsLORowsProductLengthNo.AsInteger = 1960) or
-          (cdsLORowsProductLengthNo.AsInteger = 1831) or
-          (cdsLORowsProductLengthNo.AsInteger = 3187) or
-          (cdsLORowsProductLengthNo.AsInteger = 3190) then
+          if (cdsLORowsProductLengthNo.AsInteger = 453) or
+            (cdsLORowsProductLengthNo.AsInteger = 533) or
+            (cdsLORowsProductLengthNo.AsInteger = 1960) or
+            (cdsLORowsProductLengthNo.AsInteger = 1831) or
+            (cdsLORowsProductLengthNo.AsInteger = 3187) or
+            (cdsLORowsProductLengthNo.AsInteger = 3190) then
+}
         Begin
           CustcdsNo := cdsLORowsCustShipPlanDetailObjectNo.AsInteger;
           LO_Number := cdsLORowsShippingPlanNo.AsInteger;
@@ -4644,16 +4648,7 @@ Begin
           if MessageDlg('Do you want to create a internal LO?', mtConfirmation,
             [mbYes, mbNo], 0) = mrYes then
           Begin
-
-            // Om det lasten har  dbo.Confirmed_Load WHERE NewLoadNo =
-            OldVerkLoadNo := VerkLoadExists(cds_LoadHeadLoadNo.AsInteger);
-            if OldVerkLoadNo > 0 then
-            Begin
-              NewLO := CreateInternalLO(cds_LSPShippingPlanNo.AsInteger);
-              if NewLO > 0 then
-                CreateVerkLoad(NewLO, cds_LSPShippingPlanNo.AsInteger);
-            End;
-
+            CreateInternalLODialog(Sender) ;
           End;
 
         Except
@@ -4690,6 +4685,133 @@ Begin
         Screen.Cursor := Save_Cursor; { Always restore to normal }
       End;
     End; // with
+end;
+
+procedure TfLoadEntryCSD.CreateInternalLODialog(Sender: TObject);
+Var
+  Save_Cursor: TCursor;
+  fSelectVerkandShipTo: TfSelectVerkandShipTo;
+  Info  : String ;
+  InfoOk  : Boolean ;
+  OldVerkLoadNo, NewLO : Integer ;
+begin
+  { if DataSaved = False then
+    Begin
+    ShowMessage('Spara först.') ;
+    Exit ;
+    End ; }
+
+
+
+  Info  := '' ;
+
+  with dmsContact, dmLoadEntryCSD do
+  Begin
+    dmsContact.VerkBySR (dmsContact.GetSRByCompanyNo(ThisUser.CompanyNo)) ;
+    cds_GrpInv.Active := True ;
+
+      // cds_LL_Verk.Filtered:= True ;
+      cds_PhysInvByCityNo.Filtered := True;
+      Try
+        fSelectVerkandShipTo := TfSelectVerkandShipTo.Create(Nil);
+        fSelectVerkandShipTo.OrderType  := 0 ;//cds_OrderHdrOrderType.AsInteger ;
+        fSelectVerkandShipTo.KopieraFranAvrop := True;
+{
+          if cds_OrderHdrOrderType.AsInteger = c_Sales then
+          Begin
+
+          fSelectVerkandShipTo.tvSelVerkVERK.Caption        := 'VERK' ;
+          fSelectVerkandShipTo.tvSelVerkLASTSTALLE.Caption  := 'LASTSTÄLLE';
+          fSelectVerkandShipTo.tvSelVerkLEVTILL.Caption     := 'LEV.TILL';
+
+          }
+{
+          End
+          else
+          Begin
+            fSelectVerkandShipTo.tvSelVerkVERK.Caption                    := siLangLinked1.GetTextOrDefault('IDS_3' (* 'KUND' *) );
+            fSelectVerkandShipTo.tvSelVerkLASTSTALLE.Position.LayerIndex  := 2;
+            fSelectVerkandShipTo.tvSelVerkLASTSTALLE.Position.BeginsLayer := True;
+
+            fSelectVerkandShipTo.tvSelVerkLEVTILL.Position.LayerIndex   := 1;
+            fSelectVerkandShipTo.tvSelVerkLEVTILL.Position.BeginsLayer  := True;
+
+            fSelectVerkandShipTo.tvSelVerkLASTSTALLE.Caption  := siLangLinked1.GetTextOrDefault('IDS_2' (* 'LEV.TILL' *) );
+            fSelectVerkandShipTo.tvSelVerkLEVTILL.Caption     := siLangLinked1.GetTextOrDefault('IDS_1' (* 'LASTSTÄLLE' *) );
+          End;
+}
+        // mtVerkforLO används för att spara det verk och LL man väljer vid kopiering till LO/ALO
+        mtVerkforLO.Active := True;
+
+
+        // ==========================
+
+        mtVerkforLO.Insert;
+//        if cds_OrderHdrOrderType.AsInteger = c_Sales then
+//        Begin
+          mtVerkforLOVerkNo.AsInteger := ThisUser.CompanyNo;
+          cds_PhysInvByCityNo.Filter := 'OwnerNo = ' +
+            mtVerkforLOVerkNo.AsString;
+
+
+        Try
+          if fSelectVerkandShipTo.ShowModal = mrOK then
+          Begin
+            Application.ProcessMessages;
+            Save_Cursor := Screen.Cursor;
+            Screen.Cursor := crSQLWait; { Show hourglass cursor }
+            // Try
+            Try
+              if mtVerkforLO.State in [dsEdit, dsInsert] then
+                mtVerkforLO.Post;
+
+
+//Create Internal LO and Load
+
+            // Om det lasten har  dbo.Confirmed_Load WHERE NewLoadNo =
+            //OldVerkLoadNo := VerkLoadExists(cds_LoadHeadLoadNo.AsInteger);
+            OldVerkLoadNo := cds_LoadHeadLoadNo.AsInteger ;
+            if OldVerkLoadNo > 0 then
+            Begin
+//                   CreateInternalLO(const ShipToCityNo, ShipToLIPNo, OldLoadNo, OldLONo: Integer): Integer;
+              NewLO := CreateInternalLO(mtVerkforLOVerkNo.AsInteger, mtVerkforLOShipToInvPointNo.AsInteger,
+               mtVerkforLOLIPNo.AsInteger, OldVerkLoadNo, cds_LSPShippingPlanNo.AsInteger);
+              if NewLO > 0 then
+              Begin
+                CreateVerkLoad(NewLO, cds_LSPShippingPlanNo.AsInteger);
+                ShowMessage('Internal LoadOrder created, LOno: ' + inttostr(NewLO)) ;
+              End;
+            End;
+
+//              CopyFromAvropTillLOExecute(Sender);
+
+//              SetAvropHeaderStatus(STATUS_LO_NEW) ;
+              { Except
+                on e: EDatabaseError do
+                ShowMessage('Misslyckades med operationen.') ;
+
+                End ; }
+            Finally
+              Screen.Cursor := Save_Cursor; { Always restore to normal }
+            End;
+//            acSaveExecute(Sender);
+          End; // if fSelectVerkandShipTo.ShowModal = mrOK then
+        Finally
+          mtVerkforLO.Active := False;
+          FreeAndNil(fSelectVerkandShipTo);
+        End;
+      Finally
+        cds_LL_Verk.Filtered          := False;
+        cds_PhysInvByCityNo.Filtered  := False;
+        cds_GrpInv.Active             := False ;
+      End;
+
+{
+      InfoOk  := dmcOrder.ADDLO_LOBuffertCheckIsOK(cds_AvropShippingPlanNo.AsInteger, Info) ;
+      if Not infook then
+       ShowMessage(Info) ;
+}
+  End; // with
 end;
 
 Procedure TfLoadEntryCSD.EnabledTheLoad;

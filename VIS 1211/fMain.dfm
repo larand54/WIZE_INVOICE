@@ -3459,10 +3459,6 @@ object frmMain: TfrmMain
           ItemName = 'dxBarButton17'
         end
         item
-          Visible = True
-          ItemName = 'dxBarButton11'
-        end
-        item
           BeginGroup = True
           Visible = True
           ItemName = 'bbGeneralShippingCost'

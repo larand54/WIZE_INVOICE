@@ -439,6 +439,7 @@ type
     cds_PackageSizeCreatedUser: TIntegerField;
     cds_PackageSizeAct: TIntegerField;
     cxSchedulerStorage1: TcxSchedulerStorage;
+    sp_IsLengthLengthGroup: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);
@@ -479,6 +480,7 @@ type
     LOG_ENABLE: Boolean;
     MarkedPkgs: Integer;
     PktNrPos, AntPosPktNr, LevKodPos, AntPosLevKod: Cardinal;
+    function  IsLengthLengthGroup(const ProductLengthNo : Integer) : Boolean ;
     function  GetLanguageNo : Integer ;
     procedure SaveLanguage(const LanguageNo : Integer) ;
     procedure MovePkgToInvFromLoad(const LoadNo, LIPNo: Integer);
@@ -2568,15 +2570,29 @@ Begin
     else
      Result := -1 ;
   Except
-     On E: Exception do
-     Begin
-      ShowMessage('sp_Lang: ' + E.Message) ;
-      Raise ;
-     End
+   On E: Exception do
+   Begin
+    ShowMessage('sp_Lang: ' + E.Message) ;
+    Raise ;
+   End
   End ;
  Finally
    sp_Lang.Active  := False ;
  End;
+End;
+
+function TdmsSystem.IsLengthLengthGroup(const ProductLengthNo : Integer) : Boolean ;
+Begin
+  sp_IsLengthLengthGroup.ParamByName('@ProductLengthNo').AsInteger  :=  ProductLengthNo ;
+  sp_IsLengthLengthGroup.Active := True ;
+  Try
+  if not sp_IsLengthLengthGroup.Eof then
+   Result := True
+    else
+     Result := False ;
+  Finally
+    sp_IsLengthLengthGroup.Active := False ;
+  End;
 End;
 
 end.

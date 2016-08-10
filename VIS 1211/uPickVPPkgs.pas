@@ -31,7 +31,11 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, dxSkinsdxBarPainter, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk, dxPSGlbl, dxPSUtl, dxPSEngn, dxPrnPg, dxBkgnd, dxWrap, dxPrnDev,
+  dxPSCompsProvider, dxPSFillPatterns, dxPSEdgePatterns, dxPSPDFExportCore,
+  dxPSPDFExport, cxDrawTextUtils, dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon,
+  dxPScxPageControlProducer, dxPScxGridLnk, dxPScxGridLayoutViewLnk,
+  dxSkinsdxRibbonPainter, dxPSCore, dxPScxCommon;
 
 type
   TfPickVPPkgs = class(TForm)
@@ -78,17 +82,23 @@ type
     cxButton2: TcxButton;
     rgUrvalPaket: TcxRadioGroup;
     siLangLinked_fPickVPPkgs: TsiLangLinked;
+    cxButton3: TcxButton;
+    acPrint: TAction;
+    dxComponentPrinter1: TdxComponentPrinter;
+    dxComponentPrinter1Link1: TdxGridReportLink;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ds_SelectedPkgNoDataChange(Sender: TObject; Field: TField);
-    procedure cbFilterOnLengthPropertiesChange(Sender: TObject);
     procedure acPkgInfoExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acMarkAllExecute(Sender: TObject);
     procedure acUnmarkAllExecute(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure acPrintExecute(Sender: TObject);
+    procedure rgUrvalPaketPropertiesChange(Sender: TObject);
   private
     { Private declarations }
+    procedure BuildSQL ;
     procedure Refresh;
   public
     { Public declarations }
@@ -128,6 +138,45 @@ begin
     LabelNoOfPkgsMarked.Caption := intToStr(MarkedPkgs);
 end;
 
+procedure TfPickVPPkgs.BuildSQL ;
+Begin
+  sq_PaketLista.Active := False;
+  with sq_PaketLista.SQL do
+  Begin
+    Clear ;
+    Add('Select distinct') ;
+    Add('pn.PackageNo AS PaketNr, pn.SupplierCode AS Prefix,') ;
+    Add('pt.productno,') ;
+    Add('ptl.PcsPerLength AS StyckPerLangd,') ;
+    Add('pt.Totalm3Actual AS AM3,') ;
+    Add('pt.Totalm3Nominal AS NM3,') ;
+    Add('pt.TotalNoOfPieces AS STYCK,') ;
+    Add('pn.DateCreated,') ;
+    Add('(Select Count(PackageTypeNo) From PackageTypeDetail WHERE PackageTypeNo = pt.PackageTypeNo) AS NOOFLENGTHS,') ;
+    Add('p.ProductDisplayName AS Produkt,') ;
+    Add('pg.RaMtrlPrice AS RavaruPrisPerNM3') ;
+    Add('From dbo.PackageGroup pg') ;
+    Add('Inner Join dbo.packagenumber pn on pn.packageno = pg.AvRegpackageno') ;
+    Add('and pn.SupplierCode = pg.AvRegPrefix') ;
+    Add('Inner join dbo.LogicalInventoryPoint LIP on LIP.LogicalInventoryPointNo = pn.LogicalInventoryPointNo') ;
+    Add('Inner join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo') ;
+    Add('Inner Join dbo.packagetype pt on pt.packagetypeno = pn.packagetypeno') ;
+    Add('Inner Join dbo.product p on p.productno = pt.productno') ;
+    Add('Inner Join dbo.PackageTypeLengths ptl on ptl.packagetypeno = pn.packagetypeno') ;
+    Add('where') ;
+    Add('PIP.OwnerNo = ' + inttostr(VerkNo)) ;
+    Add('and pn.Status = 1') ;
+    if rgUrvalPaket.ItemIndex = 0 then
+    Begin
+      Add('and Exists (Select OL.ProductNo FROM dbo.OrderLine OL') ;
+      Add('Inner Join dbo.CustomerShippingPlanDetails csd on csd.OrderNo = OL.OrderNo') ;
+      Add('and csd.OrderLineNo = OL.OrderLineNo') ;
+      Add('WHERE csd.ShippingPlanNo = ' + inttostr(LONo)) ;
+      Add('and ol.ProductNo = pt.ProductNo)') ;
+    End;
+  End;
+End;
+
 procedure TfPickVPPkgs.Refresh;
 Var
   Save_Cursor: TCursor;
@@ -140,13 +189,14 @@ begin
     mtSelectedPkgNo.DisableControls;
     Try
       mtSelectedPkgNo.Active := False;
-      // BuildSQL ;
+
 
       mtSelectedPkgNo.Active := True;
 
       sq_PaketLista.Active := False;
-      sq_PaketLista.ParamByName('VerkNo').AsInteger := VerkNo;
-      sq_PaketLista.ParamByName('LONo').AsInteger := LONo;
+      BuildSQL ;
+//      sq_PaketLista.ParamByName('VerkNo').AsInteger   := VerkNo;
+//      sq_PaketLista.ParamByName('LONo').AsInteger     := LONo;
       sq_PaketLista.Active := True;
       sq_PaketLista.First;
       While not sq_PaketLista.Eof do
@@ -178,9 +228,9 @@ begin
   End;
 end;
 
-procedure TfPickVPPkgs.cbFilterOnLengthPropertiesChange(Sender: TObject);
+procedure TfPickVPPkgs.rgUrvalPaketPropertiesChange(Sender: TObject);
 begin
-  Refresh;
+   Refresh;
 end;
 
 procedure TfPickVPPkgs.acPkgInfoExecute(Sender: TObject);
@@ -198,6 +248,16 @@ begin
       FreeAndNil(frmPkgInfo);
     End;
   End;
+end;
+
+procedure TfPickVPPkgs.acPrintExecute(Sender: TObject);
+begin
+  dxComponentPrinter1Link1.ShrinkToPageWidth := True;
+//  dxComponentPrinter1Link1.PrinterPage.PageHeader.LeftTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Clear;
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Add('Paket förbrukade av Vida Packaging');
+
+  dxComponentPrinter1.Preview(True, dxComponentPrinter1Link1);
 end;
 
 procedure TfPickVPPkgs.FormDestroy(Sender: TObject);

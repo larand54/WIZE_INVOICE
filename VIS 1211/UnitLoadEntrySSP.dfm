@@ -65,9 +65,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 262
-    ClientRectLeft = 4
-    ClientRectRight = 1368
+    ClientRectBottom = 266
+    ClientRectRight = 1372
     ClientRectTop = 27
     object tsLoadData: TcxTabSheet
       Margins.Left = 4
@@ -77,8 +76,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Caption = 'Leveranshuvud'
       object Splitter1: TSplitter
         Left = 0
-        Top = 175
-        Width = 1364
+        Top = 179
+        Width = 1372
         Height = 4
         Cursor = crVSplit
         Margins.Left = 4
@@ -89,12 +88,11 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Color = clBlack
         ParentColor = False
         ExplicitTop = 176
-        ExplicitWidth = 1372
       end
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1364
+        Width = 1372
         Height = 91
         Margins.Left = 4
         Margins.Top = 4
@@ -427,8 +425,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 179
-        Width = 1364
+        Top = 183
+        Width = 1372
         Height = 56
         Margins.Left = 4
         Margins.Top = 4
@@ -474,8 +472,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       object grdLO: TcxGrid
         Left = 0
         Top = 91
-        Width = 1364
-        Height = 84
+        Width = 1372
+        Height = 88
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -670,10 +668,6 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Margins.Right = 4
       Margins.Bottom = 4
       Caption = 'Notering'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
@@ -685,10 +679,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntrySSP.ds_LoadHead
         TabOrder = 0
-        ExplicitWidth = 1372
-        ExplicitHeight = 239
-        Height = 235
-        Width = 1364
+        Height = 239
+        Width = 1372
       end
     end
   end
@@ -719,7 +711,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 1255
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -767,7 +759,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 79
-        Height = 49
+        Height = 48
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -1960,7 +1952,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False
@@ -2393,7 +2385,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         ItemName = 'dxBarButton2'
       end>
     UseOwnFont = False
-    Left = 672
+    Left = 712
     Top = 336
   end
   object ImageList1: TImageList
@@ -3301,8 +3293,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       000000000000}
   end
   object images1616: TImageList
-    Left = 144
-    Top = 336
+    Left = 208
+    Top = 288
     Bitmap = {
       494C010103000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -3466,8 +3458,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         ItemName = 'bbPickPkgNos'
       end>
     UseOwnFont = True
-    Left = 288
-    Top = 336
+    Left = 208
+    Top = 384
   end
   object ActionList1: TActionList
     Images = ImageList1
@@ -3844,8 +3836,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
   end
   object PopupMenu1: TPopupMenu
     AutoPopup = False
-    Left = 593
-    Top = 335
+    Left = 713
+    Top = 383
     object Lggtillpaketperpaketkod1: TMenuItem
       Action = acAddPkgByPkgCode
     end
@@ -3964,8 +3956,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         ItemName = 'dxBarLargeButton7'
       end>
     UseOwnFont = True
-    Left = 480
-    Top = 338
+    Left = 384
+    Top = 394
   end
   object Timer1: TTimer
     Enabled = False

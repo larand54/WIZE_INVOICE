@@ -337,6 +337,24 @@ type
     cds_ReportStaticsIILogga: TBlobField;
     sp_GetVerkOfLL: TFDStoredProc;
     cds_ReportStaticsIIFootNote: TMemoField;
+    sp_VerkBySR: TFDStoredProc;
+    ds_LL_Verk: TDataSource;
+    cds_LL_Verk: TFDQuery;
+    cds_LL_VerkPhyInvPointNameNo: TIntegerField;
+    cds_LL_VerkOwnerNo: TIntegerField;
+    cds_LL_VerkCityName: TStringField;
+    cds_LL_VerkAddressNo: TIntegerField;
+    cds_PhysInvByCityNo: TFDQuery;
+    cds_PhysInvByCityNoPhyInvPointNameNo: TIntegerField;
+    cds_PhysInvByCityNoCITYNAME: TStringField;
+    cds_PhysInvByCityNoOwnerNo: TIntegerField;
+    ds_PhysInvByCityNo: TDataSource;
+    ds_GrpInv: TDataSource;
+    cds_GrpInv: TFDQuery;
+    cds_GrpInvLIPNo: TIntegerField;
+    cds_GrpInvLIPName: TStringField;
+    cds_GrpInvCityNo: TIntegerField;
+    cds_GrpInvOwnerNo: TIntegerField;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;
@@ -358,40 +376,41 @@ type
     // function  WhoBelongsToLoadingLocation(const LoadingLocationNo : Integer) : Integer ;
 
   public
-    function GetVerkOfLL(const LoadingLocationNo, SalesRegionNo : integer) : Integer ;
-    function GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
-    function ThisUserIsRoleType(const ClientNo, RoleType: Integer): Boolean;
+    procedure VerkBySR (const SRNo : integer) ;
+    function  GetVerkOfLL(const LoadingLocationNo, SalesRegionNo : integer) : Integer ;
+    function  GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
+    function  ThisUserIsRoleType(const ClientNo, RoleType: Integer): Boolean;
     function  GetSalesRegionNo (const CompanyNo : Integer) : Integer ;
     function  GetLocalSupplierNo(const LoadingLocationNo: Integer): Integer;
     procedure Refresh_sp_AttLev(const RoleType: Integer);
-    Function GetMaxLIPNoOfPIPNo(const PIPNo: Integer): Integer;
-    Function ClientInterVerk(const CompanyNo: Integer): Boolean;
-    function GetSRByCompanyNo(const ClientNo: Integer): Integer;
+    Function  GetMaxLIPNoOfPIPNo(const PIPNo: Integer): Integer;
+    Function  ClientInterVerk(const CompanyNo: Integer): Boolean;
+    function  GetSRByCompanyNo(const ClientNo: Integer): Integer;
 
-    function GetEmailAddress_Utlastad(const ClientNo: Integer): String;
-    function GetEmailAddressForSpeditorByLO(const LONo: Integer): String;
-    function GetEmailAddress(const ClientNo: Integer): String;
-    function GetPIPNo(const LIPNo: Integer): Integer;
-    function GetSuppliercodeByPktLevKod(const PktNrLevKod: String): String;
-    function GetPrefixByClientNo(const ClientNo: Integer): String;
-    function GetSupplierCode(const LoadingLocationNo: Integer): String3;
+    function  GetEmailAddress_Utlastad(const ClientNo: Integer): String;
+    function  GetEmailAddressForSpeditorByLO(const LONo: Integer): String;
+    function  GetEmailAddress(const ClientNo: Integer): String;
+    function  GetPIPNo(const LIPNo: Integer): Integer;
+    function  GetSuppliercodeByPktLevKod(const PktNrLevKod: String): String;
+    function  GetPrefixByClientNo(const ClientNo: Integer): String;
+    function  GetSupplierCode(const LoadingLocationNo: Integer): String3;
 
-    function GetFullUserName(const UserID: Integer): String;
-    function GetFirstAndLastName(const UserID: Integer): String;
+    function  GetFullUserName(const UserID: Integer): String;
+    function  GetFirstAndLastName(const UserID: Integer): String;
 
-    function GetClientCode(const ClientNo: Integer): String3;
+    function  GetClientCode(const ClientNo: Integer): String3;
 
-    function Client_Language(const ClientNo: Integer): Integer;
-    function IsClientLego(const ClientNo: Integer): Integer;
-    function IsClientVerk(const ClientNo: Integer): Integer;
+    function  Client_Language(const ClientNo: Integer): Integer;
+    function  IsClientLego(const ClientNo: Integer): Integer;
+    function  IsClientVerk(const ClientNo: Integer): Integer;
     procedure InsertUserIssueReport(const UserID, InternalInvoiceNo: Integer);
 
     Procedure GetClientDocPrefs(const ClientNo, DocType: Integer;
       Var ReportName: String; Var NoOfCopy, promptUser, collated: OleVariant;
       Var PrinterSetup: Integer);
 
-    function GetRoleType(const VerkNo: Integer): Integer;
-    function GetPIPByClientNoPIPNO(const OwnerNo: Integer): Integer;
+    function  GetRoleType(const VerkNo: Integer): Integer;
+    function  GetPIPByClientNoPIPNO(const OwnerNo: Integer): Integer;
   end;
 
 var
@@ -403,6 +422,13 @@ uses dmsDataConn, VidaConst, VidaUser, dmsVidaSystem;
 
 {$R *.dfm}
 { TdmsContact }
+
+procedure TdmsContact.VerkBySR (const SRNo : integer) ;
+Begin
+  sp_VerkBySR.Active  := False ;
+  sp_VerkBySR.ParamByName('@SRNo').AsInteger := SRNo ;
+  sp_VerkBySR.Active  := True ;
+End;
 
 function TdmsContact.GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
 Begin

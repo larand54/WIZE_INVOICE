@@ -418,6 +418,8 @@ type
     cxButton1: TcxButton;
     acClearFilter: TAction;
     siLangLinked_frmLoadOrder: TsiLangLinked;
+    dxBarLargeButton11: TdxBarLargeButton;
+    acPkgsUsedByVidaPackaging: TAction;
 
     procedure atAcceptLoadOrderExecute(Sender: TObject);
     procedure atRejectLoadOrderExecute(Sender: TObject);
@@ -536,6 +538,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure acSetKLUExecute(Sender: TObject);
     procedure acClearFilterExecute(Sender: TObject);
+    procedure acPkgsUsedByVidaPackagingExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -623,7 +626,8 @@ uses
   //uLOLengths,
   uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
-  uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController, uReport;
+  uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController, uReport,
+  uPickVPPkgs;
 
 procedure TfrmLoadOrder.CMMoveIt(var Msg: TMessage);
 var
@@ -4965,6 +4969,39 @@ begin
 
   if PackageEntryOption > 0 then
     AStyle := cxStyle1Red;
+end;
+
+procedure TfrmLoadOrder.acPkgsUsedByVidaPackagingExecute(Sender: TObject);
+var
+  fPickVPPkgs: TfPickVPPkgs;
+begin
+  With dmcOrder do
+  Begin
+    fPickVPPkgs := TfPickVPPkgs.Create(Nil);
+    Try
+     if (cdsSawmillLoadOrders.Active) and (cdsSawmillLoadOrders.RecordCount > 0)
+     and (cdsSawmillLoadOrdersSupplier.AsInteger > 0) then
+      Begin
+        fPickVPPkgs.VerkNo            := cdsSawmillLoadOrdersSupplier.AsInteger ;
+        fPickVPPkgs.LONo              := cdsSawmillLoadOrdersLONumber.AsInteger;
+        fPickVPPkgs.LabelLONr.Caption := cdsSawmillLoadOrdersLONumber.AsString;
+      End
+       else
+        fPickVPPkgs.VerkNo  := ThisUser.CompanyNo ;
+
+      if fPickVPPkgs.ShowModal = mrOK then
+      Begin
+        Application.ProcessMessages;
+//        InsertSelectedPkgNos(Sender);
+//        acSaveLoadExecute(Sender);
+      End;
+    Finally
+      FreeAndNil(fPickVPPkgs); // .Free ;
+    End;
+  End; // with
+
+//  if mePackageNo.Enabled then
+//    mePackageNo.SetFocus;
 end;
 
 procedure TfrmLoadOrder.acPrintFSMisMatchExecute(Sender: TObject);

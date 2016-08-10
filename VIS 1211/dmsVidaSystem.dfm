@@ -1791,8 +1791,8 @@ object dmsSystem: TdmsSystem
       ''
       'WHERE PLG.GroupNo =:ProductLengthGroupNo'
       '')
-    Left = 568
-    Top = 616
+    Left = 576
+    Top = 600
     ParamData = <
       item
         Name = 'PRODUCTLENGTHGROUPNO'
@@ -4144,7 +4144,7 @@ object dmsSystem: TdmsSystem
       'LW.LoadNo = L.LoadNo'
       'and LW.Reference = Ship_ADR.AddressName)')
     Left = 568
-    Top = 720
+    Top = 696
     ParamData = <
       item
         Name = 'LOADNO'
@@ -4306,5 +4306,24 @@ object dmsSystem: TdmsSystem
     Resources.Items = <>
     Left = 872
     Top = 336
+  end
+  object sp_IsLengthLengthGroup: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = '[dbo].[vis_IsLengthLengthGroup]'
+    Left = 600
+    Top = 776
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@ProductLengthNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

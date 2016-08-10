@@ -3076,7 +3076,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
   end
   object sp_vis_CopyLOToInternalLO: TFDStoredProc
     Connection = dmsConnector.FDConnection1
-    StoredProcName = 'dbo.vis_CopyLOToInternalLO'
+    StoredProcName = 'dbo.vis_CopyLOToInternalLO_II'
     Left = 544
     Top = 544
     ParamData = <
@@ -3088,18 +3088,42 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       end
       item
         Position = 2
-        Name = '@OldLO'
+        Name = '@CustomerNo'
         DataType = ftInteger
         ParamType = ptInput
       end
       item
         Position = 3
-        Name = '@UserID'
+        Name = '@ShipToCityNo'
         DataType = ftInteger
         ParamType = ptInput
       end
       item
         Position = 4
+        Name = '@ShipToLIPNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@OldLoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 6
+        Name = '@OldLO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 7
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 8
         Name = '@NewLO'
         DataType = ftInteger
         ParamType = ptInputOutput
@@ -3107,7 +3131,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
   end
   object sp_Vis_CopyToInternalLO_Load: TFDStoredProc
     Connection = dmsConnector.FDConnection1
-    StoredProcName = 'dbo.Vis_CopyToInternalLO_Load'
+    StoredProcName = 'dbo.Vis_CopyToInternalLO_Load_II'
     Left = 544
     Top = 600
     ParamData = <
@@ -3166,5 +3190,263 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object mtVerkforLO: TkbmMemTable
+    DesignActivation = True
+    AttachedAutoRefresh = True
+    AttachMaxCount = 1
+    FieldDefs = <
+      item
+        Name = 'VerkNo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'ShipToInvPointNo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'VERK'
+        DataType = ftString
+        Size = 80
+      end
+      item
+        Name = 'LASTSTALLE'
+        DataType = ftString
+        Size = 135
+      end
+      item
+        Name = 'LEVTILL'
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = 'LIPNo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'LIPName'
+        DataType = ftString
+        Size = 50
+      end>
+    IndexDefs = <>
+    SortOptions = []
+    PersistentBackup = False
+    ProgressFlags = [mtpcLoad, mtpcSave, mtpcCopy]
+    LoadedCompletely = False
+    SavedCompletely = False
+    FilterOptions = []
+    Version = '7.63.00 Standard Edition'
+    LanguageID = 0
+    SortID = 0
+    SubLanguageID = 1
+    LocaleID = 1024
+    Left = 752
+    Top = 496
+    object mtVerkforLOVerkNo: TIntegerField
+      FieldName = 'VerkNo'
+      OnChange = mtVerkforLOVerkNoChange
+    end
+    object mtVerkforLOShipToInvPointNo: TIntegerField
+      FieldName = 'ShipToInvPointNo'
+      OnChange = mtVerkforLOShipToInvPointNoChange
+    end
+    object mtVerkforLOVERK: TStringField
+      FieldKind = fkLookup
+      FieldName = 'VERK'
+      LookupDataSet = dmsContact.sp_VerkBySR
+      LookupKeyFields = 'ClientNo'
+      LookupResultField = 'ClientName'
+      KeyFields = 'VerkNo'
+      Size = 80
+      Lookup = True
+    end
+    object mtVerkforLOLEVTILL: TStringField
+      DisplayLabel = 'LEV.TILL'
+      FieldKind = fkLookup
+      FieldName = 'LEVTILL'
+      LookupDataSet = dmsContact.cds_PhysInvByCityNo
+      LookupKeyFields = 'PhyInvPointNameNo'
+      LookupResultField = 'CITYNAME'
+      KeyFields = 'ShipToInvPointNo'
+      Size = 50
+      Lookup = True
+    end
+    object mtVerkforLOLIPNo: TIntegerField
+      FieldName = 'LIPNo'
+    end
+    object mtVerkforLOLIPName: TStringField
+      DisplayLabel = 'LEV TILL Lagergrupp'
+      FieldKind = fkLookup
+      FieldName = 'LIPName'
+      LookupDataSet = dmsContact.cds_GrpInv
+      LookupKeyFields = 'LIPNo'
+      LookupResultField = 'LIPName'
+      KeyFields = 'LIPNo'
+      Size = 50
+      Lookup = True
+    end
+  end
+  object ds_mtVerkForLO: TDataSource
+    DataSet = mtVerkforLO
+    Left = 752
+    Top = 552
+  end
+  object cds_Pref: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'Select C.VATNo, C.StatistikLandNr, cp.* FROM dbo.Client C'
+      
+        'Left Outer Join dbo.ClientPreference cp on cp.ClientNo = C.Clien' +
+        'tNo'
+      'WHERE c.ClientNo = :ClientNo '
+      'AND cp.RoleType = :RoleType')
+    Left = 552
+    Top = 352
+    ParamData = <
+      item
+        Name = 'CLIENTNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'ROLETYPE'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cds_PrefVATNo: TStringField
+      FieldName = 'VATNo'
+      Origin = 'VATNo'
+      FixedChar = True
+    end
+    object cds_PrefClientNo: TIntegerField
+      FieldName = 'ClientNo'
+      Origin = 'ClientNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+    end
+    object cds_PrefRoleType: TIntegerField
+      FieldName = 'RoleType'
+      Origin = 'RoleType'
+    end
+    object cds_PrefDefaultShippingAddressNo: TIntegerField
+      FieldName = 'DefaultShippingAddressNo'
+      Origin = 'DefaultShippingAddressNo'
+    end
+    object cds_PrefDefaultDeliveryTermsNo: TIntegerField
+      FieldName = 'DefaultDeliveryTermsNo'
+      Origin = 'DefaultDeliveryTermsNo'
+    end
+    object cds_PrefDefaultPaymentTermsNo: TIntegerField
+      FieldName = 'DefaultPaymentTermsNo'
+      Origin = 'DefaultPaymentTermsNo'
+    end
+    object cds_PrefDefaultCurrencyNo: TIntegerField
+      FieldName = 'DefaultCurrencyNo'
+      Origin = 'DefaultCurrencyNo'
+    end
+    object cds_PrefDefaultPriceUnitNo: TIntegerField
+      FieldName = 'DefaultPriceUnitNo'
+      Origin = 'DefaultPriceUnitNo'
+    end
+    object cds_PrefDefaultVolumeUnitNo: TIntegerField
+      FieldName = 'DefaultVolumeUnitNo'
+      Origin = 'DefaultVolumeUnitNo'
+    end
+    object cds_PrefInvoiceText: TStringField
+      FieldName = 'InvoiceText'
+      Origin = 'InvoiceText'
+      Size = 250
+    end
+    object cds_PrefDefaultAgentNo: TIntegerField
+      FieldName = 'DefaultAgentNo'
+      Origin = 'DefaultAgentNo'
+    end
+    object cds_PrefLoadingLocationNo: TIntegerField
+      FieldName = 'LoadingLocationNo'
+      Origin = 'LoadingLocationNo'
+    end
+    object cds_PrefLanguageCode: TIntegerField
+      FieldName = 'LanguageCode'
+      Origin = 'LanguageCode'
+    end
+    object cds_PrefProdDisplayFormat: TIntegerField
+      FieldName = 'ProdDisplayFormat'
+      Origin = 'ProdDisplayFormat'
+    end
+    object cds_PrefLengthFormat: TIntegerField
+      FieldName = 'LengthFormat'
+      Origin = 'LengthFormat'
+    end
+    object cds_PrefDefaultBillingAddressNo: TIntegerField
+      FieldName = 'DefaultBillingAddressNo'
+      Origin = 'DefaultBillingAddressNo'
+    end
+    object cds_PrefSequenceNo: TIntegerField
+      FieldName = 'SequenceNo'
+      Origin = 'SequenceNo'
+    end
+    object cds_PrefDateCreated: TSQLTimeStampField
+      FieldName = 'DateCreated'
+      Origin = 'DateCreated'
+    end
+    object cds_PrefCreatedUser: TSmallintField
+      FieldName = 'CreatedUser'
+      Origin = 'CreatedUser'
+    end
+    object cds_PrefModifiedUser: TSmallintField
+      FieldName = 'ModifiedUser'
+      Origin = 'ModifiedUser'
+    end
+    object cds_PrefPhone1: TStringField
+      FieldName = 'Phone1'
+      Origin = 'Phone1'
+      FixedChar = True
+    end
+    object cds_PrefPhone2: TStringField
+      FieldName = 'Phone2'
+      Origin = 'Phone2'
+      FixedChar = True
+    end
+    object cds_PrefPhone3: TStringField
+      FieldName = 'Phone3'
+      Origin = 'Phone3'
+      FixedChar = True
+    end
+    object cds_PrefFax: TStringField
+      FieldName = 'Fax'
+      Origin = 'Fax'
+      FixedChar = True
+    end
+    object cds_PrefEmail: TStringField
+      FieldName = 'Email'
+      Origin = 'Email'
+      FixedChar = True
+      Size = 50
+    end
+    object cds_PrefDefaultDestinationNo: TIntegerField
+      FieldName = 'DefaultDestinationNo'
+      Origin = 'DefaultDestinationNo'
+    end
+    object cds_PrefSendInvoiceToAgent: TSmallintField
+      FieldName = 'SendInvoiceToAgent'
+      Origin = 'SendInvoiceToAgent'
+    end
+    object cds_PrefVAT_OnInvoice: TSmallintField
+      FieldName = 'VAT_OnInvoice'
+      Origin = 'VAT_OnInvoice'
+    end
+    object cds_PrefCommisionInDiscount: TIntegerField
+      FieldName = 'CommisionInDiscount'
+      Origin = 'CommisionInDiscount'
+    end
+    object cds_PrefFreightInDiscount: TIntegerField
+      FieldName = 'FreightInDiscount'
+      Origin = 'FreightInDiscount'
+    end
+    object cds_PrefStatistikLandNr: TIntegerField
+      FieldName = 'StatistikLandNr'
+      Origin = 'StatistikLandNr'
+    end
   end
 end

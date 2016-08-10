@@ -311,6 +311,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           OptionsSelection.CellSelect = False
           OptionsView.ColumnAutoWidth = True
           OptionsView.GroupByBox = False
+          OptionsView.Indicator = True
           object grdAddressDBTableView1Address: TcxGridDBColumn
             DataBinding.FieldName = 'Address'
             Options.Filtering = False
@@ -353,6 +354,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
           OptionsSelection.CellSelect = False
           OptionsView.ColumnAutoWidth = True
           OptionsView.GroupByBox = False
+          OptionsView.Indicator = True
           object grdLODBTableView1LoadNo: TcxGridDBColumn
             DataBinding.FieldName = 'LoadNo'
             Visible = False
@@ -650,6 +652,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         OptionsData.Inserting = False
         OptionsView.ColumnAutoWidth = True
         OptionsView.GroupByBox = False
+        OptionsView.Indicator = True
         OptionsView.BandHeaders = False
         Styles.OnGetContentStyle = grdLORowsDBBandedTableView1StylesGetContentStyle
         Bands = <
@@ -1180,6 +1183,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
         OptionsView.ColumnAutoWidth = True
         OptionsView.Footer = True
         OptionsView.GroupByBox = False
+        OptionsView.Indicator = True
         OptionsView.BandHeaders = False
         Styles.OnGetContentStyle = grdPkgsDBBandedTableView1StylesGetContentStyle
         Bands = <
@@ -3462,8 +3466,8 @@ object fLoadEntryCSD: TfLoadEntryCSD
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 512
-    Top = 320
+    Left = 536
+    Top = 408
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066004C006F006100640045006E007400720079004300

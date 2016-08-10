@@ -2,12 +2,12 @@ object fPickVPPkgs: TfPickVPPkgs
   Left = 322
   Top = 133
   Caption = 'Paket f'#246'rbrukade av Vida Packaging'
-  ClientHeight = 653
-  ClientWidth = 1035
+  ClientHeight = 804
+  ClientWidth = 1274
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -16,13 +16,17 @@ object fPickVPPkgs: TfPickVPPkgs
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object grdPickPkgNos: TcxGrid
     Left = 0
-    Top = 81
-    Width = 1035
-    Height = 513
+    Top = 100
+    Width = 1274
+    Height = 631
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     PopupMenu = pmPickPkgNosGrid
     TabOrder = 0
@@ -123,39 +127,59 @@ object fPickVPPkgs: TfPickVPPkgs
   end
   object Panel1: TPanel
     Left = 0
-    Top = 594
-    Width = 1035
-    Height = 59
+    Top = 731
+    Width = 1274
+    Height = 73
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 1
     object Label1: TLabel
-      Left = 8
-      Top = 16
-      Width = 84
-      Height = 13
+      Left = 10
+      Top = 20
+      Width = 107
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Paket markerade:'
     end
     object LabelNoOfPkgsMarked: TLabel
-      Left = 96
-      Top = 16
-      Width = 6
-      Height = 13
+      Left = 118
+      Top = 20
+      Width = 7
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '0'
     end
     object BitBtn1: TBitBtn
-      Left = 416
-      Top = 16
-      Width = 89
-      Height = 33
+      Left = 512
+      Top = 20
+      Width = 110
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkOK
       NumGlyphs = 2
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 512
-      Top = 16
-      Width = 89
-      Height = 33
+      Left = 630
+      Top = 20
+      Width = 110
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1
@@ -164,49 +188,73 @@ object fPickVPPkgs: TfPickVPPkgs
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1035
-    Height = 81
+    Width = 1274
+    Height = 100
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 2
     object Label5: TLabel
-      Left = 248
-      Top = 15
-      Width = 28
-      Height = 13
+      Left = 305
+      Top = 18
+      Width = 34
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LONr:'
     end
     object LabelLONr: TLabel
-      Left = 280
-      Top = 15
-      Width = 71
-      Height = 13
+      Left = 345
+      Top = 18
+      Width = 92
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelPIPName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object cxButton1: TcxButton
-      Left = 16
-      Top = 8
-      Width = 97
-      Height = 33
+      Left = 20
+      Top = 10
+      Width = 119
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acMarkAll
       TabOrder = 0
     end
     object cxButton2: TcxButton
-      Left = 136
-      Top = 8
-      Width = 97
-      Height = 33
+      Left = 167
+      Top = 10
+      Width = 120
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acUnmarkAll
       TabOrder = 1
     end
     object rgUrvalPaket: TcxRadioGroup
-      Left = 384
-      Top = 5
+      Left = 473
+      Top = 6
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = ' Urval '
       Properties.Items = <
         item
@@ -217,22 +265,31 @@ object fPickVPPkgs: TfPickVPPkgs
           Caption = 'Visa alla paket som inte registerats p'#229' en leverans'
           Value = 1
         end>
+      Properties.OnChange = rgUrvalPaketPropertiesChange
       ItemIndex = 0
       TabOrder = 2
+      Height = 80
+      Width = 336
+    end
+    object cxButton3: TcxButton
+      Left = 832
+      Top = 16
+      Width = 137
       Height = 65
-      Width = 273
+      Action = acPrint
+      TabOrder = 3
     end
   end
   object ds_SelectedPkgNo: TDataSource
     DataSet = dmsSystem.mtSelectedPkgNo
     OnDataChange = ds_SelectedPkgNoDataChange
-    Left = 440
-    Top = 192
+    Left = 400
+    Top = 272
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -14
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -263,12 +320,12 @@ object fPickVPPkgs: TfPickVPPkgs
         ItemName = 'dxBarButton1'
       end>
     UseOwnFont = False
-    Left = 272
-    Top = 184
+    Left = 312
+    Top = 136
   end
   object ActionList1: TActionList
-    Left = 352
-    Top = 184
+    Left = 440
+    Top = 136
     object acPkgInfo: TAction
       Caption = 'Paket information'
       OnExecute = acPkgInfoExecute
@@ -280,6 +337,10 @@ object fPickVPPkgs: TfPickVPPkgs
     object acUnmarkAll: TAction
       Caption = 'Avmarkera alla'
       OnExecute = acUnmarkAllExecute
+    end
+    object acPrint: TAction
+      Caption = 'Skriv ut'
+      OnExecute = acPrintExecute
     end
   end
   object sq_PaketLista: TFDQuery
@@ -327,8 +388,8 @@ object fPickVPPkgs: TfPickVPPkgs
       'WHERE csd.ShippingPlanNo = :LONo'
       'and ol.ProductNo = pt.ProductNo)'
       '')
-    Left = 400
-    Top = 192
+    Left = 256
+    Top = 272
     ParamData = <
       item
         Name = 'VERKNO'
@@ -489,8 +550,8 @@ object fPickVPPkgs: TfPickVPPkgs
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 512
-    Top = 328
+    Left = 440
+    Top = 192
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066005000690063006B005600500050006B0067007300
@@ -573,41 +634,67 @@ object fPickVPPkgs: TfPickVPPkgs
       5000690063006B0050006B0067004E006F007300470072006900640001005300
       650067006F006500200055004900010001005400610068006F006D0061000D00
       0A00730074004D0075006C00740069004C0069006E00650073005F0055006E00
-      690063006F00640065000D000A00640078004200610072004D0061006E006100
-      67006500720031002E00430061007400650067006F0072006900650073000100
-      440065006600610075006C007400010001000D000A0073007400530074007200
-      69006E00670073005F0055006E00690063006F00640065000D000A0073007400
-      4F00740068006500720053007400720069006E00670073005F0055006E006900
-      63006F00640065000D000A007300740043006F006C006C006500630074006900
-      6F006E0073005F0055006E00690063006F00640065000D000A00720067005500
-      7200760061006C00500061006B00650074002E00500072006F00700065007200
-      74006900650073002E004900740065006D0073005B0030005D002E0043006100
-      7000740069006F006E0001005600690073006100200065006E00640061007300
-      74002000700061006B0065007400200073006F006D0020006D00610074006300
-      68006100720020006100760072006F0070002F006B006F006E00740072006100
-      6B007400010001000D000A007200670055007200760061006C00500061006B00
-      650074002E00500072006F0070006500720074006900650073002E0049007400
-      65006D0073005B0031005D002E00430061007000740069006F006E0001005600
-      690073006100200061006C006C0061002000700061006B006500740020007300
-      6F006D00200069006E0074006500200072006500670069007300740065007200
-      61007400730020007000E500200065006E0020006C0065007600650072006100
-      6E007300010001000D000A007300740043006800610072005300650074007300
-      5F0055006E00690063006F00640065000D000A00540066005000690063006B00
-      5600500050006B00670073000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C006100620065006C004C004F004E00
-      72000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A00640078004200610072004D0061006E0061006700650072003100
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0100440045004600410055004C0054005F004300480041005200530045005400
-      0D000A0070006D005000690063006B0050006B0067004E006F00730047007200
-      690064000100440045004600410055004C0054005F0043004800410052005300
+      690063006F00640065000D000A007300740053007400720069006E0067007300
+      5F0055006E00690063006F00640065000D000A00730074004F00740068006500
+      720053007400720069006E00670073005F0055006E00690063006F0064006500
+      0D000A007300740043006F006C006C0065006300740069006F006E0073005F00
+      55006E00690063006F00640065000D000A007200670055007200760061006C00
+      500061006B00650074002E00500072006F007000650072007400690065007300
+      2E004900740065006D0073005B0030005D002E00430061007000740069006F00
+      6E0001005600690073006100200065006E006400610073007400200070006100
+      6B0065007400200073006F006D0020006D006100740063006800610072002000
+      6100760072006F0070002F006B006F006E007400720061006B00740001000100
+      0D000A007200670055007200760061006C00500061006B00650074002E005000
+      72006F0070006500720074006900650073002E004900740065006D0073005B00
+      31005D002E00430061007000740069006F006E00010056006900730061002000
+      61006C006C0061002000700061006B0065007400200073006F006D0020006900
+      6E00740065002000720065006700690073007400650072006100740073002000
+      7000E500200065006E0020006C00650076006500720061006E00730001000100
+      0D000A0073007400430068006100720053006500740073005F0055006E006900
+      63006F00640065000D000A00540066005000690063006B005600500050006B00
+      670073000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
       450054000100440045004600410055004C0054005F0043004800410052005300
-      450054000D000A00}
+      450054000D000A004C006100620065006C004C004F004E007200010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A006400
+      78004200610072004D0061006E00610067006500720031000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000100440045004600
+      410055004C0054005F0043004800410052005300450054000D000A0070006D00
+      5000690063006B0050006B0067004E006F007300470072006900640001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F00430048004100520053004500540001004400
+      45004600410055004C0054005F0043004800410052005300450054000D000A00}
+  end
+  object dxComponentPrinter1: TdxComponentPrinter
+    CurrentLink = dxComponentPrinter1Link1
+    Version = 0
+    Left = 608
+    Top = 368
+    object dxComponentPrinter1Link1: TdxGridReportLink
+      Component = grdPickPkgNos
+      PageNumberFormat = pnfNumeral
+      PrinterPage.DMPaper = 9
+      PrinterPage.Footer = 6350
+      PrinterPage.Header = 6350
+      PrinterPage.Margins.Bottom = 12700
+      PrinterPage.Margins.Left = 12700
+      PrinterPage.Margins.Right = 12700
+      PrinterPage.Margins.Top = 12700
+      PrinterPage.PageFooter.CenterTitle.Strings = (
+        '[Page # of Pages #]')
+      PrinterPage.PageHeader.LeftTitle.Strings = (
+        '[Machine Name][User Name]')
+      PrinterPage.PageHeader.RightTitle.Strings = (
+        '[Date & Time Printed]')
+      PrinterPage.PageSize.X = 210000
+      PrinterPage.PageSize.Y = 297000
+      PrinterPage._dxMeasurementUnits_ = 0
+      PrinterPage._dxLastMU_ = 2
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      BuiltInReportLink = True
+    end
   end
 end

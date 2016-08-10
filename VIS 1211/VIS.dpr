@@ -165,7 +165,8 @@ uses
   uIDBLogg in '..\..\CommonSources\DelphiLogg\uIDBLogg.pas',
   uIDBConnector in '..\..\CommonSources\DelphiLogg\uIDBConnector.pas',
   uILogger in '..\..\CommonSources\DelphiLogg\uILogger.pas',
-  uLogger in '..\..\CommonSources\DelphiLogg\uLogger.pas';
+  uLogger in '..\..\CommonSources\DelphiLogg\uLogger.pas',
+  uSelectVerkandShipTo in 'uSelectVerkandShipTo.pas' {fSelectVerkandShipTo};
 
 {$R *.res}
 
