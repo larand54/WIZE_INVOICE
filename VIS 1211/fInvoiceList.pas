@@ -381,6 +381,8 @@ type
     dxBarLargeButton15: TdxBarLargeButton;
     acBooking: TAction;
     cxButton2: TcxButton;
+    dxBarButton53: TdxBarButton;
+    acExportAnglo: TAction;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -500,6 +502,7 @@ type
     procedure acJusteraUSAfakturorExecute(Sender: TObject);
     procedure acBookingExecute(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
+    procedure acExportAngloExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -2467,6 +2470,14 @@ begin
       FreeAndNil(fAccInv);
     End;
   End;
+end;
+
+procedure TfrmInvoiceList.acExportAngloExecute(Sender: TObject);
+begin
+  dmVidaInvoice.PrepareAngloExcelFile
+    (dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString,
+    dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger,
+    dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
 end;
 
 procedure TfrmInvoiceList.acExportInvoiceSpecExecute(Sender: TObject);

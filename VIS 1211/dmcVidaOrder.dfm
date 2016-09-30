@@ -489,7 +489,8 @@ object dmcOrder: TdmcOrder
         'Inner Join dbo.PackageType pt on pt.PackageTypeNo = LD.PackageTy' +
         'peNo'
       'WHERE LD.ShippingPlanNo = SP.ShippingPlanNo'
-      'AND LD.Defsspno = SP.SupplierShipPlanObjectNo ) AS LoadedNM3'
+      'AND LD.Defsspno = SP.SupplierShipPlanObjectNo ) AS LoadedNM3,'
+      'ch.ShippingPlanStatus, ch.LOBNo'
       ''
       ''
       'FROM   dbo.SupplierShippingPlan SP'
@@ -678,7 +679,8 @@ object dmcOrder: TdmcOrder
         'Inner Join dbo.PackageType pt on pt.PackageTypeNo = LD.PackageTy' +
         'peNo'
       'WHERE LD.ShippingPlanNo = SP.ShippingPlanNo'
-      'AND LD.Defsspno = SP.SupplierShipPlanObjectNo ) AS LoadedNM3'
+      'AND LD.Defsspno = SP.SupplierShipPlanObjectNo ) AS LoadedNM3,'
+      'ch.ShippingPlanStatus, ch.LOBNo'
       ''
       ''
       'FROM dbo.SupplierShippingPlan       SP'
@@ -1229,6 +1231,18 @@ object dmcOrder: TdmcOrder
       ProviderFlags = []
       ReadOnly = True
       DisplayFormat = '#,###,###.0'
+    end
+    object cdsSawmillLoadOrdersShippingPlanStatus_1: TIntegerField
+      DisplayLabel = 'Avropstatus'
+      FieldName = 'ShippingPlanStatus_1'
+      Origin = 'ShippingPlanStatus'
+      ReadOnly = True
+    end
+    object cdsSawmillLoadOrdersLOBNo: TIntegerField
+      DisplayLabel = 'LOBuffert'
+      FieldName = 'LOBNo'
+      Origin = 'LOBNo'
+      ReadOnly = True
     end
   end
   object cdsBooking: TFDQuery
@@ -3746,6 +3760,81 @@ object dmcOrder: TdmcOrder
       item
         Position = 5
         Name = '@LoadingLocationNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_UserPerm: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_UsPerm'
+    Left = 892
+    Top = 611
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_SetAvropStatus: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = '[dbo].[vis_SetAvropStatus]'
+    Left = 520
+    Top = 568
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@AvropStatus'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_MoveToAccept: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_MoveToAccept_v2'
+    Left = 520
+    Top = 632
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@UserID'
         DataType = ftInteger
         ParamType = ptInput
       end>

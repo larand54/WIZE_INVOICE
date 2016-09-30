@@ -1594,6 +1594,41 @@ type
     cds_LoadsInInvoicePOShippingPlanNo: TIntegerField;
     sp_CopySalesLoadToPO: TFDStoredProc;
     sp_GetInvoiceSumVal: TFDStoredProc;
+    cds_AngloExport: TFDQuery;
+    QExportAngloExcel: TQExport4XLS;
+    cds_AngloExportBranchCode: TStringField;
+    cds_AngloExportProductCode: TStringField;
+    cds_AngloExportPackRef: TStringField;
+    cds_AngloExportMetImp: TStringField;
+    cds_AngloExportStockLocationCode: TStringField;
+    cds_AngloExportDateReceived: TStringField;
+    cds_AngloExportPackStatus: TStringField;
+    cds_AngloExportPackSubStatus: TStringField;
+    cds_AngloExportPackType: TStringField;
+    cds_AngloExportTotalVolume: TFMTBCDField;
+    cds_AngloExportVolumePerCode: TFMTBCDField;
+    cds_AngloExportNoOfPieces: TIntegerField;
+    cds_AngloExportPrimaryLength: TFloatField;
+    cds_AngloExportContractRef: TStringField;
+    cds_AngloExportContractPeriod: TStringField;
+    cds_AngloExportCountryOfOriginID: TStringField;
+    cds_AngloExportTimberMill: TStringField;
+    cds_AngloExportShip: TStringField;
+    cds_AngloExportVoyage: TStringField;
+    cds_AngloExportBOLRef: TStringField;
+    cds_AngloExportShippingRef: TStringField;
+    cds_AngloExportBarCodeNumber: TStringField;
+    cds_AngloExportBarCodeSuffix: TStringField;
+    cds_AngloExportEnvironmentalStatusCode: TStringField;
+    cds_AngloExportTotalCost: TStringField;
+    cds_AngloExportAdditionalCost: TStringField;
+    cds_AngloExportDtls: TFDQuery;
+    cds_AngloExportDtlsBranchCode: TStringField;
+    cds_AngloExportDtlsProductCode: TStringField;
+    cds_AngloExportDtlsPackRef: TStringField;
+    cds_AngloExportDtlsWidth: TStringField;
+    cds_AngloExportDtlsLength: TFloatField;
+    cds_AngloExportDtlsQuantity: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1725,6 +1760,8 @@ type
     vouno, logno: Integer;
     serie: String;
     ldglogwrite_logerror, vourowlog_logerror: Integer;
+    procedure PrepareAngloExcelFile(const InvoiceNo: String;
+    const CustomerNo, InternalInvoiceNo: Integer);
     procedure CopyOrderToNewPO(const InternalInvoiceNo : Integer) ;
     procedure JusteraUSAFakturor ;
     procedure STORE_ExportInvoiceData(mtSelectedInvoices: TkbmMemTable);
@@ -9791,6 +9828,51 @@ Begin
     // ShowMessage('Filerna exporterade till ' + FileName + ' resp. ' + FileNameExcel  + LF + ''  + LF + ''  + '  OBS!Kontrollera filerna innan du skickar dem!') ;
   Finally
     cds_LindaExport.Active := False;
+  End;
+End;
+
+procedure TdmVidaInvoice.PrepareAngloExcelFile(const InvoiceNo: String;
+  const CustomerNo, InternalInvoiceNo: Integer);
+const
+  LF = #10;
+Var // FileName,
+  FileNameExcel, Stext, Subject, MailToAddress: String;
+  Attach: array of String;
+Begin
+  dmsSystem.RunLengthSpec;
+
+  // FileName       := dmsSystem.Get_Dir('ExcelDir') + 'InvoiceNo ' + InvoiceNo + '.csv' ;
+  FileNameExcel := dmsSystem.Get_Dir('ExcelDir') + 'InvoiceNo ' +     InvoiceNo + '.xls';
+ //  FileNameExcel  := 'C:\vis\InvoiceNo ' + InvoiceNo + '.xls' ;
+
+  cds_AngloExport.ParamByName('InternalInvoiceNo').AsInteger :=  InternalInvoiceNo;
+  cds_AngloExport.Active := True;
+
+  cds_AngloExportDtls.ParamByName('InternalInvoiceNo').AsInteger :=  InternalInvoiceNo;
+  cds_AngloExportDtls.Active := True;
+  Try
+    // QExport3ASCII1.FileName:= FileName ;
+    // QExport3ASCII1.Execute ;
+    QExportAngloExcel.FileName := FileNameExcel;
+    QExportAngloExcel.Execute;
+
+    SetLength(Attach, 1);
+    // Attach[0]:= FileName ;
+    Attach[0] := FileNameExcel;
+
+    Subject := 'Faktura/paketspecifikation. Fakturanr: ' + InvoiceNo +
+      ' - Invoice/package specification. InvoiceNo: ' + InvoiceNo;
+    Stext := 'Exportfil paketspecifikation bifogad. ' + LF + '' +
+      'Export file package specification attached. ' + LF + '' + LF + '' + LF +
+      'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+      (ThisUser.UserID);
+
+    MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
+    dmsSystem.Email_Attachments(Attach, MailToAddress, Subject, Stext);
+    // ShowMessage('Filerna exporterade till ' + FileName + ' resp. ' + FileNameExcel  + LF + ''  + LF + ''  + '  OBS!Kontrollera filerna innan du skickar dem!') ;
+  Finally
+    cds_AngloExportDtls.Active  := False ;
+    cds_AngloExport.Active      := False;
   End;
 End;
 

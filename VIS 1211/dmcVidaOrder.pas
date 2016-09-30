@@ -430,6 +430,11 @@ type
     sp_SetLOStatus: TFDStoredProc;
     sp_grade: TFDStoredProc;
     sp_validLONo: TFDStoredProc;
+    cdsSawmillLoadOrdersShippingPlanStatus_1: TIntegerField;
+    cdsSawmillLoadOrdersLOBNo: TIntegerField;
+    sp_UserPerm: TFDStoredProc;
+    sp_SetAvropStatus: TFDStoredProc;
+    sp_MoveToAccept: TFDStoredProc;
 
     procedure provSawMillLoadOrdersGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -470,6 +475,8 @@ type
 
     SupplierNo: Integer;
     Shipping: Integer; // Deliver or Receiving selected by user in fLoadForm
+    procedure SetAvropStatus(const LONo, Status : Integer) ;
+    function  UserIsAllowedToSetStatusToActive(const LONo : Integer) : Boolean ;
     procedure SaveToBooking;
     Function FindLoadRecord(const LoadNo: Integer): Boolean;
     procedure RefreshOrter;
@@ -1150,6 +1157,53 @@ Begin
       cdsSawmillLoadOrdersPreliminaryRequestedPeriod.AsString;
     cdsBooking.Post;
   End;
+End;
+
+function TdmcOrder.UserIsAllowedToSetStatusToActive(const LONo : Integer) : Boolean ;
+Begin
+  sp_UserPerm.ParamByName('@UserID').AsInteger :=  LONo  ;
+  sp_UserPerm.Active := True ;
+  Try
+  if not sp_UserPerm.Eof then
+  Begin
+   if sp_UserPerm.FieldByName('AllowedSetCOActive').AsInteger = 1 then
+    Result := True
+     else
+      Result  := False ;
+  End
+    else
+     Result := False ;
+  Finally
+    sp_UserPerm.Active := False ;
+  End;
+End;
+
+procedure TdmcOrder.SetAvropStatus(const LONo, Status : Integer) ;
+Begin
+  Try
+  sp_MoveToAccept.ParamByName('@LONo').AsInteger    :=  LONo ;
+  sp_MoveToAccept.ParamByName('@UserID').AsInteger  :=  ThisUser.UserID ;
+  sp_MoveToAccept.ExecProc ;
+  Except
+   On E: Exception do
+   Begin
+    ShowMessage(E.Message+' :sp_MoveToAccept.ExecProc') ;
+    Raise ;
+   End ;
+  End;
+  Try
+  sp_SetAvropStatus.ParamByName('@LONo').AsInteger          :=  LONo ;
+  sp_SetAvropStatus.ParamByName('@AvropStatus').AsInteger   :=  Status ;
+  sp_SetAvropStatus.ParamByName('@UserID').AsInteger        :=  Status ;
+  sp_SetAvropStatus.ExecProc ;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      // ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
 End;
 
 end.

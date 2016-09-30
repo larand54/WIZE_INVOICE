@@ -17448,4 +17448,640 @@ object dmVidaInvoice: TdmVidaInvoice
         ParamType = ptInput
       end>
   end
+  object cds_AngloExport: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'Select DISTINCT'
+      #39#39' as BranchCode,'
+      'OL.OrderLineDescription as ProductCode'
+      ',CASE WHEN 0 = 0 then'
+      
+        'isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39') +  Ca' +
+        'st(LD.PackageNo AS Varchar(10))'
+      'else'
+      
+        #39'C'#39' + isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39')' +
+        ' + Cast(LD.PackageNo AS Varchar(10))'
+      'End AS PackRef,'
+      ''
+      #39#39' as MetImp,'
+      #39#39' as StockLocationCode,'
+      #39#39' as DateReceived,'
+      #39#39' as PackStatus,'
+      #39#39' as PackSubStatus,'
+      #39#39' as PackType,'
+      ''
+      '(Select SUM(ptd.m3Nominal) FROM dbo.PkgType_Invoice ptd '
+      'WHERE ptd.InternalInvoiceNo = IH.InternalInvoiceNo'
+      'and ptd.PackageTypeNo = LD.PackageTypeNo'
+      'and ptd.LoadNo = ILo.LoadNo'
+      'and ptd.LoadDetailNo = LD.LoadDetailNo) AS TotalVolume,'
+      ''
+      '(Select SUM(ptd.m3Nominal) FROM dbo.PkgType_Invoice ptd '
+      'WHERE ptd.InternalInvoiceNo = IH.InternalInvoiceNo'
+      'and ptd.PackageTypeNo = LD.PackageTypeNo'
+      'and ptd.LoadNo = ILo.LoadNo'
+      'and ptd.LoadDetailNo = LD.LoadDetailNo) AS VolumePerCode,'
+      ''
+      'PT.TotalNoOfPieces AS NoOfPieces,'
+      ''
+      
+        '(Select Max(ActualLengthMM)/100 FROM dbo.PackageTypeDetail    PT' +
+        'D'
+      
+        'INNER JOIN dbo.ProductLength   PL '#9'ON  PL.ProductLengthNo       ' +
+        '     = PTD.ProductLengthNo'
+      
+        'WHERE  PTD.PackageTypeNo            = LD.PackageTypeNo) AS Prima' +
+        'ryLength,'
+      ''
+      #39#39' as ContractRef,'
+      #39#39' as ContractPeriod,'
+      #39#39' as CountryOfOriginID,'
+      #39#39' as TimberMill,'
+      #39#39' as Ship,'
+      #39#39' as Voyage,'
+      ''
+      ''
+      'CSH.Reference as BOLRef,'
+      '-- OL.Reference AS Mark,'
+      ''
+      #39#39' as ShippingRef,'
+      ''
+      'CASE WHEN 0 = 0 then'
+      'isNull(Cast(PkgFix.ClientID AS Varchar(11)),'#39'**'#39') +'
+      
+        'isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39') +  Ca' +
+        'st(LD.PackageNo AS Varchar(10))'
+      'else'
+      'isNull(Cast(PkgFix.ClientID AS Varchar(11)),'#39'**'#39') +'
+      
+        'isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39') + Cas' +
+        't(LD.PackageNo AS Varchar(10))'
+      'End AS BarCodeNumber,'
+      ''
+      #39#39' as BarCodeSuffix,'
+      ''
+      ''
+      '--OL.NominalThicknessMM AS NomThick,'
+      '--OL.NominalWidthMM AS NomWidth,'
+      ''
+      
+        '-- pg.ActualThicknessMM AS ActThick, pg.ActualWidthMM AS ActWidt' +
+        'h,'
+      ''
+      ''
+      ''
+      '--(CASE'
+      '--WHEN LS.NoOfLengths > 1 THEN'
+      '--(Select MIN(ActualLengthMM) FROM dbo.PackageTypeDetail    PTD'
+      
+        '--INNER JOIN dbo.ProductLength   PL '#9'ON  PL.ProductLengthNo     ' +
+        '       = PTD.ProductLengthNo'
+      '--WHERE  PTD.PackageTypeNo            = LD.PackageTypeNo)'
+      '--ELSE'
+      '--0'
+      '--END)'
+      '--AS MINLENGTH,'
+      '--PT.TotalNoOfPieces AS Pcs,'
+      ''
+      '--PT.Totalm3Actual AS AM3,'
+      '--PT.Totalm3Nominal AS NM3int,'
+      ''
+      ''
+      ''
+      ''
+      'CASE WHEN IsNull(pin.StressGrade,0) = 1 then '#39'PEFC'#39
+      'WHEN IsNull(pin.StressGrade,0) = 2 then '#39'FSC'#39
+      'END AS EnvironmentalStatusCode,'
+      ''
+      #39#39' as TotalCost,'
+      #39#39' as AdditionalCost'
+      ''
+      ''
+      'FROM   dbo.InvoiceHeader IH '
+      
+        #9'INNER JOIN dbo.InvoiceLO     IL '#9'ON  IH.InternalInvoiceNo = IL.' +
+        'InternalInvoiceNo'
+      
+        #9'Left Outer Join dbo.InvoiceNumber INV'#9'ON'#9'INV.InternalInvoiceNo ' +
+        '= IH.InternalInvoiceNo'
+      
+        #9'INNER JOIN dbo.Invoiced_Load'#9'ILo'#9'ON Ilo.InternalInvoiceNo = IL.' +
+        'InternalInvoiceNo'
+      #9#9#9#9#9#9'AND Ilo.SHIPPINGPLANNO    = IL.SHIPPINGPLANNO'
+      
+        #9'INNER JOIN dbo.Loaddetail    LD '#9'ON  Ilo.LoadNo            = LD' +
+        '.LoadNo'
+      
+        #9'                                  '#9'AND Ilo.SHIPPINGPLANNO    = ' +
+        'LD.SHIPPINGPLANNO'
+      ''
+      
+        #9'INNER JOIN dbo.PackageType    PT '#9'ON  PT.PackageTypeNo         ' +
+        '   = LD.PackageTypeNo'
+      
+        #9'INNER JOIN dbo.LengthSpec    LS '#9'ON  LS.LengthSpecNo           ' +
+        ' = PT.LengthSpecNo'
+      ''
+      ''
+      '    '#9
+      ''
+      
+        #9'INNER JOIN dbo.CustomerShippingPlanDetails CSD ON CSD.CustShipP' +
+        'lanDetailObjectNo =  LD.DefaultCustShipObjectNo'
+      #9
+      
+        #9'INNER JOIN dbo.CustomerShippingPlanHeader CSH ON CSH.ShippingPl' +
+        'anNo = CSD.ShippingPlanNo'
+      ''
+      #9'INNER JOIN DBO.ORDERLINE'#9'OL'#9'ON CSD.ORDERNO = OL.ORDERNO'
+      #9#9#9#9#9#9'AND CSD.ORDERLINENO = OL.ORDERLINENO'
+      ''
+      #9'Inner Join dbo.Product p on p.ProductNo = OL.ProductNo'
+      
+        #9'Inner Join dbo.ProductGroup pg on pg.ProductGroupNo = p.Product' +
+        'GroupNo'
+      ''
+      
+        #9'Left Outer Join dbo.Prodinstru pin on pin.ProdInstruNo = OL.Pro' +
+        'dInstructNo            '
+      ''
+      #9'inner join dbo.packagenumber PN ON PN.PackageNo = LD.packageNo'
+      #9#9#9#9#9'AND RTrim(PN.SupplierCode) = RTrim(LD.SupplierCode)'
+      ''
+      
+        #9'Left join dbo.PkgPrefix PkgFix on PkgFix.PkgPrefix = PN.Supplie' +
+        'rCode'
+      #9'and PkgFix.ReportStd = 1'
+      ''
+      #9'inner JOIN dbo.Client C'#9#9#9'ON C.ClientNo = PN.SupplierNo'
+      ''
+      ' WHERE     (IH.InternalInvoiceNo   =  :InternalInvoiceNo)'
+      ''
+      '  AND     (IL.ShippingPlanNo      <> -1)'
+      ''
+      '')
+    Left = 992
+    Top = 1104
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cds_AngloExportBranchCode: TStringField
+      FieldName = 'BranchCode'
+      Origin = 'BranchCode'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportProductCode: TStringField
+      FieldName = 'ProductCode'
+      Origin = 'ProductCode'
+      Size = 150
+    end
+    object cds_AngloExportPackRef: TStringField
+      FieldName = 'PackRef'
+      Origin = 'PackRef'
+      ReadOnly = True
+      Size = 13
+    end
+    object cds_AngloExportMetImp: TStringField
+      FieldName = 'MetImp'
+      Origin = 'MetImp'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportStockLocationCode: TStringField
+      FieldName = 'StockLocationCode'
+      Origin = 'StockLocationCode'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportDateReceived: TStringField
+      FieldName = 'DateReceived'
+      Origin = 'DateReceived'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportPackStatus: TStringField
+      FieldName = 'PackStatus'
+      Origin = 'PackStatus'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportPackSubStatus: TStringField
+      FieldName = 'PackSubStatus'
+      Origin = 'PackSubStatus'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportPackType: TStringField
+      FieldName = 'PackType'
+      Origin = 'PackType'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportTotalVolume: TFMTBCDField
+      FieldName = 'TotalVolume'
+      Origin = 'TotalVolume'
+      ReadOnly = True
+      Precision = 38
+      Size = 3
+    end
+    object cds_AngloExportVolumePerCode: TFMTBCDField
+      FieldName = 'VolumePerCode'
+      Origin = 'VolumePerCode'
+      ReadOnly = True
+      Precision = 38
+      Size = 3
+    end
+    object cds_AngloExportNoOfPieces: TIntegerField
+      FieldName = 'NoOfPieces'
+      Origin = 'NoOfPieces'
+    end
+    object cds_AngloExportPrimaryLength: TFloatField
+      FieldName = 'PrimaryLength'
+      Origin = 'PrimaryLength'
+      ReadOnly = True
+    end
+    object cds_AngloExportContractRef: TStringField
+      FieldName = 'ContractRef'
+      Origin = 'ContractRef'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportContractPeriod: TStringField
+      FieldName = 'ContractPeriod'
+      Origin = 'ContractPeriod'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportCountryOfOriginID: TStringField
+      FieldName = 'CountryOfOriginID'
+      Origin = 'CountryOfOriginID'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportTimberMill: TStringField
+      FieldName = 'TimberMill'
+      Origin = 'TimberMill'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportShip: TStringField
+      FieldName = 'Ship'
+      Origin = 'Ship'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportVoyage: TStringField
+      FieldName = 'Voyage'
+      Origin = 'Voyage'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportBOLRef: TStringField
+      FieldName = 'BOLRef'
+      Origin = 'BOLRef'
+      Size = 30
+    end
+    object cds_AngloExportShippingRef: TStringField
+      FieldName = 'ShippingRef'
+      Origin = 'ShippingRef'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportBarCodeNumber: TStringField
+      FieldName = 'BarCodeNumber'
+      Origin = 'BarCodeNumber'
+      ReadOnly = True
+      Size = 24
+    end
+    object cds_AngloExportBarCodeSuffix: TStringField
+      FieldName = 'BarCodeSuffix'
+      Origin = 'BarCodeSuffix'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportEnvironmentalStatusCode: TStringField
+      FieldName = 'EnvironmentalStatusCode'
+      Origin = 'EnvironmentalStatusCode'
+      ReadOnly = True
+      Size = 4
+    end
+    object cds_AngloExportTotalCost: TStringField
+      FieldName = 'TotalCost'
+      Origin = 'TotalCost'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportAdditionalCost: TStringField
+      FieldName = 'AdditionalCost'
+      Origin = 'AdditionalCost'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+  end
+  object QExportAngloExcel: TQExport4XLS
+    DataSet = cds_AngloExport
+    About = '(About EMS AdvancedExport)'
+    _Version = '4.10.2.1'
+    FileName = 'C:\Projects\VIS\VIS Trusted III\VIS 1211\TestAngloExport.xls'
+    Formats.DecimalSeparator = ','
+    Formats.ThousandSeparator = #160
+    Formats.DateSeparator = '-'
+    Formats.TimeSeparator = ':'
+    Formats.BooleanTrue = 'true'
+    Formats.BooleanFalse = 'false'
+    Formats.IntegerFormat = '#,###,##0'
+    Formats.FloatFormat = '#,###,##0.00'
+    Formats.DateFormat = 'yyyy/MM/dd'
+    Formats.TimeFormat = 'hh:mm'
+    Formats.DateTimeFormat = 'yyyy/MM/dd hh:mm:ss'
+    Formats.CurrencyFormat = '#,###,##0.00 kr'
+    Options.PageFooter = 'Page &P of &N'
+    Options.SheetTitle = 'Sheet 1'
+    Options.CaptionsFormat.Font.Style = [xfsBold]
+    Options.HyperlinkFormat.Font.Color = clrBlue
+    Options.HyperlinkFormat.Font.Underline = fulSingle
+    Options.NoteFormat.Alignment.Horizontal = halLeft
+    Options.NoteFormat.Alignment.Vertical = valTop
+    Options.NoteFormat.Font.Size = 8
+    Options.NoteFormat.Font.Style = [xfsBold]
+    Options.NoteFormat.Font.Name = 'Tahoma'
+    FieldFormats = <>
+    StripStyles = <>
+    Hyperlinks = <>
+    Notes = <>
+    Charts = <>
+    Sheets = <
+      item
+        Title = 'Pack'
+        Options.PageFooter = 'Page &P of &N'
+        Options.SheetTitle = 'Sheet 1'
+        Options.CaptionsFormat.Font.Style = [xfsBold]
+        Options.HyperlinkFormat.Font.Color = clrBlue
+        Options.HyperlinkFormat.Font.Underline = fulSingle
+        Options.NoteFormat.Alignment.Horizontal = halLeft
+        Options.NoteFormat.Alignment.Vertical = valTop
+        Options.NoteFormat.Font.Size = 8
+        Options.NoteFormat.Font.Style = [xfsBold]
+        Options.NoteFormat.Font.Name = 'Tahoma'
+        FieldFormats = <>
+        StripStyles = <>
+        Hyperlinks = <>
+        Notes = <>
+        Charts = <>
+        Images = <>
+        Cells = <>
+        Aggregates = <>
+        MergedCells = <>
+        DataSet = cds_AngloExport
+        ExportedFields.Strings = (
+          'BranchCode'
+          'ProductCode'
+          'PackRef'
+          'MetImp'
+          'StockLocationCode'
+          'DateReceived'
+          'PackStatus'
+          'PackStatus'
+          'PackType'
+          'TotalVolume'
+          'VolumePerCode'
+          'NoOfPieces'
+          'PrimaryLength'
+          'ContractRef'
+          'ContractPeriod'
+          'CountryOfOriginID'
+          'TimberMill'
+          'Ship'
+          'Voyage'
+          'BOLRef'
+          'ShippingRef'
+          'BarCodeNumber'
+          'BarCodeSuffix'
+          'EnvironmentalStatusCode'
+          'TotalCost'
+          'AdditionalCost')
+        Formats.DecimalSeparator = ','
+        Formats.ThousandSeparator = #160
+        Formats.DateSeparator = '-'
+        Formats.TimeSeparator = ':'
+        Formats.BooleanTrue = 'true'
+        Formats.BooleanFalse = 'false'
+        Formats.IntegerFormat = '#,###,##0'
+        Formats.FloatFormat = '#,###,##0.00'
+        Formats.DateFormat = 'yyyy/MM/dd'
+        Formats.TimeFormat = 'hh:mm'
+        Formats.DateTimeFormat = 'yyyy/MM/dd hh:mm:ss'
+        Formats.CurrencyFormat = '#,###,##0.00 kr'
+      end
+      item
+        Title = 'Pack Details'
+        Options.PageFooter = 'Page &P of &N'
+        Options.SheetTitle = 'Sheet 1'
+        Options.CaptionsFormat.Font.Style = [xfsBold]
+        Options.HyperlinkFormat.Font.Color = clrBlue
+        Options.HyperlinkFormat.Font.Underline = fulSingle
+        Options.NoteFormat.Alignment.Horizontal = halLeft
+        Options.NoteFormat.Alignment.Vertical = valTop
+        Options.NoteFormat.Font.Size = 8
+        Options.NoteFormat.Font.Style = [xfsBold]
+        Options.NoteFormat.Font.Name = 'Tahoma'
+        FieldFormats = <>
+        StripStyles = <>
+        Hyperlinks = <>
+        Notes = <>
+        Charts = <>
+        Images = <>
+        Cells = <>
+        Aggregates = <>
+        MergedCells = <>
+        DataSet = cds_AngloExportDtls
+        ExportedFields.Strings = (
+          'BranchCode'
+          'ProductCode'
+          'PackRef'
+          'Width'
+          'Length'
+          'Quantity')
+        Formats.DecimalSeparator = ','
+        Formats.ThousandSeparator = #160
+        Formats.DateSeparator = '-'
+        Formats.TimeSeparator = ':'
+        Formats.BooleanTrue = 'true'
+        Formats.BooleanFalse = 'false'
+        Formats.IntegerFormat = '#,###,##0'
+        Formats.FloatFormat = '#,###,##0.00'
+        Formats.DateFormat = 'yyyy/MM/dd'
+        Formats.TimeFormat = 'hh:mm'
+        Formats.DateTimeFormat = 'yyyy/MM/dd hh:mm:ss'
+        Formats.CurrencyFormat = '#,###,##0.00 kr'
+      end>
+    Pictures = <>
+    Images = <>
+    Cells = <>
+    Aggregates = <>
+    MergedCells = <>
+    DefRowHeight = 12.750000000000000000
+    Left = 872
+    Top = 1128
+  end
+  object cds_AngloExportDtls: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'Select DISTINCT'
+      #39#39' as BranchCode,'
+      'OL.OrderLineDescription as ProductCode'
+      ''
+      ',CASE WHEN 0 = 0 then'
+      
+        'isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39') +  Ca' +
+        'st(LD.PackageNo AS Varchar(10))'
+      'else'
+      
+        #39'C'#39' + isNull(Cast(PkgFix.ProductionUnitCode AS Varchar(3)),'#39'99'#39')' +
+        ' + Cast(LD.PackageNo AS Varchar(10))'
+      'End AS PackRef,'
+      ''
+      #39#39' as Width,'
+      ''
+      'PL.ActualLengthMM as [Length],'
+      ''
+      'PTD.NoOfPieces as Quantity'
+      ''
+      ''
+      'FROM   dbo.InvoiceHeader IH '
+      
+        #9'INNER JOIN dbo.InvoiceLO     IL '#9'ON  IH.InternalInvoiceNo = IL.' +
+        'InternalInvoiceNo'
+      
+        #9'Left Outer Join dbo.InvoiceNumber INV'#9'ON'#9'INV.InternalInvoiceNo ' +
+        '= IH.InternalInvoiceNo'
+      
+        #9'INNER JOIN dbo.Invoiced_Load'#9'ILo'#9'ON Ilo.InternalInvoiceNo = IL.' +
+        'InternalInvoiceNo'
+      #9#9#9#9#9#9'AND Ilo.SHIPPINGPLANNO    = IL.SHIPPINGPLANNO'
+      
+        #9'INNER JOIN dbo.Loaddetail    LD '#9'ON  Ilo.LoadNo            = LD' +
+        '.LoadNo'
+      
+        #9'                                  '#9'AND Ilo.SHIPPINGPLANNO    = ' +
+        'LD.SHIPPINGPLANNO'
+      ''
+      
+        #9'INNER JOIN dbo.PackageType    PT '#9'ON  PT.PackageTypeNo         ' +
+        '   = LD.PackageTypeNo'
+      
+        #9'INNER JOIN dbo.LengthSpec    LS '#9'ON  LS.LengthSpecNo           ' +
+        ' = PT.LengthSpecNo'
+      #9
+      
+        #9'INNER JOIN dbo.PackageTypeDetail    PTD '#9'ON  PTD.PackageTypeNo ' +
+        '           = PT.PackageTypeNo'
+      #9
+      
+        #9'inner join dbo.ProductLength PL on PL.ProductLengthNo = PTD.Pro' +
+        'ductLengthNo'
+      '    '#9
+      ''
+      
+        #9'INNER JOIN dbo.CustomerShippingPlanDetails CSD ON CSD.CustShipP' +
+        'lanDetailObjectNo =  LD.DefaultCustShipObjectNo'
+      #9
+      
+        #9'INNER JOIN dbo.CustomerShippingPlanHeader CSH ON CSH.ShippingPl' +
+        'anNo = CSD.ShippingPlanNo'
+      ''
+      #9'INNER JOIN DBO.ORDERLINE'#9'OL'#9'ON CSD.ORDERNO = OL.ORDERNO'
+      #9#9#9#9#9#9'AND CSD.ORDERLINENO = OL.ORDERLINENO'
+      ''
+      #9'Inner Join dbo.Product p on p.ProductNo = OL.ProductNo'
+      
+        #9'Inner Join dbo.ProductGroup pg on pg.ProductGroupNo = p.Product' +
+        'GroupNo'
+      ''
+      
+        #9'Left Outer Join dbo.Prodinstru pin on pin.ProdInstruNo = OL.Pro' +
+        'dInstructNo            '
+      ''
+      #9'inner join dbo.packagenumber PN ON PN.PackageNo = LD.packageNo'
+      #9#9#9#9#9'AND RTrim(PN.SupplierCode) = RTrim(LD.SupplierCode)'
+      ''
+      
+        #9'Left join dbo.PkgPrefix PkgFix on PkgFix.PkgPrefix = PN.Supplie' +
+        'rCode'
+      #9'and PkgFix.ReportStd = 1'
+      ''
+      #9'inner JOIN dbo.Client C'#9#9#9'ON C.ClientNo = PN.SupplierNo'
+      #9
+      ' WHERE     (IH.InternalInvoiceNo   =  :InternalInvoiceNo)'
+      ''
+      '  AND     (IL.ShippingPlanNo      <> -1)'
+      ''
+      ''
+      #9)
+    Left = 1088
+    Top = 1128
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object cds_AngloExportDtlsBranchCode: TStringField
+      FieldName = 'BranchCode'
+      Origin = 'BranchCode'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportDtlsProductCode: TStringField
+      FieldName = 'ProductCode'
+      Origin = 'ProductCode'
+      Size = 150
+    end
+    object cds_AngloExportDtlsPackRef: TStringField
+      FieldName = 'PackRef'
+      Origin = 'PackRef'
+      ReadOnly = True
+      Size = 13
+    end
+    object cds_AngloExportDtlsWidth: TStringField
+      FieldName = 'Width'
+      Origin = 'Width'
+      ReadOnly = True
+      Required = True
+      Size = 1
+    end
+    object cds_AngloExportDtlsLength: TFloatField
+      FieldName = 'Length'
+      Origin = 'Length'
+      Required = True
+    end
+    object cds_AngloExportDtlsQuantity: TIntegerField
+      FieldName = 'Quantity'
+      Origin = 'Quantity'
+    end
+  end
 end

@@ -420,6 +420,8 @@ type
     siLangLinked_frmLoadOrder: TsiLangLinked;
     dxBarLargeButton11: TdxBarLargeButton;
     acPkgsUsedByVidaPackaging: TAction;
+    grdLODBTableView1ShippingPlanStatus_1: TcxGridDBColumn;
+    grdLODBTableView1LOBNo: TcxGridDBColumn;
 
     procedure atAcceptLoadOrderExecute(Sender: TObject);
     procedure atRejectLoadOrderExecute(Sender: TObject);
@@ -546,7 +548,8 @@ type
     SearchOneLO: Boolean;
     SupplierShipPlanObjectNo: Integer;
     OrderTypeChanged: Boolean;
-    Function GetSQLofComboFilter(const dType: Byte; const Kolumn: String;
+    procedure SetNEWAvropToActive(const LONo  : Integer;Sender: TObject) ;
+    Function  GetSQLofComboFilter(const dType: Byte; const Kolumn: String;
       combo: TcxCheckComboBox): String;
     procedure SetCheckComboBoxes_Where_PktNrLevKod_Required
       (const VerkNo: Integer);
@@ -736,8 +739,33 @@ end;
 
 procedure TfrmLoadOrder.atAcceptLoadOrderExecute(Sender: TObject);
 begin
-  SetLOStatus(Sender, STATUS_ACCEPTED);
+
+  if (dmcOrder.cdsSawmillLoadOrdersShippingPlanStatus_1.AsInteger = 5) then
+   SetNEWAvropToActive(dmcOrder.cdsSawmillLoadOrdersLONumber.AsInteger, Sender)
+    else
+     SetLOStatus(Sender, STATUS_ACCEPTED);
+
 end;
+
+procedure TfrmLoadOrder.SetNEWAvropToActive(const LONo  : Integer;Sender: TObject) ;
+Begin
+ with dmcOrder do
+ Begin
+  if UserIsAllowedToSetStatusToActive(ThisUser.UserID) then
+  Begin
+//        SetLOStatus(Sender, STATUS_ACCEPTED);
+
+   //     UpdateLORowsWhenMovingToAccept(LONo) ;
+
+
+    dmcOrder.SetAvropStatus(LONo, 5) ;
+    atRefreshExecute(Sender) ;
+
+  End
+   else
+    ShowMessage('Not allowed to set status to accept!') ;
+ End;//with
+End ;
 
 procedure TfrmLoadOrder.atRejectLoadOrderExecute(Sender: TObject);
 begin
@@ -1506,7 +1534,9 @@ begin
     cdsSawmillLoadOrders.SQL.Add
       ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
     cdsSawmillLoadOrders.SQL.Add
-      ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+      ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+    cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
     cdsSawmillLoadOrders.SQL.Add('FROM dbo.SupplierShippingPlan       SP');
     cdsSawmillLoadOrders.SQL.Add
@@ -1736,7 +1766,9 @@ begin
     cdsSawmillLoadOrders.SQL.Add
       ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
     cdsSawmillLoadOrders.SQL.Add
-      ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+      ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+    cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
     cdsSawmillLoadOrders.SQL.Add('FROM   dbo.SupplierShippingPlan     SP');
     cdsSawmillLoadOrders.SQL.Add
@@ -2124,7 +2156,9 @@ begin
       cdsSawmillLoadOrders.SQL.Add
         ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
       cdsSawmillLoadOrders.SQL.Add
-        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+      cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
       cdsSawmillLoadOrders.SQL.Add('FROM   dbo.Client_LoadingLocation     CLL');
 
@@ -2370,7 +2404,9 @@ begin
       cdsSawmillLoadOrders.SQL.Add
         ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
       cdsSawmillLoadOrders.SQL.Add
-        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+      cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
       cdsSawmillLoadOrders.SQL.Add('FROM   dbo.Client_LoadingLocation     CLL');
       if dmcOrder.cds_PropsOrderTypeNo.AsInteger = 0 then
@@ -2636,7 +2672,9 @@ begin
       cdsSawmillLoadOrders.SQL.Add
         ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
       cdsSawmillLoadOrders.SQL.Add
-        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+      cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
       cdsSawmillLoadOrders.SQL.Add('FROM   dbo.Client_LoadingLocation     CLL');
       if dmcOrder.cds_PropsOrderTypeNo.AsInteger = 0 then
@@ -2894,7 +2932,9 @@ begin
       cdsSawmillLoadOrders.SQL.Add
         ('AND (SP2.OLO  = SP.SupplierShipPlanObjectNo)');
       cdsSawmillLoadOrders.SQL.Add
-        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3');
+        ('OR (SP2.SupplierShipPlanObjectNo = SP.SupplierShipPlanObjectNo) ) AS LoadedNM3,');
+
+      cdsSawmillLoadOrders.SQL.Add('ch.ShippingPlanStatus, ch.LOBNo') ;
 
       cdsSawmillLoadOrders.SQL.Add('FROM   dbo.Client_LoadingLocation     CLL');
       if dmcOrder.cds_PropsOrderTypeNo.AsInteger = 0 then

@@ -1580,6 +1580,10 @@ object frmInvoiceList: TfrmInvoiceList
       Caption = 'Bokning'
       OnExecute = acBookingExecute
     end
+    object acExportAnglo: TAction
+      Caption = 'Export Anglo'
+      OnExecute = acExportAngloExecute
+    end
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
@@ -1897,6 +1901,10 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object dxBarLargeButton15: TdxBarLargeButton
       Action = acBooking
+      Category = 0
+    end
+    object dxBarButton53: TdxBarButton
+      Action = acExportAnglo
       Category = 0
     end
     object dxBarButton1: TdxBarButton
@@ -4094,6 +4102,10 @@ object frmInvoiceList: TfrmInvoiceList
       item
         Visible = True
         ItemName = 'dxBarButton51'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton53'
       end>
     UseOwnFont = False
     Left = 336

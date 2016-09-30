@@ -158,6 +158,7 @@ Begin
     Add('From dbo.PackageGroup pg') ;
     Add('Inner Join dbo.packagenumber pn on pn.packageno = pg.AvRegpackageno') ;
     Add('and pn.SupplierCode = pg.AvRegPrefix') ;
+    Add('and pn.PackageTypeNo = pg.AvRegPackageTypeNo') ;
     Add('Inner join dbo.LogicalInventoryPoint LIP on LIP.LogicalInventoryPointNo = pn.LogicalInventoryPointNo') ;
     Add('Inner join dbo.PhysicalInventoryPoint PIP on PIP.PhysicalInventoryPointNo = LIP.PhysicalInventoryPointNo') ;
     Add('Inner Join dbo.packagetype pt on pt.packagetypeno = pn.packagetypeno') ;

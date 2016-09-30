@@ -497,6 +497,46 @@ object frmLoadOrder: TfrmLoadOrder
           DataBinding.FieldName = 'LoadedNM3'
           PropertiesClassName = 'TcxLabelProperties'
         end
+        object grdLODBTableView1ShippingPlanStatus_1: TcxGridDBColumn
+          DataBinding.FieldName = 'ShippingPlanStatus_1'
+          PropertiesClassName = 'TcxImageComboBoxProperties'
+          Properties.Images = dmsConnector.ilStatus
+          Properties.Items = <
+            item
+              Description = 'Annulerad'
+              ImageIndex = 0
+              Value = 0
+            end
+            item
+              Description = 'Aktiv'
+              ImageIndex = 1
+              Value = 1
+            end
+            item
+              Description = 'Avslutad'
+              ImageIndex = 2
+              Value = 2
+            end
+            item
+              Description = 'Prelimin'#228'r'
+              ImageIndex = 3
+              Value = 3
+            end
+            item
+              Description = 'Skeppat'
+              ImageIndex = 6
+              Value = 4
+            end
+            item
+              Description = 'Ny'
+              ImageIndex = 7
+              Value = 5
+            end>
+        end
+        object grdLODBTableView1LOBNo: TcxGridDBColumn
+          DataBinding.FieldName = 'LOBNo'
+          PropertiesClassName = 'TcxLabelProperties'
+        end
       end
       object grdLOLevel1: TcxGridLevel
         GridView = grdLODBTableView1
@@ -7066,7 +7106,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42578.337159016210000000
+      ReportDocument.CreationDate = 42621.458322893520000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end

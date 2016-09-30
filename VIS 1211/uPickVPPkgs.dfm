@@ -675,7 +675,6 @@ object fPickVPPkgs: TfPickVPPkgs
     Top = 368
     object dxComponentPrinter1Link1: TdxGridReportLink
       Component = grdPickPkgNos
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.Header = 6350
@@ -693,7 +692,6 @@ object fPickVPPkgs: TfPickVPPkgs
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
