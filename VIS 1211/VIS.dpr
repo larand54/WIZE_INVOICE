@@ -166,7 +166,9 @@ uses
   uIDBConnector in '..\..\CommonSources\DelphiLogg\uIDBConnector.pas',
   uILogger in '..\..\CommonSources\DelphiLogg\uILogger.pas',
   uLogger in '..\..\CommonSources\DelphiLogg\uLogger.pas',
-  uSelectVerkandShipTo in 'uSelectVerkandShipTo.pas' {fSelectVerkandShipTo};
+  uSelectVerkandShipTo in 'uSelectVerkandShipTo.pas' {fSelectVerkandShipTo},
+  uFastReports in '..\..\CommonSources\FastReport\uFastReports.pas',
+  uTwoReportInOne in '..\..\CommonSources\FastReport\uTwoReportInOne.pas';
 
 {$R *.res}
 

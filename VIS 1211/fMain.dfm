@@ -3,12 +3,12 @@ object frmMain: TfrmMain
   Top = 108
   Hint = 'Currency'
   Caption = 'VIS'
-  ClientHeight = 903
-  ClientWidth = 1509
+  ClientHeight = 734
+  ClientWidth = 1226
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
@@ -17,28 +17,20 @@ object frmMain: TfrmMain
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 169
-    Width = 1509
-    Height = 706
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 159
+    Width = 1226
+    Height = 552
     Align = alClient
     TabOrder = 0
     object panelBase: TPanel
       Left = 1
       Top = 1
-      Width = 1507
-      Height = 704
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1224
+      Height = 550
       Align = alClient
       BevelOuter = bvLowered
       TabOrder = 0
@@ -47,12 +39,8 @@ object frmMain: TfrmMain
   object dxRibbon1: TdxRibbon
     Left = 0
     Top = 0
-    Width = 1509
-    Height = 169
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1226
+    Height = 159
     ApplicationButton.Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
       2000000000000009000000000000000000000000000000000000000000000000
@@ -136,7 +124,6 @@ object frmMain: TfrmMain
     TabOrder = 2
     TabStop = False
     object dxRibbon1Tab1: TdxRibbonTab
-      Active = True
       Caption = 'Avrop'
       Groups = <
         item
@@ -148,6 +135,7 @@ object frmMain: TfrmMain
       Index = 0
     end
     object dxRibbon1Tab2: TdxRibbonTab
+      Active = True
       Caption = 'Lastorder'
       Groups = <
         item
@@ -182,13 +170,9 @@ object frmMain: TfrmMain
   end
   object dxRibbonStatusBar1: TdxRibbonStatusBar
     Left = 0
-    Top = 875
-    Width = 1509
-    Height = 28
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 711
+    Width = 1226
+    Height = 23
     Panels = <
       item
         PanelStyleClassName = 'TdxStatusBarTextPanelStyle'
@@ -209,7 +193,7 @@ object frmMain: TfrmMain
     Ribbon = dxRibbon1
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clDefault
-    Font.Height = -15
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
   end
@@ -3135,7 +3119,7 @@ object frmMain: TfrmMain
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

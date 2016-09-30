@@ -38,7 +38,7 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk, uFastReports;
 
 type
   TfrmAvrop = class(TForm)
@@ -5051,7 +5051,13 @@ Var
   ClientNo: integer;
   Params: TCMParams;
   ExportFile: string;
+  Lang: integer;
+  FR: TFastReports;
+  LoadNo: integer;
 begin
+  ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
+  lang := dmsContact.Client_Language(ClientNo);
+  LoadNo := daMoLM1.cdsLoadsLoadNo.AsInteger;
   MailToAddress := dmsContact.GetEmailAddress
     (daMoLM1.cdsAvropCLIENTNO.AsInteger);
   if Length(MailToAddress) = 0 then Begin
@@ -5074,14 +5080,20 @@ begin
     if FileExists(ExportFile) then
       DeleteFile(ExportFile);
 
+    FR := TFastReports.Create;
+    try
+      FR.Tally(LoadNo, ReportType, Lang, MailToAddress, '', '',0);
+    finally
+      FR.Free;
+    end;
+    exit;
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
-      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
+      Params.Add('@Language', lang);
       Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
 
       RC := TCMReportController.Create;
-      ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
       RoleType := -1;
 
       Try
