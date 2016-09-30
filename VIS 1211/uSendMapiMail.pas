@@ -23,7 +23,9 @@ type
     { Public declarations }
     procedure SendMail(const Subject, MessageText, MailFromAddress,
       MailToAddress: String; const Attachments: array of String;
-      const SubMit: Boolean);
+      const SubMit: Boolean); overload;
+    procedure SendMail(const Subject, MessageText, MailFromAddress,
+      MailToAddress, HTML: String; const Attachments: array of String) overload;
   end;
 
   // var dm_SendMapiMail: Tdm_SendMapiMail;
@@ -183,6 +185,12 @@ procedure Tdm_SendMapiMail.MapiSessionBeforeLogoff(Sender: TObject);
 begin
   // FRecipTable := nil;
   // FAddressbook := nil;
+end;
+
+procedure Tdm_SendMapiMail.SendMail(const Subject, MessageText, MailFromAddress,
+  MailToAddress, HTML: String; const Attachments: array of String);
+begin
+    SendMail(Subject, MessageText, MailFromAddress, MailToAddress, Attachments, false);
 end;
 
 { procedure Tdm_SendMapiMail.AddressBookBeforeDisplayAddressBookDlg(var AddrBookDlgParams: TFDdrBookDlgParams);
