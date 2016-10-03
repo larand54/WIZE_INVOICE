@@ -3509,7 +3509,7 @@ begin
     try
       Params := TCMParams.Create();
       Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ORDERNUMBER', daMoLM1.cdsAvropORDERNUMBER.AsString);
+      Params.Add('@OrderNo', daMoLM1.cdsAvropORDERNO.AsInteger);
       RC.RunReport(RepNo,Params,frPreview,0);
     finally
       FreeAndNil(Params);
@@ -5596,10 +5596,17 @@ Var
   RC: TCMReportController;
   RepNo: integer;
   Params: TCMParams;
+  lang: integer;
 begin
+  lang := dmsContact.Client_Language(daMoLM1.cdsAvropShippingPlanNo.AsInteger);
   if uReportController.useFR then begin
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      RepNo := 11 // TRP_AVROPSORDER_NOTE_dk.fr3
+    begin
+      if lang = 1 {Swedish} then
+        RepNo := 11     // TRP_AVROPSORDER_NOTE_SV.fr3 (11)
+      else
+        RepNo := 505;     // TRP_AVROPSORDER_NOTE_ENG.fr3 (505)
+    end
     else begin
       ShowMessage('N/A');
       Exit;
@@ -5607,7 +5614,7 @@ begin
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
+      Params.Add('@Language', lang);
       Params.Add('@ShippingPlanNo',daMoLM1.cdsAvropShippingPlanNo.AsInteger);
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
