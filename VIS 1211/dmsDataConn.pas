@@ -229,12 +229,28 @@ begin
         Params.Add('User_Name=Lars');
         Params.Add('Password=woods2011');
         Params.Add('DriverID=MSSQL');
-        Params.Add('ApplicationName=VISTRUCK');
+        Params.Add('ApplicationName=VIS');
       end;
   end
   else begin
   end;
 {$ELSE}
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+  begin
+    dmsConnector.DriveLetter := 'C:\';
+      with dmsConnector.FDConnection1 do begin
+        Params.Clear;
+        Params.Add('Server=alvesql01');
+        Params.Add('Database=vis_vida');
+        Params.Add('OSAuthent=No');
+        Params.add('MetaDefCatalog=vis_vida');
+        Params.Add('MetaDefSchema=dbo');
+        Params.Add('User_Name=Lars');
+        Params.Add('Password=woods2011');
+        Params.Add('DriverID=MSSQL');
+        Params.Add('ApplicationName=VIS');
+      end;
+  end;
 {$ENDIF}
   // FDMoniFlatFileClientLink1.Tracing := False ;
   // ALVESQL04

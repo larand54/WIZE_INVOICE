@@ -45,6 +45,8 @@ begin
   path := ExtractFilePath(ParamStr(0));
 {$ELSE}
   path := dmsSystem.GetLangPath();
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+    path := ExtractFilePath(ParamStr(0));
 {$ENDIF}
   path := getFileWithPath(ParamStr(0),'sib', path);
   assert(path <> '','Path to languagefiles not defined in database');
