@@ -3497,6 +3497,8 @@ Var
   RepNo: Integer;
   Params: TCMParams;
 begin
+  dmFR.SaveCursor;
+  try
   if Length(daMoLM1.cdsAvropORDERNUMBER.AsString) <= 0 then
     Exit;
   if uReportController.useFR then begin
@@ -3534,6 +3536,9 @@ begin
       FreeAndNil(FormCRViewReport);
     End;
   end;
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmAvrop.acPrintLOExecute(Sender: TObject);
@@ -3543,43 +3548,63 @@ Var
   RC: TCMReportController;
   RepNo: Integer;
   Params: TCMParams;
+  lang: integer;
 begin
-  if daMoLM1.cdsAvropShippingPlanNo.AsInteger < 1 then
-    Exit;
-  if uReportController.useFR then begin
+  dmFR.SaveCursor;
+  try
+    lang := ThisUser.LanguageID;
+    if daMoLM1.cdsAvropShippingPlanNo.AsInteger < 1 then
+      Exit;
+    if uReportController.useFR then
+    begin
 
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      RepNo := 20 // LASTORDER_NOTE_ver3.fr3
-    else
-      RepNo := 21; // LASTORDER_INKOP_NOTE_ver2.fr3;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      Params.Add('@SupplierNo', -1);
-      RC.RunReport(RepNo,Params,frPreview,0);
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 2);
-      A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-      A[1] := -1;
       if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-        FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A)
+      begin
+        if lang = 1 then
+          RepNo := 20 // LASTORDER_NOTE_ver3_SV.fr3  ( 20)
+        else
+          RepNo := 506; // LASTORDER_NOTE_ver3_ENG.fr3 (506)
+      end
       else
-        FormCRViewReport.CreateCo('LASTORDER_INKOP_NOTE_ver2.RPT', A);
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
+      begin
+        if lang = 1 then
+          RepNo := 524 // LASTORDER_INKOP_NOTE_SV.fr3 (524)
+        else
+          RepNo := 525; // LASTORDER_INKOP_NOTE_ENG.fr3(525)
+      end;
+      RC := TCMReportController.Create;
+      try
+        Params := TCMParams.Create();
+        Params.Add('@Language', lang);
+        Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+        Params.Add('@SupplierNo', -1);
+        RC.RunReport(RepNo, Params, frPreview, 0);
+      finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      end;
+    end
+    else
+    begin
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 2);
+        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+        A[1] := -1;
+        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+          FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A)
+        else
+          FormCRViewReport.CreateCo('LASTORDER_INKOP_NOTE_ver2.RPT', A);
+        if FormCRViewReport.ReportFound then
+        Begin
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+    end;
+  finally
+    dmFR.RestoreCursor;
   end;
 end;
 
@@ -3590,40 +3615,63 @@ Var
   RC: TCMReportController;
   RepNo: Integer;
   Params: TCMParams;
+  lang,
+  TOno: integer;
 begin
-  if uReportController.useFR then begin
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      RepNo := 22 // TRP_ORDER_NOTE.fr3
-    else
-      RepNo := 23; // TRP_ORDER_INKOP_NOTE.fr3;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-
+  dmFR.SaveCursor;
+  try
+    lang := ThisUser.LanguageID;
+    TOno := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+    if uReportController.useFR then
+    begin
       if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-        FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+      begin
+        if lang = 1 then
+          RepNo := 22 // TRP_ORDER_NOTE_SV.fr3  ( 22)
+        else
+          RepNo := 510 // TRP_ORDER_NOTE_ENG.fr3 (510)
+      end
       else
-        FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT', A);
+      begin
+        if lang = 1 then
+          RepNo := 23 // TRP_ORDER_INKOP_NOTE.fr3;
+        else
+          RepNo := 23;
+      end;
+      RC := TCMReportController.Create;
+      try
+        Params := TCMParams.Create();
+        Params.Add('@Language', ThisUser.LanguageID);
+        Params.Add('@ShippingPlanNo', TOno);
+        RC.RunReport(RepNo, Params, frPreview, 0);
+      finally
+        FreeAndNil(Params);
+        FreeAndNil(RC);
+      end;
+    end
+    else
+    begin
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
+      Try
+        SetLength(A, 1);
+        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
 
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
+        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+          FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
+        else
+          FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT', A);
+
+        if FormCRViewReport.ReportFound then
+        Begin
+          FormCRViewReport.ShowModal;
+        End;
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+    end;
+
+  finally
+    dmFR.RestoreCursor;
   end;
 end;
 
@@ -4268,28 +4316,38 @@ Var
   RC: TCMReportController;
   RepNo: Integer;
   Params: TCMParams;
+  lang: integer;
+  LoadNo: integer;
+  FR: TFastReports;
 begin
-  if daMoLM1.cdsLoadsLoadNo.AsInteger < 1 then
+  dmFR.SaveCursor;
+  try
+  lang := dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger);
+  LoadNo := daMoLM1.cdsLoadsLoadNo.AsInteger;
+  if LoadNo < 1 then
     Exit;
   if uReportController.useFR then begin
     if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      RepNo := 43 // TALLY_VER3_NOTE.fr3
-    else
-      RepNo := 39; // TALLY_VER2_INKOP_NOTE.fr3;
+    begin
+      if lang = 1 then RepNo := 43 // TALLY_NOTE_VER3_SV.fr3    ( 43)
+      else RepNo := 56;              // TALLY_NOTE_VER3_ENG.fr3   ( 56)
+    end
+    else begin
+      if lang = 1 then RepNo := 39 // TALLY_VER2_INKOP_NOTE.fr3;
+      else RepNo := 39;
+    end;
     RC := TCMReportController.Create;
     try
       Params := TCMParams.Create();
-      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
-      Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      Params.Add('@Language', lang);
+      Params.Add('@LoadNo', LoadNo);
+      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=LoadNo;
       dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
       RC.RunReport(RepNo, Params, frPreview, 0);
     finally
       FreeAndNil(Params);
       FreeAndNil(RC);
-      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=LoadNo;
       dmsSystem.sq_DelPkgType.ExecSQL;
     end;
   end
@@ -4321,6 +4379,9 @@ begin
     Finally
       FreeAndNil(FormCRViewReport);
     End;
+  end;
+  finally
+    dmFR.RestoreCursor;
   end;
 End;
 
@@ -4615,28 +4676,25 @@ procedure TfrmAvrop.acPrintLastOrderDittVerkExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  RepNo: integer;
-  Params: TCMParams;
+  FR: TFastReports;
+  LOno: integer;
+  lang: integer;
+  SUpplierNo: integer;
+
 begin
-  if grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-    ('ShippingPlanNo').AsInteger < 1 then
+  LOno := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
+        ('LO').AsInteger;
+  if LOno < 1 then
     Exit;
   if uReportController.useFR then begin
-    RepNo := 20; // LASTORDER_NOTE_ver3.fr3
-    RC := TCMReportController.Create;
+    lang := ThisUser.LanguageID;
+    SupplierNo := grdLODBTableView1.DataController.DataSource.
+        DataSet.FieldByName('SUPPLIERNO').AsInteger;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger);
-      Params.Add('@SupplierNo', grdLODBTableView1.DataController.DataSource.
-        DataSet.FieldByName('SUPPLIERNO').AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      FR.LO(LOno, SupplierNo, cLastorder, lang, '', '', '', false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin
@@ -4662,28 +4720,23 @@ procedure TfrmAvrop.acPrintLOAllaVerkExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  RepNo: integer;
-  Params: TCMParams;
+  FR: TFastReports;
+  LOno: integer;
+  lang: integer;
+  SUpplierNo: integer;
 begin
-  if grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-    ('SUPPLIERNO').AsInteger < 1 then
+  LOno := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
+        ('LO').AsInteger;
+  if LOno < 1 then
     Exit;
-
   if uReportController.useFR then begin
-    RepNo := 20; // LASTORDER_NOTE_ver3.fr3
-    RC := TCMReportController.Create;
+    lang := ThisUser.LanguageID;
+    SupplierNo := -1;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger);
-      Params.Add('@SupplierNo', -1);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      FR.LO(LOno, SupplierNo, cLastorder, lang, '', '', '', false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin
@@ -4730,32 +4783,24 @@ procedure TfrmAvrop.acPrintAddLODittVerkExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  RepNo: integer;
-  Params: TCMParams;
+  FR: TFastReports;
+  LOno: integer;
+  lang: integer;
+  SUpplierNo: integer;
 begin
-  if grdAddLODBTableView1.DataController.DataSource.DataSet.FieldByName
-    ('ShippingPlanNo').AsInteger < 1 then
+  LOno := grdAddLODBTableView1.DataController.DataSource.DataSet.FieldByName
+        ('LO').AsInteger;
+  if LOno < 1 then
     Exit;
-
+    SupplierNo := grdAddLODBTableView1.DataController.DataSource.DataSet.FieldByName
+        ('SupplierNo').AsInteger;
   if uReportController.useFR then begin
-    if ThisUser.LanguageID = cSwedish then
-      RepNo := 578  // LASTORDER_VERK_NOTE_ver3_SV.fr3 // RepNo=578
-    else
-      RepNo := 529; // LASTORDER_VERK_NOTE_ver3_SV.fr3 // RepNo=529
-    RC := TCMReportController.Create;
+    lang := ThisUser.LanguageID;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger);
-      Params.Add('@SupplierNo', grdLODBTableView1.DataController.DataSource.
-        DataSet.FieldByName('SUPPLIERNO').AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      FR.LO(LOno, SupplierNo, cLastorder_verk, lang, '', '', '', false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin
@@ -4781,29 +4826,23 @@ procedure TfrmAvrop.acPrintAddLOAllaVerkExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  RepNo: integer;
-  Params: TCMParams;
+  FR: TFastReports;
+  LOno: integer;
+  lang: integer;
+  SUpplierNo: integer;
 begin
-
-  if grdAddLODBTableView1.DataController.DataSource.DataSet.FieldByName
-    ('SUPPLIERNO').AsInteger < 1 then
+  LOno := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
+        ('LO').AsInteger;
+  if LOno < 1 then
     Exit;
-
   if uReportController.useFR then begin
-    RepNo := 289; // LASTORDER_VERK_NOTE_ver3.fr3 (578)((289-DocType=3))
-    RC := TCMReportController.Create;
+    lang := ThisUser.LanguageID;
+    SupplierNo := -1;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger);
-      Params.Add('@SupplierNo',-1);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      FR.LO(LOno, SupplierNo, cLastorder, lang, '', '', '', false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin
@@ -4960,79 +4999,88 @@ Var
   Params: TCMParams;
   ExportFile: string;
 begin
-  MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
-    (daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-  if Length(MailToAddress) = 0 then
-  Begin
-    MailToAddress := 'ange@adress.nu';
-    ShowMessage
-      ('Email address is missing, please enter the address direct in the mail(outlook)');
-  End;
-  if Length(MailToAddress) > 0 then
-  Begin
-    // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-    ExportFile := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.AsString + '.pdf';
-    if FileExists(ExportFile) then
-      DeleteFile(ExportFile);
-
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      ReportType := cTrpOrder
-    else
-      ReportType := cTrpOrderInkop;
-    if uReportController.useFR then begin
-
-      Params := TCMParams.Create();
-      Params.Add('@Language', dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-
-      RC := TCMReportController.Create;
-      ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
-      RoleType := -1;
-
-      Try
-        DocTyp := ReportType;
-        RC.setExportFile(ExportFile);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-      End;
-      if not FileExists(ExportFile) then
-        Exit;
-    end
-    else begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-        FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
-          ReportType, A, ExcelDir + 'LONo ' +
-          daMoLM1.cdsAvropShippingPlanNo.AsString);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        if FormCRExportOneReport.ReportFound = False then
-          Exit;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
-    end;
-    SetLength(Attach, 1);
-    Attach[0] := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.
-      AsString + '.pdf';
-    // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
-        daMoLM1.cdsAvropShippingPlanNo.AsString, 'Transportorder bifogad. ' + LF
-        + '' + 'Transportorder attached. ' + LF + '' + LF + '' + LF +
-        'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-        (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-        Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
+  dmFR.SaveCursor;
+  try
+    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+      (daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing, please enter the address direct in the mail(outlook)');
     End;
-  End
-  else
-    ShowMessage('Emailadress saknas för klienten!');
+    if Length(MailToAddress) > 0 then
+    Begin
+      // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
+      ExportFile := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.
+        AsString + '.pdf';
+      if FileExists(ExportFile) then
+        DeleteFile(ExportFile);
+
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        ReportType := cTrpOrder
+      else
+        ReportType := cTrpOrderInkop;
+      if uReportController.useFR then
+      begin
+
+        Params := TCMParams.Create();
+        Params.Add('@Language',
+          dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
+        Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+
+        RC := TCMReportController.Create;
+        ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
+        RoleType := -1;
+
+        Try
+          DocTyp := ReportType;
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
+          Exit;
+      end
+      else
+      begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+          FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
+            ReportType, A, ExcelDir + 'LONo ' +
+            daMoLM1.cdsAvropShippingPlanNo.AsString);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
+      SetLength(Attach, 1);
+      Attach[0] := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.
+        AsString + '.pdf';
+      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
+          daMoLM1.cdsAvropShippingPlanNo.AsString, 'Transportorder bifogad. ' + LF
+          + '' + 'Transportorder attached. ' + LF + '' + LF + '' + LF +
+          'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+          Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmAvrop.acEmailaFSExecute(Sender: TObject);
@@ -5055,9 +5103,13 @@ Var
   FR: TFastReports;
   LoadNo: integer;
 begin
+dmFR.SaveCursor;
+try
   ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
-  lang := dmsContact.Client_Language(ClientNo);
+  lang := dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger);
   LoadNo := daMoLM1.cdsLoadsLoadNo.AsInteger;
+  if LoadNo < 1  then exit;
+
   MailToAddress := dmsContact.GetEmailAddress
     (daMoLM1.cdsAvropCLIENTNO.AsInteger);
   if Length(MailToAddress) = 0 then Begin
@@ -5076,17 +5128,22 @@ begin
     else
       ReportType := cFoljesedelInkop;     //TALLY_VER2_INKOP_NOTE.fr3 (39)
 
-    ExportFile := ExcelDir + 'FS ' + daMoLM1.cdsLoadsLoadNo.AsString + '.pdf';
-    if FileExists(ExportFile) then
-      DeleteFile(ExportFile);
 
     FR := TFastReports.Create;
+    Params := TCMParams.Create();
     try
+//      Params.Add('@Language', lang);
+//      Params.Add('@LoadNo', loadNo);
+//      FR.MailClientControlledReport(ClientNo, RoleType, DocTyp, Params, MailToAddress, '','', ExportFile);
       FR.Tally(LoadNo, ReportType, Lang, MailToAddress, '', '',0);
     finally
       FR.Free;
+      Params.Free;
     end;
     exit;
+    ExportFile := ExcelDir + 'FS ' + intToStr(loadNo) + '.pdf';
+    if FileExists(ExportFile) then
+      DeleteFile(ExportFile);
     if uReportController.useFR then begin
 
       Params := TCMParams.Create();
@@ -5137,6 +5194,10 @@ begin
   End
   else
     ShowMessage('Emailadress saknas för klienten!');
+
+finally
+  dmFR.RestoreCursor;
+end;
 end;
 
 procedure TfrmAvrop.acEmailaLOExecute(Sender: TObject);
@@ -5156,87 +5217,98 @@ Var
   Params: TCMParams;
   ExportFile: string;
 begin
-  MailToAddress := dmsContact.GetEmailAddress
-    (daMoLM1.cdsAvropCLIENTNO.AsInteger);
-  if Length(MailToAddress) = 0 then Begin
-    MailToAddress := 'ange@adress.nu';
-    ShowMessage
-      ('Email address is missing, please enter the address direct in the mail(outlook)');
-  End;
-  if Length(MailToAddress) > 0 then Begin
-    // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-    ExportFile := ExcelDir + 'LO ' + daMoLM1.cdsAvropShippingPlanNo.
-      AsString + '.pdf';
-    if FileExists(ExportFile) then
-      DeleteFile(ExportFile);
-
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      ReportType := cLastorder // LASTORDER_NOTE_ver3.fr3 (20)
-    else Begin
-      ReportType := cLastorderInkop // Lastorder_inkop_NOTE_ver2.fr3 (21),
-                                    // LASTORDER_INKOP_NOTE_dk_ver2.fr3 (34)
-                                    // Lastorder_inkop_NOTE_dk_eng_ver2.fr3 (38)
+  dmFR.SaveCursor;
+  try
+    MailToAddress := dmsContact.GetEmailAddress
+      (daMoLM1.cdsAvropCLIENTNO.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing, please enter the address direct in the mail(outlook)');
     End;
+    if Length(MailToAddress) > 0 then
+    Begin
+      // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
+      ExportFile := ExcelDir + 'LO ' + daMoLM1.cdsAvropShippingPlanNo.
+        AsString + '.pdf';
+      if FileExists(ExportFile) then
+        DeleteFile(ExportFile);
 
-    if uReportController.useFR then begin
-
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-      Params.Add('@SupplierNo', -1);
-
-      RC := TCMReportController.Create;
-      ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
-      RoleType := -1;
-
-      Try
-        DocTyp := ReportType;
-        RC.setExportFile(ExportFile);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        ReportType := cLastorder // LASTORDER_NOTE_ver3.fr3 (20)
+      else
+      Begin
+        ReportType := cLastorderInkop // Lastorder_inkop_NOTE_ver2.fr3 (21),
+        // LASTORDER_INKOP_NOTE_dk_ver2.fr3 (34)
+        // Lastorder_inkop_NOTE_dk_eng_ver2.fr3 (38)
       End;
-      if not FileExists(ExportFile) then
-        Exit;
-    end
-    else begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 2);
-        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-        A[1] := -1;
-        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-          ReportType := cLastorder
-        else
-          ReportType := cLastorderInkop;
-        FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
-          ReportType, A, ExcelDir + 'LO ' +
-          daMoLM1.cdsAvropShippingPlanNo.AsString);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        if FormCRExportOneReport.ReportFound = False then
+
+      if uReportController.useFR then
+      begin
+
+        Params := TCMParams.Create();
+        Params.Add('@Language', ThisUser.LanguageID);
+        Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
+        Params.Add('@SupplierNo', -1);
+
+        RC := TCMReportController.Create;
+        ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
+        RoleType := -1;
+
+        Try
+          DocTyp := ReportType;
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
           Exit;
+      end
+      else
+      begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 2);
+          A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
+          A[1] := -1;
+          if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+            ReportType := cLastorder
+          else
+            ReportType := cLastorderInkop;
+          FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
+            ReportType, A, ExcelDir + 'LO ' +
+            daMoLM1.cdsAvropShippingPlanNo.AsString);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
+      SetLength(Attach, 1);
+      Attach[0] := ExcelDir + 'LO ' + daMoLM1.cdsAvropShippingPlanNo.
+        AsString + '.pdf';
+      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Lastorder. LOnr: ' +
+          daMoLM1.cdsAvropShippingPlanNo.AsString, 'Lastorder bifogad. ' + LF + ''
+          + 'Loadorder attached. ' + LF + '' + LF + '' + LF + 'MVH/Best Regards, '
+          + LF + '' + dmsContact.GetFirstAndLastName(ThisUser.UserID),
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
       Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
+        FreeAndNil(dm_SendMapiMail);
       End;
-    end;
-    SetLength(Attach, 1);
-    Attach[0] := ExcelDir + 'LO ' + daMoLM1.cdsAvropShippingPlanNo.
-      AsString + '.pdf';
-    // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Lastorder. LOnr: ' +
-        daMoLM1.cdsAvropShippingPlanNo.AsString, 'Lastorder bifogad. ' + LF + ''
-        + 'Loadorder attached. ' + LF + '' + LF + '' + LF + 'MVH/Best Regards, '
-        + LF + '' + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    ShowMessage('Emailadress saknas för klienten!');
+    End
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmAvrop.acEmailaFS_USAExecute(Sender: TObject);
