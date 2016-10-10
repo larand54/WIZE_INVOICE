@@ -954,6 +954,7 @@ Begin
   End
   else
     Result := 'C:\';
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then result := 'C:\VIS\TEMP\';
   cds_Props.Active := False;
 End;
 

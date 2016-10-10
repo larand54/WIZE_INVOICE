@@ -4998,6 +4998,7 @@ Var
   ClientNo: integer;
   Params: TCMParams;
   ExportFile: string;
+  FR: TFastReports;
 begin
   dmFR.SaveCursor;
   try
@@ -5012,7 +5013,7 @@ begin
     if Length(MailToAddress) > 0 then
     Begin
       // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-      ExportFile := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.
+      ExportFile := ExcelDir + 'TO ' + daMoLM1.cdsAvropShippingPlanNo.
         AsString + '.pdf';
       if FileExists(ExportFile) then
         DeleteFile(ExportFile);
@@ -5023,26 +5024,20 @@ begin
         ReportType := cTrpOrderInkop;
       if uReportController.useFR then
       begin
-
         Params := TCMParams.Create();
         Params.Add('@Language',
           dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger));
         Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
-
-        RC := TCMReportController.Create;
         ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
         RoleType := -1;
-
-        Try
-          DocTyp := ReportType;
-          RC.setExportFile(ExportFile);
-          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-        Finally
-          FreeAndNil(Params);
-          FreeAndNil(RC);
-        End;
-        if not FileExists(ExportFile) then
-          Exit;
+        FR := TFastReports.Create;
+        try
+          FR.MailClientControlledReport(ClientNo, RoleType, ReportType, Params, MailToAddress, 'TO');
+        finally
+          FR.Free;
+          Params.Free;
+        end;
+        exit;
       end
       else
       begin
@@ -5103,68 +5098,52 @@ Var
   FR: TFastReports;
   LoadNo: integer;
 begin
-dmFR.SaveCursor;
-try
-  ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
-  lang := dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger);
-  LoadNo := daMoLM1.cdsLoadsLoadNo.AsInteger;
-  if LoadNo < 1  then exit;
+  dmFR.SaveCursor;
+  try
+    ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
+    lang := dmsContact.Client_Language(daMoLM1.cdsOrderCustomerNo.AsInteger);
+    LoadNo := daMoLM1.cdsLoadsLoadNo.AsInteger;
+    if LoadNo < 1 then
+      Exit;
 
-  MailToAddress := dmsContact.GetEmailAddress
-    (daMoLM1.cdsAvropCLIENTNO.AsInteger);
-  if Length(MailToAddress) = 0 then Begin
-    MailToAddress := 'ange@adress.nu';
-    ShowMessage
-      ('Email address is missing, please enter the address direct in the mail(outlook)');
-  End;
-  if Length(MailToAddress) > 0 then Begin
-    // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-    dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-      daMoLM1.cdsLoadsLoadNo.AsInteger;
-    dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
+    MailToAddress := dmsContact.GetEmailAddress
+      (daMoLM1.cdsAvropCLIENTNO.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing, please enter the address direct in the mail(outlook)');
+    End;
+    if Length(MailToAddress) > 0 then
+    Begin
+      // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
+      dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
+        daMoLM1.cdsLoadsLoadNo.AsInteger;
+      dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
 
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      ReportType := cFoljesedel           //TALLY_VER3_NOTE.fr3 (43)
-    else
-      ReportType := cFoljesedelInkop;     //TALLY_VER2_INKOP_NOTE.fr3 (39)
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+      else
+        ReportType := cFoljesedelInkop; // TALLY_VER2_INKOP_NOTE.fr3 (39)
 
-
-    FR := TFastReports.Create;
-    Params := TCMParams.Create();
-    try
-//      Params.Add('@Language', lang);
-//      Params.Add('@LoadNo', loadNo);
-//      FR.MailClientControlledReport(ClientNo, RoleType, DocTyp, Params, MailToAddress, '','', ExportFile);
-      FR.Tally(LoadNo, ReportType, Lang, MailToAddress, '', '',0);
-    finally
-      FR.Free;
-      Params.Free;
-    end;
-    exit;
-    ExportFile := ExcelDir + 'FS ' + intToStr(loadNo) + '.pdf';
-    if FileExists(ExportFile) then
-      DeleteFile(ExportFile);
-    if uReportController.useFR then begin
-
+      FR := TFastReports.Create;
       Params := TCMParams.Create();
-      Params.Add('@Language', lang);
-      Params.Add('@LoadNo', daMoLM1.cdsLoadsLoadNo.AsInteger);
-
-      RC := TCMReportController.Create;
-      RoleType := -1;
-
-      Try
-        DocTyp := ReportType;
-        RC.setExportFile(ExportFile);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-      End;
-      if not FileExists(ExportFile) then
-        Exit;
+      try
+        Params.Add('@Language', lang);
+        Params.Add('@LoadNo', LoadNo);
+        RoleType := -1;
+        FR.MailClientControlledReport(ClientNo, RoleType, ReportType, Params,
+          MailToAddress, 'FS');
+        // FR.Tally(LoadNo, ReportType, Lang, MailToAddress, '', '',0);
+      finally
+        FR.Free;
+        Params.Free;
+      end;
+      Exit;
     end
-    else begin
+(*
+    else
+    begin
       FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
       Try
         SetLength(A, 1);
@@ -5190,10 +5169,10 @@ try
         dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
     Finally
       FreeAndNil(dm_SendMapiMail);
-    End;
-  End
+    End
+*)
   else
-    ShowMessage('Emailadress saknas för klienten!');
+  ShowMessage('Emailadress saknas för klienten!');
 
 finally
   dmFR.RestoreCursor;
@@ -5216,6 +5195,8 @@ Var
   ClientNo: integer;
   Params: TCMParams;
   ExportFile: string;
+  FR: TFastReports;
+
 begin
   dmFR.SaveCursor;
   try
@@ -5251,9 +5232,14 @@ begin
         Params.Add('@Language', ThisUser.LanguageID);
         Params.Add('@ShippingPlanNo', daMoLM1.cdsAvropShippingPlanNo.AsInteger);
         Params.Add('@SupplierNo', -1);
+        FR := TFastReports.Create;
+//        ShowMessage(FR.createMailTitle('LO',Params)+#10+'============='+#10+FR.createMailMessage('LO'));
+        RoleType := -1;
+        ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
+        FR.MailClientControlledReport(ClientNo, RoleType, ReportType, Params, MailToAddress, 'LO');
+        exit;
 
         RC := TCMReportController.Create;
-        ClientNo := daMoLM1.cdsAvropCLIENTNO.AsInteger;
         RoleType := -1;
 
         Try
