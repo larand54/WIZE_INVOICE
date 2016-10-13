@@ -3493,9 +3493,9 @@ procedure TfrmAvrop.acPrintContractExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  RepNo: Integer;
-  Params: TCMParams;
+  FR: TFastReports;
+  lang: integer;
+  OrderNo: integer;
 begin
   dmFR.SaveCursor;
   try
@@ -3503,19 +3503,16 @@ begin
     Exit;
   if uReportController.useFR then begin
 
-    if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-      RepNo := 17   // CONTRACT.NOTE.fr3
-    else
-      RepNo := 19;  //INCONTRACT_NOTE.fr3
-    RC := TCMReportController.Create;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@OrderNo', daMoLM1.cdsAvropORDERNO.AsInteger);
-      RC.RunReport(RepNo,Params,frPreview,0);
+      OrderNo :=  daMoLM1.cdsAvropORDERNO.AsInteger;
+      lang := ThisUser.LanguageID;
+      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
+        FR.Contract(OrderNo, lang, CTnote, frPreview)
+      else
+        FR.InContract(OrderNo, lang, CTnote, frPreview);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FreeAndNil(FR);
     end;
   end
   else begin
