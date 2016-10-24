@@ -560,7 +560,7 @@ uses
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
   uSokAvropMall, uEntryField, uVerifikationLogg, uAccInv,
   UnitdmModule1, udmLanguage, uReport, uReportController, UnitBookingForm,
-  dmBooking;
+  dmBooking, uCustomReports, udmFR;
 
 {$R *.dfm}
 
@@ -1187,8 +1187,7 @@ Var
   InternalInvoiceNo: Integer;
   Duplicate: Boolean;
 begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait; { Show hourglass cursor }
+ dmFR.SaveAndSetCursor(crSQLWait);{ Show hourglass cursor }
   with dmVidaInvoice do
   Begin
     lbLO_To_Invoice.Items.Clear;
@@ -1223,7 +1222,7 @@ begin
     Finally
       grdFakturaDBBandedTableView1.DataController.EndLocate;
       grdFakturaDBBandedTableView1.EndUpdate;
-      Screen.Cursor := Save_Cursor; { Always restore to normal }
+      dmFR.RestoreCursor; { Always restore to normal }
     End;
 
   End; // with
@@ -3092,6 +3091,26 @@ end;
 procedure TfrmInvoiceList.acKundSpecifikaExecute(Sender: TObject);
 var
   fAddKundSpecifika: TfAddKundSpecifika;
+  dsrcCustomReports: TCustomReports;
+begin
+  if uReportController.useFR then
+    dsrcCustomReports := TCustomReports.create(dmFR.cdsClientPrefDocsFR, -2, 1)
+  else
+    dsrcCustomReports := TCustomReports.create(dmsSystem.cdsClientPrefDocs, -2, 1);
+  with dmVidaInvoice do
+  Begin
+    dsrcCustomReports.open;
+    fAddKundSpecifika := TfAddKundSpecifika.Create(nil,dsrcCustomReports);
+    try
+      if fAddKundSpecifika.ShowModal = mrOk then
+        PrintKundSpecifikFaktura(dsrcCustomReports.Dsrc.DataSet.FieldByName('RAPPORT').AsString);
+    finally
+      FreeAndNil(fAddKundSpecifika);
+      dsrcCustomReports.close;
+    end;
+  End; // With
+(*var
+  fAddKundSpecifika: TfAddKundSpecifika;
 begin
   with dmVidaInvoice do
   Begin
@@ -3105,6 +3124,7 @@ begin
       dmsSystem.Close_ClientPrefDocs;
     end;
   End; // With
+*)
 end;
 
 procedure TfrmInvoiceList.PrintKundSpecifikFaktura(const RapportNamn: String);

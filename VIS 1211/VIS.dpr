@@ -168,7 +168,8 @@ uses
   uLogger in '..\..\CommonSources\DelphiLogg\uLogger.pas',
   uSelectVerkandShipTo in 'uSelectVerkandShipTo.pas' {fSelectVerkandShipTo},
   uFastReports in '..\..\CommonSources\FastReport\uFastReports.pas',
-  uTwoReportInOne in '..\..\CommonSources\FastReport\uTwoReportInOne.pas';
+  uTwoReportInOne in '..\..\CommonSources\FastReport\uTwoReportInOne.pas',
+  uCustomReports in '..\..\CommonSources\FastReport\uCustomReports.pas';
 
 {$R *.res}
 

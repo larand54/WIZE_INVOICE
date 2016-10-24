@@ -22,7 +22,8 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, System.Actions, siComp, siLngLnk;
+  dxSkinscxPCPainter, cxNavigator, System.Actions, siComp, siLngLnk
+  , uCustomReports;
 
 type
   TfAddKundSpecifika = class(TForm)
@@ -61,9 +62,11 @@ type
     procedure acTaBortUpdate(Sender: TObject);
   private
     { Private declarations }
+    FCR: TCustomReports;
     Function Saved: Boolean;
   public
     { Public declarations }
+    constructor create(sender: TComponent; aCR: TCustomReports); reintroduce; virtual;
   end;
 
   // var fAddKundSpecifika: TfAddKundSpecifika;
@@ -81,43 +84,23 @@ end;
 
 procedure TfAddKundSpecifika.acAddKSExecute(Sender: TObject);
 begin
-  With dmsSystem do
-  Begin
-    cdsClientPrefDocs.Insert;
-    grdDocs.SetFocus;
-    // cdsClientPrefDocsDocType.AsInteger:= cKontrakt ;
-  End;
+  FCR.Insert;
+  grdDocs.SetFocus;
 end;
 
 procedure TfAddKundSpecifika.acTaBortExecute(Sender: TObject);
 begin
-  With dmsSystem do
-  Begin
-    cdsClientPrefDocs.Delete;
-  End;
+  FCR.Delete
 end;
 
 procedure TfAddKundSpecifika.acSaveExecute(Sender: TObject);
 begin
-  With dmsSystem do
-  Begin
-    if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
-      cdsClientPrefDocs.Post;
-    if cdsClientPrefDocs.ChangeCount > 0 then
-      cdsClientPrefDocs.ApplyUpdates(0);
-  End;
+  FCR.Save
 end;
 
 Function TfAddKundSpecifika.Saved: Boolean;
 begin
-  Result := True;
-  With dmsSystem do
-  Begin
-    if cdsClientPrefDocs.State in [dsEdit, dsInsert] then
-      Result := False;
-    if cdsClientPrefDocs.ChangeCount > 0 then
-      Result := False;
-  End;
+  Result := FCR.Saved;
 end;
 
 procedure TfAddKundSpecifika.acSaveUpdate(Sender: TObject);
@@ -127,11 +110,14 @@ end;
 
 procedure TfAddKundSpecifika.acTaBortUpdate(Sender: TObject);
 begin
-  With dmsSystem do
-  Begin
-    acTaBort.Enabled := (cdsClientPrefDocs.Active) and
-      (cdsClientPrefDocs.RecordCount > 0);
-  End;
+  acTaBort.Enabled := (FCR.Dsrc.DataSet.Active) and (FCR.Dsrc.DataSet.RecordCount > 0);
+end;
+
+constructor TfAddKundSpecifika.create(sender: TComponent; aCR: TCustomReports);
+begin
+  inherited create(sender);
+  FCR := aCR;
+  grdDocsDBTableView1.DataController.DataSource := FCR.Dsrc;
 end;
 
 end.

@@ -418,7 +418,7 @@ var
 
 implementation
 
-uses dmsDataConn, VidaConst, VidaUser, dmsVidaSystem;
+uses dmsDataConn, VidaConst, VidaUser, dmsVidaSystem, udmFR;
 
 {$R *.dfm}
 { TdmsContact }
@@ -621,18 +621,23 @@ end;
 procedure TdmsContact.InsertUserIssueReport(const UserID, InternalInvoiceNo
   : Integer);
 Begin
-  Try
-    sq_UserIssueReport.ParamByName('userId').AsInteger := UserID;
-    sq_UserIssueReport.ParamByName('InternalInvoiceNo').AsInteger :=
-      InternalInvoiceNo;
-    sq_UserIssueReport.ExecSQL;
-  except
-    On E: Exception do
-    Begin
-      dmsSystem.FDoLog(E.Message);
-      // ShowMessage(E.Message);
-      Raise;
-    End;
+  dmFR.SaveCursor;
+  try
+    Try
+      sq_UserIssueReport.ParamByName('userId').AsInteger := UserID;
+      sq_UserIssueReport.ParamByName('InternalInvoiceNo').AsInteger :=
+        InternalInvoiceNo;
+      sq_UserIssueReport.ExecSQL;
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog(E.Message);
+        // ShowMessage(E.Message);
+        Raise;
+      End;
+    end;
+  finally
+    dmFR.RestoreCursor;
   end;
 End;
 
@@ -728,48 +733,64 @@ End;
 
 function TdmsContact.GetEmailAddress_Utlastad(const ClientNo: Integer): String;
 Begin
-  Result := '';
-  sq_GetEmailAdr_Utlastad.Close;
-  sq_GetEmailAdr_Utlastad.ParamByName('ClientNo').AsInteger := ClientNo;
-  sq_GetEmailAdr_Utlastad.Open;
-  sq_GetEmailAdr_Utlastad.First;
-  While not sq_GetEmailAdr_Utlastad.Eof do
-  Begin
-    Result := Trim(sq_GetEmailAdr_UtlastadEmailAddress.AsString) + ';' + Result;
-    sq_GetEmailAdr_Utlastad.Next;
-  End;
-  sq_GetEmailAdr_Utlastad.Close;
+  dmFR.SaveCursor;
+  try
+    Result := '';
+    sq_GetEmailAdr_Utlastad.Close;
+    sq_GetEmailAdr_Utlastad.ParamByName('ClientNo').AsInteger := ClientNo;
+    sq_GetEmailAdr_Utlastad.Open;
+    sq_GetEmailAdr_Utlastad.First;
+    While not sq_GetEmailAdr_Utlastad.Eof do
+    Begin
+      Result := Trim(sq_GetEmailAdr_UtlastadEmailAddress.AsString) +
+        ';' + Result;
+      sq_GetEmailAdr_Utlastad.Next;
+    End;
+    sq_GetEmailAdr_Utlastad.Close;
+  finally
+    dmFR.RestoreCursor;
+  end;
 End;
 
 function TdmsContact.GetEmailAddress(const ClientNo: Integer): String;
 Begin
-  Result := '';
-  sqGetEmailAdr.Close;
-  sqGetEmailAdr.ParamByName('ClientNo').AsInteger := ClientNo;
-  sqGetEmailAdr.Open;
-  sqGetEmailAdr.First;
-  While not sqGetEmailAdr.Eof do
-  Begin
-    Result := Trim(sqGetEmailAdrEmailAddress.AsString) + ';' + Result;
-    sqGetEmailAdr.Next;
+  dmFR.SaveCursor;
+  try
+    Result := '';
+    sqGetEmailAdr.Close;
+    sqGetEmailAdr.ParamByName('ClientNo').AsInteger := ClientNo;
+    sqGetEmailAdr.Open;
+    sqGetEmailAdr.First;
+    While not sqGetEmailAdr.Eof do
+    Begin
+      Result := Trim(sqGetEmailAdrEmailAddress.AsString) + ';' + Result;
+      sqGetEmailAdr.Next;
+    End;
+    sqGetEmailAdr.Close;
+  finally
+    dmFR.RestoreCursor;
   End;
-  sqGetEmailAdr.Close;
-End;
+end;
 
 function TdmsContact.GetEmailAddressForSpeditorByLO
   (const LONo: Integer): String;
 Begin
-  Result := '';
-  sq_GetSpeditorEmail.Close;
-  sq_GetSpeditorEmail.ParamByName('LONumber').AsInteger := LONo;
-  sq_GetSpeditorEmail.Open;
-  sq_GetSpeditorEmail.First;
-  While not sq_GetSpeditorEmail.Eof do
-  Begin
-    Result := Trim(sq_GetSpeditorEmailEmailAddress.AsString) + ';' + Result;
-    sq_GetSpeditorEmail.Next;
-  End;
-  sq_GetSpeditorEmail.Close;
+  dmFR.SaveCursor;
+  try
+    Result := '';
+    sq_GetSpeditorEmail.Close;
+    sq_GetSpeditorEmail.ParamByName('LONumber').AsInteger := LONo;
+    sq_GetSpeditorEmail.Open;
+    sq_GetSpeditorEmail.First;
+    While not sq_GetSpeditorEmail.Eof do
+    Begin
+      Result := Trim(sq_GetSpeditorEmailEmailAddress.AsString) + ';' + Result;
+      sq_GetSpeditorEmail.Next;
+    End;
+    sq_GetSpeditorEmail.Close;
+  finally
+    dmFR.RestoreCursor;
+  end;
 End;
 
 function TdmsContact.GetRoleType(const VerkNo: Integer): Integer;

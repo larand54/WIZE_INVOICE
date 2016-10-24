@@ -643,7 +643,7 @@ uses VidaUser, dmsDataConn, UnitSelectClient, UnitdmModule1,
   UnitCRPrintReport, uLanguage, uSendMapiMail, UnitCRExportOneReport,
   UnitCRPrintOneReport, fAttestInvoice, dmsVidaSystem,
   uKundspecifika, uAddKundSpecifika, uArticle, uAccInv, uVerifikationLogg,
-  udmLanguage, uReportController, uReport;
+  udmLanguage, uReportController, uReport, udmFR, uCustomReports;
 
 {$R *.dfm}
 
@@ -2434,7 +2434,7 @@ begin
 
     RC := TCMReportController.Create;
     Try
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
+      RC.RunReport(1, ClientNo, RoleType, DocTyp, Params, frPrint);
     Finally
       FreeAndNil(Params);
       FreeAndNil(RC);
@@ -5685,17 +5685,22 @@ end;
 procedure TfrmInvoice.acKundSpecifikaExecute(Sender: TObject);
 var
   fAddKundSpecifika: TfAddKundSpecifika;
+  dsrcCustomReports: TCustomReports;
 begin
+  if uReportController.useFR then
+    dsrcCustomReports := TCustomReports.create(dmFR.cdsClientPrefDocsFR, -2, 1)
+  else
+    dsrcCustomReports := TCustomReports.create(dmsSystem.cdsClientPrefDocs, -2, 1);
   with dmVidaInvoice do
   Begin
-    dmsSystem.Open_ClientPrefDocs;
-    fAddKundSpecifika := TfAddKundSpecifika.Create(nil);
+    dsrcCustomReports.open;
+    fAddKundSpecifika := TfAddKundSpecifika.Create(nil,dsrcCustomReports);
     try
       if fAddKundSpecifika.ShowModal = mrOk then
-        PrintKundSpecifikFaktura(dmsSystem.cdsClientPrefDocsRAPPORT.AsString);
+        PrintKundSpecifikFaktura(dsrcCustomReports.Dsrc.DataSet.FieldByName('RAPPORT').AsString);
     finally
       FreeAndNil(fAddKundSpecifika);
-      dmsSystem.Close_ClientPrefDocs;
+      dsrcCustomReports.close;
     end;
   End; // With
 end;
@@ -5832,90 +5837,105 @@ Var
   ExportInvoiceFile: string;
   ExportSpecFile: string;
 begin
+  dmFR.SaveCursor;
+  try
   InvoiceNo := intToStr(dmVidaInvoice.GetInvoiceNo
-    (dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
-    dmVidaInvoice.cdsInvoiceHeadInvoiceType.AsInteger));
-  MailToAddress := dmsContact.GetEmailAddress
-    (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger);
-  AgentMailToAddress := dmsContact.GetEmailAddress
-    (dmVidaInvoice.cdsInvoiceHeadAgentNo.AsInteger);
-  if Length(AgentMailToAddress) > 0 then
-    MailToAddress := MailToAddress + ';' + AgentMailToAddress;
-  if Length(MailToAddress) > 0 then Begin
-    if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
-      Exit;
-    ExportInvoiceFile := ExcelDir + 'InvoiceNo ' + InvoiceNo + '.pdf';
-    ExportSpecFile := ExcelDir + 'Specification ' + InvoiceNo + '.pdf';
-    ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
-
-    if uReportController.useFR then begin
-
-      Params := TCMParams.Create();
-      Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
-
-      RC := TCMReportController.Create;
-      RoleType := -1;
-
-      Try
-        RC.setExportFile(ExportInvoiceFile);
-        RC.RunReport(0, ClientNo, RoleType, cFaktura, Params, frFile);
-        RC.setExportFile(ExportSpecFile);
-        RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-      End;
-      if not (FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile)) then begin
-        ShowMessage('The report files were not created.');
+      (dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
+      dmVidaInvoice.cdsInvoiceHeadInvoiceType.AsInteger));
+    MailToAddress := dmsContact.GetEmailAddress
+      (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger);
+    AgentMailToAddress := dmsContact.GetEmailAddress
+      (dmVidaInvoice.cdsInvoiceHeadAgentNo.AsInteger);
+    if Length(AgentMailToAddress) > 0 then
+      MailToAddress := MailToAddress + ';' + AgentMailToAddress;
+    if Length(MailToAddress) > 0 then
+    Begin
+      if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
         Exit;
+      ExportInvoiceFile := ExcelDir + 'InvoiceNo ' + InvoiceNo + '.pdf';
+      ExportSpecFile := ExcelDir + 'Specification ' + InvoiceNo + '.pdf';
+      DeleteFile(ExportInvoiceFile);
+      DeleteFile(ExportSpecFile);
+      ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
+
+      if uReportController.useFR then
+      begin
+
+        Params := TCMParams.Create();
+        Params.Add('@Language',
+          dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
+        Params.Add('@INVOICENO',
+          dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+
+        RC := TCMReportController.Create;
+        RoleType := -1;
+
+        Try
+          RC.setExportFile(ExportInvoiceFile);
+          RC.RunReport(0, ClientNo, RoleType, cFaktura, Params, frFile);
+          RC.setExportFile(ExportSpecFile);
+          RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not(FileExists(ExportInvoiceFile) and FileExists(ExportSpecFile))
+        then
+        begin
+          ShowMessage('The report files were not created.');
+          Exit;
+        end;
+      end
+      else
+      begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+          // const ClientNo, DocTyp : Integer;const A: array of variant);
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+
+          FormCRExportOneReport.CreateCo
+            (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A,
+            ExcelDir + 'InvoiceNo ' + InvoiceNo);
+          FormCRExportOneReport.CreateCo
+            (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A,
+            ExcelDir + 'Specification ' + InvoiceNo);
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
       end;
-    end
-    else begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
+
+      SetLength(Attach, 2);
+
+      Attach[0] := ExportInvoiceFile;
+      Attach[1] := ExportSpecFile;
+
+      // Attach[0]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'InvoiceNo '+InvoiceNo+'.pdf' ;
+      // Attach[1]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'Specification '+InvoiceNo+'.pdf' ;
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
       Try
-        SetLength(A, 1);
-        A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
-        // const ClientNo, DocTyp : Integer;const A: array of variant);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, ExcelDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+        dm_SendMapiMail.SendMail('Faktura/paketspecifikation. Fakturanr: ' +
+          InvoiceNo + ' - Invoice/package specification. InvoiceNo: ' +
+          InvoiceNo,
+          'Faktura och paketspecifikation bifogad. ' + LF + '' +
+          'Invoice and package specification attached. ' + LF + '' + LF + '' + LF
+          + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
 
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A,
-          ExcelDir + 'InvoiceNo ' + InvoiceNo);
-        FormCRExportOneReport.CreateCo
-          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A,
-          ExcelDir + 'Specification ' + InvoiceNo);
+          Attach, False);
       Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
+        FreeAndNil(dm_SendMapiMail);
       End;
-    end;
-    // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
-
-    SetLength(Attach, 2);
-
-    Attach[0] := ExportInvoiceFile;
-    Attach[1] := ExportSpecFile;
-
-    // Attach[0]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'InvoiceNo '+InvoiceNo+'.pdf' ;
-    // Attach[1]:= ExtractFilePath(Forms.Application.ExeName) + '\'+'Specification '+InvoiceNo+'.pdf' ;
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Faktura/paketspecifikation. Fakturanr: ' +
-        InvoiceNo + ' - Invoice/package specification. InvoiceNo: ' + InvoiceNo,
-        'Faktura och paketspecifikation bifogad. ' + LF + '' +
-        'Invoice and package specification attached. ' + LF + '' + LF + '' + LF
-        + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-        (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-        // 'lars.makiaho@falubo.se', //getinvoice emailaddress
-
-        Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    ShowMessage('Email address is missing for the client.');
+    End
+    else
+      ShowMessage('Email address is missing for the client.');
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmInvoice.lcLIPEnter(Sender: TObject);

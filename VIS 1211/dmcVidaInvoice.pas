@@ -3788,6 +3788,7 @@ End;
 function TdmVidaInvoice.GetInvoiceNo(const InternalInvoiceNo,
   InvoiceType: Integer): Integer;
 begin
+  dmFR.SaveCursor;
   sq_GetInvoiceNumber.ParamByName('InternalInvoiceNo').AsInteger :=
     InternalInvoiceNo;
   Try
@@ -3799,6 +3800,7 @@ begin
 
   Finally
     sq_GetInvoiceNumber.Close;
+    dmFR.RestoreCursor;
   End;
 
   { sq_GetInvNo.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
@@ -4548,97 +4550,112 @@ Var
   i, ClientNo: integer;
   Params: TCMParams;
 begin
-  // if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
-  // Begin
-  ExcelDir := dmsSystem.Get_Dir('ExcelDir');
-  MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO(LONo);
-  if Length(MailToAddress) = 0 then
-  Begin
-    MailToAddress := 'ange@adress.nu';
-    showmessage
-      ('Email address is missing for the client.');
-  End;
-
-  if Length(MailToAddress) > 0 then
-  Begin
-    sTransportBrev := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) + '.pdf';
-    sSpecification := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
-
-    if uReportController.useFR then
-     begin
-
-      params := TCMParams.Create();
-      Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-      Params.Add('@INVOICENO',IntInvNo);
-
-      RC := TCMReportController.create;
-      ClientNo := CustomerNo;
-      RoleType := -1;
-
-      Try
-        DocTyp := cTrpBrev;
-        RC.setExportFile(sTransportBrev);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-
-        DocTyp := cPkgSpec;
-        RC.setExportFile(sSpecification);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-      End;
-     end
-    else
-     begin
-      sTransportBrev := ExcelDir + 'Transportbrev ' + IntToStr(InvoiceNo) ;
-      sSpecification := ExcelDir + 'Specification ' + IntToStr(InvoiceNo) ;
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-
-        A[0] := IntInvNo;
-        FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
-          sTransportBrev);
-
-        FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-          sSpecification);
-        sTransportBrev    := sTransportBrev + '.pdf' ;
-        sSpecification    := sSpecification + '.pdf' ;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
-     end;
-
-    SetLength(Attach, 2);
-    Attach[0] := sTransportBrev;
-    if thisuser.userid = 8 then
-       dmsSystem.FDoLog('sTransportBrev= ' + sTransportBrev);
-    Attach[1] := sSpecification;
-    if thisuser.userid = 8 then
-       dmsSystem.FDoLog('sSpecification= ' + sSpecification);
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-
-    for i := Low(Attach) to High(Attach) do
+  dmFR.SaveAndSetCursor(crSQLWait);
+  try
+    // if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
+    // Begin
+    ExcelDir := dmsSystem.Get_Dir('ExcelDir');
+    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO(LONo);
+    if Length(MailToAddress) = 0 then
     Begin
-      if thisuser.userid = 8 then
-       dmsSystem.FDoLog('Attach= ' + Attach[i]);
-
+      MailToAddress := 'ange@adress.nu';
+      showmessage
+        ('Email address is missing for the client.');
     End;
 
-      dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
-        IntToStr(InvoiceNo), 'Transportbrev/Paketspecifikation bifogad. ' + LF +
-        '' + 'Transport letter/Package specification attached. ' + LF + '' + LF
-        + '' + LF + 'MVH/Best Regards, ' + LF + '' +
-        dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    showmessage('Email address is missing for the client.');
-  // End ;//if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
+    if Length(MailToAddress) > 0 then
+    Begin
+      sTransportBrev := ExcelDir + 'Transportbrev ' +
+        inttostr(InvoiceNo) + '.pdf';
+      sSpecification := ExcelDir + 'Specification ' +
+        inttostr(InvoiceNo) + '.pdf';
+      DeleteFile(sTransportBrev);
+      DeleteFile(sSpecification);
+      if uReportController.useFR then
+      begin
+
+        Params := TCMParams.Create();
+        Params.Add('@Language',
+          dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
+        Params.Add('@INVOICENO', IntInvNo);
+
+        RC := TCMReportController.Create;
+        ClientNo := CustomerNo;
+        RoleType := -1;
+
+        Try
+          DocTyp := cTrpBrev;
+          RC.setExportFile(sTransportBrev);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+
+          DocTyp := cPkgSpec;
+          RC.setExportFile(sSpecification);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not (FileExists(sTransportBrev) and FileExists(sSpecification)) then
+        begin
+          showMessage('No mail sent due to missing attachment file(s)');
+          exit;
+        end;
+      end
+      else
+      begin
+        sTransportBrev := ExcelDir + 'Transportbrev ' + inttostr(InvoiceNo);
+        sSpecification := ExcelDir + 'Specification ' + inttostr(InvoiceNo);
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+
+          A[0] := IntInvNo;
+          FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
+            sTransportBrev);
+
+          FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
+            sSpecification);
+          sTransportBrev := sTransportBrev + '.pdf';
+          sSpecification := sSpecification + '.pdf';
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
+      end;
+
+      SetLength(Attach, 2);
+      Attach[0] := sTransportBrev;
+      if ThisUser.UserID = 8 then
+        dmsSystem.FDoLog('sTransportBrev= ' + sTransportBrev);
+      Attach[1] := sSpecification;
+      if ThisUser.UserID = 8 then
+        dmsSystem.FDoLog('sSpecification= ' + sSpecification);
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+
+        for i := Low(Attach) to High(Attach) do
+        Begin
+          if ThisUser.UserID = 8 then
+            dmsSystem.FDoLog('Attach= ' + Attach[i]);
+
+        End;
+
+        dm_SendMapiMail.SendMail('Transportbrev/Paketspec. Fakturanr: ' +
+          inttostr(InvoiceNo), 'Transportbrev/Paketspecifikation bifogad. ' + LF +
+          '' + 'Transport letter/Package specification attached. ' + LF + '' + LF
+          + '' + LF + 'MVH/Best Regards, ' + LF + '' +
+          dmsContact.GetFirstAndLastName(ThisUser.UserID),
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      showmessage('Email address is missing for the client.');
+    // End ;//if dmVidaInvoice.cdsInvoiceList.Locate('INT_INVNO', IntInvNo, []) then
+
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 Procedure TdmVidaInvoice.ExportToWoodx(const CustomerNo, IntInvNo: Integer;
