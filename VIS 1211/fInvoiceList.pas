@@ -3092,11 +3092,13 @@ procedure TfrmInvoiceList.acKundSpecifikaExecute(Sender: TObject);
 var
   fAddKundSpecifika: TfAddKundSpecifika;
   dsrcCustomReports: TCustomReports;
+  Customer: integer;
 begin
+  Customer := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
   if uReportController.useFR then
-    dsrcCustomReports := TCustomReports.create(dmFR.cdsClientPrefDocsFR, -2, 1)
+    dsrcCustomReports := TCustomReports.create(dmFR.cdsClientPrefDocsFR, Customer, 1)
   else
-    dsrcCustomReports := TCustomReports.create(dmsSystem.cdsClientPrefDocs, -2, 1);
+    dsrcCustomReports := TCustomReports.create(dmsSystem.cdsClientPrefDocs, Customer, 1);
   with dmVidaInvoice do
   Begin
     dsrcCustomReports.open;

@@ -630,7 +630,7 @@ uses
   uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
   uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController, uReport,
-  uPickVPPkgs;
+  uPickVPPkgs, uFastReports;
 
 procedure TfrmLoadOrder.CMMoveIt(var Msg: TMessage);
 var
@@ -966,34 +966,28 @@ Var
   A: array of variant;
   RC: TCMReportController;
   RepNo: Integer;
+  lang: integer;
   Params: TCMParams;
+  FR: TFastReports;
+  LO, ReportType, OrderType, ObjectType: integer;
 begin
-  if grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-    .AsInteger < 1 then
+  LO := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger;
+  OrderType := dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger;
+  ObjectType := dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger;
+  lang := ThisUser.LanguageID;
+  if LO < 1 then
     Exit;
 
   if uReportController.useFR then begin
-
-    if (dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 1) and
-      (dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2) then
-      RepNo := 21   // LASTORDER_INKOP_NOTE_ver2.fr3;
-    else if dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2 then
-      RepNo := 20   // LASTORDER_NOTE_ver3.fr3
-    else
-      RepNo := 601; // LASTORDER_VERK_NOTE_ver3.RPT
-    RC := TCMReportController.Create;
+    FR := TFastReports.Create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-        .AsInteger);
-      Params.Add('@SupplierNo', -1);
-      RC.RunReport(RepNo, Params, frPreview, 0);
+      if (OrderType = 1) and (ObjectType = 2) then ReportType := cLastOrderInkop
+      else if ObjectType = 2 then ReportType := cLastOrder
+      else ReportType := cLastorder_verk;
+      FR.LO(LO,-1,ReportType,lang,'','','',false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end
+      FR.Free;
+    end;
   end
   else begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
@@ -1026,37 +1020,27 @@ procedure TfrmLoadOrder.bPrintLODittVerkClick(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
-  RC: TCMReportController;
-  Params: TCMParams;
-  RepNo: integer;
+  FR: TFastReports;
+  LO, supplier, lang, ReportType, OrderType, ObjectType: integer;
 begin
-  if grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-    .AsInteger < 1 then
+  LO := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger;
+  OrderType := dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger;
+  ObjectType := dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger;
+  lang := ThisUser.LanguageID;
+  Supplier := grdLODBTableView1.DataController.DataSet.FieldByName('Supplier').AsInteger;
+  if LO < 1 then
     Exit;
 
   if uReportController.useFR then begin
-
-    if (dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 1) and
-      (dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2) then
-      RepNo := 21 // LASTORDER_INKOP_NOTE_ver2.fr3;
-    else if dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2 then
-      RepNo := 20 // LASTORDER_NOTE_ver3.fr3
-    else
-      RepNo := 601; // LASTORDER_VERK_NOTE_ver3.RPT
-    RC := TCMReportController.Create;
+    FR := TFastReports.Create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-        .AsInteger);
-      Params.Add('@SupplierNo',
-      grdLODBTableView1.DataController.DataSet.FieldByName('Supplier').AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
+      if (OrderType = 1) and (ObjectType = 2) then ReportType := cLastOrderInkop
+      else if ObjectType = 2 then ReportType := cLastOrder
+      else ReportType := cLastorder_verk;
+      FR.LO(LO,Supplier,ReportType,lang,'','','',false);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end
+      FR.Free;
+    end;
   end
   else begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
@@ -4425,47 +4409,27 @@ procedure TfrmLoadOrder.acPrintLOStatusExecute(Sender: TObject);
 var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
-  RC: TCMReportController;
-
-  RepNo: Integer;
-  Params: TCMParams;
-  Save_Cursor: TCursor;
+  FR: TFastReports;
+  LO, supplier, lang, ReportType, OrderType, ObjectType: integer;
 begin
+  LO := grdLODBTableView1.DataController.DataSet.FieldByName('LONumber').AsInteger;
+  OrderType := dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger;
+  ObjectType := dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger;
+  lang := ThisUser.LanguageID;
+  Supplier := -1;
+  if LO < 1 then
+    Exit;
+
   if uReportController.useFR then begin
-    Save_Cursor := Screen.Cursor;
-    Screen.Cursor := crSQLWait; { Show hourglass cursor }
-
-    Params := TCMParams.Create();
-    Params.Add('@Language', ThisUser.LanguageID);
-    Params.Add('@ShippingPlanNo',
-      grdLODBTableView1.DataController.DataSet.FieldByName('LONumber')
-      .AsInteger);
-    Params.Add('@SupplierNo', -1);
-
-    RC := TCMReportController.Create;
-
-    Try
-      if (dmcOrder.cdsSawmillLoadOrdersOrderType.AsInteger = 1) and
-        (dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2) then
-        RepNo := 291 // Lastorder_inkop_NOTE_STATUS_ver2.fr3 (291)
-      else Begin
-        if dmcOrder.cdsSawmillLoadOrdersObjectType.AsInteger = 2 then
-          if ThisUser.LanguageID = cSwedish then
-            RepNo := 599 // LASTORDER_NOTE_STATUS_ver3_SV.fr3 (599)
-          else
-            RepNo := 507
-        else
-          if ThisUser.LanguageID = cSwedish then
-            RepNo := 528 // LASTORDER_VERK_NOTE_STATUS_ver3_SV.fr3 (528)
-          else
-            repNo := 530 // LASTORDER_VERK_NOTE_STATUS_ver3_ENG.fr3 (530)
-      End;
-      RC.RunReport(RepNo, Params, frPreview, 0);
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-      Screen.Cursor := Save_Cursor; { Always restore to normal }
-    End;
+    FR := TFastReports.Create;
+    try
+      if (OrderType = 1) and (ObjectType = 2) then ReportType := cLastOrderInkop
+      else if ObjectType = 2 then ReportType := cLastOrder
+      else ReportType := cLastorder_verk;
+      FR.LO(LO,Supplier,ReportType,lang,'','','',true);
+    finally
+      FR.Free;
+    end;
   end
   else begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
