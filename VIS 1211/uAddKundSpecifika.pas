@@ -22,8 +22,7 @@ uses
   dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringTime, dxSkinStardust,
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
-  dxSkinscxPCPainter, cxNavigator, System.Actions, siComp, siLngLnk
-  , uCustomReports;
+  dxSkinscxPCPainter, cxNavigator, System.Actions, siComp, siLngLnk, uCustomReports;
 
 type
   TfAddKundSpecifika = class(TForm)

@@ -1629,6 +1629,11 @@ type
     cds_AngloExportDtlsWidth: TStringField;
     cds_AngloExportDtlsLength: TFloatField;
     cds_AngloExportDtlsQuantity: TIntegerField;
+    sq_InsInvNo_VIDA_ENERGI: TFDQuery;
+    sq_GetNextInvoiceNo_VIDA_ENERGI: TFDQuery;
+    sq_GetNextInvoiceNo_VIDA_ENERGINEXT_INVNO: TIntegerField;
+    sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI: TFDQuery;
+    sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1687,6 +1692,7 @@ type
     { Private declarations }
     GlobalLoadDetailNo: Integer;
     lbList: TStringList;
+    procedure AssignVIDAENERGIInvoiceNumber(const InternalInvoiceNo  : Integer) ;
     procedure CopyLoads(const InternalInvoiceNo  : Integer) ;
     procedure CopyAvrop(const InternalInvoiceNo, CopyToOrderNo, SalesOrderNo : Integer) ;
     function  AssignPurchase_VPInvoiceNumber(const InternalInvoiceNo  : Integer): Integer;
@@ -1942,8 +1948,201 @@ Begin
 
     VP_INVOICE_PO:
       AssignPurchase_VPInvoiceNumber(InternalInvoiceNo);
+
+    VE_INVOICE:
+      AssignVIDAENERGIInvoiceNumber(InternalInvoiceNo);
+
   End;
 End;
+
+////////////////////////////////////////// VIDA ENERGI ////////////////////////////////////////
+
+
+procedure TdmVidaInvoice.AssignVIDAENERGIInvoiceNumber(const InternalInvoiceNo
+  : Integer);
+Var
+  mrResult: Word;
+  InvoiceNo, OrgInternalInvoiceNo, QInvNo: Integer;
+  FormEnterInvoiceNo: TFormEnterInvoiceNo;
+
+  Function GetInvNo: Integer;
+  Begin
+    // sq_GetNextInvoiceNo.Close ;
+    sq_GetNextInvoiceNo_VIDA_ENERGI.Open;
+    Try
+      Result := sq_GetNextInvoiceNo_VIDA_ENERGINEXT_INVNO.AsInteger;
+    Finally
+      sq_GetNextInvoiceNo_VIDA_ENERGI.Close;
+    End;
+  End;
+
+procedure InsertInvoiceNo_VE(const InvoiceNo, InternalInvoiceNo
+  : Integer);
+Begin
+  Try
+    sq_InsInvNo_VIDA_ENERGI.ParamByName('InvoiceNo').AsInteger         := InvoiceNo;
+    sq_InsInvNo_VIDA_ENERGI.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo;
+    sq_InsInvNo_VIDA_ENERGI.ParamByName('UserCreated').AsInteger       := ThisUser.UserID;
+    sq_InsInvNo_VIDA_ENERGI.ParamByName('UserModified').AsInteger      := ThisUser.UserID;
+    sq_InsInvNo_VIDA_ENERGI.ParamByName('DateCreated').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(Now);
+    sq_InsInvNo_VIDA_ENERGI.ExecSQL;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+  Function GetOrgInvoiceNoByCreditInternalInvoiceNo: Integer;
+  Begin
+    Try
+      sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI.ParamByName('NewInternalInvoiceNo').AsInteger
+        := InternalInvoiceNo;
+      sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI.Active := True;
+      if not sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI.Eof then
+        Result := sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo.AsInteger
+      else
+        Result := -1;
+    Finally
+      sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI.Active := False;
+    End;
+  End;
+
+  procedure Insert_PkgType_Invoice;
+  Begin
+    // sq_InvLOs.ParamByName('InternalInvoiceNo').AsInteger  := InternalInvoiceNo ;
+    // sq_InvLOs.Active := True ;
+    // Try
+    // sq_InvLOs.First ;
+    // While not sq_InvLOs.Eof do
+    // Begin
+    Try
+      sq_PkgType_InvoiceForCredit.ParamByName('InternalInvoiceNo').AsInteger :=
+        InternalInvoiceNo;
+      // sq_PkgType_Invoice.ParamByName('SupplierNo').AsInteger        := cdsInvoiceHeadSupplierNo.AsInteger ;//VIDA_WOOD_CLIENTNO ;
+      // sq_PkgType_Invoice.ParamByName('ShippingPlanNo').AsInteger    := sq_InvLOsShippingPlanNo.AsInteger ;
+      // sq_PkgType_Invoice.ParamByName('CustomerNo').AsInteger        := cdsInvoiceHeadCustomerNo.AsInteger ; // Avrop customerNo
+      sq_PkgType_InvoiceForCredit.ExecSQL;
+    except
+      On E: Exception do
+      Begin
+        dmsSystem.FDoLog(E.Message);
+        // ShowMessage(E.Message);
+        Raise;
+      End;
+    end;
+    // sq_InvLOs.Next ;
+    // End ;//While..
+    // Finally
+    // sq_InvLOs.Active  := False ;
+    // End ;
+  End;
+
+// Main AssignNormalInvoiceNumber
+Begin
+  // Result:= -1 ;
+  with dmVidaInvoice do
+  Begin
+    OrgInternalInvoiceNo := GetOrgInvoiceNoByCreditInternalInvoiceNo;
+
+    InvoiceNo := GetInvoiceNo(InternalInvoiceNo, VE_INVOICE);
+    if InvoiceNo > 0 then
+    Begin
+      showmessage('Invoice number (' + inttostr(InvoiceNo) + ') already assigned.');
+      Exit;
+    End
+    else
+    Begin
+      mrResult := MessageDlg
+        ('Click Yes to generate invoice number automatically, or click no to enter the invoice number manually ',
+        mtConfirmation, [mbYes, mbNo, mbCancel], 0);
+      if mrResult = mrNo then
+      Begin
+        FormEnterInvoiceNo := TFormEnterInvoiceNo.Create(Nil);
+        Try
+          FormEnterInvoiceNo.Caption := 'Ange fakturanr';
+          if FormEnterInvoiceNo.ShowModal = MrOK then
+          Begin;
+            // START A TRANSACTION
+            dmsConnector.StartTransaction;
+            Try
+              if StrToInt(FormEnterInvoiceNo.eFakturanr.Text) > 0 then
+              Begin
+                InsertInvoiceNo_VE(StrToInt(FormEnterInvoiceNo.eFakturanr.Text),
+                  InternalInvoiceNo);
+                if (cdsInvoiceHeadDebit_Credit.AsInteger = cCredit) and
+                  (cdsInvoiceHeadDelKredit.AsInteger = 0) then
+                Begin
+                  vis_CopyLoad(OrgInternalInvoiceNo, // Old OrgInternalInvoiceNo
+                    InternalInvoiceNo); // NewInternalInvoiceNo
+                  Insert_PkgType_Invoice;
+                End;
+                if cdsInvoiceHeadDelKredit.AsInteger = 1 then
+                  InsertAttest(StrToInt(FormEnterInvoiceNo.eFakturanr.Text));
+              End;
+
+              PkgLogInvoiced(InternalInvoiceNo, 25);
+
+              dmsConnector.Commit;
+            Except
+              On E: Exception do
+              Begin
+                dmsConnector.Rollback;
+                dmsSystem.FDoLog(E.Message);
+                Raise;
+              End;
+            End;
+          End;
+
+        Finally
+          FormEnterInvoiceNo.Free;
+        End;
+      End // End of Manual invoice number entry
+      else if mrResult = mrYes then
+      Begin // Auto invoice number
+        if MessageDlg('Do you want to continue generating the invoice number automatically?', mtConfirmation,
+          [mbYes, mbNo], 0) = mrYes then
+        Begin
+          // START A TRANSACTION
+          dmsConnector.StartTransaction;
+          Try
+            QInvNo := GetInvNo;
+
+            if QInvNo > 0 then
+            Begin
+              InsertInvoiceNo_VE(QInvNo, InternalInvoiceNo);
+              if (cdsInvoiceHeadDebit_Credit.AsInteger = cCredit) and
+                (cdsInvoiceHeadDelKredit.AsInteger = 0) and
+                (OrgInternalInvoiceNo > 0) then
+              Begin
+                vis_CopyLoad(OrgInternalInvoiceNo, // Old OrgInternalInvoiceNo
+                  InternalInvoiceNo); // NewInternalInvoiceNo
+                Insert_PkgType_Invoice;
+              End;
+              if cdsInvoiceHeadDelKredit.AsInteger = 1 then
+                InsertAttest(QInvNo);
+            End;
+            dmsConnector.Commit;
+          Except
+            On E: Exception do
+            Begin
+              dmsConnector.Rollback;
+              dmsSystem.FDoLog(E.Message);
+              Raise;
+            End;
+          End;
+
+        End;
+      End;
+    End;
+
+  End; // with
+End;
+
+
+///////////////////////////////// END VIDA ENERGI ///////////////////////////////////////////
 
 function TdmVidaInvoice.AssignPurchase_VPInvoiceNumber(const InternalInvoiceNo
   : Integer): Integer;
@@ -3494,6 +3693,7 @@ procedure TdmVidaInvoice.DataModuleCreate(Sender: TObject);
 begin
   fInternalInvoiceNo := -1;
   mtInvoiceType.Active := True;
+  mtInvoiceType.InsertRecord([12, 'VE [VIDA ENERGI]']);
   mtInvoiceType.InsertRecord([11, 'VP Purchase']);
   mtInvoiceType.InsertRecord([10, 'UK Purchase']);
   mtInvoiceType.InsertRecord([9, 'VIDA UK']);
@@ -9487,7 +9687,7 @@ Begin
         // GetTotalAM3PerLO(cdsInvoiceHeadInternalInvoiceNo.AsInteger, sq_LONoInInvoiceShippingPlanNo.AsInteger) ;
         cdsInvoiceDetail.Filter := 'ShippingPlanNo = ' +
           cdsInvoiceLOShippingPlanNo.AsString +
-          ' AND (ArticleNo = 1 OR ArticleNo = 3)';
+          ' AND (ArticleNo = 1 OR ArticleNo = 3 OR ArticleNo = 18)';
         cdsInvoiceDetail.Filtered := True;
         cdsInvoiceDetail.First;
         Try

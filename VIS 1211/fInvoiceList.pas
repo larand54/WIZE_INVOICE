@@ -643,6 +643,7 @@ begin
   ccbInvoiceType.Properties.Items.AddCheckItem('AGENT', '6');
   ccbInvoiceType.Properties.Items.AddCheckItem('VTA', '7');
   ccbInvoiceType.Properties.Items.AddCheckItem('BKO', '8');
+  ccbInvoiceType.Properties.Items.AddCheckItem('VIDA ENERGI', '12');
 end;
 
 procedure TfrmInvoiceList.FormDestroy(Sender: TObject);

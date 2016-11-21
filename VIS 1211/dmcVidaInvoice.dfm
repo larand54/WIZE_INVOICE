@@ -2,7 +2,7 @@ object dmVidaInvoice: TdmVidaInvoice
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 1183
+  Height = 1232
   Width = 1206
   object dsrcInvoiceHead: TDataSource
     DataSet = cdsInvoiceHead
@@ -6928,6 +6928,13 @@ object dmVidaInvoice: TdmVidaInvoice
       'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
       'END'
       ''
+      'WHEN VU.VolumeUnitName = '#39'Pall'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PL.ActualLengthMM * ' +
+        'PTD.NoOfPieces  As decimal(10,3)),3)'
+      ''
+      'END'
+      ''
       ''
       ''
       'END AS OrderVolume,'
@@ -7134,6 +7141,16 @@ object dmVidaInvoice: TdmVidaInvoice
       'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
       'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
       'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'kg'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PL.ActualLengthMM * PTD.NoOfPieces As decimal(10,3)),' +
+        '3) -- AS m3NomSizeActualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
       ''
       'END AS PriceVolume'
       ''
@@ -17019,8 +17036,8 @@ object dmVidaInvoice: TdmVidaInvoice
       
         'SELECT MAX(InvoiceNo) + 1 AS NEXT_INVNO FROM dbo.InvoiceNumber_U' +
         'K')
-    Left = 224
-    Top = 208
+    Left = 96
+    Top = 1080
     object sq_GetNextInvoiceNo_UKNEXT_INVNO: TIntegerField
       FieldName = 'NEXT_INVNO'
       Origin = 'NEXT_INVNO'
@@ -18082,6 +18099,92 @@ object dmVidaInvoice: TdmVidaInvoice
     object cds_AngloExportDtlsQuantity: TIntegerField
       FieldName = 'Quantity'
       Origin = 'Quantity'
+    end
+  end
+  object sq_InsInvNo_VIDA_ENERGI: TFDQuery
+    CachedUpdates = True
+    Indexes = <
+      item
+        Active = True
+        Selected = True
+        Name = 'cdsInvoiceNumbersInvNo'
+        Fields = 'InvoiceNo'
+      end>
+    IndexName = 'cdsInvoiceNumbersInvNo'
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'INSERT INTO dbo.InvoiceNumber_VE(InvoiceNo, InternalInvoiceNo, U' +
+        'serCreated, UserModified, DateCreated)'
+      
+        'VALUES(:InvoiceNo, :InternalInvoiceNo, :UserCreated, :UserModifi' +
+        'ed, :DateCreated)'
+      '')
+    Left = 408
+    Top = 1112
+    ParamData = <
+      item
+        Name = 'INVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'USERCREATED'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'USERMODIFIED'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'DATECREATED'
+        DataType = ftTimeStamp
+        ParamType = ptInput
+      end>
+  end
+  object sq_GetNextInvoiceNo_VIDA_ENERGI: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      
+        'SELECT MAX(InvoiceNo) + 1 AS NEXT_INVNO FROM dbo.InvoiceNumber_V' +
+        'E')
+    Left = 96
+    Top = 1138
+    object sq_GetNextInvoiceNo_VIDA_ENERGINEXT_INVNO: TIntegerField
+      FieldName = 'NEXT_INVNO'
+      Origin = 'NEXT_INVNO'
+      ReadOnly = True
+    end
+  end
+  object sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'Select InternalInvoiceNo from dbo.Invoice_Credited_VE'
+      'Where NewInternalInvoiceNo = :NewInternalInvoiceNo')
+    Left = 264
+    Top = 1152
+    ParamData = <
+      item
+        Name = 'NEWINTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo: TIntegerField
+      FieldName = 'InternalInvoiceNo'
+      Origin = 'InternalInvoiceNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
   end
 end
