@@ -138,7 +138,8 @@ var
 
 implementation
 
-uses dmsDataConn, dmLM1, dmsVidaSystem, uAvdelning, udmLanguage;
+uses dmsDataConn, dmLM1, dmsVidaSystem, uAvdelning, udmLanguage, dmsVidaContact,
+  VidaUser;
 
 {$R *.dfm}
 
@@ -267,9 +268,17 @@ end;
 
 procedure TfKontoLogik.FormCreate(Sender: TObject);
 begin
+
+  dmsContact.cds_SR.Active := False ;
+  dmsContact.cds_SR.ParamByName('SalesRegionNo').AsInteger  := dmsContact.GetSalesRegionNo(ThisUser.CompanyNo) ;
+  dmsContact.cds_SR.Active := True ;
+
   if (not Assigned(daMoLM1)) then
     daMoLM1 := TdaMoLM1.Create(nil);
   dmsSystem.AssignDMToThisWork('TfKontoLogik', 'daMoLM1');
+
+
+
 
   With daMoLM1 do
   begin

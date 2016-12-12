@@ -216,6 +216,7 @@ const
   cVidaPackaging = 1879;
   cOsterlovsta = 4275;
   VIDA_BORGSTENA_BOTLR = 5666; // VIDA BORGSTENA AB (TS/LUCK/RAM)
+  VIDA_ENERGI = 2846 ;
   // i min testdatabas använd VIDA_DANMARK = 3099
 
   ANY_CUSTOMER = -1;
@@ -326,6 +327,7 @@ const
   UK_INVOICE                      = 9 ;
   UK_INVOICE_PO                   = 10 ;
   VP_INVOICE_PO                   = 11 ;
+  VE_INVOICE                      = 12 ;
 
   SHOW_LO_LENGTHS = 0;
   SHOW_ALL_LENGTHS = 1;

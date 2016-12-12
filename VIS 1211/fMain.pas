@@ -591,7 +591,7 @@ begin
     close;
   End;
 
-  ChangeUserSettingsOnStartUp ;
+ //LARS ChangeUserSettingsOnStartUp ;
 
 
   if forms.Screen.MonitorCount = 2 then

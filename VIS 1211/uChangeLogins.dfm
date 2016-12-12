@@ -1,82 +1,123 @@
 object OKHelpBottomDlg: TOKHelpBottomDlg
   Left = 335
   Top = 193
-  ActiveControl = eAD_Name
   Caption = 'Byt anv'#228'ndare'
-  ClientHeight = 179
-  ClientWidth = 375
+  ClientHeight = 265
+  ClientWidth = 472
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 13
+  OnCreate = FormCreate
+  PixelsPerInch = 120
+  TextHeight = 16
   object Label1: TLabel
-    Left = 32
-    Top = 40
-    Width = 48
-    Height = 13
+    Left = 39
+    Top = 49
+    Width = 60
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'FD Namn:'
   end
   object Label2: TLabel
-    Left = 32
-    Top = 80
-    Width = 43
-    Height = 13
+    Left = 39
+    Top = 98
+    Width = 55
+    Height = 16
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Databas:'
   end
   object eAD_Name: TEdit
-    Left = 88
-    Top = 32
-    Width = 121
-    Height = 21
-    TabOrder = 0
+    Left = 266
+    Top = 9
+    Width = 149
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    TabOrder = 1
+    Visible = False
   end
   object Button1: TButton
-    Left = 216
-    Top = 29
-    Width = 153
-    Height = 25
+    Left = 266
+    Top = 36
+    Width = 188
+    Height = 30
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'H'#228'mta standard FD namn'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = Button1Click
   end
   object eDatabas: TEdit
-    Left = 88
-    Top = 72
-    Width = 121
-    Height = 21
-    TabOrder = 1
+    Left = 106
+    Top = 88
+    Width = 149
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    TabOrder = 2
   end
   object Button2: TButton
-    Left = 216
-    Top = 69
-    Width = 153
-    Height = 25
+    Left = 266
+    Top = 85
+    Width = 188
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'H'#228'mta standard databas'
-    TabOrder = 3
+    TabOrder = 4
     OnClick = Button2Click
   end
   object BitBtn1: TBitBtn
-    Left = 96
-    Top = 138
-    Width = 75
-    Height = 25
+    Left = 118
+    Top = 170
+    Width = 92
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Kind = bkOK
     NumGlyphs = 2
-    TabOrder = 4
+    TabOrder = 5
   end
   object BitBtn2: TBitBtn
-    Left = 190
-    Top = 138
-    Width = 75
-    Height = 25
+    Left = 234
+    Top = 170
+    Width = 92
+    Height = 31
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Kind = bkCancel
     NumGlyphs = 2
-    TabOrder = 5
+    TabOrder = 6
+  end
+  object cbUserName: TComboBox
+    Left = 106
+    Top = 39
+    Width = 153
+    Height = 24
+    TabOrder = 0
+    OnChange = cbUserNameChange
   end
   object siLangLinked_OKHelpBottomDlg: TsiLangLinked
     Version = '7.2'
@@ -205,5 +246,18 @@ object OKHelpBottomDlg: TOKHelpBottomDlg
       5300450054000100440045004600410055004C0054005F004300480041005200
       5300450054000100440045004600410055004C0054005F004300480041005200
       5300450054000D000A00}
+  end
+  object cds_users: TFDQuery
+    Active = True
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'select UserName from dbo.users')
+    Left = 352
+    Top = 216
+    object cds_usersUserName: TStringField
+      FieldName = 'UserName'
+      Origin = 'UserName'
+      Required = True
+    end
   end
 end

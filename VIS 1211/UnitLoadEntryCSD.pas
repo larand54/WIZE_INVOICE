@@ -34,7 +34,8 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, cxPCdxBarPopupMenu,
   dxSkinsdxBarPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk;
+  dxBarBuiltInMenu, System.Actions, siComp, siLngLnk, cxGridCustomPopupMenu,
+  cxGridPopupMenu;
 
 type
   TfLoadEntryCSD = class(TForm)
@@ -283,6 +284,9 @@ type
     dxBarButton2: TdxBarButton;
     cxStyleFuchsia: TcxStyle;
     siLangLinked_fLoadEntryCSD: TsiLangLinked;
+    grdPkgsDBBandedTableView1KG: TcxGridDBBandedColumn;
+    cxGridPopupMenu1: TcxGridPopupMenu;
+    cxGridPopupMenu2: TcxGridPopupMenu;
 
     procedure lbRemoveLONumberClick(Sender: TObject);
     procedure lbRemovePackageClick(Sender: TObject);

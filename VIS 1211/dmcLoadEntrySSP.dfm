@@ -1419,6 +1419,7 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
   object cds_LoadPackages: TFDQuery
     AfterInsert = cds_LoadPackagesAfterInsert
     BeforePost = cds_LoadPackagesBeforePost
+    OnCalcFields = cds_LoadPackagesCalcFields
     OnPostError = cds_LoadPackagesPostError
     CachedUpdates = True
     Indexes = <
@@ -1786,6 +1787,12 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       Origin = 'Certfiering'
       ProviderFlags = []
       Size = 5
+    end
+    object cds_LoadPackagesKG: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'KG'
+      ProviderFlags = []
+      Calculated = True
     end
   end
   object cds_LO_LookUp: TFDQuery

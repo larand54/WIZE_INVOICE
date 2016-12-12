@@ -54,87 +54,130 @@ object dm_SokFormular: Tdm_SokFormular
         #39#39')))+'
       
         'RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,'#39#39'))) AS UKEY' +
-        ', '
+        ','
       'CASE'
       'WHEN CSH.SHIPPINGPLANSTATUS = 0 THEN '#39'CANCEL'#39
       'WHEN CSH.SHIPPINGPLANSTATUS = 1 THEN '#39'PROGRESS'#39
       'WHEN CSH.SHIPPINGPLANSTATUS = 2 THEN '#39'COMPLETE'#39
       'END AS AVROP_STATUS,'
       #9'CSH.ShippingPlanNo        '#9'AS LO,'
-      '  CSH.ShippingPlanNo, '
+      'CSH.ShippingPlanNo,'
       'CASE'
       'WHEN SP.ShippingPlanNo is null THEN LLCSH.CityName'
       'ELSE'
-      'LL.CityName'#9'END             AS LOADING_LOCATION, '
-      #9'Supp.SearchName'#9#9#9'        AS SUPPLIER, '
-      #9'OH.OrderNoText'#9#9#9'        AS ORDER_NO, '
-      #9'CSH.Reference'#9#9#9'          AS CUST_REFERENCE, '
-      #9'CSH.ETDYearWeek'#9#9#9'        AS FROM_WEEK, '
-      #9'CSH.ETDWeekEnd'#9#9#9'        AS TO_WEEK, '
-      #9'C.SearchName            '#9'  AS CUSTOMER, '
-      #9'AG.SearchName'#9#9#9'          AS AGENT, '
-      #9'DT.DeliveryTerm'#9#9#9'        AS DELIVERY_TERM, '
+      'LL.CityName'#9'END             AS LOADING_LOCATION,'
+      #9'Supp.SearchName'#9#9#9'        AS SUPPLIER,'
+      #9'OH.OrderNoText'#9#9#9'        AS ORDER_NO,'
+      #9'CSH.Reference'#9#9#9'          AS CUST_REFERENCE,'
+      #9'CSH.ETDYearWeek'#9#9#9'        AS FROM_WEEK,'
+      #9'CSH.ETDWeekEnd'#9#9#9'        AS TO_WEEK,'
+      #9'C.SearchName            '#9'  AS CUSTOMER,'
+      #9'AG.SearchName'#9#9#9'          AS AGENT,'
+      #9'DT.DeliveryTerm'#9#9#9'        AS DELIVERY_TERM,'
       #9'isnull(RTRIM(ST_ADR.PostalCode)+'#39' / '#39'   ,'#39#39')  +'
       
         #9'RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,'#39#39'))) AS POS' +
         'TAL_CODE_DESTINATION,'
-      '  ST_AdrCtry.CountryName      AS Land,'
-      #9'ST.Reference'#9#9#9'          AS SHIPTO_REFERENCE, '
-      #9'BK.PreliminaryRequestedPeriod, '
-      #9'SC.SearchName'#9#9#9'          AS SHIPPER, '
-      #9'Bk.ShippingCompanyBookingID'#9'AS SHIPPINGCOMPANYBOOKINGID, '
-      #9'Bk.ShippersShipDate'#9#9'      AS SHIPPERSSHIPDATE, '
-      #9'Bt.BookingType'#9#9#9'        AS TRANSPORT, '
-      #9'MR.MarketRegionName'#9#9'      AS MARKET_REGION, '
-      #9'Bk.BookingNo    '#9#9'        AS BookingNo, '
-      #9'OL.OrderLineDescription'#9#9'AS PROD_DESC, '
-      #9'CSD.LengthDescription           AS LENGTH_DESC, '
-      'Bk.Panic_Note AS PANIC_NOTE, '
-      'CR.CarrierName AS VESSEL, '
-      'VG.ETD, '
-      'VG.ETA,'
+      'ST_AdrCtry.CountryName AS Land,'
+      #9'ST.Reference'#9#9#9'          AS SHIPTO_REFERENCE,'
+      #9'BK.PreliminaryRequestedPeriod,'
+      #9'SC.SearchName'#9#9#9'          AS SHIPPER,'
+      #9'Bk.ShippingCompanyBookingID'#9'AS SHIPPINGCOMPANYBOOKINGID,'
+      #9'Bk.ShippersShipDate'#9#9'      AS SHIPPERSSHIPDATE,'
+      #9'Bt.BookingType'#9#9#9'        AS TRANSPORT,'
+      #9'MR.MarketRegionName'#9#9'      AS MARKET_REGION,'
+      #9'Bk.BookingNo    '#9#9'        AS BookingNo,'
+      #9'OL.OrderLineDescription'#9#9'AS PROD_DESC,'
+      #9'CSD.LengthDescription           AS LENGTH_DESC,'
+      #9'Bk.Panic_Note AS PANIC_NOTE,'
+      #9'CR.CarrierName AS VESSEL,'
+      #9'VG.ETD,'
+      #9'VG.ETA,'
       ''
-      'CASE'
+      #9'/* Avropsvolymer */'
       
-        'WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net' +
-        ')    ) As decimal(18,3)),3)'
-      'ELSE'
-      'ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)'
-      'END AS AM3,'
+        #9'ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) AS Avro' +
+        'pAM3,'
       ''
-      'CASE'
-      'WHEN SP.ShippingPlanNo is null THEN'
-      '(Select AM3 From  DelperCSDLO LD'
+      #9'(Select LD.AM3 From  dbo.DelperCSDLO LD'
       
-        'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectN' +
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPAM3,'
+      ''
+      #9'CASE WHEN (Select isnull(AM3,0) From  dbo.DelperCSDLO LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo) IS null THEN'
+      #9'ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)'
+      #9'ELSE'
+      #9'ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) -'
+      #9'(Select isnull(AM3,0) From  dbo.DelperCSDLO LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo) END AS RESTAVROPAM3,'
+      ''
+      #9'/* LOVolymer */'
+      
+        #9'ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) AS' +
+        ' AM3,'
+      ''
+      #9'(Select AM3 From  dbo.DelperSSPCDS LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectN' +
         'o'
-      'AND LD.CustomerNo = CSH.CustomerNo)'
-      'ELSE'
-      '(Select AM3 From  dbo.DelperSSPCDS LD'
-      'WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo'
-      'AND LD.SupplierNo = Supp.ClientNo)'
-      'END AS LEVLO,'
+      #9'AND LD.SupplierNo = Supp.ClientNo'
+      #9') AS LEVLO,'
       ''
-      'CASE'
+      #9'CASE WHEN (Select AM3 From  dbo.DelperSSPCDS LD'
       
-        'WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net' +
-        ')    ) As decimal(18,3)),3)'
-      'ELSE'
-      'ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)'
-      'END -'
-      'CASE'
-      'WHEN SP.ShippingPlanNo is null THEN'
-      '(Select isnull(AM3,0) From DelperCSDLO LD'
-      
-        'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectN' +
+        #9'WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectN' +
         'o'
-      'AND LD.CustomerNo = CSH.CustomerNo)'
-      'ELSE'
-      '(Select isnull(AM3,0) From  dbo.DelperSSPCDS LD'
-      'WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo'
-      'AND LD.SupplierNo = Supp.ClientNo)'
-      'END AS REST,'
+      #9'AND LD.SupplierNo = Supp.ClientNo) is null then'
+      #9'ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)'
+      #9'ELSE'
+      #9'ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) -'
+      #9'(Select isnull(AM3,0) From  dbo.DelperSSPCDS LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectN' +
+        'o'
+      #9'AND LD.SupplierNo = Supp.ClientNo) END AS REST,'
       ''
+      ''
+      #9'/* Avropsvolymer KG */'
+      
+        #9' ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM ' +
+        'FROM dbo.ProductLength pl'
+      #9' where pl.ProductLengthNo = OL.ProductLengthNo) as AvropKG,'
+      ''
+      #9'(Select LD.Kg From [dbo].[DelperCSDLO_KG] LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPKG,'
+      ''
+      #9'CASE WHEN (Select LD.Kg From [dbo].[DelperCSDLO_KG] LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo) IS NULL THEN'
+      
+        #9'ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM F' +
+        'ROM dbo.ProductLength pl'
+      #9' where pl.ProductLengthNo = OL.ProductLengthNo)'
+      #9' ELSE'
+      
+        #9' ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM ' +
+        'FROM dbo.ProductLength pl'
+      #9' where pl.ProductLengthNo = OL.ProductLengthNo) -'
+      #9' (Select LD.Kg From [dbo].[DelperCSDLO_KG] LD'
+      
+        #9'WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObject' +
+        'No'
+      #9'AND LD.CustomerNo = CSH.CustomerNo)'
+      #9'END AS RESTAVROPKG,'
       ''
       'Bk.SupplierReference ,'
       
@@ -143,58 +186,61 @@ object dm_SokFormular: Tdm_SokFormular
       'WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo'
       'AND (SPP.ShippingPlanStatus <> 7'
       ' AND SPP.ShippingPlanStatus <> 8)'
-      ') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType,'
-      'Bk.VoyageNo'
-      ''
-      'FROM'#9'dbo.CustomerShippingPlanHeader CSH '
-      #9'INNER JOIN dbo.Client '#9#9#9'C'#9'ON '#9'C.ClientNo'#9#9'= CSH.CustomerNo '
+      ') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType, Bk.VoyageNo'
+      'FROM'#9'dbo.CustomerShippingPlanHeader CSH'
+      #9'INNER JOIN dbo.Client '#9#9#9'C'#9'ON '#9'C.ClientNo'#9#9'= CSH.CustomerNo'
       
         #9'LEFT OUTER JOIN dbo.MarketRegion'#9'MR'#9'ON'#9'MR.MarketRegionNo'#9'= C.Ma' +
-        'rketRegionNo '
+        'rketRegionNo'
       #9'LEFT OUTER JOIN dbo.PhysicalInventoryPoint PIP'
       
         #9'INNER JOIN dbo.CITY'#9#9'LLCSH'#9'ON'#9'LLCSH.CityNo '#9#9'= PIP.PhyInvPointN' +
         'ameNo'
       #9'on PIP.PhysicalInventoryPointNo = CSH.LoadingLocationNo'
-      #9'Left outer JOIN dbo.CustomerShippingPlanDetails CSD '#9
-      #9'INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo '
-      #9'AND OL.OrderLineNo = CSD.OrderLineNo '
-      #9'ON '#9'CSD.ShippingPlanNo '#9'= CSH.ShippingPlanNo  '
-      #9'INNER JOIN dbo.Orders '#9#9#9'OH '
-      #9'LEFT OUTER JOIN dbo.Client '#9#9#9'AG'#9'ON '#9'AG.ClientNo'#9#9'= OH.AgentNo '
+      #9'Left outer JOIN dbo.CustomerShippingPlanDetails CSD'
+      #9'INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo'
+      #9'AND OL.OrderLineNo = CSD.OrderLineNo'
+      #9'ON '#9'CSD.ShippingPlanNo '#9'= CSH.ShippingPlanNo'
+      
+        #9'Inner join dbo.ProdInstru pin on pin.ProdInstruNo = OL.ProdInst' +
+        'ructNo'
+      
+        #9'Left Outer join dbo.PackageSize ps on ps.PackageSizeNo = pin.Pa' +
+        'ckage_Size'
+      #9'and ps.LanguageCode = 1'
+      #9'INNER JOIN dbo.Orders '#9#9#9'OH'
+      #9'LEFT OUTER JOIN dbo.Client '#9#9#9'AG'#9'ON '#9'AG.ClientNo'#9#9'= OH.AgentNo'
       
         #9'LEFT OUTER JOIN dbo.DeliveryTerm'#9'DT'#9'ON'#9'DT.DeliveryTerm_No'#9#9'= OH' +
-        '.DeliveryTermsNo '
-      #9#9#9#9#9#9#9'ON '#9'OH.OrderNo'#9#9#9'= CSH.OrderNo '
-      #9'LEFT OUTER JOIN ShippingPlan_ShippingAddress ST '
+        '.DeliveryTermsNo'
+      #9#9#9#9#9#9#9'ON '#9'OH.OrderNo'#9#9#9'= CSH.OrderNo'
+      #9'LEFT OUTER JOIN ShippingPlan_ShippingAddress ST'
       
         #9'INNER JOIN dbo.Address '#9#9'ST_ADR'#9#9'ON'#9'ST_ADR.AddressNo'#9'= ST.Addre' +
-        'ssNo '
+        'ssNo'
       
         #9'INNER JOIN dbo.CITY'#9#9'ST_AdrCY'#9'ON'#9'ST_AdrCY.CityNo '#9'= ST_ADR.City' +
-        'No '
+        'No'
       
         #9'INNER JOIN dbo.Country'#9#9'ST_AdrCtry'#9'ON'#9'ST_AdrCtry.CountryNo '#9'= S' +
-        'T_ADR.CountryNo '
-      #9#9#9#9#9#9#9'ON'#9'ST.ShippingPlanNo'#9'= CSD.ShippingPlanNo '
-      #9#9#9#9#9#9#9'AND'#9'ST.Reference'#9#9'= CSD.Reference '
-      '    '#9'LEFT OUTER JOIN dbo.Booking'#9#9'Bk '
+        'T_ADR.CountryNo'
+      #9#9#9#9#9#9#9'ON'#9'ST.ShippingPlanNo'#9'= CSD.ShippingPlanNo'
+      #9#9#9#9#9#9#9'AND'#9'ST.Reference'#9#9'= CSD.Reference'
+      '    '#9'LEFT OUTER JOIN dbo.Booking'#9#9'Bk'
       #9'Left Outer JOIN dbo.Voyage'#9#9'Vg '#9'ON  '#9'Bk.VoyageNo'#9#9'= Vg.VoyageNo'
       
         #9'Left Outer JOIN dbo.Client'#9#9'SC '#9'ON  '#9'Bk.ShippingCompanyNo '#9'= SC' +
-        '.ClientNo '
+        '.ClientNo'
       
         #9'Left outer JOIN dbo.Carrier            '#9'Cr '#9'ON  '#9'Vg.CarrierNo  ' +
-        '  '#9'= Cr.CarrierNo '
+        '  '#9'= Cr.CarrierNo'
       
         #9'Left Outer Join dbo.BookingType'#9#9'Bt'#9'ON'#9'Bt.BookingTypeNo'#9'= Bk.Bo' +
-        'okingTypeNo '
-      #9#9#9#9#9#9#9'ON  '#9'CSD.ShippingPlanNo '#9'= Bk.ShippingPlanNo '
-      #9'LEFT OUTER JOIN dbo.SupplierShippingPlan          SP '
-      #9'INNER JOIN dbo.CITY'#9#9'LL'#9'ON'#9'LL.CityNo '#9#9'= SP.LoadingLocationNo '
-      
-        #9'INNER JOIN dbo.Client '#9#9'Supp'#9'ON '#9'Supp.ClientNo'#9#9'= SP.SupplierNo' +
-        ' '
+        'okingTypeNo'
+      #9#9#9#9#9#9#9'ON  '#9'CSD.ShippingPlanNo '#9'= Bk.ShippingPlanNo'
+      #9'LEFT OUTER JOIN dbo.SupplierShippingPlan          SP'
+      #9'INNER JOIN dbo.CITY'#9#9'LL'#9'ON'#9'LL.CityNo '#9#9'= SP.LoadingLocationNo'
+      #9'INNER JOIN dbo.Client '#9#9'Supp'#9'ON '#9'Supp.ClientNo'#9#9'= SP.SupplierNo'
       
         '     ON '#9'SP.CustShipPlanDetailObjectNo = CSD.CustShipPlanDetailO' +
         'bjectNo'
@@ -202,13 +248,10 @@ object dm_SokFormular: Tdm_SokFormular
       'AND ((SP.ShippingPlanStatus <> 7'
       ' AND SP.ShippingPlanStatus <> 8)'
       'OR SP.ShippingPlanStatus is null)'
-      ' AND CSH.ShippingPlanStatus = 1 '
-      ' AND OH.SalesRegionNo = 749'
-      ' AND SP.SupplierNo = 76'
-      ' AND SP.LoadingLocationNo = 1933'
-      ' AND Bk.ShippingCompanyNo = 1515'
-      ' AND Bk.BookingTypeNo = 1'
-      ' AND CSH.CustomerNo = 239'
+      ' AND CSH.ShippingPlanStatus = 1'
+      'AND sp.ObjectType in (0,1,2)'
+      ' AND OH.SalesRegionNo = 2846'
+      '-- AND C.MarketRegionNo = 5192'
       
         'GROUP BY CSH.SHIPPINGPLANSTATUS, CSH.ShippingPlanNo, LL.CityName' +
         ', Supp.SearchName,'
@@ -226,12 +269,16 @@ object dm_SokFormular: Tdm_SokFormular
         'p.ClientName, Bk.SupplierReference,'
       
         'CSH.CustomerNo, SP.ShippingPlanNo, Supp.ClientNo, SP.LoadingLoca' +
-        'tionNo, OH.OrderType, LLCSH.CityName'
+        'tionNo, OH.OrderType, LLCSH.CityName,'
+      'Bk.VoyageNo'
       
         ', CSD.CustShipPlanDetailObjectNo, SP.CustShipPlanDetailObjectNo,' +
         ' OL.ProductNo, CSD.ProductLengthNo'
-      ',OL.OrderLineDescription , CSD.LengthDescription, Bk.VoyageNo'
-      '')
+      
+        ',OL.OrderLineDescription , CSD.LengthDescription, OL.ProductLeng' +
+        'thNo, ps.NoOfUnits -- marj, ps.NoOfUnits, OL.NoOfUnits'
+      ''
+      '-- select * from dbo.Client where ClientName like '#39'%energi%'#39)
     Left = 160
     Top = 16
     object cds_MakeSokAvropAVROP_STATUS: TStringField
@@ -485,6 +532,38 @@ object dm_SokFormular: Tdm_SokFormular
       Origin = 'Land'
       ProviderFlags = []
       Size = 30
+    end
+    object cds_MakeSokAvropAvropAM3: TBCDField
+      FieldName = 'AvropAM3'
+      Origin = 'AvropAM3'
+      ReadOnly = True
+      Precision = 18
+      Size = 3
+    end
+    object cds_MakeSokAvropLEVAVROPAM3: TFloatField
+      FieldName = 'LEVAVROPAM3'
+      Origin = 'LEVAVROPAM3'
+      ReadOnly = True
+    end
+    object cds_MakeSokAvropRESTAVROPAM3: TFloatField
+      FieldName = 'RESTAVROPAM3'
+      Origin = 'RESTAVROPAM3'
+      ReadOnly = True
+    end
+    object cds_MakeSokAvropAvropKG: TFloatField
+      FieldName = 'AvropKG'
+      Origin = 'AvropKG'
+      ReadOnly = True
+    end
+    object cds_MakeSokAvropLEVAVROPKG: TFloatField
+      FieldName = 'LEVAVROPKG'
+      Origin = 'LEVAVROPKG'
+      ReadOnly = True
+    end
+    object cds_MakeSokAvropRESTAVROPKG: TFloatField
+      FieldName = 'RESTAVROPKG'
+      Origin = 'RESTAVROPKG'
+      ReadOnly = True
     end
   end
   object cds_SokAvrop: TFDQuery

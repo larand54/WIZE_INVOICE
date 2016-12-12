@@ -2,57 +2,77 @@ object fAddKundSpecifika: TfAddKundSpecifika
   Left = 197
   Top = 107
   Caption = 'Kundspecifika rapporter'
-  ClientHeight = 659
-  ClientWidth = 833
+  ClientHeight = 811
+  ClientWidth = 1025
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 833
-    Height = 73
+    Width = 1025
+    Height = 90
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 0
     DesignSize = (
-      833
-      73)
+      1025
+      90)
     object cxButton1: TcxButton
-      Left = 16
-      Top = 8
-      Width = 75
-      Height = 51
+      Left = 20
+      Top = 10
+      Width = 92
+      Height = 63
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acAddKS
       TabOrder = 0
     end
     object cxButton2: TcxButton
-      Left = 104
-      Top = 8
-      Width = 75
-      Height = 51
+      Left = 128
+      Top = 10
+      Width = 92
+      Height = 63
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acTaBort
       TabOrder = 1
     end
     object cxButton3: TcxButton
-      Left = 184
-      Top = 8
-      Width = 75
-      Height = 51
+      Left = 226
+      Top = 10
+      Width = 93
+      Height = 63
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acSave
       TabOrder = 2
     end
     object cxButton4: TcxButton
-      Left = 755
-      Top = 8
-      Width = 75
-      Height = 51
+      Left = 929
+      Top = 10
+      Width = 93
+      Height = 63
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acClose
       Anchors = [akTop, akRight]
       TabOrder = 3
@@ -60,9 +80,13 @@ object fAddKundSpecifika: TfAddKundSpecifika
   end
   object grdDocs: TcxGrid
     Left = 0
-    Top = 73
-    Width = 833
-    Height = 530
+    Top = 90
+    Width = 1025
+    Height = 652
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 1
     LookAndFeel.Kind = lfFlat
@@ -154,25 +178,37 @@ object fAddKundSpecifika: TfAddKundSpecifika
   end
   object Panel2: TPanel
     Left = 0
-    Top = 603
-    Width = 833
-    Height = 56
+    Top = 742
+    Width = 1025
+    Height = 69
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 2
     object BitBtn1: TBitBtn
-      Left = 320
-      Top = 8
-      Width = 75
-      Height = 36
+      Left = 394
+      Top = 10
+      Width = 92
+      Height = 44
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkOK
       NumGlyphs = 2
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 416
-      Top = 8
-      Width = 75
-      Height = 36
+      Left = 512
+      Top = 10
+      Width = 92
+      Height = 44
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1

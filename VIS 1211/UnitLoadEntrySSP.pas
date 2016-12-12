@@ -347,6 +347,7 @@ type
     grdPkgsDBBandedTableView1Certfiering: TcxGridDBBandedColumn;
     siLangLinked_fLoadEntrySSP: TsiLangLinked;
     grdLORowsDBBandedTableView1ShippingPlanStatus: TcxGridDBBandedColumn;
+    grdPkgsDBBandedTableView1KG: TcxGridDBBandedColumn;
 
     procedure lbRemovePackageClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
