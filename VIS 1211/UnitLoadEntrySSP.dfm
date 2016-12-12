@@ -479,9 +479,9 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alClient
+        PopupMenu = pmLONumber
         TabOrder = 2
         object grdLODBTableView1: TcxGridDBTableView
-          PopupMenu = pmLONumber
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dmLoadEntrySSP.ds_LSP
           DataController.KeyFieldNames = 'LoadNo;ShippingPlanNo'
@@ -811,9 +811,9 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
+      PopupMenu = ppmenuLO_Lines
       TabOrder = 1
       object grdLORowsDBBandedTableView1: TcxGridDBBandedTableView
-        PopupMenu = ppmenuLO_Lines
         Navigator.Buttons.CustomButtons = <>
         OnCellClick = grdLORowsDBBandedTableView1CellClick
         DataController.DataSource = dmLoadEntrySSP.dsLORows
@@ -1467,9 +1467,9 @@ object fLoadEntrySSP: TfLoadEntrySSP
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
+      PopupMenu = pmPkgs
       TabOrder = 1
       object grdPkgsDBBandedTableView1: TcxGridDBBandedTableView
-        PopupMenu = pmPkgs
         OnKeyDown = grdPkgsDBBandedTableView1KeyDown
         Navigator.Buttons.CustomButtons = <>
         OnEditing = grdPkgsDBBandedTableView1Editing
@@ -1676,7 +1676,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           VisibleForCustomization = False
           Width = 49
           Position.BandIndex = 0
-          Position.ColIndex = 31
+          Position.ColIndex = 32
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1ProductLengthNo: TcxGridDBBandedColumn
@@ -1767,7 +1767,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Options.Filtering = False
           Width = 53
           Position.BandIndex = 0
-          Position.ColIndex = 29
+          Position.ColIndex = 30
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1DateCreated: TcxGridDBBandedColumn
@@ -1859,7 +1859,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Options.Filtering = False
           VisibleForCustomization = False
           Position.BandIndex = 0
-          Position.ColIndex = 30
+          Position.ColIndex = 31
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Pkg_State: TcxGridDBBandedColumn
@@ -1869,7 +1869,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Options.Filtering = False
           VisibleForCustomization = False
           Position.BandIndex = 0
-          Position.ColIndex = 32
+          Position.ColIndex = 33
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Pkg_Function: TcxGridDBBandedColumn
@@ -1879,7 +1879,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Options.Filtering = False
           VisibleForCustomization = False
           Position.BandIndex = 0
-          Position.ColIndex = 33
+          Position.ColIndex = 34
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Changed: TcxGridDBBandedColumn
@@ -1889,7 +1889,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Options.Filtering = False
           VisibleForCustomization = False
           Position.BandIndex = 0
-          Position.ColIndex = 34
+          Position.ColIndex = 35
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Defsspno: TcxGridDBBandedColumn
@@ -1900,7 +1900,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           VisibleForCustomization = False
           Width = 51
           Position.BandIndex = 0
-          Position.ColIndex = 35
+          Position.ColIndex = 36
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1OverrideRL: TcxGridDBBandedColumn
@@ -1911,7 +1911,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Properties.ValueUnchecked = 0
           Width = 135
           Position.BandIndex = 0
-          Position.ColIndex = 36
+          Position.ColIndex = 37
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1InvNr: TcxGridDBBandedColumn
@@ -1924,7 +1924,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           Visible = False
           Width = 50
           Position.BandIndex = 0
-          Position.ColIndex = 37
+          Position.ColIndex = 38
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Paketstorlek: TcxGridDBBandedColumn
@@ -1932,7 +1932,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
           PropertiesClassName = 'TcxLabelProperties'
           Width = 148
           Position.BandIndex = 0
-          Position.ColIndex = 38
+          Position.ColIndex = 39
           Position.RowIndex = 0
         end
         object grdPkgsDBBandedTableView1Certfiering: TcxGridDBBandedColumn
@@ -1940,7 +1940,14 @@ object fLoadEntrySSP: TfLoadEntrySSP
           PropertiesClassName = 'TcxLabelProperties'
           Width = 122
           Position.BandIndex = 0
-          Position.ColIndex = 39
+          Position.ColIndex = 40
+          Position.RowIndex = 0
+        end
+        object grdPkgsDBBandedTableView1KG: TcxGridDBBandedColumn
+          DataBinding.FieldName = 'KG'
+          PropertiesClassName = 'TcxLabelProperties'
+          Position.BandIndex = 0
+          Position.ColIndex = 29
           Position.RowIndex = 0
         end
       end
@@ -2374,8 +2381,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         ItemName = 'lbPkgInfo'
       end>
     UseOwnFont = True
-    Left = 280
-    Top = 504
+    Left = 528
+    Top = 656
   end
   object pmLONumber: TdxBarPopupMenu
     BarManager = dxBarManager1

@@ -395,6 +395,7 @@ type
     cds_PrefCommisionInDiscount: TIntegerField;
     cds_PrefFreightInDiscount: TIntegerField;
     cds_PrefStatistikLandNr: TIntegerField;
+    cds_LoadPackagesKG: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
     procedure dspLORowsGetTableName(Sender: TObject; DataSet: TDataSet;
@@ -417,6 +418,7 @@ type
       var Action: TDataAction);
     procedure mtVerkforLOVerkNoChange(Sender: TField);
     procedure mtVerkforLOShipToInvPointNoChange(Sender: TField);
+    procedure cds_LoadPackagesCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
@@ -1335,6 +1337,11 @@ begin
     DataSet.FieldByName('LoadDetailNo').AsInteger:= GlobalLoadDetailNo ;
     GlobalLoadDetailNo := Succ(GlobalLoadDetailNo) ;
     End ; }
+end;
+
+procedure TdmLoadEntryCSD.cds_LoadPackagesCalcFields(DataSet: TDataSet);
+begin
+  cds_LoadPackagesKG.AsFloat := cds_LoadPackagesALMM.AsFloat * cds_LoadPackagesPCS.AsInteger ;
 end;
 
 procedure TdmLoadEntryCSD.cds_LoadHeadPIPNoChange(Sender: TField);

@@ -1962,6 +1962,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
   object cds_LoadPackages: TFDQuery
     AfterInsert = cds_LoadPackagesAfterInsert
     BeforePost = cds_LoadPackagesBeforePost
+    OnCalcFields = cds_LoadPackagesCalcFields
     OnPostError = cds_LoadPackagesPostError
     CachedUpdates = True
     Indexes = <
@@ -2315,6 +2316,12 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       FieldName = 'InvNr'
       Origin = 'InvNr'
       ProviderFlags = []
+    end
+    object cds_LoadPackagesKG: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'KG'
+      ProviderFlags = []
+      Calculated = True
     end
   end
   object sq_GetPkgNos: TFDQuery

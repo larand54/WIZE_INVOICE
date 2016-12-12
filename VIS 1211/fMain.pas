@@ -543,7 +543,7 @@ begin
   CheckMappar;
 
 {$IFDEF DEBUG}
-  if pos('CAR MAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
+  if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
     if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-SPEED' then
       dmsConnector.DriveLetter := 'D:\'
     else if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-FASTER' then

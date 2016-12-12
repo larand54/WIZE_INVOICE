@@ -330,6 +330,7 @@ type
     sq_PkgExistInInventory: TFDQuery;
     sq_PkgExistInInventoryPackageNo: TIntegerField;
     cdsLORowsShippingPlanStatus: TIntegerField;
+    cds_LoadPackagesKG: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure cds_LoadHead1SenderLoadStatusChange(Sender: TField);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
@@ -351,6 +352,7 @@ type
       var Action: TDataAction);
     procedure cdsLORowsCalcFields(DataSet: TDataSet);
     procedure cds_LoadHeadCustomerNoChange(Sender: TField);
+    procedure cds_LoadPackagesCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
@@ -1370,6 +1372,11 @@ begin
     DataSet.FieldByName('LoadDetailNo').AsInteger := GlobalLoadDetailNo ;
     GlobalLoadDetailNo                            := Succ(GlobalLoadDetailNo) ;
     End ; }
+end;
+
+procedure TdmLoadEntrySSP.cds_LoadPackagesCalcFields(DataSet: TDataSet);
+begin
+ cds_LoadPackagesKG.AsFloat := cds_LoadPackagesALMM.AsFloat * cds_LoadPackagesPCS.AsInteger ;
 end;
 
 procedure TdmLoadEntrySSP.cds_LoadHeadPIPNoChange(Sender: TField);

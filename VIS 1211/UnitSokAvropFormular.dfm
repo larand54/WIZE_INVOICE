@@ -18,8 +18,6 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 120
   TextHeight = 16
   object Panel1: TPanel
@@ -551,7 +549,6 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       OptionsBehavior.PullFocusing = True
       OptionsSelection.MultiSelect = True
       OptionsView.Footer = True
-      OptionsView.BandHeaders = False
       Styles.OnGetContentStyle = grdAvropSokDBBandedTableView1StylesGetContentStyle
       Bands = <
         item
@@ -560,6 +557,17 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end
         item
           Caption = 'OTHER'
+        end
+        item
+          Caption = 'AVROP'
+          Options.HoldOwnColumnsOnly = True
+        end
+        item
+          Caption = 'LO'
+        end
+        item
+          Caption = 'VIDA ENERGI'
+          Options.HoldOwnColumnsOnly = True
         end>
       object grdAvropSokDBBandedTableView1AVROP_STATUS: TcxGridDBBandedColumn
         DataBinding.FieldName = 'AVROP_STATUS'
@@ -762,26 +770,27 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1AM3: TcxGridDBBandedColumn
+        Caption = 'LO, AM3'
         DataBinding.FieldName = 'AM3'
         PropertiesClassName = 'TcxCalcEditProperties'
-        Position.BandIndex = 1
-        Position.ColIndex = 23
+        Position.BandIndex = 3
+        Position.ColIndex = 0
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1LEVLO: TcxGridDBBandedColumn
         DataBinding.FieldName = 'LEVLO'
         PropertiesClassName = 'TcxCalcEditProperties'
         Properties.ReadOnly = True
-        Position.BandIndex = 1
-        Position.ColIndex = 24
+        Position.BandIndex = 3
+        Position.ColIndex = 1
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1REST: TcxGridDBBandedColumn
         DataBinding.FieldName = 'REST'
         PropertiesClassName = 'TcxCalcEditProperties'
         Properties.ReadOnly = True
-        Position.BandIndex = 1
-        Position.ColIndex = 25
+        Position.BandIndex = 3
+        Position.ColIndex = 2
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1SupplierReference: TcxGridDBBandedColumn
@@ -789,34 +798,82 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         PropertiesClassName = 'TcxTextEditProperties'
         Width = 70
         Position.BandIndex = 1
-        Position.ColIndex = 26
+        Position.ColIndex = 23
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1NoOfSuppliers: TcxGridDBBandedColumn
         DataBinding.FieldName = 'NoOfSuppliers'
         PropertiesClassName = 'TcxLabelProperties'
         Position.BandIndex = 1
-        Position.ColIndex = 27
+        Position.ColIndex = 24
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1PROD_DESC: TcxGridDBBandedColumn
         DataBinding.FieldName = 'PROD_DESC'
         PropertiesClassName = 'TcxLabelProperties'
         Position.BandIndex = 1
-        Position.ColIndex = 28
+        Position.ColIndex = 25
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1LENGTH_DESC: TcxGridDBBandedColumn
         DataBinding.FieldName = 'LENGTH_DESC'
         PropertiesClassName = 'TcxLabelProperties'
         Position.BandIndex = 1
-        Position.ColIndex = 29
+        Position.ColIndex = 26
         Position.RowIndex = 0
       end
       object grdAvropSokDBBandedTableView1Land: TcxGridDBBandedColumn
         DataBinding.FieldName = 'Land'
         Position.BandIndex = 1
-        Position.ColIndex = 30
+        Position.ColIndex = 27
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1AvropAM3: TcxGridDBBandedColumn
+        Caption = 'Avrop, AM3'
+        DataBinding.FieldName = 'AvropAM3'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 2
+        Position.ColIndex = 0
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1LEVAVROPAM3: TcxGridDBBandedColumn
+        Caption = 'Levererat'
+        DataBinding.FieldName = 'LEVAVROPAM3'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 2
+        Position.ColIndex = 1
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1RESTAVROPAM3: TcxGridDBBandedColumn
+        Caption = 'Rest'
+        DataBinding.FieldName = 'RESTAVROPAM3'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 2
+        Position.ColIndex = 2
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1AvropKG: TcxGridDBBandedColumn
+        Caption = 'Avrop, KG'
+        DataBinding.FieldName = 'AvropKG'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 4
+        Position.ColIndex = 0
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1LEVAVROPKG: TcxGridDBBandedColumn
+        Caption = 'Levererat'
+        DataBinding.FieldName = 'LEVAVROPKG'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 4
+        Position.ColIndex = 1
+        Position.RowIndex = 0
+      end
+      object grdAvropSokDBBandedTableView1RESTAVROPKG: TcxGridDBBandedColumn
+        Caption = 'Rest'
+        DataBinding.FieldName = 'RESTAVROPKG'
+        PropertiesClassName = 'TcxCalcEditProperties'
+        Position.BandIndex = 4
+        Position.ColIndex = 2
         Position.RowIndex = 0
       end
     end
@@ -940,7 +997,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     PopupMenuLinks = <>
     UseSystemFont = False
     Left = 80
-    Top = 376
+    Top = 384
     DockControlHeights = (
       0
       0
@@ -2587,7 +2644,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42457.920457500000000000
+      ReportDocument.CreationDate = 42711.946865532410000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       OptionsView.Footers = False
       OptionsView.BandHeaders = False
