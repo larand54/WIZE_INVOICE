@@ -560,7 +560,7 @@ uses
   uInvoiceWizard, uKundspecifika, uAddKundSpecifika, uShowInvTrfLog,
   uSokAvropMall, uEntryField, uVerifikationLogg, uAccInv,
   UnitdmModule1, udmLanguage, uReport, uReportController, UnitBookingForm,
-  dmBooking, uCustomReports, udmFR;
+  dmBooking, uCustomReports, udmFR, uFastReports;
 
 {$R *.dfm}
 
@@ -2895,32 +2895,39 @@ var
   A: array of variant;
   RC: TCMReportController;
   DocTyp, RoleType, ClientNo: Integer;
+  FR: TFastReports;
+  InvoiceNo:Integer;
+  language: integer;
   Params: TCMParams;
-  Save_Cursor: TCursor;
 begin
   try
-    Save_Cursor := Screen.Cursor;
-    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    dmFR.SaveCursor;
+    InvoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+    if InvoiceNo < 1 then
       Exit;
 
     RoleType := -1;
     DocTyp := cFaktura;
     ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
-
+    language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
     if uReportController.useFR then
     begin
-
+      FR := TFastReports.create;
       Params := TCMParams.Create();
-      Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-      Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
-        AsInteger);
-
-      RC := TCMReportController.Create;
       Try
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPreview);
+        Params.Add('@INVOICENO', InvoiceNo);
+        Params.Add('@Language', InvoiceNo);
+        Params.Add('@ClientNo', InvoiceNo);
+        if FR.VidaEnergi(0,0,InvoiceNo) then
+        begin
+          FR.InvoiceReportVE(Params, VE_INVOICE, '');
+        end
+        else
+        begin
+          FR.PreviewClientControlledReport(ClientNo, RoleType, DocTyp, Params,'');
+        end;
       Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
+        FR.Free;
       End;
     end
     else
@@ -2948,7 +2955,7 @@ begin
       End;
     end;
   finally
-    Screen.Cursor := Save_Cursor;
+    dmFR.RestoreCursor;
   end;
 end;
 
