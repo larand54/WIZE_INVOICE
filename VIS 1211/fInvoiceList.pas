@@ -383,6 +383,8 @@ type
     cxButton2: TcxButton;
     dxBarButton53: TdxBarButton;
     acExportAnglo: TAction;
+    dxBarButton54: TdxBarButton;
+    acEmailaFaktura: TAction;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -503,6 +505,7 @@ type
     procedure acBookingExecute(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
     procedure acExportAngloExecute(Sender: TObject);
+    procedure acEmailaFakturaExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -1532,27 +1535,38 @@ Var
   FormCRPrintReport: TFormCRPrintReport;
   A: array of variant;
   RC: TCMReportController;
-  DocTyp, RoleType, ClientNo: Integer;
+  DocTyp, RoleType, ClientNo, InvoiceNo, Language: Integer;
+  FR: TFastreports;
   Params: TCMParams;
 begin
-  if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+  dmFR.SaveCursor;
+  InvoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  if InvoiceNo < 1 then
     Exit;
   RoleType := 1;
   DocTyp := cFaktura;
   ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+  language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
   if uReportController.useFR then begin
 
-    Params := TCMParams.Create();
-    Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-    Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
-
-    RC := TCMReportController.Create;
-    Try
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frPrint);
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    End;
+      FR := TFastReports.createForPrint(false);
+      Params := TCMParams.Create();
+      Try
+        Params.Add('@INVOICENO', InvoiceNo);
+        Params.Add('@Language', Language);
+        Params.Add('@ClientNo', ClientNo);
+        if FR.VidaEnergi(0,0,InvoiceNo) then
+        begin
+          FR.InvoiceReportVE(Params, VE_INVOICE, '');
+        end
+        else
+        begin
+          FR.PrintClientControlledReport(0,ClientNo, RoleType, DocTyp, Params);
+        end;
+      Finally
+        FR.Free;
+        dmFR.RestoreCursor;
+      End;
   end
   else begin
     FormCRPrintReport := TFormCRPrintReport.Create(Nil);
@@ -1563,6 +1577,7 @@ begin
       FormCRPrintReport.CreateCo(1, clientNo, RoleType, cFaktura, A);
     Finally
       FreeAndNil(FormCRPrintReport); // .Free ;
+      dmFR.RestoreCursor;
     End;
   end;
 end;
@@ -2917,8 +2932,8 @@ begin
       Params := TCMParams.Create();
       Try
         Params.Add('@INVOICENO', InvoiceNo);
-        Params.Add('@Language', InvoiceNo);
-        Params.Add('@ClientNo', InvoiceNo);
+        Params.Add('@Language', Language);
+        Params.Add('@ClientNo', ClientNo);
         if FR.VidaEnergi(0,0,InvoiceNo) then
         begin
           FR.InvoiceReportVE(Params, VE_INVOICE, '');
@@ -3918,6 +3933,52 @@ begin
       cdsInvoiceList.ApplyUpdates(0);
       cdsInvoiceList.CommitUpdates;
     End;
+  End;
+end;
+
+procedure TfrmInvoiceList.acEmailaFakturaExecute(Sender: TObject);
+Var
+  FormCRPrintReport: TFormCRPrintReport;
+  A: array of variant;
+  RC: TCMReportController;
+  DocTyp, RoleType, ClientNo, InvoiceNo, Language: Integer;
+  FR: TFastreports;
+  Params: TCMParams;
+  MailToAddress: string;
+begin
+  dmFR.SaveCursor;
+  InvoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  if InvoiceNo < 1 then
+    Exit;
+  MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+    (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+  if Length(MailToAddress) = 0 then
+  Begin
+    MailToAddress := 'ange@adress.nu';
+    ShowMessage
+      ('Email address is missing for the client.');
+  End;
+  language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
+  RoleType := 1;
+  DocTyp := cFaktura;
+  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+  FR := TFastreports.create;
+  Params := TCMParams.Create();
+  Try
+    Params.Add('@INVOICENO', InvoiceNo);
+    Params.Add('@Language', Language);
+    Params.Add('@ClientNo', ClientNo);
+    if FR.VidaEnergi(0, 0, InvoiceNo) then
+    begin
+      FR.InvoiceReportVE(Params, VE_INVOICE, MailToAddress);
+    end
+    else
+    begin
+      FR.MailClientControlledReport(ClientNo, RoleType, DocTyp, Params, MailToAddress,'INV');
+    end;
+  Finally
+    FR.Free;
+    dmFR.RestoreCursor;
   End;
 end;
 

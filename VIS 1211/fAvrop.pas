@@ -4332,6 +4332,8 @@ begin
     else begin
       if lang = 1 then RepNo := 39 // TALLY_VER2_INKOP_NOTE.fr3;
       else RepNo := 39;
+      showmessage('Rapport Följesedel Inköp - EJ Implementerad!');
+      exit;
     end;
     RC := TCMReportController.Create;
     try
