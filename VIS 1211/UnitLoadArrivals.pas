@@ -450,7 +450,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
   uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage, uReport,
-  uReportController, URegionToRegionSelectLIPNo;
+  uReportController, URegionToRegionSelectLIPNo, uFastReports, udmFR;
 
 {$R *.dfm}
 
@@ -2155,55 +2155,36 @@ Var
   RC: TCMReportController;
   Params: TCMParams;
   RepNo: Integer;
+  FR: TFastReports;
+  ClientNo: integer;
+  LoadNo,
+  lang: integer;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
 
   if uReportController.useFR then begin
-
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
-    else Begin
-      if dmsContact.Client_Language
-        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
-      then
-        RepNo := 43 // TALLY_VER3_NOTE.fr3 (43)
-      else
-        RepNo := 56; // TALLY_eng_VER3_NOTE.fr3 (56)
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
+    ClientNo := dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger;
+    lang := dmsContact.Client_Language(ClientNo);
+    LoadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+    if LoadNo < 1 then
+      Exit;
+    if uReportController.useFR then
+    begin
+      FR := TFastReports.Create;
+      try
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
+        begin
+          FR.Tally_Pkg_Matched(LoadNo, cFoljesedelIntern, lang, '', '', '', 0);
+        end
+        else
+        begin
+          FR.Tally_Pkg_Matched(LoadNo, cFoljesedel, lang, '', '', '', 0);
+        end;
+      finally
+        FR.Free;
       end;
-    End;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language',  dmsContact.Client_Language
-        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
-      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
+    end
   end
   else begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
@@ -2755,125 +2736,120 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
-  Save_Cursor: TCursor;
+  FR: TFastReports;
+  lang,
+  loadNo: integer;
 begin
-  Save_Cursor := Screen.Cursor;
-  ExcelDir := dmsSystem.Get_Dir('ExcelDir');
-  MailToAddress2 := '';
-  MailToAddress := '';
-  if (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger > 0) and
-    (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = False) then
-    MailToAddress := dmsContact.GetEmailAddress_Utlastad
-      (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger)
-  else
-    MailToAddress := dmsContact.GetEmailAddress_Utlastad
-      (dmArrivingLoads.cdsArrivingLoadsCUSTOMERNO.AsInteger);
-  if Length(MailToAddress) = 0 then Begin
-    MailToAddress := 'ange@adress.nu;';
-    ShowMessage
-      ('Email address missing, enter the address direct in the mail(outlook)');
-  End;
-
-  MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
-    (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
-
-  if Length(MailToAddress2) > 0 then Begin
-    if MailToAddress = 'ange@adress.nu' then
-      MailToAddress := MailToAddress2
+  dmFR.SaveCursor;
+  try
+    ExcelDir := dmsSystem.Get_Dir('ExcelDir');
+    MailToAddress2 := '';
+    MailToAddress := '';
+    if dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = false then
+      ClientNo := dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger
     else
-      MailToAddress := MailToAddress + MailToAddress2;
-  End;
-
-  if Length(MailToAddress) > 0 then Begin
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-      ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
-    else Begin
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-
-      if dmsContact.Client_Language
-        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger) = cSwedish
-      then
-        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
-      else
-        ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
+      ClientNo := dmArrivingLoads.cdsArrivingLoadsCUSTOMERNO.AsInteger;
+    if (ClientNo > 0) then
+      MailToAddress := dmsContact.GetEmailAddress_Utlastad(ClientNo);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu;';
+      ShowMessage
+        ('Email address missing, enter the address direct in the mail(outlook)');
     End;
 
-    ExportFile := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
-      AsString + '.pdf';
-    if uReportController.useFR then begin
+    MailToAddress2 := dmsContact.GetEmailAddressForSpeditorByLO
+      (dmArrivingLoads.cdsArrivingLoadsLO.AsInteger);
 
-      Screen.Cursor := crHourGlass; { Show hourglass cursor }
-      Params := TCMParams.Create();
-      Params.Add('@Language',  dmsContact.Client_Language
-        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
-      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
-      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger
+    if Length(MailToAddress2) > 0 then
+    Begin
+      if MailToAddress = 'ange@adress.nu' then
+        MailToAddress := MailToAddress2
+      else
+        MailToAddress := MailToAddress + MailToAddress2;
+    End;
 
-      RC := TCMReportController.Create;
-      ClientNo := 1;
-      RoleType := -1;
+    loadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+    if Length(MailToAddress) > 0 then
+    Begin
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
+        ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
+      else
+      Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger := loadNo;
+          // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
 
-      Try
-        DocTyp := ReportType;
-        RC.setExportFile(ExportFile);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-        Screen.Cursor := Save_Cursor;
+        if dmsContact.Client_Language(ClientNo) = cSwedish
+        then
+          ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+        else
+          ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
       End;
-      if not FileExists(ExportFile) then
-        Exit;
-    end
-    else
-      try
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-        SetLength(A, 1);
-        A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-        FormCRExportOneReport.CreateCo(1, ReportType, A,
-          ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
-        // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
 
-        if FormCRExportOneReport.ReportFound = False then
-          Exit;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
+      ExportFile := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
+        AsString + '.pdf';
+      if uReportController.useFR then
+      begin
+        lang := dmsContact.Client_Language(ClientNo);
+        FR := TFastReports.create;
+        try
+          FR.Tally_Pkg_Matched(loadNo,ReportType,lang,MailToAddress,'','',0);
+        finally
+          FR.Free;
+        end;
+        exit;
+      end
+      else
+        try
+          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+          SetLength(A, 1);
+          A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+          // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+          FormCRExportOneReport.CreateCo(1, ReportType, A,
+            ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
+          // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
+
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
 {$IFDEF DEBUG}
 {$IFDEF TEST_WITH_EMAIL}
 {$ELSE}
-    Exit;
+      Exit;
 {$ENDIF}
 {$ENDIF}
-    SetLength(Attach, 1);
-    Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
-      AsString + '.pdf';
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
-        dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString,
-        'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
-        LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
-        dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    ShowMessage('Emailadress saknas för klienten!');
+      SetLength(Attach, 1);
+      Attach[0] := ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.
+        AsString + '.pdf';
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
+          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString,
+          'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
+          LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
+          dmsContact.GetFirstAndLastName(ThisUser.UserID),
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmLoadArrivals.acExpandAllExecute(Sender: TObject);
@@ -3326,18 +3302,22 @@ var
   RC: TCMReportController;
   Params: TCMParams;
   RepNo: Integer;
+  loadNo: integer;
 begin
-  if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
+  loadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+  if loadNo < 1 then
     Exit;
   if uReportController.useFR then begin
 
     if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
       RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
     else Begin
-      RepNo := 43; // TALLY_VER3_NOTE.fr3;
+      if TFastReports.VidaEnergi(0,loadNo,0) then
+        RepNo := dmFR.reportByName(VE_FS)
+      else
+        RepNo := 43; // TALLY_VER3_NOTE.fr3;
       Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger := loadNo;
         dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
       except
         On E: Exception do Begin
@@ -3352,11 +3332,10 @@ begin
       Params := TCMParams.Create();
       Params.Add('@Language',  dmsContact.Client_Language
         (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
-      Params.Add('@LoadNo', dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger);
+      Params.Add('@LoadNo', loadNo);
       RC.RunReport(RepNo, Params, frPrint, 0);
       Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger := loadNo;
         dmsSystem.sq_DelPkgType.ExecSQL;
       except
         On E: Exception do Begin
