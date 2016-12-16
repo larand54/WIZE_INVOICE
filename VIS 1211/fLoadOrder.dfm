@@ -4,12 +4,12 @@ object frmLoadOrder: TfrmLoadOrder
   Align = alClient
   BorderStyle = bsNone
   Caption = 'LASTORDER'
-  ClientHeight = 1054
-  ClientWidth = 1513
+  ClientHeight = 856
+  ClientWidth = 1229
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -20,29 +20,21 @@ object frmLoadOrder: TfrmLoadOrder
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object pnlBottomGrid: TPanel
     Left = 0
-    Top = 212
-    Width = 1513
-    Height = 842
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 172
+    Width = 1229
+    Height = 684
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object grdLO: TcxGrid
       Left = 0
-      Top = 21
-      Width = 1513
-      Height = 605
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 17
+      Width = 1229
+      Height = 490
       Align = alClient
       PopupMenu = pmLOGrid
       TabOrder = 0
@@ -545,12 +537,8 @@ object frmLoadOrder: TfrmLoadOrder
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 1513
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1229
+      Height = 17
       Align = alTop
       BevelOuter = bvNone
       Caption = '_________________'
@@ -558,13 +546,9 @@ object frmLoadOrder: TfrmLoadOrder
     end
     object cxSplitter1: TcxSplitter
       Left = 0
-      Top = 626
-      Width = 1513
+      Top = 507
+      Width = 1229
       Height = 8
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       HotZoneClassName = 'TcxMediaPlayer8Style'
       AlignSplitter = salBottom
       Control = pcLoadOrder
@@ -573,13 +557,9 @@ object frmLoadOrder: TfrmLoadOrder
     end
     object pcLoadOrder: TcxPageControl
       Left = 0
-      Top = 634
-      Width = 1513
-      Height = 208
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 515
+      Width = 1229
+      Height = 169
       Align = alBottom
       TabOrder = 3
       Properties.ActivePage = tsLoads
@@ -587,37 +567,25 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.HideTabs = True
       Properties.Style = 5
       Properties.TabPosition = tpLeft
-      ClientRectBottom = 208
-      ClientRectRight = 1513
+      ClientRectBottom = 169
+      ClientRectRight = 1229
       ClientRectTop = 0
       object tsLoads: TcxTabSheet
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Caption = 'Last'
         ImageIndex = 0
         object PanelLoadDetail: TPanel
           Left = 0
           Top = 0
-          Width = 1513
-          Height = 208
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Width = 1229
+          Height = 169
           Align = alClient
-          Constraints.MinWidth = 492
+          Constraints.MinWidth = 400
           TabOrder = 0
           object grdFS: TcxGrid
             Left = 1
-            Top = 65
-            Width = 1511
-            Height = 142
-            Margins.Left = 4
-            Margins.Top = 4
-            Margins.Right = 4
-            Margins.Bottom = 4
+            Top = 53
+            Width = 1227
+            Height = 115
             Align = alClient
             PopupMenu = pmLoadGrid
             TabOrder = 0
@@ -802,172 +770,132 @@ object frmLoadOrder: TfrmLoadOrder
           object pnlLowerGridHdr: TPanel
             Left = 1
             Top = 1
-            Width = 1511
-            Height = 64
-            Margins.Left = 4
-            Margins.Top = 4
-            Margins.Right = 4
-            Margins.Bottom = 4
+            Width = 1227
+            Height = 52
             Align = alTop
             BevelOuter = bvNone
             Color = clMaroon
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
-            Font.Height = -18
+            Font.Height = -15
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
             TabOrder = 1
             object Label1: TLabel
-              Left = 4
-              Top = 12
-              Width = 61
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 3
+              Top = 10
+              Width = 47
+              Height = 13
               Caption = 'Redodag:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label2: TLabel
-              Left = 233
-              Top = 42
-              Width = 55
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 189
+              Top = 34
+              Width = 45
+              Height = 13
               Caption = 'Sped. ID:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label3: TLabel
-              Left = 849
-              Top = 41
-              Width = 54
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 690
+              Top = 33
+              Width = 42
+              Height = 13
               Caption = 'Spedit'#246'r:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label4: TLabel
-              Left = 420
-              Top = 43
-              Width = 60
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 341
+              Top = 35
+              Width = 48
+              Height = 13
               Caption = 'Sped.Dat:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label5: TLabel
-              Left = 658
-              Top = 37
-              Width = 23
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 535
+              Top = 30
+              Width = 19
+              Height = 13
               Caption = 'B'#229't:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label6: TLabel
-              Left = 4
-              Top = 42
-              Width = 40
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 3
+              Top = 34
+              Width = 33
+              Height = 13
               Caption = 'Trp.ID:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label7: TLabel
-              Left = 849
-              Top = 9
-              Width = 31
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 690
+              Top = 7
+              Width = 25
+              Height = 13
               Caption = 'ETD:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object Label8: TLabel
-              Left = 234
-              Top = 12
-              Width = 32
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 190
+              Top = 10
+              Width = 26
+              Height = 13
               Caption = 'Note:'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite
-              Font.Height = -15
+              Font.Height = -12
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
             end
             object bbBookingForm: TBitBtn
-              Left = 1068
+              Left = 868
               Top = 0
-              Width = 141
-              Height = 32
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Width = 114
+              Height = 26
               Action = acBooking
               Caption = 'Bokning F10'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
-              Font.Height = -18
+              Font.Height = -15
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               Glyph.Data = {
@@ -1027,19 +955,15 @@ object frmLoadOrder: TfrmLoadOrder
               TabOrder = 8
             end
             object bbSave: TBitBtn
-              Left = 1068
-              Top = 33
-              Width = 141
-              Height = 29
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 868
+              Top = 27
+              Width = 114
+              Height = 23
               Action = acSaveBooking
               Caption = 'Spara Shift+F3'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
-              Font.Height = -18
+              Font.Height = -15
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               Glyph.Data = {
@@ -1089,272 +1013,197 @@ object frmLoadOrder: TfrmLoadOrder
               TabOrder = 9
             end
             object deShippersShipDate: TcxDBDateEdit
-              Left = 512
-              Top = 32
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 416
+              Top = 26
               DataBinding.DataField = 'ShippersShipDate'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clBlack
-              Style.Font.Height = -15
+              Style.Font.Height = -12
               Style.Font.Name = 'Tahoma'
               Style.Font.Style = []
               Style.IsFontAssigned = True
               TabOrder = 5
-              Width = 119
+              Width = 97
             end
             object ePreliminaryRequestedPeriod: TcxDBTextEdit
-              Left = 105
+              Left = 85
               Top = 2
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
               DataBinding.DataField = 'PreliminaryRequestedPeriod'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clBlack
-              Style.Font.Height = -15
+              Style.Font.Height = -12
               Style.Font.Name = 'Tahoma'
               Style.Font.Style = []
               Style.IsFontAssigned = True
               TabOrder = 0
-              Width = 119
+              Width = 97
             end
             object ePanic_Note: TcxDBTextEdit
-              Left = 324
+              Left = 263
               Top = 2
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
               DataBinding.DataField = 'Panic_Note'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clBlack
-              Style.Font.Height = -15
+              Style.Font.Height = -12
               Style.Font.Name = 'Tahoma'
               Style.Font.Style = []
               Style.IsFontAssigned = True
               TabOrder = 1
-              Width = 517
+              Width = 420
             end
             object eSupplierReference: TcxDBTextEdit
-              Left = 105
-              Top = 33
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 85
+              Top = 27
               DataBinding.DataField = 'SupplierReference'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clBlack
-              Style.Font.Height = -15
+              Style.Font.Height = -12
               Style.Font.Name = 'Tahoma'
               Style.Font.Style = []
               Style.IsFontAssigned = True
               TabOrder = 3
-              Width = 119
+              Width = 97
             end
             object eShippingCompanyBookingID: TcxDBTextEdit
-              Left = 324
-              Top = 34
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 263
+              Top = 28
               DataBinding.DataField = 'ShippingCompanyBookingID'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clBlack
-              Style.Font.Height = -15
+              Style.Font.Height = -12
               Style.Font.Name = 'Tahoma'
               Style.Font.Style = []
               Style.IsFontAssigned = True
               TabOrder = 4
-              Width = 90
+              Width = 73
             end
             object eCarrierName: TcxDBTextEdit
-              Left = 702
-              Top = 32
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 570
+              Top = 26
               DataBinding.DataField = 'CarrierName'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Properties.ReadOnly = True
               Style.Color = clSilver
               TabOrder = 6
-              Width = 139
+              Width = 113
             end
             object deETD: TcxDBDateEdit
-              Left = 908
+              Left = 738
               Top = 1
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
               DataBinding.DataField = 'ETD'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Properties.ReadOnly = True
               Style.Color = clSilver
               TabOrder = 2
-              Width = 149
+              Width = 121
             end
             object eClientName: TcxDBTextEdit
-              Left = 908
-              Top = 32
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
+              Left = 738
+              Top = 26
               DataBinding.DataField = 'ClientName'
               DataBinding.DataSource = dmcOrder.dsrcBooking
               ParentFont = False
               Properties.ReadOnly = True
               Style.Color = clSilver
               TabOrder = 7
-              Width = 149
+              Width = 121
             end
           end
         end
       end
     end
     object Memo1: TMemo
-      Left = 758
-      Top = 167
-      Width = 228
-      Height = 110
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 616
+      Top = 136
+      Width = 185
+      Height = 89
       TabOrder = 4
       Visible = False
     end
     object lbLO_To_Invoice: TListBox
-      Left = 620
-      Top = 207
-      Width = 130
-      Height = 119
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 504
+      Top = 168
+      Width = 105
+      Height = 97
+      ItemHeight = 13
       TabOrder = 5
       Visible = False
     end
   end
   object Panel3: TPanel
     Left = 0
-    Top = 70
-    Width = 1513
-    Height = 142
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 57
+    Width = 1229
+    Height = 115
     Align = alTop
     BevelOuter = bvLowered
     TabOrder = 1
     object Label9: TLabel
-      Left = 5
-      Top = 23
-      Width = 61
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 4
+      Top = 19
+      Width = 50
+      Height = 13
       Caption = 'S'#246'k LONr:'
     end
     object Label10: TLabel
-      Left = 5
-      Top = 58
-      Width = 69
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 4
+      Top = 47
+      Width = 56
+      Height = 13
       Caption = 'S'#246'k LastNr:'
     end
     object Label11: TLabel
-      Left = 178
-      Top = 25
-      Width = 31
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 145
+      Top = 20
+      Width = 25
+      Height = 13
       Caption = 'Verk:'
     end
     object Label12: TLabel
-      Left = 732
-      Top = 23
-      Width = 37
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 595
+      Top = 19
+      Width = 30
+      Height = 13
       Caption = 'Status'
     end
     object Label13: TLabel
-      Left = 439
-      Top = 21
-      Width = 60
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 357
+      Top = 17
+      Width = 47
+      Height = 13
       Caption = 'Lastst'#228'lle:'
     end
     object Label14: TLabel
-      Left = 439
-      Top = 57
-      Width = 70
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 357
+      Top = 46
+      Width = 56
+      Height = 13
       Caption = 'Destination:'
     end
     object Label15: TLabel
-      Left = 178
-      Top = 57
-      Width = 58
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 145
+      Top = 46
+      Width = 46
+      Height = 13
       Caption = 'Referens:'
     end
     object cbShowAll: TCheckBox
-      Left = 966
-      Top = 55
-      Width = 118
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 785
+      Top = 45
+      Width = 96
+      Height = 17
       Caption = 'Visa alla'
       Checked = True
       State = cbChecked
@@ -1362,14 +1211,10 @@ object frmLoadOrder: TfrmLoadOrder
       Visible = False
     end
     object bbRefresh: TBitBtn
-      Left = 965
-      Top = 10
-      Width = 127
-      Height = 43
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 784
+      Top = 8
+      Width = 103
+      Height = 35
       Action = atRefresh
       Caption = 'Uppdatera F6'
       Glyph.Data = {
@@ -1450,74 +1295,50 @@ object frmLoadOrder: TfrmLoadOrder
       TabOrder = 2
     end
     object BitBtn3: TBitBtn
-      Left = 1241
-      Top = 10
-      Width = 77
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 1008
+      Top = 8
+      Width = 63
+      Height = 25
       Action = acLoadOrderListSetup
       Caption = 'Inst'#228'llningar'
       TabOrder = 12
       Visible = False
     end
     object teSearchLONo: TcxTextEdit
-      Left = 107
-      Top = 14
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 87
+      Top = 11
       TabOrder = 0
       OnKeyDown = teSearchLONoKeyDown
-      Width = 64
+      Width = 52
     end
     object teSearchLoadNo: TcxTextEdit
-      Left = 107
-      Top = 48
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 87
+      Top = 39
       TabOrder = 1
       OnKeyDown = teSearchLoadNoKeyDown
-      Width = 63
+      Width = 51
     end
     object bTestLogg: TButton
-      Left = 1162
-      Top = 10
-      Width = 70
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 944
+      Top = 8
+      Width = 57
+      Height = 25
       Caption = 'Test logg'
       TabOrder = 13
       Visible = False
       OnClick = bTestLoggClick
     end
     object bVaxlaBolag: TcxButton
-      Left = 375
-      Top = 78
-      Width = 75
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 305
+      Top = 63
+      Width = 61
+      Height = 21
       Action = acBytMellanBTBochBTH
       TabOrder = 5
     end
     object lcVerk: TcxDBLookupComboBox
-      Left = 242
-      Top = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 197
+      Top = 13
       DataBinding.DataField = 'Verk'
       DataBinding.DataSource = dmcOrder.ds_Props
       Properties.DropDownWidth = 250
@@ -1530,15 +1351,11 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.ListOptions.ShowHeader = False
       Properties.OnCloseUp = lcVerkPropertiesCloseUp
       TabOrder = 3
-      Width = 165
+      Width = 134
     end
     object icStatus: TcxDBImageComboBox
-      Left = 775
-      Top = 10
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 630
+      Top = 8
       DataBinding.DataField = 'Status'
       DataBinding.DataSource = dmcOrder.ds_Props
       Properties.Images = imglistActions
@@ -1604,15 +1421,11 @@ object frmLoadOrder: TfrmLoadOrder
           Value = 11
         end>
       TabOrder = 8
-      Width = 149
+      Width = 121
     end
     object icOrderTypeNo: TcxDBImageComboBox
-      Left = 775
-      Top = 48
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 630
+      Top = 39
       DataBinding.DataField = 'OrderTypeNo'
       DataBinding.DataSource = dmcOrder.ds_Props
       Properties.ImmediatePost = True
@@ -1627,29 +1440,21 @@ object frmLoadOrder: TfrmLoadOrder
           Value = 1
         end>
       TabOrder = 9
-      Width = 149
+      Width = 121
     end
     object Button1: TButton
-      Left = 1329
-      Top = 10
-      Width = 41
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 1080
+      Top = 8
+      Width = 33
+      Height = 41
       Caption = 'Button1'
       TabOrder = 10
       Visible = False
       OnClick = Button1Click
     end
     object lcLaststlle: TcxDBLookupComboBox
-      Left = 546
-      Top = 14
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 444
+      Top = 11
       DataBinding.DataField = 'Lastst'#228'lle'
       DataBinding.DataSource = dmcOrder.ds_Props
       Properties.ClearKey = 46
@@ -1661,15 +1466,11 @@ object frmLoadOrder: TfrmLoadOrder
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 6
-      Width = 179
+      Width = 145
     end
     object lcDestination: TcxDBLookupComboBox
-      Left = 546
-      Top = 48
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 444
+      Top = 39
       DataBinding.DataField = 'Destination'
       DataBinding.DataSource = dmcOrder.ds_Props
       Properties.ClearKey = 46
@@ -1681,35 +1482,23 @@ object frmLoadOrder: TfrmLoadOrder
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 7
-      Width = 179
+      Width = 145
     end
     object cxLabel9: TcxLabel
-      Left = 322
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 262
+      Top = 73
       Caption = 'Kvalitet'
       ParentFont = False
     end
     object cxLabel10: TcxLabel
-      Left = 468
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 380
+      Top = 73
       Caption = 'Utf'#246'rande'
       ParentFont = False
     end
     object ccVarugrupp: TcxCheckComboBox
-      Left = 619
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 503
+      Top = 90
       Properties.EmptySelectionText = 'Alla'
       Properties.ClearKey = 46
       Properties.DropDownRows = 30
@@ -1718,128 +1507,80 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.EditValueFormat = cvfStatesString
       Properties.Items = <>
       TabOrder = 16
-      Width = 127
+      Width = 103
     end
     object cxLabel29: TcxLabel
-      Left = 619
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 503
+      Top = 73
       Caption = 'Varugrupp'
       ParentFont = False
     end
     object eAT: TcxTextEdit
-      Left = 11
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 9
+      Top = 90
       TabOrder = 18
-      Width = 58
+      Width = 47
     end
     object eAB: TcxTextEdit
-      Left = 89
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 72
+      Top = 90
       TabOrder = 19
-      Width = 61
+      Width = 50
     end
     object eNT: TcxTextEdit
-      Left = 160
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 130
+      Top = 90
       TabOrder = 20
-      Width = 58
+      Width = 47
     end
     object eNB: TcxTextEdit
-      Left = 247
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 201
+      Top = 90
       TabOrder = 21
-      Width = 59
+      Width = 48
     end
     object cxLabel36: TcxLabel
-      Left = 242
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 197
+      Top = 73
       Caption = 'Bredd, nom'
       ParentFont = False
     end
     object cxLabel35: TcxLabel
-      Left = 155
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 126
+      Top = 73
       Caption = 'Tjocklek, nom'
       ParentFont = False
     end
     object cxLabel6: TcxLabel
-      Left = 89
-      Top = 90
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 72
+      Top = 73
       Caption = 'Bredd, akt'
       ParentFont = False
     end
     object cxLabel1: TcxLabel
-      Left = 6
-      Top = 91
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 5
+      Top = 74
       AutoSize = False
       Caption = 'Tjocklek, akt'
       ParentFont = False
-      Height = 20
-      Width = 80
+      Height = 16
+      Width = 65
     end
     object teFromWeek: TcxTextEdit
-      Left = 1028
-      Top = 112
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 835
+      Top = 91
       TabOrder = 27
-      Width = 61
+      Width = 50
     end
     object teToWeek: TcxTextEdit
-      Left = 1106
-      Top = 112
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 899
+      Top = 91
       TabOrder = 28
-      Width = 62
+      Width = 50
     end
     object ccbSU2: TcxCheckComboBox
-      Left = 468
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 380
+      Top = 90
       Properties.EmptySelectionText = 'Alla'
       Properties.ClearKey = 46
       Properties.DropDownRows = 30
@@ -1848,15 +1589,11 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.EditValueFormat = cvfStatesString
       Properties.Items = <>
       TabOrder = 23
-      Width = 149
+      Width = 121
     end
     object ccbKV2: TcxCheckComboBox
-      Left = 325
-      Top = 111
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 264
+      Top = 90
       Properties.EmptySelectionText = 'Alla'
       Properties.ClearKey = 46
       Properties.DropDownRows = 30
@@ -1865,15 +1602,11 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.EditValueFormat = cvfStatesString
       Properties.Items = <>
       TabOrder = 22
-      Width = 144
+      Width = 117
     end
     object ccLand: TcxCheckComboBox
-      Left = 750
-      Top = 112
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 609
+      Top = 91
       Properties.EmptySelectionText = 'Alla'
       Properties.ClearKey = 46
       Properties.DropDownRows = 30
@@ -1882,28 +1615,20 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.EditValueFormat = cvfStatesString
       Properties.Items = <>
       TabOrder = 25
-      Width = 126
+      Width = 103
     end
     object cxLabel37: TcxLabel
-      Left = 753
-      Top = 91
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 612
+      Top = 74
       AutoSize = False
       Caption = 'Land'
       ParentFont = False
-      Height = 20
-      Width = 48
+      Height = 16
+      Width = 39
     end
     object ccKund: TcxCheckComboBox
-      Left = 887
-      Top = 112
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 721
+      Top = 91
       Properties.EmptySelectionText = 'Alla'
       Properties.ClearKey = 46
       Properties.DropDownRows = 30
@@ -1912,67 +1637,47 @@ object frmLoadOrder: TfrmLoadOrder
       Properties.EditValueFormat = cvfStatesString
       Properties.Items = <>
       TabOrder = 26
-      Width = 127
+      Width = 103
     end
     object cxLabel38: TcxLabel
-      Left = 889
-      Top = 91
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 722
+      Top = 74
       AutoSize = False
       Caption = 'Kund'
       ParentFont = False
-      Height = 20
-      Width = 48
+      Height = 16
+      Width = 39
     end
     object cxLabel2: TcxLabel
-      Left = 1025
-      Top = 91
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 833
+      Top = 74
       AutoSize = False
       Caption = 'Fr'#229'n vecka'
       ParentFont = False
-      Height = 20
-      Width = 70
+      Height = 16
+      Width = 57
     end
     object cxLabel3: TcxLabel
-      Left = 1108
-      Top = 91
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 900
+      Top = 74
       AutoSize = False
       Caption = 'Till vecka'
       ParentFont = False
-      Height = 20
-      Width = 60
+      Height = 16
+      Width = 49
     end
     object teReferens: TcxTextEdit
-      Left = 242
-      Top = 48
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 197
+      Top = 39
       TabOrder = 4
       OnKeyDown = teReferensKeyDown
-      Width = 105
+      Width = 85
     end
     object cxCheckListBox1: TcxCheckListBox
-      Left = 1349
-      Top = 54
-      Width = 149
-      Height = 80
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 1096
+      Top = 44
+      Width = 121
+      Height = 65
       Items = <>
       Style.LookAndFeel.SkinName = 'Blueprint'
       StyleDisabled.LookAndFeel.SkinName = 'Blueprint'
@@ -1982,14 +1687,10 @@ object frmLoadOrder: TfrmLoadOrder
       Visible = False
     end
     object cxButton1: TcxButton
-      Left = 1182
-      Top = 106
-      Width = 109
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 960
+      Top = 86
+      Width = 89
+      Height = 25
       Action = acClearFilter
       TabOrder = 37
     end
@@ -1997,74 +1698,50 @@ object frmLoadOrder: TfrmLoadOrder
   object Panel4: TPanel
     Left = 0
     Top = 0
-    Width = 1513
-    Height = 70
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1229
+    Height = 57
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 6
     object Panel5: TPanel
       Left = 0
       Top = 0
-      Width = 1195
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 971
+      Height = 57
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 1195
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 971
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel6: TPanel
-      Left = 1195
+      Left = 971
       Top = 0
-      Width = 240
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 195
+      Height = 57
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
     end
     object Panel7: TPanel
-      Left = 1435
+      Left = 1166
       Top = 0
-      Width = 78
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 63
+      Height = 57
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 2
       object dxBarDockControl3: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 78
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 63
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -2073,7 +1750,7 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -7092,7 +6769,6 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -7106,8 +6782,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42687.962868078710000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42719.324579895830000000
       BuiltInReportLink = True
     end
   end
@@ -7358,7 +7033,7 @@ object frmLoadOrder: TfrmLoadOrder
   object cxStyleRepository1: TcxStyleRepository
     Left = 488
     Top = 399
-    PixelsPerInch = 120
+    PixelsPerInch = 96
     object cxStyle1clYellow: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clYellow

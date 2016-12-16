@@ -577,7 +577,8 @@ uses dmcLoadEntrySSP, VidaConst, dlgPickPkg,
   UnitCRExportOneReport, uSendMapiMail, dmc_UserProps, VidaUtils,
   uPickVPPkgs, // uImportedPackages,
   fLoadOrder, uSelectPrintDevice, uconfirm, UnitCRPrintOneReport,
-  uEnterLoadWeight, uSelectLORowInLoad, udmLanguage, uReport, uReportController;
+  uEnterLoadWeight, uSelectLORowInLoad, udmLanguage, uReport, uReportController,
+  udmFR, uFastReports;
 
 {$R *.dfm}
 { TfrmLoadEntry }
@@ -4012,52 +4013,30 @@ procedure TfLoadEntrySSP.PrintDirectFS(Sender: TObject);
 var
   FormCRPrintOneReport: TFormCRPrintOneReport;
   A: array of variant;
-  RC: TCMReportController;
-  RepNo: Integer;
-  Params: TCMParams;
+  FR: TFastreports;
+  lang,
+  loadNo,
+  ReportType: integer;
+
 begin
-  if dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger < 1 then
+  dmFR.SaveCursor;
+  try
+  loadNo := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+  if loadNo < 1 then
     Exit;
   if uReportController.useFR then begin
-
-    Params := TCMParams.Create();
-    Params.Add('@Language', ThisUser.LanguageID);
-    Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
-    RC := TCMReportController.Create;
-
-    Try
+    FR := TFastReports.createForPrint(false);
+    try
+    lang := ThisUser.LanguageID;
       if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
-        RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
-      else Begin
-        Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-            dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-        except
-          On E: Exception do Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-        RepNo := 43; // TALLY_VER3_NOTE.fr3
-      End;
-      RC.RunReport(RepNo, Params, frPrint, 0);
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    End;
+        ReportType := cFoljesedelIntern
+      else
+        ReportType := cFoljesedel;
+
+      FR.Tally_Pkg_Matched(loadNo, ReportType, lang, '', '', '', 0);
+    finally
+      FR.Free;
+    end;
   end
   else begin
     FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
@@ -4100,98 +4079,91 @@ begin
       FreeAndNil(FormCRPrintOneReport);
     End;
   end;
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfLoadEntrySSP.PreviewFS(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
-  RC: TCMReportController;
-  Params: TCMParams;
-  RepNo: Integer;
+
+  FR: TFastreports;
+  lang,
+  loadNo,
+  ReportType: integer;
+
 begin
-
   Edit1.SetFocus;
+  dmFR.SaveCursor;
+  try
+  loadNo := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+    if LoadNo < 1 then
+      Exit;
 
-  if uReportController.useFR then begin
+    if uReportController.useFR then
+    begin
+      FR := TFastreports.Create;
+      try
+        lang := ThisUser.LanguageID;
+        if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
+          ReportType := cFoljesedelIntern
+        else
+          ReportType := cFoljesedel;
 
-    if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
-    else begin
-      RepNo := 43; // TALLY_VER3_NOTE.fr3;
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
+        FR.Tally_Pkg_Matched(LoadNo, ReportType, lang, '', '', '', 0);
+      finally
+        FR.free;
       end;
-    end;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+    end
+    else
+    begin
+      FormCRViewReport := TFormCRViewReport.Create(Nil);
       Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+        SetLength(A, 1);
+        A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
 
-      if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
-        FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
-      else Begin
+        if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
+          FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
+        else
+        Begin
+          Try
+            dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+              dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+            dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+          except
+            On E: Exception do
+            Begin
+              dmsSystem.FDoLog(E.Message);
+              // ShowMessage(E.Message);
+              Raise;
+            End;
+          end;
+          FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
+        End;
+        if FormCRViewReport.ReportFound then
+        Begin
+          FormCRViewReport.ShowModal;
+        End;
         Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+          dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
             dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+          dmsSystem.sq_DelPkgType.ExecSQL;
         except
-          On E: Exception do Begin
+          On E: Exception do
+          Begin
             dmsSystem.FDoLog(E.Message);
             // ShowMessage(E.Message);
             Raise;
           End;
         end;
-        FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
+      Finally
+        FreeAndNil(FormCRViewReport);
       End;
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
+    end;
+  finally
+    dmFR.RestoreCursor;
   end;
 end;
 

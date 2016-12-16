@@ -4,12 +4,12 @@ object frmPortArrivals: TfrmPortArrivals
   Align = alClient
   BorderStyle = bsNone
   Caption = 'frmPortArrivals'
-  ClientHeight = 714
-  ClientWidth = 1263
+  ClientHeight = 580
+  ClientWidth = 1026
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -17,17 +17,13 @@ object frmPortArrivals: TfrmPortArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object grdPortPkgs: TcxGrid
     Left = 0
-    Top = 478
-    Width = 1263
-    Height = 236
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 388
+    Width = 1026
+    Height = 192
     Align = alBottom
     TabOrder = 1
     object grdPortPkgsDBTableView1: TcxGridDBTableView
@@ -182,13 +178,9 @@ object frmPortArrivals: TfrmPortArrivals
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 470
-    Width = 1263
+    Top = 380
+    Width = 1026
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = grdPortPkgs
@@ -197,13 +189,9 @@ object frmPortArrivals: TfrmPortArrivals
   end
   object grdPortLoads: TcxGrid
     Left = 0
-    Top = 65
-    Width = 1263
-    Height = 405
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 53
+    Width = 1026
+    Height = 327
     Align = alClient
     TabOrder = 2
     object grdPortLoadsDBTableView1: TcxGridDBTableView
@@ -417,59 +405,39 @@ object frmPortArrivals: TfrmPortArrivals
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1263
-    Height = 65
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1026
+    Height = 53
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 7
     object Panel2: TPanel
-      Left = 581
+      Left = 472
       Top = 0
-      Width = 607
-      Height = 65
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 493
+      Height = 53
       Align = alClient
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 605
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 491
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel3: TPanel
-      Left = 1188
+      Left = 965
       Top = 0
-      Width = 75
-      Height = 65
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 61
+      Height = 53
       Align = alRight
       TabOrder = 1
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 73
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 59
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -477,21 +445,13 @@ object frmPortArrivals: TfrmPortArrivals
     object Panel4: TPanel
       Left = 0
       Top = 0
-      Width = 581
-      Height = 65
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 472
+      Height = 53
       Align = alLeft
       TabOrder = 2
       object bcConfirmed: TcxComboBox
-        Left = 46
-        Top = 32
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 37
+        Top = 26
         Properties.DropDownListStyle = lsFixedList
         Properties.Items.Strings = (
           '0 : Ej ankomstreg'
@@ -500,128 +460,84 @@ object frmPortArrivals: TfrmPortArrivals
         Properties.OnChange = bcConfirmedPropertiesChange
         TabOrder = 0
         Visible = False
-        Width = 155
+        Width = 126
       end
       object cxLabel1: TcxLabel
-        Left = 4
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 3
+        Top = 8
         Caption = 'Skeppare:'
       end
       object cxLabel2: TcxLabel
-        Left = 4
-        Top = 38
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 3
+        Top = 31
         Caption = 'Lista'
         Visible = False
       end
       object cxLabel3: TcxLabel
-        Left = 287
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 233
+        Top = 8
         Caption = 'LO:'
         Visible = False
       end
       object Edit1: TEdit
-        Left = 313
-        Top = 4
-        Width = 57
-        Height = 24
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 254
+        Top = 3
+        Width = 47
+        Height = 21
         TabOrder = 1
         Visible = False
         OnKeyDown = Edit1KeyDown
       end
       object Edit2: TEdit
-        Left = 394
-        Top = 4
-        Width = 58
-        Height = 24
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 320
+        Top = 3
+        Width = 47
+        Height = 21
         TabOrder = 2
         Visible = False
         OnKeyDown = Edit2KeyDown
       end
       object cxLabel4: TcxLabel
-        Left = 370
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 301
+        Top = 8
         Caption = 'Lastnr:'
         Visible = False
       end
       object fomdate: TcxDateEdit
-        Left = 254
-        Top = 32
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 206
+        Top = 26
         Properties.ImmediatePost = True
         Properties.Kind = ckDateTime
         Properties.OnChange = fomdatePropertiesChange
         TabOrder = 3
         Visible = False
-        Width = 161
+        Width = 131
       end
       object tomdate: TcxDateEdit
-        Left = 425
-        Top = 32
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 345
+        Top = 26
         Properties.ImmediatePost = True
         Properties.Kind = ckDateTime
         Properties.OnChange = tomdatePropertiesChange
         TabOrder = 4
         Visible = False
-        Width = 147
+        Width = 120
       end
       object cxLabel5: TcxLabel
-        Left = 208
-        Top = 37
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 169
+        Top = 30
         Caption = 'Period:'
         Visible = False
       end
       object cxLabel6: TcxLabel
-        Left = 415
-        Top = 37
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 337
+        Top = 30
         Caption = '-'
         Visible = False
       end
       object cbShowAll: TcxDBCheckBox
-        Left = 286
-        Top = 4
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 232
+        Top = 3
         Caption = 'Visa alla'
         DataBinding.DataField = 'NewItemRow'
         DataBinding.DataSource = ds_Props
@@ -630,15 +546,11 @@ object frmPortArrivals: TfrmPortArrivals
         Properties.ValueUnchecked = 0
         TabOrder = 11
         Visible = False
-        Width = 89
+        Width = 73
       end
       object lcShipper: TcxDBLookupComboBox
-        Left = 75
-        Top = 4
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 61
+        Top = 3
         DataBinding.DataField = 'Shipper'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -649,27 +561,19 @@ object frmPortArrivals: TfrmPortArrivals
           end>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 12
-        Width = 300
+        Width = 244
       end
       object ePkgNo: TEdit
-        Left = 512
-        Top = 4
-        Width = 58
-        Height = 24
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 416
+        Top = 3
+        Width = 47
+        Height = 21
         TabOrder = 13
         OnKeyDown = ePkgNoKeyDown
       end
       object cxLabel7: TcxLabel
-        Left = 439
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 357
+        Top = 8
         Caption = 'S'#246'k Pktnr:'
       end
     end
@@ -677,7 +581,7 @@ object frmPortArrivals: TfrmPortArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -2491,7 +2395,7 @@ object frmPortArrivals: TfrmPortArrivals
   object cxStyleRepository1: TcxStyleRepository
     Left = 616
     Top = 88
-    PixelsPerInch = 120
+    PixelsPerInch = 96
     object cxStyle_1: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = 15138815

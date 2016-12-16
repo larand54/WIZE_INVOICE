@@ -5111,36 +5111,6 @@ begin
       end;
       Exit;
     end
-    (*
-      else
-      begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-      SetLength(A, 1);
-      A[0] := daMoLM1.cdsLoadsLoadNo.AsInteger;
-      FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
-      ReportType, A, ExcelDir + 'FS ' + daMoLM1.cdsLoadsLoadNo.AsString);
-      // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-      if FormCRExportOneReport.ReportFound = False then
-      Exit;
-      Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
-      end;
-      SetLength(Attach, 1);
-      Attach[0] := ExcelDir + 'FS ' + daMoLM1.cdsLoadsLoadNo.AsString + '.pdf';
-      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-      Try
-      dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
-      daMoLM1.cdsLoadsLoadNo.AsString, 'Följesedel bifogad. ' + LF + '' +
-      'Load tally attached. ' + LF + '' + LF + '' + LF + 'MVH/Best Regards, '
-      + LF + '' + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-      dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-      Finally
-      FreeAndNil(dm_SendMapiMail);
-      End
-    *)
     else
       ShowMessage('Emailadress saknas för klienten!');
   finally

@@ -335,7 +335,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
   uSelectLIP, uAnkomstRegProgress, VidaConst,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
-  dmc_UserProps, udmLanguage, uReport, uReportController;
+  dmc_UserProps, udmLanguage, uReport, uReportController, udmFR, uFastReports;
 
 {$R *.dfm}
 
@@ -1170,53 +1170,34 @@ procedure TfrmPortArrivals.acFSExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
-  RC: TCMReportController;
-  Params: TCMParams;
-  RepNo: Integer;
+  FR: TFastreports;
+  lang,
+  loadNo,
+  ReportType: integer;
 begin
-  if dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger < 1 then
+  dmFR.SaveCursor;
+  try
+  loadNo := dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;
+  if loadNo < 1 then
     Exit;
 
   if uReportController.useFR then begin
+    begin
+      FR := TFastReports.Create;
+      try
+        lang := ThisUser.LanguageID;;
+        if dmArrivingLoads.cdsPortArrivingLoadsObjectType.AsInteger <> 2  then
+          ReportType := cFoljesedelIntern
+        else
+          ReportType := cFoljesedel;
 
-    if dmArrivingLoads.cdsPortArrivingLoadsObjectType.AsInteger = 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
-    else Begin
-      RepNo := 43;  // TALLY_VER3_NOTE.fr3
-      Try
-        dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;
-        dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
+        FR.Tally_Pkg_Matched(loadNo, ReportType, lang, '', '', '', 0);
+      finally
+        FR.Free;
       end;
-    End;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@LoadNo', dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
+    end
   end
+
   else begin
     FormCRViewReport := TFormCRViewReport.Create(Nil);
     Try
@@ -1224,7 +1205,7 @@ begin
       SetLength(A, 1);
       A[0] := dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger;
 
-      if dmArrivingLoads.cdsPortArrivingLoadsObjectType.AsInteger = 2 then
+      if dmArrivingLoads.cdsPortArrivingLoadsObjectType.AsInteger <> 2 then
         FormCRViewReport.CreateCo('TALLY_INTERNAL_VER3_NOTE.RPT', A)
       else Begin
         Try
@@ -1262,6 +1243,9 @@ begin
     Finally
       FreeAndNil(FormCRViewReport);
     End;
+  end;
+  finally
+    dmFR.RestoreCursor;
   end;
 end;
 

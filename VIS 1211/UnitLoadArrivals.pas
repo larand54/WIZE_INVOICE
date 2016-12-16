@@ -2173,7 +2173,7 @@ begin
     begin
       FR := TFastReports.Create;
       try
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
         begin
           FR.Tally_Pkg_Matched(LoadNo, cFoljesedelIntern, lang, '', '', '', 0);
         end
@@ -2745,7 +2745,7 @@ begin
     ExcelDir := dmsSystem.Get_Dir('ExcelDir');
     MailToAddress2 := '';
     MailToAddress := '';
-    if dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = false then
+    if dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.IsNull = False then
       ClientNo := dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger
     else
       ClientNo := dmArrivingLoads.cdsArrivingLoadsCUSTOMERNO.AsInteger;
@@ -2769,25 +2769,13 @@ begin
         MailToAddress := MailToAddress + MailToAddress2;
     End;
 
-    loadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+    LoadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
     if Length(MailToAddress) > 0 then
     Begin
       if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
         ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
       else
       Begin
-        Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger := loadNo;
-          // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
 
         if dmsContact.Client_Language(ClientNo) = cSwedish
         then
@@ -2801,29 +2789,44 @@ begin
       if uReportController.useFR then
       begin
         lang := dmsContact.Client_Language(ClientNo);
-        FR := TFastReports.create;
+        FR := TFastReports.Create;
         try
-          FR.Tally_Pkg_Matched(loadNo,ReportType,lang,MailToAddress,'','',0);
+          FR.Tally_Pkg_Matched(LoadNo, ReportType, lang, MailToAddress,
+            '', '', 0);
         finally
           FR.Free;
         end;
-        exit;
+        Exit;
       end
       else
-        try
-          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-          SetLength(A, 1);
-          A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        if ReportType <> cFoljesedelIntern then
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger
+            := LoadNo;
           // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-          FormCRExportOneReport.CreateCo(1, ReportType, A,
-            ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
-          // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+      try
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        SetLength(A, 1);
+        A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+        FormCRExportOneReport.CreateCo(1, ReportType, A,
+          ExcelDir + 'FS ' + dmArrivingLoads.cdsArrivingLoadsLoadNo.AsString);
+        // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
 
-          if FormCRExportOneReport.ReportFound = False then
-            Exit;
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
+        if FormCRExportOneReport.ReportFound = False then
+          Exit;
+      Finally
+        FreeAndNil(FormCRExportOneReport); // .Free ;
+      End;
 {$IFDEF DEBUG}
 {$IFDEF TEST_WITH_EMAIL}
 {$ELSE}
@@ -3303,92 +3306,78 @@ var
   Params: TCMParams;
   RepNo: Integer;
   loadNo: integer;
+  lang: integer;
+  ClientNo: integer;
+  ReportType: integer;
+  FR: TFastReports;
 begin
-  loadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-  if loadNo < 1 then
-    Exit;
-  if uReportController.useFR then begin
-
-    if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
-    else Begin
-      if TFastReports.VidaEnergi(0,loadNo,0) then
-        RepNo := dmFR.reportByName(VE_FS)
+  dmFR.SaveCursor;
+  try
+    LoadNo := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+    ClientNo := dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger;
+    lang := dmsContact.Client_Language(ClientNo);
+    if LoadNo < 1 then
+      Exit;
+    if uReportController.useFR then
+    begin
+      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
+        ReportType := cFoljesedelIntern
       else
-        RepNo := 43; // TALLY_VER3_NOTE.fr3;
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger := loadNo;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
+        ReportType := cFoljesedel;
+      FR := TFastReports.createForPrint(False);
+      try
+        FR.Tally_Pkg_Matched(LoadNo, ReportType, lang, '', '', '', 0);
+      finally
+        FR.Free;
       end;
-    End;
-    RC := TCMReportController.Create;
-    try
-      Params := TCMParams.Create();
-      Params.Add('@Language',  dmsContact.Client_Language
-        (dmArrivingLoads.cdsArrivingLoadsAVROP_CUSTOMERNO.AsInteger));
-      Params.Add('@LoadNo', loadNo);
-      RC.RunReport(RepNo, Params, frPrint, 0);
+    end
+    else
+    begin
+      FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
       Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger := loadNo;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    end;
-  end
-  else begin
-    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-    Try
-      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+        // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
 
-      SetLength(A, 1);
-      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
-        FormCRPrintOneReport.CreateCo(1, False, False, A,
-          'TALLY_INTERNAL_VER3_NOTE.RPT')
-      else Begin
+        SetLength(A, 1);
+        A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+        if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger < 2 then
+          FormCRPrintOneReport.CreateCo(1, False, False, A,
+            'TALLY_INTERNAL_VER3_NOTE.RPT')
+        else
+        Begin
+          Try
+            dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+              dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
+            dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+          except
+            On E: Exception do
+            Begin
+              dmsSystem.FDoLog(E.Message);
+              // ShowMessage(E.Message);
+              Raise;
+            End;
+          end;
+          FormCRPrintOneReport.CreateCo(1, False, False, A,
+            'TALLY_VER3_NOTE.RPT');
+        End;
+
         Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+          dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
             dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+          dmsSystem.sq_DelPkgType.ExecSQL;
         except
-          On E: Exception do Begin
+          On E: Exception do
+          Begin
             dmsSystem.FDoLog(E.Message);
             // ShowMessage(E.Message);
             Raise;
           End;
         end;
-        FormCRPrintOneReport.CreateCo(1, False, False, A,
-          'TALLY_VER3_NOTE.RPT');
+      Finally
+        FreeAndNil(FormCRPrintOneReport);
       End;
-
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    Finally
-      FreeAndNil(FormCRPrintOneReport);
-    End;
+    end;
+  finally
+    dmFR.RestoreCursor
   end;
 end;
 
