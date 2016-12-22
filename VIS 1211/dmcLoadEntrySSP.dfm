@@ -3254,4 +3254,29 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
       Required = True
     end
   end
+  object sp_AdjustPkgArticleNoOnLoadPkgs: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_AdjustPkgArticleNoOnLoadPkgs'
+    Left = 728
+    Top = 488
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
 end
