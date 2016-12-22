@@ -2566,43 +2566,24 @@ Var
   RC: TCMReportController;
   Params: TCMParams;
   RepNo: Integer;
+  ReportType, lang, LoadNo: integer;
+  FR: TFastReports;
+
 begin
   if uReportController.useFR then begin
-      if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
-      RepNo := 55 // TALLY_INTERNAL_VER3_NOTE.fr3
-    else Begin
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-      RepNo := 43;
-    End;
+    LoadNo := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+    lang := ThisUser.LanguageID;
+
+    if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
+      ReportType := cFoljesedelIntern
+    else
+      ReportType := cFoljesedel;
+
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language', ThisUser.LanguageID);
-      Params.Add('@LoadNo', dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
+      FR.Tally_Pkg_Matched(LoadNo, ReportType, lang, '', '', '',0);
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin

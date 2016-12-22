@@ -1390,7 +1390,6 @@ Var
   Attach: array of String;
   MailToAddress: String;
   ReportType: Integer;
-  RC: TCMReportController;
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;

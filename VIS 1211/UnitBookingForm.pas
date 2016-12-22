@@ -166,7 +166,7 @@ implementation
 uses VidaConst,
   VidaUser,
   dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
-  dmsVidaContact, udmLanguage, uReport, uReportController;
+  dmsVidaContact, udmLanguage, uReport, uReportController, uFastReports;
 
 {$R *.dfm}
 
@@ -363,25 +363,21 @@ procedure TFormBookingForm.acPrintExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
-  RC: TCMReportController;
-  Params: TCMParams;
-  RepNo: Integer;
+  ReportType, lang, LONo: integer;
+  FR: TFastReports;
 begin
   if uReportController.useFR then begin
+    lang := ThisUser.LanguageID;
+    LONo := dm_Booking.cdsBookingInvoiceShippingPlanNo.AsInteger;
     if OrderType = 0 then
-      RepNo := 22 // TRP_ORDER_NOTE.fr3
+      ReportType := cTrporder
     else
-      RepNo := 23; // TRP_ORDER_INKOP_NOTE.fr3;
-    RC := TCMReportController.Create;
+      ReportType := cTrporderInkop;
+    FR := TFastReports.create;
     try
-      Params := TCMParams.Create();
-      Params.Add('@Language',  ThisUser.LanguageID);
-      Params.Add('@ShippingPlanNo',
-        dm_Booking.cdsBookingInvoiceShippingPlanNo.AsInteger);
-      RC.RunReport(RepNo, Params, frPreview, 0);
+      FR.TrpO(LONo, ReportType, lang, '', '', '');
     finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
+      FR.Free;
     end;
   end
   else begin

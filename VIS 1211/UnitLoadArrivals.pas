@@ -2152,9 +2152,6 @@ procedure TfrmLoadArrivals.acFSExecute(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of Variant;
-  RC: TCMReportController;
-  Params: TCMParams;
-  RepNo: Integer;
   FR: TFastReports;
   ClientNo: integer;
   LoadNo,
