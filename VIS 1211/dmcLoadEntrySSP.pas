@@ -331,6 +331,7 @@ type
     sq_PkgExistInInventoryPackageNo: TIntegerField;
     cdsLORowsShippingPlanStatus: TIntegerField;
     cds_LoadPackagesKG: TFloatField;
+    sp_AdjustPkgArticleNoOnLoadPkgs: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure cds_LoadHead1SenderLoadStatusChange(Sender: TField);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
@@ -357,6 +358,7 @@ type
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
 
+    procedure AdjustPkgArticleNoOnLoadPkgs(const LoadNo : Integer) ;
     procedure RemovePkgFromLoad_II(const Status, Operation: Integer);
     function PkgExistInLoad: Boolean;
     function IS_Load_OK: Word;
@@ -538,7 +540,10 @@ begin
 
     // Om status = 2 then check and change manuell overriden packages
     if cds_LoadHeadSenderLoadStatus.AsInteger = 2 then
+    Begin
       chgManLoadPkgs(LoadNo);
+      AdjustPkgArticleNoOnLoadPkgs(LoadNo);
+    End;
 
     // CleanUpLoadpkgsGrid(Sender) ;
     { LL      dmsConnector.Commit ;
@@ -1494,5 +1499,21 @@ Begin
     sq_PkgExistInInventory.Active := False;
   End;
 End;
+
+procedure TdmLoadEntrySSP.AdjustPkgArticleNoOnLoadPkgs(const LoadNo : Integer) ;
+Begin
+    Try
+    sp_AdjustPkgArticleNoOnLoadPkgs.ParamByName('@LoadNo').AsInteger := LoadNo ;
+    sp_AdjustPkgArticleNoOnLoadPkgs.ParamByName('@UserID').AsInteger := ThisUser.UserID ;
+    sp_AdjustPkgArticleNoOnLoadPkgs.ExecProc ;
+     except
+      On E: Exception do
+      Begin
+       dmsSystem.FDoLog(E.Message) ;
+//      ShowMessage(E.Message);
+       Raise ;
+      End ;
+     end;
+End ;
 
 end.
