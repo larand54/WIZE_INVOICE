@@ -547,62 +547,62 @@ begin
 
     if cds_PropsRegPointNo.AsInteger = 1 then
     Begin
-	cds_MakeSokAvrop.SQL.Add('/* Avropsvolymer */');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) AS AvropAM3,');
+      cds_MakeSokAvrop.SQL.Add('/* Avropsvolymer */');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) AS AvropAM3,');
 
-	cds_MakeSokAvrop.SQL.Add('(Select LD.AM3 From  dbo.DelperCSDLO LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPAM3,');
+      cds_MakeSokAvrop.SQL.Add('(Select LD.AM3 From  dbo.DelperCSDLO LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPAM3,');
 
-	cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select isnull(AM3,0) From  dbo.DelperCSDLO LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) IS null THEN');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
-	cds_MakeSokAvrop.SQL.Add('ELSE');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) -');
-	cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From  dbo.DelperCSDLO LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) END AS RESTAVROPAM3,');
+      cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select isnull(AM3,0) From  dbo.DelperCSDLO LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) IS null THEN');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3) -');
+      cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From  dbo.DelperCSDLO LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) END AS RESTAVROPAM3,');
 
-	cds_MakeSokAvrop.SQL.Add('/* LOVolymer */');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) AS AM3,');
+      cds_MakeSokAvrop.SQL.Add('/* LOVolymer */');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) AS AM3,');
 
-	cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperSSPCDS LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) AS LEVLO,');
+      cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperSSPCDS LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) AS LEVLO,');
 
-	cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select AM3 From  dbo.DelperSSPCDS LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) is null then');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
-	cds_MakeSokAvrop.SQL.Add('ELSE');
-	cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) -');
-	cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From  dbo.DelperSSPCDS LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) END AS REST,');
+      cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select AM3 From  dbo.DelperSSPCDS LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) is null then');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3) -');
+      cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From  dbo.DelperSSPCDS LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo) END AS REST,');
 
 
-	cds_MakeSokAvrop.SQL.Add('/* Avropsvolymer KG */');
-	 cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
-	 cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo) as AvropKG,');
+      cds_MakeSokAvrop.SQL.Add('/* Avropsvolymer KG */');
+      cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
+      cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo) as AvropKG,');
 
-	cds_MakeSokAvrop.SQL.Add('(Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPKG,');
+      cds_MakeSokAvrop.SQL.Add('(Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) AS LEVAVROPKG,');
 
-	cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) IS NULL THEN');
-	cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
-	 cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo)');
-	 cds_MakeSokAvrop.SQL.Add('ELSE');
-	 cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
-	 cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo) -');
-	 cds_MakeSokAvrop.SQL.Add('(Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
-	cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-	cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
-	cds_MakeSokAvrop.SQL.Add('END AS RESTAVROPKG,');
-  End ;
+      cds_MakeSokAvrop.SQL.Add('CASE WHEN (Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo) IS NULL THEN');
+      cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
+      cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo)');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add('ps.NoOfUnits * sum(csd.NoOfUnits) * (Select pl.ActualLengthMM FROM dbo.ProductLength pl');
+      cds_MakeSokAvrop.SQL.Add('where pl.ProductLengthNo = OL.ProductLengthNo) -');
+      cds_MakeSokAvrop.SQL.Add('(Select LD.Kg From [dbo].[DelperCSDLO_KG] LD');
+      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
+      cds_MakeSokAvrop.SQL.Add('END AS RESTAVROPKG,');
+    End ;
 
 {
 
@@ -916,7 +916,8 @@ begin
         (',OL.OrderLineDescription , CSD.LengthDescription, OL.ProductLengthNo, ps.NoOfUnits');
     End;
 
-    // if ThisUser.UserID = 8 then  cds_MakeSokAvrop.SQL.SaveToFile('cds_MakeSokAvrop.txt');
+    // if ThisUser.UserID = 8 then
+    cds_MakeSokAvrop.SQL.SaveToFile('cds_MakeSokAvrop.txt');
     // Try
     // cds_MakeSokAvrop.ExecSQL ;
     { except
