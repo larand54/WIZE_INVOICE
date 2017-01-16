@@ -1501,16 +1501,20 @@ object dmVidaInvoice: TdmVidaInvoice
     end
   end
   object cdsInvoiceDetail: TFDQuery
+    Active = True
     AfterInsert = cdsInvoiceDetailAfterInsert
     CachedUpdates = True
     OnUpdateError = cdsInvoiceDetailUpdateError
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'SELECT *'
-      'FROM dbo.InvoiceDetail'
+      'SELECT INVD.*, csd.OrderBy'
+      'FROM dbo.InvoiceDetail INVD'
+      
+        'Left Join dbo.CustomerShippingPlanDetails csd on csd.CustShipPla' +
+        'nDetailObjectNo = INVD.CustShipPlanDetailObjectNo'
       'WHERE '
-      'InternalInvoiceNo = :InternalInvoiceNo')
+      'INVD.InternalInvoiceNo = :InternalInvoiceNo')
     Left = 280
     Top = 16
     ParamData = <
@@ -1823,6 +1827,11 @@ object dmVidaInvoice: TdmVidaInvoice
       FieldName = 'InclInInvoiceTotal'
       Origin = 'InclInInvoiceTotal'
       ProviderFlags = [pfInUpdate]
+    end
+    object cdsInvoiceDetailOrderBy: TIntegerField
+      DisplayLabel = 'EDI-Rnr'
+      FieldName = 'OrderBy'
+      Origin = 'OrderBy'
     end
     object cdsInvoiceDetailTotalInvoice: TAggregateField
       FieldName = 'TotalInvoice'

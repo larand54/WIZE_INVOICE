@@ -316,8 +316,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     SortID = 0
     SubLanguageID = 1
     LocaleID = 1024
-    Left = 592
-    Top = 243
+    Left = 584
+    Top = 235
     object mtLoadShippingPlanLoadNo: TIntegerField
       FieldName = 'LoadNo'
     end
@@ -2376,8 +2376,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       'AND pt2.ProductNo = pt.ProductNo)'
       ''
       'Order by pn.datecreated')
-    Left = 400
-    Top = 248
+    Left = 448
+    Top = 200
     ParamData = <
       item
         Name = 'LOGICALINVENTORYPOINTNO'
@@ -2501,8 +2501,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       'WHERE     PN.PackageNo = :PackageNo'
       'AND PN.SupplierCode = :SupplierCode'
       'and pdc.LanguageID = :LanguageID')
-    Left = 400
-    Top = 176
+    Left = 448
+    Top = 152
     ParamData = <
       item
         Name = 'PACKAGENO'
@@ -2979,7 +2979,7 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
       'Select * FROM dbo.SortingOrderMarkedPkgs'
       'WHERE UserID = :UserID')
     Left = 288
-    Top = 440
+    Top = 384
     ParamData = <
       item
         Name = 'USERID'
@@ -2991,8 +2991,8 @@ object dmLoadEntryCSD: TdmLoadEntryCSD
     SQL.Strings = (
       'Delete dbo.SortingOrderMarkedPkgs'
       'WHERE UserID = :UserID')
-    Left = 296
-    Top = 496
+    Left = 288
+    Top = 432
     ParamData = <
       item
         Name = 'USERID'

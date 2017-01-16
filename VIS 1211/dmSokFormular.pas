@@ -163,12 +163,6 @@ type
     cds_MakeSokAvropShippingPlanNo: TIntegerField;
     cds_MakeSokAvropVoyageNo: TIntegerField;
     cds_MakeSokAvropLand: TStringField;
-    cds_MakeSokAvropAvropAM3: TBCDField;
-    cds_MakeSokAvropLEVAVROPAM3: TFloatField;
-    cds_MakeSokAvropRESTAVROPAM3: TFloatField;
-    cds_MakeSokAvropAvropKG: TFloatField;
-    cds_MakeSokAvropLEVAVROPKG: TFloatField;
-    cds_MakeSokAvropRESTAVROPKG: TFloatField;
     procedure dsp_MakeSokAvropGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
     procedure cds_MakeSokAvropBeforePost(DataSet: TDataSet);
