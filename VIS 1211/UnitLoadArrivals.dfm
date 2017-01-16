@@ -1006,19 +1006,12 @@ object frmLoadArrivals: TfrmLoadArrivals
       Caption = 'F'#246'ljesedel USA'
       Category = 3
       Visible = ivAlways
-      ItemLinks = <
-        item
-          Visible = True
-          ItemName = 'dxBarButton9'
-        end
-        item
-          Visible = True
-          ItemName = 'dxBarButton10'
-        end>
+      ItemLinks = <>
     end
     object dxBarButton9: TdxBarButton
-      Action = acPrintTallyUSNote
+      Caption = 'F'#246'rhandsgranska'
       Category = 3
+      Visible = ivAlways
     end
     object dxBarButton10: TdxBarButton
       Action = acPrintDirectFS_USA
@@ -2539,15 +2532,6 @@ object frmLoadArrivals: TfrmLoadArrivals
         ItemName = 'dxBarSubItem1'
       end
       item
-        Visible = True
-        ItemName = 'dxBarSubItem2'
-      end
-      item
-        BeginGroup = True
-        Visible = True
-        ItemName = 'dxBarButton2'
-      end
-      item
         BeginGroup = True
         Visible = True
         ItemName = 'bbSamlingsspecifikation'
@@ -2555,10 +2539,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       item
         Visible = True
         ItemName = 'dxBarButton1'
-      end
-      item
-        Visible = True
-        ItemName = 'dxBarButton11'
       end>
     UseOwnFont = False
     Left = 272
@@ -2718,8 +2698,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     end
     object acFS_DK: TAction
       Caption = 'F'#246'ljesedel (DK)'
-      OnExecute = acFS_DKExecute
-      OnUpdate = acFS_DKUpdate
     end
     object acPrintSamLast: TAction
       Caption = 'Samlingsf'#246'ljesedel'
@@ -2795,8 +2773,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     end
     object acPrintTallyUSNote: TAction
       Caption = 'F'#246'rhandsgranska'
-      OnExecute = acPrintTallyUSNoteExecute
-      OnUpdate = acPrintTallyUSNoteUpdate
     end
     object acConfirmOneLoad: TAction
       Caption = 'Ankomstregistrera'
@@ -2810,13 +2786,9 @@ object frmLoadArrivals: TfrmLoadArrivals
     end
     object acPrintDirectFS_USA: TAction
       Caption = 'Skriv ut markerade laster'
-      OnExecute = acPrintDirectFS_USAExecute
-      OnUpdate = acPrintDirectFS_USAUpdate
     end
     object acSamlingsFS_USA: TAction
       Caption = 'Samlingsf'#246'ljesedel USA'
-      OnExecute = acSamlingsFS_USAExecute
-      OnUpdate = acSamlingsFS_USAUpdate
     end
     object acGetIntPrices: TAction
       Caption = 'Upd. priser s-F6'
