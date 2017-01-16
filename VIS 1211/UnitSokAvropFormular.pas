@@ -323,7 +323,8 @@ implementation
 uses VidaUser, dmSokFormular, dmcVidaOrder, dmsVidaContact,
   UnitBookingFormorg, UnitCRViewReport, dmsDataConn, VidaConst,
   dmsVidaSystem, uSokAvropMall, UnitCRExportOneReport, uSendMapiMail,
-  uEntryField, dmBooking, udmLanguage, uReport, uReportController;
+  uEntryField, dmBooking, udmLanguage, uReport, uReportController
+  , uFastReports, udmFR;
 
 {$R *.dfm}
 
@@ -1329,90 +1330,92 @@ Var
   DocTyp, RoleType, ClientNo: Integer;
   Params: TCMParams;
   ExportFile: string;
-  Save_Cursor: TCursor;
+  lang, TONo: integer;
+  FR: TFastReports;
 begin
-  Save_Cursor := Screen.Cursor;
-  With dm_SokFormular do Begin
-    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
-    // Byter cursor !! Bör fixas!
-      (cds_MakeSokAvropLO.AsInteger);
-    if Length(MailToAddress) = 0 then Begin
-      MailToAddress := 'ange@adress.nu';
-      ShowMessage
-        ('Email address missing, enter the address direct in the mail(outlook).');
-    End;
+  dmFR.SaveCursor;
+  try
+    With dm_SokFormular do
+    Begin
+      MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+      // Byter cursor !! Bör fixas!
+        (cds_MakeSokAvropLO.AsInteger);
+      if Length(MailToAddress) = 0 then
+      Begin
+        MailToAddress := 'ange@adress.nu';
+        ShowMessage
+          ('Email address missing, enter the address direct in the mail(outlook).');
+      End;
 {$IFDEF TEST_WITH_EMAIL}
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-      MailToAddress := 'larand54@gmail.com'
-    else if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-SPEED' then
-      MailToAddress := 'lars.makiaho@gmail.com';
+      if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+        MailToAddress := 'larand54@gmail.com'
+      else if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-SPEED' then
+        MailToAddress := 'lars.makiaho@gmail.com';
 {$ENDIF}
-    if Length(MailToAddress) > 0 then Begin
-      if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-        ReportType := cTrpOrder // TRP_ORDER_NOTE.fr3 (22)
-      else
-        ReportType := cTrpOrderInkop; // trp_order_inkop_NOTE.fr3  (23)
-      // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
-      RoleType := 1;
-      ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
-      ExportFile := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+      if Length(MailToAddress) > 0 then
+      Begin
+        if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
+          ReportType := cTrpOrder // TRP_ORDER_NOTE.fr3 (22)
+        else
+          ReportType := cTrpOrderInkop; // trp_order_inkop_NOTE.fr3  (23)
+        // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
 
-      if uReportController.useFR then begin
-        Params := TCMParams.Create();
-        Params.Add('@Language', ThisUser.LanguageID);
-        Params.Add('@SHIPPINGPLANNO', cds_MakeSokAvropLO.AsInteger);
-        DocTyp := ReportType;
-        RC := TCMReportController.Create;
-        Try
-          RC.setExportFile(ExportFile);
-          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-        Finally
-          FreeAndNil(Params);
-          FreeAndNil(RC);
-        End;
-        if not FileExists(ExportFile) then begin
-          Screen.Cursor := Save_Cursor;
-          Exit;
-        end;
-      end
-      else
-        Try
-          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-          SetLength(A, 1);
-          A[0] := cds_MakeSokAvropLO.AsInteger;
-          FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
-            ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
-          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-          if FormCRExportOneReport.ReportFound = False then
-            Exit;
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
+        if uReportController.useFR then
+        begin
+          RoleType := 1;
+          ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
+          TONo := cds_MakeSokAvropLO.AsInteger;
+          lang := ThisUser.LanguageID;
+          FR := TFastReports.Create;
+          try
+            FR.TrpO(TONo, ReportType, lang, MailToAddress, '', '', False);
+          finally
+            FR.Free;
+          end;
+          exit;
+        end
+        else
+          Try
+            FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+            SetLength(A, 1);
+            A[0] := cds_MakeSokAvropLO.AsInteger;
+            FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
+              ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
+            // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+            if FormCRExportOneReport.ReportFound = False then
+              Exit;
+          Finally
+            FreeAndNil(FormCRExportOneReport); // .Free ;
+          End;
 {$IFDEF DEBUG}
 {$IFDEF TEST_WITH_EMAIL}
 {$ELSE}
-      Exit; // No email if debugging and not TEST_WITH_EMAIL
+        Exit; // No email if debugging and not TEST_WITH_EMAIL
 {$ENDIF}
 {$ENDIF}
-      SetLength(Attach, 1);
-      Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
-      // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
-      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-      Try
-        dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
-          cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
-          'Transportorder attached. ' + LF + '' + LF + '' + LF +
-          'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-          Attach, False);
-      Finally
-        FreeAndNil(dm_SendMapiMail);
-        Screen.Cursor := Save_Cursor;
-      End;
-    End
-    else
-      ShowMessage('Email address missing.');
-  End; // With dm_SokFormular do
+        SetLength(Attach, 1);
+        Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
+        // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
+        dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+        Try
+          dm_SendMapiMail.SendMail('Transportorder. LOnr: ' +
+            cds_MakeSokAvropLO.AsString, 'Transportorder bifogad. ' + LF + '' +
+            'Transportorder attached. ' + LF + '' + LF + '' + LF +
+            'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+            (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
+            MailToAddress,
+            Attach, False);
+        Finally
+          FreeAndNil(dm_SendMapiMail);
+        End;
+      End
+      else
+        ShowMessage('Email address missing.');
+    End; // With dm_SokFormular do
+
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmSokAvropFormular.acMailaTrpOrderAvropDKExecute(Sender: TObject);
