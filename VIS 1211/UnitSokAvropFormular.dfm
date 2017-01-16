@@ -4,12 +4,12 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   Align = alClient
   BorderStyle = bsNone
   Caption = 'AVROP '
-  ClientHeight = 845
-  ClientWidth = 1242
+  ClientHeight = 1040
+  ClientWidth = 1529
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -18,102 +18,158 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
-    Top = 62
-    Width = 1242
-    Height = 91
+    Top = 76
+    Width = 1529
+    Height = 112
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
-      Left = 4
-      Top = 64
-      Width = 25
-      Height = 13
+      Left = 5
+      Top = 79
+      Width = 31
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Verk:'
     end
     object Label2: TLabel
-      Left = 4
-      Top = 40
-      Width = 47
-      Height = 13
+      Left = 5
+      Top = 49
+      Width = 60
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lastst'#228'lle:'
     end
     object Label3: TLabel
-      Left = 191
-      Top = 40
-      Width = 39
-      Height = 13
+      Left = 235
+      Top = 49
+      Width = 50
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Shipper:'
     end
     object Label4: TLabel
-      Left = 191
-      Top = 16
-      Width = 48
-      Height = 13
+      Left = 235
+      Top = 20
+      Width = 61
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Transport:'
     end
     object Label5: TLabel
-      Left = 192
-      Top = 64
-      Width = 28
-      Height = 13
+      Left = 236
+      Top = 79
+      Width = 33
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Kund:'
     end
     object Label6: TLabel
-      Left = 364
-      Top = 16
-      Width = 45
-      Height = 13
+      Left = 448
+      Top = 20
+      Width = 56
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Marknad:'
     end
     object Label7: TLabel
-      Left = 536
-      Top = 16
-      Width = 31
-      Height = 13
+      Left = 660
+      Top = 20
+      Width = 38
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Agent:'
     end
     object Label8: TLabel
-      Left = 364
-      Top = 40
-      Width = 33
-      Height = 13
+      Left = 448
+      Top = 49
+      Width = 43
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Period:'
     end
     object Label9: TLabel
-      Left = 460
-      Top = 40
-      Width = 17
-      Height = 13
+      Left = 566
+      Top = 49
+      Width = 22
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'tom'
     end
     object Label10: TLabel
-      Left = 364
-      Top = 64
-      Width = 43
-      Height = 13
+      Left = 448
+      Top = 79
+      Width = 55
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Ordertyp:'
     end
     object Label11: TLabel
-      Left = 535
-      Top = 64
-      Width = 59
-      Height = 13
+      Left = 658
+      Top = 79
+      Width = 74
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Avropstatus:'
     end
     object Label12: TLabel
-      Left = 4
-      Top = 16
-      Width = 55
-      Height = 13
+      Left = 5
+      Top = 20
+      Width = 71
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'F'#246'rs.region:'
     end
     object lcSR: TcxDBLookupComboBox
-      Left = 64
-      Top = 8
+      Left = 79
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'SR'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -125,11 +181,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 0
-      Width = 121
+      Width = 149
     end
     object lcLaststalle: TcxDBLookupComboBox
-      Left = 64
-      Top = 32
+      Left = 79
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Laststalle'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -141,11 +201,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 1
-      Width = 121
+      Width = 149
     end
     object lcVerk: TcxDBLookupComboBox
-      Left = 64
-      Top = 56
+      Left = 79
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Verk'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -157,11 +221,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 2
-      Width = 121
+      Width = 149
     end
     object lcBokningstyp: TcxDBLookupComboBox
-      Left = 239
-      Top = 8
+      Left = 294
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Bokningstyp'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
@@ -172,11 +240,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 3
-      Width = 121
+      Width = 149
     end
     object lcShipper: TcxDBLookupComboBox
-      Left = 239
-      Top = 32
+      Left = 294
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Shipper'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -188,11 +260,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 4
-      Width = 121
+      Width = 149
     end
     object lcKund: TcxDBLookupComboBox
-      Left = 239
-      Top = 56
+      Left = 294
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Kund'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -204,11 +280,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 5
-      Width = 121
+      Width = 149
     end
     object lcMarknad: TcxDBLookupComboBox
-      Left = 408
-      Top = 8
+      Left = 502
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'Marknad'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 200
@@ -220,11 +300,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 6
-      Width = 121
+      Width = 149
     end
     object lcAgentNamn: TcxDBLookupComboBox
-      Left = 600
-      Top = 8
+      Left = 738
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'AgentNamn'
       DataBinding.DataSource = ds_Props
       Properties.DropDownWidth = 300
@@ -236,29 +320,41 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         end>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 10
-      Width = 121
+      Width = 149
     end
     object deStartPeriod: TcxDBDateEdit
-      Left = 728
-      Top = 32
+      Left = 896
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'StartPeriod'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       TabOrder = 14
-      Width = 121
+      Width = 149
     end
     object deEndPeriod: TcxDBDateEdit
-      Left = 728
-      Top = 56
+      Left = 896
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'EndPeriod'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       TabOrder = 15
-      Width = 121
+      Width = 149
     end
     object icOrderTypeNo: TcxDBImageComboBox
-      Left = 408
-      Top = 56
+      Left = 502
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'OrderTypeNo'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
@@ -273,11 +369,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
           Value = 1
         end>
       TabOrder = 9
-      Width = 121
+      Width = 149
     end
     object icAvropStatus: TcxDBImageComboBox
-      Left = 600
-      Top = 56
+      Left = 738
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'CopyPcs'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
@@ -300,11 +400,15 @@ object frmSokAvropFormular: TfrmSokAvropFormular
           Value = 3
         end>
       TabOrder = 12
-      Width = 121
+      Width = 149
     end
     object cbShowProduct: TcxDBCheckBox
-      Left = 600
-      Top = 32
+      Left = 738
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Visa produkt'
       DataBinding.DataField = 'RegPointNo'
       DataBinding.DataSource = ds_Props
@@ -313,20 +417,28 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       Properties.ValueUnchecked = 0
       Properties.OnChange = cbShowProductPropertiesChange
       TabOrder = 11
-      Width = 121
+      Width = 149
     end
     object deFilterOrderDate: TcxDBDateEdit
-      Left = 856
-      Top = 32
+      Left = 1054
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'FilterOrderDate'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       TabOrder = 17
-      Width = 121
+      Width = 148
     end
     object cbFilterInvoiceDate: TcxDBCheckBox
-      Left = 728
-      Top = 8
+      Left = 896
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Filtrera fakturadatum'
       DataBinding.DataField = 'InputOption'
       DataBinding.DataSource = ds_Props
@@ -334,20 +446,28 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       Properties.ValueChecked = 1
       Properties.ValueUnchecked = 0
       TabOrder = 13
-      Width = 121
+      Width = 149
     end
     object deRegDate: TcxDBDateEdit
-      Left = 856
-      Top = 56
+      Left = 1054
+      Top = 69
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'RegDate'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       TabOrder = 18
-      Width = 121
+      Width = 148
     end
     object cbFilter_ETD: TcxDBCheckBox
-      Left = 856
-      Top = 8
+      Left = 1054
+      Top = 10
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Filtrera ETD'
       DataBinding.DataField = 'GroupSummary'
       DataBinding.DataSource = ds_Props
@@ -355,30 +475,42 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       Properties.ValueChecked = 1
       Properties.ValueUnchecked = 0
       TabOrder = 16
-      Width = 81
+      Width = 99
     end
     object meAvropsPeriodStart: TcxDBMaskEdit
-      Left = 408
-      Top = 32
+      Left = 502
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'BarCodeNo'
       DataBinding.DataSource = ds_Props
       TabOrder = 7
-      Width = 49
+      Width = 60
     end
     object meAvropsPeriodEnd: TcxDBMaskEdit
-      Left = 480
-      Top = 32
+      Left = 591
+      Top = 39
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'GradeStampNo'
       DataBinding.DataSource = ds_Props
       TabOrder = 8
-      Width = 49
+      Width = 60
     end
   end
   object grdAvropSok: TcxGrid
     Left = 0
-    Top = 153
-    Width = 1242
-    Height = 692
+    Top = 188
+    Width = 1529
+    Height = 852
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     PopupMenu = pmAvropGrd
     TabOrder = 1
@@ -752,59 +884,91 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1242
-    Height = 62
+    Width = 1529
+    Height = 76
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 3
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 865
-      Height = 60
+      Width = 1065
+      Height = 74
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       TabOrder = 0
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 863
-        Height = 45
+        Width = 1063
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel4: TPanel
-      Left = 866
+      Left = 1066
       Top = 1
-      Width = 290
-      Height = 60
+      Width = 358
+      Height = 74
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       TabOrder = 1
       object dblTemplateName: TcxDBLabel
-        Left = 8
-        Top = 29
+        Left = 10
+        Top = 36
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         DataBinding.DataField = 'Form'
         DataBinding.DataSource = ds_Props
-        Height = 21
-        Width = 85
+        Height = 26
+        Width = 104
       end
       object cxLabel1: TcxLabel
-        Left = 8
-        Top = 9
+        Left = 10
+        Top = 11
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Mall'
       end
     end
     object Panel5: TPanel
-      Left = 1156
+      Left = 1424
       Top = 1
-      Width = 85
-      Height = 60
+      Width = 104
+      Height = 74
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alRight
       TabOrder = 2
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 83
-        Height = 45
+        Width = 102
+        Height = 48
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -813,7 +977,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -14
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -2480,7 +2644,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42726.735793483790000000
+      ReportDocument.CreationDate = 42729.549320312500000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       OptionsView.Footers = False
       OptionsView.BandHeaders = False
@@ -2493,7 +2657,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object cxStyleRepository1: TcxStyleRepository
     Left = 128
     Top = 584
-    PixelsPerInch = 96
+    PixelsPerInch = 120
     object cxStyle1: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = 12713983
