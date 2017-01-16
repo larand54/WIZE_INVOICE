@@ -287,6 +287,8 @@ type
     grdPkgsDBBandedTableView1KG: TcxGridDBBandedColumn;
     cxGridPopupMenu1: TcxGridPopupMenu;
     cxGridPopupMenu2: TcxGridPopupMenu;
+    acSetLoadPIPandLIP: TAction;
+    cxButton2: TcxButton;
 
     procedure lbRemoveLONumberClick(Sender: TObject);
     procedure lbRemovePackageClick(Sender: TObject);
@@ -377,10 +379,12 @@ LG *)
     procedure acSetStatusPrelAndSaveUpdate(Sender: TObject);
     procedure acCreditPackagesExecute(Sender: TObject);
     procedure Label1DblClick(Sender: TObject);
+    procedure acSetLoadPIPandLIPExecute(Sender: TObject);
 
   private
     { Private declarations }
     DoingCreditingPkgs, LoadEnabled, AddingPkgsFromPkgEntry: Boolean;
+    procedure SetLoadPIPandLIP ;
     procedure CreateInternalLODialog(Sender: TObject);
     procedure SetSpecialLoadEnabled ;
     Procedure EnabledTheLoad;
@@ -873,6 +877,19 @@ begin
     Screen.Cursor := Save_Cursor;
   End;
 end;
+
+procedure TfLoadEntryCSD.SetLoadPIPandLIP ;
+Begin
+  With dmLoadEntryCSD do
+  Begin
+    if cds_LoadHead.State in [dsBrowse] then
+     cds_LoadHead.Edit ;
+
+    cds_LoadHeadPIPNo.AsInteger := cds_LSPLoadingPIPNo.AsInteger;
+    cds_LoadHeadLIPNo.AsInteger := cds_LSPLoadingLIPNo.AsInteger;
+    cds_LoadHead.Post;
+  End;
+End;
 
 constructor TfLoadEntryCSD.CreateWithNewLoad(AOwner: TComponent;
   const CustomerNo, SalesRegionNo, LoadNo, LO_NO: Integer);
@@ -2209,8 +2226,14 @@ Begin
           sq_OnePkgDetailDataSpeciesNo.AsInteger;
         cds_LoadPackagesMainGradeNo.AsInteger :=
           sq_OnePkgDetailDataMainGradeNo.AsInteger;
-        cds_LoadPackagesALMM.AsFloat := sq_OnePkgDetailDataALMM.AsFloat;
-        cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger;
+        cds_LoadPackagesALMM.AsFloat    := sq_OnePkgDetailDataALMM.AsFloat ;
+
+       //Set LIPNo in LoadDetail to LoadHead LIPNo if exists
+        if cds_LoadHeadLIPNo.AsInteger > 0 then
+         cds_LoadPackagesLIPNo.AsInteger := cds_LoadHeadLIPNo.AsInteger
+          else
+            cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger ;
+
         cds_LoadPackagesProductCategoryNo.AsInteger :=
           sq_OnePkgDetailDataProductCategoryNo.AsInteger;
         cds_LoadPackagesVaruslag.AsInteger :=
@@ -2585,7 +2608,14 @@ begin
         cds_LoadPackagesMainGradeNo.AsInteger :=
           sq_OnePkgDetailDataMainGradeNo.AsInteger;
         cds_LoadPackagesALMM.AsFloat := sq_OnePkgDetailDataALMM.AsFloat;
-        cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger;
+
+
+       //Set LIPNo in LoadDetail to LoadHead LIPNo if exists
+        if cds_LoadHeadLIPNo.AsInteger > 0 then
+         cds_LoadPackagesLIPNo.AsInteger := cds_LoadHeadLIPNo.AsInteger
+          else
+            cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger ;
+
         cds_LoadPackagesProductCategoryNo.AsInteger :=
           sq_OnePkgDetailDataProductCategoryNo.AsInteger;
         cds_LoadPackagesVaruslag.AsInteger :=
@@ -3104,6 +3134,11 @@ begin
     (dmLoadEntryCSD.cds_LoadPackages.RecordCount > 0) and (LoadEnabled);
 end;
 
+procedure TfLoadEntryCSD.acSetLoadPIPandLIPExecute(Sender: TObject);
+begin
+  SetLoadPIPandLIP ;
+end;
+
 procedure TfLoadEntryCSD.acPkgInfoUpdate(Sender: TObject);
 begin
   acPkgInfo.Enabled := dmLoadEntryCSD.cds_LoadPackages.RecordCount > 0;
@@ -3123,13 +3158,12 @@ begin
   Begin
     if cds_LoadHeadLoadNo.AsInteger > 0 then
     Begin
-
       if cds_LoadPackages.State in [dsEdit, dsInsert] then
-        Try
-          cds_LoadPackages.Post;
-        Except
-          cds_LoadPackages.Cancel;
-        End;
+      Try
+        cds_LoadPackages.Post;
+      Except
+        cds_LoadPackages.Cancel;
+      End;
 
       noofpkgs := 0;
 
@@ -4324,7 +4358,13 @@ Begin
         cds_LoadPackagesMainGradeNo.AsInteger :=
           sq_OnePkgDetailDataMainGradeNo.AsInteger;
         cds_LoadPackagesALMM.AsFloat := sq_OnePkgDetailDataALMM.AsFloat;
-        cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger;
+
+       //Set LIPNo in LoadDetail to LoadHead LIPNo if exists
+        if cds_LoadHeadLIPNo.AsInteger > 0 then
+         cds_LoadPackagesLIPNo.AsInteger := cds_LoadHeadLIPNo.AsInteger
+          else
+            cds_LoadPackagesLIPNo.AsInteger := sq_OnePkgDetailDataLIPNo.AsInteger ;
+
         cds_LoadPackagesProductCategoryNo.AsInteger :=
           sq_OnePkgDetailDataProductCategoryNo.AsInteger;
         cds_LoadPackagesVaruslag.AsInteger :=

@@ -471,6 +471,7 @@ type
     N1: TMenuItem;
     EMailaKlientfaktura1: TMenuItem;
     acEmailaFaktura: TAction;
+    grdFakturaDBTableView1OrderBy: TcxGridDBColumn;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);

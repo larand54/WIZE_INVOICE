@@ -1634,6 +1634,7 @@ type
     sq_GetNextInvoiceNo_VIDA_ENERGINEXT_INVNO: TIntegerField;
     sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI: TFDQuery;
     sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo: TIntegerField;
+    cdsInvoiceDetailOrderBy: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);

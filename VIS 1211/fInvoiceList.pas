@@ -6540,7 +6540,7 @@ begin
       cdsInvoiceList.SQL.Add
         ('IH.IncludeFreightCostInPrice, invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.ArticleNo, IH.AddressLine1');
       // cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
-      // if ThisUser.UserID = 8 then cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
+      // if ThisUser.UserID = 8 then         cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
 
       cdsInvoiceList.Active := True;
 
