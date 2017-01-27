@@ -1832,6 +1832,7 @@ object dmVidaInvoice: TdmVidaInvoice
       DisplayLabel = 'EDI-Rnr'
       FieldName = 'OrderBy'
       Origin = 'OrderBy'
+      ProviderFlags = []
     end
     object cdsInvoiceDetailTotalInvoice: TAggregateField
       FieldName = 'TotalInvoice'
