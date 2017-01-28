@@ -2,7 +2,7 @@ object dmVidaInvoice: TdmVidaInvoice
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 1232
+  Height = 1337
   Width = 1206
   object dsrcInvoiceHead: TDataSource
     DataSet = cdsInvoiceHead
@@ -1501,7 +1501,6 @@ object dmVidaInvoice: TdmVidaInvoice
     end
   end
   object cdsInvoiceDetail: TFDQuery
-    Active = True
     AfterInsert = cdsInvoiceDetailAfterInsert
     CachedUpdates = True
     OnUpdateError = cdsInvoiceDetailUpdateError

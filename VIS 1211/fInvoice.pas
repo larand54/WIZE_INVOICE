@@ -37,7 +37,8 @@ uses
   cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
-  System.Actions, siComp, siLngLnk;
+  System.Actions, siComp, siLngLnk
+  , uReportController;
 
 type
   TfrmInvoice = class(TForm)
@@ -472,6 +473,12 @@ type
     EMailaKlientfaktura1: TMenuItem;
     acEmailaFaktura: TAction;
     grdFakturaDBTableView1OrderBy: TcxGridDBColumn;
+    acTrpBrv_Containers_Preview: TAction;
+    acTrpBrv_Containers_Print: TAction;
+    acTrpBrv_Containers_Email: TAction;
+    acTrpBrvContainersPrint1: TMenuItem;
+    acTrpBrvContainersEmail1: TMenuItem;
+    acTrpBrvContainersPreview1: TMenuItem;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -600,7 +607,12 @@ type
     procedure Utankvalitet2Click(Sender: TObject);
     procedure acPreviewKlientPkgSpecExecute(Sender: TObject);
     procedure acEmailaFakturaExecute(Sender: TObject);
-  private
+    procedure FR_ReportTransportLetter(const InternalInvoiceNo: Integer; const aMedia: TCMMediaType);
+    procedure eMailTrpbrev_and_PkgSpec(const aInvoiceNo: Integer);
+    procedure acTrpBrv_Containers_PreviewExecute(Sender: TObject);
+    procedure acTrpBrv_Containers_PrintExecute(Sender: TObject);
+    procedure acTrpBrv_Containers_EmailExecute(Sender: TObject);
+ private
     { Private declarations }
     // Invoiced  : Boolean ;
     ExcelDir: String;
@@ -647,7 +659,7 @@ uses VidaUser, dmsDataConn, UnitSelectClient, UnitdmModule1,
   UnitCRPrintReport, uLanguage, uSendMapiMail, UnitCRExportOneReport,
   UnitCRPrintOneReport, fAttestInvoice, dmsVidaSystem,
   uKundspecifika, uAddKundSpecifika, uArticle, uAccInv, uVerifikationLogg,
-  udmLanguage, uReportController, uReport, udmFR, uCustomReports, uFastReports;
+  udmLanguage, uReport, udmFR, uCustomReports, uFastReports;
 
 {$R *.dfm}
 
@@ -5037,6 +5049,60 @@ begin
     grdPackageSpecDBTableView1.OptionsView.GroupFooters := gfInvisible;
 end;
 
+procedure TfrmInvoice.eMailTrpbrev_and_PkgSpec(const aInvoiceNo: Integer);
+var
+  docPrefix,
+  mailTo,
+  FileName: string;
+  repNo,
+  clientNo: Integer;
+  FileNames: TStringList;
+  FR: TFastReports;
+  params: TCMParams;
+begin
+  if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', aInvoiceNo,
+    []) then
+  Begin
+    mailTo := dmsContact.GetEmailAddressForSpeditorByLO
+      (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+    if Length(mailTo) = 0 then
+    Begin
+      mailTo := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing for the client.');
+    End;
+    if Length(mailTo) > 0 then
+    Begin
+      if aInvoiceNo < 1 then
+        Exit;
+      docPrefix := 'TRPBRV/PKGS';
+
+      FileNames := TStringList.Create;
+      FR := TFastreports.Create;
+      params := TCMParams.Create();
+      try
+        ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
+        FileName := ExcelDir + 'Transportbrev ' + inttostr(aInvoiceNo) + '.pdf';
+        RepNo := 547;
+        FileNames.AddObject(FileName, TObject(RepNo));
+
+        RepNo := FR.getClientReportNo(clientNo,-1,cPkgSpec);
+        FileName := ExcelDir + 'Specification ' + inttostr(aInvoiceNo) + '.pdf';
+
+
+        FileNames.AddObject(FileName, TObject(RepNo));
+        Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
+        Params.Add('@INVOICENO', aInvoiceNo);
+        FR.MailReports(fileNames, params, docPrefix, mailTo);
+      finally
+        FR.Free;
+        params.Free;
+        Filenames.Free;
+      end;
+    end;
+  End;
+end;
+
 procedure TfrmInvoice.eSearchPkgNoKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -5606,6 +5672,38 @@ begin
   end;
 end;
 
+procedure TfrmInvoice.FR_ReportTransportLetter(const InternalInvoiceNo: Integer;
+  const aMedia: TCMMediaType);
+var
+  RC: TCMReportController;
+  Params: TCMParams;
+  RepNo: Integer;
+begin
+  dmFR.SaveCursor;
+  try
+    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+      Exit;
+    dmsContact.InsertUserIssueReport(ThisUser.userid,
+      dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    begin
+      RepNo := 547; // TRP_BREV_Containers_ENG.fr3
+      RC := TCMReportController.Create;
+      Params := TCMParams.Create();
+      try
+        Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
+        Params.Add('@INVOICENO',
+          dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+          RC.RunReport(RepNo, Params, aMedia,0);
+      finally
+        Params.Free;
+        RC.Free;
+      end;
+    end;
+  finally
+    dmFR.RestoreCursor;
+  end;
+end;
+
 procedure TfrmInvoice.tePkgNoKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
@@ -5699,6 +5797,35 @@ begin
       (cdsInvoiceHeadInvoiced.AsInteger <> 1)) or (ThisUser.UserID = 8);
   End;
 
+end;
+
+procedure TfrmInvoice.acTrpBrv_Containers_EmailExecute(Sender: TObject);
+var
+  invoiceNo: integer;
+begin
+  invoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+  eMailTrpbrev_and_PkgSpec(invoiceNo);
+end;
+
+procedure TfrmInvoice.acTrpBrv_Containers_PreviewExecute(Sender: TObject);
+var
+  invoiceNo: integer;
+begin
+  invoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  if invoiceNo < 1 then
+    Exit;
+  FR_ReportTransportLetter(invoiceNo,frPreview);
+end;
+
+procedure TfrmInvoice.acTrpBrv_Containers_PrintExecute(Sender: TObject);
+var
+  invoiceNo: integer;
+begin
+  invoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  if invoiceNo < 1 then
+    Exit;
+  FR_ReportTransportLetter(invoiceNo, frPrint);
+  acPrintOrderAndSpecExecute(Sender);
 end;
 
 procedure TfrmInvoice.acPrintMenyExecute(Sender: TObject);
