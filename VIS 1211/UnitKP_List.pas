@@ -113,6 +113,8 @@ type
     cdsKP_ListAvropsreferens: TStringField;
     grdKPListDBTableView1Avropsreferens: TcxGridDBColumn;
     cxGridPopupMenu2: TcxGridPopupMenu;
+    cdsKP_ListPanic_Note: TStringField;
+    grdKPListDBTableView1Panic_Note: TcxGridDBColumn;
     procedure acCustomizegrdKP_ListExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);

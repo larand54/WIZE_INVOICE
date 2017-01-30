@@ -10,9 +10,10 @@ inherited frmKP_List: TfrmKP_List
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitTop = -90
-  ExplicitWidth = 1078
-  ExplicitHeight = 820
+  ExplicitLeft = -205
+  ExplicitTop = -316
+  ExplicitWidth = 1327
+  ExplicitHeight = 1009
   PixelsPerInch = 120
   TextHeight = 16
   object grdKPList: TcxGrid [0]
@@ -26,6 +27,8 @@ inherited frmKP_List: TfrmKP_List
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
+    ExplicitLeft = -1
+    ExplicitTop = 103
     object grdKPListDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsKP_List
@@ -176,6 +179,10 @@ inherited frmKP_List: TfrmKP_List
       end
       object grdKPListDBTableView1Avropsreferens: TcxGridDBColumn
         DataBinding.FieldName = 'Avropsreferens'
+      end
+      object grdKPListDBTableView1Panic_Note: TcxGridDBColumn
+        DataBinding.FieldName = 'Panic_Note'
+        Width = 214
       end
     end
     object grdKPListLevel1: TcxGridLevel
@@ -1807,6 +1814,12 @@ inherited frmKP_List: TfrmKP_List
       FieldName = 'Avropsreferens'
       Origin = 'Avropsreferens'
       Size = 30
+    end
+    object cdsKP_ListPanic_Note: TStringField
+      DisplayLabel = 'Paniknote'
+      FieldName = 'Panic_Note'
+      Origin = 'Panic_Note'
+      Size = 255
     end
   end
   object dsKP_List: TDataSource

@@ -317,6 +317,7 @@ type
     grdLoadsDBTableView1OriginalLoadNo: TcxGridDBColumn;
     mtSelectedLoadsTrading: TIntegerField;
     grdLoadsDBTableView1OriginalInvoiceNo: TcxGridDBColumn;
+    cxButtonSkapaRtRLast: TcxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -374,6 +375,8 @@ type
     procedure acPrintDirectFSUpdate(Sender: TObject);
     procedure acEmailFSExecute(Sender: TObject);
     procedure acSetPktStorlekExecute(Sender: TObject);
+    procedure cxButtonSkapaRtRLastClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 
   private
     { Private declarations }
@@ -429,6 +432,10 @@ type
 
 var
   frmLoadArrivals: TfrmLoadArrivals;
+
+
+
+
 
 implementation
 
@@ -535,6 +542,21 @@ begin
     acSetLoadToConfirmed.Enabled := True;
 end;
 
+procedure TfrmLoadArrivals.cxButtonSkapaRtRLastClick(Sender: TObject);
+begin
+ with dmArrivingLoads do
+ Begin
+  if MessageDlg('Är du säker?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+    Begin
+     dmArrivingLoads.CopyRtR(cdsArrivingLoadsLO.AsInteger) ;
+
+     CopyLoadToOtherSalesRegion(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger) ;
+    End;
+//     CopyLoadToOtherSalesRegion(cdsArrivingLoadsLoadNo.AsInteger, cdsArrivingLoadsLO.AsInteger) ;
+ End;
+end;
+
 procedure TfrmLoadArrivals.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
@@ -549,6 +571,18 @@ begin
     dmArrivingLoads.Free;
     dmArrivingLoads := Nil;
   End;
+end;
+
+procedure TfrmLoadArrivals.FormShow(Sender: TObject);
+begin
+ //Users := [4,8,50,258];
+ if (thisuser.UserID = 4) or
+ (thisuser.UserID = 8) or
+ (thisuser.UserID = 85) or
+ (thisuser.UserID = 258) then
+  cxButtonSkapaRtRLast.Visible  := True
+   else
+    cxButtonSkapaRtRLast.Visible  := False ;
 end;
 
 procedure TfrmLoadArrivals.FormCreate(Sender: TObject);
@@ -785,6 +819,7 @@ Begin
       cdsArrivingLoads.SQL.Add('WHEN isNull(OH.OrderType,-1) = -1 THEN ' +
         QuotedStr('INTERN'));
       cdsArrivingLoads.SQL.Add('End AS TYP,');
+
       cdsArrivingLoads.SQL.Add('CASE');
       cdsArrivingLoads.SQL.Add('WHEN isNull(SP.ObjectType,-1) >= 2 THEN ' +
         QuotedStr('LO'));
@@ -1302,6 +1337,7 @@ Begin
       cdsArrivingLoads.SQL.Add('End AS TYP,') ;
 
       cdsArrivingLoads.SQL.Add(QuotedStr('RtR') + ' AS LOTYP,') ;
+
       cdsArrivingLoads.SQL.Add('(Select Top 1 US.INITIALS') ;
       cdsArrivingLoads.SQL.Add('From dbo.CustomerShippingPlanHeader sp2') ;
       cdsArrivingLoads.SQL.Add('Inner Join dbo.Users US on US.UserID = SP2.CreatedUser') ;
@@ -3366,6 +3402,7 @@ begin
 
                             if mtSelectedLoadsTrading.AsInteger = 2 then
                                      Begin
+                                       dmsSystem.FDoLog('CopyRtR, NewLoadNo = ' + inttostr(NewLoadNo) + ' - mtSelectedLoadsLONo.AsInteger = ' + mtSelectedLoadsLONo.AsString);
                                        dmArrivingLoads.CopyRtR(mtSelectedLoadsLONo.AsInteger) ;
 
                                        CopyLoadToOtherSalesRegion(NewLoadNo, mtSelectedLoadsLONo.AsInteger) ;
