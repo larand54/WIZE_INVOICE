@@ -536,8 +536,6 @@ object dmArrivingLoads: TdmArrivingLoads
     Top = 528
   end
   object cdsArrivingLoads: TFDQuery
-    Active = True
-    CachedUpdates = True
     Indexes = <
       item
         Active = True
@@ -562,10 +560,12 @@ object dmArrivingLoads: TdmArrivingLoads
       end>
     IndexName = 'cdsArrivingLoadsIndex1'
     AggregatesActive = True
+    OnUpdateRecord = cdsArrivingLoadsUpdateRecord
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     ResourceOptions.AssignedValues = [rvCmdExecMode]
     ResourceOptions.CmdExecMode = amCancelDialog
+    UpdateObject = UpdateArrivingLoads
     SQL.Strings = (
       'SELECT DISTINCT'
       '0 AS EGEN,'
@@ -1991,7 +1991,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'WHERE '
       'CPL.Confirmed_LoadNo = :LoadNo')
     Left = 56
-    Top = 152
+    Top = 176
     ParamData = <
       item
         Name = 'LOADNO'
@@ -2077,7 +2077,7 @@ object dmArrivingLoads: TdmArrivingLoads
       'and dbo.packagenumber.SupplierCode = dbo.LoadDetail.SupplierCode'
       'WHERE      dbo.LoadDetail.LoadNo = :LoadNo')
     Left = 56
-    Top = 200
+    Top = 224
     ParamData = <
       item
         Name = 'LOADNO'
@@ -5810,5 +5810,40 @@ object dmArrivingLoads: TdmArrivingLoads
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object UpdateArrivingLoads: TFDUpdateSQL
+    Connection = dmsConnector.FDConnection1
+    InsertSQL.Strings = (
+      'INSERT INTO Loads'
+      '(FS)'
+      'VALUES (:NEW_FS);'
+      'SELECT FS'
+      'FROM Loads'
+      'WHERE LoadNo = :NEW_LoadNo')
+    ModifySQL.Strings = (
+      'UPDATE Loads'
+      'SET FS = :NEW_FS'
+      'WHERE LoadNo = :OLD_LoadNo;'
+      'SELECT FS'
+      'FROM Loads'
+      'WHERE LoadNo = :NEW_LoadNo')
+    DeleteSQL.Strings = (
+      'DELETE FROM Loads'
+      'WHERE LoadNo = :OLD_LoadNo')
+    FetchRowSQL.Strings = (
+      
+        'SELECT LoadNo, SupplierNo, LoadedDate, SenderLoadStatus, LoadID,' +
+        ' MsgToShipper, '
+      '  InternalNote, PackageEntryOption, LocalShippingCompanyNo, '
+      
+        '  LocalLoadingLocation, LocalDestinationNo, CreatedUser, Modifie' +
+        'dUser, '
+      '  DateCreated, FS, OriginalSupplierNo, CustomerNo, Notering, '
+      '  LoadOK, LoadAR, ShippingPlanNo, PIPNo, LIPNo, ShowOriginalLO, '
+      '  ShortNote'
+      'FROM Loads'
+      'WHERE LoadNo = :LoadNo')
+    Left = 56
+    Top = 128
   end
 end

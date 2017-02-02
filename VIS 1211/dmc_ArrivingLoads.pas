@@ -574,11 +574,15 @@ type
     sp_isRtRLoadAR: TFDStoredProc;
     sp_RtR_Load_is_AR: TFDStoredProc;
     cdsArrivingLoadsOriginalInvoiceNo: TIntegerField;
+    UpdateArrivingLoads: TFDUpdateSQL;
     procedure dsrcArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure ds_verkLasterDataChange(Sender: TObject; Field: TField);
     procedure dsrcPortArrivingLoadsDataChange(Sender: TObject; Field: TField);
     procedure DataModuleCreate(Sender: TObject);
     procedure cds_Props22VerkNoChange(Sender: TField);
+    procedure cdsArrivingLoadsUpdateRecord(ASender: TDataSet;
+      ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+      AOptions: TFDUpdateRowOptions);
   private
     { Private declarations }
     FOnAmbiguousPkgNo: TAmbiguityEvent;
@@ -2591,6 +2595,17 @@ End;
   // cds_Props.Active:= False ;
   End ;
 *)
+
+procedure TdmArrivingLoads.cdsArrivingLoadsUpdateRecord(ASender: TDataSet;
+  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
+  AOptions: TFDUpdateRowOptions);
+begin
+ UpdateArrivingLoads.ConnectionName  := cdsArrivingLoads.ConnectionName ;
+ UpdateArrivingLoads.DataSet         := cdsArrivingLoads ;
+ UpdateArrivingLoads.Apply(ARequest, AAction, AOptions) ;
+
+ AAction := eaApplied ;
+end;
 
 procedure TdmArrivingLoads.cds_Props22VerkNoChange(Sender: TField);
 begin
