@@ -2689,6 +2689,8 @@ BEGIN
 
                   AddProductData;
 
+
+
                   AddAdditionalCost_From_ExtraCost_Table;
 
                   // AddAdditionalCost ;
@@ -2840,6 +2842,10 @@ BEGIN
                 // := mtCompSelRowsLONo.AsS LO_String ;
                 mtCompSelRows.Next;
               End;
+
+              cdsInvoiceDetail.Active := False ;
+              cdsInvoiceDetail.ParamByName('InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
+              cdsInvoiceDetail.Active := True ;
 
               frmInvoice.NewInvoice := True;
               frmInvoice.ShowModal;

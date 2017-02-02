@@ -5811,7 +5811,7 @@ procedure TfrmInvoice.acTrpBrv_Containers_PreviewExecute(Sender: TObject);
 var
   invoiceNo: integer;
 begin
-  invoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  invoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
   if invoiceNo < 1 then
     Exit;
   FR_ReportTransportLetter(invoiceNo,frPreview);
@@ -5821,7 +5821,7 @@ procedure TfrmInvoice.acTrpBrv_Containers_PrintExecute(Sender: TObject);
 var
   invoiceNo: integer;
 begin
-  invoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
+  invoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
   if invoiceNo < 1 then
     Exit;
   FR_ReportTransportLetter(invoiceNo, frPrint);

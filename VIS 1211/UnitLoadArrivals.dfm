@@ -19,8 +19,9 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  OnShow = FormShow
+  PixelsPerInch = 120
+  TextHeight = 16
   object cxSplitter1: TcxSplitter
     Left = 0
     Top = 371
@@ -571,6 +572,19 @@ object frmLoadArrivals: TfrmLoadArrivals
         Left = 243
         Top = 110
         Caption = 'Kund extern:'
+      end
+      object cxButtonSkapaRtRLast: TcxButton
+        Left = 16
+        Top = 163
+        Width = 387
+        Height = 22
+        Caption = 'Skapa RtR last, obs markera avropslast fr'#229'n leverant'#246'r'
+        Colors.Default = clBlue
+        Colors.DefaultText = clWhite
+        Colors.Pressed = clYellow
+        Colors.PressedText = clBlue
+        TabOrder = 21
+        OnClick = cxButtonSkapaRtRLastClick
       end
     end
   end
@@ -3089,7 +3103,7 @@ object frmLoadArrivals: TfrmLoadArrivals
       'WHERE UserID = :UserID'
       'AND Form = :Form')
     Left = 72
-    Top = 192
+    Top = 200
     ParamData = <
       item
         Name = 'USERID'
