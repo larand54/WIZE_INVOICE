@@ -5681,10 +5681,10 @@ var
 begin
   dmFR.SaveCursor;
   try
-    if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
+    if InternalInvoiceNo < 1 then
       Exit;
     dmsContact.InsertUserIssueReport(ThisUser.userid,
-      dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+      InternalInvoiceNo);
     begin
       RepNo := 547; // TRP_BREV_Containers_ENG.fr3
       RC := TCMReportController.Create;
@@ -5692,7 +5692,7 @@ begin
       try
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO',
-          dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+          dmVidaInvoice.InternalInvoiceNo);
           RC.RunReport(RepNo, Params, aMedia,0);
       finally
         Params.Free;
