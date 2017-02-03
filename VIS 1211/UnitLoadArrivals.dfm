@@ -5,12 +5,12 @@ object frmLoadArrivals: TfrmLoadArrivals
   Align = alClient
   BorderStyle = bsNone
   Caption = 'frmLoadArrivals'
-  ClientHeight = 753
-  ClientWidth = 1266
+  ClientHeight = 612
+  ClientWidth = 1029
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -9
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -20,27 +20,37 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 371
-    Width = 1266
+    Top = 330
+    Width = 1029
     Height = 8
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = grdLoads
     Color = clMaroon
     ParentColor = False
+    ExplicitTop = 301
   end
   object grdLoads: TcxGrid
     Left = 0
     Top = 154
-    Width = 1266
-    Height = 217
+    Width = 1029
+    Height = 176
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Align = alTop
     PopupMenu = pmLoads
     TabOrder = 1
+    ExplicitTop = 125
     object grdLoadsDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmArrivingLoads.dsrcArrivingLoads
@@ -332,39 +342,61 @@ object frmLoadArrivals: TfrmLoadArrivals
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1266
+    Width = 1029
     Height = 154
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
     object Panel2: TPanel
-      Left = 521
+      Left = 423
       Top = 0
-      Width = 682
+      Width = 554
       Height = 154
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 125
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 680
-        Height = 45
+        Width = 552
+        Height = 90
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel3: TPanel
-      Left = 1203
+      Left = 977
       Top = 0
-      Width = 63
+      Width = 52
       Height = 154
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Align = alRight
       TabOrder = 1
+      ExplicitHeight = 125
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 61
+        Width = 50
         Height = 45
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -372,13 +404,22 @@ object frmLoadArrivals: TfrmLoadArrivals
     object Panel4: TPanel
       Left = 0
       Top = 0
-      Width = 521
+      Width = 423
       Height = 154
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Align = alLeft
       TabOrder = 2
+      ExplicitHeight = 125
       object bcConfirmed: TcxComboBox
-        Left = 78
-        Top = 59
+        Left = 63
+        Top = 48
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Properties.DropDownListStyle = lsFixedList
         Properties.ImmediatePost = True
         Properties.Items.Strings = (
@@ -388,52 +429,84 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.OnChange = bcConfirmedPropertiesChange
         TabOrder = 2
         Text = 'Att ankomstregistrera'
-        Width = 158
+        Width = 129
       end
       object cxLabel1: TcxLabel
-        Left = 243
-        Top = 15
+        Left = 197
+        Top = 12
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Mottagare:'
       end
       object cxLabel2: TcxLabel
-        Left = 11
-        Top = 64
+        Left = 9
+        Top = 52
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Visa:'
       end
       object cxLabel3: TcxLabel
-        Left = 11
-        Top = 16
+        Left = 9
+        Top = 13
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'LO:'
       end
       object Edit1: TEdit
-        Left = 78
-        Top = 11
-        Width = 59
+        Left = 63
+        Top = 9
+        Width = 48
         Height = 21
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         TabOrder = 0
         OnKeyDown = Edit1KeyDown
       end
       object Edit2: TEdit
-        Left = 78
-        Top = 35
-        Width = 59
+        Left = 63
+        Top = 28
+        Width = 48
         Height = 21
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         TabOrder = 1
         OnKeyDown = Edit2KeyDown
       end
       object cxLabel4: TcxLabel
-        Left = 11
-        Top = 40
+        Left = 9
+        Top = 33
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Lastnr:'
       end
       object cxLabel5: TcxLabel
-        Left = 11
-        Top = 88
+        Left = 9
+        Top = 72
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Period:'
       end
       object cbShowOnlyVWLoads: TcxDBCheckBox
-        Left = 333
-        Top = 131
+        Left = 271
+        Top = 106
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Visa endast VW leveranser'
         DataBinding.DataField = 'NewItemRow'
         DataBinding.DataSource = ds_Props
@@ -441,11 +514,15 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.ValueChecked = 1
         Properties.ValueUnchecked = 0
         TabOrder = 10
-        Width = 144
+        Width = 117
       end
       object lcVerk: TcxDBLookupComboBox
-        Left = 333
-        Top = 11
+        Left = 271
+        Top = 9
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'Verk'
         DataBinding.DataSource = ds_Props
         Properties.DropDownWidth = 350
@@ -454,33 +531,45 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.ListOptions.AnsiSort = True
         Properties.ListOptions.ShowHeader = False
         TabOrder = 5
-        Width = 145
+        Width = 117
       end
       object deStartPeriod: TcxDBDateEdit
-        Left = 78
-        Top = 84
+        Left = 63
+        Top = 68
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'StartPeriod'
         DataBinding.DataSource = ds_Props
         Enabled = False
         Properties.ImmediatePost = True
         Properties.Kind = ckDateTime
         TabOrder = 3
-        Width = 158
+        Width = 129
       end
       object deEndPeriod: TcxDBDateEdit
-        Left = 78
-        Top = 107
+        Left = 63
+        Top = 87
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'EndPeriod'
         DataBinding.DataSource = ds_Props
         Enabled = False
         Properties.ImmediatePost = True
         Properties.Kind = ckDateTime
         TabOrder = 4
-        Width = 158
+        Width = 129
       end
       object cbAllaVerk: TcxDBCheckBox
-        Left = 153
-        Top = 11
+        Left = 124
+        Top = 9
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Alla verk'
         DataBinding.DataField = 'GradeStampNo'
         DataBinding.DataSource = ds_Props
@@ -489,11 +578,15 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.ValueUnchecked = 0
         TabOrder = 11
         Visible = False
-        Width = 66
+        Width = 54
       end
       object lcInternKund: TcxDBLookupComboBox
-        Left = 333
-        Top = 60
+        Left = 271
+        Top = 49
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'Kund'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -503,16 +596,24 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.ListOptions.AnsiSort = True
         Properties.ListOptions.ShowHeader = False
         TabOrder = 7
-        Width = 145
+        Width = 117
       end
       object cxLabel6: TcxLabel
-        Left = 243
-        Top = 63
+        Left = 197
+        Top = 51
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Leverant'#246'r:'
       end
       object lcLaststlle: TcxDBLookupComboBox
-        Left = 333
-        Top = 83
+        Left = 271
+        Top = 67
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'Lastst'#228'lle'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -525,11 +626,15 @@ object frmLoadArrivals: TfrmLoadArrivals
           end>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 8
-        Width = 145
+        Width = 117
       end
       object lcDestination: TcxDBLookupComboBox
-        Left = 333
-        Top = 35
+        Left = 271
+        Top = 28
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'Destination'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -542,21 +647,33 @@ object frmLoadArrivals: TfrmLoadArrivals
           end>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 6
-        Width = 145
+        Width = 117
       end
       object cxLabel7: TcxLabel
-        Left = 243
-        Top = 87
+        Left = 197
+        Top = 71
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Lastst'#228'lle:'
       end
       object cxLabel8: TcxLabel
-        Left = 243
-        Top = 39
+        Left = 197
+        Top = 32
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Leverera till:'
       end
       object lcSlutKund: TcxDBLookupComboBox
-        Left = 333
-        Top = 104
+        Left = 271
+        Top = 85
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         DataBinding.DataField = 'Slutkund'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -566,18 +683,26 @@ object frmLoadArrivals: TfrmLoadArrivals
         Properties.ListOptions.AnsiSort = True
         Properties.ListOptions.ShowHeader = False
         TabOrder = 9
-        Width = 145
+        Width = 117
       end
       object cxLabel9: TcxLabel
-        Left = 243
-        Top = 110
+        Left = 197
+        Top = 89
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Kund extern:'
       end
       object cxButtonSkapaRtRLast: TcxButton
-        Left = 16
-        Top = 163
-        Width = 387
-        Height = 22
+        Left = 13
+        Top = 132
+        Width = 314
+        Height = 18
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Caption = 'Skapa RtR last, obs markera avropslast fr'#229'n leverant'#246'r'
         Colors.Default = clBlue
         Colors.DefaultText = clWhite
@@ -590,19 +715,30 @@ object frmLoadArrivals: TfrmLoadArrivals
   end
   object Panel5: TPanel
     Left = 0
-    Top = 379
-    Width = 1266
-    Height = 374
+    Top = 338
+    Width = 1029
+    Height = 274
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Align = alClient
     Caption = 'Panel5'
     TabOrder = 7
+    ExplicitTop = 309
+    ExplicitHeight = 303
     object grdPkgs: TcxGrid
       Left = 1
-      Top = 50
-      Width = 1264
-      Height = 323
+      Top = 41
+      Width = 1027
+      Height = 232
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 261
       object grdPkgsDBTableView1: TcxGridDBTableView
         PopupMenu = pmPkgs
         Navigator.Buttons.CustomButtons = <>
@@ -792,15 +928,23 @@ object frmLoadArrivals: TfrmLoadArrivals
     object Panel6: TPanel
       Left = 1
       Top = 1
-      Width = 1264
-      Height = 49
+      Width = 1027
+      Height = 40
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
       Align = alTop
       TabOrder = 1
       object cxButton1: TcxButton
-        Left = 10
-        Top = 5
-        Width = 111
-        Height = 38
+        Left = 8
+        Top = 4
+        Width = 90
+        Height = 31
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Action = acSetPktStorlek
         TabOrder = 0
       end
