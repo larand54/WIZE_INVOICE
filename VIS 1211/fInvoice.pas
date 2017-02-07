@@ -5975,49 +5975,102 @@ begin
 end;
 
 procedure TfrmInvoice.acEmailaFakturaExecute(Sender: TObject);
+const
+  LF = #10;
 Var
-  FormCRPrintReport: TFormCRPrintReport;
+  FormCRExportOneReport: TFormCRExportOneReport;
   A: array of variant;
-  RC: TCMReportController;
-  DocTyp, RoleType, ClientNo, InvoiceNo, Language: Integer;
-  FR: TFastreports;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddressAgent, MailToAddressKund, sInvoiceNo: String;
+  ExportInvoiceFile: string;
+  ExportSpecFile: string;
+
+  DocTyp, RoleType, ClientNo, InvoiceNo, language: Integer;
+  FR: TFastReports;
   Params: TCMParams;
   MailToAddress: string;
 begin
   dmFR.SaveCursor;
-  InvoiceNo := dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger;
-  if InvoiceNo < 1 then
-    Exit;
-  MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
-    (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
-  if Length(MailToAddress) = 0 then
-  Begin
-    MailToAddress := 'ange@adress.nu';
-    ShowMessage
-      ('Email address is missing for the client.');
-  End;
-  language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
-  RoleType := 1;
-  DocTyp := cFaktura;
-  ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
-  FR := TFastreports.create;
-  Params := TCMParams.Create();
-  Try
-    Params.Add('@INVOICENO', InvoiceNo);
-    Params.Add('@Language', Language);
-    Params.Add('@ClientNo', ClientNo);
-    if FR.VidaEnergi(0, 0, InvoiceNo) then
+  try
+    InvoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+    if InvoiceNo < 1 then
+      Exit;
+    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+      (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing for the client.');
+    End;
+    language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
+    RoleType := 1;
+    DocTyp := cFaktura;
+    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+    if uReportController.useFR then
     begin
-      FR.InvoiceReportVE(Params, VE_INVOICE, MailToAddress);
+      FR := TFastReports.Create;
+      Params := TCMParams.Create();
+      Try
+        Params.Add('@INVOICENO', InvoiceNo);
+        Params.Add('@Language', language);
+        Params.Add('@ClientNo', ClientNo);
+        if FR.VidaEnergi(0, 0, InvoiceNo) then
+        begin
+          FR.InvoiceReportVE(Params, VE_INVOICE, MailToAddress);
+        end
+        else
+        begin
+          FR.MailClientControlledReport(ClientNo, RoleType, DocTyp, Params,
+            MailToAddress, 'INV');
+        end;
+      Finally
+        FR.Free;
+      End;
     end
     else
     begin
-      FR.MailClientControlledReport(ClientNo, RoleType, DocTyp, Params, MailToAddress,'INV');
-    end;
-  Finally
-    FR.Free;
-    dmFR.RestoreCursor;
-  End;
+      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+      Try
+        ExportInvoiceFile := ExcelDir + 'InvoiceNo ' + intToStr(InvoiceNo) + '.pdf';
+        SetLength(A, 1);
+        A[0] := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+        FormCRExportOneReport.CreateCo
+          (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cFaktura, A, ExportInvoiceFile);
+//          ExcelDir + 'InvoiceNo ' + intToStr(InvoiceNo));
+        if not FileExists(ExportInvoiceFile) then exit;
+
+        SetLength(Attach, 1);
+
+        Attach[0] := ExportInvoiceFile;
+
+        dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+        Try
+          dm_SendMapiMail.SendMail('Faktura. Fakturanr: ' +
+            intToStr(InvoiceNo) + ' - Invoice. InvoiceNo: ' +
+            intToStr(InvoiceNo),
+            'Faktura bifogad. ' + LF + '' +
+            'Invoice attached. ' + LF + '' + LF + '' + LF
+            + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
+            (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
+            MailToAddress,
+            Attach, False);
+
+          dmVidaInvoice.MailaCopyToVIDASTORE(intToStr(InvoiceNo),
+            dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger,
+            dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger);
+
+        Finally
+          FreeAndNil(dm_SendMapiMail);
+        End;
+      Finally
+        FreeAndNil(FormCRExportOneReport);
+      End;
+    End;
+  finally
+    dmFR.RestoreCursor
+  end;
 end;
 
 procedure TfrmInvoice.acEMailaFakturaSpecTillKundOchAgentExecute
