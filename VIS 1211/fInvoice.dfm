@@ -4195,6 +4195,7 @@ object frmInvoice: TfrmInvoice
     end
     object acTrpBrvContainersPrint1: TMenuItem
       Action = acTrpBrv_Containers_Print
+      Caption = 'Skriv ut Trp brev Containers'
     end
     object N1: TMenuItem
       Caption = '-'
@@ -4214,6 +4215,9 @@ object frmInvoice: TfrmInvoice
     object acTrpBrvContainersEmail1: TMenuItem
       Action = acTrpBrv_Containers_Email
     end
+    object N2: TMenuItem
+      Caption = '-'
+    end
     object TRPBREV1: TMenuItem
       Caption = 'F'#246'rhandsgranska TRP BREV'
       OnClick = TRPBREV1Click
@@ -4227,6 +4231,9 @@ object frmInvoice: TfrmInvoice
     end
     object Frhandsgranskaklientspecifikation1: TMenuItem
       Action = acPreviewKlientPkgSpec
+    end
+    object N3: TMenuItem
+      Caption = '-'
     end
     object Kundspecifikarapporter1: TMenuItem
       Action = acKundSpecifika

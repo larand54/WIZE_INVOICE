@@ -479,6 +479,8 @@ type
     acTrpBrvContainersPrint1: TMenuItem;
     acTrpBrvContainersEmail1: TMenuItem;
     acTrpBrvContainersPreview1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
     procedure TabControl1Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -608,7 +610,7 @@ type
     procedure acPreviewKlientPkgSpecExecute(Sender: TObject);
     procedure acEmailaFakturaExecute(Sender: TObject);
     procedure FR_ReportTransportLetter(const InternalInvoiceNo: Integer; const aMedia: TCMMediaType);
-    procedure eMailTrpbrev_and_PkgSpec(const aInvoiceNo: Integer);
+    procedure eMailTrpbrev_Containers(const aInvoiceNo: Integer);
     procedure acTrpBrv_Containers_PreviewExecute(Sender: TObject);
     procedure acTrpBrv_Containers_PrintExecute(Sender: TObject);
     procedure acTrpBrv_Containers_EmailExecute(Sender: TObject);
@@ -5049,7 +5051,7 @@ begin
     grdPackageSpecDBTableView1.OptionsView.GroupFooters := gfInvisible;
 end;
 
-procedure TfrmInvoice.eMailTrpbrev_and_PkgSpec(const aInvoiceNo: Integer);
+procedure TfrmInvoice.eMailTrpbrev_Containers(const aInvoiceNo: Integer);
 var
   docPrefix,
   mailTo,
@@ -5063,7 +5065,7 @@ begin
   if aInvoiceNo > 0 then
   begin
     mailTo := dmsContact.GetEmailAddressForSpeditorByLO
-      (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+      (dmVidaInvoice.cdsInvoiceLOShippingPlanNo.AsInteger);
     if Length(mailTo) = 0 then
     Begin
       mailTo := 'ange@adress.nu';
@@ -5074,7 +5076,7 @@ begin
     Begin
       if aInvoiceNo < 1 then
         Exit;
-      docPrefix := 'TRPBRV/PKGS';
+      docPrefix := 'TRPBRV';
 
       FileNames := TStringList.Create;
       FR := TFastreports.Create;
@@ -5083,12 +5085,6 @@ begin
         ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
         FileName := ExcelDir + 'Transportbrev ' + inttostr(aInvoiceNo) + '.pdf';
         RepNo := 547;
-        FileNames.AddObject(FileName, TObject(RepNo));
-
-        RepNo := FR.getClientReportNo(clientNo,-1,cPkgSpec);
-        FileName := ExcelDir + 'Specification ' + inttostr(aInvoiceNo) + '.pdf';
-
-
         FileNames.AddObject(FileName, TObject(RepNo));
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', aInvoiceNo);
@@ -5802,7 +5798,7 @@ var
   invoiceNo: integer;
 begin
   invoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
-  eMailTrpbrev_and_PkgSpec(invoiceNo);
+  eMailTrpbrev_Containers(invoiceNo);
 end;
 
 procedure TfrmInvoice.acTrpBrv_Containers_PreviewExecute(Sender: TObject);
@@ -5823,7 +5819,6 @@ begin
   if invoiceNo < 1 then
     Exit;
   FR_ReportTransportLetter(invoiceNo, frPrint);
-  acClientPkgSpecarExecute(Sender);
 end;
 
 procedure TfrmInvoice.acPrintMenyExecute(Sender: TObject);
@@ -5997,7 +5992,7 @@ begin
     if InvoiceNo < 1 then
       Exit;
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
-      (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+      (dmVidaInvoice.cdsInvoiceLOShippingPlanNo.AsInteger);
     if Length(MailToAddress) = 0 then
     Begin
       MailToAddress := 'ange@adress.nu';
@@ -6007,7 +6002,7 @@ begin
     language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
     RoleType := 1;
     DocTyp := cFaktura;
-    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+    ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
     if uReportController.useFR then
     begin
       FR := TFastReports.Create;
