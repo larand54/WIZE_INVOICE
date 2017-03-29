@@ -18,6 +18,7 @@ object dm_SokFormular: Tdm_SokFormular
     Top = 80
   end
   object cds_MakeSokAvrop: TFDQuery
+    Active = True
     BeforePost = cds_MakeSokAvropBeforePost
     CachedUpdates = True
     Indexes = <
@@ -144,27 +145,30 @@ object dm_SokFormular: Tdm_SokFormular
       'AND (SPP.ShippingPlanStatus <> 7'
       ' AND SPP.ShippingPlanStatus <> 8)'
       ') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType,'
-      'Bk.VoyageNo'
+      'Bk.VoyageNo, SalesP.UserName'
       ''
-      'FROM'#9'dbo.CustomerShippingPlanHeader CSH '
-      #9'INNER JOIN dbo.Client '#9#9#9'C'#9'ON '#9'C.ClientNo'#9#9'= CSH.CustomerNo '
+      'FROM'#9'dbo.CustomerShippingPlanHeader CSH'
+      #9'INNER JOIN dbo.Client '#9#9#9'C'#9'ON '#9'C.ClientNo'#9#9'= CSH.CustomerNo'
       
         #9'LEFT OUTER JOIN dbo.MarketRegion'#9'MR'#9'ON'#9'MR.MarketRegionNo'#9'= C.Ma' +
-        'rketRegionNo '
+        'rketRegionNo'
       #9'LEFT OUTER JOIN dbo.PhysicalInventoryPoint PIP'
       
         #9'INNER JOIN dbo.CITY'#9#9'LLCSH'#9'ON'#9'LLCSH.CityNo '#9#9'= PIP.PhyInvPointN' +
         'ameNo'
       #9'on PIP.PhysicalInventoryPointNo = CSH.LoadingLocationNo'
-      #9'Left outer JOIN dbo.CustomerShippingPlanDetails CSD '#9
-      #9'INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo '
-      #9'AND OL.OrderLineNo = CSD.OrderLineNo '
-      #9'ON '#9'CSD.ShippingPlanNo '#9'= CSH.ShippingPlanNo  '
-      #9'INNER JOIN dbo.Orders '#9#9#9'OH '
-      #9'LEFT OUTER JOIN dbo.Client '#9#9#9'AG'#9'ON '#9'AG.ClientNo'#9#9'= OH.AgentNo '
+      #9'Left outer JOIN dbo.CustomerShippingPlanDetails CSD'
+      #9'INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo'
+      #9'AND OL.OrderLineNo = CSD.OrderLineNo'
+      #9'ON '#9'CSD.ShippingPlanNo '#9'= CSH.ShippingPlanNo'
+      #9'INNER JOIN dbo.Orders '#9#9#9'OH'
+      #9'LEFT OUTER JOIN dbo.Client '#9#9#9'AG'#9'ON '#9'AG.ClientNo'#9#9'= OH.AgentNo'
       
         #9'LEFT OUTER JOIN dbo.DeliveryTerm'#9'DT'#9'ON'#9'DT.DeliveryTerm_No'#9#9'= OH' +
-        '.DeliveryTermsNo '
+        '.DeliveryTermsNo'
+      
+        '  Inner Join dbo.Users SalesP on SalesP.UserID = OH.ResponsibleS' +
+        'eller'
       #9#9#9#9#9#9#9'ON '#9'OH.OrderNo'#9#9#9'= CSH.OrderNo '
       #9'LEFT OUTER JOIN ShippingPlan_ShippingAddress ST '
       
@@ -230,7 +234,9 @@ object dm_SokFormular: Tdm_SokFormular
       
         ', CSD.CustShipPlanDetailObjectNo, SP.CustShipPlanDetailObjectNo,' +
         ' OL.ProductNo, CSD.ProductLengthNo'
-      ',OL.OrderLineDescription , CSD.LengthDescription, Bk.VoyageNo'
+      
+        ',OL.OrderLineDescription , CSD.LengthDescription, Bk.VoyageNo, S' +
+        'alesP.UserName'
       '')
     Left = 160
     Top = 16
@@ -485,6 +491,12 @@ object dm_SokFormular: Tdm_SokFormular
       Origin = 'Land'
       ProviderFlags = []
       Size = 30
+    end
+    object cds_MakeSokAvropUserName: TStringField
+      DisplayLabel = 'S'#228'ljare'
+      FieldName = 'UserName'
+      Origin = 'UserName'
+      Required = True
     end
   end
   object cds_SokAvrop: TFDQuery

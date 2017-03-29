@@ -163,6 +163,7 @@ type
     cds_MakeSokAvropShippingPlanNo: TIntegerField;
     cds_MakeSokAvropVoyageNo: TIntegerField;
     cds_MakeSokAvropLand: TStringField;
+    cds_MakeSokAvropUserName: TStringField;
     procedure dsp_MakeSokAvropGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
     procedure cds_MakeSokAvropBeforePost(DataSet: TDataSet);

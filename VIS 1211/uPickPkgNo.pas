@@ -168,8 +168,7 @@ type
 
 implementation
 
-uses dmsDataConn, dmsVidaSystem, UnitdmModule1, VidaUser, UnitPkgInfo,
-  udmLanguage;
+uses dmsDataConn, dmsVidaSystem, UnitdmModule1, VidaUser, UnitPkgInfo;
 
 {$R *.dfm}
 
@@ -190,10 +189,14 @@ begin
   lcProductDisplayName.Visible := False;
   if ObjectType = 0 then
   Begin
-    mtProduct.Active                                := False  ;
-    cds_ProdInLager.ParamByName('PIPNo').AsInteger  := PIPNo  ;
-    mtProduct.Active                                := True ;
-    lcProductDisplayName.Visible                    := True ;
+    mtProduct.Active := False;
+    cds_ProdInLager.ParamByName('PIPNo').AsInteger := PIPNo;
+    mtProduct.Active := True;
+    lcProductDisplayName.Visible := True;
+
+
+
+
   End;
   if dmsSystem.LoadGridLayout(ThisUser.UserID,
     Self.Name + '/' + grdPickPkgNos.Name, grdPickPkgNosDBTableView1) = False

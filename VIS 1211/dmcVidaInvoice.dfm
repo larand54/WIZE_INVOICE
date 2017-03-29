@@ -17387,7 +17387,7 @@ object dmVidaInvoice: TdmVidaInvoice
         'L.ShippingPlanNo'
       'WHERE IL.InternalInvoiceNo = :InternalInvoiceNo')
     Left = 672
-    Top = 1080
+    Top = 1104
     ParamData = <
       item
         Name = 'INTERNALINVOICENO'
@@ -18195,5 +18195,24 @@ object dmVidaInvoice: TdmVidaInvoice
       Origin = 'InternalInvoiceNo'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
+  end
+  object sp_SetReferenceInInvoiceDetails: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.vis_SetReferenceInInvoiceDetails'
+    Left = 672
+    Top = 1160
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

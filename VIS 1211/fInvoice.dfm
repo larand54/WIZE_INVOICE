@@ -36,9 +36,8 @@ object frmInvoice: TfrmInvoice
     Properties.TabWidth = 150
     LookAndFeel.Kind = lfUltraFlat
     OnPageChanging = pgInvoicePageChanging
-    ClientRectBottom = 196
-    ClientRectLeft = 4
-    ClientRectRight = 1140
+    ClientRectBottom = 200
+    ClientRectRight = 1144
     ClientRectTop = 26
     object tsInvoiceHead: TcxTabSheet
       Caption = '&FAKTURA'
@@ -46,7 +45,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceHead: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 160
         Align = alTop
         Color = clMoneyGreen
@@ -687,8 +686,8 @@ object frmInvoice: TfrmInvoice
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 28
-        Width = 1136
-        Height = 142
+        Width = 1144
+        Height = 146
         Align = alClient
         TabOrder = 0
         object grdShipAdrDBTableView1: TcxGridDBTableView
@@ -785,7 +784,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceRowMissing: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 28
         Align = alTop
         Caption = 
@@ -805,16 +804,15 @@ object frmInvoice: TfrmInvoice
       Caption = '&AGENT'
       ImageIndex = 15
       DesignSize = (
-        1136
-        170)
+        1144
+        174)
       object Shape3: TShape
         Left = 4
         Top = 3
-        Width = 1127
+        Width = 1135
         Height = 155
         Anchors = [akLeft, akTop, akRight]
         Brush.Color = clMoneyGreen
-        ExplicitWidth = 1135
       end
       object DBText22: TDBText
         Left = 72
@@ -895,8 +893,8 @@ object frmInvoice: TfrmInvoice
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        Height = 170
-        Width = 1136
+        Height = 174
+        Width = 1144
       end
     end
     object tsStickyNote: TcxTabSheet
@@ -927,7 +925,7 @@ object frmInvoice: TfrmInvoice
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 32
         Align = alTop
         BevelOuter = bvNone
@@ -1163,7 +1161,7 @@ object frmInvoice: TfrmInvoice
       object grdPackageSpec: TcxGrid
         Left = 0
         Top = 32
-        Width = 1136
+        Width = 1144
         Height = 184
         Align = alTop
         TabOrder = 1
@@ -1450,7 +1448,7 @@ object frmInvoice: TfrmInvoice
       object cxSplitter2: TcxSplitter
         Left = 0
         Top = 216
-        Width = 1136
+        Width = 1144
         Height = 8
         HotZoneClassName = 'TcxMediaPlayer8Style'
         AlignSplitter = salTop
@@ -1461,7 +1459,7 @@ object frmInvoice: TfrmInvoice
       object pcSPEC: TcxPageControl
         Left = 0
         Top = 224
-        Width = 1136
+        Width = 1144
         Height = 13
         Align = alClient
         TabOrder = 3
@@ -1471,15 +1469,16 @@ object frmInvoice: TfrmInvoice
         Properties.TabHeight = 30
         Properties.TabWidth = 200
         LookAndFeel.Kind = lfUltraFlat
-        ClientRectRight = 0
-        ClientRectTop = 0
+        ClientRectBottom = 15
+        ClientRectRight = 1144
+        ClientRectTop = 15
         object tsKortSkeppSpec: TcxTabSheet
           Caption = 'Kortskeppningsspec'
           ImageIndex = 18
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 0
+            Width = 1144
             Height = 0
             Align = alClient
             BevelOuter = bvNone
@@ -1487,7 +1486,7 @@ object frmInvoice: TfrmInvoice
             object Panel5: TPanel
               Left = 0
               Top = 0
-              Width = 0
+              Width = 1144
               Height = 33
               Align = alTop
               BevelOuter = bvNone
@@ -1664,7 +1663,7 @@ object frmInvoice: TfrmInvoice
             object grdSelectedPkgs: TcxGrid
               Left = 0
               Top = 33
-              Width = 0
+              Width = 1144
               Height = 236
               Align = alClient
               TabOrder = 1
@@ -1879,7 +1878,7 @@ object frmInvoice: TfrmInvoice
           object Panel7: TPanel
             Left = 0
             Top = 0
-            Width = 0
+            Width = 1144
             Height = 0
             Align = alClient
             BevelOuter = bvNone
@@ -1887,7 +1886,7 @@ object frmInvoice: TfrmInvoice
             object Panel8: TPanel
               Left = 0
               Top = 0
-              Width = 0
+              Width = 1144
               Height = 33
               Align = alTop
               BevelOuter = bvNone
@@ -2086,7 +2085,7 @@ object frmInvoice: TfrmInvoice
             object grdToInventory: TcxGrid
               Left = 0
               Top = 33
-              Width = 0
+              Width = 1144
               Height = 236
               Align = alClient
               TabOrder = 1
@@ -6499,7 +6498,7 @@ object frmInvoice: TfrmInvoice
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

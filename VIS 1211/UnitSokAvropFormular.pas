@@ -256,6 +256,7 @@ type
     cxGridPopupMenu2: TcxGridPopupMenu;
     grdAvropSokDBBandedTableView1Land: TcxGridDBBandedColumn;
     siLangLinked_frmSokAvropFormular: TsiLangLinked;
+    grdAvropSokDBBandedTableView1UserName: TcxGridDBBandedColumn;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -365,507 +366,922 @@ procedure TfrmSokAvropFormular.BuildSQL(Sender: TObject);
 const
   CRLF = #13 + #10;
 begin
-  With dm_SokFormular do
-  Begin
+ With dm_SokFormular do
+ Begin
 
-    Try
+  Try
+  if cds_PropsInputOption.AsInteger = 1 then
+  Begin
+{   esStart.Date:= RecodeHour(esStart.Date,0) ;
+   esStart.Date:= RecodeMinute(esStart.Date,0) ;
+   esStart.Date:= RecodeSecond(esStart.Date,0) ;
+
+   esEnd.Date:= RecodeHour(esEnd.Date,23) ;
+   esEnd.Date:= RecodeMinute(esEnd.Date,59) ;
+   esEnd.Date:= RecodeSecond(esEnd.Date,59) ;
+   }
+  End ;
+
+
+  if cds_PropsGroupSummary.AsInteger = 1 then
+  Begin
+{   esETDStart.Date:= RecodeHour(esETDStart.Date,0) ;
+   esETDStart.Date:= RecodeMinute(esETDStart.Date,0) ;
+   esETDStart.Date:= RecodeSecond(esETDStart.Date,0) ;
+
+   esETDEnd.Date:= RecodeHour(esETDEnd.Date,23) ;
+   esETDEnd.Date:= RecodeMinute(esETDEnd.Date,59) ;
+   esETDEnd.Date:= RecodeSecond(esETDEnd.Date,59) ; }
+  End ;
+  Except
+    on E: EConvertError do
+      ShowMessage(E.ClassName + CRLF + E.Message);
+  End ;
+
+  if cds_Props.State = dsBrowse then
+   cds_Props.Edit ;
+
+  if Length(lcSR.Text) = 0 then
+   cds_PropsSalesRegionNo.Clear ;
+
+  if Length(lcLaststalle.Text) = 0 then
+   cds_PropsLoadingLocationNo.Clear ;
+
+  if Length(lcVerk.Text) = 0 then
+   cds_PropsVerkNo.Clear ;
+
+  if Length(lcBokningstyp.Text) = 0 then
+   cds_PropsBookingTypeNo.Clear ;
+
+  if Length(lcShipper.Text) = 0 then
+   cds_PropsShipperNo.Clear ;
+
+  if Length(lcKund.Text) = 0 then
+   cds_PropsClientNo.Clear ;
+
+  if Length(lcMarknad.Text) = 0 then
+   cds_PropsMarketRegionNo.Clear ;
+
+  if Length(lcAgentNamn.Text) = 0 then
+   cds_PropsAgentNo.Clear ;
+
+  if cds_Props.State in [dsEdit, dsInsert] then
+   cds_Props.Post ;
+
+
+  cds_MakeSokAvrop.Close ;
+  cds_MakeSokAvrop.SQL.Clear ;
+
+
+  cds_MakeSokAvrop.SQL.Add('Select DISTINCT ') ;
+  cds_MakeSokAvrop.SQL.Add('  RTRIM(CONVERT(varchar(20),isnull(CSH.ShippingPlanNo,'+''''')))+') ;
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Supp.ClientName,'+''''')))+') ;
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Bk.BookingNo,'+''''')))+') ;
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(ST.Reference,'+''''')))+') ;
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(LL.CityName,'+''''')))+') ;
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(OH.OrderNoText,'+''''')))+') ;
+
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+//   cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(OL.OrderLineDescription,'+''''')))+') ;
+//   cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(CSD.LengthDescription,'+''''')))+') ;
+   cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(6),isnull(OL.ProductNo,'+''''')))+') ;
+   cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(6),isnull(CSD.ProductLengthNo,'+''''')))+') ;
+   cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(10),isnull(CSD.CustShipPlanDetailObjectNo,'+''''')))+') ;
+  End ;
+
+  cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,'+'''''))) AS UKEY, ') ;
+
+  cds_MakeSokAvrop.SQL.Add('CASE') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 0 THEN '+'''CANCEL'''+'') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 1 THEN '+'''PROGRESS'''+'') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 2 THEN '+'''COMPLETE'''+'') ;
+  cds_MakeSokAvrop.SQL.Add('END AS AVROP_STATUS,') ;
+
+  cds_MakeSokAvrop.SQL.Add('	CSH.ShippingPlanNo        	AS LO, ') ;
+  cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanNo,') ;
+
+  cds_MakeSokAvrop.SQL.Add('CASE') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN LLCSH.CityName') ;
+  cds_MakeSokAvrop.SQL.Add('ELSE') ;
+  cds_MakeSokAvrop.SQL.Add('LL.CityName	END             AS LOADING_LOCATION, ') ;
+
+
+
+
+  cds_MakeSokAvrop.SQL.Add('	Supp.SearchName			        AS SUPPLIER, ') ;
+  cds_MakeSokAvrop.SQL.Add('	OH.OrderNoText			        AS ORDER_NO, ') ;
+  cds_MakeSokAvrop.SQL.Add('	CSH.Reference			          AS CUST_REFERENCE, ') ;
+  cds_MakeSokAvrop.SQL.Add('	CSH.ETDYearWeek			        AS FROM_WEEK, ') ;
+  cds_MakeSokAvrop.SQL.Add('	CSH.ETDWeekEnd			        AS TO_WEEK, ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	C.SearchName            	  AS CUSTOMER, ') ;
+  cds_MakeSokAvrop.SQL.Add('	AG.SearchName			          AS AGENT, ') ;
+  cds_MakeSokAvrop.SQL.Add('	DT.DeliveryTerm			        AS DELIVERY_TERM, ') ;
+  cds_MakeSokAvrop.SQL.Add('	isnull(RTRIM(ST_ADR.PostalCode'+')+' + ''' / ''   ,'+''''')  +') ;
+  cds_MakeSokAvrop.SQL.Add('	RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,'+'''''))) AS POSTAL_CODE_DESTINATION, ') ;
+
+  cds_MakeSokAvrop.SQL.Add('ST_AdrCtry.CountryName AS Land,') ;
+
+  cds_MakeSokAvrop.SQL.Add('	ST.Reference			          AS SHIPTO_REFERENCE, ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	BK.PreliminaryRequestedPeriod, ') ;
+  cds_MakeSokAvrop.SQL.Add('	SC.SearchName			          AS SHIPPER, ') ;
+  cds_MakeSokAvrop.SQL.Add('	Bk.ShippingCompanyBookingID	AS SHIPPINGCOMPANYBOOKINGID, ') ;
+  cds_MakeSokAvrop.SQL.Add('	Bk.ShippersShipDate		      AS SHIPPERSSHIPDATE, ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	Bt.BookingType			        AS TRANSPORT, ') ;
+  cds_MakeSokAvrop.SQL.Add('	MR.MarketRegionName		      AS MARKET_REGION, ') ;
+  cds_MakeSokAvrop.SQL.Add('	Bk.BookingNo    		        AS BookingNo, ') ;
+
+
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add('	OL.OrderLineDescription		AS PROD_DESC, ') ;
+   cds_MakeSokAvrop.SQL.Add('	CSD.LengthDescription           AS LENGTH_DESC, ') ;
+  End
+  else
+  Begin
+   cds_MakeSokAvrop.SQL.Add(QuotedStr('----------------------------------------------------------------------------------------------------')+'		AS PROD_DESC, ') ;
+   cds_MakeSokAvrop.SQL.Add(QuotedStr('----------------------------------------------------------------------------------------------------')+'		AS LENGTH_DESC, ') ;
+  End ;
+
+
+  cds_MakeSokAvrop.SQL.Add('Bk.Panic_Note AS PANIC_NOTE, ') ;
+  cds_MakeSokAvrop.SQL.Add('CR.CarrierName AS VESSEL, ') ;
+  cds_MakeSokAvrop.SQL.Add('VG.ETD, ') ;
+  cds_MakeSokAvrop.SQL.Add('VG.ETA, ') ;
+//  cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)  	 AS AM3,') ;
+
+//======================================== ORDER VOLYM ============================================
+  cds_MakeSokAvrop.SQL.Add('CASE') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)') ;
+  cds_MakeSokAvrop.SQL.Add('ELSE') ;
+  cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)') ;
+  cds_MakeSokAvrop.SQL.Add('END AS AM3,') ;
+//======================================== LEVERERAD VOLYM ============================================
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add('CASE') ;
+   cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN') ;
+   cds_MakeSokAvrop.SQL.Add('(Select AM3 From  DelperCSDLO LD') ;
+   cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo') ;
+   cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)') ;
+   cds_MakeSokAvrop.SQL.Add('ELSE') ;
+   cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperSSPCDS LD') ;
+   cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo') ;
+//   cds_MakeSokAvrop.SQL.Add('WHERE LD.defsspno = SP.SupplierShipPlanObjectNo') ;
+   cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)') ;
+   cds_MakeSokAvrop.SQL.Add('END AS LEVLO,') ;
+  End
+  else
+  Begin
+   cds_MakeSokAvrop.SQL.Add('CASE') ;
+   cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN') ;
+   cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperCSHLO LD') ;
+   cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo') ;
+   cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)') ;
+   cds_MakeSokAvrop.SQL.Add(' ELSE') ;
+   cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperSSPLO_II LD') ;
+   cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo') ;
+   cds_MakeSokAvrop.SQL.Add(' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)') ;
+   cds_MakeSokAvrop.SQL.Add('END AS LEVLO,') ;
+  End ;
+
+
+//======================================== CALC RESTVOLYM ============================================
+//======================================== ORDER VOLYM ============================================
+  cds_MakeSokAvrop.SQL.Add('CASE') ;
+  cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)') ;
+  cds_MakeSokAvrop.SQL.Add('ELSE') ;
+  cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)') ;
+  cds_MakeSokAvrop.SQL.Add('END -') ;
+//======================================== - LEVERERAD VOLYM ============================================
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add('CASE') ;
+   cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN') ;
+   cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From DelperCSDLO LD') ;
+   cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo') ;
+   cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)') ;
+   cds_MakeSokAvrop.SQL.Add('ELSE') ;
+   cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From  dbo.DelperSSPCDS LD') ;
+   cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo') ;
+   cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)') ;
+   cds_MakeSokAvrop.SQL.Add('END AS REST,') ;
+  End
+  else
+  Begin
+   cds_MakeSokAvrop.SQL.Add('CASE') ;
+   cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN') ;
+   cds_MakeSokAvrop.SQL.Add(' (Select isnull(AM3,0) From dbo.DelperCSHLO LD') ;
+   cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo') ;
+   cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)') ;
+   cds_MakeSokAvrop.SQL.Add(' ELSE') ;
+   cds_MakeSokAvrop.SQL.Add(' (Select isnull(AM3,0) From dbo.DelperSSPLO_II LD') ;
+   cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo') ;
+   cds_MakeSokAvrop.SQL.Add(' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)') ;
+   cds_MakeSokAvrop.SQL.Add('END AS REST,') ;
+  End ;
+
+
+  cds_MakeSokAvrop.SQL.Add('Bk.SupplierReference ,') ;
+
+//  cds_MakeSokAvrop.SQL.Add('(Select Count(ShippingPlanNo) from dbo.SupplierShippingPlan SPP') ;
+//  cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo ) AS NoOfSuppliers') ;
+
+  cds_MakeSokAvrop.SQL.Add('(Select  Count(distinct SPP.LoadingLocationNo) from dbo.SupplierShippingPlan SPP') ;
+  cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo') ;
+  cds_MakeSokAvrop.SQL.Add('AND (SPP.ShippingPlanStatus <> 7') ;
+  cds_MakeSokAvrop.SQL.Add(' AND SPP.ShippingPlanStatus <> 8)') ;
+  cds_MakeSokAvrop.SQL.Add(') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType, Bk.VoyageNo, SalesP.UserName') ;
+
+  cds_MakeSokAvrop.SQL.Add('FROM	dbo.CustomerShippingPlanHeader CSH ') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Client 			C	ON 	C.ClientNo		= CSH.CustomerNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.MarketRegion	MR	ON	MR.MarketRegionNo	= C.MarketRegionNo ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.PhysicalInventoryPoint PIP') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.CITY		LLCSH	ON	LLCSH.CityNo 		= PIP.PhyInvPointNameNo') ;
+  cds_MakeSokAvrop.SQL.Add('	on PIP.PhysicalInventoryPointNo = CSH.LoadingLocationNo') ;
+
+  if cds_PropsInputOption.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add('	inner JOIN dbo.InvoiceLO		IL	ON	IL.ShippingPlanNo	= CSH.ShippingPlanNo') ;
+   cds_MakeSokAvrop.SQL.Add('	inner JOIN dbo.InvoiceHeader       IH	ON	IH.InternalInvoiceNo	= IL.InternalInvoiceNo') ;
+   cds_MakeSokAvrop.SQL.Add('	inner JOIN dbo.InvoiceNumber	INV	ON	INV.InternalInvoiceNo	= IL.InternalInvoiceNo') ;
+  End ;
+
+
+
+  cds_MakeSokAvrop.SQL.Add('	Left outer JOIN dbo.CustomerShippingPlanDetails CSD 	') ;
+
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	AND OL.OrderLineNo = CSD.OrderLineNo ') ;
+  End ;
+
+  cds_MakeSokAvrop.SQL.Add('	ON 	CSD.ShippingPlanNo 	= CSH.ShippingPlanNo  ') ;
+
+
+
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Orders 			OH ') ;
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.Client 			AG	ON 	AG.ClientNo		= OH.AgentNo ') ;
+  cds_MakeSokAvrop.SQL.Add('  Inner Join dbo.Users SalesP on SalesP.UserID = OH.ResponsibleSeller') ;
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.DeliveryTerm	DT	ON	DT.DeliveryTerm_No		= OH.DeliveryTermsNo ') ;
+  cds_MakeSokAvrop.SQL.Add('							ON 	OH.OrderNo			= CSH.OrderNo ') ;
+
+
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN ShippingPlan_ShippingAddress ST ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Address 		ST_ADR		ON	ST_ADR.AddressNo	= ST.AddressNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.CITY		ST_AdrCY	ON	ST_AdrCY.CityNo 	= ST_ADR.CityNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Country		ST_AdrCtry	ON	ST_AdrCtry.CountryNo 	= ST_ADR.CountryNo ') ;
+  cds_MakeSokAvrop.SQL.Add('							ON	ST.ShippingPlanNo	= CSD.ShippingPlanNo ') ;
+//LARS MAR 18 Varför var nedan rad inte med i sql, den var bortkommenterad.s
+  cds_MakeSokAvrop.SQL.Add('							AND	ST.Reference		= CSD.Reference ') ;
+
+  cds_MakeSokAvrop.SQL.Add('    	LEFT OUTER JOIN dbo.Booking		Bk ') ;
+
+//  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.VoyageDestination	VD 	ON  	Bk.BookingNo		= vd.BookingNo ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	Left Outer JOIN dbo.Voyage		Vg 	ON  	Bk.VoyageNo		= Vg.VoyageNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	Left Outer JOIN dbo.Client		SC 	ON  	Bk.ShippingCompanyNo 	= SC.ClientNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	Left outer JOIN dbo.Carrier            	Cr 	ON  	Vg.CarrierNo    	= Cr.CarrierNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	Left Outer Join dbo.BookingType		Bt	ON	Bt.BookingTypeNo	= Bk.BookingTypeNo ') ;
+  cds_MakeSokAvrop.SQL.Add('							ON  	CSD.ShippingPlanNo 	= Bk.ShippingPlanNo ') ;
+
+  cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.SupplierShippingPlan          SP ') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.CITY		LL	ON	LL.CityNo 		= SP.LoadingLocationNo ') ;
+  cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Client 		Supp	ON 	Supp.ClientNo		= SP.SupplierNo ') ;
+
+  //Sept 13 Koppling mot SSP ändrad
+
+  cds_MakeSokAvrop.SQL.Add('     ON 	SP.CustShipPlanDetailObjectNo = CSD.CustShipPlanDetailObjectNo') ;
+
+  if cds_PropsOrderTypeNo.IsNull then
+  Begin
+   cds_MakeSokAvrop.SQL.Add('WHERE ((SP.ShippingPlanStatus <> 7') ;
+   cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)') ;
+   cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)') ;
+  End
+  else
+  Begin
+   cds_MakeSokAvrop.SQL.Add('WHERE OH.OrderType = ' + cds_PropsOrderTypeNo.AsString) ;
+   cds_MakeSokAvrop.SQL.Add('AND ((SP.ShippingPlanStatus <> 7') ;
+   cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)') ;
+   cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)') ;
+  End ;
+
+
+  Case cds_PropsCopyPcs.AsInteger of
+//   0 :  cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanStatus <> 9 ') ;
+   1 :  cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 0 ') ;
+   2 :  cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 1 ') ;
+   3 :  cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 2 ') ;
+  End ; //case
+
+  cds_MakeSokAvrop.SQL.Add('AND sp.ObjectType in (0,1,2)') ;
+
+  if cds_PropsSalesRegionNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND OH.SalesRegionNo = ' + cds_PropsSalesRegionNo.AsString) ;
+
+  if cds_PropsVerkNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND SP.SupplierNo = ' + cds_PropsVerkNo.AsString) ;
+
+  if cds_PropsLoadingLocationNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND SP.LoadingLocationNo = ' + cds_PropsLoadingLocationNo.AsString) ;
+
+  if cds_PropsShipperNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND Bk.ShippingCompanyNo = ' + cds_PropsShipperNo.AsString) ;
+
+  if cds_PropsBookingTypeNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND Bk.BookingTypeNo = ' + cds_PropsBookingTypeNo.AsString) ;
+
+  if cds_PropsMarketRegionNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND C.MarketRegionNo = ' + cds_PropsMarketRegionNo.AsString) ;
+
+  if cds_PropsClientNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND CSH.CustomerNo = ' + cds_PropsClientNo.AsString) ;
+
+  if cds_PropsAgentNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND OH.AgentNo = ' + cds_PropsAgentNo.AsString) ;
+
+  if cds_PropsInputOption.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate >= :StartInvoiceDate') ;
+   cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate <= :EndInvoiceDate') ;
+  End ;
+
+  if cds_PropsGroupSummary.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD >= :StartETD') ;
+   cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD <= :EndETD') ;
+  End ;
+
+  Try
+
+  if cds_PropsBarCodeNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDYearWeek >= ' + cds_PropsBarCodeNo.AsString) ;
+  Except
+  End ;
+
+  Try
+  if cds_PropsGradeStampNo.AsInteger > 0 then
+   cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDWeekEnd <= ' + cds_PropsGradeStampNo.AsString) ;
+  Except
+  End ;
+
+  if cds_PropsInputOption.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.ParamByName('StartInvoiceDate').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(deStartPeriod.Date) ;
+   cds_MakeSokAvrop.ParamByName('EndInvoiceDate').AsSQLTimeStamp    := DateTimeToSQLTimeStamp(deEndPeriod.Date) ;
+  End ;
+
+  if cds_PropsGroupSummary.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.ParamByName('StartETD').AsSQLTimeStamp  := DateTimeToSQLTimeStamp(deFilterOrderDate.Date) ;
+   cds_MakeSokAvrop.ParamByName('EndETD').AsSQLTimeStamp    := DateTimeToSQLTimeStamp(deRegDate.Date) ;
+  End ;
+
+
+  cds_MakeSokAvrop.SQL.Add('GROUP BY CSH.SHIPPINGPLANSTATUS, CSH.ShippingPlanNo, LL.CityName, Supp.SearchName,');
+  cds_MakeSokAvrop.SQL.Add('OH.OrderNoText, CSH.Reference, CSH.ETDYearWeek, CSH.ETDWeekEnd, C.SearchName, AG.SearchName,');
+  cds_MakeSokAvrop.SQL.Add('DT.DeliveryTerm,  ST_ADR.PostalCode, ST_AdrCY.CityName, ST_AdrCtry.CountryName, ST.Reference, BK.PreliminaryRequestedPeriod,');
+  cds_MakeSokAvrop.SQL.Add('SC.SearchName, Bk.ShippingCompanyBookingID, Bk.ShippersShipDate, Bt.BookingType, MR.MarketRegionName,');
+  cds_MakeSokAvrop.SQL.Add('Bk.BookingNo, Bk.Panic_Note, CR.CarrierName, Vg.ETD, VG.ETA, Supp.ClientName, Bk.SupplierReference,');
+  cds_MakeSokAvrop.SQL.Add('CSH.CustomerNo, SP.ShippingPlanNo, Supp.ClientNo, SP.LoadingLocationNo, OH.OrderType, LLCSH.CityName,') ;
+  cds_MakeSokAvrop.SQL.Add('Bk.VoyageNo, SalesP.UserName') ;
+
+  if cds_PropsRegPointNo.AsInteger = 1 then
+  Begin
+   cds_MakeSokAvrop.SQL.Add(', CSD.CustShipPlanDetailObjectNo, SP.CustShipPlanDetailObjectNo, OL.ProductNo, CSD.ProductLengthNo') ;
+   cds_MakeSokAvrop.SQL.Add(',OL.OrderLineDescription , CSD.LengthDescription') ;
+  End ;
+
+ // if ThisUser.UserID = 8 then  cds_MakeSokAvrop.SQL.SaveToFile('cds_MakeSokAvrop.txt');
+//  Try
+//  cds_MakeSokAvrop.ExecSQL ;
+{    except
+     On E: Exception do
+     Begin
+      dmsSystem.FDoLog(E.Message) ;
+  //   ShowMessage(E.Message);
+      Raise ;
+     End ;
+    end;
+    }
+
+ End ;
+end;
+
+(*
+  procedure TfrmSokAvropFormular.BuildSQL(Sender: TObject);
+  const
+    CRLF = #13 + #10;
+  begin
+    With dm_SokFormular do
+    Begin
+
+      Try
+        if cds_PropsInputOption.AsInteger = 1 then
+        Begin
+          { esStart.Date:= RecodeHour(esStart.Date,0) ;
+            esStart.Date:= RecodeMinute(esStart.Date,0) ;
+            esStart.Date:= RecodeSecond(esStart.Date,0) ;
+
+            esEnd.Date:= RecodeHour(esEnd.Date,23) ;
+            esEnd.Date:= RecodeMinute(esEnd.Date,59) ;
+            esEnd.Date:= RecodeSecond(esEnd.Date,59) ;
+          }
+        End;
+
+        if cds_PropsGroupSummary.AsInteger = 1 then
+        Begin
+          { esETDStart.Date:= RecodeHour(esETDStart.Date,0) ;
+            esETDStart.Date:= RecodeMinute(esETDStart.Date,0) ;
+            esETDStart.Date:= RecodeSecond(esETDStart.Date,0) ;
+
+            esETDEnd.Date:= RecodeHour(esETDEnd.Date,23) ;
+            esETDEnd.Date:= RecodeMinute(esETDEnd.Date,59) ;
+            esETDEnd.Date:= RecodeSecond(esETDEnd.Date,59) ; }
+        End;
+      Except
+        on E: EConvertError do
+          ShowMessage(E.ClassName + CRLF + E.Message);
+      End;
+
+      if cds_Props.State = dsBrowse then
+        cds_Props.Edit;
+
+      if Length(lcSR.Text) = 0 then
+        cds_PropsSalesRegionNo.Clear;
+
+      if Length(lcLaststalle.Text) = 0 then
+        cds_PropsLoadingLocationNo.Clear;
+
+      if Length(lcVerk.Text) = 0 then
+        cds_PropsVerkNo.Clear;
+
+      if Length(lcBokningstyp.Text) = 0 then
+        cds_PropsBookingTypeNo.Clear;
+
+      if Length(lcShipper.Text) = 0 then
+        cds_PropsShipperNo.Clear;
+
+      if Length(lcKund.Text) = 0 then
+        cds_PropsClientNo.Clear;
+
+      if Length(lcMarknad.Text) = 0 then
+        cds_PropsMarketRegionNo.Clear;
+
+      if Length(lcAgentNamn.Text) = 0 then
+        cds_PropsAgentNo.Clear;
+
+      if cds_Props.State in [dsEdit, dsInsert] then
+        cds_Props.Post;
+
+      cds_MakeSokAvrop.Close;
+      cds_MakeSokAvrop.SQL.Clear;
+
+      cds_MakeSokAvrop.SQL.Add('Select DISTINCT ');
+      cds_MakeSokAvrop.SQL.Add
+        ('  RTRIM(CONVERT(varchar(20),isnull(CSH.ShippingPlanNo,' + ''''')))+');
+      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Supp.ClientName,'
+        + ''''')))+');
+      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Bk.BookingNo,' +
+        ''''')))+');
+      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(ST.Reference,' +
+        ''''')))+');
+      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(LL.CityName,' +
+        ''''')))+');
+      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(OH.OrderNoText,'
+        + ''''')))+');
+
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        // cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(OL.OrderLineDescription,'+''''')))+') ;
+        // cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(CSD.LengthDescription,'+''''')))+') ;
+        cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(6),isnull(OL.ProductNo,' +
+          ''''')))+');
+        cds_MakeSokAvrop.SQL.Add
+          ('RTRIM(CONVERT(varchar(6),isnull(CSD.ProductLengthNo,' + ''''')))+');
+        cds_MakeSokAvrop.SQL.Add
+          ('RTRIM(CONVERT(varchar(10),isnull(CSD.CustShipPlanDetailObjectNo,' +
+          ''''')))+');
+      End;
+
+      cds_MakeSokAvrop.SQL.Add
+        ('RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,' +
+        '''''))) AS UKEY, ');
+
+      cds_MakeSokAvrop.SQL.Add('CASE');
+      cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 0 THEN ' +
+        '''CANCEL''' + '');
+      cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 1 THEN ' +
+        '''PROGRESS''' + '');
+      cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 2 THEN ' +
+        '''COMPLETE''' + '');
+      cds_MakeSokAvrop.SQL.Add('END AS AVROP_STATUS,');
+
+      cds_MakeSokAvrop.SQL.Add('	CSH.ShippingPlanNo        	AS LO, ');
+      cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanNo,');
+
+      cds_MakeSokAvrop.SQL.Add('CASE');
+      cds_MakeSokAvrop.SQL.Add
+        ('WHEN SP.ShippingPlanNo is null THEN LLCSH.CityName');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add
+        ('LL.CityName	END             AS LOADING_LOCATION, ');
+
+      cds_MakeSokAvrop.SQL.Add('	Supp.SearchName			        AS SUPPLIER, ');
+      cds_MakeSokAvrop.SQL.Add('	OH.OrderNoText			        AS ORDER_NO, ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	CSH.Reference			          AS CUST_REFERENCE, ');
+      cds_MakeSokAvrop.SQL.Add('	CSH.ETDYearWeek			        AS FROM_WEEK, ');
+      cds_MakeSokAvrop.SQL.Add('	CSH.ETDWeekEnd			        AS TO_WEEK, ');
+
+      cds_MakeSokAvrop.SQL.Add('	C.SearchName            	  AS CUSTOMER, ');
+      cds_MakeSokAvrop.SQL.Add('	AG.SearchName			          AS AGENT, ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	DT.DeliveryTerm			        AS DELIVERY_TERM, ');
+      cds_MakeSokAvrop.SQL.Add('	isnull(RTRIM(ST_ADR.PostalCode' + ')+' +
+        ''' / ''   ,' + ''''')  +');
+      cds_MakeSokAvrop.SQL.Add
+        ('	RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,' +
+        '''''))) AS POSTAL_CODE_DESTINATION, ');
+
+      cds_MakeSokAvrop.SQL.Add('ST_AdrCtry.CountryName AS Land,');
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	ST.Reference			          AS SHIPTO_REFERENCE, ');
+
+      cds_MakeSokAvrop.SQL.Add('	BK.PreliminaryRequestedPeriod, ');
+      cds_MakeSokAvrop.SQL.Add('	SC.SearchName			          AS SHIPPER, ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	Bk.ShippingCompanyBookingID	AS SHIPPINGCOMPANYBOOKINGID, ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	Bk.ShippersShipDate		      AS SHIPPERSSHIPDATE, ');
+
+      cds_MakeSokAvrop.SQL.Add('	Bt.BookingType			        AS TRANSPORT, ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	MR.MarketRegionName		      AS MARKET_REGION, ');
+      cds_MakeSokAvrop.SQL.Add('	Bk.BookingNo    		        AS BookingNo, ');
+
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add('	OL.OrderLineDescription		AS PROD_DESC, ');
+        cds_MakeSokAvrop.SQL.Add
+          ('	CSD.LengthDescription           AS LENGTH_DESC, ');
+      End
+      else
+      Begin
+        cds_MakeSokAvrop.SQL.Add
+          (QuotedStr
+          ('----------------------------------------------------------------------------------------------------')
+          + '		AS PROD_DESC, ');
+        cds_MakeSokAvrop.SQL.Add
+          (QuotedStr
+          ('----------------------------------------------------------------------------------------------------')
+          + '		AS LENGTH_DESC, ');
+      End;
+
+      cds_MakeSokAvrop.SQL.Add('Bk.Panic_Note AS PANIC_NOTE, ');
+      cds_MakeSokAvrop.SQL.Add('CR.CarrierName AS VESSEL, ');
+      cds_MakeSokAvrop.SQL.Add('VG.ETD, ');
+      cds_MakeSokAvrop.SQL.Add('VG.ETA, ');
+      // cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)  	 AS AM3,') ;
+
+      // ======================================== ORDER VOLYM ============================================
+      cds_MakeSokAvrop.SQL.Add('CASE');
+      cds_MakeSokAvrop.SQL.Add
+        ('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add('(Select ROUND(CAST((   SUM(SP2.ActualM3Net)    ) As decimal(18,3)),3) FROM dbo.SupplierShippingPlan SP2') ;
+      cds_MakeSokAvrop.SQL.Add('WHERE 	SP2.ShippingPlanNo = csh.ShippingPlanNo') ;
+      cds_MakeSokAvrop.SQL.Add('and sp2.SupplierNo =  Supp.ClientNo)') ;
+      cds_MakeSokAvrop.SQL.Add('END AS AM3,');
+
+  //     cds_MakeSokAvrop.SQL.Add ('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
+
+      // ======================================== LEVERERAD VOLYM ============================================
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add('CASE');
+        cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
+        cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperCSDLO LD');
+        cds_MakeSokAvrop.SQL.Add
+          ('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo)');
+  //      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
+        cds_MakeSokAvrop.SQL.Add('ELSE');
+        cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperSSPCDS_defsspno LD');
+  //      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo)');
+         cds_MakeSokAvrop.SQL.Add('WHERE LD.defsspno = SP.SupplierShipPlanObjectNo)') ;
+  //      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)');
+        cds_MakeSokAvrop.SQL.Add('END AS LEVLO,');
+      End
+      else
+      Begin
+        cds_MakeSokAvrop.SQL.Add('CASE');
+        cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
+        cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperCSHLO LD');
+        cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo');
+        cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)');
+        cds_MakeSokAvrop.SQL.Add(' ELSE');
+        cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperSSPLO_II LD');
+        cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo');
+        cds_MakeSokAvrop.SQL.Add
+          (' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)');
+        cds_MakeSokAvrop.SQL.Add('END AS LEVLO,');
+      End;
+
+      // ======================================== CALC RESTVOLYM ============================================
+      // ======================================== ORDER VOLYM ============================================
+      cds_MakeSokAvrop.SQL.Add('CASE');
+      cds_MakeSokAvrop.SQL.Add
+        ('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
+      cds_MakeSokAvrop.SQL.Add('ELSE');
+      cds_MakeSokAvrop.SQL.Add
+        ('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
+      cds_MakeSokAvrop.SQL.Add('END -');
+      // ======================================== - LEVERERAD VOLYM ============================================
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add('CASE');
+        cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
+        cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From DelperCSDLO LD');
+        cds_MakeSokAvrop.SQL.Add
+          ('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
+        cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
+        cds_MakeSokAvrop.SQL.Add('ELSE');
+        cds_MakeSokAvrop.SQL.Add
+          ('(Select isnull(AM3,0) From  dbo.DelperSSPCDS_defsspno LD');
+         cds_MakeSokAvrop.SQL.Add('WHERE LD.defsspno = SP.SupplierShipPlanObjectNo)') ;
+
+  //      cds_MakeSokAvrop.SQL.Add ('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
+  //      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)');
+        cds_MakeSokAvrop.SQL.Add('END AS REST,');
+      End
+      else
+      Begin
+        cds_MakeSokAvrop.SQL.Add('CASE');
+        cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
+        cds_MakeSokAvrop.SQL.Add
+          (' (Select isnull(AM3,0) From dbo.DelperCSHLO LD');
+        cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo');
+        cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)');
+        cds_MakeSokAvrop.SQL.Add(' ELSE');
+        cds_MakeSokAvrop.SQL.Add
+          (' (Select isnull(AM3,0) From dbo.DelperSSPLO_II LD');
+        cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo');
+        cds_MakeSokAvrop.SQL.Add
+          (' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)');
+        cds_MakeSokAvrop.SQL.Add('END AS REST,');
+      End;
+
+      cds_MakeSokAvrop.SQL.Add('Bk.SupplierReference ,');
+
+      // cds_MakeSokAvrop.SQL.Add('(Select Count(ShippingPlanNo) from dbo.SupplierShippingPlan SPP') ;
+      // cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo ) AS NoOfSuppliers') ;
+
+      cds_MakeSokAvrop.SQL.Add
+        ('(Select  Count(distinct SPP.LoadingLocationNo) from dbo.SupplierShippingPlan SPP');
+      cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo');
+      cds_MakeSokAvrop.SQL.Add('AND (SPP.ShippingPlanStatus <> 7');
+      cds_MakeSokAvrop.SQL.Add(' AND SPP.ShippingPlanStatus <> 8)');
+      cds_MakeSokAvrop.SQL.Add
+        (') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType, Bk.VoyageNo');
+
+      cds_MakeSokAvrop.SQL.Add('FROM	dbo.CustomerShippingPlanHeader CSH ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.Client 			C	ON 	C.ClientNo		= CSH.CustomerNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN dbo.MarketRegion	MR	ON	MR.MarketRegionNo	= C.MarketRegionNo ');
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN dbo.PhysicalInventoryPoint PIP');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.CITY		LLCSH	ON	LLCSH.CityNo 		= PIP.PhyInvPointNameNo');
+      cds_MakeSokAvrop.SQL.Add
+        ('	on PIP.PhysicalInventoryPointNo = CSH.LoadingLocationNo');
+
       if cds_PropsInputOption.AsInteger = 1 then
       Begin
-        { esStart.Date:= RecodeHour(esStart.Date,0) ;
-          esStart.Date:= RecodeMinute(esStart.Date,0) ;
-          esStart.Date:= RecodeSecond(esStart.Date,0) ;
+        cds_MakeSokAvrop.SQL.Add
+          ('	inner JOIN dbo.InvoiceLO		IL	ON	IL.ShippingPlanNo	= CSH.ShippingPlanNo');
+        cds_MakeSokAvrop.SQL.Add
+          ('	inner JOIN dbo.InvoiceHeader       IH	ON	IH.InternalInvoiceNo	= IL.InternalInvoiceNo');
+        cds_MakeSokAvrop.SQL.Add
+          ('	inner JOIN dbo.InvoiceNumber	INV	ON	INV.InternalInvoiceNo	= IL.InternalInvoiceNo');
+      End;
 
-          esEnd.Date:= RecodeHour(esEnd.Date,23) ;
-          esEnd.Date:= RecodeMinute(esEnd.Date,59) ;
-          esEnd.Date:= RecodeSecond(esEnd.Date,59) ;
-        }
+      cds_MakeSokAvrop.SQL.Add
+        ('	Left outer JOIN dbo.CustomerShippingPlanDetails CSD 	');
+
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add
+          ('	INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo ');
+        cds_MakeSokAvrop.SQL.Add('	AND OL.OrderLineNo = CSD.OrderLineNo ');
+      End;
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	ON 	CSD.ShippingPlanNo 	= CSH.ShippingPlanNo  ');
+
+      cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Orders 			OH ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN dbo.Client 			AG	ON 	AG.ClientNo		= OH.AgentNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN dbo.DeliveryTerm	DT	ON	DT.DeliveryTerm_No		= OH.DeliveryTermsNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('							ON 	OH.OrderNo			= CSH.OrderNo ');
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN ShippingPlan_ShippingAddress ST ');
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.Address 		ST_ADR		ON	ST_ADR.AddressNo	= ST.AddressNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.CITY		ST_AdrCY	ON	ST_AdrCY.CityNo 	= ST_ADR.CityNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.Country		ST_AdrCtry	ON	ST_AdrCtry.CountryNo 	= ST_ADR.CountryNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('							ON	ST.ShippingPlanNo	= CSD.ShippingPlanNo ');
+      // LARS MAR 18 Varför var nedan rad inte med i sql, den var bortkommenterad.s
+      cds_MakeSokAvrop.SQL.Add
+        ('							AND	ST.Reference		= CSD.Reference ');
+
+      cds_MakeSokAvrop.SQL.Add('    	LEFT OUTER JOIN dbo.Booking		Bk ');
+
+      // cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.VoyageDestination	VD 	ON  	Bk.BookingNo		= vd.BookingNo ') ;
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	Left Outer JOIN dbo.Voyage		Vg 	ON  	Bk.VoyageNo		= Vg.VoyageNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	Left Outer JOIN dbo.Client		SC 	ON  	Bk.ShippingCompanyNo 	= SC.ClientNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	Left outer JOIN dbo.Carrier            	Cr 	ON  	Vg.CarrierNo    	= Cr.CarrierNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	Left Outer Join dbo.BookingType		Bt	ON	Bt.BookingTypeNo	= Bk.BookingTypeNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('							ON  	CSD.ShippingPlanNo 	= Bk.ShippingPlanNo ');
+
+      cds_MakeSokAvrop.SQL.Add
+        ('	LEFT OUTER JOIN dbo.SupplierShippingPlan          SP ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.CITY		LL	ON	LL.CityNo 		= SP.LoadingLocationNo ');
+      cds_MakeSokAvrop.SQL.Add
+        ('	INNER JOIN dbo.Client 		Supp	ON 	Supp.ClientNo		= SP.SupplierNo ');
+
+      // Sept 13 Koppling mot SSP ändrad
+
+      cds_MakeSokAvrop.SQL.Add
+        ('     ON 	SP.CustShipPlanDetailObjectNo = CSD.CustShipPlanDetailObjectNo');
+
+      if cds_PropsOrderTypeNo.IsNull then
+      Begin
+        cds_MakeSokAvrop.SQL.Add('WHERE ((SP.ShippingPlanStatus <> 7');
+        cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)');
+        cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)');
+      End
+      else
+      Begin
+        cds_MakeSokAvrop.SQL.Add('WHERE OH.OrderType = ' +
+          cds_PropsOrderTypeNo.AsString);
+        cds_MakeSokAvrop.SQL.Add('AND ((SP.ShippingPlanStatus <> 7');
+        cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)');
+        cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)');
+      End;
+
+      Case cds_PropsCopyPcs.AsInteger of
+        // 0 :  cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanStatus <> 9 ') ;
+        1:
+          cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 0 ');
+        2:
+          cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 1 ');
+        3:
+          cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 2 ');
+      End; // case
+
+      cds_MakeSokAvrop.SQL.Add('AND sp.ObjectType in (0,1,2)');
+
+      if cds_PropsSalesRegionNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND OH.SalesRegionNo = ' +
+          cds_PropsSalesRegionNo.AsString);
+
+      if cds_PropsVerkNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND SP.SupplierNo = ' +
+          cds_PropsVerkNo.AsString);
+
+      if cds_PropsLoadingLocationNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND SP.LoadingLocationNo = ' +
+          cds_PropsLoadingLocationNo.AsString);
+
+      if cds_PropsShipperNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND Bk.ShippingCompanyNo = ' +
+          cds_PropsShipperNo.AsString);
+
+      if cds_PropsBookingTypeNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND Bk.BookingTypeNo = ' +
+          cds_PropsBookingTypeNo.AsString);
+
+      if cds_PropsMarketRegionNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND C.MarketRegionNo = ' +
+          cds_PropsMarketRegionNo.AsString);
+
+      if cds_PropsClientNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND CSH.CustomerNo = ' +
+          cds_PropsClientNo.AsString);
+
+      if cds_PropsAgentNo.AsInteger > 0 then
+        cds_MakeSokAvrop.SQL.Add(' AND OH.AgentNo = ' +
+          cds_PropsAgentNo.AsString);
+
+      if cds_PropsInputOption.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate >= :StartInvoiceDate');
+        cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate <= :EndInvoiceDate');
       End;
 
       if cds_PropsGroupSummary.AsInteger = 1 then
       Begin
-        { esETDStart.Date:= RecodeHour(esETDStart.Date,0) ;
-          esETDStart.Date:= RecodeMinute(esETDStart.Date,0) ;
-          esETDStart.Date:= RecodeSecond(esETDStart.Date,0) ;
-
-          esETDEnd.Date:= RecodeHour(esETDEnd.Date,23) ;
-          esETDEnd.Date:= RecodeMinute(esETDEnd.Date,59) ;
-          esETDEnd.Date:= RecodeSecond(esETDEnd.Date,59) ; }
+        cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD >= :StartETD');
+        cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD <= :EndETD');
       End;
-    Except
-      on E: EConvertError do
-        ShowMessage(E.ClassName + CRLF + E.Message);
-    End;
 
-    if cds_Props.State = dsBrowse then
-      cds_Props.Edit;
-
-    if Length(lcSR.Text) = 0 then
-      cds_PropsSalesRegionNo.Clear;
-
-    if Length(lcLaststalle.Text) = 0 then
-      cds_PropsLoadingLocationNo.Clear;
-
-    if Length(lcVerk.Text) = 0 then
-      cds_PropsVerkNo.Clear;
-
-    if Length(lcBokningstyp.Text) = 0 then
-      cds_PropsBookingTypeNo.Clear;
-
-    if Length(lcShipper.Text) = 0 then
-      cds_PropsShipperNo.Clear;
-
-    if Length(lcKund.Text) = 0 then
-      cds_PropsClientNo.Clear;
-
-    if Length(lcMarknad.Text) = 0 then
-      cds_PropsMarketRegionNo.Clear;
-
-    if Length(lcAgentNamn.Text) = 0 then
-      cds_PropsAgentNo.Clear;
-
-    if cds_Props.State in [dsEdit, dsInsert] then
-      cds_Props.Post;
-
-    cds_MakeSokAvrop.Close;
-    cds_MakeSokAvrop.SQL.Clear;
-
-    cds_MakeSokAvrop.SQL.Add('Select DISTINCT ');
-    cds_MakeSokAvrop.SQL.Add
-      ('  RTRIM(CONVERT(varchar(20),isnull(CSH.ShippingPlanNo,' + ''''')))+');
-    cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Supp.ClientName,'
-      + ''''')))+');
-    cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(Bk.BookingNo,' +
-      ''''')))+');
-    cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(ST.Reference,' +
-      ''''')))+');
-    cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(LL.CityName,' +
-      ''''')))+');
-    cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(20),isnull(OH.OrderNoText,'
-      + ''''')))+');
-
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      // cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(OL.OrderLineDescription,'+''''')))+') ;
-      // cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(100),isnull(CSD.LengthDescription,'+''''')))+') ;
-      cds_MakeSokAvrop.SQL.Add('RTRIM(CONVERT(varchar(6),isnull(OL.ProductNo,' +
-        ''''')))+');
-      cds_MakeSokAvrop.SQL.Add
-        ('RTRIM(CONVERT(varchar(6),isnull(CSD.ProductLengthNo,' + ''''')))+');
-      cds_MakeSokAvrop.SQL.Add
-        ('RTRIM(CONVERT(varchar(10),isnull(CSD.CustShipPlanDetailObjectNo,' +
-        ''''')))+');
-    End;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,' +
-      '''''))) AS UKEY, ');
-
-    cds_MakeSokAvrop.SQL.Add('CASE');
-    cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 0 THEN ' +
-      '''CANCEL''' + '');
-    cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 1 THEN ' +
-      '''PROGRESS''' + '');
-    cds_MakeSokAvrop.SQL.Add('WHEN CSH.SHIPPINGPLANSTATUS = 2 THEN ' +
-      '''COMPLETE''' + '');
-    cds_MakeSokAvrop.SQL.Add('END AS AVROP_STATUS,');
-
-    cds_MakeSokAvrop.SQL.Add('	CSH.ShippingPlanNo        	AS LO, ');
-    cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanNo,');
-
-    cds_MakeSokAvrop.SQL.Add('CASE');
-    cds_MakeSokAvrop.SQL.Add
-      ('WHEN SP.ShippingPlanNo is null THEN LLCSH.CityName');
-    cds_MakeSokAvrop.SQL.Add('ELSE');
-    cds_MakeSokAvrop.SQL.Add
-      ('LL.CityName	END             AS LOADING_LOCATION, ');
-
-    cds_MakeSokAvrop.SQL.Add('	Supp.SearchName			        AS SUPPLIER, ');
-    cds_MakeSokAvrop.SQL.Add('	OH.OrderNoText			        AS ORDER_NO, ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	CSH.Reference			          AS CUST_REFERENCE, ');
-    cds_MakeSokAvrop.SQL.Add('	CSH.ETDYearWeek			        AS FROM_WEEK, ');
-    cds_MakeSokAvrop.SQL.Add('	CSH.ETDWeekEnd			        AS TO_WEEK, ');
-
-    cds_MakeSokAvrop.SQL.Add('	C.SearchName            	  AS CUSTOMER, ');
-    cds_MakeSokAvrop.SQL.Add('	AG.SearchName			          AS AGENT, ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	DT.DeliveryTerm			        AS DELIVERY_TERM, ');
-    cds_MakeSokAvrop.SQL.Add('	isnull(RTRIM(ST_ADR.PostalCode' + ')+' +
-      ''' / ''   ,' + ''''')  +');
-    cds_MakeSokAvrop.SQL.Add
-      ('	RTRIM(CONVERT(varchar(20),isnull(ST_AdrCY.CityName,' +
-      '''''))) AS POSTAL_CODE_DESTINATION, ');
-
-    cds_MakeSokAvrop.SQL.Add('ST_AdrCtry.CountryName AS Land,');
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	ST.Reference			          AS SHIPTO_REFERENCE, ');
-
-    cds_MakeSokAvrop.SQL.Add('	BK.PreliminaryRequestedPeriod, ');
-    cds_MakeSokAvrop.SQL.Add('	SC.SearchName			          AS SHIPPER, ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	Bk.ShippingCompanyBookingID	AS SHIPPINGCOMPANYBOOKINGID, ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	Bk.ShippersShipDate		      AS SHIPPERSSHIPDATE, ');
-
-    cds_MakeSokAvrop.SQL.Add('	Bt.BookingType			        AS TRANSPORT, ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	MR.MarketRegionName		      AS MARKET_REGION, ');
-    cds_MakeSokAvrop.SQL.Add('	Bk.BookingNo    		        AS BookingNo, ');
-
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add('	OL.OrderLineDescription		AS PROD_DESC, ');
-      cds_MakeSokAvrop.SQL.Add
-        ('	CSD.LengthDescription           AS LENGTH_DESC, ');
-    End
-    else
-    Begin
-      cds_MakeSokAvrop.SQL.Add
-        (QuotedStr
-        ('----------------------------------------------------------------------------------------------------')
-        + '		AS PROD_DESC, ');
-      cds_MakeSokAvrop.SQL.Add
-        (QuotedStr
-        ('----------------------------------------------------------------------------------------------------')
-        + '		AS LENGTH_DESC, ');
-    End;
-
-    cds_MakeSokAvrop.SQL.Add('Bk.Panic_Note AS PANIC_NOTE, ');
-    cds_MakeSokAvrop.SQL.Add('CR.CarrierName AS VESSEL, ');
-    cds_MakeSokAvrop.SQL.Add('VG.ETD, ');
-    cds_MakeSokAvrop.SQL.Add('VG.ETA, ');
-    // cds_MakeSokAvrop.SQL.Add('ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)  	 AS AM3,') ;
-
-    // ======================================== ORDER VOLYM ============================================
-    cds_MakeSokAvrop.SQL.Add('CASE');
-    cds_MakeSokAvrop.SQL.Add
-      ('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
-    cds_MakeSokAvrop.SQL.Add('ELSE');
-    cds_MakeSokAvrop.SQL.Add('(Select ROUND(CAST((   SUM(SP2.ActualM3Net)    ) As decimal(18,3)),3) FROM dbo.SupplierShippingPlan SP2') ;
-    cds_MakeSokAvrop.SQL.Add('WHERE 	SP2.ShippingPlanNo = csh.ShippingPlanNo') ;
-    cds_MakeSokAvrop.SQL.Add('and sp2.SupplierNo =  Supp.ClientNo)') ;
-    cds_MakeSokAvrop.SQL.Add('END AS AM3,');
-
-//     cds_MakeSokAvrop.SQL.Add ('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
-
-    // ======================================== LEVERERAD VOLYM ============================================
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add('CASE');
-      cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
-      cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperCSDLO LD');
-      cds_MakeSokAvrop.SQL.Add
-        ('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo)');
-//      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
-      cds_MakeSokAvrop.SQL.Add('ELSE');
-      cds_MakeSokAvrop.SQL.Add('(Select AM3 From  dbo.DelperSSPCDS_defsspno LD');
-//      cds_MakeSokAvrop.SQL.Add('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo)');
-       cds_MakeSokAvrop.SQL.Add('WHERE LD.defsspno = SP.SupplierShipPlanObjectNo)') ;
-//      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)');
-      cds_MakeSokAvrop.SQL.Add('END AS LEVLO,');
-    End
-    else
-    Begin
-      cds_MakeSokAvrop.SQL.Add('CASE');
-      cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
-      cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperCSHLO LD');
-      cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo');
-      cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)');
-      cds_MakeSokAvrop.SQL.Add(' ELSE');
-      cds_MakeSokAvrop.SQL.Add(' (Select AM3 From dbo.DelperSSPLO_II LD');
-      cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo');
-      cds_MakeSokAvrop.SQL.Add
-        (' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)');
-      cds_MakeSokAvrop.SQL.Add('END AS LEVLO,');
-    End;
-
-    // ======================================== CALC RESTVOLYM ============================================
-    // ======================================== ORDER VOLYM ============================================
-    cds_MakeSokAvrop.SQL.Add('CASE');
-    cds_MakeSokAvrop.SQL.Add
-      ('WHEN SP.ShippingPlanNo is null THEN ROUND(CAST((   SUM(CSD.m3Net)    ) As decimal(18,3)),3)');
-    cds_MakeSokAvrop.SQL.Add('ELSE');
-    cds_MakeSokAvrop.SQL.Add
-      ('ROUND(CAST((   SUM(SP.ActualM3Net)    ) As decimal(18,3)),3)');
-    cds_MakeSokAvrop.SQL.Add('END -');
-    // ======================================== - LEVERERAD VOLYM ============================================
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add('CASE');
-      cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
-      cds_MakeSokAvrop.SQL.Add('(Select isnull(AM3,0) From DelperCSDLO LD');
-      cds_MakeSokAvrop.SQL.Add
-        ('WHERE LD.DefaultCustShipObjectNo = CSD.CustShipPlanDetailObjectNo');
-      cds_MakeSokAvrop.SQL.Add('AND LD.CustomerNo = CSH.CustomerNo)');
-      cds_MakeSokAvrop.SQL.Add('ELSE');
-      cds_MakeSokAvrop.SQL.Add
-        ('(Select isnull(AM3,0) From  dbo.DelperSSPCDS_defsspno LD');
-       cds_MakeSokAvrop.SQL.Add('WHERE LD.defsspno = SP.SupplierShipPlanObjectNo)') ;
-
-//      cds_MakeSokAvrop.SQL.Add ('WHERE LD.DefaultCustShipObjectNo = SP.CustShipPlanDetailObjectNo');
-//      cds_MakeSokAvrop.SQL.Add('AND LD.SupplierNo = Supp.ClientNo)');
-      cds_MakeSokAvrop.SQL.Add('END AS REST,');
-    End
-    else
-    Begin
-      cds_MakeSokAvrop.SQL.Add('CASE');
-      cds_MakeSokAvrop.SQL.Add('WHEN SP.ShippingPlanNo is null THEN');
-      cds_MakeSokAvrop.SQL.Add
-        (' (Select isnull(AM3,0) From dbo.DelperCSHLO LD');
-      cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = CSH.ShippingPlanNo');
-      cds_MakeSokAvrop.SQL.Add(' AND LD.CustomerNo = CSH.CustomerNo)');
-      cds_MakeSokAvrop.SQL.Add(' ELSE');
-      cds_MakeSokAvrop.SQL.Add
-        (' (Select isnull(AM3,0) From dbo.DelperSSPLO_II LD');
-      cds_MakeSokAvrop.SQL.Add(' WHERE LD.ShippingPlanNo = SP.ShippingPlanNo');
-      cds_MakeSokAvrop.SQL.Add
-        (' AND LD.SupplierNo = Supp.ClientNo AND LD.LoadingLocationNo = SP.LoadingLocationNo)');
-      cds_MakeSokAvrop.SQL.Add('END AS REST,');
-    End;
-
-    cds_MakeSokAvrop.SQL.Add('Bk.SupplierReference ,');
-
-    // cds_MakeSokAvrop.SQL.Add('(Select Count(ShippingPlanNo) from dbo.SupplierShippingPlan SPP') ;
-    // cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo ) AS NoOfSuppliers') ;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('(Select  Count(distinct SPP.LoadingLocationNo) from dbo.SupplierShippingPlan SPP');
-    cds_MakeSokAvrop.SQL.Add('WHERE  SPP.ShippingPlanNo = CSH.ShippingPlanNo');
-    cds_MakeSokAvrop.SQL.Add('AND (SPP.ShippingPlanStatus <> 7');
-    cds_MakeSokAvrop.SQL.Add(' AND SPP.ShippingPlanStatus <> 8)');
-    cds_MakeSokAvrop.SQL.Add
-      (') AS NoOfSuppliers, CSH.CustomerNo, OH.OrderType, Bk.VoyageNo');
-
-    cds_MakeSokAvrop.SQL.Add('FROM	dbo.CustomerShippingPlanHeader CSH ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.Client 			C	ON 	C.ClientNo		= CSH.CustomerNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN dbo.MarketRegion	MR	ON	MR.MarketRegionNo	= C.MarketRegionNo ');
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN dbo.PhysicalInventoryPoint PIP');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.CITY		LLCSH	ON	LLCSH.CityNo 		= PIP.PhyInvPointNameNo');
-    cds_MakeSokAvrop.SQL.Add
-      ('	on PIP.PhysicalInventoryPointNo = CSH.LoadingLocationNo');
-
-    if cds_PropsInputOption.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add
-        ('	inner JOIN dbo.InvoiceLO		IL	ON	IL.ShippingPlanNo	= CSH.ShippingPlanNo');
-      cds_MakeSokAvrop.SQL.Add
-        ('	inner JOIN dbo.InvoiceHeader       IH	ON	IH.InternalInvoiceNo	= IL.InternalInvoiceNo');
-      cds_MakeSokAvrop.SQL.Add
-        ('	inner JOIN dbo.InvoiceNumber	INV	ON	INV.InternalInvoiceNo	= IL.InternalInvoiceNo');
-    End;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	Left outer JOIN dbo.CustomerShippingPlanDetails CSD 	');
-
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add
-        ('	INNER JOIN dbo.OrderLine OL ON OL.OrderNo = CSD.OrderNo ');
-      cds_MakeSokAvrop.SQL.Add('	AND OL.OrderLineNo = CSD.OrderLineNo ');
-    End;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	ON 	CSD.ShippingPlanNo 	= CSH.ShippingPlanNo  ');
-
-    cds_MakeSokAvrop.SQL.Add('	INNER JOIN dbo.Orders 			OH ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN dbo.Client 			AG	ON 	AG.ClientNo		= OH.AgentNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN dbo.DeliveryTerm	DT	ON	DT.DeliveryTerm_No		= OH.DeliveryTermsNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('							ON 	OH.OrderNo			= CSH.OrderNo ');
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN ShippingPlan_ShippingAddress ST ');
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.Address 		ST_ADR		ON	ST_ADR.AddressNo	= ST.AddressNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.CITY		ST_AdrCY	ON	ST_AdrCY.CityNo 	= ST_ADR.CityNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.Country		ST_AdrCtry	ON	ST_AdrCtry.CountryNo 	= ST_ADR.CountryNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('							ON	ST.ShippingPlanNo	= CSD.ShippingPlanNo ');
-    // LARS MAR 18 Varför var nedan rad inte med i sql, den var bortkommenterad.s
-    cds_MakeSokAvrop.SQL.Add
-      ('							AND	ST.Reference		= CSD.Reference ');
-
-    cds_MakeSokAvrop.SQL.Add('    	LEFT OUTER JOIN dbo.Booking		Bk ');
-
-    // cds_MakeSokAvrop.SQL.Add('	LEFT OUTER JOIN dbo.VoyageDestination	VD 	ON  	Bk.BookingNo		= vd.BookingNo ') ;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	Left Outer JOIN dbo.Voyage		Vg 	ON  	Bk.VoyageNo		= Vg.VoyageNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	Left Outer JOIN dbo.Client		SC 	ON  	Bk.ShippingCompanyNo 	= SC.ClientNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	Left outer JOIN dbo.Carrier            	Cr 	ON  	Vg.CarrierNo    	= Cr.CarrierNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	Left Outer Join dbo.BookingType		Bt	ON	Bt.BookingTypeNo	= Bk.BookingTypeNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('							ON  	CSD.ShippingPlanNo 	= Bk.ShippingPlanNo ');
-
-    cds_MakeSokAvrop.SQL.Add
-      ('	LEFT OUTER JOIN dbo.SupplierShippingPlan          SP ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.CITY		LL	ON	LL.CityNo 		= SP.LoadingLocationNo ');
-    cds_MakeSokAvrop.SQL.Add
-      ('	INNER JOIN dbo.Client 		Supp	ON 	Supp.ClientNo		= SP.SupplierNo ');
-
-    // Sept 13 Koppling mot SSP ändrad
-
-    cds_MakeSokAvrop.SQL.Add
-      ('     ON 	SP.CustShipPlanDetailObjectNo = CSD.CustShipPlanDetailObjectNo');
-
-    if cds_PropsOrderTypeNo.IsNull then
-    Begin
-      cds_MakeSokAvrop.SQL.Add('WHERE ((SP.ShippingPlanStatus <> 7');
-      cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)');
-      cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)');
-    End
-    else
-    Begin
-      cds_MakeSokAvrop.SQL.Add('WHERE OH.OrderType = ' +
-        cds_PropsOrderTypeNo.AsString);
-      cds_MakeSokAvrop.SQL.Add('AND ((SP.ShippingPlanStatus <> 7');
-      cds_MakeSokAvrop.SQL.Add(' AND SP.ShippingPlanStatus <> 8)');
-      cds_MakeSokAvrop.SQL.Add('OR SP.ShippingPlanStatus is null)');
-    End;
-
-    Case cds_PropsCopyPcs.AsInteger of
-      // 0 :  cds_MakeSokAvrop.SQL.Add('CSH.ShippingPlanStatus <> 9 ') ;
-      1:
-        cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 0 ');
-      2:
-        cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 1 ');
-      3:
-        cds_MakeSokAvrop.SQL.Add(' AND CSH.ShippingPlanStatus = 2 ');
-    End; // case
-
-    cds_MakeSokAvrop.SQL.Add('AND sp.ObjectType in (0,1,2)');
-
-    if cds_PropsSalesRegionNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND OH.SalesRegionNo = ' +
-        cds_PropsSalesRegionNo.AsString);
-
-    if cds_PropsVerkNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND SP.SupplierNo = ' +
-        cds_PropsVerkNo.AsString);
-
-    if cds_PropsLoadingLocationNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND SP.LoadingLocationNo = ' +
-        cds_PropsLoadingLocationNo.AsString);
-
-    if cds_PropsShipperNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND Bk.ShippingCompanyNo = ' +
-        cds_PropsShipperNo.AsString);
-
-    if cds_PropsBookingTypeNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND Bk.BookingTypeNo = ' +
-        cds_PropsBookingTypeNo.AsString);
-
-    if cds_PropsMarketRegionNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND C.MarketRegionNo = ' +
-        cds_PropsMarketRegionNo.AsString);
-
-    if cds_PropsClientNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND CSH.CustomerNo = ' +
-        cds_PropsClientNo.AsString);
-
-    if cds_PropsAgentNo.AsInteger > 0 then
-      cds_MakeSokAvrop.SQL.Add(' AND OH.AgentNo = ' +
-        cds_PropsAgentNo.AsString);
-
-    if cds_PropsInputOption.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate >= :StartInvoiceDate');
-      cds_MakeSokAvrop.SQL.Add(' AND IH.InvoiceDate <= :EndInvoiceDate');
-    End;
-
-    if cds_PropsGroupSummary.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD >= :StartETD');
-      cds_MakeSokAvrop.SQL.Add(' AND Vg.ETD <= :EndETD');
-    End;
-
-    Try
-
-      if cds_PropsBarCodeNo.AsInteger > 0 then
-        cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDYearWeek >= ' +
-          cds_PropsBarCodeNo.AsString);
-    Except
-    End;
-
-    Try
-      if cds_PropsGradeStampNo.AsInteger > 0 then
-        cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDWeekEnd <= ' +
-          cds_PropsGradeStampNo.AsString);
-    Except
-    End;
-
-    if cds_PropsInputOption.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.ParamByName('StartInvoiceDate').AsSQLTimeStamp :=
-        DateTimeToSQLTimeStamp(deStartPeriod.Date);
-      cds_MakeSokAvrop.ParamByName('EndInvoiceDate').AsSQLTimeStamp :=
-        DateTimeToSQLTimeStamp(deEndPeriod.Date);
-    End;
-
-    if cds_PropsGroupSummary.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.ParamByName('StartETD').AsSQLTimeStamp :=
-        DateTimeToSQLTimeStamp(deFilterOrderDate.Date);
-      cds_MakeSokAvrop.ParamByName('EndETD').AsSQLTimeStamp :=
-        DateTimeToSQLTimeStamp(deRegDate.Date);
-    End;
-
-    cds_MakeSokAvrop.SQL.Add
-      ('GROUP BY CSH.SHIPPINGPLANSTATUS, CSH.ShippingPlanNo, LL.CityName, Supp.SearchName,');
-    cds_MakeSokAvrop.SQL.Add
-      ('OH.OrderNoText, CSH.Reference, CSH.ETDYearWeek, CSH.ETDWeekEnd, C.SearchName, AG.SearchName,');
-    cds_MakeSokAvrop.SQL.Add
-      ('DT.DeliveryTerm,  ST_ADR.PostalCode, ST_AdrCY.CityName, ST_AdrCtry.CountryName, ST.Reference, BK.PreliminaryRequestedPeriod,');
-    cds_MakeSokAvrop.SQL.Add
-      ('SC.SearchName, Bk.ShippingCompanyBookingID, Bk.ShippersShipDate, Bt.BookingType, MR.MarketRegionName,');
-    cds_MakeSokAvrop.SQL.Add
-      ('Bk.BookingNo, Bk.Panic_Note, CR.CarrierName, Vg.ETD, VG.ETA, Supp.ClientName, Bk.SupplierReference,');
-    cds_MakeSokAvrop.SQL.Add
-      ('CSH.CustomerNo, SP.ShippingPlanNo, Supp.ClientNo, SP.LoadingLocationNo, OH.OrderType, LLCSH.CityName,');
-    cds_MakeSokAvrop.SQL.Add('Bk.VoyageNo');
-
-    if cds_PropsRegPointNo.AsInteger = 1 then
-    Begin
-      cds_MakeSokAvrop.SQL.Add
-        (', CSD.CustShipPlanDetailObjectNo, OL.ProductNo, CSD.ProductLengthNo');
-      cds_MakeSokAvrop.SQL.Add
-        (',OL.OrderLineDescription , CSD.LengthDescription, SP.SupplierShipPlanObjectNo');
-    End;
-
-
-
-
-
-    // if ThisUser.UserID = 8 then   cds_MakeSokAvrop.SQL.SaveToFile('cds_MakeSokAvrop.txt') ;
-    // Try
-    // cds_MakeSokAvrop.ExecSQL ;
-    { except
-      On E: Exception do
+      Try
+
+        if cds_PropsBarCodeNo.AsInteger > 0 then
+          cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDYearWeek >= ' +
+            cds_PropsBarCodeNo.AsString);
+      Except
+      End;
+
+      Try
+        if cds_PropsGradeStampNo.AsInteger > 0 then
+          cds_MakeSokAvrop.SQL.Add(' AND CSH.ETDWeekEnd <= ' +
+            cds_PropsGradeStampNo.AsString);
+      Except
+      End;
+
+      if cds_PropsInputOption.AsInteger = 1 then
       Begin
-      dmsSystem.FDoLog(E.Message) ;
-      //   ShowMessage(E.Message);
-      Raise ;
-      End ;
-      end;
-    }
+        cds_MakeSokAvrop.ParamByName('StartInvoiceDate').AsSQLTimeStamp :=
+          DateTimeToSQLTimeStamp(deStartPeriod.Date);
+        cds_MakeSokAvrop.ParamByName('EndInvoiceDate').AsSQLTimeStamp :=
+          DateTimeToSQLTimeStamp(deEndPeriod.Date);
+      End;
 
-  End;
-end;
+      if cds_PropsGroupSummary.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.ParamByName('StartETD').AsSQLTimeStamp :=
+          DateTimeToSQLTimeStamp(deFilterOrderDate.Date);
+        cds_MakeSokAvrop.ParamByName('EndETD').AsSQLTimeStamp :=
+          DateTimeToSQLTimeStamp(deRegDate.Date);
+      End;
+
+      cds_MakeSokAvrop.SQL.Add
+        ('GROUP BY CSH.SHIPPINGPLANSTATUS, CSH.ShippingPlanNo, LL.CityName, Supp.SearchName,');
+      cds_MakeSokAvrop.SQL.Add
+        ('OH.OrderNoText, CSH.Reference, CSH.ETDYearWeek, CSH.ETDWeekEnd, C.SearchName, AG.SearchName,');
+      cds_MakeSokAvrop.SQL.Add
+        ('DT.DeliveryTerm,  ST_ADR.PostalCode, ST_AdrCY.CityName, ST_AdrCtry.CountryName, ST.Reference, BK.PreliminaryRequestedPeriod,');
+      cds_MakeSokAvrop.SQL.Add
+        ('SC.SearchName, Bk.ShippingCompanyBookingID, Bk.ShippersShipDate, Bt.BookingType, MR.MarketRegionName,');
+      cds_MakeSokAvrop.SQL.Add
+        ('Bk.BookingNo, Bk.Panic_Note, CR.CarrierName, Vg.ETD, VG.ETA, Supp.ClientName, Bk.SupplierReference,');
+      cds_MakeSokAvrop.SQL.Add
+        ('CSH.CustomerNo, SP.ShippingPlanNo, Supp.ClientNo, SP.LoadingLocationNo, OH.OrderType, LLCSH.CityName,');
+      cds_MakeSokAvrop.SQL.Add('Bk.VoyageNo');
+
+      if cds_PropsRegPointNo.AsInteger = 1 then
+      Begin
+        cds_MakeSokAvrop.SQL.Add
+          (', CSD.CustShipPlanDetailObjectNo, OL.ProductNo, CSD.ProductLengthNo');
+        cds_MakeSokAvrop.SQL.Add
+          (',OL.OrderLineDescription , CSD.LengthDescription, SP.SupplierShipPlanObjectNo');
+      End;
+
+
+
+
+
+      // if ThisUser.UserID = 8 then   cds_MakeSokAvrop.SQL.SaveToFile('cds_MakeSokAvrop.txt') ;
+      // Try
+      // cds_MakeSokAvrop.ExecSQL ;
+      { except
+        On E: Exception do
+        Begin
+        dmsSystem.FDoLog(E.Message) ;
+        //   ShowMessage(E.Message);
+        Raise ;
+        End ;
+        end;
+      }
+
+    End;
+  end;
+*)
 
 procedure TfrmSokAvropFormular.FormClose(Sender: TObject;
   var Action: TCloseAction);

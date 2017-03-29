@@ -387,6 +387,11 @@ type
     siLangLinked_frmAvrop: TsiLangLinked;
     acCopyLoadToOtherSalesRegion: TAction;
     dxBarButton38: TdxBarButton;
+    cxGridPopupMenu2: TcxGridPopupMenu;
+    cxGridPopupMenu3: TcxGridPopupMenu;
+    cxGridPopupMenu4: TcxGridPopupMenu;
+    acGoToSearchLO: TAction;
+    dxBarButton39: TdxBarButton;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -487,6 +492,7 @@ type
     procedure acMovePkgsToInvAndDeleteLoadExecute(Sender: TObject);
     procedure acMovePkgsToInvAndDeleteLoadUpdate(Sender: TObject);
     procedure acCopyLoadToOtherSalesRegionUpdate(Sender: TObject);
+    procedure acGoToSearchLOExecute(Sender: TObject);
   private
     { Private declarations }
     GlobalLONo, CSDNO: Integer;
@@ -4820,6 +4826,11 @@ begin
     (grdcxAvropDBBandedTableView1.DataController.DataSource.DataSet.Active) and
     (grdcxAvropDBBandedTableView1.DataController.DataSource.DataSet.
     RecordCount > 0);
+end;
+
+procedure TfrmAvrop.acGoToSearchLOExecute(Sender: TObject);
+begin
+ eSearchLONr.SetFocus ;
 end;
 
 procedure TfrmAvrop.acGruppSummeringExecute(Sender: TObject);

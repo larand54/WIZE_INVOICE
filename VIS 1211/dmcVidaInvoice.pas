@@ -1635,6 +1635,7 @@ type
     sq_GetOrgInvoiceNoByCredit_VIDA_ENERGI: TFDQuery;
     sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo: TIntegerField;
     cdsInvoiceDetailOrderBy: TIntegerField;
+    sp_SetReferenceInInvoiceDetails: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1767,6 +1768,7 @@ type
     vouno, logno: Integer;
     serie: String;
     ldglogwrite_logerror, vourowlog_logerror: Integer;
+    procedure SetReferenceInInvoiceDetails(const InternalInvoiceNo : Integer);
     procedure PrepareAngloExcelFile(const InvoiceNo: String;
     const CustomerNo, InternalInvoiceNo: Integer);
     procedure CopyOrderToNewPO(const InternalInvoiceNo : Integer) ;
@@ -10204,6 +10206,7 @@ begin
     if not InvoiceSentAsEDI(InternalInvoiceNo) then
     Begin
       Try
+        //CheckAndAdjustMissingReferences ;
         cds_InsertToInvoiceEDI.ParamByName('InternalInvoiceNo').AsInteger :=
           InternalInvoiceNo;
         cds_InsertToInvoiceEDI.ParamByName('UserID').AsInteger :=
@@ -10587,6 +10590,21 @@ Begin
  End;
 End ;
 
+
+procedure TdmVidaInvoice.SetReferenceInInvoiceDetails(const InternalInvoiceNo : Integer);
+Begin
+  Try
+    sp_SetReferenceInInvoiceDetails.ParamByName('@InternalInvoiceNo').AsInteger :=
+      InternalInvoiceNo;
+    sp_SetReferenceInInvoiceDetails.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
+End;
 
 
 end.

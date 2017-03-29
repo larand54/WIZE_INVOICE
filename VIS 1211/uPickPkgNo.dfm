@@ -2,12 +2,12 @@ object fPickPkgNo: TfPickPkgNo
   Left = 216
   Top = 125
   Caption = 'Plocka paketnr'
-  ClientHeight = 663
-  ClientWidth = 1043
+  ClientHeight = 816
+  ClientWidth = 1284
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -16,13 +16,17 @@ object fPickPkgNo: TfPickPkgNo
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object grdPickPkgNos: TcxGrid
     Left = 0
-    Top = 249
-    Width = 1043
-    Height = 355
+    Top = 306
+    Width = 1284
+    Height = 437
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
     object grdPickPkgNosDBTableView1: TcxGridDBTableView
@@ -133,39 +137,59 @@ object fPickPkgNo: TfPickPkgNo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 604
-    Width = 1043
-    Height = 59
+    Top = 743
+    Width = 1284
+    Height = 73
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     TabOrder = 1
     object Label1: TLabel
-      Left = 8
-      Top = 16
-      Width = 84
-      Height = 13
+      Left = 10
+      Top = 20
+      Width = 107
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Paket markerade:'
     end
     object LabelNoOfPkgsMarked: TLabel
-      Left = 96
-      Top = 16
-      Width = 6
-      Height = 13
+      Left = 118
+      Top = 20
+      Width = 7
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '0'
     end
     object BitBtn1: TBitBtn
-      Left = 416
-      Top = 16
-      Width = 89
-      Height = 33
+      Left = 512
+      Top = 20
+      Width = 110
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkOK
       NumGlyphs = 2
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 512
-      Top = 16
-      Width = 89
-      Height = 33
+      Left = 630
+      Top = 20
+      Width = 110
+      Height = 40
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1
@@ -173,123 +197,175 @@ object fPickPkgNo: TfPickPkgNo
   end
   object Panel2: TPanel
     Left = 0
-    Top = 113
-    Width = 1043
-    Height = 136
+    Top = 139
+    Width = 1284
+    Height = 167
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 2
     object LabelProduct: TLabel
-      Left = 464
-      Top = 23
-      Width = 63
-      Height = 13
+      Left = 571
+      Top = 28
+      Width = 80
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelProduct'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object LabelLength: TLabel
-      Left = 464
-      Top = 39
-      Width = 59
-      Height = 13
+      Left = 571
+      Top = 48
+      Width = 74
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelLength'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object LabelPIPName: TLabel
-      Left = 464
-      Top = 55
-      Width = 71
-      Height = 13
+      Left = 571
+      Top = 68
+      Width = 92
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelPIPName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 400
-      Top = 23
-      Width = 40
-      Height = 13
+      Left = 492
+      Top = 28
+      Width = 49
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Produkt:'
     end
     object Label3: TLabel
-      Left = 400
-      Top = 39
-      Width = 33
-      Height = 13
+      Left = 492
+      Top = 48
+      Width = 41
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'L'#228'ngd:'
     end
     object Label4: TLabel
-      Left = 400
-      Top = 55
-      Width = 54
-      Height = 13
+      Left = 492
+      Top = 68
+      Width = 70
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lagerst'#228'lle:'
     end
     object LabelOwnerTitle: TLabel
-      Left = 400
-      Top = 7
-      Width = 31
-      Height = 13
+      Left = 492
+      Top = 9
+      Width = 40
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = #196'gare:'
     end
     object LabelOwner: TLabel
-      Left = 464
-      Top = 7
-      Width = 57
-      Height = 13
+      Left = 571
+      Top = 9
+      Width = 72
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelOwner'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 400
-      Top = 71
-      Width = 28
-      Height = 13
+      Left = 492
+      Top = 87
+      Width = 34
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LONr:'
     end
     object LabelLONr: TLabel
-      Left = 464
-      Top = 71
-      Width = 71
-      Height = 13
+      Left = 571
+      Top = 87
+      Width = 92
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'LabelPIPName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
     end
     object cbFilterOnLength: TcxCheckBox
-      Left = 832
-      Top = 7
+      Left = 1024
+      Top = 9
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Filtrera p'#229' l'#228'ngd'
       Properties.OnChange = cbFilterOnLengthPropertiesChange
       State = cbsChecked
       TabOrder = 0
-      Width = 121
+      Width = 149
     end
     object lcProductDisplayName: TcxDBLookupComboBox
-      Left = 680
-      Top = 64
+      Left = 837
+      Top = 79
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'ProductDisplayName'
       DataBinding.DataSource = dsProduct
       Properties.DropDownListStyle = lsFixedList
@@ -302,120 +378,176 @@ object fPickPkgNo: TfPickPkgNo
       Properties.ListOptions.ShowHeader = False
       TabOrder = 1
       Visible = False
-      Width = 297
+      Width = 365
     end
     object cxLabel1: TcxLabel
-      Left = 680
-      Top = 48
+      Left = 837
+      Top = 59
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Produkter i lager'
       Visible = False
     end
     object cxButton1: TcxButton
-      Left = 8
-      Top = 8
-      Width = 81
-      Height = 65
+      Left = 10
+      Top = 10
+      Width = 100
+      Height = 80
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acMarkAll
       TabOrder = 3
     end
     object cxButton2: TcxButton
-      Left = 96
-      Top = 8
-      Width = 81
-      Height = 65
+      Left = 118
+      Top = 10
+      Width = 100
+      Height = 80
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acUnmarkAll
       TabOrder = 4
     end
     object cxButton8: TcxButton
-      Left = 184
-      Top = 8
-      Width = 121
-      Height = 65
+      Left = 226
+      Top = 10
+      Width = 149
+      Height = 80
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acSelectMarkedRows
       TabOrder = 5
     end
     object cxLabel2: TcxLabel
-      Left = 400
-      Top = 100
+      Left = 492
+      Top = 123
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lagergrupp:'
     end
     object lcLIP: TcxDBLookupComboBox
-      Left = 464
-      Top = 96
+      Left = 571
+      Top = 119
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       DataBinding.DataField = 'LIP'
       DataBinding.DataSource = dsProps
       Properties.ImmediatePost = True
       Properties.ListColumns = <>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 7
-      Width = 145
+      Width = 179
     end
   end
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 1043
-    Height = 113
+    Width = 1284
+    Height = 139
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     TabOrder = 3
     object Panel4: TPanel
       Left = 1
       Top = 1
-      Width = 1041
-      Height = 17
+      Width = 1282
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       BevelOuter = bvNone
       Caption = 'Urvalsalternativ'
       TabOrder = 0
     end
     object cxButton3: TcxButton
-      Left = 8
-      Top = 24
-      Width = 121
-      Height = 57
+      Left = 10
+      Top = 30
+      Width = 149
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowMatchingProductAndLength
       TabOrder = 1
     end
     object cxButton4: TcxButton
-      Left = 135
-      Top = 24
-      Width = 122
-      Height = 57
+      Left = 166
+      Top = 30
+      Width = 150
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowMatchingProduct
       TabOrder = 2
     end
     object cxButton5: TcxButton
-      Left = 263
-      Top = 24
-      Width = 122
-      Height = 57
+      Left = 324
+      Top = 30
+      Width = 150
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowAddLOPkgsWithMatchingProduct
       TabOrder = 3
     end
     object cxButton6: TcxButton
-      Left = 391
-      Top = 24
-      Width = 130
-      Height = 57
+      Left = 481
+      Top = 30
+      Width = 160
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowAllAddLOPkgs
       TabOrder = 4
     end
     object cxButton7: TcxButton
-      Left = 527
-      Top = 24
-      Width = 122
-      Height = 57
+      Left = 649
+      Top = 30
+      Width = 150
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowPkgsWithSameActDimOnly
       TabOrder = 5
     end
     object cxLabel_Val: TcxLabel
-      Left = 8
-      Top = 87
+      Left = 10
+      Top = 107
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = '______'
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -16
+      Style.Font.Height = -20
       Style.Font.Name = 'MS Sans Serif'
       Style.Font.Style = []
       Style.TextColor = clRed
@@ -423,10 +555,14 @@ object fPickPkgNo: TfPickPkgNo
       Style.IsFontAssigned = True
     end
     object cxButton9: TcxButton
-      Left = 656
-      Top = 24
-      Width = 161
-      Height = 57
+      Left = 807
+      Top = 30
+      Width = 199
+      Height = 70
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acShowMatchingLIP
       TabOrder = 7
     end
@@ -921,40 +1057,37 @@ object fPickPkgNo: TfPickPkgNo
       5F0055006E00690063006F00640065000D000A00730074005300740072006900
       6E00670073005F0055006E00690063006F00640065000D000A00730074004F00
       740068006500720053007400720069006E00670073005F0055006E0069006300
-      6F00640065000D000A006D007400500072006F0064007500630074002E005600
-      65007200730069006F006E00010037002E00360033002E003000300020005300
-      740061006E0064006100720064002000450064006900740069006F006E000100
-      01000D000A007300740043006F006C006C0065006300740069006F006E007300
-      5F0055006E00690063006F00640065000D000A006C006300500072006F006400
-      75006300740044006900730070006C00610079004E0061006D0065002E005000
-      72006F0070006500720074006900650073002E004C0069007300740043006F00
-      6C0075006D006E0073005B0030005D002E00430061007000740069006F006E00
-      0100500072006F00640075006300740044006900730070006C00610079004E00
-      61006D006500010001000D000A00730074004300680061007200530065007400
-      73005F0055006E00690063006F00640065000D000A0054006600500069006300
-      6B0050006B0067004E006F000100440045004600410055004C0054005F004300
+      6F00640065000D000A007300740043006F006C006C0065006300740069006F00
+      6E0073005F0055006E00690063006F00640065000D000A006C00630050007200
+      6F00640075006300740044006900730070006C00610079004E0061006D006500
+      2E00500072006F0070006500720074006900650073002E004C00690073007400
+      43006F006C0075006D006E0073005B0030005D002E0043006100700074006900
+      6F006E000100500072006F00640075006300740044006900730070006C006100
+      79004E0061006D006500010001000D000A007300740043006800610072005300
+      6500740073005F0055006E00690063006F00640065000D000A00540066005000
+      690063006B0050006B0067004E006F000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A004C006100620065006C005000
+      72006F0064007500630074000100440045004600410055004C0054005F004300
       4800410052005300450054000100440045004600410055004C0054005F004300
       4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A004C006100620065006C00500072006F00
-      64007500630074000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000100440045004600410055004C0054005F00430048004100
-      52005300450054000D000A004C006100620065006C004C0065006E0067007400
-      68000100440045004600410055004C0054005F00430048004100520053004500
+      4800410052005300450054000D000A004C006100620065006C004C0065006E00
+      6700740068000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000100440045004600410055004C0054005F004300480041005200
+      5300450054000D000A004C006100620065006C005000490050004E0061006D00
+      65000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
       54000100440045004600410055004C0054005F00430048004100520053004500
-      54000D000A004C006100620065006C005000490050004E0061006D0065000100
-      440045004600410055004C0054005F0043004800410052005300450054000100
-      440045004600410055004C0054005F0043004800410052005300450054000100
-      440045004600410055004C0054005F0043004800410052005300450054000D00
-      0A004C006100620065006C004F0077006E006500720001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F00430048004100520053004500540001004400450046004100
-      55004C0054005F0043004800410052005300450054000D000A004C0061006200
-      65006C004C004F004E0072000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000100440045004600410055004C0054005F004300
-      4800410052005300450054000D000A00}
+      54000D000A004C006100620065006C004F0077006E0065007200010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F004300480041005200530045005400010044004500
+      4600410055004C0054005F0043004800410052005300450054000D000A004C00
+      6100620065006C004C004F004E0072000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000100440045004600410055004C005400
+      5F0043004800410052005300450054000D000A00}
   end
   object mtPkgNos: TFDMemTable
     FetchOptions.AssignedValues = [evMode]

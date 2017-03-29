@@ -1958,7 +1958,7 @@ object dmsConnector: TdmsConnector
     Params.Strings = (
       'Server=visprodsql.vida.se'
       'Database=vis_vida'
-      'OSAuthent=yes'
+      'OSAuthent=No'
       'MetaDefCatalog=vis_vida'
       'MetaDefSchema=dbo'
       'ApplicationName=VIS'

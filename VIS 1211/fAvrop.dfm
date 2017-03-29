@@ -5,7 +5,7 @@ object frmAvrop: TfrmAvrop
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Avrop'
-  ClientHeight = 711
+  ClientHeight = 784
   ClientWidth = 1248
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,28 +20,28 @@ object frmAvrop: TfrmAvrop
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 388
+    Top = 461
     Width = 1248
     Height = 3
     Cursor = crVSplit
     Align = alBottom
     Color = clBlack
     ParentColor = False
+    ExplicitTop = 388
   end
   object Panel1: TPanel
     Left = 0
-    Top = 391
+    Top = 464
     Width = 1248
     Height = 320
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 391
     object Splitter2: TSplitter
       Left = 561
       Top = 1
@@ -274,7 +274,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 145
         Width = 560
-        Height = 174
+        Height = 173
         Align = alClient
         TabOrder = 1
         object Panel2: TPanel
@@ -297,7 +297,7 @@ object frmAvrop: TfrmAvrop
           Left = 1
           Top = 17
           Width = 558
-          Height = 156
+          Height = 155
           Align = alClient
           TabOrder = 1
           object grdAddLODBTableView1: TcxGridDBTableView
@@ -595,7 +595,6 @@ object frmAvrop: TfrmAvrop
         Height = 245
         Align = alClient
         TabOrder = 1
-        ExplicitHeight = 246
         object grdLoadDBTableView1: TcxGridDBTableView
           PopupMenu = pmLoads
           OnDblClick = grdLoadDBTableView1DblClick
@@ -764,9 +763,9 @@ object frmAvrop: TfrmAvrop
     object Label5: TLabel
       Left = 8
       Top = 15
-      Width = 50
+      Width = 71
       Height = 13
-      Caption = 'S'#246'k LONr:'
+      Caption = 'S'#246'k LONr (F7):'
     end
     object LabelKlient: TLabel
       Left = 440
@@ -989,10 +988,11 @@ object frmAvrop: TfrmAvrop
     Left = 0
     Top = 117
     Width = 1248
-    Height = 271
+    Height = 344
     Align = alClient
     PopupMenu = pmAvropGrid
     TabOrder = 2
+    ExplicitHeight = 271
     object grdcxAvropDBBandedTableView1: TcxGridDBBandedTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.dsrcAvrop
@@ -1356,7 +1356,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 903
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1373,7 +1373,7 @@ object frmAvrop: TfrmAvrop
         Left = 0
         Top = 0
         Width = 65
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1397,9 +1397,9 @@ object frmAvrop: TfrmAvrop
     Width = 1177
   end
   object DBRichEdit_InvoiceText: TDBRichEdit
-    Left = 40
-    Top = 521
-    Width = 1233
+    Left = 33
+    Top = 170
+    Width = 1234
     Height = 159
     DataField = 'InvoiceText'
     DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -1692,6 +1692,11 @@ object frmAvrop: TfrmAvrop
       Caption = 'Kopiera last till annan f'#246'rs'#228'ljningsregion'
       ImageIndex = 3
       OnUpdate = acCopyLoadToOtherSalesRegionUpdate
+    end
+    object acGoToSearchLO: TAction
+      Caption = 'Goto search LO no'
+      ShortCut = 118
+      OnExecute = acGoToSearchLOExecute
     end
   end
   object imglistActions: TImageList
@@ -3195,7 +3200,7 @@ object frmAvrop: TfrmAvrop
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -3363,6 +3368,10 @@ object frmAvrop: TfrmAvrop
       Action = acCopyLoadToOtherSalesRegion
       Category = 0
     end
+    object dxBarButton39: TdxBarButton
+      Action = acGoToSearchLO
+      Category = 0
+    end
     object bbPrintOrder: TdxBarButton
       Action = acPrintContract
       Caption = 'Kontrakt'
@@ -3435,14 +3444,17 @@ object frmAvrop: TfrmAvrop
     object dxBarButton2: TdxBarButton
       Action = acSetLOStatusToCancel
       Category = 2
+      ShortCut = 16462
     end
     object dxBarButton3: TdxBarButton
       Action = acSetLOStatusToAktiv
       Category = 2
+      ShortCut = 16459
     end
     object dxBarButton4: TdxBarButton
       Action = acSetLOStatusToComplete
       Category = 2
+      ShortCut = 16449
     end
     object dxBarButton5: TdxBarButton
       Action = acCustomizeAvropGrid
@@ -3471,6 +3483,7 @@ object frmAvrop: TfrmAvrop
     object dxBarButton36: TdxBarButton
       Action = acSetStatusToSkeppat
       Category = 2
+      ShortCut = 16467
     end
     object dxBarButton10: TdxBarButton
       Action = acOpenLoad
@@ -4598,6 +4611,10 @@ object frmAvrop: TfrmAvrop
       item
         Visible = True
         ItemName = 'dxBarButton27'
+      end
+      item
+        Visible = True
+        ItemName = 'dxBarButton39'
       end>
     UseOwnFont = False
     Left = 376
@@ -6122,5 +6139,23 @@ object frmAvrop: TfrmAvrop
       4800410052005300450054000100440045004600410055004C0054005F004300
       4800410052005300450054000100440045004600410055004C0054005F004300
       4800410052005300450054000D000A00}
+  end
+  object cxGridPopupMenu2: TcxGridPopupMenu
+    Grid = grdLoad
+    PopupMenus = <>
+    Left = 833
+    Top = 682
+  end
+  object cxGridPopupMenu3: TcxGridPopupMenu
+    Grid = grdAddLO
+    PopupMenus = <>
+    Left = 241
+    Top = 746
+  end
+  object cxGridPopupMenu4: TcxGridPopupMenu
+    Grid = grdLO
+    PopupMenus = <>
+    Left = 153
+    Top = 570
   end
 end

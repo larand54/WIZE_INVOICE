@@ -2114,9 +2114,10 @@ begin
           Begin
             SetInvoiceHeaderAsInvoiced;
             SetReadOnlyProperties;
+            SetReferenceInInvoiceDetails(dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger) ;
           End;
         End // OkAttAndraFakturaDatum  := ControlInvDateForInvoice ;
-        else
+         else
           ShowMessage('Invoice date is in conflict with the latest inventory count.');
       End; // With
     End; // if
