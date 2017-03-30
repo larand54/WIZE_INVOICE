@@ -78,6 +78,28 @@ type
     Giro: TcxGridDBColumn;
     Logga: TcxGridDBColumn;
     cxGridDBTableView1FootNote: TcxGridDBColumn;
+    cxGridDBTableView1BankGiro: TcxGridDBColumn;
+    cxGrid2DBTableView1: TcxGridDBTableView;
+    cxGrid2Level1: TcxGridLevel;
+    cxGrid2: TcxGrid;
+    Panel2: TPanel;
+    cxGrid2DBTableView1SalesRegionNo: TcxGridDBColumn;
+    cxGrid2DBTableView1DocType: TcxGridDBColumn;
+    cxLabel2: TcxLabel;
+    cxButton5: TcxButton;
+    acNew: TAction;
+    acSave2: TAction;
+    cxButton6: TcxButton;
+    acDelete2: TAction;
+    cxButton7: TcxButton;
+    cxGrid2DBTableView1Adress: TcxGridDBColumn;
+    cxGrid2DBTableView1Telefon: TcxGridDBColumn;
+    cxGrid2DBTableView1Internet: TcxGridDBColumn;
+    cxGrid2DBTableView1OrgNo: TcxGridDBColumn;
+    cxGrid2DBTableView1Fax: TcxGridDBColumn;
+    cxGrid2DBTableView1Email: TcxGridDBColumn;
+    cxGrid2DBTableView1VatNo: TcxGridDBColumn;
+    cxGrid2DBTableView1BankGiro: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure acNewRSExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
@@ -88,8 +110,15 @@ type
     procedure mtClientClientNoChange(Sender: TField);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acOpenImageExecute(Sender: TObject);
+    procedure acNewExecute(Sender: TObject);
+    procedure acSave2Execute(Sender: TObject);
+    procedure acDelete2Execute(Sender: TObject);
+    procedure acSave2Update(Sender: TObject);
+    procedure acDelete2Update(Sender: TObject);
+    procedure acNewUpdate(Sender: TObject);
   private
     { Private declarations }
+    function Saved2: Boolean;
     function Saved: Boolean;
   public
     { Public declarations }
@@ -114,6 +143,40 @@ begin
     Begin
       Result := False;
     End;
+
+
+  End;
+end;
+
+function TfReportStatics.Saved2: Boolean;
+begin
+  Result := True;
+  with dmsContact do
+  Begin
+    if cds_ReportStatics.State in [dsEdit, dsInsert] then
+      Result := False;
+    if cds_ReportStatics.ChangeCount > 0 then
+    Begin
+      Result := False;
+    End;
+  End;
+end;
+
+procedure TfReportStatics.acDelete2Execute(Sender: TObject);
+begin
+  with dmsContact do
+  Begin
+    cds_ReportStatics.Delete;
+  End;
+end;
+
+procedure TfReportStatics.acDelete2Update(Sender: TObject);
+begin
+  with dmsContact do
+  Begin
+    acDelete2.Enabled := (cds_ReportStatics.Active) and
+      ((cds_ReportStatics.RecordCount > 0) or (cds_ReportStatics.State
+      in [dsEdit, dsInsert]));
   End;
 end;
 
@@ -132,6 +195,16 @@ begin
     acDelete.Enabled := (cds_ReportStaticsII.Active) and
       ((cds_ReportStaticsII.RecordCount > 0) or (cds_ReportStaticsII.State
       in [dsEdit, dsInsert]));
+  End;
+end;
+
+procedure TfReportStatics.acNewExecute(Sender: TObject);
+begin
+  with dmsContact do
+  Begin
+    cds_ReportStatics.Insert;
+    cds_ReportStaticsSalesRegionNo.AsInteger  := mtClientClientNo.AsInteger;
+    cds_ReportStaticsDocType.AsInteger        := mtClientDocType.AsInteger;
   End;
 end;
 
@@ -156,6 +229,17 @@ begin
   End;
 end;
 
+procedure TfReportStatics.acNewUpdate(Sender: TObject);
+begin
+  with dmsContact do
+  Begin
+    acNew.Enabled := (mtClient.Active) and (mtClientClientNo.AsInteger > 0)
+      and (cds_ReportStatics.Active) and
+      ((cds_ReportStatics.RecordCount = 0) and (cds_ReportStatics.State
+      in [dsBrowse]));
+  End;
+end;
+
 procedure TfReportStatics.acOpenImageExecute(Sender: TObject);
 Var Filnamn : String ;
 begin
@@ -175,6 +259,25 @@ begin
         Free;
       end;
   End;
+end;
+
+procedure TfReportStatics.acSave2Execute(Sender: TObject);
+begin
+  with dmsContact do
+  Begin
+    if cds_ReportStatics.State in [dsEdit, dsInsert] then
+      cds_ReportStatics.Post;
+    if cds_ReportStatics.ChangeCount > 0 then
+    Begin
+      cds_ReportStatics.ApplyUpdates(0);
+      cds_ReportStatics.CommitUpdates;
+    End;
+  End;
+end;
+
+procedure TfReportStatics.acSave2Update(Sender: TObject);
+begin
+  acSave2.Enabled := not Saved2;
 end;
 
 procedure TfReportStatics.acSaveExecute(Sender: TObject);
@@ -214,6 +317,7 @@ begin
     with dmsContact do
     Begin
       cds_ReportStaticsII.Active := False;
+      cds_ReportStatics.Active := False;
     End;
 end;
 
@@ -236,6 +340,12 @@ begin
     cds_ReportStaticsII.Filtered := True;
     cds_ReportStaticsII.Active := False;
     cds_ReportStaticsII.Active := True;
+
+
+    cds_ReportStatics.Filter := 'SalesRegionNo = -1 AND DocType = -1';
+    cds_ReportStatics.Filtered := True;
+    cds_ReportStatics.Active := False;
+    cds_ReportStatics.Active := True;
   End;
 end;
 
@@ -249,6 +359,13 @@ begin
     else
       cds_ReportStaticsII.Filter := 'SalesRegionNo = -1 AND DocType = -1';
     cds_ReportStaticsII.Filtered := True;
+
+    if (mtClientClientNo.AsInteger > 0) and (mtClientDocType.AsInteger > 0) then
+      cds_ReportStatics.Filter := 'SalesRegionNo = ' +
+        mtClientClientNo.AsString + ' AND DocType = ' + mtClientDocType.AsString
+    else
+      cds_ReportStatics.Filter := 'SalesRegionNo = -1 AND DocType = -1';
+    cds_ReportStatics.Filtered := True;
   End;
 end;
 

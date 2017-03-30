@@ -88,8 +88,8 @@ object fReportStatics: TfReportStatics
       Left = 1
       Top = 1
       Width = 1116
-      Height = 599
-      Align = alClient
+      Height = 296
+      Align = alTop
       TabOrder = 0
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
@@ -106,9 +106,11 @@ object fReportStatics: TfReportStatics
         OptionsView.Indicator = True
         object SalesRegionNo: TcxGridDBColumn
           DataBinding.FieldName = 'SalesRegionNo'
+          PropertiesClassName = 'TcxLabelProperties'
         end
         object DocType: TcxGridDBColumn
           DataBinding.FieldName = 'DocType'
+          PropertiesClassName = 'TcxLabelProperties'
         end
         object CompanyName: TcxGridDBColumn
           DataBinding.FieldName = 'CompanyName'
@@ -149,6 +151,10 @@ object fReportStatics: TfReportStatics
         end
         object cxGridDBTableView1FootNote: TcxGridDBColumn
           DataBinding.FieldName = 'FootNote'
+        end
+        object cxGridDBTableView1BankGiro: TcxGridDBColumn
+          DataBinding.FieldName = 'BankGiro'
+          PropertiesClassName = 'TcxTextEditProperties'
         end
       end
       object cxGridDBCardView1: TcxGridDBCardView
@@ -211,6 +217,114 @@ object fReportStatics: TfReportStatics
         GridView = cxGridDBTableView1
       end
     end
+    object cxGrid2: TcxGrid
+      Left = 1
+      Top = 345
+      Width = 1116
+      Height = 255
+      Align = alClient
+      TabOrder = 1
+      object cxGrid2DBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.DataSource = dmsContact.ds_ReportStatics
+        DataController.KeyFieldNames = 'SalesRegionNo;DocType'
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsView.ColumnAutoWidth = True
+        OptionsView.GroupByBox = False
+        OptionsView.Indicator = True
+        object cxGrid2DBTableView1SalesRegionNo: TcxGridDBColumn
+          DataBinding.FieldName = 'SalesRegionNo'
+          PropertiesClassName = 'TcxLabelProperties'
+          Width = 47
+        end
+        object cxGrid2DBTableView1DocType: TcxGridDBColumn
+          DataBinding.FieldName = 'DocType'
+          PropertiesClassName = 'TcxLabelProperties'
+          Width = 47
+        end
+        object cxGrid2DBTableView1Adress: TcxGridDBColumn
+          DataBinding.FieldName = 'Adress'
+          Width = 141
+        end
+        object cxGrid2DBTableView1Telefon: TcxGridDBColumn
+          DataBinding.FieldName = 'Telefon'
+          Width = 141
+        end
+        object cxGrid2DBTableView1Internet: TcxGridDBColumn
+          DataBinding.FieldName = 'Internet'
+          Width = 101
+        end
+        object cxGrid2DBTableView1OrgNo: TcxGridDBColumn
+          DataBinding.FieldName = 'OrgNo'
+          Width = 130
+        end
+        object cxGrid2DBTableView1Fax: TcxGridDBColumn
+          DataBinding.FieldName = 'Fax'
+          Width = 135
+        end
+        object cxGrid2DBTableView1Email: TcxGridDBColumn
+          DataBinding.FieldName = 'Email'
+          Width = 152
+        end
+        object cxGrid2DBTableView1VatNo: TcxGridDBColumn
+          DataBinding.FieldName = 'VatNo'
+          Width = 132
+        end
+        object cxGrid2DBTableView1BankGiro: TcxGridDBColumn
+          DataBinding.FieldName = 'BankGiro'
+          Width = 76
+        end
+      end
+      object cxGrid2Level1: TcxGridLevel
+        GridView = cxGrid2DBTableView1
+      end
+    end
+    object Panel2: TPanel
+      Left = 1
+      Top = 297
+      Width = 1116
+      Height = 48
+      Align = alTop
+      TabOrder = 2
+      object cxLabel2: TcxLabel
+        Left = 496
+        Top = 19
+        Caption = 'Parametrar f'#246'r EDI export'
+        ParentFont = False
+        Style.Font.Charset = DEFAULT_CHARSET
+        Style.Font.Color = clWindowText
+        Style.Font.Height = -16
+        Style.Font.Name = 'Tahoma'
+        Style.Font.Style = []
+        Style.IsFontAssigned = True
+      end
+      object cxButton5: TcxButton
+        Left = 16
+        Top = 6
+        Width = 97
+        Height = 36
+        Action = acNew
+        TabOrder = 1
+      end
+      object cxButton6: TcxButton
+        Left = 128
+        Top = 6
+        Width = 97
+        Height = 36
+        Action = acSave2
+        TabOrder = 2
+      end
+      object cxButton7: TcxButton
+        Left = 231
+        Top = 6
+        Width = 97
+        Height = 36
+        Action = acDelete2
+        TabOrder = 3
+      end
+    end
   end
   object mtClient: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -245,8 +359,8 @@ object fReportStatics: TfReportStatics
     Top = 408
   end
   object ActionList1: TActionList
-    Left = 440
-    Top = 304
+    Left = 168
+    Top = 472
     object acNewRS: TAction
       Caption = 'Ny'
       OnExecute = acNewRSExecute
@@ -265,6 +379,21 @@ object fReportStatics: TfReportStatics
     object acOpenImage: TAction
       Caption = #214'ppna bild'
       OnExecute = acOpenImageExecute
+    end
+    object acNew: TAction
+      Caption = 'Ny'
+      OnExecute = acNewExecute
+      OnUpdate = acNewUpdate
+    end
+    object acSave2: TAction
+      Caption = 'Spara'
+      OnExecute = acSave2Execute
+      OnUpdate = acSave2Update
+    end
+    object acDelete2: TAction
+      Caption = 'Ta bort'
+      OnExecute = acDelete2Execute
+      OnUpdate = acDelete2Update
     end
   end
   object siLangLinked_fReportStatics: TsiLangLinked
@@ -360,8 +489,8 @@ object fReportStatics: TfReportStatics
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 440
-    Top = 360
+    Left = 168
+    Top = 528
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A00540066005200650070006F00720074005300740061007400

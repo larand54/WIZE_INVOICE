@@ -76,7 +76,7 @@ type
     Label3: TLabel;
     Label4: TLabel;
     eSearchLONr: TEdit;
-    Label5: TLabel;
+    Label51: TLabel;
     LabelKlient: TLabel;
     pmShortCuts: TPopupMenu;
     Booking1: TMenuItem;
@@ -284,7 +284,6 @@ type
     Label6: TLabel;
     acDeletePrelInvoice: TAction;
     dxBarButton33: TdxBarButton;
-    acTrpOrderAvrop: TAction;
     dxBarButton34: TdxBarButton;
     dxBarButton35: TdxBarButton;
     acPrintMeny: TAction;
@@ -392,6 +391,7 @@ type
     cxGridPopupMenu4: TcxGridPopupMenu;
     acGoToSearchLO: TAction;
     dxBarButton39: TdxBarButton;
+    acTrpOrderAvrop: TAction;
 
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);

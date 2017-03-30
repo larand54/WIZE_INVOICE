@@ -2392,7 +2392,14 @@ object dmsContact: TdmsContact
     object cds_ReportStaticsIIFootNote: TMemoField
       FieldName = 'FootNote'
       Origin = 'FootNote'
+      ProviderFlags = [pfInUpdate]
       BlobType = ftMemo
+    end
+    object cds_ReportStaticsIIBankGiro: TStringField
+      FieldName = 'BankGiro'
+      Origin = 'BankGiro'
+      ProviderFlags = [pfInUpdate]
+      Size = 10
     end
   end
   object ds_ReportStaticsII: TDataSource
@@ -2660,6 +2667,70 @@ object dmsContact: TdmsContact
     object cds_GrpInvOwnerNo: TIntegerField
       FieldName = 'OwnerNo'
       Origin = 'OwnerNo'
+    end
+  end
+  object ds_ReportStatics: TDataSource
+    DataSet = cds_ReportStatics
+    Left = 974
+    Top = 192
+  end
+  object cds_ReportStatics: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'Select * FROM dbo.ReportStatics')
+    Left = 974
+    Top = 136
+    object cds_ReportStaticsSalesRegionNo: TIntegerField
+      FieldName = 'SalesRegionNo'
+      Origin = 'SalesRegionNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_ReportStaticsDocType: TIntegerField
+      FieldName = 'DocType'
+      Origin = 'DocType'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_ReportStaticsAdress: TStringField
+      FieldName = 'Adress'
+      Origin = 'Adress'
+      Size = 250
+    end
+    object cds_ReportStaticsTelefon: TStringField
+      FieldName = 'Telefon'
+      Origin = 'Telefon'
+      Size = 250
+    end
+    object cds_ReportStaticsInternet: TStringField
+      FieldName = 'Internet'
+      Origin = 'Internet'
+      Size = 250
+    end
+    object cds_ReportStaticsOrgNo: TStringField
+      FieldName = 'OrgNo'
+      Origin = 'OrgNo'
+      Size = 250
+    end
+    object cds_ReportStaticsFax: TStringField
+      FieldName = 'Fax'
+      Origin = 'Fax'
+      Size = 250
+    end
+    object cds_ReportStaticsEmail: TStringField
+      FieldName = 'Email'
+      Origin = 'Email'
+      Size = 250
+    end
+    object cds_ReportStaticsVatNo: TStringField
+      FieldName = 'VatNo'
+      Origin = 'VatNo'
+      Size = 250
+    end
+    object cds_ReportStaticsBankGiro: TStringField
+      FieldName = 'BankGiro'
+      Origin = 'BankGiro'
+      Size = 10
     end
   end
 end
