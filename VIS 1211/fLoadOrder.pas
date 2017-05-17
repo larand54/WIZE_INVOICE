@@ -422,6 +422,7 @@ type
     acPkgsUsedByVidaPackaging: TAction;
     grdLODBTableView1ShippingPlanStatus_1: TcxGridDBColumn;
     grdLODBTableView1LOBNo: TcxGridDBColumn;
+    acAllaLasterPerLO: TAction;
 
     procedure atAcceptLoadOrderExecute(Sender: TObject);
     procedure atRejectLoadOrderExecute(Sender: TObject);
@@ -541,6 +542,7 @@ type
     procedure acSetKLUExecute(Sender: TObject);
     procedure acClearFilterExecute(Sender: TObject);
     procedure acPkgsUsedByVidaPackagingExecute(Sender: TObject);
+    procedure acAllaLasterPerLOExecute(Sender: TObject);
 
   private
     { Private declarations }
@@ -3806,6 +3808,14 @@ procedure TfrmLoadOrder.acAddToLastLoadListExecute(Sender: TObject);
 begin
   // AddLoadNoToList(grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsInteger,
   // grdFSDBTableView1.DataController.DataSet.FieldByName('ShippingPlanNo').AsInteger);
+end;
+
+procedure TfrmLoadOrder.acAllaLasterPerLOExecute(Sender: TObject);
+begin
+  // Generate_AllLoads_samLastData(Sender);
+  // gammal rapport
+  Generate_AllLoads_samLastData(Sender);
+  SPEC_ALLA_LASTER_VERK(Sender);
 end;
 
 procedure TfrmLoadOrder.acSpec_ALLA_LasterExecute(Sender: TObject);

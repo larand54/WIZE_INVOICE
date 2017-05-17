@@ -1133,8 +1133,8 @@ object frmLoadOrder: TfrmLoadOrder
       Visible = False
     end
     object lbLO_To_Invoice: TListBox
-      Left = 504
-      Top = 168
+      Left = 503
+      Top = 376
       Width = 105
       Height = 97
       ItemHeight = 13
@@ -1715,7 +1715,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 971
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1741,7 +1741,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 63
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1750,7 +1750,7 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -2021,12 +2021,8 @@ object frmLoadOrder: TfrmLoadOrder
       OnClick = bPrintLOAllVerkClick
     end
     object bAllaLasterPerLO: TdxBarButton
-      Caption = '&Alla laster per LO och Verk'
+      Action = acAllaLasterPerLO
       Category = 1
-      Hint = 'Alla laster per LO och Verk'
-      Visible = ivAlways
-      ShortCut = 16449
-      OnClick = bAllaLasterPerLOClick
     end
     object bbAvropVerk: TdxBarButton
       Caption = 'Avrop Verk'
@@ -5626,6 +5622,11 @@ object frmLoadOrder: TfrmLoadOrder
       Caption = 'Paket f'#246'rbrukade av VP'
       OnExecute = acPkgsUsedByVidaPackagingExecute
     end
+    object acAllaLasterPerLO: TAction
+      Caption = 'Alla laster per LO och Verk'
+      ShortCut = 16449
+      OnExecute = acAllaLasterPerLOExecute
+    end
   end
   object pmPrint: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -6769,6 +6770,7 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -6782,7 +6784,8 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42719.324579895830000000
+      ReportDocument.CreationDate = 42825.258373333330000000
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end

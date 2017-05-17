@@ -41,7 +41,6 @@ object frmAvrop: TfrmAvrop
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 391
     object Splitter2: TSplitter
       Left = 561
       Top = 1
@@ -763,9 +762,9 @@ object frmAvrop: TfrmAvrop
     object Label51: TLabel
       Left = 8
       Top = 15
-      Width = 71
+      Width = 87
       Height = 13
-      Caption = 'S'#246'k LONr (F7):'
+      Caption = 'S'#246'k LONr (ctrl+w):'
     end
     object LabelKlient: TLabel
       Left = 440
@@ -789,7 +788,7 @@ object frmAvrop: TfrmAvrop
       Caption = 'S'#246'k Er ref:'
     end
     object eSearchLONr: TEdit
-      Left = 97
+      Left = 102
       Top = 9
       Width = 136
       Height = 19
@@ -829,7 +828,7 @@ object frmAvrop: TfrmAvrop
       OnClick = Button1Click
     end
     object eSearchErReferens: TEdit
-      Left = 97
+      Left = 102
       Top = 33
       Width = 136
       Height = 19
@@ -992,7 +991,6 @@ object frmAvrop: TfrmAvrop
     Align = alClient
     PopupMenu = pmAvropGrid
     TabOrder = 2
-    ExplicitHeight = 271
     object grdcxAvropDBBandedTableView1: TcxGridDBBandedTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.dsrcAvrop
@@ -3375,6 +3373,7 @@ object frmAvrop: TfrmAvrop
     object dxBarButton39: TdxBarButton
       Action = acGoToSearchLO
       Category = 0
+      ShortCut = 16471
     end
     object bbPrintOrder: TdxBarButton
       Action = acPrintContract
@@ -3456,7 +3455,7 @@ object frmAvrop: TfrmAvrop
     object dxBarButton4: TdxBarButton
       Action = acSetLOStatusToComplete
       Category = 2
-      ShortCut = 16449
+      ShortCut = 16452
     end
     object dxBarButton5: TdxBarButton
       Action = acCustomizeAvropGrid
