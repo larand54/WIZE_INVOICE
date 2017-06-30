@@ -1969,6 +1969,7 @@ object dmsConnector: TdmsConnector
     FetchOptions.Mode = fmAll
     FetchOptions.RowsetSize = 500
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
+    Connected = True
     LoginPrompt = False
     Left = 464
     Top = 24

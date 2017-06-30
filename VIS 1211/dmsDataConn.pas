@@ -175,6 +175,7 @@ Begin
     AD_Name := sq_GetLoggedInUserLoggedInUser.AsString
   else
     AD_Name := '-';
+// AD_Name := 'vida\tobsor';
   // ShowMessage('AD_Name = '+AD_Name) ;
   if Length(pAD_Name) > 0 then
     AD_Name := pAD_Name;
