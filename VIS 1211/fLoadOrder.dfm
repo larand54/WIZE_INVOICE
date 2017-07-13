@@ -1715,7 +1715,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 971
-        Height = 45
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1741,7 +1741,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 63
-        Height = 45
+        Height = 46
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1750,7 +1750,7 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -6770,7 +6770,6 @@ object frmLoadOrder: TfrmLoadOrder
     object dxComponentPrinter1Link2: TdxGridReportLink
       Active = True
       Component = grdLO
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 8
       PrinterPage.Footer = 5080
       PrinterPage.GrayShading = True
@@ -6784,8 +6783,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42825.258373333330000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 42891.383732951390000000
       BuiltInReportLink = True
     end
   end

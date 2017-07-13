@@ -36,7 +36,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Control = grdLoads
     Color = clMaroon
     ParentColor = False
-    ExplicitTop = 301
   end
   object grdLoads: TcxGrid
     Left = 0
@@ -50,7 +49,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alTop
     PopupMenu = pmLoads
     TabOrder = 1
-    ExplicitTop = 125
     object grdLoadsDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmArrivingLoads.dsrcArrivingLoads
@@ -362,7 +360,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 125
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
@@ -387,7 +384,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alRight
       TabOrder = 1
-      ExplicitHeight = 125
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
@@ -412,7 +408,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alLeft
       TabOrder = 2
-      ExplicitHeight = 125
       object bcConfirmed: TcxComboBox
         Left = 63
         Top = 48
@@ -725,8 +720,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alClient
     Caption = 'Panel5'
     TabOrder = 7
-    ExplicitTop = 309
-    ExplicitHeight = 303
     object grdPkgs: TcxGrid
       Left = 1
       Top = 41
@@ -738,7 +731,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 261
       object grdPkgsDBTableView1: TcxGridDBTableView
         PopupMenu = pmPkgs
         Navigator.Buttons.CustomButtons = <>

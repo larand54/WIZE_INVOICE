@@ -5059,9 +5059,10 @@ var
   FileName: string;
   repNo,
   clientNo: Integer;
-  FileNames: TStringList;
   FR: TFastReports;
   params: TCMParams;
+  RO: TCMReportObject;
+  ROs: TCMReportObjects;
 begin
   if aInvoiceNo > 0 then
   begin
@@ -5079,21 +5080,24 @@ begin
         Exit;
       docPrefix := 'TRPBRV';
 
-      FileNames := TStringList.Create;
       FR := TFastreports.Create;
       params := TCMParams.Create();
       try
         ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
         FileName := ExcelDir + 'Transportbrev ' + inttostr(aInvoiceNo) + '.pdf';
         RepNo := 547;
-        FileNames.AddObject(FileName, TObject(RepNo));
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', aInvoiceNo);
-        FR.MailReports(fileNames, params, docPrefix, mailTo);
+        RO := TCMReportObject.create(RepNo,params,docPrefix,FileName);
+        ROs := TCMReportObjects.Create;
+        ROs.Add(RO);
+        FR.ReportFile(RepNo, fileName, Params);
+        FR.MailReports(ROs, mailTo);
       finally
         FR.Free;
         params.Free;
-        Filenames.Free;
+        if assigned(ROs) then ROs.Free;
+        if assigned(RO) then RO.Free;
       end;
     end;
   End;

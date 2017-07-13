@@ -2799,9 +2799,10 @@ var
   FileName: string;
   repNo,
   clientNo: Integer;
-  FileNames: TStringList;
   FR: TFastReports;
   params: TCMParams;
+  RO: TCMReportObject;
+  ROs: TCMReportObjects;
 begin
   if dmVidaInvoice.cdsInvoiceList.Locate('InternalInvoiceNo', aInvoiceNo,
     []) then
@@ -2820,28 +2821,34 @@ begin
         Exit;
       docPrefix := 'TRPBRV/PKGS';
 
-      FileNames := TStringList.Create;
       FR := TFastreports.Create;
       params := TCMParams.Create();
+      ROs := TCMReportObjects.Create;
       try
+        Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
+        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
         ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+
         FileName := ExcelDir + 'Transportbrev ' +
           dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
         RepNo := 547;
-        FileNames.AddObject(FileName, TObject(RepNo));
+        RO := TCMReportObject.create(RepNo,params,docPrefix,FileName);
+        ROs.Add(RO);
+        FR.ReportFile(RepNo, fileName, Params);
 
-        RepNo := FR.getClientReportNo(clientNo,-1,cPkgSpec);
         FileName := ExcelDir + 'Specification ' +
           dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
+        RepNo := FR.getClientReportNo(clientNo,-1,cPkgSpec);
+        RO := TCMReportObject.create(RepNo,params,docPrefix,FileName);
+        ROs.Add(RO);
+        FR.ReportFile(RepNo,fileName,Params);
 
-        FileNames.AddObject(FileName, TObject(RepNo));
-        Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
-        FR.MailReports(fileNames, params, docPrefix, mailTo);
+        FR.MailReports(ROs, mailTo);
       finally
         FR.Free;
         params.Free;
-        Filenames.Free;
+        if assigned(ROs) then ROs.Free;
+        if assigned(RO) then RO.Free;
       end;
     end;
   end;

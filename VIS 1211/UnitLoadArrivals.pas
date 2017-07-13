@@ -34,7 +34,8 @@ uses
   dxSkinXmas2008Blue, dxSkinscxPCPainter, dxSkinsdxBarPainter, cxNavigator,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk
+  ,uReport;
 
 type
   TfrmLoadArrivals = class(TForm)
@@ -380,6 +381,9 @@ type
 
   private
     { Private declarations }
+    procedure printSamlingsSpecifikationMedPktNr_FR( const aSamLastNr: integer);
+    procedure printSamlingsSpecifikation_FR(const aSamLastNr: integer);
+    procedure printFastReport(const aParams: TCMParams; aReport: string);
     procedure CopyLoadToOtherSalesRegion(const LoadNo, LONo  : Integer);
     Function  IsRegionToRegionLoadValid(LoadNo, ShippingPlanNo,
   ObjectType: Integer; Sender: TObject): Boolean;
@@ -448,7 +452,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
-  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage, uReport,
+  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage,
   uReportController, URegionToRegionSelectLIPNo, uFastReports, udmFR;
 
 {$R *.dfm}
@@ -1888,6 +1892,11 @@ begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
 
+  if uReportController.useFR then begin
+    printSamlingsSpecifikation_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -1934,6 +1943,11 @@ begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
 
+  if uReportController.useFR then begin
+    printSamlingsSpecifikationMedPktNr_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -1946,6 +1960,43 @@ begin
   Finally
     FreeAndNil(FormCRViewReport);
   End;
+end;
+
+procedure TfrmLoadArrivals.printSamlingsSpecifikationMedPktNr_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  // SAM_LAST_PKTNR_SV.fr3 ()
+  UserID := ThisUser.UserID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LAST_PKTNR_SV.fr3');
+  finally
+    params.Free;
+  end;
+end;
+
+procedure TfrmLoadArrivals.printSamlingsSpecifikation_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+  lang: integer;
+begin
+  UserID := ThisUser.UserID;
+  lang := ThisUser.LanguageID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',lang);
+  try
+    printFastReport(params,'SAM_LAST_SV.fr3');
+  finally
+    params.Free;
+  end;
 end;
 
 procedure TfrmLoadArrivals.GetMarkedLoads(Sender: TObject);
@@ -3211,6 +3262,21 @@ begin
   end;
 end;
 
+
+procedure TfrmLoadArrivals.printFastReport(const aParams: TCMParams;
+  aReport: string);
+var
+  FR: TFastReports;
+  repNo: integer;
+begin
+  FR := TFastReports.create;
+  repNo := dmFR.reportByName(aReport);
+  try
+    FR.ReportPreview(repNo, aParams);
+  finally
+    FR.Free;
+  end;
+end;
 
 procedure TfrmLoadArrivals.Timer1Timer(Sender: TObject);
 begin

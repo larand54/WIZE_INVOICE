@@ -19,6 +19,8 @@ object frmInvoiceList: TfrmInvoiceList
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel2: TPanel

@@ -33,7 +33,8 @@ uses
   dxSkinsdxBarPainter, cxNavigator, Vcl.ComCtrls, dxCore, cxDateUtils,
   dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk
+  ,uReport;
 
 type
   TfrmPortArrivals = class(TForm)
@@ -310,6 +311,10 @@ type
     procedure PrintSamlingsspecifikationMedPktNr(Sender: TObject;
       const SamLastNr: Integer);
     procedure GetMarkedLoads(Sender: TObject);
+    procedure printSamlingsSpecifikation_FR(const aSamLastNr: integer);
+    procedure printSamlingsSpecifikationMedPktNr_FR(const aSamLastNr: integer);
+    procedure printSamlingsSpecifikationPerRef_FR(const aSamLastNr: integer);
+    procedure printFastReport(const aParams: TCMParams; aReport: string);
     // procedure ConfirmedINTLoad(Sender: TObject);
     // procedure ConfirmedORDERLoad(Sender: TObject);
     procedure InsertMarkedLoadsToTempTable(Sender: TObject);
@@ -335,7 +340,7 @@ uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
   uSelectLIP, uAnkomstRegProgress, VidaConst,
   // fConfirmManyNormalLoad,
   UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
-  dmc_UserProps, udmLanguage, uReport, uReportController, udmFR, uFastReports;
+  dmc_UserProps, udmLanguage,  uReportController, udmFR, uFastReports;
 
 {$R *.dfm}
 
@@ -886,6 +891,10 @@ Var
 begin
   if dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger < 1 then
     Exit;
+  if uReportController.useFR then begin
+    printSamlingsSpecifikation_FR(SamLastNr);
+    exit;
+  end;
 
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
@@ -909,6 +918,11 @@ Var
 begin
   if dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger < 1 then
     Exit;
+    
+  if uReportController.useFR then begin
+    PrintSamlingsspecifikationPerRef_FR(SamLastNr);
+    exit;
+  end;
 
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
@@ -922,6 +936,42 @@ begin
   Finally
     FreeAndNil(FormCRViewReport);
   End;
+end;
+
+procedure TfrmPortArrivals.printSamlingsSpecifikationPerRef_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  UserID := ThisUser.UserID;
+  // SAM_LASTperref_SV.fr3 ()
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LASTperref_SV.fr3');
+  finally
+    params.Free;
+  end;
+end;
+
+procedure TfrmPortArrivals.printSamlingsSpecifikation_FR(const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  UserID := ThisUser.UserID;
+  // SAM_LAST_II_SV.fr3 ()
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LAST_SV.fr3');
+  finally
+    params.Free;
+  end;
+   // SAM_LAST_SV.fr3
 end;
 
 procedure TfrmPortArrivals.PrintSamlingsspecifikation_USA(Sender: TObject;
@@ -955,6 +1005,11 @@ Var
 begin
   if dmArrivingLoads.cdsPortArrivingLoadsVerk_LoadNo.AsInteger < 1 then
     Exit;
+    
+  if uReportController.useFR then begin
+    printSamlingsSpecifikationMedPktNr_FR(SamLastNr);
+    exit;
+  end;
 
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
@@ -968,6 +1023,24 @@ begin
   Finally
     FreeAndNil(FormCRViewReport);
   End;
+end;
+
+procedure TfrmPortArrivals.printSamlingsSpecifikationMedPktNr_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  // SAM_LAST_PKTNR_SV.fr3 ()
+  UserID := ThisUser.UserID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LAST_PKTNR_SV.fr3');
+  finally
+    params.Free;
+  end;
 end;
 
 procedure TfrmPortArrivals.fomdate2Change(Sender: TObject);
@@ -2029,6 +2102,21 @@ begin
   Finally
     FreeAndNil(FormCRPrintOneReport);
   End;
+end;
+
+procedure TfrmPortArrivals.printFastReport(const aParams: TCMParams;
+  aReport: string);
+var
+  FR: TFastReports;
+  repNo: integer;
+begin
+  FR := TFastReports.create;
+  repNo := dmFR.reportByName(aReport);
+  try
+    FR.ReportPreview(repNo, aParams);
+  finally
+    FR.Free;
+  end;
 end;
 
 procedure TfrmPortArrivals.acPrintDirectFS_USAExecute(Sender: TObject);

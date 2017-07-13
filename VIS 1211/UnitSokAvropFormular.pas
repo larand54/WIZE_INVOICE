@@ -1901,8 +1901,10 @@ Var
   ReportType, I: Integer;
   FR: TFastReports;
   RoleType,
-  ClientNo: integer;
+    ClientNo: Integer;
   Params: TCMParams;
+  RepNo: Integer;
+  reportName, FileName, exportPath: string;
 begin
   dmFR.SaveAndSetCursor(crSQLWait);
   try
@@ -1923,81 +1925,97 @@ begin
         if Length(MailToAddress) > 0 then
         Begin
           if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-            reportType := cTrpOrder
+            ReportType := cTrpOrder
           else
-            reportType := cTrpOrderInkop;
+            ReportType := cTrpOrderInkop;
           RoleType := 1;
           ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
-        if uReportController.useFR then begin
-          Params := TCMParams.Create();
-          Try
-            for I := 0 to High(AA) do
-            Begin
-              Params.Clear;
-              Params.Add('@Language', ThisUser.LanguageID);
-              Params.Add('@ShippingPlanNo', AA[I]);
-              FR := TFastReports.Create;
-              try
-                FR.MailClientControlledReport(ClientNo, RoleType, reportType,
-                  Params,
-                  MailToAddress, 'TO');
-              finally
-                FR.Free;
-              end;
+          if uReportController.useFR then
+          begin
+            Params := TCMParams.Create();
+            dmFR.getClientDocPref(ClientNo, RoleType, ReportType, RepNo, I, I,
+              I, I, reportName);
+            Try
+              for I := 0 to High(AA) do
+              Begin
+                Params.Clear;
+                Params.Add('@Language', ThisUser.LanguageID);
+                Params.Add('@ShippingPlanNo', AA[I]);
+                FR := TFastReports.Create;
+                try
+                  if RepNo > 0 then
+                  begin
+                    FileName := ExcelDir + 'TO' + ' ' + AA[I] + '.pdf';
+                    if FileExists(FileName) then
+                      DeleteFile(FileName);
+                    SetLength(Attach, I + 1);
+                    Attach[I] := FR.ReportFile(RepNo, FileName, Params)
+                  end
+                  else
+                  begin
+                    ShowMessage('Rapporten finns inte upplagd på klienten');
+                  end;
+                finally
+                  FR.Free;
+                end;
+              End;
+            Finally
+              FreeAndNil(Params);
             End;
-          Finally
-            FreeAndNil(Params);
-          End;
-        end
-        else begin
-          FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-          Try
-
-            // A[0]:= cds_MakeSokAvropLO.AsInteger ;
-            SetLength(A, 1);
-            for I := 0 to High(AA) do Begin
-              A[0] := AA[I];
-              S := AA[I]; // A[0] ;
-              FormCRExportOneReport.CreateCo
-                (cds_MakeSokAvropCustomerNo.AsInteger, ReportType, A,
-                ExcelDir + 'LONo ' + S);
-              if FormCRExportOneReport.ReportFound = False then
-                Exit;
-              Screen.Cursor := crSQLWait; { Show hourglass cursor }
-              SetLength(Attach, I + 1);
-              Attach[I] := ExcelDir + 'LONo ' + S + '.pdf';
-            End; // for I := 0 to High(AA) do
-
-          Finally
-            FreeAndNil(FormCRExportOneReport); // .Free ;
-          End;
-        end;
-
-        for I := 0 to High(AA) do Begin
-          SS := AA[I];
-          if I = 0 then
-            S := SS
+          end
           else
-            S := S + ', ' + SS;
-        End;
+          begin
+            FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+            Try
 
-        dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-        Try
-          dm_SendMapiMail.SendMail('Transportorder. LO number(s): ' + S,
-            'Transportorder bifogad. ' + LF + '' + 'Transportorder attached. ' +
-            LF + '' + LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
-            dmsContact.GetFirstAndLastName(ThisUser.UserID),
-            dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-        Finally
-          FreeAndNil(dm_SendMapiMail);
-        End;
-      End
-      else
-        ShowMessage('Email address missing.');
-    End; // With dm_SokFormular do
-  end // GetSelectedLOnos
-  else
-    ShowMessage('Must be same freight company on all rows.');
+              // A[0]:= cds_MakeSokAvropLO.AsInteger ;
+              SetLength(A, 1);
+              for I := 0 to High(AA) do
+              Begin
+                A[0] := AA[I];
+                S := AA[I]; // A[0] ;
+                FormCRExportOneReport.CreateCo
+                  (cds_MakeSokAvropCustomerNo.AsInteger, ReportType, A,
+                  ExcelDir + 'LONo ' + S);
+                if FormCRExportOneReport.ReportFound = False then
+                  exit;
+                Screen.Cursor := crSQLWait; { Show hourglass cursor }
+                SetLength(Attach, I + 1);
+                Attach[I] := ExcelDir + 'LONo ' + S + '.pdf';
+              End; // for I := 0 to High(AA) do
+
+            Finally
+              FreeAndNil(FormCRExportOneReport); // .Free ;
+            End;
+          end;
+
+          for I := 0 to High(AA) do
+          Begin
+            SS := AA[I];
+            if I = 0 then
+              S := SS
+            else
+              S := S + ', ' + SS;
+          End;
+
+          dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+          Try
+            dm_SendMapiMail.SendMail('Transportorder. LO number(s): ' + S,
+              'Transportorder bifogad. ' + LF + '' + 'Transportorder attached. ' +
+              LF + '' + LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
+              dmsContact.GetFirstAndLastName(ThisUser.UserID),
+              dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
+              Attach, False);
+          Finally
+            FreeAndNil(dm_SendMapiMail);
+          End;
+        End
+        else
+          ShowMessage('Email address missing.');
+      End; // With dm_SokFormular do
+    end // GetSelectedLOnos
+    else
+      ShowMessage('Must be same freight company on all rows.');
   finally
     dmFR.RestoreCursor;
   end;

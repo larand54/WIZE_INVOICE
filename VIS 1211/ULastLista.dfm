@@ -4,12 +4,12 @@ object fLastLista: TfLastLista
   Align = alClient
   BorderStyle = bsNone
   Caption = 'fLastLista'
-  ClientHeight = 731
-  ClientWidth = 1186
+  ClientHeight = 594
+  ClientWidth = 964
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -17,50 +17,34 @@ object fLastLista: TfLastLista
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1186
-    Height = 80
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 964
+    Height = 65
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
-      Left = 10
-      Top = 20
-      Width = 31
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 8
+      Top = 16
+      Width = 25
+      Height = 13
       Caption = 'Verk:'
     end
     object Label2: TLabel
-      Left = 10
-      Top = 49
-      Width = 65
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 8
+      Top = 40
+      Width = 52
+      Height = 13
       Caption = 'Laster fom:'
     end
     object bbUppdatera: TBitBtn
-      Left = 295
-      Top = 10
-      Width = 170
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 240
+      Top = 8
+      Width = 138
+      Height = 41
       Caption = 'Uppdatera'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -119,14 +103,10 @@ object fLastLista: TfLastLista
       OnClick = bbUppdateraClick
     end
     object bbSkrivut: TBitBtn
-      Left = 465
-      Top = 10
-      Width = 170
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 378
+      Top = 8
+      Width = 138
+      Height = 41
       Caption = 'Skriv ut (utan pktnr)'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -185,14 +165,10 @@ object fLastLista: TfLastLista
       OnClick = bbSkrivutClick
     end
     object bbClose: TBitBtn
-      Left = 805
-      Top = 10
-      Width = 170
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 654
+      Top = 8
+      Width = 138
+      Height = 41
       Caption = 'St'#228'ng'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -251,14 +227,10 @@ object fLastLista: TfLastLista
       OnClick = bbCloseClick
     end
     object bbSkrivUtMedPktNr: TBitBtn
-      Left = 635
-      Top = 10
-      Width = 170
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 516
+      Top = 8
+      Width = 138
+      Height = 41
       Caption = 'Skriv ut (med pktnr)'
       Glyph.Data = {
         76060000424D7606000000000000360400002800000018000000180000000100
@@ -317,42 +289,30 @@ object fLastLista: TfLastLista
       OnClick = bbSkrivUtMedPktNrClick
     end
     object lcVerk: TcxDBLookupComboBox
-      Left = 98
-      Top = 10
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 80
+      Top = 8
       DataBinding.DataField = 'Verk'
       DataBinding.DataSource = ds_Props
       Properties.ImmediatePost = True
       Properties.ListColumns = <>
       Properties.ListOptions.ShowHeader = False
       TabOrder = 4
-      Width = 179
+      Width = 145
     end
     object deStartPeriod: TcxDBDateEdit
-      Left = 98
-      Top = 39
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 80
+      Top = 32
       DataBinding.DataField = 'StartPeriod'
       DataBinding.DataSource = ds_Props
       TabOrder = 5
-      Width = 179
+      Width = 145
     end
   end
   object grdLastLista: TcxGrid
     Left = 0
-    Top = 80
-    Width = 1186
-    Height = 252
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 65
+    Width = 964
+    Height = 205
     Align = alTop
     TabOrder = 1
     object grdLastListaDBTableView1: TcxGridDBTableView
@@ -480,37 +440,25 @@ object fLastLista: TfLastLista
   end
   object Panel2: TPanel
     Left = 0
-    Top = 340
-    Width = 1186
-    Height = 391
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 278
+    Width = 964
+    Height = 316
     Align = alClient
     TabOrder = 2
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 1184
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 962
+      Height = 25
       Align = alTop
       Caption = 'Paket'
       TabOrder = 0
     end
     object grdLoadPackages: TcxGrid
       Left = 1
-      Top = 32
-      Width = 1184
-      Height = 358
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 26
+      Width = 962
+      Height = 289
       Align = alClient
       TabOrder = 1
       object grdLoadPackagesDBTableView1: TcxGridDBTableView
@@ -614,13 +562,9 @@ object fLastLista: TfLastLista
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 332
-    Width = 1186
+    Top = 270
+    Width = 964
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = grdLastLista

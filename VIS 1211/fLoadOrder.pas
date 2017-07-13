@@ -63,7 +63,8 @@ uses
   dxPScxGridLayoutViewLnk, dxPScxSSLnk, dxSkinsdxRibbonPainter, cxCheckListBox,
   cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxBarBuiltInMenu,
-  System.Actions, siComp, siLngLnk;
+  System.Actions, siComp, siLngLnk
+  ,uReport;
 
 Const
   CM_MOVEIT = WM_USER + 1;
@@ -563,6 +564,8 @@ type
       procedure CreateLoadAndEntryTo_Load_Imp(const L_SupplierNo, LONo,
           TempLoadNo: Integer; const Fil, Mapp: String);
   }
+    procedure printSamlingsSpecifikation_FR(const aSamLastNr: integer);    procedure printSamlingsSpecifikationMedPktNr_FR(const aSamLastNr: integer);
+    procedure printFastReport(const aParams: TCMParams; aReport: string);
     procedure AddMarkedLOToFile(Sender: TObject; const Mapp: String;
       const NewFile: Boolean);
     procedure GetLO(const LONo: Integer; Sender: TObject);
@@ -631,7 +634,7 @@ uses
   //uLOLengths,
   uLoadOrderListSetup, uInScannedPkgs, dmBooking,
   uLoadOrderSearch, UnitCRExportOneReport, uSendMapiMail,
-  uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController, uReport,
+  uSelectFSFileName, dmc_UserProps, udmLanguage, uReportController,
   uPickVPPkgs, uFastReports, udmFR;
 
 procedure TfrmLoadOrder.CMMoveIt(var Msg: TMessage);
@@ -3282,6 +3285,11 @@ begin
   then
     Exit;
 
+  if uReportController.useFR then begin
+    printSamlingsSpecifikation_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -3307,6 +3315,11 @@ begin
   then
     Exit;
 
+  if uReportController.useFR then begin
+    printSamlingsSpecifikationMedPktNr_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -3318,6 +3331,44 @@ begin
   Finally
     FreeAndNil(FormCRViewReport);
   End;
+end;
+
+procedure TfrmLoadOrder.printSamlingsSpecifikationMedPktNr_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  // SAM_LAST_PKTNR_SV.fr3 ()
+  UserID := ThisUser.UserID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LAST_PKTNR_SV.fr3');
+  finally
+    params.Free;
+  end;
+end;
+
+procedure TfrmLoadOrder.printSamlingsSpecifikation_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+  lang: integer;
+begin
+  UserID := ThisUser.UserID;
+  lang := ThisUser.LanguageID;
+  // SAM_LAST_II_SV.fr3 ()
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',lang);
+  try
+    printFastReport(params,'SAM_LAST_SV.fr3');
+  finally
+    params.Free;
+  end;
 end;
 
 procedure TfrmLoadOrder.bbAvrakningSpecVer2Click(Sender: TObject);
@@ -5691,6 +5742,21 @@ begin
       LockWindowUpdate(0);
     end;
   End; // if..
+end;
+
+procedure TfrmLoadOrder.printFastReport(const aParams: TCMParams;
+  aReport: string);
+var
+  FR: TFastReports;
+  repNo: integer;
+begin
+  FR := TFastReports.create;
+  repNo := dmFR.reportByName(aReport);
+  try
+    FR.ReportPreview(repNo, aParams);
+  finally
+    FR.Free;
+  end;
 end;
 
 (*

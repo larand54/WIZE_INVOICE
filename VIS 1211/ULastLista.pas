@@ -31,7 +31,8 @@ uses
   dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue,
   dxSkinscxPCPainter, cxNavigator, dxSkinMetropolis, dxSkinMetropolisDark,
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
-  siComp, siLngLnk;
+  siComp, siLngLnk
+  ,uReport;
 
 type
   TfLastLista = class(TForm)
@@ -160,6 +161,9 @@ type
     procedure RefreshLoads;
     // procedure SkrivUtLevLaster(Sender: TObject);
     // procedure SkrivUtLevLasterPKTNR(Sender: TObject);
+    procedure printFastReport(const aParams: TCMParams; aReport: string);
+    procedure printSamlingsSpecifikationMedPktNr_FR(const aSamLastNr: integer);
+    procedure printSamlingsSpecifikation_FR(const aSamLastNr: integer);
     procedure PrintSamlingsspecifikation(Sender: TObject;
       const SamLastNr: Integer);
     procedure PrintSamlingsspecifikationPKTNR(Sender: TObject;
@@ -178,7 +182,8 @@ implementation
 
 uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
   UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn, VidaConst,
-  dmsVidaSystem, dmc_UserProps, udmLanguage;
+  dmsVidaSystem, dmc_UserProps, udmLanguage
+  , uFastReports, udmFR, uReportController;
 
 {$R *.dfm}
 
@@ -299,6 +304,21 @@ begin
   Finally
     FreeAndNil(frmPkgInfo);
   End;
+end;
+
+procedure TfLastLista.printFastReport(const aParams: TCMParams;
+  aReport: string);
+var
+  FR: TFastReports;
+  repNo: integer;
+begin
+  FR := TFastReports.create;
+  repNo := dmFR.reportByName(aReport);
+  try
+    FR.ReportPreview(repNo, aParams);
+  finally
+    FR.Free;
+  end;
 end;
 
 (*
@@ -438,6 +458,12 @@ Var
 begin
   if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
     exit;
+
+  if uReportController.useFR then begin
+    printSamlingsSpecifikation_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -452,6 +478,24 @@ begin
   End;
 end;
 
+procedure TfLastLista.printSamlingsSpecifikationMedPktNr_FR(
+  const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+begin
+  // SAM_LAST_PKTNR_SV.fr3 ()
+  UserID := ThisUser.UserID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',ThisUser.LanguageID);
+  try
+    printFastReport(params,'SAM_LAST_PKTNR_SV.fr3');
+  finally
+    params.Free;
+  end;
+end;
+
 procedure TfLastLista.PrintSamlingsspecifikationPKTNR(Sender: TObject;
   const SamLastNr: Integer);
 Var
@@ -460,6 +504,12 @@ Var
 begin
   if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
     exit;
+
+  if uReportController.useFR then begin
+    printSamlingsSpecifikationMedPktNr_FR(SamLastNr);
+    exit;
+  end;
+
   FormCRViewReport := TFormCRViewReport.Create(Nil);
   Try
     SetLength(A, 1);
@@ -472,6 +522,24 @@ begin
   Finally
     FreeAndNil(FormCRViewReport);
   End;
+end;
+
+procedure TfLastLista.printSamlingsSpecifikation_FR(const aSamLastNr: integer);
+var
+  params: TCMParams;
+  UserID: integer;
+  lang: integer;
+begin
+  UserID := ThisUser.UserID;
+  lang := ThisUser.LanguageID;
+  params := TCMParams.create;
+  params.add('@SamNr',UserID);
+  params.add('@Language',lang);
+  try
+    printFastReport(params,'SAM_LAST_SV.fr3');
+  finally
+    params.Free;
+  end;
 end;
 
 procedure TfLastLista.bbUppdateraClick(Sender: TObject);
