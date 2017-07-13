@@ -6100,8 +6100,14 @@ begin
       (dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger);
     AgentMailToAddress := dmsContact.GetEmailAddress
       (dmVidaInvoice.cdsInvoiceHeadAgentNo.AsInteger);
-    if Length(AgentMailToAddress) > 0 then
+    if Length(AgentMailToAddress) > 0 then begin
+      MailToAddress := MailToAddress.Trim;
+      if (MailToAddress[MailToAddress.Length] = ';') then
+      begin
+        SetLength(MailToAddress, MailToAddress.Length-1);
+      end;
       MailToAddress := MailToAddress + ';' + AgentMailToAddress;
+    end;
     if Length(MailToAddress) > 0 then
     Begin
       if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then

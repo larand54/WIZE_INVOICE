@@ -2730,7 +2730,7 @@ begin
 
         Params := TCMParams.Create();
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
-        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
+        Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
           AsInteger);
 
         RC := TCMReportController.Create;
@@ -2891,7 +2891,8 @@ begin
         dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString + '.pdf';
       ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
       if uReportController.useFR then begin
-
+        if (FileExists(ExportTrpBrevFile)) then DeleteFile(ExportTrpBrevFile);
+        if (FileExists(ExportSpecFile)) then DeleteFile(ExportSpecFile);
         Params := TCMParams.Create();
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
@@ -4209,7 +4210,7 @@ begin
     if Length(AgentMailToAddress) > 0 then
       MailToAddress := MailToAddress + ';' + AgentMailToAddress;
     if Length(MailToAddress) > 0 then Begin
-      if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then
+      if dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger < 1 then
         Exit;
       ExportInvoiceFile := ExcelDir + 'InvoiceNo ' + InvoiceNo + '.pdf';
       ExportSpecFile := ExcelDir + 'Specification ' + InvoiceNo + '.pdf';
