@@ -5550,104 +5550,116 @@ Var
   ExportFile: string;
   Lang: integer;
 begin
-  Lang := dmsContact.Client_Language
-        (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger);
-  if (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger > 0) and
-    (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.IsNull = False) then
-    MailToAddress := dmsContact.GetEmailAddress
-      (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger)
-  else
-    MailToAddress := dmsContact.GetEmailAddress
-      (dmcOrder.cdsSawmillLoadOrdersSPCustomerNo.AsInteger);
-  if Length(MailToAddress) = 0 then Begin
-    MailToAddress := 'ange@adress.nu';
-    ShowMessage
-      ('Email address is missing, please enter the address direct in the mail(outlook)');
-  End;
-  if Length(MailToAddress) > 0 then begin
-    if grdLODBTableView1.DataController.DataSet.FieldByName('ObjectType')
-      .AsInteger <> 2 then
-      ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
-    else Begin
-      Try
-        dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-          grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
-          .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-        dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-      if Lang = cSwedish then
-        ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+  dmFR.SaveCursor;
+  try
+    Lang := dmsContact.Client_Language
+      (dmcOrder.cdsSawmillLoadOrdersCSH_CustomerNo.AsInteger);
+    if (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger > 0) and
+      (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.IsNull = False) then
+      MailToAddress := dmsContact.GetEmailAddress
+        (dmcOrder.cdsSawmillLoadOrdersCHCustomerNo.AsInteger)
+    else
+      MailToAddress := dmsContact.GetEmailAddress
+        (dmcOrder.cdsSawmillLoadOrdersSPCustomerNo.AsInteger);
+    if Length(MailToAddress) = 0 then
+    Begin
+      MailToAddress := 'ange@adress.nu';
+      ShowMessage
+        ('Email address is missing, please enter the address direct in the mail(outlook)');
+    End;
+    if Length(MailToAddress) > 0 then
+    begin
+      if grdLODBTableView1.DataController.DataSet.FieldByName('ObjectType')
+        .AsInteger <> 2 then
+        ReportType := cFoljesedelIntern // TALLY_INTERNAL_VER3_NOTE.fr3 (55)
       else
-        ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
-    end;
+      Begin
+        Try
+          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
+            grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+            .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
+        except
+          On E: Exception do
+          Begin
+            dmsSystem.FDoLog(E.Message);
+            // ShowMessage(E.Message);
+            Raise;
+          End;
+        end;
+        if lang = cSwedish then
+          ReportType := cFoljesedel // TALLY_VER3_NOTE.fr3 (43)
+        else
+          ReportType := cFoljesedel_eng; // TALLY_eng_VER3_NOTE.fr3 (56)
+      end;
 
+      if uReportController.useFR then
+      begin
+        ExportFile := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.
+          DataSet.
+          FieldByName('LoadNo').AsString+'.pdf';
+        Params := TCMParams.Create();
+        Params.Add('@Language', lang);
+        Params.Add('@LoadNo',
+          grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+          .AsInteger);
+        // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
 
-    if uReportController.useFR then begin
-      ExportFile := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
-          FieldByName('LoadNo').AsString;
-      Params := TCMParams.Create();
-      Params.Add('@Language', Lang);
-      Params.Add('@LoadNo',
-        grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
-        .AsInteger);
-      // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+        RC := TCMReportController.Create;
+        ClientNo := 1;
+        RoleType := -1;
 
-      RC := TCMReportController.Create;
-      ClientNo := 1;
-      RoleType := -1;
-
-      Try
-        DocTyp := ReportType;
-        RC.setExportFile(ExportFile);
-        RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-      Finally
-        FreeAndNil(Params);
-        FreeAndNil(RC);
-      End;
-      if not FileExists(ExportFile) then
-        Exit;
-    end
-    else begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
-          .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
-
-        FormCRExportOneReport.CreateCo(1, ReportType, A,
-          ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
-          FieldByName('LoadNo').AsString);
-        // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
-
-        if FormCRExportOneReport.ReportFound = False then
+        Try
+          DocTyp := ReportType;
+          RC.setExportFile(ExportFile);
+          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+        Finally
+          FreeAndNil(Params);
+          FreeAndNil(RC);
+        End;
+        if not FileExists(ExportFile) then
           Exit;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
+      end
+      else
+      begin
+        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+        Try
+          SetLength(A, 1);
+          A[0] := grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+            .AsInteger; // dmcOrder.cdsLoadsForLOLoadNo.AsInteger ;
+
+          FormCRExportOneReport.CreateCo(1, ReportType, A,
+            ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
+            FieldByName('LoadNo').AsString);
+          // dmcOrder.cdsLoadsForLOLoadNo.AsString) ;
+
+          if FormCRExportOneReport.ReportFound = False then
+            Exit;
+        Finally
+          FreeAndNil(FormCRExportOneReport); // .Free ;
+        End;
       End;
-    End;
-    SetLength(Attach, 1);
-    Attach[0] := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
-      FieldByName('LoadNo').AsString + '.pdf';
-    dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-    Try
-      dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
-        grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo').AsString,
-        'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
-        LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
-        dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
-    Finally
-      FreeAndNil(dm_SendMapiMail);
-    End;
-  End
-  else
-    ShowMessage('Email address is missing.');
+      SetLength(Attach, 1);
+      Attach[0] := ExcelDir + 'FS ' + grdFSDBTableView1.DataController.DataSet.
+        FieldByName('LoadNo').AsString + '.pdf';
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+        dm_SendMapiMail.SendMail('Följesedel. FSnr: ' +
+          grdFSDBTableView1.DataController.DataSet.FieldByName('LoadNo')
+          .AsString,
+          'Följesedel bifogad. ' + LF + '' + 'Load tally attached. ' + LF + '' +
+          LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
+          dmsContact.GetFirstAndLastName(ThisUser.UserID),
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End
+    else
+      ShowMessage('Email address is missing.');
+  finally
+    dmFR.RestoreCursor;
+  end;
 end;
 
 procedure TfrmLoadOrder.grdLODBTableView1DblClick(Sender: TObject);
