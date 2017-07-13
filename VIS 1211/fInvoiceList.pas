@@ -392,6 +392,7 @@ type
     dxBarButton55: TdxBarButton;
     dxBarButton56: TdxBarButton;
     dxBarButton57: TdxBarButton;
+    Button1: TButton;
     procedure rgConfirmedClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nfSearchLOKeyDown(Sender: TObject; var Key: Word;
@@ -516,6 +517,7 @@ type
     procedure acTrpBrv_Containers_PreviewExecute(Sender: TObject);
     procedure acTrpBrv_Containers_PrintExecute(Sender: TObject);
     procedure acTrpBrv_Containers_EmailExecute(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -6796,6 +6798,12 @@ begin
   Finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }
   End;
+end;
+
+procedure TfrmInvoiceList.Button1Click(Sender: TObject);
+begin
+ with dmVidaInvoice do
+  SetReferenceInInvoiceDetails(dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger) ;
 end;
 
 procedure TfrmInvoiceList.OpenInvoiceAndAssignKontoNr(const IntInvNo: Integer);
