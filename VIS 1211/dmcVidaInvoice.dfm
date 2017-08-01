@@ -2327,7 +2327,8 @@ object dmVidaInvoice: TdmVidaInvoice
       'CASE WHEN ih.VAT_OnInvoice = 0 THEN'
       'SUM(invd.VatValue) '
       'END AS momsvarde,'
-      'IH.AddressLine1'
+      'IH.AddressLine1,'
+      'IH.SupplierNo'
       ''
       ''
       'FROM dbo.InvoiceHeader IH'
@@ -2377,7 +2378,7 @@ object dmVidaInvoice: TdmVidaInvoice
         'FreightCostInPrice,'
       
         'invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd' +
-        '.ArticleNo, IH.AddressLine1'
+        '.ArticleNo, IH.AddressLine1, IH.SupplierNo'
       'ORDER BY IH.InvoiceDate'
       ''
       '')
@@ -2720,6 +2721,10 @@ object dmVidaInvoice: TdmVidaInvoice
       ProviderFlags = [pfInUpdate]
       FixedChar = True
       Size = 40
+    end
+    object cdsInvoiceListSupplierNo: TIntegerField
+      FieldName = 'SupplierNo'
+      Origin = 'SupplierNo'
     end
   end
   object cds_IH_SpecLoad: TFDQuery

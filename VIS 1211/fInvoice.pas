@@ -2461,6 +2461,7 @@ begin
     Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
     Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
       AsInteger);
+    Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2896,6 +2897,7 @@ begin
       Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
       Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.
         AsInteger);
+     Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
       RC := TCMReportController.Create;
       Try
@@ -2948,6 +2950,7 @@ begin
     Params := TCMParams.Create();
     Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
     Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+    Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -3024,6 +3027,7 @@ begin
       Params := TCMParams.Create();
       Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
       Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+      Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
       RC := TCMReportController.Create;
       RoleType := -1;
@@ -6126,6 +6130,7 @@ begin
           dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO',
           dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
         RC := TCMReportController.Create;
         RoleType := -1;

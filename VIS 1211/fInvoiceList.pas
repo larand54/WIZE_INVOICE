@@ -1692,6 +1692,7 @@ begin
     Params := TCMParams.Create();
     Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
     Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2392,6 +2393,7 @@ begin
     Params := TCMParams.Create();
     Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
     Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+    Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
     RC := TCMReportController.Create;
     Try
@@ -2732,6 +2734,7 @@ begin
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
           AsInteger);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
         RC := TCMReportController.Create;
         RoleType := -1;
@@ -2829,6 +2832,7 @@ begin
       try
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
         ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
 
         FileName := ExcelDir + 'Transportbrev ' +
@@ -2896,6 +2900,7 @@ begin
         Params := TCMParams.Create();
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.AsInteger);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
         RC := TCMReportController.Create;
         RoleType := -1;
@@ -3139,6 +3144,7 @@ begin
       Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
       Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
         AsInteger);
+      Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
       RC := TCMReportController.Create;
       Try
@@ -4222,6 +4228,7 @@ begin
         Params.Add('@Language',  dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', dmVidaInvoice.cdsInvoiceListInternalInvoiceNo.
           AsInteger);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger);
 
         RC := TCMReportController.Create;
         RoleType := -1;
@@ -6437,6 +6444,7 @@ begin
       cdsInvoiceList.SQL.Add('CASE WHEN ih.VAT_OnInvoice = 0 THEN');
       cdsInvoiceList.SQL.Add('SUM(invd.VatValue)');
       cdsInvoiceList.SQL.Add('END AS momsvarde, IH.AddressLine1');
+      cdsInvoiceList.SQL.Add(',IH.SupplierNo');
 
       cdsInvoiceList.SQL.Add('FROM dbo.InvoiceHeader IH');
       cdsInvoiceList.SQL.Add
@@ -6725,7 +6733,7 @@ begin
       cdsInvoiceList.SQL.Add
         ('IH.StickyNote, Inos.Prefix, IH.IntraStatCountryNo, ISC.CountryName, IH.DelKredit,');
       cdsInvoiceList.SQL.Add
-        ('IH.IncludeFreightCostInPrice, invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.ArticleNo, IH.AddressLine1');
+        ('IH.IncludeFreightCostInPrice, invd.VatCode, invd.Konto, ART.ArticleName, invd.moms_konto, invd.ArticleNo, IH.AddressLine1, SupplierNo');
       // cdsInvoiceList.SQL.Add('ORDER BY InvoiceDate desc') ;
       // if ThisUser.UserID = 8 then         cdsInvoiceList.SQL.SaveToFile('sq_fakturaRapport.TXT');
 

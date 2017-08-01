@@ -1636,6 +1636,7 @@ type
     sq_GetOrgInvoiceNoByCredit_VIDA_ENERGIInternalInvoiceNo: TIntegerField;
     cdsInvoiceDetailOrderBy: TIntegerField;
     sp_SetReferenceInInvoiceDetails: TFDStoredProc;
+    cdsInvoiceListSupplierNo: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -4781,6 +4782,7 @@ begin
         Params.Add('@Language',
           dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger);
         Params.Add('@INVOICENO', IntInvNo);
+        Params.add('@SalesRegionNo',dmVidaInvoice.cdsInvoiceHeadSupplierNo.AsInteger);
 
         RC := TCMReportController.Create;
         ClientNo := CustomerNo;
