@@ -241,7 +241,7 @@ begin
     dmsConnector.DriveLetter := 'C:\';
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=alvesql01');
+        Params.Add('Server=visprodsql.vida.se');
         Params.Add('Database=vis_vida');
         Params.Add('OSAuthent=No');
         Params.add('MetaDefCatalog=vis_vida');

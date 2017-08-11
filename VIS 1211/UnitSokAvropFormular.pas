@@ -1945,7 +1945,7 @@ begin
                 try
                   if RepNo > 0 then
                   begin
-                    FileName := ExcelDir + 'TO' + ' ' + AA[I] + '.pdf';
+                    FileName := ExcelDir + 'TO' + ' ' + intToStr(AA[I]) + '.pdf';
                     if FileExists(FileName) then
                       DeleteFile(FileName);
                     SetLength(Attach, I + 1);
