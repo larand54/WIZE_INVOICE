@@ -1748,6 +1748,7 @@ Var
   FR: TFastReports;
 begin
   dmFR.SaveCursor;
+  lang := ThisUser.LanguageID;
   try
     With dm_SokFormular do
     Begin
@@ -1763,7 +1764,10 @@ begin
       if Length(MailToAddress) > 0 then
       Begin
         if cds_MakeSokAvropORDERTYPE.AsInteger = 0 then
-          reportType := cTrpOrder // TRP_ORDER_NOTE.fr3 (22)
+        begin
+          reportType := 999; // TRP_ORDER_NOTE_ENG.fr3 (510)
+          lang := 2
+        end
         else
           reportType := cTrpOrderInkop; // trp_order_inkop_NOTE.fr3  (23)
         // if dmVidaInvoice.cdsInvoiceListINT_INVNO.AsInteger < 1 then exit ;
@@ -1773,7 +1777,6 @@ begin
           RoleType := 1;
           ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
           TONo := cds_MakeSokAvropLO.AsInteger;
-          lang := ThisUser.LanguageID;
           FR := TFastReports.Create;
           try
             FR.TrpO(TONo, ReportType, lang, MailToAddress, '', '', False);
@@ -1904,6 +1907,7 @@ Var
     ClientNo: Integer;
   Params: TCMParams;
   RepNo: Integer;
+  lang: integer;
   reportName, FileName, exportPath: string;
 begin
   dmFR.SaveAndSetCursor(crSQLWait);
@@ -1932,14 +1936,16 @@ begin
           ClientNo := cds_MakeSokAvropCustomerNo.AsInteger;
           if uReportController.useFR then
           begin
+            lang := ThisUser.LanguageID;
             Params := TCMParams.Create();
-            dmFR.getClientDocPref(ClientNo, RoleType, ReportType, RepNo, I, I,
-              I, I, reportName);
+//            dmFR.getClientDocPref(ClientNo, RoleType, ReportType, RepNo, I, I,
+//              I, I, reportName);
+            RepNo := 510; // TRP_ORDER_NOTE_ENG.fr3
             Try
               for I := 0 to High(AA) do
               Begin
                 Params.Clear;
-                Params.Add('@Language', ThisUser.LanguageID);
+                Params.Add('@Language', lang);
                 Params.Add('@ShippingPlanNo', AA[I]);
                 FR := TFastReports.Create;
                 try

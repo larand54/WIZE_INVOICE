@@ -544,7 +544,9 @@ Var
   Params: TCMParams;
   ExportFile: string;
 begin
-  if ThisUser.UserName = 'Lars' then
+
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+  else if ThisUser.UserName = 'Lars' then
     exit;
 
   if uReportController.useFR then begin
@@ -560,11 +562,13 @@ begin
       DocTyp := cFaktura;
       ExportFile := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
       RC.setExportFile(ExportFile);
+//      RC.setExportFile('c:\vis\temp\WoodXDir_InvoiceNo_'+ IntToStr(InvoiceNo));
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
       DocTyp := cPkgSpec;
       ExportFile := WoodXDir + 'Specification ' + IntToStr(InvoiceNo);
       RC.setExportFile(ExportFile);
+//      RC.setExportFile('c:\vis\temp\WoodXDir_Specification_'+ IntToStr(InvoiceNo));
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
     Finally
       FreeAndNil(Params);

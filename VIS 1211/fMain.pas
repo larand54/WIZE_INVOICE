@@ -538,8 +538,8 @@ begin
     ShowMessage('Ändra till H:');
 
       // Setup for FastReport
-  uReportController.useFR       := false;
-  acToggleReportSystem.Caption  := 'Change to FastReport';
+  uReportController.useFR       := true;
+  acToggleReportSystem.Caption  := 'Change to CrystalReport';
   CheckMappar;
 
 {$IFDEF DEBUG}

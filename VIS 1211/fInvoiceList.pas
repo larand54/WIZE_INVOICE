@@ -2907,7 +2907,7 @@ begin
 
         Try
           RC.setExportFile(ExportTrpBrevFile);
-          RC.RunReport(0, ClientNo, RoleType, cTrpBrev, Params, frFile);
+          RC.RunReport('TRP_BREV_ENG.fr3', Params, frFile, 0);
           RC.setExportFile(ExportSpecFile);
           RC.RunReport(0, ClientNo, RoleType, cPkgSpec, Params, frFile);
         Finally

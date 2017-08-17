@@ -4791,7 +4791,7 @@ begin
         Try
           DocTyp := cTrpBrev;
           RC.setExportFile(sTransportBrev);
-          RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+          RC.RunReport('TRP_BREV_ENG.fr3', Params, frFile,0);
 
           DocTyp := cPkgSpec;
           RC.setExportFile(sSpecification);
