@@ -538,8 +538,8 @@ begin
     ShowMessage('Ändra till H:');
 
       // Setup for FastReport
-  uReportController.useFR       := true;
-  acToggleReportSystem.Caption  := 'Change to CrystalReport';
+  uReportController.useFR       := false;
+  acToggleReportSystem.Execute;
   CheckMappar;
 
 {$IFDEF DEBUG}
@@ -1655,11 +1655,11 @@ procedure TfrmMain.acToggleReportSystemExecute(Sender: TObject);
 begin
   if uReportController.useFR then begin
     uReportController.useFR := false;
-    acToggleReportSystem.Caption := 'Byt till FastReport';
+    acToggleReportSystem.Caption := 'Change to FastReport';
   end
   else begin
     uReportController.useFR := true;
-    acToggleReportSystem.Caption := 'Byt till Crystal Report';
+    acToggleReportSystem.Caption := 'Change to Crystal Report';
   end;
 end;
 

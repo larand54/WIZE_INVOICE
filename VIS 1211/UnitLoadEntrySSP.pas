@@ -3998,7 +3998,7 @@ var
   lang,
   loadNo,
   ReportType: integer;
-
+  NoOfCopies: integer;
 begin
   dmFR.SaveCursor;
   try
@@ -4008,13 +4008,14 @@ begin
   if uReportController.useFR then begin
     FR := TFastReports.createForPrint(false);
     try
-    lang := ThisUser.LanguageID;
+      NoOfCopies := dmcOrder.cds_PropsCopyPcs.AsInteger;
+      lang := ThisUser.LanguageID;
       if dmLoadEntrySSP.cds_LSPOBJECTTYPE.AsInteger <> 2 then
         ReportType := cFoljesedelIntern
       else
         ReportType := cFoljesedel;
 
-      FR.Tally_Pkg_Matched(loadNo, ReportType, lang, '', '', '', 0);
+      FR.Tally_Pkg_Matched(loadNo, ReportType, lang, '', '', '', NoOfCopies);
     finally
       FR.Free;
     end;
@@ -6171,53 +6172,84 @@ begin
 end;
 
 procedure TfLoadEntrySSP.PrintDirectCMR(Sender: TObject);
-var
-  FormCRPrintOneReport: TFormCRPrintOneReport;
+var FormCRPrintOneReport  : TFormCRPrintOneReport;
   A: array of variant;
+  aLO: Integer;
+  FR: TFastReports;
+  NoOfCopies: Integer;
 begin
-  if dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger < 1 then
-    Exit;
-  FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-  Try
-    // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
-
-    SetLength(A, 1);
-    A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-    FormCRPrintOneReport.CreateCo(dmcOrder.cds_PropsCopyPcs.AsInteger, False,
-      False, A, 'CMR.RPT');
-    Try
-    except
-      On E: Exception do
-      Begin
-        dmsSystem.FDoLog(E.Message);
-        // ShowMessage(E.Message);
-        Raise;
-      End;
+  NoOfCopies := dmcOrder.cds_PropsCopyPcs.AsInteger;
+  if uReportController.useFR then
+  begin
+    aLO := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+    try
+      FR := TFastReports.createForPrint(true);  // true means no printerdialog!
+      FR.CMR(aLO, NoOfCopies);
+    finally
+      FreeAndNil(FR);
     end;
-  Finally
-    FreeAndNil(FormCRPrintOneReport);
-  End;
+  end
+  else
+  begin
+    if dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger < 1 then
+      Exit;
+    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
+    Try
+      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
+
+      SetLength(A, 1);
+      A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+      FormCRPrintOneReport.CreateCo(dmcOrder.cds_PropsCopyPcs.AsInteger, False,
+        False, A, 'CMR.RPT');
+      Try
+      except
+        On E: Exception do
+        Begin
+          dmsSystem.FDoLog(E.Message);
+          // ShowMessage(E.Message);
+          Raise;
+        End;
+      end;
+    Finally
+      FreeAndNil(FormCRPrintOneReport);
+    End;
+  end;
 end;
 
 procedure TfLoadEntrySSP.PreviewCMR(Sender: TObject);
 Var
   FormCRViewReport: TFormCRViewReport;
   A: array of variant;
+  aLO: Integer;
+  FR: TFastReports;
 begin
   Edit1.SetFocus;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
-    FormCRViewReport.CreateCo('CMR.RPT', A);
+  if uReportController.useFR then
+  begin
+    aLO := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+    try
+      FR := TFastReports.Create;
+      FR.CMR(aLO);
+    finally
+      FreeAndNil(FR);
+    end;
+  end
+  else
+  begin
+    FormCRViewReport := TFormCRViewReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := dmLoadEntrySSP.cds_LoadHeadLoadNo.AsInteger;
+      FormCRViewReport.CreateCo('CMR.RPT', A);
 
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
+      if FormCRViewReport.ReportFound then
+      Begin
+        FormCRViewReport.ShowModal;
+      End;
+    Finally
+      FreeAndNil(FormCRViewReport);
     End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  end;
 end;
 
 procedure TfLoadEntrySSP.acPrintCMRExecute(Sender: TObject);
