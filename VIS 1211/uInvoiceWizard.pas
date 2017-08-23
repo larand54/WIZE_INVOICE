@@ -607,6 +607,8 @@ begin
             dmModule1.cdsClientClientNo.AsInteger;
           cdsInvoiceHeadCustomerName.AsString :=
             dmModule1.cdsClientClientName.AsString;
+          cdsInvoiceHeadSearchName.AsString :=
+            dmModule1.cdsClientSearchName.AsString;
 
           sq_ClientData.Close;
           sq_ClientData.ParamByName('ClientNo').AsInteger :=

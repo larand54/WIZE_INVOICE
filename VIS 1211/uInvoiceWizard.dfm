@@ -5,133 +5,103 @@ object fInvoiceWizard: TfInvoiceWizard
   BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsDialog
   Caption = 'Fakturaguide'
-  ClientHeight = 764
-  ClientWidth = 1329
+  ClientHeight = 621
+  ClientWidth = 1080
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object pgPriceListGuide: TcxPageControl
     Left = 0
-    Top = 50
-    Width = 1329
-    Height = 649
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 41
+    Width = 1080
+    Height = 527
     Align = alClient
     TabOrder = 0
     Properties.ActivePage = tsInvoiceHead
     Properties.CustomButtons.Buttons = <>
     OnPageChanging = pgPriceListGuidePageChanging
-    ClientRectBottom = 648
-    ClientRectLeft = 1
-    ClientRectRight = 1328
+    ClientRectBottom = 523
+    ClientRectLeft = 4
+    ClientRectRight = 1076
     ClientRectTop = 24
     object tsInvoiceHead: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsInvoiceHead'
       ImageIndex = 0
       OnEnter = tsInvoiceHeadEnter
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object Label17: TLabel
-        Left = 181
-        Top = 234
-        Width = 49
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 147
+        Top = 190
+        Width = 42
+        Height = 15
         Caption = 'S'#228'ljare:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label18: TLabel
-        Left = 190
-        Top = 186
-        Width = 42
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 154
+        Top = 151
+        Width = 35
+        Height = 15
         Caption = 'Konto:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label19: TLabel
-        Left = 183
-        Top = 138
-        Width = 48
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 149
+        Top = 112
+        Width = 40
+        Height = 15
         Caption = 'Datum:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object Label20: TLabel
-        Left = 172
-        Top = 89
-        Width = 59
-        Height = 17
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 140
+        Top = 72
+        Width = 49
+        Height = 15
         Caption = 'F'#246'rs.reg:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
         Transparent = True
       end
       object cxLabel4: TcxLabel
-        Left = 10
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 8
+        Top = 8
         Caption = 'Faktura'
         ParentFont = False
         Style.BorderStyle = ebsNone
         Style.Font.Charset = DEFAULT_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -38
+        Style.Font.Height = -32
         Style.Font.Name = 'Verdana'
         Style.Font.Style = []
         Style.LookAndFeel.Kind = lfFlat
@@ -143,12 +113,8 @@ object fInvoiceWizard: TfInvoiceWizard
         StyleHot.LookAndFeel.Kind = lfFlat
       end
       object lcSalesman: TcxDBLookupComboBox
-        Left = 236
-        Top = 225
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 192
+        Top = 183
         DataBinding.DataField = 'ResponsibleSeller'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
         Properties.DropDownListStyle = lsFixedList
@@ -161,15 +127,11 @@ object fInvoiceWizard: TfInvoiceWizard
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = dmsContact.ds_Users
         TabOrder = 3
-        Width = 370
+        Width = 300
       end
       object lcKonto: TcxDBLookupComboBox
-        Left = 236
-        Top = 177
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 192
+        Top = 144
         DataBinding.DataField = 'InvoiceType'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
         Properties.DropDownListStyle = lsFixedList
@@ -182,27 +144,19 @@ object fInvoiceWizard: TfInvoiceWizard
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = dmVidaInvoice.dsInvoiceType
         TabOrder = 2
-        Width = 370
+        Width = 300
       end
       object deFakturaDatum: TcxDBDateEdit
-        Left = 236
-        Top = 129
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 192
+        Top = 105
         DataBinding.DataField = 'InvoiceDate'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
         TabOrder = 1
-        Width = 370
+        Width = 300
       end
       object lcSR: TcxDBLookupComboBox
-        Left = 236
-        Top = 79
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 192
+        Top = 64
         DataBinding.DataField = 'SR'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
         Properties.DropDownRows = 15
@@ -214,15 +168,11 @@ object fInvoiceWizard: TfInvoiceWizard
           end>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 0
-        Width = 370
+        Width = 300
       end
       object rgDebet_kredit: TcxDBRadioGroup
-        Left = 236
-        Top = 260
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 192
+        Top = 211
         DataBinding.DataField = 'Debit_Credit'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
         Properties.Columns = 2
@@ -236,47 +186,32 @@ object fInvoiceWizard: TfInvoiceWizard
             Value = 1
           end>
         TabOrder = 4
-        Height = 60
-        Width = 228
+        Height = 49
+        Width = 185
       end
     end
     object tsAddress: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsAddress'
       ImageIndex = 3
       OnEnter = tsAddressEnter
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1327
-        Height = 624
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1072
+        Height = 499
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 621
         object txtCustomer: TDBText
-          Left = 39
-          Top = 166
-          Width = 410
-          Height = 20
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 135
+          Width = 333
+          Height = 16
           Color = clWhite
           DataField = 'CustomerName'
           DataSource = dmVidaInvoice.dsrcInvoiceHead
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -18
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentColor = False
@@ -284,19 +219,15 @@ object fInvoiceWizard: TfInvoiceWizard
           Transparent = True
         end
         object Label1: TLabel
-          Left = 39
-          Top = 332
-          Width = 351
-          Height = 100
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 270
+          Width = 285
+          Height = 81
           AutoSize = False
           Color = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -18
+          Font.Height = -15
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
@@ -304,36 +235,28 @@ object fInvoiceWizard: TfInvoiceWizard
           WordWrap = True
         end
         object Label31: TLabel
-          Left = 39
-          Top = 196
-          Width = 76
-          Height = 17
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 159
+          Width = 63
+          Height = 15
           Caption = 'F'#246'rs.org.nr:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = True
         end
         object cxLabel2: TcxLabel
-          Left = 10
-          Top = 10
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 8
+          Top = 8
           Caption = 'Kund'
           ParentFont = False
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -38
+          Style.Font.Height = -32
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.LookAndFeel.Kind = lfFlat
@@ -345,24 +268,16 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleHot.LookAndFeel.Kind = lfFlat
         end
         object bSelectCustomer: TcxButton
-          Left = 39
-          Top = 108
-          Width = 169
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 88
+          Width = 137
+          Height = 41
           Action = acSelectCustomer
           TabOrder = 0
         end
         object lFakturaAdress: TcxLabel
-          Left = 39
-          Top = 304
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 247
           Caption = 'Faktura Adress'
           ParentColor = False
           Style.Color = clWindow
@@ -376,36 +291,24 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleHot.LookAndFeel.Kind = lfUltraFlat
         end
         object cxButton7: TcxButton
-          Left = 39
-          Top = 246
-          Width = 169
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 200
+          Width = 137
+          Height = 41
           Action = acSelectInvoiceAdress
           TabOrder = 2
         end
         object eSalesOrgNo: TcxDBTextEdit
-          Left = 140
-          Top = 193
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 114
+          Top = 157
           DataBinding.DataField = 'SalesOrgNo'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
           TabOrder = 1
-          Width = 370
+          Width = 300
         end
         object lcSprak: TcxDBLookupComboBox
-          Left = 249
-          Top = 487
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 202
+          Top = 396
           DataBinding.DataField = 'LanguageCode'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
           Properties.DropDownListStyle = lsFixedList
@@ -426,59 +329,40 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleFocused.LookAndFeel.Kind = lfFlat
           StyleHot.LookAndFeel.Kind = lfFlat
           TabOrder = 5
-          Width = 200
+          Width = 163
         end
         object cxButton2: TcxButton
-          Left = 39
-          Top = 476
-          Width = 169
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 387
+          Width = 137
+          Height = 41
           Action = acSelectLanguage
           TabOrder = 6
         end
       end
     end
     object tsParametrar: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsParametrar'
       ImageIndex = 4
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 1327
-        Height = 624
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1072
+        Height = 499
         Align = alClient
         TabOrder = 0
         OnEnter = Panel3Enter
-        ExplicitHeight = 621
         object DBText7: TDBText
-          Left = 246
-          Top = 346
-          Width = 304
-          Height = 70
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 200
+          Top = 281
+          Width = 247
+          Height = 57
           Color = clWhite
           DataField = 'PaymentDescription'
           DataSource = dmVidaInvoice.dsrcInvoiceHead
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
@@ -486,126 +370,98 @@ object fInvoiceWizard: TfInvoiceWizard
           WordWrap = True
         end
         object DBText9: TDBText
-          Left = 100
-          Top = 193
-          Width = 80
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 81
+          Top = 157
+          Width = 65
+          Height = 17
           Color = clWhite
           DataField = 'VAT'
           DataSource = dmVidaInvoice.dsrcInvoiceHead
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label29: TLabel
-          Left = 49
-          Top = 196
-          Width = 40
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 40
+          Top = 159
+          Width = 31
+          Height = 13
           Caption = 'Moms:'
           Transparent = True
         end
         object DBText6: TDBText
-          Left = 246
-          Top = 255
-          Width = 193
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 200
+          Top = 207
+          Width = 157
+          Height = 17
           Color = clWhite
           DataField = 'DeliveryTerm'
           DataSource = dmVidaInvoice.dsrcInvoiceHead
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object DBText44: TDBText
-          Left = 246
-          Top = 444
-          Width = 133
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 200
+          Top = 361
+          Width = 108
+          Height = 17
           Color = clWhite
           DataField = 'CurrencyName'
           DataSource = dmVidaInvoice.dsrcInvoiceHead
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentColor = False
           ParentFont = False
         end
         object Label2: TLabel
-          Left = 65
-          Top = 506
-          Width = 63
-          Height = 17
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 53
+          Top = 411
+          Width = 53
+          Height = 15
           Caption = 'Due date:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = True
         end
         object Label3: TLabel
-          Left = 65
-          Top = 555
-          Width = 82
-          Height = 17
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 53
+          Top = 451
+          Width = 70
+          Height = 15
           Caption = 'Statistikland:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -12
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
           Transparent = True
         end
         object cxLabel5: TcxLabel
-          Left = 20
-          Top = 10
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 16
+          Top = 8
           Caption = 'Parametrar'
           ParentFont = False
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -38
+          Style.Font.Height = -32
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.LookAndFeel.Kind = lfFlat
@@ -617,12 +473,8 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleHot.LookAndFeel.Kind = lfFlat
         end
         object cbTrading: TcxDBCheckBox
-          Left = 39
-          Top = 98
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 80
           Caption = 'Trading'
           DataBinding.DataField = 'Trading'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -631,15 +483,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 1
-          Width = 121
+          Width = 98
         end
         object cbCommissionPaidByCustomer: TcxDBCheckBox
-          Left = 167
-          Top = 98
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 136
+          Top = 80
           Caption = 'Provision betalas av kund'
           DataBinding.DataField = 'CommissionPaidByCustomer'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -648,15 +496,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 4
-          Width = 208
+          Width = 169
         end
         object cbQuickInvoice: TcxDBCheckBox
-          Left = 167
-          Top = 121
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 136
+          Top = 98
           Caption = 'Snabbfaktura'
           DataBinding.DataField = 'QuickInvoice'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -665,15 +509,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 5
-          Width = 208
+          Width = 169
         end
         object cbSkatteupplag: TcxDBCheckBox
-          Left = 39
-          Top = 121
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 98
           Caption = 'Skatteupplag'
           DataBinding.DataField = 'VAT_OnInvoice'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -682,15 +522,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 2
-          Width = 121
+          Width = 98
         end
         object cbSpecialMoms: TcxDBCheckBox
-          Left = 39
-          Top = 145
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 32
+          Top = 118
           Caption = 'Special moms'
           DataBinding.DataField = 'SpecialMoms'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -702,15 +538,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueUnchecked = 0
           Style.Color = clBtnFace
           TabOrder = 3
-          Width = 121
+          Width = 98
         end
         object cbMoms: TcxDBCheckBox
-          Left = 167
-          Top = 145
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 136
+          Top = 118
           Caption = 'Moms'
           DataBinding.DataField = 'Moms'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -719,15 +551,11 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ValueChecked = 1
           Properties.ValueUnchecked = 0
           TabOrder = 6
-          Width = 208
+          Width = 169
         end
         object rgCommisionInDiscount: TcxDBRadioGroup
-          Left = 732
-          Top = 98
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 595
+          Top = 80
           Caption = 'Provision'
           DataBinding.DataField = 'FreightInCommission'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -746,16 +574,12 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleFocused.LookAndFeel.Kind = lfFlat
           StyleHot.LookAndFeel.Kind = lfFlat
           TabOrder = 7
-          Height = 66
-          Width = 159
+          Height = 53
+          Width = 129
         end
         object rgFreightInDiscount: TcxDBRadioGroup
-          Left = 475
-          Top = 98
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 386
+          Top = 80
           Caption = 'Kassa'
           DataBinding.DataField = 'FreightInDiscount'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -774,64 +598,44 @@ object fInvoiceWizard: TfInvoiceWizard
           StyleFocused.LookAndFeel.Kind = lfFlat
           StyleHot.LookAndFeel.Kind = lfFlat
           TabOrder = 8
-          Height = 66
-          Width = 156
+          Height = 53
+          Width = 127
         end
         object bSelectDeliveryTerms: TcxButton
-          Left = 49
-          Top = 239
-          Width = 139
-          Height = 50
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 40
+          Top = 194
+          Width = 113
+          Height = 41
           Action = acSelectDeliveryTerms
           TabOrder = 9
         end
         object bSelectPaymentTerms: TcxButton
-          Left = 49
-          Top = 330
-          Width = 139
-          Height = 50
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 40
+          Top = 268
+          Width = 113
+          Height = 41
           Action = acSelectPaymentTerms
           TabOrder = 10
         end
         object bSelectCurrency: TcxButton
-          Left = 49
-          Top = 428
-          Width = 139
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 40
+          Top = 348
+          Width = 113
+          Height = 41
           Action = acSelectCurrency
           TabOrder = 11
         end
         object deDueDate: TcxDBDateEdit
-          Left = 246
-          Top = 503
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 200
+          Top = 409
           DataBinding.DataField = 'DueDate'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
           TabOrder = 12
-          Width = 223
+          Width = 181
         end
         object lcIntraStatCountryNo: TcxDBLookupComboBox
-          Left = 246
-          Top = 553
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 200
+          Top = 449
           DataBinding.DataField = 'IntraStatCountryNo'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
           Properties.KeyFieldNames = 'CountryNo'
@@ -842,99 +646,73 @@ object fInvoiceWizard: TfInvoiceWizard
           Properties.ListOptions.ShowHeader = False
           Properties.ListSource = dmsContact.ds_Country
           TabOrder = 13
-          Width = 223
+          Width = 181
         end
       end
     end
     object tsAgent: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsAgent'
       ImageIndex = 5
       OnEnter = tsAgentEnter
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object DBText22: TDBText
-        Left = 39
-        Top = 177
-        Width = 78
-        Height = 21
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 144
+        Width = 63
+        Height = 17
         AutoSize = True
         Color = clWhite
         DataField = 'AgentName'
         DataSource = dmVidaInvoice.dsrcInvoiceHead
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -18
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object Label43: TLabel
-        Left = 39
-        Top = 305
-        Width = 612
-        Height = 100
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 248
+        Width = 497
+        Height = 81
         AutoSize = False
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -18
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentColor = False
         ParentFont = False
       end
       object bSelectAgent: TBitBtn
-        Left = 43
-        Top = 118
-        Width = 113
-        Height = 52
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 35
+        Top = 96
+        Width = 92
+        Height = 42
         Action = acSelectAgent
         Caption = 'V'#228'lj agent'
         TabOrder = 0
       end
       object bbRemoveAgent: TBitBtn
-        Left = 190
-        Top = 118
-        Width = 107
-        Height = 52
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 154
+        Top = 96
+        Width = 87
+        Height = 42
         Action = acClearAgent
         Caption = 'Ta bort agent'
         TabOrder = 1
       end
       object cxLabel6: TcxLabel
-        Left = 10
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 8
+        Top = 8
         Caption = 'Agent'
         ParentFont = False
         Style.BorderStyle = ebsNone
         Style.Font.Charset = DEFAULT_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -38
+        Style.Font.Height = -32
         Style.Font.Name = 'Verdana'
         Style.Font.Style = []
         Style.LookAndFeel.Kind = lfFlat
@@ -946,12 +724,8 @@ object fInvoiceWizard: TfInvoiceWizard
         StyleHot.LookAndFeel.Kind = lfFlat
       end
       object cxLabel7: TcxLabel
-        Left = 39
-        Top = 276
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 224
         Caption = 'Agent fakturaadress'
         ParentColor = False
         Style.Color = clBtnFace
@@ -966,77 +740,51 @@ object fInvoiceWizard: TfInvoiceWizard
         StyleHot.LookAndFeel.Kind = lfUltraFlat
       end
       object BitBtn1: TBitBtn
-        Left = 39
-        Top = 217
-        Width = 114
-        Height = 51
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 176
+        Width = 92
+        Height = 42
         Action = acSelectAgentAdress
         Caption = 'V'#228'lj agent adress'
         TabOrder = 4
       end
     end
     object tsInvoiceRows: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsInvoiceRows'
       ImageIndex = 6
       OnEnter = tsInvoiceRowsEnter
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1327
-        Height = 169
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1072
+        Height = 137
         Align = alTop
         TabOrder = 0
         object bSelectInvoiceRows: TcxButton
-          Left = 20
-          Top = 108
-          Width = 129
-          Height = 41
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 16
+          Top = 88
+          Width = 105
+          Height = 33
           Action = acAddInvoiceRow
           TabOrder = 0
         end
         object cxButton4: TcxButton
-          Left = 167
-          Top = 108
-          Width = 130
-          Height = 41
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 136
+          Top = 88
+          Width = 105
+          Height = 33
           Action = acRemoveInvoiceRow
           TabOrder = 1
         end
         object cxLabel1: TcxLabel
-          Left = 10
-          Top = 10
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 8
+          Top = 8
           Caption = 'Fakturarader'
           ParentFont = False
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -38
+          Style.Font.Height = -32
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.LookAndFeel.Kind = lfFlat
@@ -1050,16 +798,11 @@ object fInvoiceWizard: TfInvoiceWizard
       end
       object grdFaktura: TcxGrid
         Left = 0
-        Top = 169
-        Width = 1327
-        Height = 455
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 137
+        Width = 1072
+        Height = 362
         Align = alClient
         TabOrder = 1
-        ExplicitHeight = 453
         object grdFakturaDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsrcInvoiceDetail
@@ -1480,24 +1223,14 @@ object fInvoiceWizard: TfInvoiceWizard
       end
     end
     object tsShipToAddress: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'tsShipToAddress'
       ImageIndex = 6
       OnEnter = tsShipToAddressEnter
-      ExplicitTop = 26
-      ExplicitHeight = 621
       object grdShipAdr: TcxGrid
         Left = 0
-        Top = 178
-        Width = 1327
-        Height = 149
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 145
+        Width = 1072
+        Height = 121
         Align = alTop
         TabOrder = 0
         object grdShipAdrDBTableView1: TcxGridDBTableView
@@ -1587,51 +1320,35 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1327
-        Height = 178
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1072
+        Height = 145
         Align = alTop
         TabOrder = 1
         object bSelectDeliveryAddress: TcxButton
-          Left = 10
-          Top = 98
-          Width = 168
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 8
+          Top = 80
+          Width = 137
+          Height = 41
           Action = acAddDeliveryAdress
           TabOrder = 0
         end
         object cxButton6: TcxButton
-          Left = 207
-          Top = 98
-          Width = 159
-          Height = 51
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 168
+          Top = 80
+          Width = 129
+          Height = 41
           Action = acRemoveDeliveryAdress
           TabOrder = 1
         end
         object cxLabel3: TcxLabel
-          Left = 10
-          Top = 10
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 8
+          Top = 8
           Caption = 'Leveransadress'
           ParentFont = False
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -38
+          Style.Font.Height = -32
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.LookAndFeel.Kind = lfFlat
@@ -1645,23 +1362,11 @@ object fInvoiceWizard: TfInvoiceWizard
       end
     end
     object tsNotering: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'Notering&&slutf'#246'r'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
-        Top = 100
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 81
         Align = alClient
         DataBinding.DataField = 'InvoiceText'
         DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -1669,34 +1374,25 @@ object fInvoiceWizard: TfInvoiceWizard
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        ExplicitHeight = 522
-        Height = 524
-        Width = 1327
+        Height = 418
+        Width = 1072
       end
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 1327
-        Height = 100
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1072
+        Height = 81
         Align = alTop
         TabOrder = 1
         object cxLabel8: TcxLabel
-          Left = 10
-          Top = 10
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 8
+          Top = 8
           Caption = 'Notering'
           ParentFont = False
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
-          Style.Font.Height = -38
+          Style.Font.Height = -32
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.LookAndFeel.Kind = lfFlat
@@ -1713,35 +1409,23 @@ object fInvoiceWizard: TfInvoiceWizard
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1329
-    Height = 50
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1080
+    Height = 41
     Align = alTop
     TabOrder = 1
   end
   object Panel2: TPanel
     Left = 0
-    Top = 699
-    Width = 1329
-    Height = 65
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 568
+    Width = 1080
+    Height = 53
     Align = alBottom
     TabOrder = 2
     object SpeedButton2: TSpeedButton
-      Left = 737
+      Left = 599
       Top = 2
-      Width = 120
-      Height = 55
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 97
+      Height = 44
       Action = acSave
       Glyph.Data = {
         36090000424D3609000000000000360000002800000018000000180000000100
@@ -1820,14 +1504,10 @@ object fInvoiceWizard: TfInvoiceWizard
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
     end
     object SpeedButton1: TSpeedButton
-      Left = 354
+      Left = 288
       Top = 2
-      Width = 120
-      Height = 55
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 97
+      Height = 44
       Action = acCancelChanges
       Glyph.Data = {
         36090000424D3609000000000000360000002800000018000000180000000100
@@ -1906,14 +1586,10 @@ object fInvoiceWizard: TfInvoiceWizard
         FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
     end
     object BitBtn7: TBitBtn
-      Left = 610
+      Left = 496
       Top = 2
-      Width = 120
-      Height = 55
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 97
+      Height = 44
       Action = acNextPage
       Caption = '&N'#228'sta'
       Glyph.Data = {
@@ -1994,14 +1670,10 @@ object fInvoiceWizard: TfInvoiceWizard
       TabOrder = 0
     end
     object BitBtn8: TBitBtn
-      Left = 482
+      Left = 392
       Top = 2
-      Width = 120
-      Height = 55
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 97
+      Height = 44
       Action = acPreviousPage
       Caption = '&F'#246'reg'#229'ende'
       Glyph.Data = {
@@ -4264,7 +3936,7 @@ object fInvoiceWizard: TfInvoiceWizard
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

@@ -958,6 +958,7 @@
         Name = '@RETURN_VALUE'
         DataType = ftInteger
         ParamType = ptResult
+        Value = 0
       end
       item
         Position = 2
@@ -973,6 +974,11 @@
     object cdsClientClientName: TStringField
       FieldName = 'ClientName'
       Origin = 'ClientName'
+      Size = 80
+    end
+    object cdsClientSearchName: TStringField
+      FieldName = 'SearchName'
+      Origin = 'SearchName'
       Size = 80
     end
   end

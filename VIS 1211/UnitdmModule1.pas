@@ -632,6 +632,7 @@ type
     sp_OrderstockCountryNo: TIntegerField;
     sp_OrderstockCurrencyNo: TIntegerField;
     sp_OrderstockMPNH: TFloatField;
+    cdsClientSearchName: TStringField;
     procedure tblLoadFreight2CalcFields(DataSet: TDataSet);
     procedure tblLoadFreight2M3_NETChange(Sender: TField);
     procedure tblLoadFreight2PRICEChange(Sender: TField);
