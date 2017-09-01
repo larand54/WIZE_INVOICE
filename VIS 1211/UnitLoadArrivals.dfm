@@ -5,8 +5,8 @@ object frmLoadArrivals: TfrmLoadArrivals
   Align = alClient
   BorderStyle = bsNone
   Caption = 'frmLoadArrivals'
-  ClientHeight = 612
-  ClientWidth = 1029
+  ClientHeight = 716
+  ClientWidth = 1220
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -25,7 +25,7 @@ object frmLoadArrivals: TfrmLoadArrivals
   object cxSplitter1: TcxSplitter
     Left = 0
     Top = 330
-    Width = 1029
+    Width = 1220
     Height = 8
     Margins.Left = 2
     Margins.Top = 2
@@ -36,11 +36,12 @@ object frmLoadArrivals: TfrmLoadArrivals
     Control = grdLoads
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 1029
   end
   object grdLoads: TcxGrid
     Left = 0
     Top = 154
-    Width = 1029
+    Width = 1220
     Height = 176
     Margins.Left = 2
     Margins.Top = 2
@@ -49,6 +50,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alTop
     PopupMenu = pmLoads
     TabOrder = 1
+    ExplicitWidth = 1029
     object grdLoadsDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmArrivingLoads.dsrcArrivingLoads
@@ -340,7 +342,7 @@ object frmLoadArrivals: TfrmLoadArrivals
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1029
+    Width = 1220
     Height = 154
     Margins.Left = 2
     Margins.Top = 2
@@ -349,10 +351,11 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 1029
     object Panel2: TPanel
       Left = 423
       Top = 0
-      Width = 554
+      Width = 745
       Height = 154
       Margins.Left = 2
       Margins.Top = 2
@@ -360,21 +363,24 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 554
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 552
-        Height = 90
+        Width = 743
+        Height = 44
         Margins.Left = 2
         Margins.Top = 2
         Margins.Right = 2
         Margins.Bottom = 2
         Align = dalTop
         BarManager = dxBarManager1
+        ExplicitWidth = 552
+        ExplicitHeight = 88
       end
     end
     object Panel3: TPanel
-      Left = 977
+      Left = 1168
       Top = 0
       Width = 52
       Height = 154
@@ -384,11 +390,12 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alRight
       TabOrder = 1
+      ExplicitLeft = 977
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
         Width = 50
-        Height = 45
+        Height = 44
         Margins.Left = 2
         Margins.Top = 2
         Margins.Right = 2
@@ -711,8 +718,8 @@ object frmLoadArrivals: TfrmLoadArrivals
   object Panel5: TPanel
     Left = 0
     Top = 338
-    Width = 1029
-    Height = 274
+    Width = 1220
+    Height = 378
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -720,17 +727,21 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alClient
     Caption = 'Panel5'
     TabOrder = 7
+    ExplicitWidth = 1029
+    ExplicitHeight = 274
     object grdPkgs: TcxGrid
       Left = 1
       Top = 41
-      Width = 1027
-      Height = 232
+      Width = 1218
+      Height = 336
       Margins.Left = 2
       Margins.Top = 2
       Margins.Right = 2
       Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 1027
+      ExplicitHeight = 232
       object grdPkgsDBTableView1: TcxGridDBTableView
         PopupMenu = pmPkgs
         Navigator.Buttons.CustomButtons = <>
@@ -920,7 +931,7 @@ object frmLoadArrivals: TfrmLoadArrivals
     object Panel6: TPanel
       Left = 1
       Top = 1
-      Width = 1027
+      Width = 1218
       Height = 40
       Margins.Left = 2
       Margins.Top = 2
@@ -928,6 +939,7 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alTop
       TabOrder = 1
+      ExplicitWidth = 1027
       object cxButton1: TcxButton
         Left = 8
         Top = 4
@@ -945,7 +957,7 @@ object frmLoadArrivals: TfrmLoadArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
