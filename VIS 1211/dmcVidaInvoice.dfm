@@ -3104,6 +3104,9 @@ object dmVidaInvoice: TdmVidaInvoice
       
         '                                                        AND     ' +
         'PayText.CountryNo = ADR.CountryNo'
+      
+        '                                                        AND     ' +
+        'PayText.SalesRegionNo = OH.SalesRegionNo'
       ''
       #9'LEFT OUTER JOIN dbo.Address '#9#9'Agent_ADR'
       
@@ -3177,6 +3180,7 @@ object dmVidaInvoice: TdmVidaInvoice
         Name = 'SHIPPINGPLANNO'
         DataType = ftInteger
         ParamType = ptInput
+        Value = Null
       end
       item
         Name = 'CUSTOMERNO'
