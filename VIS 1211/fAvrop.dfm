@@ -6,7 +6,7 @@ object frmAvrop: TfrmAvrop
   BorderStyle = bsNone
   Caption = 'Avrop'
   ClientHeight = 784
-  ClientWidth = 1248
+  ClientWidth = 1265
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -25,22 +25,24 @@ object frmAvrop: TfrmAvrop
   object Splitter1: TSplitter
     Left = 0
     Top = 461
-    Width = 1248
+    Width = 1265
     Height = 3
     Cursor = crVSplit
     Align = alBottom
     Color = clBlack
     ParentColor = False
     ExplicitTop = 388
+    ExplicitWidth = 1248
   end
   object Panel1: TPanel
     Left = 0
     Top = 464
-    Width = 1248
+    Width = 1265
     Height = 320
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitWidth = 1248
     object Splitter2: TSplitter
       Left = 561
       Top = 1
@@ -459,15 +461,16 @@ object frmAvrop: TfrmAvrop
     object pLoads: TPanel
       Left = 564
       Top = 1
-      Width = 683
+      Width = 700
       Height = 318
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 683
       object PanelAvropLoad: TPanel
         Left = 0
         Top = 0
-        Width = 683
+        Width = 700
         Height = 73
         Align = alTop
         BevelOuter = bvNone
@@ -478,8 +481,9 @@ object frmAvrop: TfrmAvrop
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 683
         DesignSize = (
-          683
+          700
           73)
         object Label1: TLabel
           Left = 8
@@ -514,7 +518,7 @@ object frmAvrop: TfrmAvrop
           Width = 96
         end
         object cxButton1: TcxButton
-          Left = 7
+          Left = 24
           Top = 42
           Width = 94
           Height = 25
@@ -527,9 +531,10 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          ExplicitLeft = 7
         end
         object cxButton2: TcxButton
-          Left = 116
+          Left = 133
           Top = 42
           Width = 125
           Height = 25
@@ -542,6 +547,7 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          ExplicitLeft = 116
         end
         object teSearchInvoiceNo: TcxTextEdit
           Left = 111
@@ -572,7 +578,7 @@ object frmAvrop: TfrmAvrop
           Width = 83
         end
         object cxButton5: TcxButton
-          Left = 256
+          Left = 273
           Top = 42
           Width = 146
           Height = 25
@@ -585,15 +591,17 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
+          ExplicitLeft = 256
         end
       end
       object grdLoad: TcxGrid
         Left = 0
         Top = 73
-        Width = 683
+        Width = 700
         Height = 245
         Align = alClient
         TabOrder = 1
+        ExplicitWidth = 683
         object grdLoadDBTableView1: TcxGridDBTableView
           PopupMenu = pmLoads
           OnDblClick = grdLoadDBTableView1DblClick
@@ -741,10 +749,11 @@ object frmAvrop: TfrmAvrop
   object Panel4: TPanel
     Left = 0
     Top = 48
-    Width = 1248
+    Width = 1265
     Height = 69
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 1248
     object Label3: TLabel
       Left = 440
       Top = 16
@@ -986,11 +995,12 @@ object frmAvrop: TfrmAvrop
   object grdcxAvrop: TcxGrid
     Left = 0
     Top = 117
-    Width = 1248
+    Width = 1265
     Height = 344
     Align = alClient
     PopupMenu = pmAvropGrid
     TabOrder = 2
+    ExplicitWidth = 1248
     object grdcxAvropDBBandedTableView1: TcxGridDBBandedTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.dsrcAvrop
@@ -1337,11 +1347,12 @@ object frmAvrop: TfrmAvrop
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 1248
+    Width = 1265
     Height = 48
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 3
+    ExplicitWidth = 1248
     object Panel6: TPanel
       Left = 0
       Top = 0
@@ -1360,13 +1371,14 @@ object frmAvrop: TfrmAvrop
       end
     end
     object Panel7: TPanel
-      Left = 1183
+      Left = 1200
       Top = 0
       Width = 65
       Height = 48
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitLeft = 1183
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
@@ -1379,11 +1391,12 @@ object frmAvrop: TfrmAvrop
     object Panel8: TPanel
       Left = 903
       Top = 0
-      Width = 280
+      Width = 297
       Height = 48
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
+      ExplicitWidth = 280
     end
   end
   object cxRichEdit1: TcxRichEdit
@@ -1397,7 +1410,7 @@ object frmAvrop: TfrmAvrop
   object DBRichEdit_InvoiceText: TDBRichEdit
     Left = 33
     Top = 170
-    Width = 1234
+    Width = 1184
     Height = 159
     DataField = 'InvoiceText'
     DataSource = dmVidaInvoice.dsrcInvoiceHead
