@@ -557,18 +557,19 @@ begin
     RC := TCMReportController.Create;
     ClientNo := CustomerNo;
     RoleType := -1;
-
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      ExportFile := 'C:\VIS\Temp\'
+    else
+      ExportFile := WoodXDir;
     Try
       DocTyp := cFaktura;
-      ExportFile := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
+      ExportFile := ExportFile + 'InvoiceNo ' + IntToStr(InvoiceNo);
       RC.setExportFile(ExportFile);
-//      RC.setExportFile('c:\vis\temp\WoodXDir_InvoiceNo_'+ IntToStr(InvoiceNo));
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
       DocTyp := cPkgSpec;
-      ExportFile := WoodXDir + 'Specification ' + IntToStr(InvoiceNo);
+      ExportFile := ExportFile + 'Specification ' + IntToStr(InvoiceNo);
       RC.setExportFile(ExportFile);
-//      RC.setExportFile('c:\vis\temp\WoodXDir_Specification_'+ IntToStr(InvoiceNo));
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
     Finally
       FreeAndNil(Params);
@@ -588,26 +589,10 @@ begin
       FreeAndNil(FormCRExportOneReport); // .Free ;
     End;
   end;
-{$IFDEF TEST_WITH_EMAIL}
-{$ELSE}
-  {$IFDEF DEBUG}
   if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
     exit;
-  {$ENDIF}
-{$ENDIF}
   if cbEmaila.Checked then Begin
-{$IFDEF TEST_WITH_EMAIL}
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-      MailToAddress := 'larand54@yahoo.se'
-    else if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FAST' then
-      MailToAddress := 'lars.makiaho@gmail.com'
-    else begin
-      showMessage('This computer: ' + GetEnvironmentVariable('COMPUTERNAME')+' is not defined for TEST_WITH_EMAIL');
-      exit;
-    end;
-{$ELSE}
     MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
-{$ENDIF}
     if Length(MailToAddress) > 0 then Begin
       SetLength(Attach, 2);
       Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
@@ -659,88 +644,138 @@ begin
   End;
 end;
 
-procedure TXMLImportExport.EmailFakturaAndSpecExecute ;
+procedure TXMLImportExport.EmailFakturaAndSpecExecute;
 const
   LF = #10;
-Var FormCRExportOneReport   : TFormCRExportOneReport ;
-    A                       : array of variant ;
-    dm_SendMapiMail         : Tdm_SendMapiMail;
-    Attach                  : array of String ;
-    MailToAddress           : String ;
-    x                       : Integer ;
+Var
+  FormCRExportOneReport: TFormCRExportOneReport;
+  A: array of Variant;
+  dm_SendMapiMail: Tdm_SendMapiMail;
+  Attach: array of String;
+  MailToAddress: String;
+  x: Integer;
+
+  params: TCMParams;
+  RC: TCMReportController;
+  ClientNo: integer;
+  DocTyp: integer;
+  RoleType: integer;
+  ExportFile: String;
 begin
- if thisuser.UserName = 'Lars' then exit ;
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+  else if ThisUser.UserName = 'Lars' then
+    exit;
 
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]:= InternalInvoiceNo ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A, WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo)) ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A, WoodXDir + 'Specification ' + IntToStr(InvoiceNo)) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
+  if uReportController.useFR then
+  begin
 
- if cbEmaila.Checked then
- Begin
- MailToAddress:= dmsContact.GetEmailAddress(CustomerNo) ;
- if Length(MailToAddress) > 0 then
- Begin
-  SetLength(Attach, 2);
-  Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf' ;
-  Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf' ;
+    Params := TCMParams.Create();
+    Params.Add('@INVOICENO', InternalInvoiceNo);
 
-  x:= 1 ;
+    RC := TCMReportController.Create;
+    ClientNo := CustomerNo;
+    RoleType := -1;
+    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+      ExportFile := 'C:\VIS\Temp\'
+    else
+      ExportFile := WoodXDir;
+    Try
+      DocTyp := cFaktura;
+      ExportFile := ExportFile + 'InvoiceNo ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportFile);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
-  sq_GetLONos.Close ;
-  sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value := InternalInvoiceNo ;
-  sq_GetLONos.Open ;
-  sq_GetLONos.First ;
-  While not sq_GetLONos.Eof do
-  Begin
-   x:= succ(x) ;
-   SetLength(Attach, x+1);
-   dmsSystem.DeliveryMessageNumber  := sq_GetLONosDeliveryMessageNumber.AsString ;
-
-//   dm_ImportWoodx.Ins_InvoicePkgSpecWoodX (InternalInvoiceNo, sq_GetLONosDeliveryMessageNumber.AsInteger) ;
-
-   Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber + '.xml' ;
-
-   sq_GetLONos.Next ;
-  End ;
- sq_GetLONos.Close ;
-
- dm_SendMapiMail         := Tdm_SendMapiMail.Create(nil);
- Try
-
-  dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' + IntToStr(InvoiceNo)
-  + ' - Invoice/package specification. InvoiceNo: ' + IntToStr(InvoiceNo),
-  'Faktura, paketspecifikation bifogad. '
-  + LF  + ''
-  + 'Invoice, package specification attached. '
-  + LF  + ''
-  + LF  + ''
-  + LF  + 'MVH/Best Regards, '
-  + LF  + ''
-  + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-//  'lars.makiaho@falubo.se',
-
-  MailToAddress,
-//  'lars.makiaho@falubo.se', //getinvoice emailaddress
-
-  Attach, False) ;
- Finally
-  FreeAndNil(dm_SendMapiMail) ;
- End ;
- End //if cbEmaila.Checked then
+      DocTyp := cPkgSpec;
+      ExportFile := ExportFile + 'Specification ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportFile);
+      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+    Finally
+      FreeAndNil(Params);
+      FreeAndNil(RC);
+    End;
+  end
   else
-   ShowMessage('Emailadress saknas för klienten!') ;
- End ;
+  begin
+
+    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
+    Try
+      SetLength(A, 1);
+      A[0] := InternalInvoiceNo;
+      FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
+        WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo));
+      FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
+        WoodXDir + 'Specification ' + IntToStr(InvoiceNo));
+    Finally
+      FreeAndNil(FormCRExportOneReport); // .Free ;
+    End;
+  end;
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+    exit;
+  if cbEmaila.Checked then
+  Begin
+    MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
+    if Length(MailToAddress) > 0 then
+    Begin
+      SetLength(Attach, 2);
+      Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
+      Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
+
+      x := 1;
+
+      sq_GetLONos.Close;
+      sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value :=
+        InternalInvoiceNo;
+      sq_GetLONos.Open;
+      sq_GetLONos.First;
+      While not sq_GetLONos.Eof do
+      Begin
+        x := succ(x);
+        SetLength(Attach, x + 1);
+        dmsSystem.DeliveryMessageNumber :=
+          sq_GetLONosDeliveryMessageNumber.AsString;
+
+        // dm_ImportWoodx.Ins_InvoicePkgSpecWoodX (InternalInvoiceNo, sq_GetLONosDeliveryMessageNumber.AsInteger) ;
+
+        Attach[x] := WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' +
+          IntToStr(InvoiceNo) + '-' + dmsSystem.DeliveryMessageNumber + '.xml';
+
+        sq_GetLONos.Next;
+      End;
+      sq_GetLONos.Close;
+
+      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
+      Try
+
+        dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
+          IntToStr(InvoiceNo)
+          + ' - Invoice/package specification. InvoiceNo: ' +
+          IntToStr(InvoiceNo),
+          'Faktura, paketspecifikation bifogad. '
+          + LF + ''
+          + 'Invoice, package specification attached. '
+          + LF + ''
+          + LF + ''
+          + LF + 'MVH/Best Regards, '
+          + LF + ''
+          + dmsContact.GetFirstAndLastName(ThisUser.UserID),
+          dmsSystem.Get_Dir('MyEmailAddress'),
+          // 'lars.makiaho@falubo.se',
+
+          MailToAddress,
+          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
+
+          Attach, False);
+      Finally
+        FreeAndNil(dm_SendMapiMail);
+      End;
+    End // if cbEmaila.Checked then
+    else
+      ShowMessage('Emailadress saknas för klienten!');
+  End;
 
 end;
 
-(*    since 2014-03-27 11:31
+(* since 2014-03-27 11:31
 begin
  if thisuser.UserName = 'Lars' then exit ;
 

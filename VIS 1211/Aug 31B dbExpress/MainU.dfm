@@ -27,10 +27,6 @@ object XMLImportExport: TXMLImportExport
     TabOrder = 0
     object tsImport: TTabSheet
       Caption = '&XML Import to DB'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 0
         Top = 32
@@ -50,7 +46,7 @@ object XMLImportExport: TXMLImportExport
         Left = 112
         Top = 24
         Width = 553
-        Height = 25
+        Height = 21
         TabOrder = 0
       end
       object btnImport: TButton
@@ -83,10 +79,6 @@ object XMLImportExport: TXMLImportExport
     object tsExport: TTabSheet
       Caption = '&DB Export to XML'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 24
         Top = 32
@@ -122,7 +114,7 @@ object XMLImportExport: TXMLImportExport
         Left = 112
         Top = 24
         Width = 553
-        Height = 25
+        Height = 21
         TabOrder = 0
       end
       object btnClearEmptyNode: TButton
@@ -188,14 +180,14 @@ object XMLImportExport: TXMLImportExport
       Left = 136
       Top = 32
       Width = 553
-      Height = 25
+      Height = 21
       TabOrder = 2
     end
     object edtConnectionString: TEdit
       Left = 136
       Top = 8
       Width = 553
-      Height = 25
+      Height = 21
       TabOrder = 0
       Text = 
         'Initial Catalog=vis_vwab;Provider=SQLOLEDB.1;uid=sa;pwd=huggkubb' +
