@@ -49,7 +49,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 1080
-          Height = 45
+          Height = 44
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -65,7 +65,7 @@ object frmInvoiceList: TfrmInvoiceList
           Left = 1
           Top = 1
           Width = 70
-          Height = 45
+          Height = 44
           Align = dalTop
           BarManager = dxBarManager1
         end
@@ -1414,7 +1414,7 @@ object frmInvoiceList: TfrmInvoiceList
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (

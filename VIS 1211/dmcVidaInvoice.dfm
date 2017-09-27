@@ -6954,6 +6954,21 @@ object dmVidaInvoice: TdmVidaInvoice
       'END'
       ''
       ''
+      'WHEN VU.VolumeUnitName = '#39'S'#228'ck'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PTD.NoOfPieces  As d' +
+        'ecimal(10,3)),3)'
+      ''
+      'END'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Bal'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PTD.NoOfPieces  As d' +
+        'ecimal(10,3)),3)'
+      ''
+      'END'
+      ''
+      ''
       ''
       'END AS OrderVolume,'
       ''
@@ -7165,6 +7180,26 @@ object dmVidaInvoice: TdmVidaInvoice
       
         'ROUND(CAST(PL.ActualLengthMM * PTD.NoOfPieces As decimal(10,3)),' +
         '3) -- AS m3NomSizeActualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      ''
+      ''
+      'WHEN PU.TemplateUnitName = '#39'S'#228'ck'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PTD.NoOfPieces As decimal(10,3)),3) -- AS m3NomSizeAc' +
+        'tualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'Bal'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PTD.NoOfPieces As decimal(10,3)),3) -- AS m3NomSizeAc' +
+        'tualLength,'
       'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
       'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
       'END'

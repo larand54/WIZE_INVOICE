@@ -7540,10 +7540,14 @@ Begin
 
   if cid = 'VWAB' then
     serie := 'KR19'
-  else if cid = 'VBAB' then
+  else
+   if cid = 'VBAB' then
     serie := 'KR21'
   else
-    serie := 'KR34';
+   if cid = 'VPEL' then
+    serie:= 'KR28H'
+   else
+    serie:= 'KR34';
 
   Try
     sp_VIS_xp_voulogwrite.ParamByName('@cid').AsString := cid;
@@ -8397,7 +8401,9 @@ begin
             else if InvoiceType2 = 7 then
               ResKontraSerie := 'VTA1'
             else if InvoiceType2 = 8 then
-              ResKontraSerie := 'VBAB';
+              ResKontraSerie := 'VBAB'
+            else if InvoiceType2 = 12 then
+              ResKontraSerie := 'VHOK';
 
         if Length(Trim(ResKontraSerie)) = 0 then
         Begin
