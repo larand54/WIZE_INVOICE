@@ -660,11 +660,17 @@ Var
   ClientNo: integer;
   DocTyp: integer;
   RoleType: integer;
-  ExportFile: String;
+  ExportInvoiceFile: String;
+  ExportSpecFile: String;
+  ExportDir: String;
 begin
   if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
   else if ThisUser.UserName = 'Lars' then
     exit;
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
+    ExportDir := 'C:\VIS\Temp\'
+  else
+    ExportDir := WoodXDir;
 
   if uReportController.useFR then
   begin
@@ -675,19 +681,15 @@ begin
     RC := TCMReportController.Create;
     ClientNo := CustomerNo;
     RoleType := -1;
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-      ExportFile := 'C:\VIS\Temp\'
-    else
-      ExportFile := WoodXDir;
     Try
       DocTyp := cFaktura;
-      ExportFile := ExportFile + 'InvoiceNo ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportFile);
+      ExportInvoiceFile := ExportDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportInvoiceFile);
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
 
       DocTyp := cPkgSpec;
-      ExportFile := ExportFile + 'Specification ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportFile);
+      ExportSpecFile := ExportDir + 'Specification ' + IntToStr(InvoiceNo);
+      RC.setExportFile(ExportSpecFile);
       RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
     Finally
       FreeAndNil(Params);
@@ -699,12 +701,14 @@ begin
 
     FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
     Try
+      ExportInvoiceFile := ExportDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
+      ExportSpecFile := ExportDir + 'Specification ' + IntToStr(InvoiceNo);
       SetLength(A, 1);
       A[0] := InternalInvoiceNo;
       FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
-        WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo));
+        ExportInvoiceFile);
       FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-        WoodXDir + 'Specification ' + IntToStr(InvoiceNo));
+        ExportSpecFile);
     Finally
       FreeAndNil(FormCRExportOneReport); // .Free ;
     End;
@@ -717,8 +721,8 @@ begin
     if Length(MailToAddress) > 0 then
     Begin
       SetLength(Attach, 2);
-      Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
-      Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
+      Attach[0] := ExportInvoiceFile + '.pdf';
+      Attach[1] := ExportSpecFile + '.pdf';
 
       x := 1;
 
