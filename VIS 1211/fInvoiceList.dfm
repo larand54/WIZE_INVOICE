@@ -1091,6 +1091,7 @@ object frmInvoiceList: TfrmInvoiceList
       OnUpdate = acDeleteInvoiceUpdate
     end
     object acCreditInvoice: TAction
+      AutoCheck = True
       Caption = 'Fullkredit'
       ImageIndex = 8
       OnExecute = acCreditInvoiceExecute
@@ -3355,6 +3356,7 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object KrediteraShiftF21: TMenuItem
       Action = acCreditInvoice
+      AutoCheck = True
     end
     object SamlingsfakturaF101: TMenuItem
       Action = acGroupedInvoice
@@ -3981,13 +3983,14 @@ object frmInvoiceList: TfrmInvoiceList
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

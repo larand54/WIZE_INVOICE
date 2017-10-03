@@ -536,7 +536,7 @@ type
     Function CopyPOLoadToSalesLoadAndSetPackagesAsNotAvailable(const OldLoadNo,
       NewLONo, OriginalLoadNo, Insert_Confirmed_Load: Integer): Integer;
     procedure ShowMemo(InfoList: TStrings);
-    function DoesLOHaveNonInvoicedLoads(const LONo: Integer): Boolean;
+    function DoesLOHaveNonInvoicedLoads(const LONo : Integer): Boolean;
     Function GetReportNameByReportNo(const ReportNo: Integer): String;
     function GetReportNameByDocTyp(const DocTyp: Integer): String;
     function GetLogonParams(var HostName, Database, UserName, Password,
@@ -1870,67 +1870,87 @@ begin
   End;
 end;
 
-function TdmsSystem.DoesLOHaveNonInvoicedLoads(const LONo: Integer): Boolean;
+function TdmsSystem.DoesLOHaveNonInvoicedLoads(const LONo  : Integer): Boolean;
 begin
   Try
     Result := False;
     qryExec.SQL.Clear;
+
+
+{
+      qryExec.SQL.Add('Select LSP.LoadNo AS productno');
+      qryExec.SQL.Add('FROM dbo.LoadShippingPlan LSP');
+      qryExec.SQL.Add('Inner Join dbo.Loads L on L.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.CustomerShippingPlanHeader CSH on CSH.ShippingPlanNo = LSP.ShippingPlanNo');
+      qryExec.SQL.Add('AND CSH.CustomerNo = L.CustomerNo');
+
+      qryExec.SQL.Add('WHERE LSP.ShippingPlanNo = ' + inttostr(LONo));
+      qryExec.SQL.Add
+        ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add('AND IH.InvoiceType = 0)');
+
+      qryExec.SQL.Add
+        ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+      qryExec.SQL.Add
+        ('Inner Join dbo.ProformaInvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add('AND IH.InvoiceType = 1)');
+
+      qryExec.SQL.Add
+        ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+      qryExec.SQL.Add
+        ('Inner Join dbo.ProformaInvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add('AND IH.InvoiceType = 2)');
+
+      qryExec.SQL.Add
+        ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceNumber_AGENT invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add('AND IH.InvoiceType = 6)');
+
+      qryExec.SQL.Add
+        ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceNo_VTA invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add
+        ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+      qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
+      qryExec.SQL.Add('AND IH.InvoiceType = 7)');
+
+}
+
+
+
     qryExec.SQL.Add('Select LSP.LoadNo AS productno');
     qryExec.SQL.Add('FROM dbo.LoadShippingPlan LSP');
     qryExec.SQL.Add('Inner Join dbo.Loads L on L.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.CustomerShippingPlanHeader CSH on CSH.ShippingPlanNo = LSP.ShippingPlanNo');
+    qryExec.SQL.Add('Inner Join dbo.CustomerShippingPlanHeader CSH on CSH.ShippingPlanNo = LSP.ShippingPlanNo');
     qryExec.SQL.Add('AND CSH.CustomerNo = L.CustomerNo');
-
     qryExec.SQL.Add('WHERE LSP.ShippingPlanNo = ' + inttostr(LONo));
-    qryExec.SQL.Add
-      ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add('AND IH.InvoiceType = 0)');
-
-    qryExec.SQL.Add
-      ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
-    qryExec.SQL.Add
-      ('Inner Join dbo.ProformaInvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add('AND IH.InvoiceType = 1)');
-
-    qryExec.SQL.Add
-      ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
-    qryExec.SQL.Add
-      ('Inner Join dbo.ProformaInvoiceNumber invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add('AND IH.InvoiceType = 2)');
-
-    qryExec.SQL.Add
-      ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceNumber_AGENT invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add('AND IH.InvoiceType = 6)');
-
-    qryExec.SQL.Add
-      ('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceNo_VTA invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add
-      ('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
-    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo');
-    qryExec.SQL.Add('AND IH.InvoiceType = 7)');
+    qryExec.SQL.Add('AND LSP.LoadNo not in (Select inl.LoadNo FROM dbo.Invoiced_Load inl');
+    qryExec.SQL.Add('Inner Join dbo.InvoiceNos invno on invno.InternalInvoiceNo = inl.InternalInvoiceNo');
+    qryExec.SQL.Add('Inner Join dbo.InvoiceHeader ih on ih.InternalInvoiceNo = inl.InternalInvoiceNo');
+    qryExec.SQL.Add('WHERE inl.LoadNo = LSP.LoadNo)');
+//    qryExec.SQL.Add('AND IH.InvoiceType =  ' + inttostr(InvoiceType));
 
 
 
-    // qryExec.SQL.SaveToFile('qryExec.TXT') ;
+
+ //    qryExec.SQL.SaveToFile('qryExec.TXT') ;
 
     qryExec.Open;
     if not qryExec.Eof then // and qryExec.Bof) then

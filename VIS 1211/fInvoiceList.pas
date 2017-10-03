@@ -2137,6 +2137,7 @@ begin
   With dmVidaInvoice do
   Begin
     acCreditInvoice.Enabled := ((cdsInvoiceListInvoiceType.AsInteger = 0) or
+    (cdsInvoiceListInvoiceType.AsInteger = 12) or
       ((cdsInvoiceListInvoiceType.AsInteger >= 4) and
       (cdsInvoiceListInvoiceType.AsInteger <= 8))) and
       (cdsInvoiceListINVOICE_NO.AsInteger > 0);
