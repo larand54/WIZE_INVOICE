@@ -13296,7 +13296,7 @@ object dmVidaInvoice: TdmVidaInvoice
     CachedUpdates = True
     Connection = dmsConnector.SQLConn_XOR
     FetchOptions.AssignedValues = [evCache]
-    StoredProcName = 'VIS_xp_vourowlogwrite_ALVE'
+    StoredProcName = 'VIS_xp_vourowlogwrite_ALVE_v2'
     Left = 920
     Top = 448
     ParamData = <
@@ -13374,27 +13374,34 @@ object dmVidaInvoice: TdmVidaInvoice
       end
       item
         Position = 12
-        Name = '@o2'
+        Name = '@o1'
         DataType = ftString
         ParamType = ptInput
         Size = 8
       end
       item
         Position = 13
-        Name = '@o5'
+        Name = '@o2'
         DataType = ftString
         ParamType = ptInput
         Size = 8
       end
       item
         Position = 14
+        Name = '@o5'
+        DataType = ftString
+        ParamType = ptInput
+        Size = 8
+      end
+      item
+        Position = 15
         Name = '@freetext'
         DataType = ftString
         ParamType = ptInput
         Size = 30
       end
       item
-        Position = 15
+        Position = 16
         Name = '@LogError'
         DataType = ftInteger
         ParamType = ptInputOutput

@@ -1828,7 +1828,7 @@ type
       const account: String; const logdate: TSQLTimeStamp;
       const currency: String; const amount: Double; const foramount: Double;
       const vatcode: Integer; const creator: String;
-      const Object2, Object5: String; Const NM3: Double;
+      const Object1, Object2, Object5: String; Const NM3: Double;
       Const FreeText: String);
 
     procedure ChangeVISPaketInCaseDifferentNoOfPiecesFromHTF;
@@ -7608,7 +7608,7 @@ End;
 procedure TdmVidaInvoice.EXEC_xp_vourowlogwrite(const logno: Integer;
   const account: String; const logdate: TSQLTimeStamp; const currency: String;
   const amount: Double; const foramount: Double; const vatcode: Integer;
-  const creator: String; const Object2, Object5: String; Const NM3: Double;
+  const creator: String; const Object1, Object2, Object5: String; Const NM3: Double;
   Const FreeText: String);
 
 const
@@ -7619,7 +7619,8 @@ Begin
   if (ThisUser.UserName = 'larmak') or (ThisUser.UserName = 'Lars') then
     showmessage('EXEC_xp_vourowlogwrite: ' + LF + ' logno = ' + IntToStr(logno)
       + LF + ' account = ' + account + LF + ' currency = ' + currency + LF +
-      ' amount = ' + FloatToStr(amount) + LF + ' Object2 = ' + Object2 + LF +
+      ' amount = ' + FloatToStr(amount) + LF + ' Object1 = ' + Object1 + LF +
+      ' Object2 = ' + Object2 + LF +
       ' Object5 = ' + Object5 + LF + ' FreeText = ' + FreeText);
 
   // ShowMessage('Before EXEC_xp_vourowlogwrite');
@@ -7641,6 +7642,7 @@ Begin
     sp_VIS_xp_vourowlogwrite.ParamByName('@vatcode').AsSmallInt := vatcode; //
     sp_VIS_xp_vourowlogwrite.ParamByName('@crtype').AsInteger := 5; // 5 = kund
     sp_VIS_xp_vourowlogwrite.ParamByName('@creator').AsString := creator;
+    sp_VIS_xp_vourowlogwrite.ParamByName('@o1').AsString := Object1 ;
     sp_VIS_xp_vourowlogwrite.ParamByName('@o2').AsString := Object2;
     // varchar 8
     sp_VIS_xp_vourowlogwrite.ParamByName('@o5').AsString := Object5;
@@ -7973,7 +7975,7 @@ const
   LF = #10;
 
 Var
-  Object2, Object5: String;
+  Object1, Object2, Object5: String;
   ResKontraSerie: String;
   KundResKontra: String;
   VaruKonto: String;
@@ -8421,51 +8423,49 @@ begin
           Exit;
         End;
 
-        cdsInvTrfLoggInvoiceNo.AsInteger := InvoiceNo;
-        cdsInvTrfLoggInternalInvoiceNo.AsInteger := InternalInvoiceNo;
-        cdsInvTrfLoggObject2.AsString := Object2;
-        cdsInvTrfLoggObject5.AsString := Object5;
-        cdsInvTrfLoggResKontraSerie.AsString := ResKontraSerie;
-        cdsInvTrfLoggKundResKontra.AsString := KundResKontra;
-        cdsInvTrfLoggForsaljningskonto.AsString := VaruKonto;
-        cdsInvTrfLoggFrakt_konto.AsString := Frakt_konto;
-        cdsInvTrfLoggMoms_konto.AsString := Moms_konto;
-        cdsInvTrfLoggRounding_Konto.AsString := Rounding_Konto;
-        cdsInvTrfLoggProvision_Konto.AsString := Provision_Konto;
-        cdsInvTrfLoggKassaRabattKonto.AsString := KassaRabattKonto;
-        cdsInvTrfLoggAgentNo.AsInteger := AgentNo;
-        cdsInvTrfLoggRegion.AsString := Region;
-        cdsInvTrfLoggCurrency.AsString := currency;
-        cdsInvTrfLoggCountryNo.AsInteger := sp_InvTotalsCountryNo.AsInteger;
-        cdsInvTrfLoggSkatteUpplag.AsInteger := SkatteUpplag;
-        cdsInvTrfLoggInvoiceTotal_SEK.AsFloat := InvoiceTotal_SEK;
-        cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat := ForsaljningsKonto_SEK;
-        cdsInvTrfLoggmoms_SEK.AsFloat := moms_sek;
-        cdsInvTrfLoggmoms_For.AsFloat := moms_for;
-        cdsInvTrfLoggmoms.AsFloat := moms_sek;
-        cdsInvTrfLoggRounding_SEK.AsFloat := Rounding_SEK;
-        cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat :=
-          TotalInvoiceValueNoRounding_SEK;
-        cdsInvTrfLoggProvision_SEK.AsFloat := Provision_SEK;
-        cdsInvTrfLoggKassaRabatt_SEK.AsFloat := KassaRabatt_SEK;
-        cdsInvTrfLoggfrakt_SEK.AsFloat := Total_frakt_SEK;
-        cdsInvTrfLoggInvoiceTotal_For.AsFloat := InvoiceTotal_For;
-        cdsInvTrfLoggForsaljningsKonto_For.AsFloat := ForsaljningsKonto_For;
-        cdsInvTrfLoggRounding_For.AsFloat := Rounding_For;
-        cdsInvTrfLoggProvision_For.AsFloat := Provision_For;
-        cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat :=
-          TotalInvoiceValueNoRounding_For;
-        cdsInvTrfLoggKassaRabatt_For.AsFloat := KassaRabatt_For;
-        cdsInvTrfLoggfrakt_for.AsFloat := Total_frakt_FOR;
-        cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp := InvoiceDate;
-        cdsInvTrfLoggVatcode.AsInteger := vatcode;
-        cdsInvTrfLoggInvoiceType.AsInteger := InvoiceType;
-        cdsInvTrfLoggEventDate.AsSQLTimeStamp := DateTimeToSQLTimeStamp(Now);
-        cdsInvTrfLoggUserId.AsInteger := ThisUser.UserID;
-        cdsInvTrfLoggXorID_KundNamn.AsString := XorID_KundNamn;
-        cdsInvTrfLoggTrading.AsInteger := Trading;
-        cdsInvTrfLoggVaruGrupp.AsInteger := VaruGrupp;
-        cdsInvTrfLoggPO_Country.AsInteger := PO_CountryNo;
+        cdsInvTrfLoggInvoiceNo.AsInteger                        := InvoiceNo;
+        cdsInvTrfLoggInternalInvoiceNo.AsInteger                := InternalInvoiceNo;
+        cdsInvTrfLoggObject2.AsString                           := Object2;
+        cdsInvTrfLoggObject5.AsString                           := Object5;
+        cdsInvTrfLoggResKontraSerie.AsString                    := ResKontraSerie;
+        cdsInvTrfLoggKundResKontra.AsString                     := KundResKontra;
+        cdsInvTrfLoggForsaljningskonto.AsString                 := VaruKonto;
+        cdsInvTrfLoggFrakt_konto.AsString                       := Frakt_konto;
+        cdsInvTrfLoggMoms_konto.AsString                        := Moms_konto;
+        cdsInvTrfLoggRounding_Konto.AsString                    := Rounding_Konto;
+        cdsInvTrfLoggProvision_Konto.AsString                   := Provision_Konto;
+        cdsInvTrfLoggKassaRabattKonto.AsString                  := KassaRabattKonto;
+        cdsInvTrfLoggAgentNo.AsInteger                          := AgentNo;
+        cdsInvTrfLoggRegion.AsString                            := Region;
+        cdsInvTrfLoggCurrency.AsString                          := currency;
+        cdsInvTrfLoggCountryNo.AsInteger                        := sp_InvTotalsCountryNo.AsInteger;
+        cdsInvTrfLoggSkatteUpplag.AsInteger                     := SkatteUpplag;
+        cdsInvTrfLoggInvoiceTotal_SEK.AsFloat                   := InvoiceTotal_SEK;
+        cdsInvTrfLoggForsaljningsKonto_SEK.AsFloat              := ForsaljningsKonto_SEK;
+        cdsInvTrfLoggmoms_SEK.AsFloat                           := moms_sek;
+        cdsInvTrfLoggmoms_For.AsFloat                           := moms_for;
+        cdsInvTrfLoggmoms.AsFloat                               := moms_sek;
+        cdsInvTrfLoggRounding_SEK.AsFloat                       := Rounding_SEK;
+        cdsInvTrfLoggTotalInvoiceValueNoRounding_SEK.AsFloat    := TotalInvoiceValueNoRounding_SEK;
+        cdsInvTrfLoggProvision_SEK.AsFloat                      := Provision_SEK;
+        cdsInvTrfLoggKassaRabatt_SEK.AsFloat                    := KassaRabatt_SEK;
+        cdsInvTrfLoggfrakt_SEK.AsFloat                          := Total_frakt_SEK;
+        cdsInvTrfLoggInvoiceTotal_For.AsFloat                   := InvoiceTotal_For;
+        cdsInvTrfLoggForsaljningsKonto_For.AsFloat              := ForsaljningsKonto_For;
+        cdsInvTrfLoggRounding_For.AsFloat                       := Rounding_For;
+        cdsInvTrfLoggProvision_For.AsFloat                      := Provision_For;
+        cdsInvTrfLoggTotalInvoiceValueNoRounding_For.AsFloat    := TotalInvoiceValueNoRounding_For;
+        cdsInvTrfLoggKassaRabatt_For.AsFloat                    := KassaRabatt_For;
+        cdsInvTrfLoggfrakt_for.AsFloat                          := Total_frakt_FOR;
+        cdsInvTrfLoggInvoiceDate.AsSQLTimeStamp                 := InvoiceDate;
+        cdsInvTrfLoggVatcode.AsInteger                          := vatcode;
+        cdsInvTrfLoggInvoiceType.AsInteger                      := InvoiceType;
+        cdsInvTrfLoggEventDate.AsSQLTimeStamp                   := DateTimeToSQLTimeStamp(Now);
+        cdsInvTrfLoggUserId.AsInteger                           := ThisUser.UserID;
+        cdsInvTrfLoggXorID_KundNamn.AsString                    := XorID_KundNamn;
+        cdsInvTrfLoggTrading.AsInteger                          := Trading;
+        cdsInvTrfLoggVaruGrupp.AsInteger                        := VaruGrupp;
+        cdsInvTrfLoggPO_Country.AsInteger                       := PO_CountryNo;
 
         cdsInvTrfLogg.Post;
         if cdsInvTrfLogg.ChangeCount > 0 then
@@ -8739,7 +8739,7 @@ begin
               // InvoiceTotal_For,
               mt_VerLoggVatCode.AsInteger, // vatcode,
               xorID, // Creator
-              Object2, Object5, Volume, Copy(XorID_KundNamn, 1, 30) // FreeText
+              Object1, Object2, Object5, Volume, Copy(XorID_KundNamn, 1, 30) // FreeText
               );
           mt_VerLogg.Next;
         End;
@@ -8796,7 +8796,7 @@ begin
                 // ForsaljningsKonto_For, //foramount : double;
                 mt_VerLoggVatCode.AsInteger, // skall ha en vatcode
                 xorID, // Creator
-                Object2, Object5, Volume, Copy(XorID_KundNamn, 1, 30)
+                Object1, Object2, Object5, Volume, Copy(XorID_KundNamn, 1, 30)
                 // FreeText
                 );
             mt_VerLogg.Next;

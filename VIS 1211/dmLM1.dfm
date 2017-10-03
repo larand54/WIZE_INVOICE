@@ -1,7 +1,7 @@
 object daMoLM1: TdaMoLM1
   OldCreateOrder = False
-  Height = 580
-  Width = 759
+  Height = 544
+  Width = 754
   object dsrcAvrop: TDataSource
     DataSet = cdsAvrop
     OnDataChange = dsrcAvropDataChange

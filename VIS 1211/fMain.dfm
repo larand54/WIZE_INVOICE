@@ -21,16 +21,16 @@ object frmMain: TfrmMain
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 159
+    Top = 157
     Width = 1226
-    Height = 552
+    Height = 554
     Align = alClient
     TabOrder = 0
     object panelBase: TPanel
       Left = 1
       Top = 1
       Width = 1224
-      Height = 550
+      Height = 552
       Align = alClient
       BevelOuter = bvLowered
       TabOrder = 0
@@ -40,7 +40,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 1226
-    Height = 159
+    Height = 157
     ApplicationButton.Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
       2000000000000009000000000000000000000000000000000000000000000000
@@ -3119,7 +3119,7 @@ object frmMain: TfrmMain
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -3924,7 +3924,7 @@ object frmMain: TfrmMain
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     DoNotTranslate.Strings = (
@@ -3932,7 +3932,8 @@ object frmMain: TfrmMain
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

@@ -43,7 +43,7 @@ uses
   dxBarApplicationMenu, dxScreenTip, Vcl.Menus, cxButtons, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxRibbonCustomizationForm, System.Actions, siComp,
-  siLngLnk;
+  siLngLnk ;
 
 type
   TfrmMain = class(TForm)
