@@ -42,7 +42,6 @@ object frmAvrop: TfrmAvrop
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitWidth = 1248
     object Splitter2: TSplitter
       Left = 561
       Top = 1
@@ -466,7 +465,6 @@ object frmAvrop: TfrmAvrop
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 683
       object PanelAvropLoad: TPanel
         Left = 0
         Top = 0
@@ -481,7 +479,6 @@ object frmAvrop: TfrmAvrop
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 683
         DesignSize = (
           700
           73)
@@ -531,7 +528,6 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 7
         end
         object cxButton2: TcxButton
           Left = 133
@@ -547,7 +543,6 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 116
         end
         object teSearchInvoiceNo: TcxTextEdit
           Left = 111
@@ -591,7 +586,6 @@ object frmAvrop: TfrmAvrop
           Font.Name = 'Arial'
           Font.Style = []
           ParentFont = False
-          ExplicitLeft = 256
         end
       end
       object grdLoad: TcxGrid
@@ -601,7 +595,6 @@ object frmAvrop: TfrmAvrop
         Height = 245
         Align = alClient
         TabOrder = 1
-        ExplicitWidth = 683
         object grdLoadDBTableView1: TcxGridDBTableView
           PopupMenu = pmLoads
           OnDblClick = grdLoadDBTableView1DblClick
@@ -753,7 +746,6 @@ object frmAvrop: TfrmAvrop
     Height = 69
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 1248
     object Label3: TLabel
       Left = 440
       Top = 16
@@ -1000,7 +992,6 @@ object frmAvrop: TfrmAvrop
     Align = alClient
     PopupMenu = pmAvropGrid
     TabOrder = 2
-    ExplicitWidth = 1248
     object grdcxAvropDBBandedTableView1: TcxGridDBBandedTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = daMoLM1.dsrcAvrop
@@ -1352,7 +1343,6 @@ object frmAvrop: TfrmAvrop
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 3
-    ExplicitWidth = 1248
     object Panel6: TPanel
       Left = 0
       Top = 0
@@ -1378,7 +1368,6 @@ object frmAvrop: TfrmAvrop
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 1183
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
@@ -1396,7 +1385,6 @@ object frmAvrop: TfrmAvrop
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitWidth = 280
     end
   end
   object cxRichEdit1: TcxRichEdit
@@ -4907,7 +4895,7 @@ object frmAvrop: TfrmAvrop
       end>
     UseOwnFont = False
     Left = 504
-    Top = 392
+    Top = 384
   end
   object pmLO: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -4931,7 +4919,7 @@ object frmAvrop: TfrmAvrop
       end>
     UseOwnFont = False
     Left = 648
-    Top = 392
+    Top = 384
   end
   object pmAddLO: TdxBarPopupMenu
     BarManager = dxBarManager1
@@ -4955,7 +4943,7 @@ object frmAvrop: TfrmAvrop
       end>
     UseOwnFont = False
     Left = 361
-    Top = 393
+    Top = 385
   end
   object SaveDialog1: TSaveDialog
     Left = 512
@@ -5315,13 +5303,14 @@ object frmAvrop: TfrmAvrop
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

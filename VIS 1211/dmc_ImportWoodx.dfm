@@ -113,6 +113,7 @@ object dm_ImportWoodx: Tdm_ImportWoodx
     object mtClientVisClientName: TStringField
       FieldKind = fkLookup
       FieldName = 'VisClientName'
+      LookupDataSet = dmsContact.sp_Customers
       LookupKeyFields = 'ClientNo'
       LookupResultField = 'ClientName'
       KeyFields = 'VisClientNo'
@@ -901,7 +902,8 @@ object dm_ImportWoodx: Tdm_ImportWoodx
         'IdentifierType = '#39'VATIdentificationNumber'#39')'
       'or (paid.PartyIdentifierType = '#39'AssignedBySeller'#39')'
       'or (paid.PartyIdentifierType = '#39'GlobalLocationNumber'#39'))'
-      'AND paid.Partytype = '#39'Supplier'#39)
+      '-- AND paid.Partytype = '#39'Supplier'#39
+      'Order by c.ClientName desc')
     Left = 40
     Top = 16
     ParamData = <

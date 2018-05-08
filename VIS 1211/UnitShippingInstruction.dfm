@@ -2,8 +2,8 @@ inherited frmShippingInstruction: TfrmShippingInstruction
   Left = 240
   Top = 109
   Caption = 'frmShippingInstruction'
-  ClientHeight = 795
-  ClientWidth = 1396
+  ClientHeight = 646
+  ClientWidth = 1134
   OldCreateOrder = True
   PopupMenu = pmShortcut
   OnCloseQuery = FormCloseQuery
@@ -11,17 +11,13 @@ inherited frmShippingInstruction: TfrmShippingInstruction
   OnShow = FormShow
   ExplicitWidth = 1134
   ExplicitHeight = 646
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object grdShippingInstruct: TcxGrid [0]
     Left = 0
-    Top = 82
-    Width = 1396
-    Height = 713
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 67
+    Width = 1134
+    Height = 579
     Align = alClient
     TabOrder = 0
     object grdShippingInstructDBTableView1: TcxGridDBTableView
@@ -106,126 +102,106 @@ inherited frmShippingInstruction: TfrmShippingInstruction
     end
   end
   inherited Panel6: TPanel
-    Width = 1396
-    Height = 82
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Width = 1134
+    Height = 67
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 1
-    ExplicitWidth = 1396
-    ExplicitHeight = 82
+    ExplicitWidth = 1134
+    ExplicitHeight = 67
     inherited Panel7: TPanel
-      Left = 464
-      Width = 846
-      Height = 82
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 377
+      Width = 687
+      Height = 67
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
-      ExplicitLeft = 464
-      ExplicitWidth = 846
-      ExplicitHeight = 82
+      ExplicitLeft = 377
+      ExplicitWidth = 687
+      ExplicitHeight = 67
       inherited dxBarDockControl1: TdxBarDockControl
-        Width = 844
-        Height = 47
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        ExplicitWidth = 844
-        ExplicitHeight = 47
+        Width = 685
+        Height = 45
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        ExplicitWidth = 685
+        ExplicitHeight = 45
       end
     end
     inherited Panel8: TPanel
       Left = 0
-      Width = 464
-      Height = 82
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Width = 377
+      Height = 67
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alLeft
       ExplicitLeft = 0
-      ExplicitWidth = 464
-      ExplicitHeight = 82
+      ExplicitWidth = 377
+      ExplicitHeight = 67
       object deStartPeriod: TcxDBDateEdit
-        Left = 89
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 72
+        Top = 8
         DataBinding.DataField = 'StartPeriod'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         TabOrder = 0
-        Width = 178
+        Width = 145
       end
       object lcCarrier: TcxDBLookupComboBox
-        Left = 89
-        Top = 44
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 72
+        Top = 36
         DataBinding.DataField = 'Carrier'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 1
-        Width = 345
+        Width = 281
       end
       object deEndPeriod: TcxDBDateEdit
-        Left = 286
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 232
+        Top = 8
         DataBinding.DataField = 'EndPeriod'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         TabOrder = 2
-        Width = 148
+        Width = 121
       end
       object cxLabel1: TcxLabel
-        Left = 30
-        Top = 15
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 24
+        Top = 12
         Caption = 'Period:'
       end
       object cxLabel2: TcxLabel
-        Left = 30
-        Top = 49
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 24
+        Top = 40
         Caption = 'B'#229't:'
       end
     end
     inherited Panel9: TPanel
-      Left = 1310
-      Height = 82
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ExplicitLeft = 1310
-      ExplicitHeight = 82
+      Left = 1064
+      Height = 67
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      ExplicitLeft = 1064
+      ExplicitHeight = 67
       inherited dxBarDockControl2: TdxBarDockControl
-        Height = 47
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        ExplicitHeight = 47
+        Height = 45
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        ExplicitHeight = 45
       end
     end
   end
@@ -1152,7 +1128,6 @@ inherited frmShippingInstruction: TfrmShippingInstruction
       Caption = 'Skriv ut F8'
       ImageIndex = 5
       ShortCut = 119
-      OnExecute = acPrintExecute
     end
     object acExportToExcel: TAction
       Category = 'GENERAL'

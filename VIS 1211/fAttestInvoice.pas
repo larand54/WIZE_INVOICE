@@ -355,7 +355,7 @@ implementation
 
 uses VidaUser, dmsDataConn, UnitSelectClient, UnitdmModule1,
   UnitDestination, UnitAddress, UnitCurrency, UnitDelTerms,
-  UnitPaymentTerms, UnitCRViewReport, UnitCarrier, dmBooking,
+  UnitPaymentTerms, UnitCarrier, dmBooking,
   dmcVidaInvoice, UnitBookingForm, dmsVidaContact, uStickyNote,
   fSelectInvoice, dmsVidaSystem, uSelectAttBeskrivning, udmLanguage;
 

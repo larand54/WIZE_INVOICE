@@ -1312,6 +1312,7 @@ object dmsContact: TdmsContact
     end
   end
   object sp_Customers: TFDStoredProc
+    BeforeOpen = sp_CustomersBeforeOpen
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
@@ -2400,6 +2401,23 @@ object dmsContact: TdmsContact
       Origin = 'BankGiro'
       ProviderFlags = [pfInUpdate]
       Size = 10
+    end
+    object cds_ReportStaticsIISalesPersonNo: TIntegerField
+      FieldName = 'SalesPersonNo'
+      Origin = 'SalesPersonNo'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object cds_ReportStaticsIISales: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Sales'
+      LookupDataSet = cds_Users
+      LookupKeyFields = 'UserID'
+      LookupResultField = 'Namn'
+      KeyFields = 'SalesPersonNo'
+      ProviderFlags = []
+      Size = 36
+      Lookup = True
     end
   end
   object ds_ReportStaticsII: TDataSource

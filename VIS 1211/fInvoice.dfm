@@ -36,9 +36,8 @@ object frmInvoice: TfrmInvoice
     Properties.TabWidth = 150
     LookAndFeel.Kind = lfUltraFlat
     OnPageChanging = pgInvoicePageChanging
-    ClientRectBottom = 196
-    ClientRectLeft = 4
-    ClientRectRight = 1140
+    ClientRectBottom = 200
+    ClientRectRight = 1144
     ClientRectTop = 26
     object tsInvoiceHead: TcxTabSheet
       Caption = '&FAKTURA'
@@ -46,7 +45,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceHead: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 160
         Align = alTop
         Color = clMoneyGreen
@@ -356,7 +355,7 @@ object frmInvoice: TfrmInvoice
           OnClick = lFakturaAdressClick
         end
         object lcSR: TcxDBLookupComboBox
-          Left = 362
+          Left = 363
           Top = 7
           DataBinding.DataField = 'SR'
           DataBinding.DataSource = dmVidaInvoice.dsrcInvoiceHead
@@ -684,11 +683,14 @@ object frmInvoice: TfrmInvoice
     object tsShipToAddress: TcxTabSheet
       Caption = '&LEVERANSADRESS'
       ImageIndex = 14
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 28
-        Width = 1136
-        Height = 142
+        Width = 1144
+        Height = 146
         Align = alClient
         TabOrder = 0
         object grdShipAdrDBTableView1: TcxGridDBTableView
@@ -785,7 +787,7 @@ object frmInvoice: TfrmInvoice
       object PanelInvoiceRowMissing: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 28
         Align = alTop
         Caption = 
@@ -805,16 +807,15 @@ object frmInvoice: TfrmInvoice
       Caption = '&AGENT'
       ImageIndex = 15
       DesignSize = (
-        1136
-        170)
+        1144
+        174)
       object Shape3: TShape
         Left = 4
         Top = 3
-        Width = 1127
+        Width = 1135
         Height = 155
         Anchors = [akLeft, akTop, akRight]
         Brush.Color = clMoneyGreen
-        ExplicitWidth = 1135
       end
       object DBText22: TDBText
         Left = 72
@@ -885,6 +886,9 @@ object frmInvoice: TfrmInvoice
     object tsNotes: TcxTabSheet
       Caption = '&NOTERING'
       ImageIndex = 11
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 0
@@ -895,13 +899,16 @@ object frmInvoice: TfrmInvoice
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        Height = 170
-        Width = 1136
+        Height = 174
+        Width = 1144
       end
     end
     object tsStickyNote: TcxTabSheet
       Caption = '&POST IT!'
       ImageIndex = 13
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo2: TDBMemo
         Left = 400
         Top = 5
@@ -924,10 +931,13 @@ object frmInvoice: TfrmInvoice
     object tsSpec: TcxTabSheet
       Caption = '&SPEC'
       ImageIndex = 5
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 1136
+        Width = 1144
         Height = 32
         Align = alTop
         BevelOuter = bvNone
@@ -1163,7 +1173,7 @@ object frmInvoice: TfrmInvoice
       object grdPackageSpec: TcxGrid
         Left = 0
         Top = 32
-        Width = 1136
+        Width = 1144
         Height = 184
         Align = alTop
         TabOrder = 1
@@ -1450,18 +1460,19 @@ object frmInvoice: TfrmInvoice
       object cxSplitter2: TcxSplitter
         Left = 0
         Top = 216
-        Width = 1136
+        Width = 1144
         Height = 8
         HotZoneClassName = 'TcxMediaPlayer8Style'
         AlignSplitter = salTop
         Control = grdPackageSpec
         Color = clMaroon
         ParentColor = False
+        ExplicitWidth = 8
       end
       object pcSPEC: TcxPageControl
         Left = 0
         Top = 224
-        Width = 1136
+        Width = 1144
         Height = 13
         Align = alClient
         TabOrder = 3
@@ -1471,15 +1482,16 @@ object frmInvoice: TfrmInvoice
         Properties.TabHeight = 30
         Properties.TabWidth = 200
         LookAndFeel.Kind = lfUltraFlat
-        ClientRectRight = 0
-        ClientRectTop = 0
+        ClientRectBottom = 15
+        ClientRectRight = 1144
+        ClientRectTop = 15
         object tsKortSkeppSpec: TcxTabSheet
           Caption = 'Kortskeppningsspec'
           ImageIndex = 18
           object Panel4: TPanel
             Left = 0
             Top = 0
-            Width = 0
+            Width = 1144
             Height = 0
             Align = alClient
             BevelOuter = bvNone
@@ -1487,7 +1499,7 @@ object frmInvoice: TfrmInvoice
             object Panel5: TPanel
               Left = 0
               Top = 0
-              Width = 0
+              Width = 1144
               Height = 33
               Align = alTop
               BevelOuter = bvNone
@@ -1664,7 +1676,7 @@ object frmInvoice: TfrmInvoice
             object grdSelectedPkgs: TcxGrid
               Left = 0
               Top = 33
-              Width = 0
+              Width = 1144
               Height = 236
               Align = alClient
               TabOrder = 1
@@ -1879,7 +1891,7 @@ object frmInvoice: TfrmInvoice
           object Panel7: TPanel
             Left = 0
             Top = 0
-            Width = 0
+            Width = 1144
             Height = 0
             Align = alClient
             BevelOuter = bvNone
@@ -1887,7 +1899,7 @@ object frmInvoice: TfrmInvoice
             object Panel8: TPanel
               Left = 0
               Top = 0
-              Width = 0
+              Width = 1144
               Height = 33
               Align = alTop
               BevelOuter = bvNone
@@ -2086,7 +2098,7 @@ object frmInvoice: TfrmInvoice
             object grdToInventory: TcxGrid
               Left = 0
               Top = 33
-              Width = 0
+              Width = 1144
               Height = 236
               Align = alClient
               TabOrder = 1
@@ -4247,12 +4259,10 @@ object frmInvoice: TfrmInvoice
       object FakturaEngelsk1: TMenuItem
         Caption = 'Faktura Engelsk'
         Enabled = False
-        OnClick = FakturaEngelsk1Click
       end
       object FakturaEngelskLength1: TMenuItem
         Caption = 'Faktura Engelsk - Length'
         Enabled = False
-        OnClick = FakturaEngelskLength1Click
       end
       object SpecifikationSvenskVer2: TMenuItem
         Break = mbBreak
@@ -4261,56 +4271,44 @@ object frmInvoice: TfrmInvoice
       end
       object SpecEngVer2: TMenuItem
         Caption = 'Specifikation Engelsk ver2'
-        OnClick = SpecEngVer2Click
       end
       object SpecifikationEngelskmedproducentver21: TMenuItem
         Caption = 'Specifikation Engelsk - med producent ver2'
-        OnClick = SpecifikationEngelskmedproducentver21Click
       end
       object SpecifikationEngelskAktuelldimensionVer21: TMenuItem
         Caption = 'Specifikation Engelsk - Aktuell dimension ver2'
-        OnClick = SpecifikationEngelskAktuelldimensionVer21Click
       end
       object Specifikationutanpktnr1: TMenuItem
         Caption = 'Specifikation utan pktnr'
-        OnClick = Specifikationutanpktnr1Click
       end
       object SpecifikationIdahostyle1: TMenuItem
         Caption = 'Specifikation (Idaho style)'
-        OnClick = SpecifikationIdahostyle1Click
       end
       object FakturaEngelskfrAgust1: TMenuItem
         Caption = 'Faktura Engelsk (f'#246'r Agust)'
         Enabled = False
-        OnClick = FakturaEngelskfrAgust1Click
       end
       object FakturaEngelskLengthNM31: TMenuItem
         Caption = 'Faktura Engelsk - Length (+ NM3)'
         Enabled = False
-        OnClick = FakturaEngelskLengthNM31Click
       end
       object FakturaEngelskLngdperpakettyp1: TMenuItem
         Caption = 'Faktura Engelsk - L'#228'ngd (per pakettyp)'
         Enabled = False
-        OnClick = FakturaEngelskLngdperpakettyp1Click
       end
       object FakturaSvenskutanmomsdk1: TMenuItem
         Caption = 'Faktura Svensk utan moms (dk)'
         Enabled = False
-        OnClick = FakturaSvenskutanmomsdk1Click
       end
       object FakturaEngelskdk1: TMenuItem
         Caption = 'Faktura Engelsk (dk)'
         Enabled = False
-        OnClick = FakturaEngelskdk1Click
       end
       object SpecifikationSvenskdk1: TMenuItem
         Caption = 'Specifikation Svensk (dk)'
-        OnClick = SpecifikationSvenskdk1Click
       end
       object SpecifikationEngelskdk1: TMenuItem
         Caption = 'Specifikation Engelsk (dk)'
-        OnClick = SpecifikationEngelskdk1Click
       end
       object SpecifikationgrupperadperFSSvensk1: TMenuItem
         Action = acSpecGroupByLoadNo
@@ -4357,7 +4355,6 @@ object frmInvoice: TfrmInvoice
     end
     object acPrintInvoices: TAction
       Caption = 'Faktura Svensk'
-      OnExecute = acPrintInvoicesExecute
     end
     object acKlientInvoices: TAction
       Caption = 'Skriv ut Klientfaktura 1st'
@@ -4486,7 +4483,6 @@ object frmInvoice: TfrmInvoice
     end
     object acSpecGroupByLoadNo: TAction
       Caption = 'Specifikation grupperad per FS Svensk'
-      OnExecute = acSpecGroupByLoadNoExecute
     end
     object acExportTyp1a: TAction
       Caption = 'Excel: paketnrfil'
@@ -6499,7 +6495,7 @@ object frmInvoice: TfrmInvoice
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -6532,13 +6528,14 @@ object frmInvoice: TfrmInvoice
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

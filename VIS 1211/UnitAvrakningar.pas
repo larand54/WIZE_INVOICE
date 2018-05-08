@@ -200,7 +200,6 @@ type
     procedure acRemoveRowExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
     procedure acRemoveAvrExecute(Sender: TObject);
-    procedure acPrintAvrExecute(Sender: TObject);
     procedure acSearchLastnrExecute(Sender: TObject);
     procedure acSearchAvrNrExecute(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);
@@ -225,7 +224,7 @@ var
 
 implementation
 
-uses UnitdmModule1, UnitCRViewReport, VidaUser, dmsVidaContact, VidaConst,
+uses UnitdmModule1, VidaUser, dmsVidaContact, VidaConst,
   uEntryField, dmsDataConn, dmsVidaSystem, uFreightAvrSearch,
   dmc_UserProps, udmLanguage;
 
@@ -509,25 +508,6 @@ begin
       cds_LoadFreightCostHeader2.Delete;
       // lbApplyChanges.Enabled:= True ;
     End;
-  End;
-end;
-
-procedure TfrmAvrakningar.acPrintAvrExecute(Sender: TObject);
-var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of variant;
-begin
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmModule1.cds_LoadFreightCostHeader2AvrakningsNo.AsInteger;
-    FormCRViewReport.CreateCo('FRAKT_AVRAKNING.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
   End;
 end;
 

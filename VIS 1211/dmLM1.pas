@@ -247,6 +247,8 @@ type
     cdsLoadsINVOICE_NO: TIntegerField;
     cdsLoadsPrefix: TStringField;
     cdsLoadsInvoiceType: TStringField;
+    sq_PkgType_InvoiceOrigLoad: TFDQuery;
+    sp_DeleteTempLoad: TFDStoredProc;
     procedure dsrcAvropDataChange(Sender: TObject; Field: TField);
     procedure dspLoadsGetTableName(Sender: TObject; DataSet: TDataSet;
       var TableName: String);
@@ -258,8 +260,9 @@ type
     function SelectLONo: Integer;
 
   public
-    
 
+
+    procedure DeleteTempLoad(const LoadNo, InternalInvoiceNo: Integer);
     procedure CngLOonLoad(const LoadNo, NewLONo: Integer);
     function  ValidLO(const LONo: Integer): Boolean;
     procedure RefreshAvropLoads;
@@ -517,6 +520,24 @@ begin
   if cdsAvropRest.AsFloat < 0 then
     cdsAvropRest.AsFloat := 0;
 end;
+
+
+procedure TdaMoLM1.DeleteTempLoad(const LoadNo, InternalInvoiceNo: Integer);
+Begin
+  sp_DeleteTempLoad.ParamByName('@LoadNo').AsInteger            := LoadNo;
+  sp_DeleteTempLoad.ParamByName('@InternalInvoiceNo').AsInteger := InternalInvoiceNo ;
+  Try
+    sp_DeleteTempLoad.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      // dmsSystem.FDoLog(E.Message) ;
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
 
 
 

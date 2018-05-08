@@ -3279,4 +3279,18 @@ object dmLoadEntrySSP: TdmLoadEntrySSP
         ParamType = ptInput
       end>
   end
+  object sp_CheckAllLengthsExists: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.ws_CheckAllLengthsExists'
+    Left = 728
+    Top = 576
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end>
+  end
 end

@@ -320,8 +320,8 @@ var
 implementation
 
 uses VidaUser, dmSokFormular, dmcVidaOrder, dmsVidaContact,
-  UnitBookingFormorg, UnitCRViewReport, dmsDataConn, VidaConst,
-  dmsVidaSystem, uSokAvropMall, UnitCRExportOneReport, uSendMapiMail,
+  UnitBookingFormorg, dmsDataConn, VidaConst,
+  dmsVidaSystem, uSokAvropMall, uSendMapiMail,
   uEntryField, dmBooking, udmLanguage, uReport, uReportController
   , uFastReports, udmFR;
 
@@ -1365,28 +1365,9 @@ begin
 end;
 
 procedure TfrmSokAvropFormular.PrintReport(Sender: TObject);
-Var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of variant;
+
 begin
-  cbShowProduct.SetFocus;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := ThisUser.UserID;
 
-    if cds_PropsRegPointNo.AsInteger = 1 then
-      FormCRViewReport.CreateCo('SokAvrop_PROD.RPT', A)
-    else
-      FormCRViewReport.CreateCo('SokAvrop.RPT', A);
-
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
 end;
 
 procedure TfrmSokAvropFormular.acRefreshExecute(Sender: TObject);
@@ -1735,7 +1716,7 @@ procedure TfrmSokAvropFormular.acMailaTrpOrderExecute(Sender: TObject);
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -1784,26 +1765,9 @@ begin
             FR.Free;
           end;
           exit;
-        end
-        else
-          Try
-            FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-            SetLength(A, 1);
-            A[0] := cds_MakeSokAvropLO.AsInteger;
-            FormCRExportOneReport.CreateCo(cds_MakeSokAvropCustomerNo.AsInteger,
-              ReportType, A, ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString);
-            // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-            if FormCRExportOneReport.ReportFound = False then
-              Exit;
-          Finally
-            FreeAndNil(FormCRExportOneReport); // .Free ;
-          End;
-{$IFDEF DEBUG}
-{$IFDEF TEST_WITH_EMAIL}
-{$ELSE}
-        Exit; // No email if debugging and not TEST_WITH_EMAIL
-{$ENDIF}
-{$ENDIF}
+        end ;
+
+
         SetLength(Attach, 1);
         Attach[0] := ExcelDir + 'LONo ' + cds_MakeSokAvropLO.AsString + '.pdf';
         // Attach[1]        := ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString+'.pdf' ;
@@ -1815,7 +1779,7 @@ begin
             'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
             (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
             MailToAddress,
-            Attach, False);
+            Attach);
         Finally
           FreeAndNil(dm_SendMapiMail);
         End;
@@ -1896,7 +1860,7 @@ procedure TfrmSokAvropFormular.acMailaManyTrpOrdersExecute(Sender: TObject);
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -1968,32 +1932,7 @@ begin
             Finally
               FreeAndNil(Params);
             End;
-          end
-          else
-          begin
-            FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-            Try
-
-              // A[0]:= cds_MakeSokAvropLO.AsInteger ;
-              SetLength(A, 1);
-              for I := 0 to High(AA) do
-              Begin
-                A[0] := AA[I];
-                S := AA[I]; // A[0] ;
-                FormCRExportOneReport.CreateCo
-                  (cds_MakeSokAvropCustomerNo.AsInteger, ReportType, A,
-                  ExcelDir + 'LONo ' + S);
-                if FormCRExportOneReport.ReportFound = False then
-                  exit;
-                Screen.Cursor := crSQLWait; { Show hourglass cursor }
-                SetLength(Attach, I + 1);
-                Attach[I] := ExcelDir + 'LONo ' + S + '.pdf';
-              End; // for I := 0 to High(AA) do
-
-            Finally
-              FreeAndNil(FormCRExportOneReport); // .Free ;
-            End;
-          end;
+          end ;
 
           for I := 0 to High(AA) do
           Begin
@@ -2011,7 +1950,7 @@ begin
               LF + '' + LF + '' + LF + 'MVH/Best Regards, ' + LF + '' +
               dmsContact.GetFirstAndLastName(ThisUser.UserID),
               dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-              Attach, False);
+              Attach);
           Finally
             FreeAndNil(dm_SendMapiMail);
           End;

@@ -17,6 +17,8 @@ object frmPortArrivals: TfrmPortArrivals
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object grdPortPkgs: TcxGrid
@@ -186,6 +188,7 @@ object frmPortArrivals: TfrmPortArrivals
     Control = grdPortPkgs
     Color = clMaroon
     ParentColor = False
+    ExplicitWidth = 8
   end
   object grdPortLoads: TcxGrid
     Left = 0
@@ -421,7 +424,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 491
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -437,7 +440,7 @@ object frmPortArrivals: TfrmPortArrivals
         Left = 1
         Top = 1
         Width = 59
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -581,7 +584,7 @@ object frmPortArrivals: TfrmPortArrivals
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -2203,7 +2206,6 @@ object frmPortArrivals: TfrmPortArrivals
     end
     object acFS_DK: TAction
       Caption = 'F'#246'ljesedel (DK)'
-      OnExecute = acFS_DKExecute
       OnUpdate = acFS_DKUpdate
     end
     object acPrintSamLast: TAction
@@ -2683,13 +2685,14 @@ object frmPortArrivals: TfrmPortArrivals
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

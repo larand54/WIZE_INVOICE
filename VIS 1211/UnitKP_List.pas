@@ -118,7 +118,6 @@ type
     procedure acCustomizegrdKP_ListExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);
-    procedure acPrintExecute(Sender: TObject);
     procedure acExportToExcelExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -140,7 +139,7 @@ var
 implementation
 
 uses VidaConst, VidaUser, VidaUtils,
-  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
+  dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 
@@ -203,29 +202,6 @@ begin
   finally
     Screen.Cursor := Save_Cursor; { Always restore to normal }
   end;
-end;
-
-procedure TfrmKP_List.acPrintExecute(Sender: TObject);
-Var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of variant;
-begin
-  inherited;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 2);
-    A[0] := cds_PropsClientNo.AsInteger;
-    A[1] := cds_PropsStatus.AsInteger;
-
-    FormCRViewReport.CreateCo('KP_LISTA.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
-
 end;
 
 procedure TfrmKP_List.acExportToExcelExecute(Sender: TObject);

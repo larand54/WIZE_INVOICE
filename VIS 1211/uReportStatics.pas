@@ -100,6 +100,8 @@ type
     cxGrid2DBTableView1Email: TcxGridDBColumn;
     cxGrid2DBTableView1VatNo: TcxGridDBColumn;
     cxGrid2DBTableView1BankGiro: TcxGridDBColumn;
+    cxGridDBTableView1SalesPersonNo: TcxGridDBColumn;
+    cxGridDBTableView1Sales: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure acNewRSExecute(Sender: TObject);
     procedure acSaveExecute(Sender: TObject);
@@ -213,8 +215,8 @@ begin
   with dmsContact do
   Begin
     cds_ReportStaticsII.Insert;
-    cds_ReportStaticsIISalesRegionNo.AsInteger := mtClientClientNo.AsInteger;
-    cds_ReportStaticsIIDocType.AsInteger := mtClientDocType.AsInteger;
+    cds_ReportStaticsIISalesRegionNo.AsInteger  := mtClientClientNo.AsInteger;
+    cds_ReportStaticsIIDocType.AsInteger        := mtClientDocType.AsInteger;
   End;
 end;
 
@@ -223,9 +225,8 @@ begin
   with dmsContact do
   Begin
     acNewRS.Enabled := (mtClient.Active) and (mtClientClientNo.AsInteger > 0)
-      and (cds_ReportStaticsII.Active) and
-      ((cds_ReportStaticsII.RecordCount = 0) and (cds_ReportStaticsII.State
-      in [dsBrowse]));
+      and (cds_ReportStaticsII.Active) ;
+//      and ((cds_ReportStaticsII.RecordCount = 0) and (cds_ReportStaticsII.State in [dsBrowse]));
   End;
 end;
 

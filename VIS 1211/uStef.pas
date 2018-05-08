@@ -101,11 +101,11 @@ uses dmsDataConn, VidaUser, dmsVidaContact, VidaConst, dmsVidaSystem,
 
 function TfStef.InitiateReport(const ReportName: String): Boolean;
 var
-  HostName, Database, UserName, Password, spath: String;
+  HostName, Database, UserName, Password, spath, ServiceUrl : String;
 var
   iSecurity: Integer;
 begin
-  dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath);
+  dmsSystem.GetLogonParams(HostName, Database, UserName, Password, spath, ServiceUrl);
 
   Result := True;
   if not(FileExists(spath + ReportName)) then

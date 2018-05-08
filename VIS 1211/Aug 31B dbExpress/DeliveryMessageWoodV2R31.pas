@@ -136,10 +136,10 @@ type
   IXMLNumberOfDocumentsList = interface;
   IXMLDeliveryMessageShipment = interface;
   IXMLDeliveryMessageShipmentList = interface;
-//  IXMLShipmentID = interface;
+  IXMLShipmentID = interface;
   IXMLDeliveryMessageProductGroup = interface;
   IXMLDeliveryMessageProductGroupList = interface;
-//  IXMLProductGroupID = interface;
+  IXMLProductGroupID = interface;
   IXMLDeliveryShipmentLineItem = interface;
   IXMLDeliveryShipmentLineItemList = interface;
   IXMLPurchaseOrderInformation = interface;
@@ -723,7 +723,7 @@ type
 { IXMLNameAddress }
 
   IXMLNameAddress = interface(IXMLNode)
-    ['{60CBA6BE-AD9D-49C6-987A-7DD9DBFAE5AD}']
+    ['{60CBA6BE-FD9D-49C6-987A-7DD9DBFAE5AD}']
     { Property Accessors }
     function Get_CommunicationRole: WideString;
     function Get_Name1: WideString;
@@ -1228,7 +1228,7 @@ type
     { Methods & Properties }
     property QuantityType: WideString read Get_QuantityType write Set_QuantityType;
     property QuantityTypeContext: WideString read Get_QuantityTypeContext write Set_QuantityTypeContext;
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
   end;
 
 { IXMLInformationalQuantity }
@@ -1245,7 +1245,7 @@ type
     { Methods & Properties }
     property QuantityType: WideString read Get_QuantityType write Set_QuantityType;
     property QuantityTypeContext: WideString read Get_QuantityTypeContext write Set_QuantityTypeContext;
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
   end;
 
 { IXMLInformationalQuantityList }
@@ -1390,7 +1390,7 @@ type
     procedure Set_MonetaryAdjustmentReferenceLine(Value: LongWord);
     procedure Set_AdjustmentTypeReason(Value: WideString);
     { Methods & Properties }
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
     property MonetaryAdjustmentLine: LongWord read Get_MonetaryAdjustmentLine write Set_MonetaryAdjustmentLine;
     property MonetaryAdjustmentStartAmount: IXMLMonetaryAdjustmentStartAmount read Get_MonetaryAdjustmentStartAmount;
     property MonetaryAdjustmentStartQuantity: IXMLMeasurement read Get_MonetaryAdjustmentStartQuantity;
@@ -1402,7 +1402,7 @@ type
     property AdditionalText: IXMLS255List read Get_AdditionalText;
     property GeneralLedgerAccount: IXMLGeneralLedgerAccount read Get_GeneralLedgerAccount;
     property MonetaryAdjustmentAmount: IXMLMonetaryAdjustmentAmount read Get_MonetaryAdjustmentAmount;
-    property AdjustmentTypeReason: WideString read Get_AdjustmentTypeReason write Set_AdjustmentTypeReason;
+    property FDjustmentTypeReason: WideString read Get_AdjustmentTypeReason write Set_AdjustmentTypeReason;
   end;
 
 { IXMLMonetaryAdjustmentList }
@@ -1434,8 +1434,8 @@ type
     function Get_AdjustmentPercentage: IXMLMeasurement;
     function Get_AdjustmentValue: IXMLPricePerUnit;
     { Methods & Properties }
-    property AdjustmentPercentage: IXMLMeasurement read Get_AdjustmentPercentage;
-    property AdjustmentValue: IXMLPricePerUnit read Get_AdjustmentValue;
+    property FDjustmentPercentage: IXMLMeasurement read Get_AdjustmentPercentage;
+    property FDjustmentValue: IXMLPricePerUnit read Get_AdjustmentValue;
   end;
 
 { IXMLFlatAmountAdjustment }
@@ -1446,8 +1446,8 @@ type
     function Get_AdjustmentPercentage: IXMLMeasurement;
     function Get_AdjustmentFixedAmount: IXMLAdjustmentFixedAmount;
     { Methods & Properties }
-    property AdjustmentPercentage: IXMLMeasurement read Get_AdjustmentPercentage;
-    property AdjustmentFixedAmount: IXMLAdjustmentFixedAmount read Get_AdjustmentFixedAmount;
+    property FDjustmentPercentage: IXMLMeasurement read Get_AdjustmentPercentage;
+    property FDjustmentFixedAmount: IXMLAdjustmentFixedAmount read Get_AdjustmentFixedAmount;
   end;
 
 { IXMLAdjustmentFixedAmount }
@@ -2168,7 +2168,7 @@ type
 { IXMLInsurance }
 
   IXMLInsurance = interface(IXMLNode)
-    ['{B705385A-3042-4499-ADAD-E3349E05D313}']
+    ['{B705385A-3042-4499-FDAD-E3349E05D313}']
     { Property Accessors }
     function Get_Insurer: WideString;
     function Get_InsuranceContractNo: WideString;
@@ -2247,12 +2247,11 @@ type
   IXMLDeliveryMessageShipment = interface(IXMLNode)
     ['{2FF82E6B-FC76-4954-BB11-1A25DAA26ADA}']
     { Property Accessors }
-//    function Get_ShipmentID: IXMLShipmentID;
+    function Get_ShipmentID: IXMLShipmentID;
     function Get_DeliveryMessageProductGroup: IXMLDeliveryMessageProductGroupList;
     function Get_ShipmentSummary: IXMLShipmentSummary;
     { Methods & Properties }
-    //Lars open this up mar 2 2013
-//    property ShipmentID: IXMLShipmentID read Get_ShipmentID;
+    property ShipmentID: IXMLShipmentID read Get_ShipmentID;
     property DeliveryMessageProductGroup: IXMLDeliveryMessageProductGroupList read Get_DeliveryMessageProductGroup;
     property ShipmentSummary: IXMLShipmentSummary read Get_ShipmentSummary;
   end;
@@ -2269,7 +2268,7 @@ type
   end;
 
 { IXMLShipmentID }
-(*
+
   IXMLShipmentID = interface(IXMLNode)
     ['{D9CBD78C-E463-4E44-A04A-9539D16EC026}']
     { Property Accessors }
@@ -2279,18 +2278,16 @@ type
     property ShipmentIDType: WideString read Get_ShipmentIDType write Set_ShipmentIDType;
   end;
 
-  *)
-
 { IXMLDeliveryMessageProductGroup }
 
   IXMLDeliveryMessageProductGroup = interface(IXMLNode)
     ['{DEFB4D61-34F5-40C9-812B-3A60778226B9}']
     { Property Accessors }
-//    function Get_ProductGroupID: IXMLProductGroupID;
+    function Get_ProductGroupID: IXMLProductGroupID;
     function Get_DeliveryShipmentLineItem: IXMLDeliveryShipmentLineItemList;
     function Get_ProductGroupSummary: IXMLProductGroupSummary;
     { Methods & Properties }
-//    property ProductGroupID: IXMLProductGroupID read Get_ProductGroupID;
+    property ProductGroupID: IXMLProductGroupID read Get_ProductGroupID;
     property DeliveryShipmentLineItem: IXMLDeliveryShipmentLineItemList read Get_DeliveryShipmentLineItem;
     property ProductGroupSummary: IXMLProductGroupSummary read Get_ProductGroupSummary;
   end;
@@ -2307,7 +2304,7 @@ type
   end;
 
 { IXMLProductGroupID }
-(*
+
   IXMLProductGroupID = interface(IXMLNode)
     ['{F4005F60-AAEE-4F92-B0A6-9370FC0AA550}']
     { Property Accessors }
@@ -2316,7 +2313,6 @@ type
     { Methods & Properties }
     property ProductGroupIDType: WideString read Get_ProductGroupIDType write Set_ProductGroupIDType;
   end;
-  *)
 
 { IXMLDeliveryShipmentLineItem }
 
@@ -2658,7 +2654,7 @@ type
 { IXMLProofInformationalQuantity }
 
   IXMLProofInformationalQuantity = interface(IXMLNode)
-    ['{F2C2D66C-ADA3-4F01-BD5B-29B208308E6C}']
+    ['{F2C2D66C-FDA3-4F01-BD5B-29B208308E6C}']
     { Property Accessors }
     function Get_ProofType: WideString;
     function Get_Quantity: IXMLQuantity;
@@ -3456,7 +3452,7 @@ type
 { IXMLCoreStrengthCode }
 
   IXMLCoreStrengthCode = interface(IXMLNode)
-    ['{ADF4D5C0-4C53-4B2B-B406-10D988864ACE}']
+    ['{FDF4D5C0-4C53-4B2B-B406-10D988864ACE}']
     { Property Accessors }
     function Get_Agency: WideString;
     procedure Set_Agency(Value: WideString);
@@ -3606,13 +3602,13 @@ type
     { Methods & Properties }
     property QuantityType: WideString read Get_QuantityType write Set_QuantityType;
     property QuantityTypeContext: WideString read Get_QuantityTypeContext write Set_QuantityTypeContext;
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
   end;
 
 { IXMLSlitReelReference }
 
   IXMLSlitReelReference = interface(IXMLNode)
-    ['{1695087D-C3DC-4413-AD1A-5411332C072C}']
+    ['{1695087D-C3DC-4413-FD1A-5411332C072C}']
     { Property Accessors }
     function Get_SlitReelReferenceType: WideString;
     function Get_AssignedBy: WideString;
@@ -4394,7 +4390,7 @@ type
 { IXMLBendingStiffness }
 
   IXMLBendingStiffness = interface(IXMLDetailMeasurement)
-    ['{9A07F517-50D9-419F-AD1E-352A4ACF7179}']
+    ['{9A07F517-50D9-419F-FD1E-352A4ACF7179}']
     { Property Accessors }
     function Get_TestMethod: WideString;
     function Get_TestAgency: WideString;
@@ -4445,7 +4441,7 @@ type
 { IXMLBrightnessList }
 
   IXMLBrightnessList = interface(IXMLNodeCollection)
-    ['{FA2C705D-F468-481A-AD6F-F36B191D8290}']
+    ['{FA2C705D-F468-481A-FD6F-F36B191D8290}']
     { Methods & Properties }
     function Add: IXMLBrightness;
     function Insert(const Index: Integer): IXMLBrightness;
@@ -4518,7 +4514,7 @@ type
 { IXMLCoatWeight }
 
   IXMLCoatWeight = interface(IXMLDetailMeasurement)
-    ['{713CD815-31D8-4BFD-A76E-ADBC96EBD35E}']
+    ['{713CD815-31D8-4BFD-A76E-FDBC96EBD35E}']
     { Property Accessors }
     function Get_TestMethod: WideString;
     function Get_TestAgency: WideString;
@@ -5819,7 +5815,7 @@ type
 { IXMLTEA }
 
   IXMLTEA = interface(IXMLDetailMeasurement)
-    ['{5103B7A5-AD26-4949-A2F6-18FDBFCF3BAB}']
+    ['{5103B7A5-FD26-4949-A2F6-18FDBFCF3BAB}']
     { Property Accessors }
     function Get_TestMethod: WideString;
     function Get_TestAgency: WideString;
@@ -6176,7 +6172,7 @@ type
 { IXMLPlySet }
 
   IXMLPlySet = interface(IXMLNode)
-    ['{1208BD82-AD40-4356-AE84-7E8C3E6BACF7}']
+    ['{1208BD82-FD40-4356-AE84-7E8C3E6BACF7}']
     { Property Accessors }
     function Get_EdgePaddable: WideString;
     function Get_NumberOfPlies: IXMLNni1List;
@@ -7454,7 +7450,7 @@ type
 { IXMLPlywoodOSBSupplementalClass }
 
   IXMLPlywoodOSBSupplementalClass = interface(IXMLNodeCollection)
-    ['{F007E302-AD71-4319-9457-142009A42695}']
+    ['{F007E302-FD71-4319-9457-142009A42695}']
     { Property Accessors }
     function Get_SupplementalSpecification: WideString;
     function Get_AdditionalText(Index: Integer): WideString;
@@ -7544,7 +7540,7 @@ type
 { IXMLPackageInformationClass }
 
   IXMLPackageInformationClass = interface(IXMLNode)
-    ['{1093AD45-FDFF-43D6-AD34-4EA707B16BA3}']
+    ['{1093AD45-FDFF-43D6-FD34-4EA707B16BA3}']
     { Property Accessors }
     function Get_PackageType: WideString;
     function Get_MixedProductPalletIndicator: WideString;
@@ -8028,7 +8024,7 @@ type
     { Methods & Properties }
     property QuantityType: WideString read Get_QuantityType write Set_QuantityType;
     property QuantityTypeContext: WideString read Get_QuantityTypeContext write Set_QuantityTypeContext;
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
   end;
 
 { IXMLTotalQuantityList }
@@ -8056,7 +8052,7 @@ type
     { Methods & Properties }
     property QuantityType: WideString read Get_QuantityType write Set_QuantityType;
     property QuantityTypeContext: WideString read Get_QuantityTypeContext write Set_QuantityTypeContext;
-    property AdjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
+    property FDjustmentType: WideString read Get_AdjustmentType write Set_AdjustmentType;
   end;
 
 { IXMLTotalInformationalQuantityList }
@@ -8603,10 +8599,10 @@ type
   TXMLNumberOfDocumentsList = class;
   TXMLDeliveryMessageShipment = class;
   TXMLDeliveryMessageShipmentList = class;
-//  TXMLShipmentID = class;
+  TXMLShipmentID = class;
   TXMLDeliveryMessageProductGroup = class;
   TXMLDeliveryMessageProductGroupList = class;
-//  TXMLProductGroupID = class;
+  TXMLProductGroupID = class;
   TXMLDeliveryShipmentLineItem = class;
   TXMLDeliveryShipmentLineItemList = class;
   TXMLPurchaseOrderInformation = class;
@@ -10473,7 +10469,7 @@ type
     FDeliveryMessageProductGroup: IXMLDeliveryMessageProductGroupList;
   protected
     { IXMLDeliveryMessageShipment }
-//    function Get_ShipmentID: IXMLShipmentID;
+    function Get_ShipmentID: IXMLShipmentID;
     function Get_DeliveryMessageProductGroup: IXMLDeliveryMessageProductGroupList;
     function Get_ShipmentSummary: IXMLShipmentSummary;
   public
@@ -10492,14 +10488,12 @@ type
 
 { TXMLShipmentID }
 
-(*
   TXMLShipmentID = class(TXMLNode, IXMLShipmentID)
   protected
     { IXMLShipmentID }
     function Get_ShipmentIDType: WideString;
     procedure Set_ShipmentIDType(Value: WideString);
   end;
-  *)
 
 { TXMLDeliveryMessageProductGroup }
 
@@ -10508,7 +10502,7 @@ type
     FDeliveryShipmentLineItem: IXMLDeliveryShipmentLineItemList;
   protected
     { IXMLDeliveryMessageProductGroup }
-//    function Get_ProductGroupID: IXMLProductGroupID;
+    function Get_ProductGroupID: IXMLProductGroupID;
     function Get_DeliveryShipmentLineItem: IXMLDeliveryShipmentLineItemList;
     function Get_ProductGroupSummary: IXMLProductGroupSummary;
   public
@@ -10527,13 +10521,12 @@ type
 
 { TXMLProductGroupID }
 
-(*
   TXMLProductGroupID = class(TXMLNode, IXMLProductGroupID)
   protected
     { IXMLProductGroupID }
     function Get_ProductGroupIDType: WideString;
     procedure Set_ProductGroupIDType(Value: WideString);
-  end; *)
+  end;
 
 { TXMLDeliveryShipmentLineItem }
 
@@ -17224,12 +17217,12 @@ end;
 
 function TXMLQuantity.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLQuantity.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 { TXMLInformationalQuantity }
@@ -17256,12 +17249,12 @@ end;
 
 function TXMLInformationalQuantity.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLInformationalQuantity.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 { TXMLInformationalQuantityList }
@@ -17497,12 +17490,12 @@ end;
 
 function TXMLMonetaryAdjustment.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLMonetaryAdjustment.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 function TXMLMonetaryAdjustment.Get_MonetaryAdjustmentLine: LongWord;
@@ -17572,12 +17565,12 @@ end;
 
 function TXMLMonetaryAdjustment.Get_AdjustmentTypeReason: WideString;
 begin
-  Result := ChildNodes['AdjustmentTypeReason'].Text;
+  Result := ChildNodes['FDjustmentTypeReason'].Text;
 end;
 
 procedure TXMLMonetaryAdjustment.Set_AdjustmentTypeReason(Value: WideString);
 begin
-  ChildNodes['AdjustmentTypeReason'].NodeValue := Value;
+  ChildNodes['FDjustmentTypeReason'].NodeValue := Value;
 end;
 
 { TXMLMonetaryAdjustmentList }
@@ -17613,38 +17606,38 @@ end;
 
 procedure TXMLPriceAdjustment.AfterConstruction;
 begin
-  RegisterChildNode('AdjustmentPercentage', TXMLMeasurement);
-  RegisterChildNode('AdjustmentValue', TXMLPricePerUnit);
+  RegisterChildNode('FDjustmentPercentage', TXMLMeasurement);
+  RegisterChildNode('FDjustmentValue', TXMLPricePerUnit);
   inherited;
 end;
 
 function TXMLPriceAdjustment.Get_AdjustmentPercentage: IXMLMeasurement;
 begin
-  Result := ChildNodes['AdjustmentPercentage'] as IXMLMeasurement;
+  Result := ChildNodes['FDjustmentPercentage'] as IXMLMeasurement;
 end;
 
 function TXMLPriceAdjustment.Get_AdjustmentValue: IXMLPricePerUnit;
 begin
-  Result := ChildNodes['AdjustmentValue'] as IXMLPricePerUnit;
+  Result := ChildNodes['FDjustmentValue'] as IXMLPricePerUnit;
 end;
 
 { TXMLFlatAmountAdjustment }
 
 procedure TXMLFlatAmountAdjustment.AfterConstruction;
 begin
-  RegisterChildNode('AdjustmentPercentage', TXMLMeasurement);
-  RegisterChildNode('AdjustmentFixedAmount', TXMLAdjustmentFixedAmount);
+  RegisterChildNode('FDjustmentPercentage', TXMLMeasurement);
+  RegisterChildNode('FDjustmentFixedAmount', TXMLAdjustmentFixedAmount);
   inherited;
 end;
 
 function TXMLFlatAmountAdjustment.Get_AdjustmentPercentage: IXMLMeasurement;
 begin
-  Result := ChildNodes['AdjustmentPercentage'] as IXMLMeasurement;
+  Result := ChildNodes['FDjustmentPercentage'] as IXMLMeasurement;
 end;
 
 function TXMLFlatAmountAdjustment.Get_AdjustmentFixedAmount: IXMLAdjustmentFixedAmount;
 begin
-  Result := ChildNodes['AdjustmentFixedAmount'] as IXMLAdjustmentFixedAmount;
+  Result := ChildNodes['FDjustmentFixedAmount'] as IXMLAdjustmentFixedAmount;
 end;
 
 { TXMLAdjustmentFixedAmount }
@@ -19078,19 +19071,17 @@ end;
 
 procedure TXMLDeliveryMessageShipment.AfterConstruction;
 begin
- // RegisterChildNode('ShipmentID', TXMLShipmentID);
+  RegisterChildNode('ShipmentID', TXMLShipmentID);
   RegisterChildNode('DeliveryMessageProductGroup', TXMLDeliveryMessageProductGroup);
   RegisterChildNode('ShipmentSummary', TXMLShipmentSummary);
   FDeliveryMessageProductGroup := CreateCollection(TXMLDeliveryMessageProductGroupList, IXMLDeliveryMessageProductGroup, 'DeliveryMessageProductGroup') as IXMLDeliveryMessageProductGroupList;
   inherited;
 end;
 
-{
 function TXMLDeliveryMessageShipment.Get_ShipmentID: IXMLShipmentID;
 begin
   Result := ChildNodes['ShipmentID'] as IXMLShipmentID;
 end;
- }
 
 function TXMLDeliveryMessageShipment.Get_DeliveryMessageProductGroup: IXMLDeliveryMessageProductGroupList;
 begin
@@ -19120,7 +19111,7 @@ end;
 
 { TXMLShipmentID }
 
-(*function TXMLShipmentID.Get_ShipmentIDType: WideString;
+function TXMLShipmentID.Get_ShipmentIDType: WideString;
 begin
   Result := AttributeNodes['ShipmentIDType'].Text;
 end;
@@ -19129,24 +19120,22 @@ procedure TXMLShipmentID.Set_ShipmentIDType(Value: WideString);
 begin
   SetAttribute('ShipmentIDType', Value);
 end;
-*)
 
 { TXMLDeliveryMessageProductGroup }
 
 procedure TXMLDeliveryMessageProductGroup.AfterConstruction;
 begin
-//  RegisterChildNode('ProductGroupID', TXMLProductGroupID);
+  RegisterChildNode('ProductGroupID', TXMLProductGroupID);
   RegisterChildNode('DeliveryShipmentLineItem', TXMLDeliveryShipmentLineItem);
   RegisterChildNode('ProductGroupSummary', TXMLProductGroupSummary);
   FDeliveryShipmentLineItem := CreateCollection(TXMLDeliveryShipmentLineItemList, IXMLDeliveryShipmentLineItem, 'DeliveryShipmentLineItem') as IXMLDeliveryShipmentLineItemList;
   inherited;
 end;
 
-(*function TXMLDeliveryMessageProductGroup.Get_ProductGroupID: IXMLProductGroupID;
+function TXMLDeliveryMessageProductGroup.Get_ProductGroupID: IXMLProductGroupID;
 begin
   Result := ChildNodes['ProductGroupID'] as IXMLProductGroupID;
 end;
-*)
 
 function TXMLDeliveryMessageProductGroup.Get_DeliveryShipmentLineItem: IXMLDeliveryShipmentLineItemList;
 begin
@@ -19175,7 +19164,7 @@ begin
 end;
 
 { TXMLProductGroupID }
-(*
+
 function TXMLProductGroupID.Get_ProductGroupIDType: WideString;
 begin
   Result := AttributeNodes['ProductGroupIDType'].Text;
@@ -19185,7 +19174,6 @@ procedure TXMLProductGroupID.Set_ProductGroupIDType(Value: WideString);
 begin
   SetAttribute('ProductGroupIDType', Value);
 end;
-*)
 
 { TXMLDeliveryShipmentLineItem }
 
@@ -21808,12 +21796,12 @@ end;
 
 function TXMLSlitReelOrderQuantity.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLSlitReelOrderQuantity.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 { TXMLSlitReelReference }
@@ -30929,12 +30917,12 @@ end;
 
 function TXMLTotalQuantity.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLTotalQuantity.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 { TXMLTotalQuantityList }
@@ -30977,12 +30965,12 @@ end;
 
 function TXMLTotalInformationalQuantity.Get_AdjustmentType: WideString;
 begin
-  Result := AttributeNodes['AdjustmentType'].Text;
+  Result := AttributeNodes['FDjustmentType'].Text;
 end;
 
 procedure TXMLTotalInformationalQuantity.Set_AdjustmentType(Value: WideString);
 begin
-  SetAttribute('AdjustmentType', Value);
+  SetAttribute('FDjustmentType', Value);
 end;
 
 { TXMLTotalInformationalQuantityList }

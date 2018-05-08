@@ -7,20 +7,21 @@ uses
   Dialogs, StdCtrls, DB, ADODB, xmldom, XMLIntf, msxmldom, XMLDoc, PackageExportU,
   ComCtrls, ExtCtrls, Buttons, FMTBcd, DBClient, Provider, SqlExpr,
   cxShellBrowserDialog, ActnList, cxControls, cxContainer, cxEdit,
-  cxCheckBox, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, dxSkinsCore,
-  dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee,
-  dxSkinDarkRoom, dxSkinDarkSide, dxSkinDevExpressDarkStyle,
-  dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast,
-  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
-  dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
-  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
-  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
-  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
-  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinWhiteprint, dxSkinVS2010, dxSkinXmas2008Blue, cxClasses,
-  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
-  dxSkinOffice2013LightGray, dxSkinOffice2013White, System.Actions;
+  cxCheckBox, clTcpClient, clFtp, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven,
+  dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008, dxSkinTheAsphaltWorld,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinWhiteprint, dxSkinVS2010,
+  dxSkinXmas2008Blue,  cxClasses, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  clTcpClientTls, clTcpCommandClient, System.Actions;
 
 type
 
@@ -45,7 +46,7 @@ type
     btnValidateExportFile: TButton;
     edtFileToExport: TEdit;
     btnClearEmptyNode: TButton;
-    sbOpenWoodXFileToImport: TSpeedButton;
+    SpeedButton1: TSpeedButton;
     opd: TOpenDialog;
     svd: TSaveDialog;
     SpeedButton2: TSpeedButton;
@@ -62,19 +63,23 @@ type
     acImportPkgs: TAction;
     acExportPkgsToXMLFile: TAction;
     acValidateExportXMLFile: TAction;
+    sq_GetLONos2: TSQLQuery;
+    sq_GetLONos2DeliveryMessageNumber: TStringField;
     cbEmaila: TcxCheckBox;
+    clFtp1: TclFtp;
+    SQLQuery1: TSQLQuery;
     sq_GetLONos: TADOQuery;
     sq_GetLONosDeliveryMessageNumber: TStringField;
-    Timer1: TTimer;
-    acExportPkgsToXMLFileToInternational: TAction;
-    Button2: TButton;
     procedure btnImportClick(Sender: TObject);
     procedure ADOConnection1BeforeConnect(Sender: TObject);
     procedure btnConnectionClick(Sender: TObject);
     procedure btnClearEmptyNodeClick(Sender: TObject);
-    procedure sbOpenWoodXFileToImportClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
+
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure acValidateImportFileExecute(Sender: TObject);
     procedure acImportPkgsExecute(Sender: TObject);
@@ -84,23 +89,22 @@ type
     procedure acImportPkgsUpdate(Sender: TObject);
     procedure acValidateExportXMLFileUpdate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
-    procedure acExportPkgsToXMLFileToInternationalExecute(Sender: TObject);
   private
-    WoodXDir, ImportDir, DeliveryWoodMsg_XSD_File : String ;
-    procedure EmailFakturaAndSpecExecuteViaBizTalk ;
+
+    WoodXDir, ImportDir, DelWoodMsg_XSD : String ;
+    function  StringExist(const s, FileName : String) : Boolean ;
     function  DoGetNo(ImpExpFunction: TImportExportFunctionGetDeliveryMessageNumber): String ;//Lars, Lars again changed to string of course!!!
     function  DoImportExport(sSQL: string; ImpExpFunction: TImportExportFunction): Boolean;
     procedure DoExport;
     procedure DoImport;
     procedure DoRelaxedImport;
     procedure LoadConfig;
+    procedure SaveConfig;
     procedure EmailFakturaAndSpecExecute ;
    Public
-    ImportOfPkgsOK    : Boolean ;
-    InvoiceNo, CustomerNo, InternalInvoiceNo : Integer ;
-//    DeliveryMessageNumber : String ;
+    LoadNo, CustomerNo : Integer ;
+    InternalInvoiceNo : Integer ;
+    DeliveryMessageNumber, FakturaNummer : String ;
   end;
 
 var
@@ -110,46 +114,90 @@ implementation
 
 {$R *.dfm}
 
-uses PackageImportU, ComObj, TypInfo, dmsVidaSystem, VidaUser ,
-  dmsDataConn, dmsVidaContact, UnitCRExportOneReport,
-  uSendMapiMail, VidaConst , dmc_ImportWoodx, uReport, uReportController;
+uses PackageImportU, ComObj, TypInfo, IniFiles, dmsVidaSystem, VidaUser ,
+  dmsDataConn, dmsVidaContact,
+  //uSendMapiMail,
+  VidaConst , uSendMapiMail, uPrintModule, uReplaceStringInFile;
 
+
+procedure TXMLImportExport.SaveConfig;
+var
+  i : Integer;
+begin
+  with TIniFile.Create(ChangeFileExt(ParamStr(0), '.ini')) do
+  try
+    for i := 0 to Self.ComponentCount - 1 do
+    try
+
+      if IsPublishedProp(Self.Components[i], 'Text') then
+        WriteString('Config',  Self.Components[i].Name, TypInfo.GetStrProp(Self.Components[i], 'Text'));
+
+    except
+    end;
+
+  finally
+    Free;
+  end;
+end;
 
 procedure TXMLImportExport.LoadConfig;
 var
   i : Integer;
 begin
- WoodXDir                 := dmsSystem.Get_SystemDir('Woodx', 'WoodxDir') ;
- ImportDir                := dmsSystem.Get_SystemDir('Woodx', 'ImportDir') ;
- DeliveryWoodMsg_XSD_File := dmsSystem.Get_SystemDir('Woodx', 'DeliveryMessageWood_XSD') ; // GetUserExportDir(2, ThisUser.UserID, Self.Name) ;
+ WoodXDir                 := dmsSystem.Get_SystemDir('XMLImportExport', 'WoodxDir') ;
+ ImportDir                := dmsSystem.Get_SystemDir('XMLImportExport', 'ImportDir') ;
+ DelWoodMsg_XSD := dmsSystem.Get_SystemDir('XMLImportExport', 'DeliveryMessageWood_XSD') ; // GetUserExportDir(2, ThisUser.UserID, Self.Name) ;
 
 
-{ WoodXDir       := 'C:\ProjectXE\tt_sys\TT Faktura\WoodxMall\' ;
- ImportDir      := 'C:\ProjectXE\tt_sys\' ;
- DeliveryWoodMsg_XSD_File := 'C:\ProjectXE\tt_sys\TT Faktura\WoodxMall\' ;   }
+{
+   WoodXDir       := dmsSystem.Get_Dir(-1, 'XMLImportExport', 'WoodxDir') ;
+   ImportDir      := dmsSystem.Get_Dir(-1, 'XMLImportExport', 'ImportDir') ;
+   DelWoodMsg_XSD := dmsSystem.Get_Dir(-1, 'XMLImportExport', 'DeliveryMessageWood_XSD') ;
+
+}
 
 
+ if Length(WoodXDir) = 0 then
+ Begin
+  ShowMessage('Woodx huvudmapp saknas.');
+  acExportPkgsToXMLFile.Enabled:= False ;
+  Exit ;
+ End ;
 
- if not DirectoryExists(WoodXDir  + 'FakturaNr_' + IntToStr(InvoiceNo)) then
-  if not CreateDir(WoodXDir + 'FakturaNr_' + IntToStr(InvoiceNo)) then
-   raise Exception.Create('Cannot create '  + WoodXDir  + 'FakturaNr_' + IntToStr(InvoiceNo));
+ if Length(DelWoodMsg_XSD) = 0 then
+ Begin
+  ShowMessage('Mapp för woodx mallar saknas.');
+  acExportPkgsToXMLFile.Enabled:= False ;
+  Exit ;
+ End ;
 
- WoodXDir             := IncludeTrailingPathDelimiter(WoodXDir+'FakturaNr_' + IntToStr(InvoiceNo)) ;
+ if not DirectoryExists(WoodXDir + 'DeliveryMessage') then
+  if not CreateDir(WoodXDir + 'DeliveryMessage') then
+   raise Exception.Create('Cannot create ' + WoodXDir + 'DeliveryMessage');
+
+ WoodXDir             := IncludeTrailingPathDelimiter(WoodXDir + 'DeliveryMessage') ;
 // edtFileToImport.Text := ImportDir ;
- edtXSDFileName.Text  := DeliveryWoodMsg_XSD_File ;
+ edtXSDFileName.Text  := DelWoodMsg_XSD ;
  edtFileToExport.Text := WoodXDir ;
 
+ //Lars
+// edtConnectionString.Text       := 'Provider=SQLOLEDB.1;Password=woods2011;Persist Security Info=True;User ID=sa;Initial Catalog=WOODSUPPORT;Data Source=carmak-speed\SQLEXPRESS' ;
 
-// Vida server original
- edtConnectionString.Text       :='Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=vis_vida;Data Source=ALVESQL01' ;
-
-// Vida server Lars
-// edtConnectionString.Text       :=  'Provider=SQLOLEDB.1;Password=woods2011;Persist Security Info=True;User ID=Lars;Initial Catalog=vis_vida;Data Source=vis.vida.se' ;
+//LindVerken
+  edtConnectionString.Text       := 'Provider=SQLOLEDB.1;Password=Woodsupport2016!;Persist Security Info=True;User ID=sa;Initial Catalog=WOODSUPPORT;Data Source=VPS-NET-RDS-004\WOODSUPPORT' ;
+//inte denna                                    Provider=SQLOLEDB.1;Password=woods;Persist Security Info=True;User ID=sa;Initial Catalog=WOODSUPPORT;Data Source=WSSQL01\SQLEXPRESS;Extended Properties="uid=sa;pwd=sa"
 
 
-//Carmak-HP\SQLEXPRESS
-// edtConnectionString.Text       := 'Provider=SQLOLEDB.1;Password=woods;Persist Security Info=True;User ID=sa;Initial Catalog=vis_vida;Data Source=carmak-hp\sqlexpress;Extended Properties="uid=sa"' ;
+{
+  Database=WOODSUPPORT
+  OSAuthent=No
+  Server=VPS-NET-RDS-004\WOODSUPPORT
+  User_Name=sa
+  Password=Woodsupport2016!
+  LoginTimeout=120
+  DriverID=MSSQL
 
+}
 
  if ThisUser.UserID = 8 then
  Begin
@@ -158,6 +206,22 @@ begin
   btnConnection.Visible       := True ;
  End ;
 
+{  with TIniFile.Create(ChangeFileExt(ParamStr(0), '.ini')) do
+  try
+    for i := 0 to Self.ComponentCount - 1 do
+    try
+
+      if IsPublishedProp(Self.Components[i], 'Text') then
+        TypInfo.SetPropValue( Self.Components[i],
+                              'Text',
+                              ReadString('Config',  Self.Components[i].Name, TypInfo.GetStrProp(Self.Components[i], 'Text'))
+                              );
+
+    except
+    end;
+  finally
+    Free;
+  end; }
 end;
 
 
@@ -220,7 +284,7 @@ begin
   Result := '-1';
 
   if Assigned(ImpExpFunction) then
-    Result := ImpExpFunction ;
+    Result := ImpExpFunction;
 end;
 
 {-------------------------------------------------------------------------------
@@ -236,29 +300,27 @@ begin
 //Lars get GetDeliveryMessageNumber
 //Delete old data
   ADOConnection1.Open;
-  dmsSystem.DeliveryMessageNumber := DoGetNo(GetDeliveryMessageNumber) ;
-  if Length(dmsSystem.DeliveryMessageNumber) = 0 then
-   dmsSystem.DeliveryMessageNumber  := IntToStr( dmsSystem.ShippingPlanNo) ;
+  DeliveryMessageNumber:= DoGetNo(GetDeliveryMessageNumber) ;
   ADOQuery1.Close;
-  ADOQuery1.SQL.Add('Delete From dbo.DeliveryMessageWoodHeader WHERE DeliveryMessageNumber = '+QuotedStr(dmsSystem.DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From DeliveryMessageWoodHeader WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
   ADOQuery1.ExecSQL ;
   ADOConnection1.Close;
 
   ADOConnection1.Open;
   ADOConnection1.BeginTrans;
   try
-      DoImportExport('select * from dbo.DeliveryMessageWoodHeader', ImportDeliveryWoordHeader);
-      DoImportExport('select * from dbo.DeliveryMessageReference', ImportDeliveryMessageReference);
-      DoImportExport('select * from dbo.PartyIdentifier', ImportPartyIdentifier);
-      DoImportExport('select * from dbo.NameAddress', ImportNameAddress);
+      DoImportExport('select * from DeliveryMessageWoodHeader', ImportDeliveryWoordHeader);
+      DoImportExport('select * from DeliveryMessageReference', ImportDeliveryMessageReference);
+      DoImportExport('select * from PartyIdentifier', ImportPartyIdentifier);
+      DoImportExport('select * from NameAddress', ImportNameAddress);
 
-      DoImportExport('select * from dbo.DeliveryMessageShipment', ImportDeliveryMessageShipment);
-      DoImportExport('select * from dbo.ProductIdentifier', ImportProductIdentifier);
+      DoImportExport('select * from DeliveryMessageShipment', ImportDeliveryMessageShipment);
+      DoImportExport('select * from ProductIdentifier', ImportProductIdentifier);
 
-      DoImportExport('select * from dbo.DeliveryShipmentDeliveryMessageReference', ImportDeliveryShipmentDeliveryMessageReference);
-      DoImportExport('select * from dbo.TransportPackageInformation', ImportTransportPackageInformation);
-      DoImportExport('select * from dbo.LengthSpecification', ImportLengthSpecification);
-      DoImportExport('select * from dbo.InformationalQuantity', ImportInformationalQuantity);
+      DoImportExport('select * from DeliveryShipmentDeliveryMessageReference', ImportDeliveryShipmentDeliveryMessageReference);
+      DoImportExport('select * from TransportPackageInformation', ImportTransportPackageInformation);
+      DoImportExport('select * from LengthSpecification', ImportLengthSpecification);
+      DoImportExport('select * from InformationalQuantity', ImportInformationalQuantity);
       ADOConnection1.CommitTrans;
   except
       ADOConnection1.RollbackTrans;
@@ -268,7 +330,7 @@ end;
 {-------------------------------------------------------------------------------
   Procedure: btnExportClick
   Author:    2006.08.31 13.25.55 By Zheng Jie (Gear1023@163.com)
-  Function:  DB Export TO XML
+  Function:  DB Export TO XML 
 
   // Only ONE record can be exported one time.
   // Some changes need to be done for multi reocrd export.
@@ -276,41 +338,41 @@ end;
 -------------------------------------------------------------------------------}
 procedure TXMLImportExport.DoExport;
 begin
+ InternalInvoiceNo := LoadNo ;
  PackageExportU.InternalInvoiceNo := InternalInvoiceNo ;
  sq_GetLONos.Close ;
- sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value  := InternalInvoiceNo ;
+ sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value := LoadNo ;
  sq_GetLONos.Open ;
  While not sq_GetLONos.Eof do
  Begin
-  dmsSystem.DeliveryMessageNumber := sq_GetLONosDeliveryMessageNumber.AsString ;//DeliveryMessageNumber = LONo
-//LOKAL DIR  OutPutPackageFileName           := 'C:\woodx\' + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber +'.xml' ;
-  OutPutPackageFileName           := WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +  '-' + dmsSystem.DeliveryMessageNumber +  '.xml' ;
+  DeliveryMessageNumber:= sq_GetLONosDeliveryMessageNumber.AsString ;
+  OutPutPackageFileName := WoodXDir + 'DeliveryMessage_LoadNo_' + DeliveryMessageNumber +'.xml' ; //edtFileToExport.Text;
   CleareDoc;
 
-   DoImportExport('select * from dbo.DeliveryMessageWoodHeader  WHERE DeliveryMessageNumber = ' + QuotedStr(dmsSystem.DeliveryMessageNumber)  + ' AND InternalInvoiceNo = '  + inttostr(InternalInvoiceNo), ExportDeliveryWoordHeader);
+   DoImportExport('select * from dbo.DeliveryMessageWoodHeader  WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(LoadNo), ExportDeliveryWoordHeader);
 // This function is called by prior function
-////    DoImportExport('select * from dbo.DeliveryMessageReference, ExportDeliveryMessageReference);
-////    DoImportExport('select * from dbo.DeliveryMessageShipment', ExportDeliveryMessageShipment);
+////    DoImportExport('select * from DeliveryMessageReference, ExportDeliveryMessageReference);
+////    DoImportExport('select * from DeliveryMessageShipment', ExportDeliveryMessageShipment);
 
 //Lars switched order of these 2 calls
 // 2006.11.26 20:02:44 By Zheng Jie (Gear1023@163.com)
 // Changed Back By
-   DoImportExport('select * from dbo.PartyIdentifier  WHERE DeliveryMessageNumber = ' +  QuotedStr(dmsSystem.DeliveryMessageNumber) +  ' AND InternalInvoiceNo = '  + inttostr(InternalInvoiceNo), ExportPartyIdentifier) ;
-   DoImportExport('select * from dbo.NameAddress  WHERE DeliveryMessageNumber = ' +  QuotedStr(dmsSystem.DeliveryMessageNumber) +  ' AND InternalInvoiceNo = '  + inttostr(InternalInvoiceNo), ExportNameAddress) ;
+   DoImportExport('select * from dbo.PartyIdentifier  WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(LoadNo), ExportPartyIdentifier) ;
+   DoImportExport('select * from dbo.NameAddress  WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(LoadNo), ExportNameAddress) ;
 
 
 
 // This function is called by prior function
-////    DoImportExport('select * from dbo.ProductIdentifier', ExportProductIdentifier);
-////    DoImportExport('select * from dbo.DeliveryShipmentDeliveryMessageReference', ExportDeliveryShipmentDeliveryMessageReference);
+////    DoImportExport('select * from ProductIdentifier', ExportProductIdentifier);
+////    DoImportExport('select * from DeliveryShipmentDeliveryMessageReference', ExportDeliveryShipmentDeliveryMessageReference);
 
-   DoImportExport('select * from dbo.TransportPackageInformation  WHERE DeliveryMessageNumber = ' +  QuotedStr(dmsSystem.DeliveryMessageNumber) +  ' AND InternalInvoiceNo = '  + inttostr(InternalInvoiceNo), ExportTransportPackageInformation);
-////    DoImportExport('select * from dbo.LengthSpecification', ExportLengthSpecification);
-////    DoImportExport('select * from dbo.InformationalQuantity', ExportInformationalQuantity);
+   DoImportExport('select * from dbo.TransportPackageInformation  WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(LoadNo), ExportTransportPackageInformation);
+////    DoImportExport('select * from LengthSpecification', ExportLengthSpecification);
+////    DoImportExport('select * from InformationalQuantity', ExportInformationalQuantity);
 
    doClearEmptyNode;
 
-   edtFileToExport.Text := OutPutPackageFileName;
+   edtFileToExport.Text := OutPutPackageFileName ;
   sq_GetLONos.Next ;
  End ;
  sq_GetLONos.Close ;
@@ -336,7 +398,7 @@ begin
     DoSetPropValue(Sender, 'Enabled', True);
   end;
 end;
-
+         
 procedure TXMLImportExport.ADOConnection1BeforeConnect(Sender: TObject);
 begin
   ADOConnection1.ConnectionString := edtConnectionString.Text;
@@ -347,15 +409,60 @@ begin
   edtConnectionString.Text := PromptDataSource(Handle, edtConnectionString.Text);
 end;
 
-procedure TXMLImportExport.sbOpenWoodXFileToImportClick(Sender: TObject);
+procedure TXMLImportExport.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+//  SaveConfig;
+end;
+
+procedure TXMLImportExport.FormCreate(Sender: TObject);
+begin
+  LoadConfig;
+end;
+
+function TXMLImportExport.StringExist(const s, FileName : String) : Boolean ;
+Var sl : TStringList ;
+    i : Integer ;
+Begin
+  Result  := False ;
+  sl := TStringList.Create;
+  try
+    sl.LoadFromFile(fileName);
+    for i := sl.Count-1 downto 0 do
+      if Pos(s, sl[i])<>0 then
+      Begin
+        Result  := True ;
+        Exit ;
+      End;
+//    sl.SaveToFile(fileName);
+  finally
+    sl.Free;
+  end;
+End;
+
+procedure TXMLImportExport.SpeedButton1Click(Sender: TObject);
+var
+  Replacer: TFileSearchReplace;
+  StartTime: TDateTime;
 begin
   opd.InitialDir  := ImportDir ;
-  opd.Title       := 'Välj woodx fil att importera' ;
 //  opd.FileName    := edtFileToImport.Text;
   if opd.Execute then
   begin
    edtFileToImport.Text := opd.FileName;
    ImportDir            := ExtractFilePath(opd.FileName) ;
+
+   if not StringExist('TransportPackageInformation', edtFileToImport.Text)  then
+   Begin
+    StartTime:=Now;
+    Replacer:=TFileSearchReplace.Create(edtFileToImport.Text) ;
+    try
+      Replacer.Replace('PackageInformation', 'TransportPackageInformation', [rfReplaceAll,rfIgnoreCase]); //
+    finally
+      Replacer.Free;
+    end;
+    Caption:=FormatDateTime('nn:ss.zzz', Now - StartTime);
+   End;
   end;
 end;
 
@@ -363,7 +470,7 @@ procedure TXMLImportExport.SpeedButton2Click(Sender: TObject);
 begin
   if cxShellBrowserDialog1.Execute then
   Begin
-   WoodXDir             := IncludeTrailingBackslash(cxShellBrowserDialog1.Path) ;
+   WoodXDir            := IncludeTrailingBackslash(cxShellBrowserDialog1.Path) ;
    edtFileToExport.Text := IncludeTrailingBackslash(cxShellBrowserDialog1.Path) ;
 
   End ;
@@ -379,84 +486,77 @@ end;
 
 procedure TXMLImportExport.SpeedButton3Click(Sender: TObject);
 begin
-  opdxs.InitialDir:= ExtractFilePath(DeliveryWoodMsg_XSD_File) ;
-  opdxs.FileName := edtXSDFileName.Text;
+  opdxs.InitialDir:= ExtractFilePath(DelWoodMsg_XSD) ;
+//  opdxs.FileName := edtXSDFileName.Text;
   if opdxs.Execute then
   begin
 //    edtFileToImport.Text := opdxs.FileName;
     edtXSDFileName.Text := opdxs.FileName;
-    DeliveryWoodMsg_XSD_File      := opdxs.FileName;
+    DelWoodMsg_XSD      := opdxs.FileName;
   end;
 end;
 
 //Lars 28 nov
 procedure TXMLImportExport.DoRelaxedImport;
-Var
- Save_Cursor  : TCursor;
+var
+  Save_Cursor : TCursor;
 begin
-  Save_Cursor   := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
- Try
-  ImportOfPkgsOK:= False ;
   InPutPackageFileName := edtFileToImport.Text;
 //Lars get GetDeliveryMessageNumber
 //Delete old data
   ADOConnection1.Open;
-  dmsSystem.DeliveryMessageNumber:= DoGetNo(GetDeliveryMessageNumber) ;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-  if Length(dmsSystem.DeliveryMessageNumber) = 0 then
-   dmsSystem.DeliveryMessageNumber  := IntToStr( dmsSystem.ShippingPlanNo) ;
+  DeliveryMessageNumber:= '1' ;//DoGetNo(GetDeliveryMessageNumber) ;
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
   ADOQuery1.Close;
   ADOQuery1.SQL.Clear ;
-  ADOQuery1.SQL.Add('Delete From dbo.DeliveryMessageWoodHeader2 WHERE DeliveryMessageNumber = ' +QuotedStr(dmsSystem.DeliveryMessageNumber)) ;
-  ADOQuery1.SQL.Add('Delete From dbo.ProductIdentifier2 WHERE DeliveryMessageNumber = ' + QuotedStr(dmsSystem.DeliveryMessageNumber)) ;
-  ADOQuery1.SQL.Add('Delete From dbo.PartyIdentifier2 WHERE DeliveryMessageNumber = ' + QuotedStr(dmsSystem.DeliveryMessageNumber)) ;
-  ADOQuery1.SQL.Add('Delete From dbo.NameAddress2 WHERE DeliveryMessageNumber = ' + QuotedStr(dmsSystem.DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.DeliveryMessageWoodHeader2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.ProductIdentifier2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.PartyIdentifier2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.NameAddress2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.DeliveryMessageShipment2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
+  ADOQuery1.SQL.Add('Delete From dbo.DeliveryShipmentDeliveryMessageReference2 WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)) ;
   ADOQuery1.ExecSQL ;
   ADOConnection1.Close;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
   ADOConnection1.Open;
   ADOConnection1.BeginTrans;
   try
-      DoImportExport('select * from DeliveryMessageWoodHeader2', ImportDeliveryWoordHeader);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-//      DoImportExport('select * from DeliveryMessageReference', ImportDeliveryMessageReference);
-      DoImportExport('select * from PartyIdentifier2', ImportPartyIdentifier);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-      DoImportExport('select * from NameAddress2', ImportNameAddress);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-      DoImportExport('select * from DeliveryMessageShipment2', ImportDeliveryMessageShipment);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
 
-      DoImportExport('select * from DeliveryShipmentDeliveryMessageReference2', ImportDeliveryShipmentDeliveryMessageReference);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-      DoImportExport('select * from TransportPackageInformation2', RelaxedImportTransportPackageInformation);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-      DoImportExport('select * from LengthSpecification2', RelaxedImportLengthSpecification);
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-      DoImportExport('select * from ProductIdentifier2', ImportProductIdentifier);//Moved after TransportPackageInformation2 beacuse it is related to it
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+      DoImportExport('select * from dbo.DeliveryMessageWoodHeader2', ImportDeliveryWoordHeader);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+//      DoImportExport('select * from DeliveryMessageReference', ImportDeliveryMessageReference);
+      DoImportExport('select * from dbo.PartyIdentifier2', ImportPartyIdentifier);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+      DoImportExport('select * from dbo.NameAddress2', ImportNameAddress);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+
+
+      DoImportExport('select * from dbo.DeliveryMessageShipment2', ImportDeliveryMessageShipment);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+
+      DoImportExport('select * from dbo.DeliveryShipmentDeliveryMessageReference2', ImportDeliveryShipmentDeliveryMessageReference);
+
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+      DoImportExport('select * from dbo.TransportPackageInformation2', RelaxedImportTransportPackageInformation);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+      DoImportExport('select * from dbo.LengthSpecification2', RelaxedImportLengthSpecification);
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+      DoImportExport('select * from dbo.ProductIdentifier2', ImportProductIdentifier);//Moved after TransportPackageInformation2 beacuse it is related to it
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
 //      DoImportExport('select * from InformationalQuantity2', ImportInformationalQuantity);
       ADOConnection1.CommitTrans;
-      Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+Screen.Cursor := crSQLWait;    { Show hourglass cursor }
     ShowMessage('Import av paket OK') ;
-    ImportOfPkgsOK:= True ;
   except
       ADOConnection1.RollbackTrans;
       ShowMessage('Import misslyckades.') ;
-      ImportOfPkgsOK:= False ;
   end;
-
- Finally
-  Screen.Cursor := Save_Cursor;  { Always restore to normal }
- End ;
 end;
 
 procedure TXMLImportExport.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-// dmsSystem.SaveUserDir (ThisUser.UserID, Self.Name, WoodXDir, ImportDir, DeliveryWoodMsg_XSD_File) ;
+ dmsSystem.SaveUserDir (ThisUser.UserID, Self.Name, WoodXDir, ImportDir, DelWoodMsg_XSD) ;
 end;
 
 procedure TXMLImportExport.acValidateImportFileExecute(Sender: TObject);
@@ -472,39 +572,22 @@ begin
  End ;
 end;
 
-procedure TXMLImportExport.acExportPkgsToXMLFileToInternationalExecute(
-  Sender: TObject);
-Var
- Save_Cursor  : TCursor;
+procedure TXMLImportExport.acImportPkgsExecute(Sender: TObject);
+var
+  Save_Cursor:TCursor;
 begin
-  Save_Cursor := Screen.Cursor;
-  Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-  Try
-
-{  dmsSystem.RunLengthSpec ;
+ Save_Cursor := Screen.Cursor;
+ Screen.Cursor := crSQLWait;    { Show hourglass cursor }
+ Try
   DoSetPropValue(Sender, 'Enabled', False);
   try
-    DoExport;
+   DoRelaxedImport;
   finally
-    DoSetPropValue(Sender, 'Enabled', True);
-  end;                   }
-
- EmailFakturaAndSpecExecuteViaBizTalk ;
+   DoSetPropValue(Sender, 'Enabled', True);
+  end;
  Finally
   Screen.Cursor := Save_Cursor;  { Always restore to normal }
  End ;
-end;
-
-procedure TXMLImportExport.acImportPkgsExecute(Sender: TObject);
-begin
-  DoSetPropValue(Sender, 'Enabled', False);
-  try
-    DoRelaxedImport;
-  finally
-    DoSetPropValue(Sender, 'Enabled', True);
-  end;
- if ImportOfPkgsOK then
-  Close ;
 end;
 
 procedure TXMLImportExport.acExportPkgsToXMLFileExecute(Sender: TObject);
@@ -513,334 +596,98 @@ Var
 begin
   Save_Cursor := Screen.Cursor;
   Screen.Cursor := crSQLWait;    { Show hourglass cursor }
-  Try
-  // Stänger av för att xml filerna skall gå över biztalken
-  dmsSystem.RunLengthSpec ;
+ Try
   DoSetPropValue(Sender, 'Enabled', False);
   try
     DoExport;
   finally
     DoSetPropValue(Sender, 'Enabled', True);
   end;
-
  EmailFakturaAndSpecExecute ;
  Finally
   Screen.Cursor := Save_Cursor;  { Always restore to normal }
  End ;
 end;
 
-procedure TXMLImportExport.EmailFakturaAndSpecExecuteViaBizTalk;
+procedure TXMLImportExport.EmailFakturaAndSpecExecute ;
 const
   LF = #10;
-Var
-  FormCRExportOneReport: TFormCRExportOneReport;
-  A: array of Variant;
-  dm_SendMapiMail: Tdm_SendMapiMail;
-  Attach: array of String;
-  MailToAddress: String;
-  x: Integer;
-  RC: TCMReportController;
-  DocTyp, RoleType, ClientNo: Integer;
-  Params: TCMParams;
-  ExportFile: string;
+Var //FormCRExportOneReport   : TFormCRExportOneReport ;
+    A                       : array of variant ;
+    dm_SendMapiMail         : Tdm_SendMapiMail;
+    Attach                  : array of String ;
+    MailToAddress           : String ;
+    x                       : Integer ;
 begin
+//LM if dmVidaInvoice.cdsInvoiceListINTFAKTNR.AsInteger < 1 then exit ;
 
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-  else if ThisUser.UserName = 'Lars' then
-    exit;
 
-  if uReportController.useFR then begin
+  dmPrintModule:= TdmPrintModule.Create(nil);
+  Try
+  dmPrintModule.ExportFS_As_PDF(LoadNo, WoodXDir + 'FS_' + inttostr(LoadNo) + '.pdf', False) ;
+  Finally
+   FreeAndNil(dmPrintModule) ;
+  End ;
 
-    Params := TCMParams.Create();
-    Params.Add('@INVOICENO', InternalInvoiceNo);
+// FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
+// Try
+//  dmVidaInvoice.SparaFakturaOchSpecSomPDF (1,  dmVidaInvoice.cdsInvoiceListINTFAKTNR.AsInteger,  dmVidaInvoice.cdsInvoiceListSupplierNo.AsInteger,  WoodXDir) ;//Svendska
 
-    RC := TCMReportController.Create;
-    ClientNo := CustomerNo;
-    RoleType := -1;
-    if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-      ExportFile := 'C:\VIS\Temp\'
-    else
-      ExportFile := WoodXDir;
-    Try
-      DocTyp := cFaktura;
-      ExportFile := ExportFile + 'InvoiceNo ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportFile);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
+//  SetLength(A, 1);
+//  A[0]:= dmVidaInvoice.cdsInvoiceListINTFAKTNR.AsInteger ;
+//  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cFaktura, A, WoodXDir + 'InvoiceNo '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+//  FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, WoodXDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
+// Finally
+//  FreeAndNil(FormCRExportOneReport) ;//.Free ;
+// End ;
 
-      DocTyp := cPkgSpec;
-      ExportFile := ExportFile + 'Specification ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportFile);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    End;
-  end
-  else begin
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := InternalInvoiceNo;
-      FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
-        WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo));
-      FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-        WoodXDir + 'Specification ' + IntToStr(InvoiceNo));
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-    End;
-  end;
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-    exit;
-  if cbEmaila.Checked then Begin
-    MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
-    if Length(MailToAddress) > 0 then Begin
-      SetLength(Attach, 2);
-      Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf';
-      Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf';
-
-      x := 1;
-
-      sq_GetLONos.Close;
-      sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value :=
-        InternalInvoiceNo;
-      sq_GetLONos.Open;
-      sq_GetLONos.First;
-      While not sq_GetLONos.Eof do Begin
-        // x:= succ(x) ;
-        // SetLength(Attach, x+1);
-        dmsSystem.DeliveryMessageNumber :=
-          sq_GetLONosDeliveryMessageNumber.AsString;
-
-        dm_ImportWoodx.Ins_InvoicePkgSpecWoodX(InternalInvoiceNo,
-          sq_GetLONosDeliveryMessageNumber.AsInteger);
-
-        // Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber + '.xml' ;
-
-        sq_GetLONos.Next;
-      End;
-      sq_GetLONos.Close;
-
-      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-      Try
-
-        dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
-          IntToStr(InvoiceNo) + ' - Invoice/package specification. InvoiceNo: '
-          + IntToStr(InvoiceNo), 'Faktura, paketspecifikation bifogad. ' + LF +
-          '' + 'Invoice, package specification attached. ' + LF + '' + LF + '' +
-          LF + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
-          (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'),
-          // 'lars.makiaho@falubo.se',
-
-          MailToAddress,
-          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
-
-          Attach, False);
-      Finally
-        FreeAndNil(dm_SendMapiMail);
-      End;
-    End // if cbEmaila.Checked then
-    else
-      ShowMessage('Emailadress saknas för klienten!');
-  End;
-end;
-
-procedure TXMLImportExport.EmailFakturaAndSpecExecute;
-const
-  LF = #10;
-Var
-  FormCRExportOneReport: TFormCRExportOneReport;
-  A: array of Variant;
-  dm_SendMapiMail: Tdm_SendMapiMail;
-  Attach: array of String;
-  MailToAddress: String;
-  x: Integer;
-
-  params: TCMParams;
-  RC: TCMReportController;
-  ClientNo: integer;
-  DocTyp: integer;
-  RoleType: integer;
-  ExportInvoiceFile: String;
-  ExportSpecFile: String;
-  ExportDir: String;
-begin
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-  else if ThisUser.UserName = 'Lars' then
-    exit;
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-    ExportDir := 'C:\VIS\Temp\'
-  else
-    ExportDir := WoodXDir;
-
-  if uReportController.useFR then
-  begin
-
-    Params := TCMParams.Create();
-    Params.Add('@INVOICENO', InternalInvoiceNo);
-
-    RC := TCMReportController.Create;
-    ClientNo := CustomerNo;
-    RoleType := -1;
-    Try
-      DocTyp := cFaktura;
-      ExportInvoiceFile := ExportDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportInvoiceFile);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-
-      DocTyp := cPkgSpec;
-      ExportSpecFile := ExportDir + 'Specification ' + IntToStr(InvoiceNo);
-      RC.setExportFile(ExportSpecFile);
-      RC.RunReport(0, ClientNo, RoleType, DocTyp, Params, frFile);
-    Finally
-      FreeAndNil(Params);
-      FreeAndNil(RC);
-    End;
-  end
-  else
-  begin
-
-    FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-    Try
-      ExportInvoiceFile := ExportDir + 'InvoiceNo ' + IntToStr(InvoiceNo);
-      ExportSpecFile := ExportDir + 'Specification ' + IntToStr(InvoiceNo);
-      SetLength(A, 1);
-      A[0] := InternalInvoiceNo;
-      FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
-        ExportInvoiceFile);
-      FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-        ExportSpecFile);
-    Finally
-      FreeAndNil(FormCRExportOneReport); // .Free ;
-    End;
-  end;
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-    exit;
-  if cbEmaila.Checked then
-  Begin
-    MailToAddress := dmsContact.GetEmailAddress(CustomerNo);
-    if Length(MailToAddress) > 0 then
-    Begin
-      SetLength(Attach, 2);
-      Attach[0] := ExportInvoiceFile + '.pdf';
-      Attach[1] := ExportSpecFile + '.pdf';
-
-      x := 1;
-
-      sq_GetLONos.Close;
-      sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value :=
-        InternalInvoiceNo;
-      sq_GetLONos.Open;
-      sq_GetLONos.First;
-      While not sq_GetLONos.Eof do
-      Begin
-        x := succ(x);
-        SetLength(Attach, x + 1);
-        dmsSystem.DeliveryMessageNumber :=
-          sq_GetLONosDeliveryMessageNumber.AsString;
-
-        // dm_ImportWoodx.Ins_InvoicePkgSpecWoodX (InternalInvoiceNo, sq_GetLONosDeliveryMessageNumber.AsInteger) ;
-
-        Attach[x] := WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' +
-          IntToStr(InvoiceNo) + '-' + dmsSystem.DeliveryMessageNumber + '.xml';
-
-        sq_GetLONos.Next;
-      End;
-      sq_GetLONos.Close;
-
-      dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
-      Try
-
-        dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' +
-          IntToStr(InvoiceNo)
-          + ' - Invoice/package specification. InvoiceNo: ' +
-          IntToStr(InvoiceNo),
-          'Faktura, paketspecifikation bifogad. '
-          + LF + ''
-          + 'Invoice, package specification attached. '
-          + LF + ''
-          + LF + ''
-          + LF + 'MVH/Best Regards, '
-          + LF + ''
-          + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-          dmsSystem.Get_Dir('MyEmailAddress'),
-          // 'lars.makiaho@falubo.se',
-
-          MailToAddress,
-          // 'lars.makiaho@falubo.se', //getinvoice emailaddress
-
-          Attach, False);
-      Finally
-        FreeAndNil(dm_SendMapiMail);
-      End;
-    End // if cbEmaila.Checked then
-    else
-      ShowMessage('Emailadress saknas för klienten!');
-  End;
-
-end;
-
-(* since 2014-03-27 11:31
-begin
- if thisuser.UserName = 'Lars' then exit ;
-
- FormCRExportOneReport:= TFormCRExportOneReport.Create(Nil);
- Try
-  SetLength(A, 1);
-  A[0]:= InternalInvoiceNo ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A, WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo)) ;
-  FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A, WoodXDir + 'Specification ' + IntToStr(InvoiceNo)) ;
- Finally
-  FreeAndNil(FormCRExportOneReport) ;//.Free ;
- End ;
 
  if cbEmaila.Checked then
  Begin
  MailToAddress:= dmsContact.GetEmailAddress(CustomerNo) ;
+ if Length(MailToAddress) = 0 then
+  MailToAddress := 'ange@FDress.nu' ;
+
  if Length(MailToAddress) > 0 then
  Begin
   SetLength(Attach, 2);
-  Attach[0] := WoodXDir + 'InvoiceNo ' + IntToStr(InvoiceNo) + '.pdf' ;
-  Attach[1] := WoodXDir + 'Specification ' + IntToStr(InvoiceNo) + '.pdf' ;
+  Attach[0] := WoodXDir + 'FS_' + inttostr(LoadNo) + '.pdf' ;
+//  Attach[1]:= WoodXDir + 'Specification '+dmVidaInvoice.cdsInvoiceListFAKTNR.AsString+'.pdf' ;
+  Attach[1] := edtFileToExport.Text ;
 
-  x:= 1 ;
+{  x:= 1 ;
 
   sq_GetLONos.Close ;
-  sq_GetLONos.Parameters.ParamByName('InternalInvoiceNo').Value := InternalInvoiceNo ;
+  sq_GetLONos.ParamByName('InternalInvoiceNo').AsInteger:= InternalInvoiceNo ;
   sq_GetLONos.Open ;
   sq_GetLONos.First ;
   While not sq_GetLONos.Eof do
   Begin
    x:= succ(x) ;
    SetLength(Attach, x+1);
-   dmsSystem.DeliveryMessageNumber  := sq_GetLONosDeliveryMessageNumber.AsString ;
-//  OutPutPackageFileName := WoodXDir+'InvoicePackageSpec InvoiceNo_LoadOrderNo ' + IntToStr(InvoiceNo) +'_'+ DeliveryMessageNumber +'.xml' ; //edtFileToExport.Text;
+   DeliveryMessageNumber:= sq_GetLONosDeliveryMessageNumber.AsString ;
 
-   Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo-LoadOrderNo' + IntToStr(InvoiceNo) +'-'+ dmsSystem.DeliveryMessageNumber + '.xml' ;
-
+   Attach[x]:= WoodXDir + 'InvoicePackageSpec InvoiceNo_LoadOrderNo ' + FakturaNummer +'_'+ DeliveryMessageNumber +'.xml' ;
    sq_GetLONos.Next ;
   End ;
- sq_GetLONos.Close ;
+ sq_GetLONos.Close ; }
 
  dm_SendMapiMail         := Tdm_SendMapiMail.Create(nil);
  Try
-
-  dm_SendMapiMail.SendMail('Faktura/specifikation. Fakturanr: ' + IntToStr(InvoiceNo)
-  +' - Invoice/package specification. InvoiceNo: ' + IntToStr(InvoiceNo),
-  'Faktura, paketspecifikation och Woodx spec bifogad. '
-  +LF+''
-  +'Invoice, package specification and woodx package spec attached. '
+  dm_SendMapiMail.SendMail('Följesedel. WoodX Deliverymessage. Lastnr: ' + IntToStr(LoadNo),
+//   dmsContact.GetMessageFras(ThisUser.UserID),
+ { 'Följesedel, WoodX Deliverymessage bifogad. '
   +LF+''
   +LF+''
   +LF+'MVH/Best Regards, '
   +LF+''
-  +dmsContact.GetFirstAndLastName(ThisUser.UserID),
-  dmsSystem.Get_Dir('MyEmailAddress'),
-//  'lars.makiaho@falubo.se',
+  + dmsContact.GetFirstAndLastName(ThisUser.UserID), }
+  LF + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName(ThisUser.UserID),
+  dmsSystem.Get_Dir(inttostr(ThisUser.UserID)), 'MyEmailAddress',  MailToAddress,
+ // '', //InfogadHTMLFil
+  Attach) ;
 
-  MailToAddress,
-//  'lars.makiaho@falubo.se', //getinvoice emailaddress
 
-  Attach, False) ;
  Finally
   FreeAndNil(dm_SendMapiMail) ;
  End ;
@@ -850,7 +697,6 @@ begin
  End ;
 
 end;
-*)
 
 procedure TXMLImportExport.acValidateExportXMLFileExecute(Sender: TObject);
 begin
@@ -875,25 +721,6 @@ end;
 procedure TXMLImportExport.FormShow(Sender: TObject);
 begin
  LoadConfig ;
- if PageControl1.ActivePage = tsImport then
- Begin
-  sbOpenWoodXFileToImportClick(Sender) ;
-  if Length(edtFileToImport.Text) > 0 then
-  Begin
-   acImportPkgsExecute(Sender) ;
-   Timer1.Enabled  := True ;
-  End ;
- End ;
-end;
-
-procedure TXMLImportExport.FormCreate(Sender: TObject);
-begin
- ImportOfPkgsOK := False ;
-end;
-
-procedure TXMLImportExport.Timer1Timer(Sender: TObject);
-begin
- Close ;
 end;
 
 end.

@@ -1715,7 +1715,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 971
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1741,7 +1741,7 @@ object frmLoadOrder: TfrmLoadOrder
         Left = 0
         Top = 0
         Width = 63
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1750,7 +1750,7 @@ object frmLoadOrder: TfrmLoadOrder
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -2002,7 +2002,6 @@ object frmLoadOrder: TfrmLoadOrder
       Hint = 'Hyvel order'
       Visible = ivAlways
       ShortCut = 16456
-      OnClick = bPrintHyvelOrderClick
     end
     object bPrintLODittVerk: TdxBarButton
       Caption = 'LO &Ert verk'
@@ -2029,7 +2028,6 @@ object frmLoadOrder: TfrmLoadOrder
       Category = 1
       Hint = 'Avrop Verk'
       Visible = ivAlways
-      OnClick = bbAvropVerkClick
     end
     object bbTallyUSA: TdxBarButton
       Caption = 'F'#246'ljesedel (USA)'
@@ -2056,7 +2054,6 @@ object frmLoadOrder: TfrmLoadOrder
       Category = 1
       Hint = 'Avr'#228'kning Spec'
       Visible = ivAlways
-      OnClick = bbAvrakningSpecVer2Click
     end
     object dxBarButton1: TdxBarButton
       Action = acSamlingFS
@@ -2071,14 +2068,12 @@ object frmLoadOrder: TfrmLoadOrder
       Category = 1
       Hint = 'F'#246'ljesedel (dk)'
       Visible = ivAlways
-      OnClick = dxBarButton18Click
     end
     object dxBarButton19: TdxBarButton
       Caption = '&LO alla verk (dk)'
       Category = 1
       Hint = 'LO alla verk (dk)'
       Visible = ivAlways
-      OnClick = dxBarButton19Click
     end
     object dxBarButton20: TdxBarButton
       Caption = '&Alla laster per LO och Verk (dk)'
@@ -5584,7 +5579,6 @@ object frmLoadOrder: TfrmLoadOrder
     end
     object acPrintLOList: TAction
       Caption = 'Skriv ut'
-      OnExecute = acPrintLOListExecute
     end
     object acRemoveLOHHRow: TAction
       Caption = 'Ta bort'
@@ -6784,7 +6778,7 @@ object frmLoadOrder: TfrmLoadOrder
       PrinterPage.PageSize.Y = 419100
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42929.616486932870000000
+      ReportDocument.CreationDate = 43074.296360335650000000
       AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
@@ -7076,13 +7070,14 @@ object frmLoadOrder: TfrmLoadOrder
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

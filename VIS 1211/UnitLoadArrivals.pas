@@ -443,16 +443,16 @@ var
 
 implementation
 
-uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils,
+uses dmc_ArrivingLoads, VidaUtils,
   Vidauser, UnitPkgInfo, dmsVidaContact, // dmcVidaSystem,
   dmsDataConn,
   // fConfirmIntLoad,
   // fConfirmManyIntLoads,
   uSelectLIP, uAnkomstRegProgress, VidaConst,
   // fConfirmManyNormalLoad,
-  UnitCRPrintOneReport, dmsVidaSystem, // dmc_Filter,
+  dmsVidaSystem, // dmc_Filter,
   uTradingLinkMult, dmc_UserProps, dmcVidaInvoice, uExportLoadPurpose,
-  uWait, UnitCRExportOneReport, uSendMapiMail, udmLanguage,
+  uWait, uSendMapiMail, udmLanguage,
   uReportController, URegionToRegionSelectLIPNo, uFastReports, udmFR;
 
 {$R *.dfm}
@@ -1886,7 +1886,7 @@ end;
 procedure TfrmLoadArrivals.PrintSamlingsspecifikation(Sender: TObject;
   const SamLastNr: Integer);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
@@ -1897,47 +1897,24 @@ begin
     exit;
   end;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := SamLastNr;
-    FormCRViewReport.CreateCo('SAM_LAST.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
 end;
 
 procedure TfrmLoadArrivals.PrintSamlingsspecifikation_USA(Sender: TObject;
   const SamLastNr: Integer);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
     Exit;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := SamLastNr;
-    FormCRViewReport.CreateCo('SAM_LAST_USA.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+  
 end;
 
 procedure TfrmLoadArrivals.PrintSamlingsspecifikationMedPktNr(Sender: TObject;
   const SamLastNr: Integer);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
 begin
   if dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger < 1 then
@@ -1948,18 +1925,7 @@ begin
     exit;
   end;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := SamLastNr;
-    FormCRViewReport.CreateCo('SAM_LAST_PKTNR.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+ 
 end;
 
 procedure TfrmLoadArrivals.printSamlingsSpecifikationMedPktNr_FR(
@@ -3172,7 +3138,7 @@ end;
 
 procedure TfrmLoadArrivals.PrintDirectFS_USA(Sender: TObject);
 var
-  FormCRPrintOneReport: TFormCRPrintOneReport;
+
   A: array of Variant;
   RC: TCMReportController;
   Params: TCMParams;
@@ -3220,46 +3186,7 @@ begin
       FreeAndNil(Params);
       FreeAndNil(RC);
     end;
-  end
-  else begin
-    FormCRPrintOneReport := TFormCRPrintOneReport.Create(Nil);
-    Try
-      // CreateCo(const numberOfCopy : Integer ;const PrinterSetup, promptUser : Boolean;const A: array of variant;const ReportName : String);
-
-      SetLength(A, 1);
-      A[0] := dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-      if dmArrivingLoads.cdsArrivingLoadsObjectType.AsInteger <> 2 then
-        FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_INT_USA.RPT')
-      else Begin
-        Try
-          dmsSystem.sq_PkgType_InvoiceByLO.ParamByName('LoadNo').AsInteger :=
-            dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByLO.ExecSQL;
-        except
-          On E: Exception do Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-        FormCRPrintOneReport.CreateCo(1, False, False, A, 'TALLY_US_NOTE.RPT');
-      End;
-
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmArrivingLoads.cdsArrivingLoadsLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    Finally
-      FreeAndNil(FormCRPrintOneReport);
-    End;
-  end;
+  end ;
 end;
 
 

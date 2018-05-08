@@ -368,6 +368,8 @@ type
     cds_ReportStaticsEmail: TStringField;
     cds_ReportStaticsVatNo: TStringField;
     cds_ReportStaticsBankGiro: TStringField;
+    cds_ReportStaticsIISalesPersonNo: TIntegerField;
+    cds_ReportStaticsIISales: TStringField;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;
@@ -379,6 +381,7 @@ type
     procedure cds_AdrSearchBeforePost(DataSet: TDataSet);
     procedure cds_Comp_DelAdrAfterInsert(DataSet: TDataSet);
     procedure cds_CompAdrAfterInsert(DataSet: TDataSet);
+    procedure sp_CustomersBeforeOpen(DataSet: TDataSet);
 
   private
     fClientNo: Integer;
@@ -971,6 +974,11 @@ Begin
   sp_AttLev.ParamByName('@RoleType').AsInteger := RoleType;
   sp_AttLev.Active := True;
 End;
+
+procedure TdmsContact.sp_CustomersBeforeOpen(DataSet: TDataSet);
+begin
+  sp_Customers.ParamByName('@SalesRegionNo').AsInteger  := 741 ;
+end;
 
 function TdmsContact.GetLocalSupplierNo(const LoadingLocationNo
   : Integer): Integer;

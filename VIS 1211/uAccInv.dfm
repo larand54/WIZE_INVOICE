@@ -34,7 +34,7 @@ object fAccInv: TfAccInv
         Left = 1
         Top = 1
         Width = 432
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -50,7 +50,7 @@ object fAccInv: TfAccInv
         Left = 1
         Top = 1
         Width = 70
-        Height = 46
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -92,7 +92,7 @@ object fAccInv: TfAccInv
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -285,7 +285,6 @@ object fAccInv: TfAccInv
     Top = 368
     object dxComponentPrinter1Link1: TdxSpreadSheetBookReportLink
       Component = ssAccLager
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -298,7 +297,6 @@ object fAccInv: TfAccInv
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -488,7 +486,7 @@ object fAccInv: TfAccInv
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     DoNotTranslate.Strings = (
@@ -496,7 +494,8 @@ object fAccInv: TfAccInv
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

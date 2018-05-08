@@ -20,6 +20,8 @@ object frmLoadArrivals: TfrmLoadArrivals
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object cxSplitter1: TcxSplitter
@@ -351,7 +353,6 @@ object frmLoadArrivals: TfrmLoadArrivals
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitWidth = 1029
     object Panel2: TPanel
       Left = 423
       Top = 0
@@ -363,7 +364,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 554
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
@@ -375,8 +375,6 @@ object frmLoadArrivals: TfrmLoadArrivals
         Margins.Bottom = 2
         Align = dalTop
         BarManager = dxBarManager1
-        ExplicitWidth = 552
-        ExplicitHeight = 88
       end
     end
     object Panel3: TPanel
@@ -390,7 +388,6 @@ object frmLoadArrivals: TfrmLoadArrivals
       Margins.Bottom = 2
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 977
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
@@ -3665,13 +3662,14 @@ object frmLoadArrivals: TfrmLoadArrivals
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

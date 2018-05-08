@@ -463,6 +463,7 @@ type
     // LevKod : String ;
     OrderSupplierNo: Integer;
     ImportedLoadOK: Boolean;
+
     procedure Ins_InvoicePkgSpecWoodX(const InternalInvoiceNo, LONo: Integer);
     Function IsClientConnectionValid: Boolean;
     procedure EditClient(const PartyIdentifier, PartyIdentifierType: String);
@@ -488,7 +489,7 @@ type
 
 var
   dm_ImportWoodx: Tdm_ImportWoodx;
-  // DeliveryMessageNumber : String ;
+  DeliveryMessageNumber : String ;
 
 implementation
 
@@ -683,6 +684,7 @@ End;
 
 procedure Tdm_ImportWoodx.DataModuleCreate(Sender: TObject);
 begin
+  DeliveryMessageNumber := '1' ;
   mtPkgStatus.Active := False;
   mtPkgStatus.Active := True;
   mtPkgStatus.InsertRecord([-1, '__']);
@@ -1590,7 +1592,7 @@ Var
   Prefix: String;
 begin
   Prefix := dmsContact.GetClientCode(mtVisKlientClientNo.AsInteger);
-  UppdateraPrefixInitially(dmsSystem.DeliveryMessageNumber, Prefix);
+  UppdateraPrefixInitially(DeliveryMessageNumber, Prefix);
 end;
 
 procedure Tdm_ImportWoodx.OpenCurrentSupplier;
@@ -1604,7 +1606,7 @@ procedure Tdm_ImportWoodx.EditClient(const PartyIdentifier, PartyIdentifierType
   : String);
 Begin
   cdsClient.Edit;
-  cdsClientPartyIdentifier.AsString := PartyIdentifier;
+  cdsClientPartyIdentifier.AsString     := PartyIdentifier;
   cdsClientPartyIdentifierType.AsString := PartyIdentifierType;
   cdsClient.Post;
   if cdsClient.ChangeCount > 0 then
@@ -1643,5 +1645,7 @@ Begin
     End;
   end;
 End;
+
+
 
 end.

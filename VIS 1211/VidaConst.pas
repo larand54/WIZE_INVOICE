@@ -210,7 +210,7 @@ const
 
   VIDA_WOOD_COMPANY_NO = 741;
   VIDA_DANMARK = 3682;
-  SWEDEN = 9;
+  SWEDEN = 20001 ;
   DENMARK = 13;
   VIDA_PACKAGING_NO = 1879;
   cVidaPackaging = 1879;

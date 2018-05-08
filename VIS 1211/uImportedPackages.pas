@@ -729,7 +729,7 @@ procedure TfImportedPackages.FormShow(Sender: TObject);
 begin
   With dm_ImportWoodx, dmsProduct do
   Begin
-    OpenCurrentSupplier;
+
 
     dm_UserProps.LoadUserProps(Self.Name, mtUserProp);
 
@@ -741,6 +741,14 @@ begin
       mtVisKlientClientNo.AsInteger := dm_ImportWoodx.OrderSupplierNo ;
       //cds_ImpClientMapClientNo.AsInteger ;//, cds_ImpClientMapWoodXPartyIdentifier.AsString
       mtVisKlient.Post ; *)
+
+  UpdateClient (SupplierNo, cds_ImpClientMapWoodXPartyIdentifier.AsString, cds_ImpClientMapWoodXPartyIdentifierType.AsString) ;
+
+  dm_ImportWoodx.OrderSupplierNo  := SupplierNo ;
+
+    OpenCurrentSupplier;
+
+  AddClient ;
 
     mtUserProp.Edit;
     mtUserPropVerkNo.AsInteger := cds_ImpClientMapClientNo.AsInteger;
@@ -766,6 +774,7 @@ Begin
       Begin
         if mtClient.State in [dsEdit, dsInsert] then
           mtClient.Post;
+        UpdateClient (mtClientVisClientNo.AsInteger, cds_ImpClientMapWoodXPartyIdentifier.AsString, cds_ImpClientMapWoodXPartyIdentifierType.AsString) ;
         // UpdateClient (mtClientVisClientNo.AsInteger, cds_ImpClientMapWoodXPartyIdentifier.AsString) ;
         mtClient.Active := False;
       End;

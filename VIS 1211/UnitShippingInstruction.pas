@@ -89,7 +89,6 @@ type
     procedure acCustomizegrdShipInstructExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acRefreshExecute(Sender: TObject);
-    procedure acPrintExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -110,7 +109,7 @@ var
 implementation
 
 uses VidaConst, VidaUser, VidaUtils,
-  UnitCRViewReport, dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
+  dmsVidaContact, dmsDataConn, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 
@@ -220,29 +219,6 @@ begin
 
   Finally
     Screen.Cursor := Save_Cursor;
-  End;
-end;
-
-procedure TfrmShippingInstruction.acPrintExecute(Sender: TObject);
-Var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of variant;
-begin
-  inherited;
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 3);
-    A[0] := cds_PropsStartPeriod.AsDateTime;
-    A[1] := cds_PropsEndPeriod.AsDateTime;
-    A[2] := cds_PropsGradeStampNo.AsInteger;
-    FormCRViewReport.CreateCo('SHIPPING_INSTRUCT.RPT', A);
-
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
   End;
 end;
 

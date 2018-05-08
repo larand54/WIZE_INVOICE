@@ -627,7 +627,7 @@ begin
         'Export file package specification attached. ' + LF + '' + LF + '' + LF
         + 'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
         (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-        Attach, False);
+        Attach);
     Finally
       FreeAndNil(dm_SendMapiMail);
     End;

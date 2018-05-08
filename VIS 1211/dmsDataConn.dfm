@@ -1929,7 +1929,7 @@ object dmsConnector: TdmsConnector
     Connection = FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'Select UserName, PassWord from dbo.users'
+      'Select UserName, PassWord, Description from dbo.users'
       'where AD_Name = :AD_Name')
     Left = 304
     Top = 224
@@ -1952,16 +1952,23 @@ object dmsConnector: TdmsConnector
       FixedChar = True
       Size = 10
     end
+    object sq_GetUserNameDescription: TStringField
+      FieldName = 'Description'
+      Origin = 'Description'
+      Size = 50
+    end
   end
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=visprodsql.vida.se'
-      'Database=vis_vida'
-      'OSAuthent=Yes'
-      'MetaDefCatalog=vis_vida'
+      'Server=carmak-speed\sqlexpress'
+      'Database=woodsupport'
+      'OSAuthent=No'
+      'MetaDefCatalog=woodsupport'
       'MetaDefSchema=dbo'
-      'ApplicationName=VIS'
+      'ApplicationName=WIZE INVOICE'
+      'User_Name=sa'
+      'Password=woods2011'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
     FetchOptions.Mode = fmAll
@@ -2138,7 +2145,6 @@ object dmsConnector: TdmsConnector
       'DriverID=MSSQL')
     UpdateOptions.AssignedValues = [uvLockMode, uvRefreshMode]
     UpdateOptions.LockMode = lmOptimistic
-    Connected = True
     LoginPrompt = False
     Left = 616
     Top = 72

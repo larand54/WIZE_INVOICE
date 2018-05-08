@@ -88,14 +88,14 @@ object fReportStatics: TfReportStatics
       Left = 1
       Top = 1
       Width = 1116
-      Height = 296
+      Height = 376
       Align = alTop
       TabOrder = 0
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStaticsII
-        DataController.DetailKeyFieldNames = 'SalesRegionNo'
-        DataController.KeyFieldNames = 'SalesRegionNo;DocType'
+        DataController.DetailKeyFieldNames = 'SalesRegionNo;SalesPersonNo'
+        DataController.KeyFieldNames = 'SalesRegionNo;DocType;SalesPersonNo'
         DataController.Summary.DefaultGroupSummaryItems = <>
         DataController.Summary.FooterSummaryItems = <>
         DataController.Summary.SummaryGroups = <>
@@ -104,57 +104,86 @@ object fReportStatics: TfReportStatics
         OptionsView.DataRowHeight = 173
         OptionsView.GroupByBox = False
         OptionsView.Indicator = True
+        object cxGridDBTableView1Sales: TcxGridDBColumn
+          Caption = 'S'#228'ljare'
+          DataBinding.FieldName = 'Sales'
+          PropertiesClassName = 'TcxLookupComboBoxProperties'
+          Properties.KeyFieldNames = 'UserID'
+          Properties.ListColumns = <
+            item
+              FieldName = 'Namn'
+            end>
+          Width = 93
+        end
         object SalesRegionNo: TcxGridDBColumn
           DataBinding.FieldName = 'SalesRegionNo'
           PropertiesClassName = 'TcxLabelProperties'
+          Width = 78
         end
         object DocType: TcxGridDBColumn
           DataBinding.FieldName = 'DocType'
           PropertiesClassName = 'TcxLabelProperties'
+          Width = 78
         end
         object CompanyName: TcxGridDBColumn
           DataBinding.FieldName = 'CompanyName'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 78
         end
         object Address: TcxGridDBColumn
           DataBinding.FieldName = 'Address'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 77
         end
         object Telefon: TcxGridDBColumn
           DataBinding.FieldName = 'Telefon'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 78
         end
         object Email: TcxGridDBColumn
           DataBinding.FieldName = 'Email'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 77
         end
         object HQ: TcxGridDBColumn
           DataBinding.FieldName = 'HQ'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 78
         end
         object Vat_BankInfo: TcxGridDBColumn
           DataBinding.FieldName = 'Vat_BankInfo'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 77
         end
         object AccountNo: TcxGridDBColumn
           DataBinding.FieldName = 'AccountNo'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 78
         end
         object Giro: TcxGridDBColumn
           DataBinding.FieldName = 'Giro'
           PropertiesClassName = 'TcxRichEditProperties'
+          Width = 77
         end
         object Logga: TcxGridDBColumn
           DataBinding.FieldName = 'Logga'
           PropertiesClassName = 'TcxImageProperties'
           Properties.GraphicClassName = 'TdxPNGImage'
+          Width = 78
         end
         object cxGridDBTableView1FootNote: TcxGridDBColumn
           DataBinding.FieldName = 'FootNote'
+          Width = 77
         end
         object cxGridDBTableView1BankGiro: TcxGridDBColumn
           DataBinding.FieldName = 'BankGiro'
           PropertiesClassName = 'TcxTextEditProperties'
+          Width = 78
+        end
+        object cxGridDBTableView1SalesPersonNo: TcxGridDBColumn
+          DataBinding.FieldName = 'SalesPersonNo'
+          PropertiesClassName = 'TcxLabelProperties'
+          Visible = False
         end
       end
       object cxGridDBCardView1: TcxGridDBCardView
@@ -219,11 +248,13 @@ object fReportStatics: TfReportStatics
     end
     object cxGrid2: TcxGrid
       Left = 1
-      Top = 345
+      Top = 425
       Width = 1116
-      Height = 255
+      Height = 175
       Align = alClient
       TabOrder = 1
+      ExplicitTop = 345
+      ExplicitHeight = 255
       object cxGrid2DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = dmsContact.ds_ReportStatics
@@ -283,11 +314,12 @@ object fReportStatics: TfReportStatics
     end
     object Panel2: TPanel
       Left = 1
-      Top = 297
+      Top = 377
       Width = 1116
       Height = 48
       Align = alTop
       TabOrder = 2
+      ExplicitTop = 297
       object cxLabel2: TcxLabel
         Left = 496
         Top = 19
@@ -402,13 +434,14 @@ object fReportStatics: TfReportStatics
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

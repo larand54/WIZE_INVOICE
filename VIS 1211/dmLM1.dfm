@@ -852,8 +852,8 @@ object daMoLM1: TdaMoLM1
       'INNER JOIN dbo.Loads '#9'L'#9'ON L.LoadNo = LSP.LoadNo'
       'LEFT OUTER JOIN dbo.Invoiced_Load IL'#9'ON IL.LoadNo = LSP.LoadNo'
       #9#9#9#9'AND IL.ShippingPlanNo = LSP.ShippingPlanNo'
-      'LEFT OUTER JOIN dbo.Confirmed_Load CL ON CL.NewLoadNo = L.LoadNo'
-      #9#9#9#9#9#9'AND CL.Confirmed_LoadNo <> L.LoadNo'
+      'INNER JOIN dbo.Confirmed_Load CL ON CL.NewLoadNo = L.LoadNo'
+      ''
       
         'Left Outer Join dbo.InvoiceNos inos on inos.InternalInvoiceNo = ' +
         'IL.InternalInvoiceNo'
@@ -2095,5 +2095,858 @@ object daMoLM1: TdaMoLM1
       ReadOnly = True
       Required = True
     end
+  end
+  object sq_PkgType_InvoiceOrigLoad: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      ''
+      ''
+      'Insert into dbo.PkgType_Invoice'
+      '(PackageTypeNo,'
+      'ProductLengthNo,'
+      'InternalInvoiceNo,'
+      'LoadNo,'
+      'LoadDetailNo,'
+      'NoOfPieces,'
+      'm3Actual,'
+      'm3Nominal,'
+      'MFBMNominal,'
+      'SQMofActualWidth,'
+      'SQMofCoveringWidth,'
+      'LinealMeterActualLength,'
+      'm3ActualSizeNomLength,'
+      'm3NomSizeActualLength,'
+      'CreatedUser,'
+      'ModifiedUser,'
+      'DateCreated,'
+      'LinealMeterNominalLength,'
+      'OrderVolume,'
+      'PriceVolume)'
+      ''
+      'SELECT DISTINCT'
+      'LD.PackageTypeNo,'
+      'PTD.ProductLengthNo,'
+      ':InternalInvoiceNo,'
+      'LD.LoadNo,'
+      'LD.LoadDetailNo,'
+      'PTD.NoOfPieces ,'
+      ''
+      '-- m3 actual'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN 0 > 0.05'
+      
+        'THEN PL.ActualLengthMM ELSE PL.ActualLengthMM END) / (1000 * 100' +
+        '0 * 1000)'
+      ' As decimal(10,3)),3)'
+      '-- Round Stolp'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST(PI() * SQUARE (PG.ActualThicknessMM/100/2) * (PG.Actu' +
+        'alWidthMM/100) * PTD.NoOfPieces'
+      
+        '-- SET @m3Act = PI() * SQUARE (@ActThick/100/2) * @ActWidth / 10' +
+        '0 * @NoOfPieces'
+      'As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      ''
+      'END AS M3Actual,'
+      
+        '-- PI() * SQUARE (PG.ActualThicknessMM/100/2) * (PG.ActualWidthM' +
+        'M/100) * PTD.NoOfPieces,'
+      ''
+      '-- M3NOMINAL *****************************************'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- Random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00))'
+      ' As decimal(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      '--Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      'END'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST(PI() * SQUARE (PG.ActualThicknessMM/100/2) * (PG.Actu' +
+        'alWidthMM/100) * PTD.NoOfPieces As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS M3NOMINAL,'
+      ''
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST((       PTD.MFBMNominal )   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS MFBMNominal,'
+      ''
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST((       PTD.SQMofActualWidth )   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS SQMofActualWidth,'
+      ''
+      'CASE WHEN PG.SequenceNo = 0 THEN PTD.SQMofCoveringWidth'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS SQMofCoveringWidth,'
+      ''
+      '--**********************************'
+      '--**********************************'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      
+        'ROUND(CAST((       PTD.LinealMeterActualLength )   As decimal(10' +
+        ',3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST((PG.ActualWidthMM / 100 * PTD.NoOfPieces)   As decima' +
+        'l(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS LinealMeterActualLength,'
+      ''
+      
+        '-- ROUND(CAST((       PTD.LinealMeterActualLength )   As decimal' +
+        '(10,3)),3) AS LinealMeterActualLength,'
+      ''
+      
+        '-- m3ActualSizeNomLength ***************************************' +
+        '******'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00)) As decimal(10,3)),3)'
+      ''
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.NominalLengthMM END) / (1000 * 1' +
+        '000 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.NominalLengthMM END) / (1000 * 1' +
+        '000 * 1000)'
+      ' As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      'END AS m3ActualSizeNomLength,'
+      ''
+      
+        '-- m3NomSizeActualLength ***************************************' +
+        '******'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST('
+      '(PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'PL.ActualLengthMM) / (1000 * 1000 * 1000)'
+      ' As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END AS m3NomSizeActualLength,'
+      ''
+      'PTD.CreatedUser,'
+      'PTD.ModifiedUser,'
+      'PTD.DateCreated,'
+      ''
+      '--**********************************'
+      '--**********************************'
+      ''
+      
+        '-- NM1 *********************************************************' +
+        '****'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces  *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000)) As decima' +
+        'l(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.NominalLengthMM END) / (1000) As' +
+        ' decimal(10,3)),3)'
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.NominalLengthMM END) / (1000) As' +
+        ' decimal(10,3)),3)'
+      ''
+      'END --WHEN PG.SequenceNo = 0 THEN'
+      ''
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST((PG.ActualWidthMM / 100 * PTD.NoOfPieces)   As decima' +
+        'l(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      '--END'
+      ''
+      'END AS NM1,'
+      ''
+      '-- OrderVolume *************************************************'
+      '-- OrderVolume *************************************************'
+      '-- OrderVolume *************************************************'
+      'CASE'
+      ''
+      '-- M3NOMINAL *****************************************'
+      'WHEN VU.VolumeUnitName = '#39'm3 nDxnL'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      '-- Random length'
+      'CASE'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0  AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00))'
+      ' As decimal(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      '--Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST(PI() * SQUARE (PG.ActualThicknessMM/100/2) * (PG.Actu' +
+        'alWidthMM/100) * PTD.NoOfPieces As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      'END'
+      '-- M3NOMINAL *****************************************'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'kvm aB'#39' THEN'
+      'CASE'
+      
+        'WHEN PG.SequenceNo = 0 THEN ROUND(CAST((       PTD.SQMofActualWi' +
+        'dth )   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Lopm a'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      
+        'ROUND(CAST((       PTD.LinealMeterActualLength )   As decimal(10' +
+        ',3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Stycketal'#39' THEN PTD.NoOfPieces'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'm3 aDxaL'#39' THEN'
+      'CASE'
+      ' WHEN PG.SequenceNo = 0 THEN'
+      
+        ' ROUND(CAST((PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWi' +
+        'dthMM *'
+      ' PL.ActualLengthMM) / (1000 * 1000 * 1000) As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 1 THEN'
+      
+        ' ROUND(CAST((pi() * SQUARE(PG.ActualWidthMM/100/2) * (PG.ActualT' +
+        'hicknessMM/100) * PTD.NoOfPieces)  As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      
+        '-- NM1 *********************************************************' +
+        '****'
+      'WHEN VU.VolumeUnitName = '#39'Lopm n'#39' THEN'
+      'CASE'
+      'WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces  *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000)) As decima' +
+        'l(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000) As ' +
+        'decimal(10,3)),3)'
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000) As ' +
+        'decimal(10,3)),3)'
+      ''
+      'END -- WHEN PG.SequenceNo = 0 THEN'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST((PG.ActualWidthMM / 100 * PTD.NoOfPieces)   As decima' +
+        'l(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      ''
+      'END --NM1'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'MFBM Nom'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST((       PTD.MFBMNominal )   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Packages'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN 1'
+      'WHEN PG.SequenceNo = 1 THEN 1'
+      'WHEN PG.SequenceNo = 2 THEN 1'
+      'END'
+      ''
+      
+        '-- m3ActualSizeNomLength ***************************************' +
+        '******'
+      'WHEN VU.VolumeUnitName = '#39'm3 aDxnL'#39' THEN'
+      'CASE'
+      'WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00)) As decimal(10,3)),3)'
+      ''
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      'END --AS m3ActualSizeNomLength,'
+      
+        '-- m3ActualSizeNomLength ***************************************' +
+        '******'
+      ''
+      '-- m3 nDxaL *********************************************'
+      ''
+      '-- WHEN VU.VolumeUnitName = '#39'm3 nDxaL'#39' THEN'
+      '-- CASE WHEN PG.SequenceNo = 1 THEN'
+      '-- ROUND(CAST(('
+      '-- PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      '-- CASE WHEN 0 > 0.05'
+      
+        '-- THEN PL.ActualLengthMM ELSE PL.ActualLengthMM END) / (1000 * ' +
+        '1000 * 1000)'
+      '--  As decimal(10,3)),3) -- AS m3NomSizeActualLength,'
+      '-- WHEN PG.SequenceNo = 1 THEN 0'
+      '-- WHEN PG.SequenceNo = 2 THEN 0'
+      '-- END'
+      '-- m3 nDxaL *********************************************'
+      'WHEN VU.VolumeUnitName = '#39'm3 nDxaL'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 0 THEN ROUND(CAST((PTD.NoOfPieces * OL' +
+        '.NominalThicknessMM * OL.NominalWidthMM *'
+      'PL.ActualLengthMM) / (1000 * 1000 * 1000)  As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Pall'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PL.ActualLengthMM * ' +
+        'PTD.NoOfPieces  As decimal(10,3)),3)'
+      ''
+      'END'
+      ''
+      ''
+      'WHEN VU.VolumeUnitName = '#39'S'#228'ck'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PTD.NoOfPieces  As d' +
+        'ecimal(10,3)),3)'
+      ''
+      'END'
+      ''
+      'WHEN VU.VolumeUnitName = '#39'Bal'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 7 THEN ROUND(CAST(PTD.NoOfPieces  As d' +
+        'ecimal(10,3)),3)'
+      ''
+      'END'
+      ''
+      ''
+      ''
+      'END AS OrderVolume,'
+      ''
+      ''
+      '--PriceVolume ********************************************'
+      '--PriceVolume ********************************************'
+      '--PriceVolume ********************************************'
+      'CASE'
+      ''
+      '-- M3NOMINAL *****************************************'
+      'WHEN PU.TemplateUnitName = '#39'm3 nDxnL'#39' THEN'
+      'CASE'
+      'WHEN PG.SequenceNo = 0 THEN'
+      '-- Random length'
+      'CASE'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0  AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00))'
+      ' As decimal(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      '--Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      'END--'
+      'WHEN PG.SequenceNo = 1 THEN'
+      
+        'ROUND(CAST(PI() * SQUARE (PG.ActualThicknessMM/100/2) * (PG.Actu' +
+        'alWidthMM/100) * PTD.NoOfPieces As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      '-- M3NOMINAL *****************************************'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'kvm aB'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST((       PTD.SQMofActualWidth )   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'Lopm a'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      
+        'ROUND(CAST((       PTD.LinealMeterActualLength )   As decimal(10' +
+        ',3)),3)'
+      
+        ' WHEN PG.SequenceNo = 1 THEN ROUND(CAST((PG.ActualWidthMM / 100 ' +
+        '* PTD.NoOfPieces)   As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'Stycketal'#39' THEN PTD.NoOfPieces'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'm3 aDxaL'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN 0 > 0.05'
+      
+        'THEN PL.ActualLengthMM ELSE PL.ActualLengthMM END) / (1000 * 100' +
+        '0 * 1000)'
+      ' As decimal(10,3)),3)'
+      
+        ' WHEN PG.SequenceNo = 1 THEN ROUND(CAST(PI() * SQUARE (PG.Actual' +
+        'ThicknessMM/100/2) * (PG.ActualWidthMM/100) * PTD.NoOfPieces As ' +
+        'decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      
+        '-- NM1 *********************************************************' +
+        '****'
+      'WHEN PU.TemplateUnitName = '#39'Lopm n'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces  *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000)) As decima' +
+        'l(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000) As ' +
+        'decimal(10,3)),3)'
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST((PTD.NoOfPieces  *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000) As ' +
+        'decimal(10,3)),3)'
+      ''
+      
+        'WHEN PG.SequenceNo = 1 THEN ROUND(CAST((PG.ActualWidthMM / 100 *' +
+        ' PTD.NoOfPieces)   As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      'END-- NM1'
+      ''
+      ''
+      ''
+      'WHEN PU.TemplateUnitName = '#39'MFBM Nom'#39' THEN'
+      
+        'CASE WHEN PG.SequenceNo = 0 THEN ROUND(CAST((       PTD.MFBMNomi' +
+        'nal )   As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 1 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 2 THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'Packages'#39' THEN 1'
+      ''
+      
+        '-- m3ActualSizeNomLength ***************************************' +
+        '******'
+      'WHEN PU.TemplateUnitName = '#39'm3 aDxnL'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0 THEN'
+      'CASE'
+      '-- random length'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      '(Select NominalLengthMM FROM dbo.ProductLengthGroup sPLG'
+      
+        'Inner Join dbo.ProductLength sPL3 ON sPL3.ProductLengthNo = sPLG' +
+        '.ProductLengthNo'
+      #9#9#9#9#9'AND sPL3.ActualLengthMM = PL.ActualLengthMM'
+      'WHERE'
+      
+        'sPLG.GroupNo = PL_CSD.ProductLengthGroupNo ) / (1000 * 1000 * 10' +
+        '00)) As decimal(10,3)),3)'
+      ''
+      '-- Random length, orderraden till'#229'ter alla l'#228'ngder'
+      'WHEN PL_CSD.ProductLengthGroupNo > 0 AND OL.OverrideRL = 1 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.ActualLengthMM END) / (1000 * 10' +
+        '00 * 1000)'
+      ' As decimal(10,3)),3)'
+      ''
+      '-- Fixed length'
+      'WHEN PL_CSD.ProductLengthGroupNo = 0 THEN'
+      'ROUND(CAST(('
+      'PTD.NoOfPieces * PG.ActualThicknessMM * PG.ActualWidthMM *'
+      'CASE WHEN OL.NominalLengthMM > 0.05'
+      
+        'THEN OL.NominalLengthMM ELSE PL.NominalLengthMM END) / (1000 * 1' +
+        '000 * 1000)'
+      ' As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      ' WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'END --AS m3ActualSizeNomLength,'
+      ''
+      ''
+      'WHEN PU.TemplateUnitName = '#39'm3 nDxaL'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 0  THEN'
+      
+        'ROUND(CAST((PTD.NoOfPieces * OL.NominalThicknessMM * OL.NominalW' +
+        'idthMM *'
+      'PL.ActualLengthMM) / (1000 * 1000 * 1000)'
+      ' As decimal(10,3)),3) -- AS m3NomSizeActualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'kg'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PL.ActualLengthMM * PTD.NoOfPieces As decimal(10,3)),' +
+        '3) -- AS m3NomSizeActualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      ''
+      ''
+      'WHEN PU.TemplateUnitName = '#39'S'#228'ck'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PTD.NoOfPieces As decimal(10,3)),3) -- AS m3NomSizeAc' +
+        'tualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      'WHEN PU.TemplateUnitName = '#39'Bal'#39' THEN'
+      'CASE WHEN PG.SequenceNo = 7  THEN'
+      
+        'ROUND(CAST(PTD.NoOfPieces As decimal(10,3)),3) -- AS m3NomSizeAc' +
+        'tualLength,'
+      'WHEN PG.SequenceNo = 1  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'WHEN PG.SequenceNo = 2  THEN ROUND(CAST(0 As decimal(10,3)),3)'
+      'END'
+      ''
+      ''
+      'END AS PriceVolume'
+      ''
+      ''
+      'FROM dbo.Loads LO'
+      'INNER JOIN dbo.LoadShippingPlan LSP'#9#9'ON'#9'LSP.LoadNo = LO.LoadNo'
+      'INNER JOIN dbo.LoadDetail LD'#9#9#9'ON'#9'LD.LoadNo = LSP.LoadNo'
+      #9#9#9#9#9#9'AND '#9'LD.ShippingPlanNo = LSP.ShippingPlanNo'
+      ''
+      
+        'Inner Join dbo.PackageTypeDetail'#9'PTD ON PTD.PackageTypeNo = LD.P' +
+        'ackageTypeNo'
+      
+        'INNER JOIN dbo.ProductLength PL ON PL.ProductLengthNo = PTD.Prod' +
+        'uctLengthNo'
+      ''
+      
+        'INNER JOIN dbo.CustomerShippingPlanDetails CSD2 ON CSD2.CustShip' +
+        'PlanDetailObjectNo = LD.DefaultCustShipObjectNo'
+      
+        'INNER JOIN dbo.OrderLine OL ON OL.OrderLineNo = CSD2.OrderLineNo' +
+        ' AND OL.OrderNo = CSD2.OrderNo'
+      ''
+      
+        'Inner JOIN dbo.ProductLength PL_CSD ON PL_CSD.ProductLengthNo = ' +
+        'CSD2.ProductLengthNo'
+      ''
+      
+        'INNER JOIN dbo.ProductGroup PG ON PG.ProductGroupNo = OL.Product' +
+        'GroupNo'
+      'INNER JOIN dbo.UnitName VU ON VU.VolumeUnit_No = OL.VolumeUnitNo'
+      'INNER JOIN dbo.PackUnit PU ON PU.TemplateUnitNo = OL.PriceUnitNo'
+      ''
+      ''
+      'WHERE'
+      'LO.LoadNo <> 1'
+      
+        'and LO.SupplierNo = :SupplierNo AND LO.SenderLoadStatus = 2 AND ' +
+        'LO.CustomerNo = :CustomerNo AND LSP.ShippingPlanNo = :ShippingPl' +
+        'anNo'
+      ''
+      ''
+      'AND NOT EXISTS'
+      '   (SELECT *'
+      '   FROM dbo.Invoiced_Load'
+      '   WHERE LoadNo = LSP.LoadNo'
+      'AND ShippingPlanNo = LSP.ShippingPlanNo)'
+      ''
+      'Delete dbo.PkgType_Load'
+      'FROM dbo.PkgType_Load'
+      
+        'Inner Join dbo.PkgType_Invoice ptd on ptd.LoadNo = PkgType_Load.' +
+        'LoadNo'
+      'WHERE Ptd.InternalInvoiceNo = :InternalInvoiceNo'
+      ''
+      'Insert into dbo.PkgType_Load'
+      'Select ptd.PackageTypeNo, ptd.LoadNo, ptd.LoadDetailNo,'
+      'SUM(ptd.NoOfPieces),'
+      'SUM(ptd.m3Actual),'
+      'SUM(ptd.m3Nominal),'
+      'SUM(ptd.MFBMNominal),'
+      'SUM(ptd.SQMofActualWidth),'
+      'SUM(ptd.SQMofCoveringWidth),'
+      'SUM(ptd.LinealMeterActualLength),'
+      'SUM(ptd.m3ActualSizeNomLength),'
+      'SUM(ptd.m3NomSizeActualLength),'
+      'SUM(ptd.LinealMeterNominalLength),'
+      'SUM(ptd.OrderVolume),'
+      'SUM(ptd.PriceVolume)'
+      ''
+      'FROM dbo.PkgType_Invoice ptd'
+      ''
+      'WHERE Ptd.InternalInvoiceNo = :InternalInvoiceNo'
+      ''
+      'Group By ptd.PackageTypeNo, ptd.LoadNo, ptd.LoadDetailNo'
+      '')
+    Left = 514
+    Top = 376
+    ParamData = <
+      item
+        Name = 'INTERNALINVOICENO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'SUPPLIERNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'CUSTOMERNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'SHIPPINGPLANNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_DeleteTempLoad: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Wize_DeleteTempLoad'
+    Left = 512
+    Top = 456
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
   end
 end

@@ -53,28 +53,26 @@ object fLoadEntrySSP: TfLoadEntrySSP
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 212
-    ClientRectLeft = 4
-    ClientRectRight = 1111
+    ClientRectBottom = 216
+    ClientRectRight = 1115
     ClientRectTop = 24
     object tsLoadData: TcxTabSheet
       Caption = 'Leveranshuvud'
       object Splitter1: TSplitter
         Left = 0
-        Top = 139
-        Width = 1107
+        Top = 143
+        Width = 1115
         Height = 5
         Cursor = crVSplit
         Align = alBottom
         Color = clBlack
         ParentColor = False
         ExplicitTop = 145
-        ExplicitWidth = 1115
       end
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1107
+        Width = 1115
         Height = 74
         Align = alTop
         BevelOuter = bvNone
@@ -323,8 +321,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 144
-        Width = 1107
+        Top = 148
+        Width = 1115
         Height = 44
         Align = alBottom
         TabOrder = 1
@@ -366,8 +364,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
       object grdLO: TcxGrid
         Left = 0
         Top = 74
-        Width = 1107
-        Height = 65
+        Width = 1115
+        Height = 69
         Align = alClient
         PopupMenu = pmLONumber
         TabOrder = 2
@@ -561,8 +559,8 @@ object fLoadEntrySSP: TfLoadEntrySSP
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntrySSP.ds_LoadHead
         TabOrder = 0
-        Height = 188
-        Width = 1107
+        Height = 192
+        Width = 1115
       end
     end
   end
@@ -585,7 +583,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 1019
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -617,7 +615,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
         Left = 1
         Top = 1
         Width = 64
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -1765,7 +1763,7 @@ object fLoadEntrySSP: TfLoadEntrySSP
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     CanCustomize = False
@@ -3368,25 +3366,21 @@ object fLoadEntrySSP: TfLoadEntrySSP
     object acPrintHyvelOrder: TAction
       Category = 'Print'
       Caption = 'Hyvelorder'
-      OnExecute = acPrintHyvelOrderExecute
       OnUpdate = acPrintHyvelOrderUpdate
     end
     object acLOAllaVerk: TAction
       Category = 'Print'
       Caption = 'Lastorder alla verk'
-      OnExecute = acLOAllaVerkExecute
       OnUpdate = acLOAllaVerkUpdate
     end
     object acPrintLOErtVerk: TAction
       Category = 'Print'
       Caption = 'Lastorder ert verk'
-      OnExecute = acPrintLOErtVerkExecute
       OnUpdate = acPrintLOErtVerkUpdate
     end
     object acPrintSpecAllaLasterLO: TAction
       Category = 'Print'
       Caption = 'Specification alla laster LO'
-      OnExecute = acPrintSpecAllaLasterLOExecute
       OnUpdate = acPrintSpecAllaLasterLOUpdate
     end
     object acPkgEntry: TAction
@@ -3456,7 +3450,6 @@ object fLoadEntrySSP: TfLoadEntrySSP
     object acPrintFSMisMatch: TAction
       Category = 'Print'
       Caption = 'F'#246'ljesedel (paket saknar koppling)'
-      OnExecute = acPrintFSMisMatchExecute
     end
     object acDeleteNotCompletePkgs: TAction
       Caption = 'Ta bort paket'
@@ -3832,13 +3825,14 @@ object fLoadEntrySSP: TfLoadEntrySSP
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

@@ -29,7 +29,7 @@ var
 implementation
 
 uses
-  DeliveryMessageWoodV2R31, Dialogs, XMLIntf, VidaUtils , dmsVidaSystem;
+  DeliveryMessageWoodV2R31, Dialogs, XMLIntf, VidaUtils ;
 
 var
   Fmw: IXMLDeliveryMessageWood;
@@ -83,9 +83,9 @@ end;
 -------------------------------------------------------------------------------}
 function DeliveryMessageNumber: string;
 begin
- Result := mw.DeliveryMessageWoodHeader.DeliveryMessageNumber;
- if Length(Result) = 0 then
-  Result := IntToStr( dmsSystem.ShippingPlanNo) ;
+//  Result := mw.DeliveryMessageWoodHeader.DeliveryMessageNumber;
+//  if Length(Result) = 0 then
+ Result := '1' ;
 end;
 
 function ImportDeliveryWoordHeader(dsInfo: TDataSet): Boolean;
@@ -153,7 +153,8 @@ begin
 
 
 
-  dsInfo.FieldByName('TotalNumberOfShipments').AsInteger   := mw.DeliveryMessageWoodSummary.TotalNumberOfShipments;
+ // if  mw.DeliveryMessageWoodSummary.TotalNumberOfShipments > 0 then
+ // dsInfo.FieldByName('TotalNumberOfShipments').AsInteger   := mw.DeliveryMessageWoodSummary.TotalNumberOfShipments;
   for i := 0 to mw.DeliveryMessageWoodSummary.TotalQuantity.Count - 1 do
   begin
     if i > 0 then break; // This line may be changed later
@@ -235,16 +236,19 @@ begin
   begin
     PI := BP.PartyIdentifier.Items[i];
 
-    sPartyIdentifier     := PI.NodeValue;
-    sPartyIdentifierType := PI.PartyIdentifierType;
+    if PI.NodeValue > '' then
+    Begin
+     sPartyIdentifier     := PI.NodeValue;
+     sPartyIdentifierType := PI.PartyIdentifierType;
 
-    dsInfo.Append;
+     dsInfo.Append;
       dsInfo.FieldByName('DeliveryMessageNumber').AsString := DeliveryMessageNumber;
 
       dsInfo.FieldByName('PartyType').AsString             := RemoveNameSpace(sPartyType) ;
       dsInfo.FieldByName('PartyIdentifier').AsString       := sPartyIdentifier;
       dsInfo.FieldByName('PartyIdentifierType').AsString   := sPartyIdentifierType;
-    dsInfo.Post;
+     dsInfo.Post;
+    End ;
   end;
 
   Result := True;
@@ -404,15 +408,15 @@ begin
   begin
     DSM := mw.DeliveryMessageShipment.Items[i];
 
-//    sShipmentID     := DSM.ShipmentID.Text;
-  //  sShipmentIDType := DSM.ShipmentID.ShipmentIDType;
+    sShipmentID     := DSM.ShipmentID.Text;
+    sShipmentIDType := DSM.ShipmentID.ShipmentIDType;
 
     for J := 0 to DSM.DeliveryMessageProductGroup.Count - 1 do
     begin
       DMPG := DSM.DeliveryMessageProductGroup.Items[J];
 
-//      sProductGroupID     := DMPG.ProductGroupID.Text;
-//      sProductGroupIDType := DMPG.ProductGroupID.ProductGroupIDType;
+      sProductGroupID     := DMPG.ProductGroupID.Text;
+      sProductGroupIDType := DMPG.ProductGroupID.ProductGroupIDType;
 
       for K := 0 to DMPG.DeliveryShipmentLineItem.Count - 1 do
       begin
@@ -487,9 +491,9 @@ begin
           dsInfo.FieldByName('GradingRule').AsString           := sGradingRule;
           dsInfo.FieldByName('GradeCode').AsString             := sGradeCode;
           dsInfo.FieldByName('GradeName').AsString             := sGradeName;
-          dsInfo.FieldByName('WidthValue').AsString            := ReplaceDecimalPoint(sWidthValue);
+          dsInfo.FieldByName('WidthValue').AsString            := ReplaceDecimalPoint(sWidthValue) ;
           dsInfo.FieldByName('WidthUOM').AsString              := sWidthUOM;
-          dsInfo.FieldByName('ThicknessValue').AsString        := ReplaceDecimalPoint(sThicknessValue);
+          dsInfo.FieldByName('ThicknessValue').AsString        := ReplaceDecimalPoint(sThicknessValue) ;
           dsInfo.FieldByName('ThicknessUOM').AsString          := sThicknessUOM;
           dsInfo.FieldByName('ManufacturingProcessType').AsString := sManufacturingProcessType;
           dsInfo.FieldByName('ExlogValue').AsString            := sExlogValue;
@@ -545,6 +549,8 @@ begin
           sProductIdentifierType := PI.ProductIdentifierType;
           sAgency                := PI.Agency;
 
+          if (sAgency <> 'Other') and (sAgency <> 'Buyer') then
+          Begin
           dsInfo.Append;
             dsInfo.FieldByName('DeliveryMessageNumber').AsString          := DeliveryMessageNumber;
             dsInfo.FieldByName('DeliveryShipmentLineItemNumber').AsString := sDeliveryShipmentLineItemNumber;
@@ -552,6 +558,7 @@ begin
             dsInfo.FieldByName('ProductIdentifierType').AsString          := sProductIdentifierType;
             dsInfo.FieldByName('Agency').AsString                         := sAgency;
           dsInfo.Post;
+          End;
         end;
       end;
     end;
@@ -924,9 +931,9 @@ begin
 
         for P := 0 to DSLI.Product.ProductIdentifier.Count - 1 do
         begin
-          if P > 1 then break;
+//          if P > 1 then break;
           PI := DSLI.Product.ProductIdentifier.Items[P];
-          if PI.ProductIdentifierType = 'PartNumber' then
+          if (PI.ProductIdentifierType = 'PartNumber') or (PI.ProductIdentifierType = 'CustomsTariffNumber') then
           Begin
            sProductIdentifier     := PI.Text;
 //           sProductIdentifierType := PI.ProductIdentifierType;
@@ -950,7 +957,10 @@ begin
 //LARS added "filter" to only get identifier of type Primary!
             if IS60.IdentifierType = 'Primary' then
             Begin
-             sIdentifier         := IS60.Text;
+             if Length(IS60.Text) > 9 then
+              sIdentifier         := Copy(IS60.Text,5,6)
+               else
+                sIdentifier         := IS60.Text ;
              sIdentifierCodeType := IS60.IdentifierCodeType;
              sIdentifierType     := IS60.IdentifierType;
             End ;
@@ -1038,7 +1048,14 @@ begin
             IS60 := TPI.Identifier.Items[M];
 //LARS added "filter" to only get identifier of type Primary!
             if IS60.IdentifierType = 'Primary' then
-            sIdentifier := IS60.Text;
+            Begin
+          //  sIdentifier := IS60.Text;
+
+             if Length(IS60.Text) > 9 then
+              sIdentifier         := Copy(IS60.Text,5,6)
+               else
+                sIdentifier         := IS60.Text ;
+            End;
           end;
 
         sIdentifier:= RemoveAlpha(sIdentifier) ;

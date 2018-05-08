@@ -89,13 +89,14 @@ object fSelectWoodxClient: TfSelectWoodxClient
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (
@@ -176,8 +177,7 @@ object fSelectWoodxClient: TfSelectWoodxClient
       'UpdateTableName'
       'Version'
       'PropertiesClassName')
-    Left = 216
-    Top = 104
+    Left = 232
     TranslationData = {
       73007400430061007000740069006F006E0073005F0055006E00690063006F00
       640065000D000A0054006600530065006C0065006300740057006F006F006400

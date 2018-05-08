@@ -332,6 +332,7 @@ type
     cdsLORowsShippingPlanStatus: TIntegerField;
     cds_LoadPackagesKG: TFloatField;
     sp_AdjustPkgArticleNoOnLoadPkgs: TFDStoredProc;
+    sp_CheckAllLengthsExists: TFDStoredProc;
     procedure DataModuleCreate(Sender: TObject);
     procedure cds_LoadHead1SenderLoadStatusChange(Sender: TField);
     procedure ds_LoadPackages2DataChange(Sender: TObject; Field: TField);
@@ -381,25 +382,26 @@ type
     Guid      : String;
     LoadStatus, LIPNo, InventoryNo: Integer; // , GlobalLoadDetailNo : Integer ;
     FSupplierNo, FCustomerNo: Integer;
-    function PkgExistInInventory(const PackageNo, PIPNo: Integer;
+    procedure CheckAllLengthsExistsinWIZE ;
+    function  PkgExistInInventory(const PackageNo, PIPNo: Integer;
       const SupplierCode: String3): Boolean;
-    function DuplicatePackageNo(const PackageNo: Integer;
+    function  DuplicatePackageNo(const PackageNo: Integer;
       const Prefix: String): Boolean;
     procedure csdUnit_OpenLagerLookup;
-    Function GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo: Integer): Integer;
+    Function  GetMaxLoadDetailNoMaxLoadDetailNo(const LoadNo: Integer): Integer;
     // Procedure Refresh_PkgList (const LoadNo : Integer) ;
     procedure chgManLoadPkgs(const LoadNo: Integer);
-    function OkToDeleteLSP(const LoadNo, ShippingPlanNo: Integer): Integer;
+    function  OkToDeleteLSP(const LoadNo, ShippingPlanNo: Integer): Integer;
     procedure UpdateLoad(const LoadNo: Integer);
     procedure UpdateLSP(const ShippingPlanNo: Integer);
     procedure UpdateLO(const LoadNo: Integer);
     function CreateLO(const LoadNo, CustomerNo, SalesRegionNo,
       SupplierNo: Integer): Integer;
-    Function DoesLOHavePackages(const LONo: Integer): Boolean;
-    function GetPkgsNos(const packagecodeno: String;
+    Function  DoesLOHavePackages(const LONo: Integer): Boolean;
+    function  GetPkgsNos(const packagecodeno: String;
       const noofpkgs, LogicalInventoryPointNo: Integer): Integer;
     procedure DeleteONELoad(const LoadNo: Integer);
-    function IS_Packages_OK: Boolean;
+    function  IS_Packages_OK: Boolean;
     Procedure Get_LO_LinesMatched(const PackageNo: Integer;
       const Supp_Code: String3);
     procedure SaveLOData(LoadNo: Integer);
@@ -1515,5 +1517,20 @@ Begin
       End ;
      end;
 End ;
+
+procedure TdmLoadEntrySSP.CheckAllLengthsExistsinWIZE ;
+Begin
+  Try
+  sp_CheckAllLengthsExists.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog('sp_CheckAllLengthsExists: ' + E.Message);
+      ShowMessage(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
 
 end.

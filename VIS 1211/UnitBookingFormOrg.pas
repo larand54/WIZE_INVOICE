@@ -135,7 +135,6 @@ type
     procedure acSaveExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
     procedure acSaveUpdate(Sender: TObject);
-    procedure acPrintExecute(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acChangeLayoutExecute(Sender: TObject);
     procedure acNewVesselNameExecute(Sender: TObject);
@@ -163,7 +162,7 @@ implementation
 
 uses   VidaConst,
   VidaUser,
-dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
+dmBooking, dmsDataConn, UnitCarrier, dmsVidaSystem,
   dmsVidaContact;
 
 {$R *.dfm}
@@ -348,29 +347,6 @@ procedure TFormBookingFormOrg.acSaveUpdate(Sender: TObject);
 begin
   acSave.Enabled:= not DataSaved ;
 end;
-
-procedure TFormBookingFormOrg.acPrintExecute(Sender: TObject);
-Var FormCRViewReport : TFormCRViewReport ;
-    A                : array of variant ;
-begin
- FormCRViewReport:= TFormCRViewReport.Create(Nil);
- Try
- SetLength(A, 1);
- A[0]:= dm_Booking.cdsBookingShippingPlanNo.AsInteger ;
- if OrderType = 0 then
- FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
- else
-  FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A) ;
-
- if FormCRViewReport.ReportFound then
- Begin
-  FormCRViewReport.ShowModal ;
- End ;
- Finally
-  FreeAndNil(FormCRViewReport) ;
- End ;
-end;
-
 
 procedure TFormBookingFormOrg.FormDestroy(Sender: TObject);
 begin

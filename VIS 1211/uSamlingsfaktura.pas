@@ -93,7 +93,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure acRefreshExecute(Sender: TObject);
     procedure acRemoveExecute(Sender: TObject);
-    procedure acPrintExecute(Sender: TObject);
     procedure acCloseExecute(Sender: TObject);
     procedure acRemoveUpdate(Sender: TObject);
     procedure acPrintUpdate(Sender: TObject);
@@ -108,7 +107,7 @@ var
 
 implementation
 
-uses UnitCRViewReport, dmcVidaInvoice, dmLM1, dmsVidaSystem, udmLanguage;
+uses dmcVidaInvoice, dmLM1, dmsVidaSystem, udmLanguage;
 
 {$R *.dfm}
 
@@ -178,29 +177,6 @@ begin
       cds_InvoiceGroup.Delete;
       cds_InvoiceGroup.ApplyUpdates(0);
     End;
-  End;
-end;
-
-procedure TfSamlingsfaktura.acPrintExecute(Sender: TObject);
-var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of variant;
-begin
-  if daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger < 1 then
-    exit;
-
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := daMoLM1.cds_InvoiceGroupInvoiceGroupNo.AsInteger;
-    FormCRViewReport.CreateCo('SAML_FAKT.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
   End;
 end;
 

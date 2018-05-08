@@ -3712,7 +3712,7 @@ object dmVidaInvoice: TdmVidaInvoice
       Required = True
     end
   end
-  object sq_GetInvoiceDetailData: TFDQuery
+  object sq_GetInvoiceDetailDataOld: TFDQuery
     CachedUpdates = True
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
@@ -3724,7 +3724,12 @@ object dmVidaInvoice: TdmVidaInvoice
       ''
       'OL.OrderLineDescription'#9#9'      AS'#9'PRODUCTDESCRIPTION,'
       'CSD.ProductNo'#9#9#9'              AS'#9'PRODUCTNO,'
-      'CSD.LengthDescription'#9#9'        AS'#9'LENGTHDESCRIPTION,'
+      '-- CSD.LengthDescription'#9#9'        AS'#9'LENGTHDESCRIPTION,'
+      ''
+      
+        '[dbo].[VISf__GetLoadLengthsFromCSDv3](csd.CustShipPlanDetailObje' +
+        'ctNo, LO.LoadNo) AS'#9'LENGTHDESCRIPTION,'
+      ''
       'CSD.ProductLengthNo'#9#9'          AS'#9'PRODUCTLENGTHNO,'
       'OL.Price'#9#9#9'                  AS'#9'PRICE,'
       'VU.VolumeUnitName'#9#9'            AS'#9'VOLUMEUNIT,'
@@ -3827,6 +3832,7 @@ object dmVidaInvoice: TdmVidaInvoice
       'LO.CustomerNo = :CustomerNo'
       'AND LSP.ShippingPlanNo = :ShippingPlanNo'
       'AND LO.SenderLoadStatus = 2'
+      'AND LO.LoadNo = :'
       ''
       ''
       ''
@@ -3853,159 +3859,159 @@ object dmVidaInvoice: TdmVidaInvoice
         DataType = ftInteger
         ParamType = ptInput
       end>
-    object sq_GetInvoiceDetailDataCustShipPlanDetailObjectNo: TIntegerField
+    object sq_GetInvoiceDetailDataOldCustShipPlanDetailObjectNo: TIntegerField
       FieldName = 'CustShipPlanDetailObjectNo'
       Origin = 'CustShipPlanDetailObjectNo'
       Required = True
     end
-    object sq_GetInvoiceDetailDataORDERLINENO: TIntegerField
+    object sq_GetInvoiceDetailDataOldORDERLINENO: TIntegerField
       FieldName = 'ORDERLINENO'
       Origin = 'ORDERLINENO'
       Required = True
     end
-    object sq_GetInvoiceDetailDataREFERENCE: TStringField
+    object sq_GetInvoiceDetailDataOldREFERENCE: TStringField
       FieldName = 'REFERENCE'
       Origin = 'REFERENCE'
       Size = 30
     end
-    object sq_GetInvoiceDetailDataPRODUCTDESCRIPTION: TStringField
+    object sq_GetInvoiceDetailDataOldPRODUCTDESCRIPTION: TStringField
       FieldName = 'PRODUCTDESCRIPTION'
       Origin = 'PRODUCTDESCRIPTION'
       Size = 100
     end
-    object sq_GetInvoiceDetailDataPRODUCTNO: TIntegerField
+    object sq_GetInvoiceDetailDataOldPRODUCTNO: TIntegerField
       FieldName = 'PRODUCTNO'
       Origin = 'PRODUCTNO'
       Required = True
     end
-    object sq_GetInvoiceDetailDataLENGTHDESCRIPTION: TStringField
+    object sq_GetInvoiceDetailDataOldLENGTHDESCRIPTION: TStringField
       FieldName = 'LENGTHDESCRIPTION'
       Origin = 'LENGTHDESCRIPTION'
       FixedChar = True
       Size = 100
     end
-    object sq_GetInvoiceDetailDataPRODUCTLENGTHNO: TIntegerField
+    object sq_GetInvoiceDetailDataOldPRODUCTLENGTHNO: TIntegerField
       FieldName = 'PRODUCTLENGTHNO'
       Origin = 'PRODUCTLENGTHNO'
       Required = True
     end
-    object sq_GetInvoiceDetailDataPRICE: TFloatField
+    object sq_GetInvoiceDetailDataOldPRICE: TFloatField
       FieldName = 'PRICE'
       Origin = 'PRICE'
     end
-    object sq_GetInvoiceDetailDataVOLUMEUNIT: TStringField
+    object sq_GetInvoiceDetailDataOldVOLUMEUNIT: TStringField
       FieldName = 'VOLUMEUNIT'
       Origin = 'VOLUMEUNIT'
       Required = True
       Size = 10
     end
-    object sq_GetInvoiceDetailDataPRICEUNIT: TStringField
+    object sq_GetInvoiceDetailDataOldPRICEUNIT: TStringField
       FieldName = 'PRICEUNIT'
       Origin = 'PRICEUNIT'
       Required = True
     end
-    object sq_GetInvoiceDetailDataActualThicknessMM: TFloatField
+    object sq_GetInvoiceDetailDataOldActualThicknessMM: TFloatField
       FieldName = 'ActualThicknessMM'
       Origin = 'ActualThicknessMM'
     end
-    object sq_GetInvoiceDetailDataActualWidthMM: TFloatField
+    object sq_GetInvoiceDetailDataOldActualWidthMM: TFloatField
       FieldName = 'ActualWidthMM'
       Origin = 'ActualWidthMM'
     end
-    object sq_GetInvoiceDetailDataNominalThicknessMM_PG: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalThicknessMM_PG: TFloatField
       FieldName = 'NominalThicknessMM_PG'
       Origin = 'NominalThicknessMM_PG'
     end
-    object sq_GetInvoiceDetailDataNominalWidthMM_PG: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalWidthMM_PG: TFloatField
       FieldName = 'NominalWidthMM_PG'
       Origin = 'NominalWidthMM_PG'
     end
-    object sq_GetInvoiceDetailDataNominalLengthMM_PL: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalLengthMM_PL: TFloatField
       FieldName = 'NominalLengthMM_PL'
       Origin = 'NominalLengthMM_PL'
       Required = True
     end
-    object sq_GetInvoiceDetailDataActualLengthMM_PL: TFloatField
+    object sq_GetInvoiceDetailDataOldActualLengthMM_PL: TFloatField
       FieldName = 'ActualLengthMM_PL'
       Origin = 'ActualLengthMM_PL'
       Required = True
     end
-    object sq_GetInvoiceDetailDataNominalThicknessMM: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalThicknessMM: TFloatField
       FieldName = 'NominalThicknessMM'
       Origin = 'NominalThicknessMM'
     end
-    object sq_GetInvoiceDetailDataNominalWidthMM: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalWidthMM: TFloatField
       FieldName = 'NominalWidthMM'
       Origin = 'NominalWidthMM'
     end
-    object sq_GetInvoiceDetailDataNominalLengthMM: TFloatField
+    object sq_GetInvoiceDetailDataOldNominalLengthMM: TFloatField
       FieldName = 'NominalLengthMM'
       Origin = 'NominalLengthMM'
     end
-    object sq_GetInvoiceDetailDataNominalThicknessINCH: TStringField
+    object sq_GetInvoiceDetailDataOldNominalThicknessINCH: TStringField
       FieldName = 'NominalThicknessINCH'
       Origin = 'NominalThicknessINCH'
     end
-    object sq_GetInvoiceDetailDataNominalWidthINCH: TStringField
+    object sq_GetInvoiceDetailDataOldNominalWidthINCH: TStringField
       FieldName = 'NominalWidthINCH'
       Origin = 'NominalWidthINCH'
     end
-    object sq_GetInvoiceDetailDataLO: TIntegerField
+    object sq_GetInvoiceDetailDataOldLO: TIntegerField
       FieldName = 'LO'
       Origin = 'LO'
       Required = True
     end
-    object sq_GetInvoiceDetailDataVOLUME_ORDERUNIT: TFMTBCDField
+    object sq_GetInvoiceDetailDataOldVOLUME_ORDERUNIT: TFMTBCDField
       FieldName = 'VOLUME_ORDERUNIT'
       Origin = 'VOLUME_ORDERUNIT'
       Precision = 38
       Size = 3
     end
-    object sq_GetInvoiceDetailDataM3ACTUAL: TFMTBCDField
+    object sq_GetInvoiceDetailDataOldM3ACTUAL: TFMTBCDField
       FieldName = 'M3ACTUAL'
       Origin = 'M3ACTUAL'
       Precision = 38
       Size = 3
     end
-    object sq_GetInvoiceDetailDataM3NOMINAL: TFMTBCDField
+    object sq_GetInvoiceDetailDataOldM3NOMINAL: TFMTBCDField
       FieldName = 'M3NOMINAL'
       Origin = 'M3NOMINAL'
       Precision = 38
       Size = 3
     end
-    object sq_GetInvoiceDetailDataACTUAL_LINEALMETER: TFMTBCDField
+    object sq_GetInvoiceDetailDataOldACTUAL_LINEALMETER: TFMTBCDField
       FieldName = 'ACTUAL_LINEALMETER'
       Origin = 'ACTUAL_LINEALMETER'
       Precision = 38
       Size = 3
     end
-    object sq_GetInvoiceDetailDataNOOFPIECES: TIntegerField
+    object sq_GetInvoiceDetailDataOldNOOFPIECES: TIntegerField
       FieldName = 'NOOFPIECES'
       Origin = 'NOOFPIECES'
     end
-    object sq_GetInvoiceDetailDataNOOFPKGS: TIntegerField
+    object sq_GetInvoiceDetailDataOldNOOFPKGS: TIntegerField
       FieldName = 'NOOFPKGS'
       Origin = 'NOOFPKGS'
     end
-    object sq_GetInvoiceDetailDataOL_Reference: TStringField
+    object sq_GetInvoiceDetailDataOldOL_Reference: TStringField
       FieldName = 'OL_Reference'
       Origin = 'OL_Reference'
       Size = 50
     end
-    object sq_GetInvoiceDetailDataintNM3: TFloatField
+    object sq_GetInvoiceDetailDataOldintNM3: TFloatField
       FieldName = 'intNM3'
       Origin = 'intNM3'
     end
-    object sq_GetInvoiceDetailDataArticleNo: TIntegerField
+    object sq_GetInvoiceDetailDataOldArticleNo: TIntegerField
       FieldName = 'ArticleNo'
       Origin = 'ArticleNo'
     end
-    object sq_GetInvoiceDetailDataOrderNo: TIntegerField
+    object sq_GetInvoiceDetailDataOldOrderNo: TIntegerField
       FieldName = 'OrderNo'
       Origin = 'OrderNo'
       Required = True
     end
-    object sq_GetInvoiceDetailDataInternalPrice: TFloatField
+    object sq_GetInvoiceDetailDataOldInternalPrice: TFloatField
       FieldName = 'InternalPrice'
       Origin = 'InternalPrice'
       ProviderFlags = [pfInUpdate]
@@ -6483,6 +6489,10 @@ object dmVidaInvoice: TdmVidaInvoice
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
+      
+        'Delete dbo.PkgType_Invoice Where InternalInvoiceNo = :InternalIn' +
+        'voiceNo'
+      ''
       'Insert into dbo.PkgType_Invoice'
       '(PackageTypeNo,'
       'ProductLengthNo,'
@@ -7239,9 +7249,11 @@ object dmVidaInvoice: TdmVidaInvoice
       ''
       ''
       'WHERE'
+      'LO.LoadNo = :LoadNo'
       
-        'LO.SupplierNo = :SupplierNo AND LO.SenderLoadStatus = 2 AND LO.C' +
-        'ustomerNo = :CustomerNo AND LSP.ShippingPlanNo = :ShippingPlanNo'
+        '-- LO.SupplierNo = :SupplierNo AND LO.SenderLoadStatus = 2 AND L' +
+        'O.CustomerNo = :CustomerNo AND LSP.ShippingPlanNo = :ShippingPla' +
+        'nNo'
       ''
       ''
       'AND NOT EXISTS'
@@ -7287,17 +7299,7 @@ object dmVidaInvoice: TdmVidaInvoice
         ParamType = ptInput
       end
       item
-        Name = 'SUPPLIERNO'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'CUSTOMERNO'
-        DataType = ftInteger
-        ParamType = ptInput
-      end
-      item
-        Name = 'SHIPPINGPLANNO'
+        Name = 'LOADNO'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -9260,7 +9262,8 @@ object dmVidaInvoice: TdmVidaInvoice
       'Adr.AddressNo = :AddressNo'
       'AND PayText.CurrencyNo = :CurrencyNo'
       'AND     PayText.LanguageCode = :LanguageCode'
-      'AND     PayText.CountryNo = Adr.CountryNo')
+      'AND     PayText.CountryNo = Adr.CountryNo'
+      'AND PayText.SalesRegionNo = :SalesRegionNo')
     Left = 144
     Top = 672
     ParamData = <
@@ -9276,6 +9279,11 @@ object dmVidaInvoice: TdmVidaInvoice
       end
       item
         Name = 'LANGUAGECODE'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'SALESREGIONNO'
         DataType = ftInteger
         ParamType = ptInput
       end>
@@ -18265,5 +18273,274 @@ object dmVidaInvoice: TdmVidaInvoice
         DataType = ftInteger
         ParamType = ptInput
       end>
+  end
+  object FDStoredProc1: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Wize_CheckMissingCallOffRows'
+    Left = 976
+    Top = 1160
+  end
+  object sp_CreateInvoiceLoad: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Wize_CreateInvoiceLoad'
+    Left = 976
+    Top = 1208
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@UserID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@LONo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_SetReferenceOnFreightRowsInInvoice: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Wize_SetReferenceOnFreightRowsInInvoice'
+    Left = 472
+    Top = 1168
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+      end
+      item
+        Position = 2
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object sp_CtrlInvoice: TFDStoredProc
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.wize_CtrlInvoice'
+    Left = 472
+    Top = 1232
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+  end
+  object ds_CtrlInvoice: TDataSource
+    DataSet = sp_CtrlInvoice
+    Left = 472
+    Top = 1280
+  end
+  object sp_GetInvoiceDetails: TFDStoredProc
+    Active = True
+    Connection = dmsConnector.FDConnection1
+    StoredProcName = 'dbo.Wize_GetInvoiceDetails'
+    Left = 344
+    Top = 88
+    ParamData = <
+      item
+        Position = 1
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        ParamType = ptResult
+        Value = 0
+      end
+      item
+        Position = 2
+        Name = '@ShippingPlanNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 3
+        Name = '@CustomerNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 4
+        Name = '@LoadNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Position = 5
+        Name = '@InternalInvoiceNo'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sp_GetInvoiceDetailsCustShipPlanDetailObjectNo: TIntegerField
+      FieldName = 'CustShipPlanDetailObjectNo'
+      Origin = 'CustShipPlanDetailObjectNo'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsORDERLINENO: TIntegerField
+      FieldName = 'ORDERLINENO'
+      Origin = 'ORDERLINENO'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsREFERENCE: TStringField
+      FieldName = 'REFERENCE'
+      Origin = 'REFERENCE'
+      Size = 30
+    end
+    object sp_GetInvoiceDetailsPRODUCTDESCRIPTION: TStringField
+      FieldName = 'PRODUCTDESCRIPTION'
+      Origin = 'PRODUCTDESCRIPTION'
+      Size = 150
+    end
+    object sp_GetInvoiceDetailsPRODUCTNO: TIntegerField
+      FieldName = 'PRODUCTNO'
+      Origin = 'PRODUCTNO'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsLENGTHDESCRIPTION: TStringField
+      FieldName = 'LENGTHDESCRIPTION'
+      Origin = 'LENGTHDESCRIPTION'
+      ReadOnly = True
+      Size = 255
+    end
+    object sp_GetInvoiceDetailsPRODUCTLENGTHNO: TIntegerField
+      FieldName = 'PRODUCTLENGTHNO'
+      Origin = 'PRODUCTLENGTHNO'
+    end
+    object sp_GetInvoiceDetailsPRICE: TFloatField
+      FieldName = 'PRICE'
+      Origin = 'PRICE'
+    end
+    object sp_GetInvoiceDetailsVOLUMEUNIT: TStringField
+      FieldName = 'VOLUMEUNIT'
+      Origin = 'VOLUMEUNIT'
+      Required = True
+      Size = 10
+    end
+    object sp_GetInvoiceDetailsPRICEUNIT: TStringField
+      FieldName = 'PRICEUNIT'
+      Origin = 'PRICEUNIT'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsActualThicknessMM: TFloatField
+      FieldName = 'ActualThicknessMM'
+      Origin = 'ActualThicknessMM'
+    end
+    object sp_GetInvoiceDetailsActualWidthMM: TFloatField
+      FieldName = 'ActualWidthMM'
+      Origin = 'ActualWidthMM'
+    end
+    object sp_GetInvoiceDetailsNominalThicknessMM_PG: TFloatField
+      FieldName = 'NominalThicknessMM_PG'
+      Origin = 'NominalThicknessMM_PG'
+    end
+    object sp_GetInvoiceDetailsNominalWidthMM_PG: TFloatField
+      FieldName = 'NominalWidthMM_PG'
+      Origin = 'NominalWidthMM_PG'
+    end
+    object sp_GetInvoiceDetailsNominalLengthMM_PL: TFloatField
+      FieldName = 'NominalLengthMM_PL'
+      Origin = 'NominalLengthMM_PL'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsActualLengthMM_PL: TFloatField
+      FieldName = 'ActualLengthMM_PL'
+      Origin = 'ActualLengthMM_PL'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsNominalThicknessMM: TFloatField
+      FieldName = 'NominalThicknessMM'
+      Origin = 'NominalThicknessMM'
+    end
+    object sp_GetInvoiceDetailsNominalWidthMM: TFloatField
+      FieldName = 'NominalWidthMM'
+      Origin = 'NominalWidthMM'
+    end
+    object sp_GetInvoiceDetailsNominalLengthMM: TFloatField
+      FieldName = 'NominalLengthMM'
+      Origin = 'NominalLengthMM'
+    end
+    object sp_GetInvoiceDetailsNominalThicknessINCH: TStringField
+      FieldName = 'NominalThicknessINCH'
+      Origin = 'NominalThicknessINCH'
+    end
+    object sp_GetInvoiceDetailsNominalWidthINCH: TStringField
+      FieldName = 'NominalWidthINCH'
+      Origin = 'NominalWidthINCH'
+    end
+    object sp_GetInvoiceDetailsLO: TIntegerField
+      FieldName = 'LO'
+      Origin = 'LO'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsVOLUME_ORDERUNIT: TFMTBCDField
+      FieldName = 'VOLUME_ORDERUNIT'
+      Origin = 'VOLUME_ORDERUNIT'
+      Precision = 38
+      Size = 3
+    end
+    object sp_GetInvoiceDetailsM3ACTUAL: TFMTBCDField
+      FieldName = 'M3ACTUAL'
+      Origin = 'M3ACTUAL'
+      Precision = 38
+      Size = 3
+    end
+    object sp_GetInvoiceDetailsM3NOMINAL: TFMTBCDField
+      FieldName = 'M3NOMINAL'
+      Origin = 'M3NOMINAL'
+      Precision = 38
+      Size = 3
+    end
+    object sp_GetInvoiceDetailsACTUAL_LINEALMETER: TFMTBCDField
+      FieldName = 'ACTUAL_LINEALMETER'
+      Origin = 'ACTUAL_LINEALMETER'
+      Precision = 38
+      Size = 3
+    end
+    object sp_GetInvoiceDetailsNOOFPIECES: TIntegerField
+      FieldName = 'NOOFPIECES'
+      Origin = 'NOOFPIECES'
+    end
+    object sp_GetInvoiceDetailsNOOFPKGS: TIntegerField
+      FieldName = 'NOOFPKGS'
+      Origin = 'NOOFPKGS'
+    end
+    object sp_GetInvoiceDetailsOL_Reference: TStringField
+      FieldName = 'OL_Reference'
+      Origin = 'OL_Reference'
+      Size = 50
+    end
+    object sp_GetInvoiceDetailsintNM3: TFloatField
+      FieldName = 'intNM3'
+      Origin = 'intNM3'
+    end
+    object sp_GetInvoiceDetailsArticleNo: TIntegerField
+      FieldName = 'ArticleNo'
+      Origin = 'ArticleNo'
+    end
+    object sp_GetInvoiceDetailsOrderNo: TIntegerField
+      FieldName = 'OrderNo'
+      Origin = 'OrderNo'
+      Required = True
+    end
+    object sp_GetInvoiceDetailsInternalPrice: TFloatField
+      FieldName = 'InternalPrice'
+      Origin = 'InternalPrice'
+    end
   end
 end

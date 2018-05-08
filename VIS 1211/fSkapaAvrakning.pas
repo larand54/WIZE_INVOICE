@@ -404,7 +404,7 @@ begin
    if cds_PropsStatus.AsInteger = const_Utan_Moms then
    Begin
     cdsArrivingLoads.SQL.Add('AND  (SSP.ObjectType >= 2)') ;
-    //Försäljning utom Sverige eller skatteupplag
+    //Försäljning utom SVERIGE eller skatteupplag
     cdsArrivingLoads.SQL.Add('AND ((  A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1))') ;
    End
    else
@@ -740,7 +740,7 @@ End ;
       if cds_PropsStatus.AsInteger = const_Utan_Moms then
       Begin
         cdsArrivingLoads.SQL.Add('AND  (SSP.ObjectType >= 2)');
-        // Försäljning utom Sverige eller skatteupplag
+        // Försäljning utom SVERIGE eller skatteupplag
         cdsArrivingLoads.SQL.Add
           ('AND ((  A.CountryNo <> 9  ) OR (CP.VAT_OnInvoice = 1))');
       End

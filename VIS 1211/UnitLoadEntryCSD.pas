@@ -334,8 +334,6 @@ type
     procedure acDeleteLoadExecute(Sender: TObject);
     procedure acDeleteLoadUpdate(Sender: TObject);
     procedure acPrintFSExecute(Sender: TObject);
-    procedure acPrintHyvelOrderExecute(Sender: TObject);
-    procedure acLOAllaVerkExecute(Sender: TObject);
     procedure acPrintFSUpdate(Sender: TObject);
     procedure acPrintSpecAllaLasterLOUpdate(Sender: TObject);
     procedure acPrintLOErtVerkUpdate(Sender: TObject);
@@ -480,7 +478,7 @@ var
 implementation
 
 uses VidaConst, dlgPickPkg,
-  dmsVidaContact, VidaUser, UnitCRViewReport, UnitPkgInfo,
+  dmsVidaContact, VidaUser, UnitPkgInfo,
   UnitPkgNoSeries, dmcVidaOrder, dmsVidaSystem, dmcVidaSystem, uPickPkgNo,
   uScanLoadPkgNo, uEntryField, dmsDataConn, dmcLoadEntryCSD,
   uSelectLoadPlanDest,
@@ -2274,7 +2272,7 @@ end;
 
 procedure TfLoadEntryCSD.bbTally_Ver2Click(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
 
   FR: TFastreports;
@@ -2297,49 +2295,7 @@ begin
         FR.Free;
       end;
 
-    end
-    else
-    begin
-      FormCRViewReport := TFormCRViewReport.Create(Nil);
-      Try
-        Try
-          dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-            dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-
-        SetLength(A, 1);
-        A[0] := dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-
-        FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
-
-        if FormCRViewReport.ReportFound then
-        Begin
-          FormCRViewReport.ShowModal;
-        End;
-        Try
-          dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-            dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_DelPkgType.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-      Finally
-        FreeAndNil(FormCRViewReport);
-      End;
-    end;
+    end ;
   finally
     dmFR.RestoreCursor;
   end;
@@ -3415,7 +3371,7 @@ End;
 
 procedure TfLoadEntryCSD.acPrintTallyUSNoteExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   RC: TCMReportController;
   Params: TCMParams;
@@ -3456,46 +3412,7 @@ begin
       FreeAndNil(Params);
       FreeAndNil(RC);
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-
-      Try
-        dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-
-      SetLength(A, 1);
-      A[0] := dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-
-      FormCRViewReport.CreateCo('TALLY_US_NOTE.RPT', A);
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-      Try
-        dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-          dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-        dmsSystem.sq_DelPkgType.ExecSQL;
-      except
-        On E: Exception do Begin
-          dmsSystem.FDoLog(E.Message);
-          // ShowMessage(E.Message);
-          Raise;
-        End;
-      end;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfLoadEntryCSD.grdPkgsDBBandedTableView1PACKAGENOPropertiesValidate
@@ -3716,7 +3633,7 @@ end;
 
 procedure TfLoadEntryCSD.acPrintFSExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
 
   FR: TFastreports;
@@ -3740,94 +3657,10 @@ begin
         FR.Free;
       end;
 
-    end
-    else
-    begin
-      FormCRViewReport := TFormCRViewReport.Create(Nil);
-      Try
-        Try
-          dmsSystem.sq_PkgType_InvoiceByCSD.ParamByName('LoadNo').AsInteger :=
-            dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_PkgType_InvoiceByCSD.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-        SetLength(A, 1);
-        A[0] := dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-
-        FormCRViewReport.CreateCo('TALLY_VER3_NOTE.RPT', A);
-
-        if FormCRViewReport.ReportFound then
-        Begin
-          FormCRViewReport.ShowModal;
-        End;
-        Try
-          dmsSystem.sq_DelPkgType.ParamByName('LoadNo').AsInteger :=
-            dmLoadEntryCSD.cds_LoadHeadLoadNo.AsInteger;
-          dmsSystem.sq_DelPkgType.ExecSQL;
-        except
-          On E: Exception do
-          Begin
-            dmsSystem.FDoLog(E.Message);
-            // ShowMessage(E.Message);
-            Raise;
-          End;
-        end;
-      Finally
-        FreeAndNil(FormCRViewReport);
-      End;
-    end;
+    end ;
   finally
     dmFR.RestoreCursor;
   end;
-end;
-
-procedure TfLoadEntryCSD.acPrintHyvelOrderExecute(Sender: TObject);
-Var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of Variant;
-begin
-  teLoadID.SetFocus;
-
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := dmLoadEntryCSD.cds_LSPShippingPlanNo.AsInteger;
-    FormCRViewReport.CreateCo('HYVEL_ORDER.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
-end;
-
-procedure TfLoadEntryCSD.acLOAllaVerkExecute(Sender: TObject);
-Var
-  FormCRViewReport: TFormCRViewReport;
-  A: array of Variant;
-begin
-  teLoadID.SetFocus;
-
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 2);
-    A[0] := dmLoadEntryCSD.cds_LSPShippingPlanNo.AsInteger;
-    A[1] := -1;
-    FormCRViewReport.CreateCo('LASTORDER_VERK_NOTE_ver3.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
 end;
 
 procedure TfLoadEntryCSD.acPrintFSUpdate(Sender: TObject);

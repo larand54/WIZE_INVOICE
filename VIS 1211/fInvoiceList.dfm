@@ -556,6 +556,7 @@ object frmInvoiceList: TfrmInvoiceList
           Height = 41
           Caption = 'Button1'
           TabOrder = 28
+          Visible = False
           OnClick = Button1Click
         end
       end
@@ -1125,34 +1126,27 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object acFakturaSvensk: TAction
       Caption = 'Faktura Svensk'
-      OnExecute = acFakturaSvenskExecute
       OnUpdate = acFakturaSvenskUpdate
     end
     object acFakturaEngelsk: TAction
       Caption = 'Faktura Engelsk'
-      OnExecute = acFakturaEngelskExecute
       OnUpdate = acFakturaEngelskUpdate
     end
     object acFakturaEngelskLangd: TAction
       Caption = 'Faktura Engelsk L'#228'ngd'
-      OnExecute = acFakturaEngelskLangdExecute
       OnUpdate = acFakturaEngelskLangdUpdate
     end
     object acSpecificationSvensk: TAction
       Caption = 'Specification Svensk'
-      OnExecute = acSpecificationSvenskExecute
     end
     object acSpecificationEngelsk: TAction
       Caption = 'Specifikation Engelsk'
-      OnExecute = acSpecificationEngelskExecute
     end
     object acSpecificationEngelskMedProducent: TAction
       Caption = 'Specification Engelsk med producent'
-      OnExecute = acSpecificationEngelskMedProducentExecute
     end
     object acSpecifikationEngelskAktuellDimension: TAction
       Caption = 'Specifikation Engelsk - Aktuell dimension'
-      OnExecute = acSpecifikationEngelskAktuellDimensionExecute
     end
     object acTrpBrev: TAction
       Caption = 'F'#246'rhandsgranska Transportbrev'
@@ -1160,44 +1154,35 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object acSpecifikatinUtanPaketNr: TAction
       Caption = 'Specifikatin utan paketnr'
-      OnExecute = acSpecifikatinUtanPaketNrExecute
     end
     object acSpecifikationIdahoStyle: TAction
       Caption = 'Specifikation (Idaho style)'
-      OnExecute = acSpecifikationIdahoStyleExecute
     end
     object acFakturaEngelskAgust: TAction
       Caption = 'Faktura Engelsk (f'#246'r Agust)'
-      OnExecute = acFakturaEngelskAgustExecute
       OnUpdate = acFakturaEngelskAgustUpdate
     end
     object acFakturaEngelskLengthPlusNM3: TAction
       Caption = 'Faktura Engelsk - L'#228'ngd (+ NM3)'
-      OnExecute = acFakturaEngelskLengthPlusNM3Execute
       OnUpdate = acFakturaEngelskLengthPlusNM3Update
     end
     object acFakturaEngelskLangdPerPakettyp: TAction
       Caption = 'Faktura Engelsk - L'#228'ngd (per pakettyp)'
-      OnExecute = acFakturaEngelskLangdPerPakettypExecute
       OnUpdate = acFakturaEngelskLangdPerPakettypUpdate
     end
     object acFakturaSvenskUtanMoms_DK: TAction
       Caption = 'Faktura Svensk - utan moms (dk)'
-      OnExecute = acFakturaSvenskUtanMoms_DKExecute
       OnUpdate = acFakturaSvenskUtanMoms_DKUpdate
     end
     object acFakturaEngelsk_DK: TAction
       Caption = 'Faktura Engelsk (dk)'
-      OnExecute = acFakturaEngelsk_DKExecute
       OnUpdate = acFakturaEngelsk_DKUpdate
     end
     object acSpecifikationSvensk_DK: TAction
       Caption = 'Specifikation Svensk (dk)'
-      OnExecute = acSpecifikationSvensk_DKExecute
     end
     object acSpecifikatikonEngelsk_DK: TAction
       Caption = 'Specifikatikon Engelsk (dk)'
-      OnExecute = acSpecifikatikonEngelsk_DKExecute
     end
     object acTrpBrvTest: TAction
       Caption = 'TrpBrvTest'
@@ -1242,7 +1227,6 @@ object frmInvoiceList: TfrmInvoiceList
     end
     object acSpecSV_GroupByLoadNo: TAction
       Caption = 'Specifikation grupperad per FS Svensk'
-      OnExecute = acSpecSV_GroupByLoadNoExecute
     end
     object acPreViewInvoice: TAction
       Caption = 'F'#246'rhandsgranska klientfaktura'

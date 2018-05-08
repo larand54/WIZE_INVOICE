@@ -2,7 +2,7 @@ object frmMain: TfrmMain
   Left = 199
   Top = 108
   Hint = 'Currency'
-  Caption = 'VIS'
+  Caption = 'WIZE INVOICE'
   ClientHeight = 734
   ClientWidth = 1226
   Color = clBtnFace

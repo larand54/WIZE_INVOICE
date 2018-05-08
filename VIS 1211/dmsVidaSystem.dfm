@@ -2525,7 +2525,7 @@ object dmsSystem: TdmsSystem
     Connection = dmsConnector.FDConnection1
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
-      'Select * FROM dbo.dbProps_v2')
+      'Select * FROM dbo.dbProps')
     Left = 560
     Top = 448
     object sq_dbPropsHostName: TStringField
@@ -2553,13 +2553,19 @@ object dmsSystem: TdmsSystem
       Origin = 'CRPath'
       Size = 255
     end
-    object sq_dbPropsintsec: TIntegerField
-      FieldName = 'intsec'
-      Origin = 'intsec'
-    end
     object sq_dbPropsLangPath: TStringField
       FieldName = 'LangPath'
       Origin = 'LangPath'
+      Size = 255
+    end
+    object sq_dbPropsFastPath: TStringField
+      FieldName = 'FastPath'
+      Origin = 'FastPath'
+      Size = 255
+    end
+    object sq_dbPropsServiceUrl: TStringField
+      FieldName = 'ServiceUrl'
+      Origin = 'ServiceUrl'
       Size = 255
     end
   end

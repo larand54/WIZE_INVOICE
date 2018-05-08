@@ -427,7 +427,6 @@ type
     sp_Kontraktsnr: TFDStoredProc;
     sp_GetOrderData: TFDStoredProc;
     mtSelectedPkgNoLagergrupp: TStringField;
-    sq_dbPropsintsec: TIntegerField;
     sq_dbPropsLangPath: TStringField;
     sp_Lang: TFDStoredProc;
     ds_PackageSize: TDataSource;
@@ -440,6 +439,8 @@ type
     cds_PackageSizeAct: TIntegerField;
     cxSchedulerStorage1: TcxSchedulerStorage;
     sp_IsLengthLengthGroup: TFDStoredProc;
+    sq_dbPropsFastPath: TStringField;
+    sq_dbPropsServiceUrl: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mtSelectedPkgNoAfterInsert(DataSet: TDataSet);
     procedure mtSelectedPkgNoBeforePost(DataSet: TDataSet);
@@ -475,7 +476,7 @@ type
       var Choice: String3; var SupplierNo: Integer; var ProductNo: Integer);
 
   public
-    DeliveryMessageNumber: String;
+//    DeliveryMessageNumber: String;
     ShippingPlanNo: Integer;
     LOG_ENABLE: Boolean;
     MarkedPkgs: Integer;
@@ -540,7 +541,7 @@ type
     Function GetReportNameByReportNo(const ReportNo: Integer): String;
     function GetReportNameByDocTyp(const DocTyp: Integer): String;
     function GetLogonParams(var HostName, Database, UserName, Password,
-      CRpath: String): Boolean;
+    CRpath, ServiceUrl: String): Boolean;
     procedure SaveDir(const Value, Field: String);
     procedure GetLastUsedLoadNo(Strings: TStrings);
     procedure SaveLastUsedLoadNo(Strings: TStrings);
@@ -761,16 +762,17 @@ Begin
 End;
 
 function TdmsSystem.GetLogonParams(var HostName, Database, UserName, Password,
-  CRpath: String): Boolean;
+  CRpath, ServiceUrl: String): Boolean;
 Begin
   sq_dbProps.Open;
   if not sq_dbProps.Eof then
   Begin
-    HostName := sq_dbPropsHostName.AsString;
-    Database := sq_dbPropsDatabas.AsString;
-    UserName := sq_dbPropsUserName.AsString;
-    Password := sq_dbPropsPassword.AsString;
-    CRpath := sq_dbPropsCRPath.AsString;
+    HostName    := sq_dbPropsHostName.AsString;
+    Database    := sq_dbPropsDatabas.AsString;
+    UserName    := sq_dbPropsUserName.AsString;
+    Password    := sq_dbPropsPassword.AsString;
+    CRpath      := sq_dbPropsCRPath.AsString;
+    ServiceUrl  := sq_dbPropsServiceUrl.AsString ;
 //    intsec := sq_dbPropsintsec.AsInteger;
     Result := True;
   End
@@ -2099,7 +2101,7 @@ begin
     dm_SendMapiMail := Tdm_SendMapiMail.Create(nil);
     Try
       dm_SendMapiMail.SendMail(Subject, Stext,
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach);
 
       // const Subject, MessageText, MailFromAddress,  MailToAddress: String; const Attachments: array of String);
     Finally

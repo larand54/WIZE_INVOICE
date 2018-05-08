@@ -360,37 +360,37 @@ type
     sq_GetLODataETA: TSQLTimeStampField;
     sq_GetLODataTrpID: TStringField;
     sq_GetLODataADDITION_PRICEUNIT: TStringField;
-    sq_GetInvoiceDetailData: TFDQuery;
-    sq_GetInvoiceDetailDataCustShipPlanDetailObjectNo: TIntegerField;
-    sq_GetInvoiceDetailDataORDERLINENO: TIntegerField;
-    sq_GetInvoiceDetailDataREFERENCE: TStringField;
-    sq_GetInvoiceDetailDataPRODUCTDESCRIPTION: TStringField;
-    sq_GetInvoiceDetailDataPRODUCTNO: TIntegerField;
-    sq_GetInvoiceDetailDataLENGTHDESCRIPTION: TStringField;
-    sq_GetInvoiceDetailDataPRODUCTLENGTHNO: TIntegerField;
-    sq_GetInvoiceDetailDataPRICE: TFloatField;
-    sq_GetInvoiceDetailDataVOLUMEUNIT: TStringField;
-    sq_GetInvoiceDetailDataPRICEUNIT: TStringField;
-    sq_GetInvoiceDetailDataActualThicknessMM: TFloatField;
-    sq_GetInvoiceDetailDataActualWidthMM: TFloatField;
-    sq_GetInvoiceDetailDataNominalThicknessMM_PG: TFloatField;
-    sq_GetInvoiceDetailDataNominalWidthMM_PG: TFloatField;
-    sq_GetInvoiceDetailDataNominalLengthMM_PL: TFloatField;
-    sq_GetInvoiceDetailDataActualLengthMM_PL: TFloatField;
-    sq_GetInvoiceDetailDataNominalThicknessMM: TFloatField;
-    sq_GetInvoiceDetailDataNominalWidthMM: TFloatField;
-    sq_GetInvoiceDetailDataNominalLengthMM: TFloatField;
-    sq_GetInvoiceDetailDataNominalThicknessINCH: TStringField;
-    sq_GetInvoiceDetailDataNominalWidthINCH: TStringField;
-    sq_GetInvoiceDetailDataLO: TIntegerField;
-    sq_GetInvoiceDetailDataVOLUME_ORDERUNIT: TFMTBCDField;
-    sq_GetInvoiceDetailDataM3ACTUAL: TFMTBCDField;
-    sq_GetInvoiceDetailDataM3NOMINAL: TFMTBCDField;
-    sq_GetInvoiceDetailDataACTUAL_LINEALMETER: TFMTBCDField;
-    sq_GetInvoiceDetailDataNOOFPIECES: TIntegerField;
-    sq_GetInvoiceDetailDataNOOFPKGS: TIntegerField;
-    sq_GetInvoiceDetailDataOL_Reference: TStringField;
-    sq_GetInvoiceDetailDataintNM3: TFloatField;
+    sq_GetInvoiceDetailDataOld: TFDQuery;
+    sq_GetInvoiceDetailDataOldCustShipPlanDetailObjectNo: TIntegerField;
+    sq_GetInvoiceDetailDataOldORDERLINENO: TIntegerField;
+    sq_GetInvoiceDetailDataOldREFERENCE: TStringField;
+    sq_GetInvoiceDetailDataOldPRODUCTDESCRIPTION: TStringField;
+    sq_GetInvoiceDetailDataOldPRODUCTNO: TIntegerField;
+    sq_GetInvoiceDetailDataOldLENGTHDESCRIPTION: TStringField;
+    sq_GetInvoiceDetailDataOldPRODUCTLENGTHNO: TIntegerField;
+    sq_GetInvoiceDetailDataOldPRICE: TFloatField;
+    sq_GetInvoiceDetailDataOldVOLUMEUNIT: TStringField;
+    sq_GetInvoiceDetailDataOldPRICEUNIT: TStringField;
+    sq_GetInvoiceDetailDataOldActualThicknessMM: TFloatField;
+    sq_GetInvoiceDetailDataOldActualWidthMM: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalThicknessMM_PG: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalWidthMM_PG: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalLengthMM_PL: TFloatField;
+    sq_GetInvoiceDetailDataOldActualLengthMM_PL: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalThicknessMM: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalWidthMM: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalLengthMM: TFloatField;
+    sq_GetInvoiceDetailDataOldNominalThicknessINCH: TStringField;
+    sq_GetInvoiceDetailDataOldNominalWidthINCH: TStringField;
+    sq_GetInvoiceDetailDataOldLO: TIntegerField;
+    sq_GetInvoiceDetailDataOldVOLUME_ORDERUNIT: TFMTBCDField;
+    sq_GetInvoiceDetailDataOldM3ACTUAL: TFMTBCDField;
+    sq_GetInvoiceDetailDataOldM3NOMINAL: TFMTBCDField;
+    sq_GetInvoiceDetailDataOldACTUAL_LINEALMETER: TFMTBCDField;
+    sq_GetInvoiceDetailDataOldNOOFPIECES: TIntegerField;
+    sq_GetInvoiceDetailDataOldNOOFPKGS: TIntegerField;
+    sq_GetInvoiceDetailDataOldOL_Reference: TStringField;
+    sq_GetInvoiceDetailDataOldintNM3: TFloatField;
     sq_GetShipToAddress: TFDQuery;
     sq_GetShipToAddressShippingPlanNo: TIntegerField;
     sq_GetShipToAddressAddressNo: TIntegerField;
@@ -1065,7 +1065,7 @@ type
     cdsInvoiceListLevORT: TStringField;
     cdsInvoiceListErReferens: TStringField;
     cdsInvoiceListOrdernr: TStringField;
-    sq_GetInvoiceDetailDataArticleNo: TIntegerField;
+    sq_GetInvoiceDetailDataOldArticleNo: TIntegerField;
     sq_GetInvoiceDetailDataIIintNM3: TFloatField;
     sq_GetInvoiceDetailDataIIArticleNo: TIntegerField;
     cdsInvoiceDetailAttSekPerAM3: TBCDField;
@@ -1373,7 +1373,7 @@ type
     cdsInvoiceDetailNettoSEKPerNM3: TBCDField;
     cdsInvoiceDetailBruttoSEKPerNM3: TBCDField;
     sq_GetNettoPris: TFDQuery;
-    sq_GetInvoiceDetailDataOrderNo: TIntegerField;
+    sq_GetInvoiceDetailDataOldOrderNo: TIntegerField;
     sq_GetNettoPrisValueField: TFloatField;
     sq_GetBruttoPris: TFDQuery;
     sq_GetBruttoPrisValueField: TFloatField;
@@ -1388,7 +1388,7 @@ type
     SmallintField2: TSmallintField;
     SmallintField3: TSmallintField;
     SQLTimeStampField3: TSQLTimeStampField;
-    sq_GetInvoiceDetailDataInternalPrice: TFloatField;
+    sq_GetInvoiceDetailDataOldInternalPrice: TFloatField;
     cdsInvoiceHeadDelKredit: TIntegerField;
     cdsInvoiceHeadIntInvNoToAttestAgainst: TIntegerField;
     cdsInvoiceListVarukonto: TStringField;
@@ -1637,6 +1637,45 @@ type
     cdsInvoiceDetailOrderBy: TIntegerField;
     sp_SetReferenceInInvoiceDetails: TFDStoredProc;
     cdsInvoiceListSupplierNo: TIntegerField;
+    FDStoredProc1: TFDStoredProc;
+    sp_CreateInvoiceLoad: TFDStoredProc;
+    sp_SetReferenceOnFreightRowsInInvoice: TFDStoredProc;
+    sp_CtrlInvoice: TFDStoredProc;
+    ds_CtrlInvoice: TDataSource;
+    sp_GetInvoiceDetails: TFDStoredProc;
+    sp_GetInvoiceDetailsCustShipPlanDetailObjectNo: TIntegerField;
+    sp_GetInvoiceDetailsORDERLINENO: TIntegerField;
+    sp_GetInvoiceDetailsREFERENCE: TStringField;
+    sp_GetInvoiceDetailsPRODUCTDESCRIPTION: TStringField;
+    sp_GetInvoiceDetailsPRODUCTNO: TIntegerField;
+    sp_GetInvoiceDetailsLENGTHDESCRIPTION: TStringField;
+    sp_GetInvoiceDetailsPRODUCTLENGTHNO: TIntegerField;
+    sp_GetInvoiceDetailsPRICE: TFloatField;
+    sp_GetInvoiceDetailsVOLUMEUNIT: TStringField;
+    sp_GetInvoiceDetailsPRICEUNIT: TStringField;
+    sp_GetInvoiceDetailsActualThicknessMM: TFloatField;
+    sp_GetInvoiceDetailsActualWidthMM: TFloatField;
+    sp_GetInvoiceDetailsNominalThicknessMM_PG: TFloatField;
+    sp_GetInvoiceDetailsNominalWidthMM_PG: TFloatField;
+    sp_GetInvoiceDetailsNominalLengthMM_PL: TFloatField;
+    sp_GetInvoiceDetailsActualLengthMM_PL: TFloatField;
+    sp_GetInvoiceDetailsNominalThicknessMM: TFloatField;
+    sp_GetInvoiceDetailsNominalWidthMM: TFloatField;
+    sp_GetInvoiceDetailsNominalLengthMM: TFloatField;
+    sp_GetInvoiceDetailsNominalThicknessINCH: TStringField;
+    sp_GetInvoiceDetailsNominalWidthINCH: TStringField;
+    sp_GetInvoiceDetailsLO: TIntegerField;
+    sp_GetInvoiceDetailsVOLUME_ORDERUNIT: TFMTBCDField;
+    sp_GetInvoiceDetailsM3ACTUAL: TFMTBCDField;
+    sp_GetInvoiceDetailsM3NOMINAL: TFMTBCDField;
+    sp_GetInvoiceDetailsACTUAL_LINEALMETER: TFMTBCDField;
+    sp_GetInvoiceDetailsNOOFPIECES: TIntegerField;
+    sp_GetInvoiceDetailsNOOFPKGS: TIntegerField;
+    sp_GetInvoiceDetailsOL_Reference: TStringField;
+    sp_GetInvoiceDetailsintNM3: TFloatField;
+    sp_GetInvoiceDetailsArticleNo: TIntegerField;
+    sp_GetInvoiceDetailsOrderNo: TIntegerField;
+    sp_GetInvoiceDetailsInternalPrice: TFloatField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1769,6 +1808,9 @@ type
     vouno, logno: Integer;
     serie: String;
     ldglogwrite_logerror, vourowlog_logerror: Integer;
+    function  CtrlInvoice(const InternalInvoiceNo : Integer) : String ;
+    procedure SetReferenceOnFreightRowsInInvoice(const InternalInvoiceNo : Integer);
+    procedure CreateInvoicedLoad(const LONo : Integer);
     procedure SetReferenceInInvoiceDetails(const InternalInvoiceNo : Integer);
     procedure PrepareAngloExcelFile(const InvoiceNo: String;
     const CustomerNo, InternalInvoiceNo: Integer);
@@ -1886,7 +1928,7 @@ type
       RichEdit1: TRichEdit): Variant;
     Function GetInvoiceTextByClient(const ClientNo: Integer): Variant;
     function GetPaymentText(const CurrencyNo, LanguageCode,
-      AddressNo: Integer): String;
+      AddressNo, SalesRegionNo : Integer): String;
     procedure OpenInvoiceHeaderForAttest(const InvoiceNo, InvoiceType: Integer);
     function NextProformaNo(const InternalInvoiceNo: Integer): Integer;
     procedure DeletePreliminaryInvoice(const InternalInvoiceNo: Integer);
@@ -1903,7 +1945,7 @@ implementation
 Uses dmsDataConn, recerror, UnitEnterInvoiceNo, VidaConst, VidaUser,
   fMoveInvPkgToInventory, dmc_ArrivingLoads,
   dmsVidaContact, uSelectMultInvoice, dmsVidaSystem, VidaUtils,
-  UnitCRExportOneReport, uSendMapiMail, MainU, dmc_ImportWoodx,
+  uSendMapiMail, MainU, dmc_ImportWoodx,
   dmcVidaOrder, dmsVidaProduct, UnitdmModule1, udmFR, uReportController,
   uReport;
 {$R *.dfm}
@@ -3696,20 +3738,22 @@ end;
 procedure TdmVidaInvoice.DataModuleCreate(Sender: TObject);
 begin
   fInternalInvoiceNo := -1;
-  mtInvoiceType.Active := True;
-  mtInvoiceType.InsertRecord([12, 'VE [VIDA ENERGI]']);
-  mtInvoiceType.InsertRecord([11, 'VP Purchase']);
-  mtInvoiceType.InsertRecord([10, 'UK Purchase']);
-  mtInvoiceType.InsertRecord([9, 'VIDA UK']);
-  mtInvoiceType.InsertRecord([8, 'BKO']);
-  mtInvoiceType.InsertRecord([7, 'VTA']);
-  mtInvoiceType.InsertRecord([6, 'AGENT']);
-  mtInvoiceType.InsertRecord([5, 'FW']);
-  mtInvoiceType.InsertRecord([4, 'USA (K2)']);
-  mtInvoiceType.InsertRecord([3, 'Purchase Invoice']);
+
+    mtInvoiceType.Active := True;
+{    mtInvoiceType.InsertRecord([12, 'VE [VIDA ENERGI]']);
+    mtInvoiceType.InsertRecord([11, 'VP Purchase']);
+    mtInvoiceType.InsertRecord([10, 'UK Purchase']);
+    mtInvoiceType.InsertRecord([9, 'VIDA UK']);
+    mtInvoiceType.InsertRecord([8, 'BKO']);
+    mtInvoiceType.InsertRecord([7, 'VTA']);
+    mtInvoiceType.InsertRecord([6, 'AGENT']);
+    mtInvoiceType.InsertRecord([5, 'FW']);
+    mtInvoiceType.InsertRecord([4, 'USA (K2)']);
+    mtInvoiceType.InsertRecord([3, 'Purchase Invoice']);
+}
   mtInvoiceType.InsertRecord([2, 'Proforma, (move pkgs to inventory)']);
   mtInvoiceType.InsertRecord([1, 'Proforma, (Invoice later)']);
-  mtInvoiceType.InsertRecord([0, 'VIDA (K1)']);
+  mtInvoiceType.InsertRecord([0, 'WOOD SUPPORT (WSK1)']);
   if not dmsContact.cds_Country.Active then
     dmsContact.cds_Country.Active := True;
 end;
@@ -3928,12 +3972,13 @@ begin
 end;
 
 function TdmVidaInvoice.GetPaymentText(const CurrencyNo, LanguageCode,
-  AddressNo: Integer): String;
+  AddressNo, SalesRegionNo : Integer): String;
 Begin
   sq_GetPaymentText.Close;
   sq_GetPaymentText.ParamByName('CurrencyNo').AsInteger := CurrencyNo;
   sq_GetPaymentText.ParamByName('LanguageCode').AsInteger := LanguageCode;
   sq_GetPaymentText.ParamByName('AddressNo').AsInteger := AddressNo;
+  sq_GetPaymentText.ParamByName('SalesRegionNo').AsInteger := SalesRegionNo;
   sq_GetPaymentText.Open;
   if not sq_GetPaymentText.Eof then
     Result := sq_GetPaymentTextPaymentText.AsString
@@ -4740,7 +4785,7 @@ procedure TdmVidaInvoice.EmailaTrpBrevExecute(const IntInvNo, InvoiceNo,
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of Variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -4805,27 +4850,7 @@ begin
           showMessage('No mail sent due to missing attachment file(s)');
           exit;
         end;
-      end
-      else
-      begin
-        sTransportBrev := ExcelDir + 'Transportbrev ' + inttostr(InvoiceNo);
-        sSpecification := ExcelDir + 'Specification ' + inttostr(InvoiceNo);
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-        Try
-          SetLength(A, 1);
-
-          A[0] := IntInvNo;
-          FormCRExportOneReport.CreateCo(CustomerNo, cTrpBrev, A,
-            sTransportBrev);
-
-          FormCRExportOneReport.CreateCo(CustomerNo, cPkgSpec, A,
-            sSpecification);
-          sTransportBrev := sTransportBrev + '.pdf';
-          sSpecification := sSpecification + '.pdf';
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
-      end;
+      end ;
 
       SetLength(Attach, 2);
       Attach[0] := sTransportBrev;
@@ -4849,7 +4874,7 @@ begin
           '' + 'Transport letter/Package specification attached. ' + LF + '' + LF
           + '' + LF + 'MVH/Best Regards, ' + LF + '' +
           dmsContact.GetFirstAndLastName(ThisUser.UserID),
-          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach);
       Finally
         FreeAndNil(dm_SendMapiMail);
       End;
@@ -4869,7 +4894,7 @@ Procedure TdmVidaInvoice.ExportToWoodx(const CustomerNo, IntInvNo: Integer;
 begin
   XMLImportExport := TXMLImportExport.Create(nil);
   try
-    XMLImportExport.InvoiceNo := StrToIntDef(InvoiceNo, 0);
+//    XMLImportExport.InvoiceNo := StrToIntDef(InvoiceNo, 0);
     XMLImportExport.InternalInvoiceNo := IntInvNo;
     XMLImportExport.CustomerNo := CustomerNo;
     XMLImportExport.tsImport.TabVisible := False;
@@ -8166,8 +8191,8 @@ begin
 {
           if Object5 = '99' then // 99 = extern kund
           Begin
-            if sp_InvTotalsCountryNo.AsInteger = 9 then // CountryNo 9 = Sverige
-              KundResKontra := '1510' // Kundfordring Sverige externa kunder
+            if sp_InvTotalsCountryNo.AsInteger = 9 then // CountryNo 9 = SVERIGE
+              KundResKontra := '1510' // Kundfordring SVERIGE externa kunder
             else
               KundResKontra := '1512'; // Kundfordring utländska externa kunder
           End
@@ -8176,7 +8201,7 @@ begin
             if Object5 = '22' then
               KundResKontra := '1562' // Kundfordring koncern Vida Wood UK
             else
-              KundResKontra := '1560'; // Kundfordring koncern Sverige
+              KundResKontra := '1560'; // Kundfordring koncern SVERIGE
           End;
 }
 
@@ -8390,9 +8415,9 @@ begin
         if InvoiceType2 = 0 then
         Begin
           if Object5 = '99' then // Om extern kund
-            ResKontraSerie := 'VWK1'
+            ResKontraSerie := 'WSK1'
           else
-            ResKontraSerie := 'VWK1';
+            ResKontraSerie := 'WSK1';
         End
         else // Om det är en USA faktura skall serien vara VWK2
           if InvoiceType2 = 4 then
@@ -9140,8 +9165,8 @@ end;
   //Kundreskontra
   if Object5 = '99' then //99 = extern kund
   Begin
-  if CountryNo = 9 then //CountryNo 9 = Sverige
-  KundResKontra:= '1510' //Kundfordring Sverige externa kunder
+  if CountryNo = 9 then //CountryNo 9 = SVERIGE
+  KundResKontra:= '1510' //Kundfordring SVERIGE externa kunder
   else
   KundResKontra:= '1512' ; //Kundfordring utländska externa kunder
   End
@@ -9150,7 +9175,7 @@ end;
   if Object5 = '22' then
   KundResKontra:= '1562' //Kundfordring koncern Vida Wood UK
   else
-  KundResKontra:= '1560' ; //Kundfordring koncern Sverige
+  KundResKontra:= '1560' ; //Kundfordring koncern SVERIGE
   End ;
 
 
@@ -10285,7 +10310,7 @@ procedure TdmVidaInvoice.MailaCopyToVIDASTORE(const InvoiceNo: String;
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of Variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -10323,7 +10348,7 @@ begin
     if (Length(MailToAddressKund) > 0) then
     MailToAddress := MailToAddressKund ; }
 
-  MailToAddress := 'vis.faktura@vida.se';
+  MailToAddress := 'Lars.makiaho@gmail.com';
 
 
   // if dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger < 1 then exit ;
@@ -10348,21 +10373,7 @@ begin
         FreeAndNil(params);
         FreeAndNil(RC);
       End;
-    end
-    else begin
-      FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := InternalInvoiceNo;
-
-        FormCRExportOneReport.CreateCo(CustomerNo, cFaktura, A,
-          ExcelFolder + 'InvoiceNo ' + InvoiceNo);
-        // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger, cPkgSpec, A, ExcelFolder + 'Specification '+InvoiceNo) ;
-      Finally
-        FreeAndNil(FormCRExportOneReport); // .Free ;
-      End;
-    end;
-    // ExtractFilePath(Forms.Application.ExeName) + '\'+ExportFile+'.pdf';
+    end ;
   End;
 
   SetLength(Attach, 1);
@@ -10381,7 +10392,7 @@ begin
       dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
       // 'lars.makiaho@falubo.se', //getinvoice emailaddress
 
-      Attach, True { SubMitt? } );
+      Attach);
   Finally
     FreeAndNil(dm_SendMapiMail);
   End;
@@ -10611,6 +10622,51 @@ Begin
       dmsSystem.FDoLog(E.Message);
       Raise;
     End;
+  end;
+End;
+
+
+procedure TdmVidaInvoice.CreateInvoicedLoad(const LONo : Integer);
+Begin
+  Try
+    sp_CreateInvoiceLoad.ParamByName('@LONo').AsInteger   := LONo ;
+    sp_CreateInvoiceLoad.ParamByName('@UserID').AsInteger := ThisUser.UserID ;
+    sp_CreateInvoiceLoad.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+
+procedure TdmVidaInvoice.SetReferenceOnFreightRowsInInvoice(const InternalInvoiceNo : Integer);
+Begin
+  Try
+    sp_SetReferenceOnFreightRowsInInvoice.ParamByName('@InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
+    sp_SetReferenceOnFreightRowsInInvoice.ExecProc;
+  except
+    On E: Exception do
+    Begin
+      dmsSystem.FDoLog(E.Message);
+      Raise;
+    End;
+  end;
+End;
+
+function TdmVidaInvoice.CtrlInvoice(const InternalInvoiceNo : Integer) : String ;
+Begin
+  Try
+    sp_CtrlInvoice.ParamByName('@InternalInvoiceNo').AsInteger   := InternalInvoiceNo ;
+    sp_CtrlInvoice.Active := True ;
+    if not sp_CtrlInvoice.Eof then
+    Begin
+      Result  := sp_CtrlInvoice.FieldByName('Info1').AsString + ' ' + sp_CtrlInvoice.FieldByName('Info2').AsString ;
+    End;
+  Finally
+    sp_CtrlInvoice.Active := False ;
   end;
 End;
 

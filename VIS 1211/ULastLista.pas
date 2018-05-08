@@ -180,7 +180,7 @@ var
 
 implementation
 
-uses UnitCRViewReport, dmc_ArrivingLoads, VidaUtils, Vidauser,
+uses dmc_ArrivingLoads, VidaUtils, Vidauser,
   UnitPkgInfo, dmsVidaContact, dmcVidaSystem, dmsDataConn, VidaConst,
   dmsVidaSystem, dmc_UserProps, udmLanguage
   , uFastReports, udmFR, uReportController;
@@ -453,7 +453,7 @@ end;
 procedure TfLastLista.PrintSamlingsspecifikation(Sender: TObject;
   const SamLastNr: Integer);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of variant;
 begin
   if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
@@ -464,18 +464,6 @@ begin
     exit;
   end;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := SamLastNr;
-    FormCRViewReport.CreateCo('SAM_LAST.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
 end;
 
 procedure TfLastLista.printSamlingsSpecifikationMedPktNr_FR(
@@ -499,7 +487,7 @@ end;
 procedure TfLastLista.PrintSamlingsspecifikationPKTNR(Sender: TObject;
   const SamLastNr: Integer);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of variant;
 begin
   if dmArrivingLoads.cds_verkLasterLastNr.AsInteger < 1 then
@@ -510,18 +498,7 @@ begin
     exit;
   end;
 
-  FormCRViewReport := TFormCRViewReport.Create(Nil);
-  Try
-    SetLength(A, 1);
-    A[0] := SamLastNr;
-    FormCRViewReport.CreateCo('SAM_LAST_PKTNR.RPT', A);
-    if FormCRViewReport.ReportFound then
-    Begin
-      FormCRViewReport.ShowModal;
-    End;
-  Finally
-    FreeAndNil(FormCRViewReport);
-  End;
+
 end;
 
 procedure TfLastLista.printSamlingsSpecifikation_FR(const aSamLastNr: integer);

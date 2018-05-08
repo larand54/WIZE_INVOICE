@@ -47,6 +47,7 @@ type
     sp_GetUserStartHostCanChangeUser: TIntegerField;
     sp_GetUserStartHostSetOnStart: TIntegerField;
     sp_GetUserStartHostChangeToUser: TStringField;
+    sq_GetUserNameDescription: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -68,8 +69,7 @@ type
     function  NextSecondMaxNo(const TableName: String;
       const PrimaryKeyValue: Integer): Integer;
     function  Get_AD_Name: String;
-    procedure GetUserNameLoggedIn(Var UserName, UserPswd: String;
-      Const pAD_Name: String);
+    procedure GetUserNameLoggedIn(Var UserName, UserPswd, Email : String;Const PFD_Name : String) ;
 
     function GetCurrentPkgNo(const ClientNo, NoOfPkgNo: Integer): Integer;
     function GetCompanyName(CompanyNo: Integer): String;
@@ -165,43 +165,41 @@ Begin
   sq_GetLoggedInUser.Close;
 End;
 
-procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd: String;
-  Const pAD_Name: String);
-Var
-  AD_Name: String;
+procedure TdmsConnector.GetUserNameLoggedIn(Var UserName, UserPswd, Email : String;Const PFD_Name : String) ;
+Var AD_Name : String ;
 Begin
-  sq_GetLoggedInUser.Open;
-  if not sq_GetLoggedInUser.Eof then
-    AD_Name := sq_GetLoggedInUserLoggedInUser.AsString
-  else
-    AD_Name := '-';
-// AD_Name := 'vida\tobsor';
-  // ShowMessage('AD_Name = '+AD_Name) ;
-  if Length(pAD_Name) > 0 then
-    AD_Name := pAD_Name;
-  sq_GetLoggedInUser.Close;
-  if AD_Name <> '-' then
+ sq_GetLoggedInUser.Open ;
+ if not sq_GetLoggedInUser.Eof then
+  AD_Name:= sq_GetLoggedInUserLoggedInUser.AsString
+   else
+    AD_Name:= '-' ;
+// ShowMessage('AD_Name = '+AD_Name) ;
+ if Length(PFD_Name) > 0 then
+  AD_Name:= PFD_Name ;
+ sq_GetLoggedInUser.Close ;
+ if AD_Name <> '-' then
+ Begin
+  sq_GetUserName.ParamByName('AD_Name').AsString:= AD_Name ;
+  sq_GetUserName.Open ;
+  if not sq_GetUserName.Eof Then
   Begin
-    sq_GetUserName.ParamByName('AD_Name').AsString := AD_Name;
-    sq_GetUserName.Open;
-    if not sq_GetUserName.Eof Then
-    Begin
-      UserName := sq_GetUserNameUserName.AsString;
-      UserPswd := sq_GetUserNamePassWord.AsString;
-    End
-    else
-    Begin
-      ShowMessage('User ' + AD_Name + ' have no access in VIS');
-      UserName := '-';
-    End;
-    sq_GetUserName.Close;
+   UserName := sq_GetUserNameUserName.AsString ;
+   UserPswd := sq_GetUserNamePassWord.AsString ;
+   Email    := sq_GetUserNameDescription.AsString ;
   End
-  else
-  Begin
-    ShowMessage('Windows user name missing.');
-    UserName := '-';
-  End;
-End;
+   else
+    Begin
+     ShowMessage('Användare ' + AD_Name + ' saknar behörighet i WIZE') ;
+     UserName:= '-' ;
+    End ;
+  sq_GetUserName.Close ;
+ End
+ else
+ Begin
+  ShowMessage('Windows användarnamn saknas') ;
+  UserName:= '-' ;
+ End ;
+End ;
 
   procedure TdmsConnector.Commit;
   begin
@@ -217,45 +215,53 @@ end;
 
 procedure TdmsConnector.DataModuleCreate(Sender: TObject);
 begin
+
 {$IFDEF DEBUG}
   if (Pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0) then begin
     dmsConnector.DriveLetter := 'C:\';
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=alvesql03');
-        Params.Add('Database=vis_vida');
+        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
-        Params.add('MetaDefCatalog=vis_vida');
+        Params.add('MetaDefCatalog=woodsupport');
         Params.Add('MetaDefSchema=dbo');
-        Params.Add('User_Name=Lars');
+        Params.Add('User_Name=sa');
         Params.Add('Password=woods2011');
         Params.Add('DriverID=MSSQL');
-        Params.Add('ApplicationName=VIS');
+        Params.Add('ApplicationName=WIZEINVOICE');
       end;
   end
   else begin
   end;
 {$ELSE}
-  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then
-  begin
+  if (GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER') then begin
     dmsConnector.DriveLetter := 'C:\';
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=visprodsql.vida.se');
-        Params.Add('Database=vis_vida');
+        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
-        Params.add('MetaDefCatalog=vis_vida');
+        Params.add('MetaDefCatalog=woodsupport');
         Params.Add('MetaDefSchema=dbo');
-        Params.Add('User_Name=Lars');
+        Params.Add('User_Name=sa');
         Params.Add('Password=woods2011');
         Params.Add('DriverID=MSSQL');
-        Params.Add('ApplicationName=VIS');
+        Params.Add('ApplicationName=WIZEINVOICE');
       end;
+  end else
+  with dmsConnector.FDConnection1 do begin
+      Params.Clear;
+      Params.Add('Server=VPS-NET-RDS-004\WOODSUPPORT');
+      Params.Add('Database=woodsupport');
+      Params.Add('OSAuthent=yes');
+      Params.add('MetaDefCatalog=woodsupport');
+      Params.Add('MetaDefSchema=dbo');
+      Params.Add('DriverID=MSSQL');
+      Params.Add('ApplicationName=WIZEINVOICE');
   end;
 {$ENDIF}
-  // FDMoniFlatFileClientLink1.Tracing := False ;
-  // ALVESQL04
-  // CARMAK-HP8530W\SQLEXPRESS
+
 end;
 
 procedure TdmsConnector.DataModuleDestroy(Sender: TObject);

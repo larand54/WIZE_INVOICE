@@ -18,6 +18,8 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -715,7 +717,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 863
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -752,7 +754,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
         Left = 1
         Top = 1
         Width = 83
-        Height = 45
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -761,7 +763,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -2410,7 +2412,6 @@ object frmSokAvropFormular: TfrmSokAvropFormular
     object dxComponentPrinter1Link1: TdxGridReportLink
       Active = True
       Component = grdAvropSok
-      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -2424,8 +2425,7 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       PrinterPage.PageSize.Y = 297000
       PrinterPage._dxMeasurementUnits_ = 0
       PrinterPage._dxLastMU_ = 2
-      ReportDocument.CreationDate = 42962.516790810190000000
-      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
+      ReportDocument.CreationDate = 43032.618592592590000000
       OptionsView.Footers = False
       OptionsView.BandHeaders = False
       OptionsView.Caption = False
@@ -2914,13 +2914,14 @@ object frmSokAvropFormular: TfrmSokAvropFormular
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

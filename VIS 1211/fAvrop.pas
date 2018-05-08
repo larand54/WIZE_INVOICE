@@ -536,11 +536,11 @@ uses
   VidaConst,
   VidaUser,
   VidaUtils, fInvoice, dmsDataConn, UnitdmModule1, dmLM1, UnitBookingForm,
-  UnitCRViewReport, dmcVidaInvoice, dmBooking,
+  dmcVidaInvoice, dmBooking,
   dmsVidaContact, dmcVidaSystem, UnitLoadEntryCSD, dmsVidaSystem,
-  UnitCRExportOneReport, uSendMapiMail, uTradingLinkMult, uEntryField,
+  uSendMapiMail, uTradingLinkMult, uEntryField,
   uExportLoadPurpose, uWait, USelectLIPNo, uUnConnectedPackages, udmLanguage,
-  udmFR, uReport, uReportController, UnitBookingFormOrg;
+  udmFR, uReport, uReportController, UnitBookingFormOrg, uconfirm;
 
 procedure TfrmAvrop.CreateCo(CompanyNo: Integer);
 begin
@@ -854,6 +854,7 @@ Var
   frmInvoice: TfrmInvoice;
   cxDBRichEdit3: TDBRichEdit;
   OrderNos, LONos: TStringList;
+  CtrLMsg : String ;
 
   // For each ShippingPlanNo # ADD INVOICE DETAIL - Products from Loads
  function GetTotalUnitsForLO(const FieldName: String): Double;
@@ -2271,66 +2272,69 @@ Var
         TotalFraktKostnadPerLO := GetTotalFraktKostnadPerLO;
         TotalAM3LO := GetTotalUnitsForLO('M3ACTUAL');
 
-        sq_GetInvoiceDetailData.Close;
-        sq_GetInvoiceDetailData.ParamByName('CustomerNo').AsInteger :=
+        sp_GetInvoiceDetails.Close;
+        sp_GetInvoiceDetails.ParamByName('@CustomerNo').AsInteger :=
           cdsInvoiceHeadCustomerNo.AsInteger;
         // daMoLM1.cdsAvropCLIENTNO.AsInteger ; // Avrop customerNo
-        sq_GetInvoiceDetailData.ParamByName('ShippingPlanNo').AsInteger :=
+        sp_GetInvoiceDetails.ParamByName('@ShippingPlanNo').AsInteger :=
           cdsInvoiceLOShippingPlanNo.AsInteger;
-        sq_GetInvoiceDetailData.ParamByName('InternalInvoiceNo').AsInteger :=
+        sp_GetInvoiceDetails.ParamByName('@InternalInvoiceNo').AsInteger :=
           InternalInvoiceNo;
-        sq_GetInvoiceDetailData.Open;
-        if ThisUser.UserID = 8 then
+        sp_GetInvoiceDetails.ParamByName('@LoadNo').AsInteger := ThisUser.UserID ;
+        sp_GetInvoiceDetails.Open;
+        if ThisUser.UserID = 1 then
+         ShowMessage('AddProductData') ;
+        if ThisUser.UserID = 1 then
           mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-            'After sq_GetInvoiceDetailData.Open');
-        While not sq_GetInvoiceDetailData.Eof do
+            'After sp_GetInvoiceDetails.Open');
+        While not sp_GetInvoiceDetails.Eof do
         Begin
           cdsInvoiceDetail.Insert;
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' +
               'After cdsInvoiceDetail.Insert');
           cdsInvoiceDetailCustShipPlanDetailObjectNo.AsInteger :=
-            sq_GetInvoiceDetailDataCustShipPlanDetailObjectNo.AsInteger;
+            sp_GetInvoiceDetailsCustShipPlanDetailObjectNo.AsInteger;
           cdsInvoiceDetailShippingPlanNo.AsInteger :=
             cdsInvoiceLOShippingPlanNo.AsInteger;
           cdsInvoiceDetailTypeOfRow.AsInteger := 1; // Product
           cdsInvoiceDetailOrderLineNo.AsInteger :=
-            sq_GetInvoiceDetailDataORDERLINENO.AsInteger;
+            sp_GetInvoiceDetailsORDERLINENO.AsInteger;
           cdsInvoiceDetailReference.AsString :=
-            sq_GetInvoiceDetailDataREFERENCE.AsString;
+            sp_GetInvoiceDetailsREFERENCE.AsString;
           cdsInvoiceDetailProductDescription.AsString :=
-            sq_GetInvoiceDetailDataPRODUCTDESCRIPTION.AsString;
+            sp_GetInvoiceDetailsPRODUCTDESCRIPTION.AsString;
           cdsInvoiceDetailProductNo.AsInteger :=
-            sq_GetInvoiceDetailDataPRODUCTNO.AsInteger;
+            sp_GetInvoiceDetailsPRODUCTNO.AsInteger;
           cdsInvoiceDetailLengthDescription.AsString :=
-            sq_GetInvoiceDetailDataLENGTHDESCRIPTION.AsString;
+            sp_GetInvoiceDetailsLENGTHDESCRIPTION.AsString;
           cdsInvoiceDetailProductLengthNo.AsInteger :=
-            sq_GetInvoiceDetailDataPRODUCTLENGTHNO.AsInteger;
-          cdsInvoiceDetailPrice.AsFloat := sq_GetInvoiceDetailDataPRICE.AsFloat;
+            sp_GetInvoiceDetailsPRODUCTLENGTHNO.AsInteger;
+          cdsInvoiceDetailPrice.AsFloat := sp_GetInvoiceDetailsPRICE.AsFloat;
           cdsInvoiceDetailVolumeUnit.AsString :=
-            sq_GetInvoiceDetailDataVOLUMEUNIT.AsString;
+            sp_GetInvoiceDetailsVOLUMEUNIT.AsString;
           cdsInvoiceDetailPriceUnit.AsString :=
-            sq_GetInvoiceDetailDataPRICEUNIT.AsString;
+            sp_GetInvoiceDetailsPRICEUNIT.AsString;
           cdsInvoiceDetailActualThicknessMM.AsFloat :=
-            sq_GetInvoiceDetailDataActualThicknessMM.AsFloat;
+            sp_GetInvoiceDetailsActualThicknessMM.AsFloat;
           cdsInvoiceDetailActualWidthMM.AsFloat :=
-            sq_GetInvoiceDetailDataActualWidthMM.AsFloat;
+            sp_GetInvoiceDetailsActualWidthMM.AsFloat;
           cdsInvoiceDetailNominalThicknessMM.AsFloat :=
-            sq_GetInvoiceDetailDataNominalThicknessMM.AsFloat;
+            sp_GetInvoiceDetailsNominalThicknessMM.AsFloat;
           cdsInvoiceDetailNominalWidthMM.AsFloat :=
-            sq_GetInvoiceDetailDataNominalWidthMM.AsFloat;
+            sp_GetInvoiceDetailsNominalWidthMM.AsFloat;
           cdsInvoiceDetailNominalLengthMM.AsFloat :=
-            sq_GetInvoiceDetailDataNominalLengthMM.AsFloat;
+            sp_GetInvoiceDetailsNominalLengthMM.AsFloat;
           cdsInvoiceDetailintNM3.AsFloat :=
-            sq_GetInvoiceDetailDataintNM3.AsFloat;
+            sp_GetInvoiceDetailsintNM3.AsFloat;
           cdsInvoiceDetailArticleNo.AsInteger :=
-            sq_GetInvoiceDetailDataArticleNo.AsInteger;
+            sp_GetInvoiceDetailsArticleNo.AsInteger;
 
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' + 'Before ThicknessINCH');
 
-          ThicknessINCH := sq_GetInvoiceDetailDataNominalThicknessINCH.AsString;
-          WidthINCH := sq_GetInvoiceDetailDataNominalWidthINCH.AsString;
+          ThicknessINCH := sp_GetInvoiceDetailsNominalThicknessINCH.AsString;
+          WidthINCH := sp_GetInvoiceDetailsNominalWidthINCH.AsString;
 
           ThicknessINCH := ReplaceCommas(ThicknessINCH);
           WidthINCH := ReplaceCommas(WidthINCH);
@@ -2374,33 +2378,33 @@ Var
               'cdsInvoiceDetailNominalWidthINCH.AsString=' +
               cdsInvoiceDetailNominalWidthINCH.AsString);
 
-          // Temp_AM3      := RoundTo(sq_GetInvoiceDetailDataM3ACTUAL.AsFloat , -3) ;
+          // Temp_AM3      := RoundTo(sp_GetInvoiceDetailsM3ACTUAL.AsFloat , -3) ;
 
-          // Temp_NM3      := RoundTo(sq_GetInvoiceDetailDataM3NOMINAL.AsFloat , -3) ;
-          // Temp_AM1      := RoundTo(sq_GetInvoiceDetailDataACTUAL_LINEALMETER.AsFloat , -3) ;
+          // Temp_NM3      := RoundTo(sp_GetInvoiceDetailsM3NOMINAL.AsFloat , -3) ;
+          // Temp_AM1      := RoundTo(sp_GetInvoiceDetailsACTUAL_LINEALMETER.AsFloat , -3) ;
 
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' + 'After Temp_AM1');
 
           cdsInvoiceDetailActualNetM3.AsFloat :=
-            RoundTo(sq_GetInvoiceDetailDataM3ACTUAL.AsFloat, -3);
-          // Temp_AM3 ; //sq_GetInvoiceDetailDataM3ACTUAL.AsFloat ;
+            RoundTo(sp_GetInvoiceDetailsM3ACTUAL.AsFloat, -3);
+          // Temp_AM3 ; //sp_GetInvoiceDetailsM3ACTUAL.AsFloat ;
           cdsInvoiceDetailLinealMeter.AsFloat :=
-            RoundTo(sq_GetInvoiceDetailDataACTUAL_LINEALMETER.AsFloat, -3);
-          // Temp_AM1 ; //sq_GetInvoiceDetailDataACTUAL_LINEALMETER.AsFloat ;
+            RoundTo(sp_GetInvoiceDetailsACTUAL_LINEALMETER.AsFloat, -3);
+          // Temp_AM1 ; //sp_GetInvoiceDetailsACTUAL_LINEALMETER.AsFloat ;
           cdsInvoiceDetailNominalM3.AsFloat :=
-            RoundTo(sq_GetInvoiceDetailDataM3NOMINAL.AsFloat, -3);
-          // Temp_NM3 ; //sq_GetInvoiceDetailDataM3NOMINAL.AsFloat ;
+            RoundTo(sp_GetInvoiceDetailsM3NOMINAL.AsFloat, -3);
+          // Temp_NM3 ; //sp_GetInvoiceDetailsM3NOMINAL.AsFloat ;
 
           cdsInvoiceDetailNoOfPieces.AsInteger :=
-            sq_GetInvoiceDetailDataNOOFPIECES.AsInteger;
+            sp_GetInvoiceDetailsNOOFPIECES.AsInteger;
           cdsInvoiceDetailNoOfPkgs.AsInteger :=
-            sq_GetInvoiceDetailDataNoOfPkgs.AsInteger;
+            sp_GetInvoiceDetailsNoOfPkgs.AsInteger;
           cdsInvoiceDetailOL_Reference.AsString :=
-            sq_GetInvoiceDetailDataOL_Reference.AsString;
+            sp_GetInvoiceDetailsOL_Reference.AsString;
 
           Temp_VOLUME_ORDERUNIT :=
-            RoundTo(sq_GetInvoiceDetailDataVOLUME_ORDERUNIT.AsFloat, -3);
+            RoundTo(sp_GetInvoiceDetailsVOLUME_ORDERUNIT.AsFloat, -3);
           cdsInvoiceDetailVolume_OrderUnit.AsFloat := Temp_VOLUME_ORDERUNIT;
 
           if ThisUser.UserID = 8 then
@@ -2409,7 +2413,7 @@ Var
 
           cdsInvoiceDetailProductValue.AsFloat :=
             RoundTo(Temp_VOLUME_ORDERUNIT *
-            sq_GetInvoiceDetailDataPRICE.AsFloat, -2);
+            sp_GetInvoiceDetailsPRICE.AsFloat, -2);
 
           if cdsInvoiceHeadMoms.AsInteger = 1 then
             cdsInvoiceDetailVatValue.AsFloat :=
@@ -2437,12 +2441,12 @@ Var
 
           // Hämta netto och bruttopris
           cdsInvoiceDetailNettoSEKPerNM3.AsFloat :=
-            dmVidaInvoice.GetNettoPris(sq_GetInvoiceDetailDataOrderNo.AsInteger,
-            sq_GetInvoiceDetailDataORDERLINENO.AsInteger);
+            dmVidaInvoice.GetNettoPris(sp_GetInvoiceDetailsOrderNo.AsInteger,
+            sp_GetInvoiceDetailsORDERLINENO.AsInteger);
           cdsInvoiceDetailBruttoSEKPerNM3.AsFloat :=
             dmVidaInvoice.GetBruttoPris
-            (sq_GetInvoiceDetailDataOrderNo.AsInteger,
-            sq_GetInvoiceDetailDataORDERLINENO.AsInteger);
+            (sp_GetInvoiceDetailsOrderNo.AsInteger,
+            sp_GetInvoiceDetailsORDERLINENO.AsInteger);
 
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' +
@@ -2451,10 +2455,10 @@ Var
           if ThisUser.UserID = 8 then
             mLog.Lines.Add(Datetimetostr(now) + ':  ' +
               'After cdsInvoiceDetail.Post ');
-          sq_GetInvoiceDetailData.Next;
+          sp_GetInvoiceDetails.Next;
           y := Succ(y);
-        End; // While not sq_GetInvoiceDetailData.Eof do
-        sq_GetInvoiceDetailData.Close;
+        End; // While not sp_GetInvoiceDetails.Eof do
+        sp_GetInvoiceDetails.Close;
 
       except
         On E: Exception do
@@ -2505,6 +2509,9 @@ BEGIN
     dmVidaInvoice := TdmVidaInvoice.Create(nil);
   dmsSystem.AssignDMToThisWork('TfrmAvropTdmVidaInvoice', 'dmVidaInvoice');
   Try
+
+   //Prepare ghost load
+   dmVidaInvoice.CreateInvoicedLoad(daMoLM1.cdsAvropShippingPlanNo.AsInteger) ;
 
     SelectedRows := CompareSelectedRows;
     if SelectedRows > 0 then
@@ -2588,21 +2595,29 @@ BEGIN
                 mLog.Lines.Add(Datetimetostr(now) + ':  ' +
                   'After open sq_PkgType_Invoice.');
               Try
+{
+                  sq_PkgType_Invoice.ParamByName('InternalInvoiceNo').AsInteger :=
+                    InternalInvoiceNo;
+                  sq_PkgType_Invoice.ParamByName('SupplierNo').AsInteger :=
+                    mtCompSelRowsSALESREGIONNO.AsInteger; // VIDA_WOOD_CLIENTNO ;
+                  sq_PkgType_Invoice.ParamByName('ShippingPlanNo').AsInteger :=
+                    mtCompSelRowsLONo.AsInteger;
+                  sq_PkgType_Invoice.ParamByName('CustomerNo').AsInteger :=
+                    mtCompSelRowsClientNo.AsInteger; // Avrop customerNo
+}
+
+
+//Här är det nu userid som skickas in som parameter så att user skapade paketen används som underlag till faktura
                 sq_PkgType_Invoice.ParamByName('InternalInvoiceNo').AsInteger :=
-                  InternalInvoiceNo;
-                sq_PkgType_Invoice.ParamByName('SupplierNo').AsInteger :=
-                  mtCompSelRowsSALESREGIONNO.AsInteger; // VIDA_WOOD_CLIENTNO ;
-                sq_PkgType_Invoice.ParamByName('ShippingPlanNo').AsInteger :=
-                  mtCompSelRowsLONo.AsInteger;
-                sq_PkgType_Invoice.ParamByName('CustomerNo').AsInteger :=
-                  mtCompSelRowsClientNo.AsInteger; // Avrop customerNo
+                    InternalInvoiceNo;
+                sq_PkgType_Invoice.ParamByName('LoadNo').AsInteger := ThisUser.UserID ;
                 sq_PkgType_Invoice.ExecSQL;
 
               except
                 On E: Exception do
                 Begin
-                  dmsSystem.FDoLog(E.Message);
-                  // ShowMessage(E.Message);
+//                  dmsSystem.FDoLog(E.Message);
+                   ShowMessage(E.Message);
                   Raise;
                 End;
               end;
@@ -2749,28 +2764,30 @@ BEGIN
                   // Insert loadNo and ShippingPlanNo to Invoice_Load table.
                   // the entry to Invoice_Load makes it impossible to invoice a load twice.
 
-                  if ThisUser.UserID = 8 then
-                    mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-                      'Before sq_Invoiced_Load.ExecSQL(False)');
-                  Try
-                    sq_Invoiced_Load.ParamByName('InternalInvoiceNo').AsInteger
-                      := cdsInvoiceHeadInternalInvoiceNo.AsInteger;
-                    sq_Invoiced_Load.ParamByName('SupplierNo').AsInteger :=
-                      daMoLM1.cdsAvropSALESREGIONNO.AsInteger;
-                    // VIDA_WOOD_CLIENTNO ;
-                    sq_Invoiced_Load.ParamByName('CustomerNo').AsInteger :=
-                      daMoLM1.cdsAvropCLIENTNO.AsInteger; // Avrop customerNo
-                    sq_Invoiced_Load.ParamByName('ShippingPlanNo').AsInteger :=
-                      cdsInvoiceLOShippingPlanNo.AsInteger;
-                    sq_Invoiced_Load.ExecSQL;
-                  except
-                    On E: Exception do
-                    Begin
-                      dmsSystem.FDoLog(E.Message);
-                      // ShowMessage(E.Message);
-                      Raise;
-                    End;
-                  end;
+{
+                    if ThisUser.UserID = 8 then
+                      mLog.Lines.Add(Datetimetostr(now) + ':  ' +
+                        'Before sq_Invoiced_Load.ExecSQL(False)');
+                    Try
+                      sq_Invoiced_Load.ParamByName('InternalInvoiceNo').AsInteger
+                        := cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+                      sq_Invoiced_Load.ParamByName('SupplierNo').AsInteger :=
+                        daMoLM1.cdsAvropSALESREGIONNO.AsInteger;
+                      // VIDA_WOOD_CLIENTNO ;
+                      sq_Invoiced_Load.ParamByName('CustomerNo').AsInteger :=
+                        daMoLM1.cdsAvropCLIENTNO.AsInteger; // Avrop customerNo
+                      sq_Invoiced_Load.ParamByName('ShippingPlanNo').AsInteger :=
+                        cdsInvoiceLOShippingPlanNo.AsInteger;
+                      sq_Invoiced_Load.ExecSQL;
+                    except
+                      On E: Exception do
+                      Begin
+                        dmsSystem.FDoLog(E.Message);
+                        // ShowMessage(E.Message);
+                        Raise;
+                      End;
+                    end;
+}
 
                   if ThisUser.UserID = 8 then
                     mLog.Lines.Add(Datetimetostr(now) + ':  ' +
@@ -2787,6 +2804,8 @@ BEGIN
                 FreeAndNil(OrderNos);
               End;
 
+          if ThisUser.UserID = 1 then
+          ShowMessage('CalcAndUpdateNetProductValueInInvoiceDetail') ;
               CalcAndUpdateNetProductValueInInvoiceDetail;
               sq_LONoInInvoice.Active := False;
 
@@ -2825,10 +2844,74 @@ BEGIN
               // Exit ;
             End;
 
+
+//Add Original Invoiced Load
+
+                Try
+          if ThisUser.UserID = 1 then
+            ShowMessage('DeleteTempLoad') ;
+
+                  daMoLM1.DeleteTempLoad(ThisUser.UserID, InternalInvoiceNo);
+
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('InternalInvoiceNo').AsInteger :=
+                    InternalInvoiceNo;
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('SupplierNo').AsInteger :=
+                    mtCompSelRowsSALESREGIONNO.AsInteger; // VIDA_WOOD_CLIENTNO ;
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('ShippingPlanNo').AsInteger :=
+                    mtCompSelRowsLONo.AsInteger;
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('CustomerNo').AsInteger :=
+                    mtCompSelRowsClientNo.AsInteger; // Avrop customerNo
+
+//Här är det nu userid som skickas in som parameter så att user skapade paketen används som underlag till faktura
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('InternalInvoiceNo').AsInteger :=
+                    InternalInvoiceNo;
+//                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ParamByName('LoadNo').AsInteger := ThisUser.UserID ;
+                  daMoLM1.sq_PkgType_InvoiceOrigLoad.ExecSQL;
+          if ThisUser.UserID = 1 then
+            ShowMessage('After sq_PkgType_InvoiceOrigLoad') ;
+
+                except
+                  On E: Exception do
+                  Begin
+  //                  dmsSystem.FDoLog(E.Message);
+                     ShowMessage(E.Message);
+                    Raise;
+                  End;
+                end;
+
+                  if ThisUser.UserID = 8 then
+                      mLog.Lines.Add(Datetimetostr(now) + ':  ' +
+                        'Before sq_Invoiced_Load.ExecSQL(False)');
+                    Try
+                      sq_Invoiced_Load.ParamByName('InternalInvoiceNo').AsInteger
+                        := cdsInvoiceHeadInternalInvoiceNo.AsInteger;
+                      sq_Invoiced_Load.ParamByName('SupplierNo').AsInteger :=
+                        daMoLM1.cdsAvropSALESREGIONNO.AsInteger;
+                      // VIDA_WOOD_CLIENTNO ;
+                      sq_Invoiced_Load.ParamByName('CustomerNo').AsInteger :=
+                        daMoLM1.cdsAvropCLIENTNO.AsInteger; // Avrop customerNo
+                      sq_Invoiced_Load.ParamByName('ShippingPlanNo').AsInteger :=
+                        cdsInvoiceLOShippingPlanNo.AsInteger;
+                      sq_Invoiced_Load.ExecSQL;
+          if ThisUser.UserID = 1 then
+            ShowMessage('After sq_Invoiced_Load') ;
+                    except
+                      On E: Exception do
+                      Begin
+                        dmsSystem.FDoLog(E.Message);
+                        // ShowMessage(E.Message);
+                        Raise;
+                      End;
+                    end;
+
+
+
+
             Screen.Cursor := crSQLWait; { Show hourglass cursor }
             frmInvoice := TfrmInvoice.Create(Nil);
             // LockWindowUpdate(0);
             Try
+             SetReferenceOnFreightRowsInInvoice(cdsInvoiceHeadInternalInvoiceNo.AsInteger) ;
               mtCompSelRows.First;
               cdsInvoiceLO.Filter := 'InternalInvoiceNo = ' +
                 cdsInvoiceHeadInternalInvoiceNo.AsString +
@@ -2857,6 +2940,18 @@ BEGIN
               cdsInvoiceDetail.Active := True ;
 
               frmInvoice.NewInvoice := True;
+
+              CtrLMsg :=  CtrlInvoice(InternalInvoiceNo) ;
+
+              if Length(Trim(CtrLMsg)) > 0 then
+              Begin
+               CtrLMsg  := 'OBS OBS WARNING WARNING!! ' + CtrLMsg ;
+               if TfConfirm.Execute(CtrLMsg) = mrYes then  ;
+//               ShowMessage(CtrLMsg) ;
+              End ;
+
+
+
               frmInvoice.ShowModal;
               Application.ProcessMessages;
 
@@ -2918,11 +3013,9 @@ Begin
     if cdsInvoiceHead.State = dsBrowse then
       cdsInvoiceHead.Edit;
 
-    // Calculate VAT if Country is SWEDEN and cbVAT (Skatteupplag) checked
-    if ((Trim(cdsInvoiceHeadCountryName.AsString) = 'SWEDEN') and
-      (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_WOOD_COMPANY_NO) OR
-      (Trim(cdsInvoiceHeadCountryName.AsString) = 'DENMARK') and
-      (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_DANMARK))
+    // Calculate VAT if Country is Sverige and cbVAT (Skatteupplag) checked
+    if ((Trim(cdsInvoiceHeadCountryName.AsString) = 'SVERIGE') and
+      (cdsInvoiceHeadSupplierNo.AsInteger = VIDA_WOOD_COMPANY_NO))
 
       OR (cdsInvoiceHeadSpecialMoms.AsInteger = 1) then
     Begin
@@ -3137,7 +3230,7 @@ Begin
         mLog.Lines.Add(Datetimetostr(now) + ':  ' +
           'After  if cdsInvoiceHeadCommissionPaidByCustomer.AsInteger = 0 then');
 
-      // Calculate VAT if Country is SWEDEN cbVAT  is checked
+      // Calculate VAT if Country is SVERIGE cbVAT  is checked
       if cdsInvoiceHeadMoms.AsInteger = 1 then
       Begin
         cdsInvoiceHeadVAT_Value.AsFloat :=
@@ -3162,7 +3255,7 @@ Begin
 
       if ThisUser.UserID = 8 then
         mLog.Lines.Add(Datetimetostr(now) + ':  ' +
-          'After   if Trim(cdsInvoiceHeadCountryName.AsString) = SWEDEN then');
+          'After   if Trim(cdsInvoiceHeadCountryName.AsString) = SVERIGE then');
 
       // Save to InvoiceHeader table
       cdsInvoiceHead.Post;
@@ -3494,7 +3587,7 @@ end;
 
 procedure TfrmAvrop.acPrintContractExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   FR: TFastReports;
   lang: integer;
@@ -3517,25 +3610,7 @@ begin
     finally
       FreeAndNil(FR);
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := daMoLM1.cdsAvropORDERNUMBER.AsString;
-
-      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-        FormCRViewReport.CreateCo('CONTRACT_NOTE.RPT', A)
-      else
-        FormCRViewReport.CreateCo('INCONTRACT_NOTE.RPT', A);
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 
   finally
     dmFR.RestoreCursor;
@@ -3544,7 +3619,7 @@ end;
 
 procedure TfrmAvrop.acPrintLOExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   RC: TCMReportController;
   RepNo: Integer;
@@ -3584,26 +3659,7 @@ begin
         FreeAndNil(Params);
         FreeAndNil(RC);
       end;
-    end
-    else
-    begin
-      FormCRViewReport := TFormCRViewReport.Create(Nil);
-      Try
-        SetLength(A, 2);
-        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-        A[1] := -1;
-        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-          FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A)
-        else
-          FormCRViewReport.CreateCo('LASTORDER_INKOP_NOTE_ver2.RPT', A);
-        if FormCRViewReport.ReportFound then
-        Begin
-          FormCRViewReport.ShowModal;
-        End;
-      Finally
-        FreeAndNil(FormCRViewReport);
-      End;
-    end;
+    end ;
   finally
     dmFR.RestoreCursor;
   end;
@@ -3611,7 +3667,7 @@ end;
 
 procedure TfrmAvrop.acPrintTrpOrderExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   lang,
   TOno: integer;
@@ -3636,27 +3692,7 @@ begin
       finally
         FR.Free
       end;
-    end
-    else
-    begin
-      FormCRViewReport := TFormCRViewReport.Create(Nil);
-      Try
-        SetLength(A, 1);
-        A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-
-        if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-          FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
-        else
-          FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT', A);
-
-        if FormCRViewReport.ReportFound then
-        Begin
-          FormCRViewReport.ShowModal;
-        End;
-      Finally
-        FreeAndNil(FormCRViewReport);
-      End;
-    end;
+    end ;
 
   finally
     dmFR.RestoreCursor;
@@ -4238,7 +4274,7 @@ end;
 
 procedure TfrmAvrop.acPrintFSExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   RC: TCMReportController;
   RepNo: Integer;
@@ -4560,7 +4596,7 @@ End;
 
 procedure TfrmAvrop.acPrintLastOrderDittVerkExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   FR: TFastReports;
   LOno: integer;
@@ -4582,29 +4618,12 @@ begin
     finally
       FR.Free;
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 2);
-      A[0] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger;
-      A[1] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('SUPPLIERNO').AsInteger;
-      FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A);
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmAvrop.acPrintLOAllaVerkExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   FR: TFastReports;
   LOno: integer;
@@ -4624,22 +4643,7 @@ begin
     finally
       FR.Free;
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 2);
-      A[0] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger;
-      A[1] := -1;
-      FormCRViewReport.CreateCo('LASTORDER_NOTE_ver3.RPT', A);
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmAvrop.acChangeLOLayoutExecute(Sender: TObject);
@@ -4667,7 +4671,7 @@ end;
 
 procedure TfrmAvrop.acPrintAddLODittVerkExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   FR: TFastReports;
   LOno: integer;
@@ -4688,29 +4692,12 @@ begin
     finally
       FR.Free;
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 2);
-      A[0] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger;
-      A[1] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('SUPPLIERNO').AsInteger;
-      FormCRViewReport.CreateCo('LASTORDER_VERK_NOTE_ver3.RPT', A);
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmAvrop.acPrintAddLOAllaVerkExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   FR: TFastReports;
   LOno: integer;
@@ -4730,22 +4717,7 @@ begin
     finally
       FR.Free;
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 2);
-      A[0] := grdLODBTableView1.DataController.DataSource.DataSet.FieldByName
-        ('ShippingPlanNo').AsInteger;
-      A[1] := -1;
-      FormCRViewReport.CreateCo('LASTORDER_VERK_NOTE_ver3.RPT', A);
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmAvrop.acChangeAddLOLayoutExecute(Sender: TObject);
@@ -4877,7 +4849,7 @@ procedure TfrmAvrop.acEmailaTrpOrderExecute(Sender: TObject);
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of Variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -4927,23 +4899,7 @@ begin
           Params.Free;
         end;
         exit;
-      end
-      else
-      begin
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-        Try
-          SetLength(A, 1);
-          A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-          FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
-            ReportType, A, ExcelDir + 'LONo ' +
-            daMoLM1.cdsAvropShippingPlanNo.AsString);
-          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-          if FormCRExportOneReport.ReportFound = False then
-            Exit;
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
-      end;
+      end ;
       SetLength(Attach, 1);
       Attach[0] := ExcelDir + 'LONo ' + daMoLM1.cdsAvropShippingPlanNo.
         AsString + '.pdf';
@@ -4955,7 +4911,7 @@ begin
           + '' + 'Transportorder attached. ' + LF + '' + LF + '' + LF +
           'MVH/Best Regards, ' + LF + '' + dmsContact.GetFirstAndLastName
           (ThisUser.UserID), dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress,
-          Attach, False);
+          Attach);
       Finally
         FreeAndNil(dm_SendMapiMail);
       End;
@@ -5021,7 +4977,7 @@ procedure TfrmAvrop.acEmailaLOExecute(Sender: TObject);
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
+
   A: array of Variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -5090,28 +5046,7 @@ begin
         End;
         if not FileExists(ExportFile) then
           Exit;
-      end
-      else
-      begin
-        FormCRExportOneReport := TFormCRExportOneReport.Create(Nil);
-        Try
-          SetLength(A, 2);
-          A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-          A[1] := -1;
-          if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-            ReportType := cLastorder
-          else
-            ReportType := cLastorderInkop;
-          FormCRExportOneReport.CreateCo(daMoLM1.cdsAvropCLIENTNO.AsInteger,
-            ReportType, A, ExcelDir + 'LO ' +
-            daMoLM1.cdsAvropShippingPlanNo.AsString);
-          // FormCRExportOneReport.CreateCo(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger, cPkgSpec, A, ExcelDir + 'Specification '+dmVidaInvoice.cdsInvoiceListINVOICE_NO.AsString) ;
-          if FormCRExportOneReport.ReportFound = False then
-            Exit;
-        Finally
-          FreeAndNil(FormCRExportOneReport); // .Free ;
-        End;
-      end;
+      end ;
       SetLength(Attach, 1);
       Attach[0] := ExcelDir + 'LO ' + daMoLM1.cdsAvropShippingPlanNo.
         AsString + '.pdf';
@@ -5122,7 +5057,7 @@ begin
           daMoLM1.cdsAvropShippingPlanNo.AsString, 'Lastorder bifogad. ' + LF + ''
           + 'Loadorder attached. ' + LF + '' + LF + '' + LF + 'MVH/Best Regards, '
           + LF + '' + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+          dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach);
       Finally
         FreeAndNil(dm_SendMapiMail);
       End;
@@ -5138,7 +5073,6 @@ procedure TfrmAvrop.Button1Click(Sender: TObject);
 const
   LF = #10;
 Var
-  FormCRExportOneReport: TFormCRExportOneReport;
   A: array of Variant;
   dm_SendMapiMail: Tdm_SendMapiMail;
   Attach: array of String;
@@ -5159,7 +5093,7 @@ begin
       dm_SendMapiMail.SendMail('Avrop errorlog, LONr: ' +
         daMoLM1.cdsAvropShippingPlanNo.AsString, 'MVH/Best Regards, ' + LF + ''
         + dmsContact.GetFirstAndLastName(ThisUser.UserID),
-        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach, False);
+        dmsSystem.Get_Dir('MyEmailAddress'), MailToAddress, Attach);
     Finally
       FreeAndNil(dm_SendMapiMail);
     End;
@@ -5393,7 +5327,7 @@ end;
 
 procedure TfrmAvrop.acTrpOrderAvropExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of Variant;
   RC: TCMReportController;
   RepNo: integer;
@@ -5423,26 +5357,7 @@ begin
       FreeAndNil(Params);
       FreeAndNil(RC);
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := daMoLM1.cdsAvropShippingPlanNo.AsInteger;
-
-      if daMoLM1.cdsAvropORDERTYPE.AsInteger = 0 then
-        FormCRViewReport.CreateCo('TRP_AVROPSORDER_NOTE_dk.RPT', A)
-      else
-        ShowMessage('N/A');
-      // FormCRViewReport.CreateCo('TRP_ORDER_INKOP_NOTE.RPT') ;
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmAvrop.acPrintMenyExecute(Sender: TObject);

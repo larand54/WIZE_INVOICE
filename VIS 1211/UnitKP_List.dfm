@@ -3,8 +3,8 @@ inherited frmKP_List: TfrmKP_List
   Top = 109
   ActiveControl = lcKund
   Caption = 'frmKP_List'
-  ClientHeight = 1009
-  ClientWidth = 1327
+  ClientHeight = 820
+  ClientWidth = 1078
   OldCreateOrder = True
   PopupMenu = pmShortcut
   OnCloseQuery = FormCloseQuery
@@ -14,21 +14,15 @@ inherited frmKP_List: TfrmKP_List
   ExplicitTop = -316
   ExplicitWidth = 1327
   ExplicitHeight = 1009
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object grdKPList: TcxGrid [0]
     Left = 0
-    Top = 110
-    Width = 1327
-    Height = 899
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 89
+    Width = 1078
+    Height = 731
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = -1
-    ExplicitTop = 103
     object grdKPListDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dsKP_List
@@ -190,57 +184,53 @@ inherited frmKP_List: TfrmKP_List
     end
   end
   inherited Panel6: TPanel
-    Width = 1327
-    Height = 110
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Width = 1078
+    Height = 89
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 1
-    ExplicitWidth = 1327
-    ExplicitHeight = 110
+    ExplicitWidth = 1078
+    ExplicitHeight = 89
     inherited Panel7: TPanel
-      Left = 588
-      Width = 653
-      Height = 110
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 478
+      Width = 530
+      Height = 89
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
-      ExplicitLeft = 588
-      ExplicitWidth = 653
-      ExplicitHeight = 110
+      ExplicitLeft = 478
+      ExplicitWidth = 530
+      ExplicitHeight = 89
       inherited dxBarDockControl1: TdxBarDockControl
-        Width = 651
-        Height = 47
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        ExplicitWidth = 651
-        ExplicitHeight = 47
-      end
-    end
-    inherited Panel8: TPanel
-      Left = 0
-      Width = 588
-      Height = 110
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Align = alLeft
-      ExplicitLeft = 0
-      ExplicitWidth = 588
-      ExplicitHeight = 110
-      object lcKund: TcxDBLookupComboBox
-        Left = 118
-        Top = 10
+        Width = 528
+        Height = 45
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
+        ExplicitWidth = 528
+        ExplicitHeight = 45
+      end
+    end
+    inherited Panel8: TPanel
+      Left = 0
+      Width = 478
+      Height = 89
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alLeft
+      ExplicitLeft = 0
+      ExplicitWidth = 478
+      ExplicitHeight = 89
+      object lcKund: TcxDBLookupComboBox
+        Left = 96
+        Top = 8
         DataBinding.DataField = 'Kund'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -248,15 +238,11 @@ inherited frmKP_List: TfrmKP_List
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 0
-        Width = 435
+        Width = 353
       end
       object cbAvropStatus: TcxDBImageComboBox
-        Left = 118
-        Top = 69
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 96
+        Top = 56
         DataBinding.DataField = 'Status'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -271,33 +257,21 @@ inherited frmKP_List: TfrmKP_List
             Value = 2
           end>
         TabOrder = 2
-        Width = 435
+        Width = 353
       end
       object cxLabel1: TcxLabel
-        Left = 39
-        Top = 75
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 61
         Caption = 'Avropstatus:'
       end
       object cxLabel2: TcxLabel
-        Left = 39
-        Top = 18
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 15
         Caption = 'Kund:'
       end
       object lcAgent: TcxDBLookupComboBox
-        Left = 118
-        Top = 39
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 96
+        Top = 32
         DataBinding.DataField = 'Agent'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -305,46 +279,38 @@ inherited frmKP_List: TfrmKP_List
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 1
-        Width = 435
+        Width = 353
       end
       object cxLabel3: TcxLabel
-        Left = 39
-        Top = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 32
+        Top = 38
         Caption = 'Agent:'
       end
     end
     inherited Panel9: TPanel
-      Left = 1241
-      Height = 110
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ExplicitLeft = 1241
-      ExplicitHeight = 110
+      Left = 1008
+      Height = 89
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      ExplicitLeft = 1008
+      ExplicitHeight = 89
       object cxButton1: TcxButton [0]
-        Left = 108
-        Top = 10
-        Width = 110
-        Height = 50
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 88
+        Top = 8
+        Width = 89
+        Height = 41
         Action = atExit
         TabOrder = 0
       end
       inherited dxBarDockControl2: TdxBarDockControl
-        Height = 47
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        ExplicitHeight = 47
+        Height = 45
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        ExplicitHeight = 45
       end
     end
   end
@@ -1273,7 +1239,6 @@ inherited frmKP_List: TfrmKP_List
       Caption = 'Skriv ut F8'
       ImageIndex = 5
       ShortCut = 119
-      OnExecute = acPrintExecute
     end
     object acExportToExcel: TAction
       Category = 'GENERAL'

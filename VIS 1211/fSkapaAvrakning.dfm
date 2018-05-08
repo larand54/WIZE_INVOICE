@@ -4,12 +4,12 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Skapa avr'#228'kning'
-  ClientHeight = 763
-  ClientWidth = 1250
+  ClientHeight = 620
+  ClientWidth = 1016
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
@@ -18,49 +18,35 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 1250
-    Height = 74
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1016
+    Height = 60
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 336
-      Height = 74
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 273
+      Height = 60
       Align = alLeft
       TabOrder = 0
       object Label2: TLabel
-        Left = 20
-        Top = 14
-        Width = 39
-        Height = 16
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 16
+        Top = 11
+        Width = 32
+        Height = 13
         Caption = 'VERK:'
       end
       object lcVerk: TcxDBLookupComboBox
-        Left = 69
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 56
+        Top = 8
         DataBinding.DataField = 'Verk'
         DataBinding.DataSource = ds_Props
         Properties.ClearKey = 46
@@ -68,15 +54,11 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 0
-        Width = 247
+        Width = 201
       end
       object cxDBImageComboBox1: TcxDBImageComboBox
-        Left = 69
-        Top = 39
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 56
+        Top = 32
         DataBinding.DataField = 'Status'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -107,53 +89,37 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
             Value = 5
           end>
         TabOrder = 1
-        Width = 247
+        Width = 201
       end
     end
     object Panel4: TPanel
-      Left = 336
+      Left = 273
       Top = 0
-      Width = 834
-      Height = 74
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 678
+      Height = 60
       Align = alClient
       TabOrder = 1
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 832
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 676
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel5: TPanel
-      Left = 1170
+      Left = 951
       Top = 0
-      Width = 80
-      Height = 74
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 65
+      Height = 60
       Align = alRight
       TabOrder = 2
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 78
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 63
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -161,73 +127,57 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   end
   object Panel6: TPanel
     Left = 0
-    Top = 565
-    Width = 1250
-    Height = 198
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 459
+    Width = 1016
+    Height = 161
     Align = alBottom
     TabOrder = 2
     object Panel1: TPanel
       Left = 1
       Top = 1
-      Width = 1248
-      Height = 27
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1014
+      Height = 22
       Align = alTop
       BevelOuter = bvNone
       Caption = 'Lastrader'
       Color = clGreen
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 0
       DesignSize = (
-        1248
-        27)
+        1014
+        22)
       object bbSavePrice: TBitBtn
-        Left = 945
+        Left = 768
         Top = 2
-        Width = 134
-        Height = 26
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 109
+        Height = 21
         Action = acSavePrices
         Anchors = [akTop, akRight]
         Caption = 'Spara pris Shift+F3'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 0
       end
       object bbCancelPrice: TBitBtn
-        Left = 1083
+        Left = 880
         Top = 2
-        Width = 160
-        Height = 26
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 130
+        Height = 21
         Action = acCancelChangePrice
         Anchors = [akTop, akRight]
         Caption = #197'ngra Shift+F4'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
@@ -236,13 +186,9 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
     end
     object grdLoadRows: TcxGrid
       Left = 1
-      Top = 28
-      Width = 1248
-      Height = 169
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 23
+      Width = 1014
+      Height = 137
       Align = alClient
       TabOrder = 1
       object grdLoadRowsDBTableView1: TcxGridDBTableView
@@ -401,37 +347,27 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 557
-    Width = 1250
+    Top = 451
+    Width = 1016
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel6
+    ExplicitTop = 453
   end
   object Panel7: TPanel
     Left = 0
-    Top = 74
-    Width = 1250
-    Height = 483
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 60
+    Width = 1016
+    Height = 391
     Align = alClient
     TabOrder = 7
+    ExplicitHeight = 393
     object grdLoads: TcxGrid
       Left = 1
-      Top = 23
-      Width = 1248
-      Height = 459
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 19
+      Width = 1014
+      Height = 373
       Align = alClient
       TabOrder = 0
       object grdLoadsDBTableView1: TcxGridDBTableView
@@ -523,19 +459,15 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
     object Panel8: TPanel
       Left = 1
       Top = 1
-      Width = 1248
-      Height = 22
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1014
+      Height = 18
       Align = alTop
       BevelOuter = bvNone
       Caption = 'Laster att avr'#228'kna'
       Color = clGreen
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -660,7 +592,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -2584,7 +2516,7 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
   object cxStyleRepository1: TcxStyleRepository
     Left = 152
     Top = 235
-    PixelsPerInch = 120
+    PixelsPerInch = 96
     object cxStyleRed: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clRed
@@ -2905,13 +2837,14 @@ object frmSkapaAvrakning: TfrmSkapaAvrakning
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

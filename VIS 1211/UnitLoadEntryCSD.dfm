@@ -2,12 +2,12 @@ object fLoadEntryCSD: TfLoadEntryCSD
   Left = 266
   Top = 147
   Caption = 'LAST (CSD)'
-  ClientHeight = 784
-  ClientWidth = 1275
+  ClientHeight = 637
+  ClientWidth = 1036
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -15,140 +15,95 @@ object fLoadEntryCSD: TfLoadEntryCSD
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object dxPageControl1: TcxPageControl
     Left = 0
-    Top = 73
-    Width = 1275
-    Height = 265
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 59
+    Width = 1036
+    Height = 216
     Align = alTop
     Focusable = False
     TabOrder = 1
     Properties.ActivePage = tsLoadData
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.Kind = lfUltraFlat
-    ClientRectBottom = 265
-    ClientRectRight = 1275
-    ClientRectTop = 27
+    ClientRectBottom = 216
+    ClientRectRight = 1036
+    ClientRectTop = 24
     object tsLoadData: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'LASTHUVUD'
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pLoadHead: TPanel
         Left = 0
         Top = 0
-        Width = 1275
-        Height = 90
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 1036
+        Height = 73
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         object Label1: TLabel
-          Left = 7
-          Top = 15
-          Width = 42
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 6
+          Top = 12
+          Width = 34
+          Height = 13
           Caption = 'LastNr:'
           OnDblClick = Label1DblClick
         end
         object Label2: TLabel
-          Left = 7
-          Top = 43
-          Width = 53
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 6
+          Top = 35
+          Width = 42
+          Height = 13
           Caption = 'Utlastad:'
         end
         object Label3: TLabel
-          Left = 7
-          Top = 70
-          Width = 40
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 6
+          Top = 57
+          Width = 33
+          Height = 13
           Caption = 'Status:'
         end
         object Label4: TLabel
-          Left = 287
-          Top = 15
-          Width = 44
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 233
+          Top = 12
+          Width = 37
+          Height = 13
           Caption = 'Last ID:'
         end
         object Label5: TLabel
-          Left = 287
-          Top = 43
-          Width = 20
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 233
+          Top = 35
+          Width = 16
+          Height = 13
           Caption = 'FS:'
         end
         object Label6: TLabel
-          Left = 588
-          Top = 15
-          Width = 96
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 478
+          Top = 12
+          Width = 77
+          Height = 13
           Caption = 'Lokalfraktf'#246'rare:'
         end
         object Label7: TLabel
-          Left = 588
-          Top = 43
-          Width = 30
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 478
+          Top = 35
+          Width = 24
+          Height = 13
           Caption = 'Fr'#229'n:'
         end
         object Label8: TLabel
-          Left = 588
-          Top = 70
-          Width = 21
-          Height = 16
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 478
+          Top = 57
+          Width = 16
+          Height = 13
           Caption = 'Till:'
         end
         object detLoaded: TcxDBDateEdit
-          Left = 89
-          Top = 32
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 72
+          Top = 26
           DataBinding.DataField = 'LoadedDate'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Properties.ImmediatePost = True
@@ -158,15 +113,11 @@ object fLoadEntryCSD: TfLoadEntryCSD
           StyleFocused.LookAndFeel.Kind = lfFlat
           StyleHot.LookAndFeel.Kind = lfFlat
           TabOrder = 1
-          Width = 188
+          Width = 153
         end
         object imgcbStatus: TcxDBImageComboBox
-          Left = 89
-          Top = 62
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 72
+          Top = 50
           DataBinding.DataField = 'SenderLoadStatus'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Properties.Images = images1616
@@ -189,39 +140,27 @@ object fLoadEntryCSD: TfLoadEntryCSD
             end>
           Properties.ReadOnly = True
           TabOrder = 2
-          Width = 188
+          Width = 153
         end
         object teLoadID: TcxDBTextEdit
-          Left = 364
+          Left = 296
           Top = 2
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           DataBinding.DataField = 'LoadID'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           TabOrder = 3
-          Width = 149
+          Width = 121
         end
         object teFS: TcxDBTextEdit
-          Left = 364
-          Top = 32
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 296
+          Top = 26
           DataBinding.DataField = 'FS'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           TabOrder = 4
-          Width = 149
+          Width = 121
         end
         object lcLocalShipper: TcxDBLookupComboBox
-          Left = 699
+          Left = 568
           Top = 2
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           DataBinding.DataField = 'LocalShippingCompanyNo'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Properties.KeyFieldNames = 'ClientNo'
@@ -232,15 +171,11 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Properties.ListOptions.ShowHeader = False
           Properties.ListSource = dmsContact.ds_LocalShipper
           TabOrder = 5
-          Width = 179
+          Width = 145
         end
         object lcFrom: TcxDBLookupComboBox
-          Left = 699
-          Top = 32
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 568
+          Top = 26
           DataBinding.DataField = 'LocalLoadingLocation'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Properties.KeyFieldNames = 'CityNo'
@@ -251,15 +186,11 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Properties.ListOptions.ShowHeader = False
           Properties.ListSource = dmsContact.dsrcCities
           TabOrder = 6
-          Width = 179
+          Width = 145
         end
         object lcTo: TcxDBLookupComboBox
-          Left = 699
-          Top = 62
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 568
+          Top = 50
           DataBinding.DataField = 'LocalDestinationNo'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Properties.KeyFieldNames = 'CityNo'
@@ -271,31 +202,23 @@ object fLoadEntryCSD: TfLoadEntryCSD
           Properties.ListSource = dmsContact.dsrcCities
           TabOrder = 7
           OnExit = lcToExit
-          Width = 179
+          Width = 145
         end
         object eLoadNo: TcxDBTextEdit
-          Left = 89
+          Left = 72
           Top = 2
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
           DataBinding.DataField = 'LoadNo'
           DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
           Enabled = False
           TabOrder = 0
-          Width = 149
+          Width = 121
         end
       end
       object grdAddress: TcxGrid
         Left = 0
-        Top = 190
-        Width = 1275
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 154
+        Width = 1036
+        Height = 39
         Align = alBottom
         TabOrder = 1
         object grdAddressDBTableView1: TcxGridDBTableView
@@ -331,13 +254,9 @@ object fLoadEntryCSD: TfLoadEntryCSD
       end
       object grdLO: TcxGrid
         Left = 0
-        Top = 90
-        Width = 1275
-        Height = 100
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 73
+        Width = 1036
+        Height = 81
         Align = alClient
         PopupMenu = pmLONumber
         TabOrder = 2
@@ -454,151 +373,111 @@ object fLoadEntryCSD: TfLoadEntryCSD
       end
     end
     object tsLoadNote: TcxTabSheet
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Caption = 'NOTE'
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object meInternalNote: TcxDBMemo
         Left = 0
         Top = 0
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alClient
         DataBinding.DataField = 'InternalNote'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         TabOrder = 0
-        Height = 238
-        Width = 1275
+        ExplicitHeight = 193
+        Height = 192
+        Width = 1036
       end
     end
   end
   object PanelToolbar: TPanel
     Left = 0
     Top = 0
-    Width = 1275
-    Height = 73
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1036
+    Height = 59
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object Panel5: TPanel
       Left = 0
       Top = 0
-      Width = 908
-      Height = 73
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 738
+      Height = 59
       Align = alClient
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 906
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 736
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object PanelLager: TPanel
-      Left = 908
+      Left = 738
       Top = 0
-      Width = 290
-      Height = 73
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 235
+      Height = 59
       Align = alRight
       TabOrder = 1
       object cxLabel1: TcxLabel
-        Left = 9
-        Top = 21
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 7
+        Top = 17
         Caption = 'Lagerst'#228'lle:'
       end
       object cxLabel2: TcxLabel
-        Left = 9
-        Top = 46
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 7
+        Top = 37
         Caption = 'Lagergrupp:'
       end
       object lcPIP: TcxDBLookupComboBox
-        Left = 98
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 80
+        Top = 8
         DataBinding.DataField = 'PIP'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 2
-        Width = 179
+        Width = 145
       end
       object lcLIP: TcxDBLookupComboBox
-        Left = 98
-        Top = 39
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 80
+        Top = 32
         DataBinding.DataField = 'LIP'
         DataBinding.DataSource = dmLoadEntryCSD.ds_LoadHead
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 3
-        Width = 179
+        Width = 145
       end
       object cxButton2: TcxButton
-        Left = 11
-        Top = 6
-        Width = 80
-        Height = 17
+        Left = 9
+        Top = 5
+        Width = 65
+        Height = 14
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Action = acSetLoadPIPandLIP
         TabOrder = 4
       end
     end
     object Panel7: TPanel
-      Left = 1198
+      Left = 973
       Top = 0
-      Width = 77
-      Height = 73
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 63
+      Height = 59
       Align = alRight
       TabOrder = 2
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 75
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 61
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -606,32 +485,25 @@ object fLoadEntryCSD: TfLoadEntryCSD
   end
   object PanelLORows: TPanel
     Left = 0
-    Top = 346
-    Width = 1275
-    Height = 169
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 283
+    Width = 1036
+    Height = 137
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 281
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 1275
-      Height = 17
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1036
+      Height = 14
       Align = alTop
       BevelOuter = bvNone
       Caption = 'LASTORDERRADER'
       Color = clMaroon
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
@@ -639,13 +511,9 @@ object fLoadEntryCSD: TfLoadEntryCSD
     end
     object grdLORows: TcxGrid
       Left = 0
-      Top = 17
-      Width = 1275
-      Height = 152
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 14
+      Width = 1036
+      Height = 123
       Align = alClient
       PopupMenu = ppmenuLO_Lines
       TabOrder = 1
@@ -1077,50 +945,40 @@ object fLoadEntryCSD: TfLoadEntryCSD
   end
   object PanelPackages: TPanel
     Left = 0
-    Top = 523
-    Width = 1275
-    Height = 261
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 428
+    Width = 1036
+    Height = 209
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
+    ExplicitTop = 425
+    ExplicitHeight = 212
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 1275
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1036
+      Height = 20
       Align = alTop
       BevelOuter = bvNone
       Caption = 'PAKET'
       Color = clMaroon
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
       object cxButton1: TcxButton
-        Left = 10
+        Left = 8
         Top = 2
-        Width = 100
-        Height = 21
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 81
+        Height = 17
         Action = acAddPkg
         TabOrder = 0
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
@@ -1128,13 +986,9 @@ object fLoadEntryCSD: TfLoadEntryCSD
     end
     object grdPkgs: TcxGrid
       Left = 0
-      Top = 25
-      Width = 1275
-      Height = 236
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 20
+      Width = 1036
+      Height = 192
       Align = alClient
       PopupMenu = pmPkgs
       TabOrder = 1
@@ -1576,26 +1430,18 @@ object fLoadEntryCSD: TfLoadEntryCSD
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 338
-    Width = 1275
+    Top = 275
+    Width = 1036
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = dxPageControl1
   end
   object cxSplitter2: TcxSplitter
     Left = 0
-    Top = 515
-    Width = 1275
+    Top = 420
+    Width = 1036
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salTop
     Control = PanelLORows
@@ -1603,7 +1449,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -2289,13 +2135,11 @@ object fLoadEntryCSD: TfLoadEntryCSD
     object acPrintHyvelOrder: TAction
       Category = 'Print'
       Caption = 'Hyvelorder'
-      OnExecute = acPrintHyvelOrderExecute
       OnUpdate = acPrintHyvelOrderUpdate
     end
     object acLOAllaVerk: TAction
       Category = 'Print'
       Caption = 'Lastorder alla verk'
-      OnExecute = acLOAllaVerkExecute
       OnUpdate = acLOAllaVerkUpdate
     end
     object acPrintLOErtVerk: TAction
@@ -2405,7 +2249,7 @@ object fLoadEntryCSD: TfLoadEntryCSD
   object cxStyleRepository1: TcxStyleRepository
     Left = 665
     Top = 295
-    PixelsPerInch = 120
+    PixelsPerInch = 96
     object cxStyleYellow: TcxStyle
       AssignedValues = [svColor, svFont]
       Color = clYellow
@@ -3398,13 +3242,14 @@ object fLoadEntryCSD: TfLoadEntryCSD
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

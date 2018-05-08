@@ -274,7 +274,7 @@ uses
   VidaConst,
   VidaType,
   VidaUser, fInvoiceList,
-  dmcVidaSystem, UnitSetup, UnitCRViewReport,
+  dmcVidaSystem, UnitSetup,
   dmLM1, UnitShippingInstruction, UnitKP_List,
   fLoadOrder, dmcVidaOrder, UnitAboutBox,
   UnitLoadArrivals, UnitPkgInfo, dmsDataConn,
@@ -283,7 +283,6 @@ uses
   UnitAvrakningar, dmsVidaProduct, // dmsVidaPkg,
   dmsVidaSystem, uFreightLoad, uUserPreference, // Ucurrency,
   // uPkgLog,
-  UnitCRPrintReport, // UnitProdRep,
   uGenShipCost, // uProductionUnit,
   uBasMatPunkter,
   UnotInvoicedReport,
@@ -517,7 +516,7 @@ Begin
             dmsConnector.LoginChanged := True;
             // dxNavBar1.DefaultStyles.Background.BackColor:= clGreen ;
 
-            Application.Title := 'VIS';
+            Application.Title := 'VIZE INVOICE';
             a := Application.Title + '/' + dmsConnector.GetCompanyName
               (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' +
               GetVersion + ' - ' + dmsConnector.FDConnection1.Params.Values
@@ -550,30 +549,30 @@ begin
       dmsConnector.DriveLetter := 'D:\'
     else
       dmsConnector.DriveLetter := 'C:\';
-    ThisUser.Database:= 'alvesql03:vis_vida' ;
+    ThisUser.Database:= 'carmak-speed\sqlexpress:woodsupport' ;
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=alvesql03');
-        Params.Add('Database=vis_vida');
+        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
-        Params.add('MetaDefCatalog=vis_vida');
+        Params.add('MetaDefCatalog=woodsupport');
         Params.Add('MetaDefSchema=dbo');
-        Params.Add('User_Name=Lars');
+        Params.Add('User_Name=sa');
         Params.Add('Password=woods2011');
         Params.Add('DriverID=MSSQL');
-        Params.Add('ApplicationName=VIS');
+        Params.Add('ApplicationName=WIZE INVOICE');
       end;
   end
   else begin
   //  ThisUser.Database:= 'alvesqltest01:vis_vida' ;
-    ThisUser.Database:= 'visprodsql.vida.se:vis_vida' ;
+    ThisUser.Database:= 'VPS-NET-RDS-004\WOODSUPPORT:woodsupport' ;
   end;
 {$ELSE}
 
-  ThisUser.Database:= 'visprodsql.vida.se:vis_vida' ;
+  ThisUser.Database:= 'VPS-NET-RDS-004\WOODSUPPORT:woodsupport' ;
 {$ENDIF}
 
-//ThisUser.Database:= 'alvesql03:vis_vida' ;
+
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
@@ -968,7 +967,7 @@ begin
             dmsConnector.LoginChanged := True;
             // dxNavBar1.DefaultStyles.Background.BackColor:= clGreen ;
 
-            Application.Title := 'VIS';
+            Application.Title := 'VIZE INVOICE';
             a := Application.Title + '/' + dmsConnector.GetCompanyName
               (ThisUser.CompanyNo) + '/' + ThisUser.UserName + ' ver ' +
               GetVersion + ' - ' + dmsConnector.FDConnection1.Params.Values
@@ -982,7 +981,7 @@ begin
             Timer1.Enabled := False;
             // dxNavBar1.DefaultStyles.Background.BackColor:= clWhite ;
 
-            Application.Title := 'VIS';
+            Application.Title := 'VIZE INVOICE';
             FrmMain.Caption := Application.Title + '/' +
               dmsConnector.GetCompanyName(ThisUser.CompanyNo) + '/' +
               ThisUser.UserName + ' ver ' + GetVersion + ' - ' +

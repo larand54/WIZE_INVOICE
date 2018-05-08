@@ -165,7 +165,7 @@ implementation
 
 uses VidaConst,
   VidaUser,
-  dmBooking, dmsDataConn, UnitCarrier, UnitCRViewReport, dmsVidaSystem,
+  dmBooking, dmsDataConn, UnitCarrier, dmsVidaSystem,
   dmsVidaContact, udmLanguage, uReport, uReportController, uFastReports;
 
 {$R *.dfm}
@@ -361,7 +361,6 @@ end;
 
 procedure TFormBookingForm.acPrintExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
   A: array of variant;
   ReportType, lang, LONo: integer;
   FR: TFastReports;
@@ -379,24 +378,7 @@ begin
     finally
       FR.Free;
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dm_Booking.cdsBookingInvoiceShippingPlanNo.AsInteger;
-      if OrderType = 0 then
-        FormCRViewReport.CreateCo('TRP_ORDER_NOTE.RPT', A)
-      else
-        FormCRViewReport.CreateCo('trp_order_inkop_NOTE.RPT', A);
-
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      FreeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TFormBookingForm.FormDestroy(Sender: TObject);

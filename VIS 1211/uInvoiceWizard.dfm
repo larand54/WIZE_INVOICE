@@ -1,7 +1,7 @@
 object fInvoiceWizard: TfInvoiceWizard
   Left = 190
   Top = 80
-  ActiveControl = lcSR
+  ActiveControl = cbTrading
   BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsDialog
   Caption = 'Fakturaguide'
@@ -26,13 +26,13 @@ object fInvoiceWizard: TfInvoiceWizard
     Height = 527
     Align = alClient
     TabOrder = 0
-    Properties.ActivePage = tsInvoiceHead
+    Properties.ActivePage = tsParametrar
     Properties.CustomButtons.Buttons = <>
     OnPageChanging = pgPriceListGuidePageChanging
-    ClientRectBottom = 523
-    ClientRectLeft = 4
-    ClientRectRight = 1076
-    ClientRectTop = 24
+    ClientRectBottom = 526
+    ClientRectLeft = 1
+    ClientRectRight = 1079
+    ClientRectTop = 21
     object tsInvoiceHead: TcxTabSheet
       Caption = 'tsInvoiceHead'
       ImageIndex = 0
@@ -197,8 +197,8 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1072
-        Height = 499
+        Width = 1078
+        Height = 505
         Align = alClient
         TabOrder = 0
         object txtCustomer: TDBText
@@ -347,8 +347,8 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 1072
-        Height = 499
+        Width = 1078
+        Height = 505
         Align = alClient
         TabOrder = 0
         OnEnter = Panel3Enter
@@ -756,7 +756,7 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1072
+        Width = 1078
         Height = 137
         Align = alTop
         TabOrder = 0
@@ -799,8 +799,8 @@ object fInvoiceWizard: TfInvoiceWizard
       object grdFaktura: TcxGrid
         Left = 0
         Top = 137
-        Width = 1072
-        Height = 362
+        Width = 1078
+        Height = 368
         Align = alClient
         TabOrder = 1
         object grdFakturaDBTableView1: TcxGridDBTableView
@@ -1229,7 +1229,7 @@ object fInvoiceWizard: TfInvoiceWizard
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 145
-        Width = 1072
+        Width = 1078
         Height = 121
         Align = alTop
         TabOrder = 0
@@ -1320,7 +1320,7 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1072
+        Width = 1078
         Height = 145
         Align = alTop
         TabOrder = 1
@@ -1374,13 +1374,13 @@ object fInvoiceWizard: TfInvoiceWizard
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        Height = 418
-        Width = 1072
+        Height = 424
+        Width = 1078
       end
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 1072
+        Width = 1078
         Height = 81
         Align = alTop
         TabOrder = 1
@@ -3936,7 +3936,7 @@ object fInvoiceWizard: TfInvoiceWizard
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -4018,13 +4018,14 @@ object fInvoiceWizard: TfInvoiceWizard
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

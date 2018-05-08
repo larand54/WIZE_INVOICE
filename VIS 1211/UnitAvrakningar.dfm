@@ -2,12 +2,12 @@ object frmAvrakningar: TfrmAvrakningar
   Left = 243
   Top = 106
   Caption = 'Fraktavr'#228'kningar'
-  ClientHeight = 833
-  ClientWidth = 1317
+  ClientHeight = 677
+  ClientWidth = 1070
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -16,41 +16,29 @@ object frmAvrakningar: TfrmAvrakningar
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object ButtonPanel: TPanel
     Left = 0
-    Top = 783
-    Width = 1317
-    Height = 50
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 636
+    Width = 1070
+    Height = 41
     Align = alBottom
     TabOrder = 0
     object bbOK: TBitBtn
-      Left = 453
-      Top = 10
-      Width = 92
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 368
+      Top = 8
+      Width = 75
+      Height = 25
       Kind = bkOK
       NumGlyphs = 2
       TabOrder = 0
     end
     object bbCancel: TBitBtn
-      Left = 571
-      Top = 10
-      Width = 92
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 464
+      Top = 8
+      Width = 75
+      Height = 25
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1
@@ -59,59 +47,39 @@ object frmAvrakningar: TfrmAvrakningar
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 1317
-    Height = 80
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1070
+    Height = 65
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     object Panel3: TPanel
-      Left = 361
+      Left = 293
       Top = 0
-      Width = 732
-      Height = 80
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 595
+      Height = 65
       Align = alLeft
       TabOrder = 0
       object dxBarDockControl2: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 730
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 593
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel4: TPanel
-      Left = 1233
+      Left = 1002
       Top = 0
-      Width = 84
-      Height = 80
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 68
+      Height = 65
       Align = alRight
       TabOrder = 1
       object dxBarDockControl3: TdxBarDockControl
         Left = 1
         Top = 1
-        Width = 82
-        Height = 48
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 66
+        Height = 44
         Align = dalTop
         BarManager = dxBarManager1
       end
@@ -119,54 +87,34 @@ object frmAvrakningar: TfrmAvrakningar
     object Panel5: TPanel
       Left = 0
       Top = 0
-      Width = 361
-      Height = 80
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 293
+      Height = 65
       Align = alLeft
       TabOrder = 2
       object cxLabel1: TcxLabel
-        Left = 20
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 16
+        Top = 8
         Caption = 'Verk'
       end
       object cxLabel2: TcxLabel
-        Left = 177
-        Top = 10
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 144
+        Top = 8
         Caption = 'Status'
       end
       object lcVerk: TcxDBLookupComboBox
-        Left = 20
-        Top = 30
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 16
+        Top = 24
         DataBinding.DataField = 'Verk'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 2
-        Width = 149
+        Width = 121
       end
       object icStatus: TcxDBImageComboBox
-        Left = 177
-        Top = 30
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 144
+        Top = 24
         DataBinding.DataField = 'Status'
         DataBinding.DataSource = ds_Props
         Properties.Images = ImageList2
@@ -183,22 +131,18 @@ object frmAvrakningar: TfrmAvrakningar
             Value = 1
           end>
         TabOrder = 3
-        Width = 149
+        Width = 121
       end
     end
   end
   object grdFraktAvr: TcxGrid
     Left = 0
-    Top = 80
-    Width = 1317
-    Height = 447
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 65
+    Width = 1070
+    Height = 362
     Align = alClient
     TabOrder = 2
-    ExplicitHeight = 446
+    ExplicitHeight = 363
     object grdFraktAvrDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dmModule1.ds_LoadFreightCostHeader2
@@ -297,24 +241,16 @@ object frmAvrakningar: TfrmAvrakningar
   end
   object Panel6: TPanel
     Left = 0
-    Top = 535
-    Width = 1317
-    Height = 248
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 435
+    Width = 1070
+    Height = 201
     Align = alBottom
     TabOrder = 7
     object grdLoads: TcxGrid
       Left = 1
-      Top = 49
-      Width = 1315
-      Height = 197
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 40
+      Width = 1068
+      Height = 160
       Align = alClient
       TabOrder = 0
       LookAndFeel.Kind = lfFlat
@@ -439,24 +375,16 @@ object frmAvrakningar: TfrmAvrakningar
     object Panel1: TPanel
       Left = 1
       Top = 1
-      Width = 1315
-      Height = 48
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 1068
+      Height = 39
       Align = alTop
       Color = clMaroon
       TabOrder = 1
       object BitBtn1: TBitBtn
-        Left = 180
-        Top = 6
-        Width = 147
-        Height = 37
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 146
+        Top = 5
+        Width = 120
+        Height = 30
         Action = acAddRow
         Caption = '&L'#228'gg till rad'
         Glyph.Data = {
@@ -537,14 +465,10 @@ object frmAvrakningar: TfrmAvrakningar
         TabOrder = 0
       end
       object BitBtn2: TBitBtn
-        Left = 335
-        Top = 6
-        Width = 147
-        Height = 37
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 272
+        Top = 5
+        Width = 120
+        Height = 30
         Action = acPrintLoads
         Caption = 'Skriv ut Shift+F8'
         Glyph.Data = {
@@ -625,14 +549,10 @@ object frmAvrakningar: TfrmAvrakningar
         TabOrder = 1
       end
       object BitBtn3: TBitBtn
-        Left = 20
-        Top = 6
-        Width = 147
-        Height = 37
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 16
+        Top = 5
+        Width = 120
+        Height = 30
         Action = acRemoveRow
         Caption = '&Ta bort rad'
         Glyph.Data = {
@@ -716,24 +636,20 @@ object frmAvrakningar: TfrmAvrakningar
   end
   object cxSplitter1: TcxSplitter
     Left = 0
-    Top = 527
-    Width = 1317
+    Top = 427
+    Width = 1070
     Height = 8
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     HotZoneClassName = 'TcxMediaPlayer8Style'
     AlignSplitter = salBottom
     Control = Panel6
     Color = clMaroon
     ParentColor = False
-    ExplicitTop = 526
+    ExplicitTop = 428
   end
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Categories.Strings = (
@@ -1974,7 +1890,6 @@ object frmAvrakningar: TfrmAvrakningar
       Caption = 'Skriv ut F8'
       ImageIndex = 1
       ShortCut = 119
-      OnExecute = acPrintAvrExecute
     end
     object acSearchLastnr: TAction
       Caption = 'S'#246'k lastnr'
@@ -2006,6 +1921,7 @@ object frmAvrakningar: TfrmAvrakningar
     Left = 200
     Top = 120
     object dxComponentPrinter1Link1: TdxGridReportLink
+      PageNumberFormat = pnfNumeral
       PrinterPage.DMPaper = 9
       PrinterPage.Footer = 6350
       PrinterPage.GrayShading = True
@@ -2029,6 +1945,7 @@ object frmAvrakningar: TfrmAvrakningar
       PrinterPage._dxLastMU_ = 2
       ReportDocument.CreationDate = 39700.623333298610000000
       ShrinkToPageWidth = True
+      AssignedFormatValues = [fvDate, fvTime, fvPageNumber]
       BuiltInReportLink = True
     end
   end
@@ -2420,13 +2337,14 @@ object frmAvrakningar: TfrmAvrakningar
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

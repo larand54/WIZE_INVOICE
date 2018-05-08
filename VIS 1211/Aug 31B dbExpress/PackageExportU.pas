@@ -3,7 +3,7 @@ unit PackageExportU;
 interface
 
 uses
-  DB, SysUtils, Variants, XMLIntf, SqlTimSt ;
+  DB, SysUtils, Variants, XMLIntf;
 type
   TImportExportFunctionGetDeliveryMessageNumber = function : String ;
 
@@ -52,11 +52,12 @@ var
 implementation
 
 uses
-  DeliveryMessageWoodV2R31, Dialogs, ADODB, Classes, VidaUtils , dmsVidaSystem;
+  DeliveryMessageWoodV2R31, Dialogs, ADODB, Classes, VidaUtils ;
 
 var
   Fmw: IXMLDeliveryMessageWood;
 
+  
 
 function GetOutPutPackageFileName: string;
 begin
@@ -94,7 +95,7 @@ var
 begin
   if Fmw = nil then
   begin
-    DoCreateEmptyPackageFile ;
+    DoCreateEmptyPackageFile;
     Fmw := LoadDeliveryMessageWood(GetOutPutPackageFileName);
     
     fmw.OwnerDocument.Options := Fmw.OwnerDocument.Options - [doAttrNull] + [doAutoSave];
@@ -506,8 +507,6 @@ var
   sExlogValue: string;
   sExlogUOM: string;
 
-  Year, Month, Day : word ;
-
 
   function GetDeliveryMessageShipment(sShipmentID, sShipmentIDType: string): IXMLDeliveryMessageShipment;
   var
@@ -518,18 +517,18 @@ var
     for i := 0 to mw.DeliveryMessageShipment.Count - 1 do
     begin
       Result := mw.DeliveryMessageShipment.Items[i];
-{      if SameText(sShipmentID, Result.ShipmentID.Text) and SameText(sShipmentIDType, Result.ShipmentID.ShipmentIDType) then
+      if SameText(sShipmentID, Result.ShipmentID.Text) and SameText(sShipmentIDType, Result.ShipmentID.ShipmentIDType) then
       begin
         bFound := True;
         Break;
-      end; }
+      end;
     end;
 
     if not bFound then
     begin
       Result := mw.DeliveryMessageShipment.Add;
-//      Result.ShipmentID.Text           := sShipmentID;
-//      Result.ShipmentID.ShipmentIDType := sShipmentIDType;
+      Result.ShipmentID.Text           := sShipmentID;
+      Result.ShipmentID.ShipmentIDType := sShipmentIDType;
     end;
 
   end;
@@ -543,19 +542,19 @@ var
     for i := 0 to DSM.DeliveryMessageProductGroup.Count - 1 do
     begin
       Result := DSM.DeliveryMessageProductGroup.Items[i];
-{      if SameText(sProductGroupID, Result.ProductGroupID.Text) and SameText(sProductGroupIDType, Result.ProductGroupID.ProductGroupIDType) then
+      if SameText(sProductGroupID, Result.ProductGroupID.Text) and SameText(sProductGroupIDType, Result.ProductGroupID.ProductGroupIDType) then
       begin
         bFound := True;
         Break;
-      end; }
+      end;
     end;
 
     if not bFound then
     begin
       Result := DSM.DeliveryMessageProductGroup.Add;
-//      Result.ProductGroupID.Text               := sProductGroupID;
-//      if sProductGroupIDType <> '' then  // 2006.11.26 20:18:46 By Zheng Jie (Gear1023@163.com)
-//      Result.ProductGroupID.ProductGroupIDType := sProductGroupIDType;
+      Result.ProductGroupID.Text               := sProductGroupID;
+      if sProductGroupIDType <> '' then  // 2006.11.26 20:18:46 By Zheng Jie (Gear1023@163.com)
+      Result.ProductGroupID.ProductGroupIDType := sProductGroupIDType;
     end;
 
   end;
@@ -566,7 +565,6 @@ var
     bFound: Boolean;
   begin
     bFound := False;
-//    for i := 0 to DMPG.DeliveryShipmentLineItem.Count - 1 do
     for i := 0 to DMPG.DeliveryShipmentLineItem.Count - 1 do
     begin
       Result := DMPG.DeliveryShipmentLineItem.Items[i];
@@ -592,54 +590,45 @@ begin
   while not dsInfo.Eof do
   begin
 //      dsInfo.FieldByName('DeliveryMessageNumber').AsString := DeliveryMessageNumber;
-    sShipmentID                     := dsInfo.FieldByName('ShipmentID').AsString;
-    sShipmentIDType                 := dsInfo.FieldByName('ShipmentIDType').AsString;
-    sProductGroupID                 := dsInfo.FieldByName('ProductGroupID').AsString;
-    sProductGroupIDType             := dsInfo.FieldByName('ProductGroupIDType').AsString;
+    sShipmentID           := dsInfo.FieldByName('ShipmentID').AsString;
+    sShipmentIDType       := dsInfo.FieldByName('ShipmentIDType').AsString;
+    sProductGroupID       := dsInfo.FieldByName('ProductGroupID').AsString;
+    sProductGroupIDType   := dsInfo.FieldByName('ProductGroupIDType').AsString;
     sDeliveryShipmentLineItemNumber := dsInfo.FieldByName('DeliveryShipmentLineItemNumber').AsString;
-    sProductIdentifier              := dsInfo.FieldByName('ProductIdentifier').AsString;
-    sProductIdentifierType          := dsInfo.FieldByName('ProductIdentifierType').AsString;
-    sAgency                         := dsInfo.FieldByName('Agency').AsString;
-    sProductDescription             := dsInfo.FieldByName('ProductDescription').AsString;
-    sSpeciesType                    := dsInfo.FieldByName('SpeciesType').AsString;
-    sGradingRule                    := dsInfo.FieldByName('GradingRule').AsString;
-    sGradeCode                      := dsInfo.FieldByName('GradeCode').AsString;
-    sGradeName                      := dsInfo.FieldByName('GradeName').AsString;
-    sWidthValue                     := dsInfo.FieldByName('WidthValue').AsString;
-    sWidthUOM                       := dsInfo.FieldByName('WidthUOM').AsString;
-    sThicknessValue                 := dsInfo.FieldByName('ThicknessValue').AsString;
-    sThicknessUOM                   := dsInfo.FieldByName('ThicknessUOM').AsString;
-    sManufacturingProcessType       := dsInfo.FieldByName('ManufacturingProcessType').AsString;
-    sExlogValue                     := dsInfo.FieldByName('ExlogValue').AsString;
-    sExlogUOM                       := dsInfo.FieldByName('ExlogUOM').AsString;
+    sProductIdentifier             := dsInfo.FieldByName('ProductIdentifier').AsString;
+    sProductIdentifierType         := dsInfo.FieldByName('ProductIdentifierType').AsString;
+    sAgency                        := dsInfo.FieldByName('Agency').AsString;
+    sProductDescription            := dsInfo.FieldByName('ProductDescription').AsString;
+    sSpeciesType                   := dsInfo.FieldByName('SpeciesType').AsString;
+    sGradingRule                   := dsInfo.FieldByName('GradingRule').AsString;
+    sGradeCode                     := dsInfo.FieldByName('GradeCode').AsString;
+    sGradeName                     := dsInfo.FieldByName('GradeName').AsString;
+    sWidthValue                    := dsInfo.FieldByName('WidthValue').AsString;
+    sWidthUOM                      := dsInfo.FieldByName('WidthUOM').AsString;
+    sThicknessValue                := dsInfo.FieldByName('ThicknessValue').AsString;
+    sThicknessUOM                  := dsInfo.FieldByName('ThicknessUOM').AsString;
+    sManufacturingProcessType      := dsInfo.FieldByName('ManufacturingProcessType').AsString;
+    sExlogValue                    := dsInfo.FieldByName('ExlogValue').AsString;
+    sExlogUOM                      := dsInfo.FieldByName('ExlogUOM').AsString;
 
     if SameText(dsInfo.FieldByName('DeliveryMessageNumber').AsString, DeliveryMessageNumber) then
     begin
 
+      sShipmentID     := TRIM(sShipmentID) ;
+      sShipmentIDType := TRIM(sShipmentIDType) ;
+
+      sProductGroupID     := TRIM(sProductGroupID) ;
+      sProductGroupIDType := TRIM(sProductGroupIDType) ;
+
       DSM   := GetDeliveryMessageShipment(sShipmentID, sShipmentIDType);
       DMPG  := GetDeliveryMessageProductGroup(sProductGroupID, sProductGroupIDType);
-      DSLI  := GetDeliveryShipmentLineItem(sDeliveryShipmentLineItemNumber);
 
-      dmsSystem.sp_GetOrderData.Active                          := False ;
-      dmsSystem.sp_GetOrderData.ParamByName('@LONo').AsInteger  :=  StrToInt(DeliveryMessageNumber) ;
-      dmsSystem.sp_GetOrderData.Active                          := True ;
-      Try
-      DecodeDate(SQLTimeStampToDateTime( dmsSystem.sp_GetOrderData.FieldByName('OrderCreated').AsSQLTimeStamp), Year, Month, Day);
 
-      ////2013.03.02 Add by Jonny Zheng (Gear1023@163.com) <<<////
-      DSLI.PurchaseOrderInformation.PurchaseOrderNumber                 := dmsSystem.sp_GetOrderData.FieldByName('PO_Number').AsString ;
-      DSLI.PurchaseOrderInformation.PurchaseOrderIssuedDate.Date.Year   := IntToStr(Year) ;
-      DSLI.PurchaseOrderInformation.PurchaseOrderIssuedDate.Date.Month  := Month ;
-      DSLI.PurchaseOrderInformation.PurchaseOrderIssuedDate.Date.Day    := Day ;
-      ////2013.03.02 Add by Jonny Zheng (Gear1023@163.com) >>>////
-      Finally
-       dmsSystem.sp_GetOrderData.Active := False ;
-      End ;
+      DSLI := GetDeliveryShipmentLineItem(sDeliveryShipmentLineItemNumber);
 
       DoImportExport('select * from DeliveryShipmentDeliveryMessageReference WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(InternalInvoiceNo), ExportDeliveryShipmentDeliveryMessageReference, dsInfo, DSLI);  //
 
       DoImportExport('select * from ProductIdentifier WHERE DeliveryMessageNumber = '+QuotedStr(DeliveryMessageNumber)+' AND InternalInvoiceNo = '+inttostr(InternalInvoiceNo), ExportProductIdentifier, dsInfo, DSLI);  //
-
 
       DSLI.Product.ProductDescription.Clear;
       DSLI.Product.ProductDescription.Add.Text := sProductDescription;
@@ -886,15 +875,11 @@ var
   sIdentifier: string;
   sIdentifierCodeType: string;
   sIdentifierType: string;
-  sIdentifier2: string;
-  sIdentifierCodeType2: string;
-  sIdentifierType2: string;
   sItemCountValue: string;
   sItemCountUOM: string;
   sQuantityType: string;
   sQuantityValue: string;
   sQuantityUOM: string;
-  sIdentifierFormatType2: string ;
 
 begin
   Result := False;
@@ -918,38 +903,26 @@ begin
         dsInfo.First;
         while not dsInfo.Eof do
         begin
-            sPackageType            := dsInfo.FieldByName('PackageType').AsString;
-            sIdentifier             := dsInfo.FieldByName('Identifier').AsString;
-            sIdentifierCodeType     := dsInfo.FieldByName('IdentifierCodeType').AsString;
-            sIdentifierType         := dsInfo.FieldByName('IdentifierType').AsString;
-
-            sIdentifier2            := dsInfo.FieldByName('Identifier2').AsString;
-            sIdentifierCodeType2    := dsInfo.FieldByName('IdentifierCodeType2').AsString ;
-            sIdentifierType2        := dsInfo.FieldByName('IdentifierType2').AsString ;
-            sIdentifierFormatType2  := dsInfo.FieldByName('IdentifierFormatType2').AsString ;
-
-            sItemCountValue         := dsInfo.FieldByName('ItemCountValue').AsString;
-            sItemCountUOM           := dsInfo.FieldByName('ItemCountUOM').AsString;
-            sQuantityType           := dsInfo.FieldByName('QuantityType').AsString;
-            sQuantityValue          := ReplaceCommas(dsInfo.FieldByName('QuantityValue').AsString) ;
-            sQuantityUOM            := dsInfo.FieldByName('QuantityUOM').AsString;
+            sPackageType       := dsInfo.FieldByName('PackageType').AsString;
+            sIdentifier        := dsInfo.FieldByName('Identifier').AsString;
+            sIdentifierCodeType:= dsInfo.FieldByName('IdentifierCodeType').AsString;
+            sIdentifierType    := dsInfo.FieldByName('IdentifierType').AsString;
+            sItemCountValue    := dsInfo.FieldByName('ItemCountValue').AsString;
+            sItemCountUOM      := dsInfo.FieldByName('ItemCountUOM').AsString;
+            sQuantityType      := dsInfo.FieldByName('QuantityType').AsString;
+            sQuantityValue     := ReplaceCommas(dsInfo.FieldByName('QuantityValue').AsString) ;
+            sQuantityUOM       := dsInfo.FieldByName('QuantityUOM').AsString;
              if sDeliveryShipmentLineItemNumber = dsInfo.FieldByName('DeliveryShipmentLineItemNumber').AsString then
              begin
                TPI := DSLI.TransportPackageInformation.Add;
                TPI.PackageType := sPackageType;
 
                 TPI.Identifier.Clear;
-
                 IS60 := TPI.Identifier.Add;
-                IS60.Text                 := sIdentifier  ;
-                IS60.IdentifierCodeType   := sIdentifierCodeType  ;
-                IS60.IdentifierType       := sIdentifierType  ;
 
-                IS60 := TPI.Identifier.Add;
-                IS60.Text                 := sIdentifier2 ;
-                IS60.IdentifierCodeType   := sIdentifierCodeType2  ;
-                IS60.IdentifierType       := sIdentifierType2  ;
-                IS60.IdentifierFormatType := sIdentifierFormatType2 ;//'Code128C' ;
+                IS60.Text := sIdentifier;
+                IS60.IdentifierCodeType := sIdentifierCodeType;
+                IS60.IdentifierType := sIdentifierType;
 
                 TPI.ItemCount.Value.Text := sItemCountValue;
                 TPI.ItemCount.Value.UOM  := sItemCountUOM;
@@ -1000,7 +973,6 @@ begin
           begin
 
             IS60 := TPI.Identifier.Items[M];
-            if (Length(IS60.Text) < Length(sIdentifier)) or (Length(sIdentifier) = 0) then
             sIdentifier := IS60.Text;
           end;
 
@@ -1012,7 +984,7 @@ begin
           begin
                 sLengthCategory          := dsInfo.FieldByName('LengthCategory').AsString;
                 sTotalNumberOfUnitsValue := dsInfo.FieldByName('TotalNumberOfUnitsValue').AsString;
-                sTotalNumberOfUnitsUOM   := dsInfo.FieldByName('TotalNumberOfUnitsUOM').AsString;
+                sTotalNumberOfUnitsUOM   :=dsInfo.FieldByName('TotalNumberOfUnitsUOM').AsString;
 
                if sIdentifier = dsInfo.FieldByName('Identifier').AsString then
                begin
@@ -1046,14 +1018,14 @@ var
   sInformationalQuantityUOM: string;
 begin
   Result := False;
-  sIdentifier := '' ;
+
   TPI := pNode as IXMLTransportPackageInformation;
   
           for M := 0 to TPI.Identifier.Count - 1 do
           begin
-            IS60        := TPI.Identifier.Items[M];
-            if (Length(IS60.Text) < Length(sIdentifier)) or (sIdentifier = '') then
-              sIdentifier := IS60.Text;
+
+            IS60 := TPI.Identifier.Items[M];
+            sIdentifier := IS60.Text;
           end;
 
           TPI.InformationalQuantity.Clear;

@@ -279,7 +279,7 @@ uses
   VidaUser,
   VidaUtils,
   dmsDataConn,
-  UnitCRViewReport,
+
   dmsVidaContact,
   uEntryField,
   dmc_ArrivingLoads,
@@ -514,7 +514,7 @@ end;
 
 procedure TfrmGjordaAvrakningar.acSkrivUtExecute(Sender: TObject);
 Var
-  FormCRViewReport: TFormCRViewReport;
+
   A: array of variant;
   RC: TCMReportController;
   RepNo: integer;
@@ -535,20 +535,7 @@ begin
       freeAndNil(Params);
       freeAndNil(RC);
     end;
-  end
-  else begin
-    FormCRViewReport := TFormCRViewReport.Create(Nil);
-    Try
-      SetLength(A, 1);
-      A[0] := dm_Avrakning.cdsPaymentHeadPaymentNo.AsInteger;
-      FormCRViewReport.CreateCo('AVRAKNING_ver_II.RPT', A);
-      if FormCRViewReport.ReportFound then Begin
-        FormCRViewReport.ShowModal;
-      End;
-    Finally
-      freeAndNil(FormCRViewReport);
-    End;
-  end;
+  end ;
 end;
 
 procedure TfrmGjordaAvrakningar.acCloseExecute(Sender: TObject);

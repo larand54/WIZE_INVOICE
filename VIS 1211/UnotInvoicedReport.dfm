@@ -4,12 +4,12 @@ object fnotInvoicedReport: TfnotInvoicedReport
   Align = alClient
   BorderStyle = bsNone
   Caption = 'Ej Fakturerat'
-  ClientHeight = 875
-  ClientWidth = 1248
+  ClientHeight = 711
+  ClientWidth = 1014
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
@@ -18,21 +18,17 @@ object fnotInvoicedReport: TfnotInvoicedReport
   OnCloseQuery = FormCloseQuery
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 320
+  ExplicitHeight = 240
+  PixelsPerInch = 96
+  TextHeight = 13
   object CRViewer91: TCrystalActiveXReportViewer
     Left = 0
-    Top = 74
-    Width = 1248
-    Height = 801
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 60
+    Width = 1014
+    Height = 651
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1268
-    ExplicitHeight = 814
     ControlData = {
       10070000306700003B4200000B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
       0B00FFFF0B00FFFF0B00FFFF0B0000000B00FFFF0B00FFFF0B00FFFF0B00FFFF
@@ -42,145 +38,97 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1248
-    Height = 74
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 1014
+    Height = 60
     Align = alTop
     TabOrder = 1
     object Panel2: TPanel
       Left = 1
       Top = 1
-      Width = 118
-      Height = 72
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 96
+      Height = 58
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object dxBarDockControl1: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 118
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 96
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel3: TPanel
-      Left = 1098
+      Left = 892
       Top = 1
-      Width = 149
-      Height = 72
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 121
+      Height = 58
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
       object dxBarDockControl2: TdxBarDockControl
         Left = 0
         Top = 0
-        Width = 149
-        Height = 47
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 121
+        Height = 45
         Align = dalTop
         BarManager = dxBarManager1
       end
     end
     object Panel122: TPanel
-      Left = 119
+      Left = 97
       Top = 1
-      Width = 979
-      Height = 72
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 795
+      Height = 58
       Align = alClient
       BevelOuter = bvNone
       PopupMenu = PopupMenu1
       TabOrder = 2
       object Label1: TLabel
-        Left = 30
-        Top = 43
-        Width = 56
-        Height = 16
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 24
+        Top = 35
+        Width = 45
+        Height = 13
         Caption = 'Marknad:'
       end
       object Label2: TLabel
-        Left = 30
-        Top = 14
-        Width = 33
-        Height = 16
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 24
+        Top = 11
+        Width = 27
+        Height = 13
         Caption = 'TOM:'
       end
       object Label3: TLabel
-        Left = 286
-        Top = 14
-        Width = 55
-        Height = 16
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 232
+        Top = 11
+        Width = 43
+        Height = 13
         Caption = 'Ordertyp:'
       end
       object deStartPeriod: TcxDBDateEdit
-        Left = 98
-        Top = 4
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 80
+        Top = 3
         DataBinding.DataField = 'StartPeriod'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         TabOrder = 0
-        Width = 179
+        Width = 145
       end
       object lcMarknad: TcxDBLookupComboBox
-        Left = 98
-        Top = 33
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 80
+        Top = 27
         DataBinding.DataField = 'Marknad'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
         Properties.ListColumns = <>
         Properties.ListOptions.ShowHeader = False
         TabOrder = 1
-        Width = 179
+        Width = 145
       end
       object icOrderTypeNo: TcxDBImageComboBox
-        Left = 345
-        Top = 4
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 280
+        Top = 3
         DataBinding.DataField = 'OrderTypeNo'
         DataBinding.DataSource = ds_Props
         Properties.ImmediatePost = True
@@ -195,20 +143,16 @@ object fnotInvoicedReport: TfnotInvoicedReport
             Value = 1
           end>
         TabOrder = 2
-        Width = 149
+        Width = 121
       end
       object cxLabel1: TcxLabel
-        Left = 679
+        Left = 552
         Top = 2
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Caption = 'Ej fakturerat'
         ParentFont = False
         Style.Font.Charset = DEFAULT_CHARSET
         Style.Font.Color = clWindowText
-        Style.Font.Height = -15
+        Style.Font.Height = -12
         Style.Font.Name = 'MS Sans Serif'
         Style.Font.Style = [fsBold]
         Style.IsFontAssigned = True
@@ -1161,7 +1105,7 @@ object fnotInvoicedReport: TfnotInvoicedReport
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -11
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -1257,13 +1201,14 @@ object fnotInvoicedReport: TfnotInvoicedReport
       'TIB_STRINGLIST'
       'TSTRINGLIST')
     UseDefaultLanguage = True
-    NumOfLanguages = 3
+    NumOfLanguages = 4
     LangDispatcher = dmLanguage.siLangDispatcher1
     LangDelim = 1
     LangNames.Strings = (
       'Origin'
       'Swedish'
-      'English')
+      'English'
+      'VE_Svenska')
     Language = 'Origin'
     CommonContainer = dmLanguage.siLang1
     ExcludedProperties.Strings = (

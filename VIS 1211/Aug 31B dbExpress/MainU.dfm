@@ -1,9 +1,9 @@
 object XMLImportExport: TXMLImportExport
   Left = 277
   Top = 206
-  Caption = 'XML Import/Export'
-  ClientHeight = 706
-  ClientWidth = 953
+  Caption = 'XML Import Export'
+  ClientHeight = 492
+  ClientWidth = 841
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,7 @@ object XMLImportExport: TXMLImportExport
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
@@ -20,17 +21,13 @@ object XMLImportExport: TXMLImportExport
   object PageControl1: TPageControl
     Left = 0
     Top = 65
-    Width = 953
-    Height = 600
-    ActivePage = tsExport
+    Width = 841
+    Height = 386
+    ActivePage = tsImport
     Align = alClient
     TabOrder = 0
     object tsImport: TTabSheet
       Caption = '&XML Import to DB'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label2: TLabel
         Left = 0
         Top = 32
@@ -38,13 +35,13 @@ object XMLImportExport: TXMLImportExport
         Height = 13
         Caption = 'XML file att importera:'
       end
-      object sbOpenWoodXFileToImport: TSpeedButton
+      object SpeedButton1: TSpeedButton
         Left = 667
         Top = 24
-        Width = 22
+        Width = 62
         Height = 21
         Caption = '...'
-        OnClick = sbOpenWoodXFileToImportClick
+        OnClick = SpeedButton1Click
       end
       object edtFileToImport: TEdit
         Left = 112
@@ -72,7 +69,7 @@ object XMLImportExport: TXMLImportExport
         TabOrder = 1
       end
       object Button1: TButton
-        Left = 288
+        Left = 279
         Top = 48
         Width = 161
         Height = 25
@@ -104,15 +101,15 @@ object XMLImportExport: TXMLImportExport
       end
       object btnExport: TButton
         Left = 112
-        Top = 51
-        Width = 257
+        Top = 48
+        Width = 161
         Height = 25
         Action = acExportPkgsToXMLFile
         TabOrder = 1
       end
       object btnValidateExportFile: TButton
-        Left = 375
-        Top = 51
+        Left = 280
+        Top = 48
         Width = 161
         Height = 25
         Action = acValidateExportXMLFile
@@ -126,8 +123,8 @@ object XMLImportExport: TXMLImportExport
         TabOrder = 0
       end
       object btnClearEmptyNode: TButton
-        Left = 542
-        Top = 51
+        Left = 464
+        Top = 48
         Width = 107
         Height = 25
         Caption = 'Clear Empty Node'
@@ -137,27 +134,19 @@ object XMLImportExport: TXMLImportExport
       end
       object cbEmaila: TcxCheckBox
         Left = 112
-        Top = 152
+        Top = 88
         Caption = 'Emaila'
         Properties.ImmediatePost = True
         State = cbsChecked
         TabOrder = 4
         Width = 121
       end
-      object Button2: TButton
-        Left = 112
-        Top = 82
-        Width = 257
-        Height = 25
-        Action = acExportPkgsToXMLFileToInternational
-        TabOrder = 5
-      end
     end
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 953
+    Width = 841
     Height = 65
     Align = alTop
     TabOrder = 1
@@ -198,8 +187,9 @@ object XMLImportExport: TXMLImportExport
       Height = 21
       TabOrder = 0
       Text = 
-        'Initial Catalog=vis_vwab;Provider=SQLOLEDB.1;uid=sa;pwd=huggkubb' +
-        ';Persist Security Info=False;Data Source=vida912'
+        'Provider=SQLOLEDB.1;Password=sa;Persist Security Info=True;User ' +
+        'ID=sa;Initial Catalog=tt_sys;Data Source=carmak-m30;Extended Pro' +
+        'perties="uid=sa;pwd=sa'
       Visible = False
     end
     object btnConnection: TButton
@@ -215,56 +205,55 @@ object XMLImportExport: TXMLImportExport
   end
   object Panel2: TPanel
     Left = 0
-    Top = 665
-    Width = 953
+    Top = 451
+    Width = 841
     Height = 41
     Align = alBottom
     TabOrder = 2
     object BitBtn1: TBitBtn
-      Left = 384
+      Left = 304
       Top = 8
       Width = 75
       Height = 25
-      Caption = 'St'#228'ng'
-      Kind = bkClose
+      Kind = bkOK
       NumGlyphs = 2
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 656
+      Left = 392
       Top = 8
       Width = 75
       Height = 25
       Kind = bkCancel
       NumGlyphs = 2
       TabOrder = 1
-      Visible = False
     end
   end
   object ADOConnection1: TADOConnection
     ConnectionString = 
       'Provider=SQLOLEDB.1;Password=woods2011;Persist Security Info=Tru' +
-      'e;User ID=Lars;Initial Catalog=vis_vida;Data Source=vis.vida.se'
+      'e;User ID=sa;Initial Catalog=ws_sys;Data Source=lars-dator\SQLEX' +
+      'PRESS'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
     BeforeConnect = ADOConnection1BeforeConnect
-    Left = 304
-    Top = 193
+    Left = 392
+    Top = 273
   end
   object dsInfo: TADODataSet
     Connection = ADOConnection1
     Parameters = <>
-    Left = 624
+    Left = 568
     Top = 193
   end
   object opd: TOpenDialog
     Filter = '*.xml|*.xml|*.*|*.*'
-    Left = 388
+    Left = 380
     Top = 193
   end
   object svd: TSaveDialog
     Filter = '*.xml|*.xml|*.*|*.*'
-    Left = 436
+    Left = 444
     Top = 193
   end
   object opdxs: TOpenDialog
@@ -275,16 +264,16 @@ object XMLImportExport: TXMLImportExport
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
     Parameters = <>
-    Left = 676
-    Top = 193
+    Left = 564
+    Top = 345
   end
   object cxShellBrowserDialog1: TcxShellBrowserDialog
-    Left = 384
-    Top = 305
+    Left = 568
+    Top = 265
   end
   object ActionList1: TActionList
-    Left = 620
-    Top = 249
+    Left = 724
+    Top = 257
     object acValidateImportFile: TAction
       Caption = 'Validera XML fil'
       OnExecute = acValidateImportFileExecute
@@ -296,7 +285,7 @@ object XMLImportExport: TXMLImportExport
       OnUpdate = acImportPkgsUpdate
     end
     object acExportPkgsToXMLFile: TAction
-      Caption = 'Exportera fakturapaketspec till woodx'
+      Caption = 'Exportera fakturaspec till xml'
       OnExecute = acExportPkgsToXMLFileExecute
     end
     object acValidateExportXMLFile: TAction
@@ -304,10 +293,33 @@ object XMLImportExport: TXMLImportExport
       OnExecute = acValidateExportXMLFileExecute
       OnUpdate = acValidateExportXMLFileUpdate
     end
-    object acExportPkgsToXMLFileToInternational: TAction
-      Caption = 'Exportera fakturapaketspec till woodx (via BizTalk)'
-      OnExecute = acExportPkgsToXMLFileToInternationalExecute
+  end
+  object sq_GetLONos2: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'InternalInvoiceNo'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'Select DeliveryMessageNumber FROM dbo.DeliveryMessageWoodHeader '
+      'WHERE InternalInvoiceNo = :InternalInvoiceNo')
+    Left = 124
+    Top = 353
+    object sq_GetLONos2DeliveryMessageNumber: TStringField
+      FieldName = 'DeliveryMessageNumber'
+      Size = 30
     end
+  end
+  object clFtp1: TclFtp
+    Left = 244
+    Top = 289
+  end
+  object SQLQuery1: TSQLQuery
+    Params = <>
+    Left = 128
+    Top = 288
   end
   object sq_GetLONos: TADOQuery
     Connection = ADOConnection1
@@ -324,18 +336,11 @@ object XMLImportExport: TXMLImportExport
     SQL.Strings = (
       'Select DeliveryMessageNumber FROM dbo.DeliveryMessageWoodHeader '
       'WHERE InternalInvoiceNo = :InternalInvoiceNo')
-    Left = 388
-    Top = 241
+    Left = 392
+    Top = 328
     object sq_GetLONosDeliveryMessageNumber: TStringField
       FieldName = 'DeliveryMessageNumber'
       Size = 30
     end
-  end
-  object Timer1: TTimer
-    Enabled = False
-    Interval = 150
-    OnTimer = Timer1Timer
-    Left = 300
-    Top = 241
   end
 end
