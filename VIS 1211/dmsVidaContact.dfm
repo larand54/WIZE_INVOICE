@@ -2751,4 +2751,42 @@ object dmsContact: TdmsContact
       Size = 10
     end
   end
+  object qryEmailContactInfo: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM dbo.UserContactInfo UI WHERE UI.UserID = :UserID')
+    Left = 1008
+    Top = 288
+    ParamData = <
+      item
+        Name = 'USERID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 1
+      end>
+  end
+  object qrySendTo: TFDQuery
+    Connection = dmsConnector.FDConnection1
+    SQL.Strings = (
+      'select C.EmailAddress from contact C '
+      'JOIN ContactRole CR ON CR.ClientNo=C.ClientNo '
+      'AND CR.ContactNo=C.ContactNo '
+      'AND CR.RoleType=:RoleType  '
+      'WHERE C.ClientNo=:ClientNo ')
+    Left = 1016
+    Top = 344
+    ParamData = <
+      item
+        Name = 'ROLETYPE'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 2
+      end
+      item
+        Name = 'CLIENTNO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 36
+      end>
+  end
 end

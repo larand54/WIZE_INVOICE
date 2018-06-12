@@ -1911,7 +1911,7 @@ object dmsConnector: TdmsConnector
   end
   object sq_GetLoggedInUser: TFDQuery
     CachedUpdates = True
-    Connection = FDConnection1
+    ConnectionName = 'VIS'
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'Select suser_sname() AS LoggedInUser')
@@ -1961,14 +1961,12 @@ object dmsConnector: TdmsConnector
   object FDConnection1: TFDConnection
     ConnectionName = 'VIS'
     Params.Strings = (
-      'Server=carmak-speed\sqlexpress'
+      'Server=VPS-NET-RDS-004\WOODSUPPORT'
       'Database=woodsupport'
-      'OSAuthent=No'
+      'OSAuthent=Yes'
       'MetaDefCatalog=woodsupport'
       'MetaDefSchema=dbo'
       'ApplicationName=WIZE INVOICE'
-      'User_Name=sa'
-      'Password=woods2011'
       'DriverID=MSSQL')
     FetchOptions.AssignedValues = [evMode, evRowsetSize, evUnidirectional, evCursorKind]
     FetchOptions.Mode = fmAll

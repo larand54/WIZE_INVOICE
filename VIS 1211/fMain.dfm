@@ -21,16 +21,16 @@ object frmMain: TfrmMain
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 157
+    Top = 159
     Width = 1226
-    Height = 554
+    Height = 552
     Align = alClient
     TabOrder = 0
     object panelBase: TPanel
       Left = 1
       Top = 1
       Width = 1224
-      Height = 552
+      Height = 550
       Align = alClient
       BevelOuter = bvLowered
       TabOrder = 0
@@ -40,7 +40,7 @@ object frmMain: TfrmMain
     Left = 0
     Top = 0
     Width = 1226
-    Height = 157
+    Height = 159
     ApplicationButton.Glyph.Data = {
       36090000424D3609000000000000360000002800000018000000180000000100
       2000000000000009000000000000000000000000000000000000000000000000
@@ -428,6 +428,11 @@ object frmMain: TfrmMain
     object acToggleReportSystem: TAction
       Caption = 'Change to FastReport'
       OnExecute = acToggleReportSystemExecute
+    end
+    object acEmailContactInfo: TAction
+      Caption = 'Email KontaktInfo'
+      ImageIndex = 16
+      OnExecute = acEmailContactInfoExecute
     end
   end
   object imglOutbar_large: TImageList
@@ -3119,7 +3124,7 @@ object frmMain: TfrmMain
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
@@ -3443,6 +3448,10 @@ object frmMain: TfrmMain
           ItemName = 'dxBarButton17'
         end
         item
+          Visible = True
+          ItemName = 'dxbrbtnEmailContactInfo'
+        end
+        item
           BeginGroup = True
           Visible = True
           ItemName = 'bbGeneralShippingCost'
@@ -3582,6 +3591,10 @@ object frmMain: TfrmMain
       Action = acToggleReportSystem
       Category = 0
       Hint = 'Toggle Reportsystem'
+    end
+    object dxbrbtnEmailContactInfo: TdxBarButton
+      Action = acEmailContactInfo
+      Category = 0
     end
     object dxBarButton1: TdxBarButton
       Action = atExit

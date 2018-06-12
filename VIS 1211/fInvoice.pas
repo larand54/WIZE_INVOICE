@@ -2125,7 +2125,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;
@@ -2257,7 +2258,8 @@ begin
             GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
             cdsInvoiceHeadLanguageCode.AsInteger,
             cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-            cdsInvoiceHeadSupplierNo.AsInteger);
+            cdsInvoiceHeadSupplierNo.AsInteger,
+            cdsInvoiceLOShippingPlanNo.AsInteger);
 
           CalculateDueDate;
 
@@ -2369,7 +2371,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;
@@ -2430,7 +2433,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;
@@ -5483,8 +5487,10 @@ begin
     InvoiceNo := dmVidaInvoice.cdsInvoiceHeadInternalInvoiceNo.AsInteger;
     if InvoiceNo < 1 then
       Exit;
-    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
-      (dmVidaInvoice.cdsInvoiceLOShippingPlanNo.AsInteger);
+    ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
+//    MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
+//      (dmVidaInvoice.cdsInvoiceLOShippingPlanNo.AsInteger);
+    MailToAddress := dmsContact.getSendTo(ClientNo, 'INV');
     if Length(MailToAddress) = 0 then
     Begin
       MailToAddress := 'ange@adress.nu';
@@ -5494,7 +5500,6 @@ begin
     language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
     RoleType := 1;
     DocTyp := cFaktura;
-    ClientNo := dmVidaInvoice.cdsInvoiceHeadCustomerNo.AsInteger;
     if uReportController.useFR then
     begin
       FR := TFastReports.Create;

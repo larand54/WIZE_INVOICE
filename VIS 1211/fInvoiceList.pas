@@ -2243,11 +2243,13 @@ begin
       else
       MailToAddress:= dmsContact.GetEmailAddress(dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger) ; }
 
-    if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
-      (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
-      MailToAddressAgent := dmsContact.GetEmailAddress
-        (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger);
+{
+      if (not dmVidaInvoice.cdsInvoiceListAgentNo.IsNull) and
+        (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger > 0) then
+        MailToAddressAgent := dmsContact.GetEmailAddress
+          (dmVidaInvoice.cdsInvoiceListAgentNo.AsInteger);
 
+}
     MailToAddressKund := dmsContact.GetEmailAddress
       (dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger);
 
@@ -3517,6 +3519,8 @@ begin
       Exit;
     MailToAddress := dmsContact.GetEmailAddressForSpeditorByLO
       (dmVidaInvoice.cdsInvoiceListLO.AsInteger);
+    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
+    MailToAddress := dmsContact.getSendTo(ClientNo, 'INV');
     if Length(MailToAddress) = 0 then
     Begin
       MailToAddress := 'ange@adress.nu';
@@ -3526,7 +3530,6 @@ begin
     language := dmVidaInvoice.cdsInvoiceHeadLanguageCode.AsInteger;
     RoleType := 1;
     DocTyp := cFaktura;
-    ClientNo := dmVidaInvoice.cdsInvoiceListCustomerNo.AsInteger;
     if uReportController.useFR then
     begin
       FR := TFastReports.Create;

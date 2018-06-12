@@ -190,6 +190,8 @@ type
     dxBarButton6: TdxBarButton;
     dxBarButton19: TdxBarButton;
     siLangLinked1: TsiLangLinked;
+    dxbrbtnEmailContactInfo: TdxBarButton;
+    acEmailContactInfo: TAction;
 
     procedure FormCreate(Sender: TObject);
     procedure atExitExecute(Sender: TObject);
@@ -245,6 +247,7 @@ type
     procedure Button1Click(Sender: TObject);
 
     procedure acToggleReportSystemExecute(Sender: TObject);
+    procedure acEmailContactInfoExecute(Sender: TObject);
 
   private
     a: String;
@@ -299,7 +302,7 @@ uses
   uCredit, uCreditLimitAnalys, uEntryField, uLockedLoads, uReportStatics, uStef,
 //  PrintUnit,  PreviewForm,
   udmLanguage, ufrmChangeLanguage,
-  dmsVidaContact, uReportController, udmFR;
+  dmsVidaContact, uReportController, udmFR, ufrmContactInfo;
 
 {$R *.DFM}
 
@@ -542,17 +545,17 @@ begin
   CheckMappar;
 
 {$IFDEF DEBUG}
-  if pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0  then begin
+  if pos('CARMAK',dmsConnector.localServer) > 0  then begin
     if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-SPEED' then
-      dmsConnector.DriveLetter := 'D:\'
+      dmsConnector.DriveLetter := 'C:\'
     else if GetEnvironmentVariable('COMPUTERNAME')= 'CARMAK-FASTER' then
       dmsConnector.DriveLetter := 'D:\'
     else
       dmsConnector.DriveLetter := 'C:\';
-    ThisUser.Database:= 'carmak-speed\sqlexpress:woodsupport' ;
+    ThisUser.Database:= dmsConnector.localServer+':woodsupport' ;
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Server='+dmsConnector.localServer);
         Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
         Params.add('MetaDefCatalog=woodsupport');
@@ -572,7 +575,22 @@ begin
   ThisUser.Database:= 'VPS-NET-RDS-004\WOODSUPPORT:woodsupport' ;
 {$ENDIF}
 
-
+  if GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER' then begin
+    dmsConnector.DriveLetter := 'C:\';
+    ThisUser.Database:= dmsConnector.localServer+':woodsupport' ;
+      with dmsConnector.FDConnection1 do begin
+        Params.Clear;
+        Params.Add('Server='+dmsConnector.localServer);
+        Params.Add('Database=woodsupport');
+        Params.Add('OSAuthent=No');
+        Params.add('MetaDefCatalog=woodsupport');
+        Params.Add('MetaDefSchema=dbo');
+        Params.Add('User_Name=sa');
+        Params.Add('Password=woods2011');
+        Params.Add('DriverID=MSSQL');
+        Params.Add('ApplicationName=WIZE INVOICE');
+      end;
+  end;
 
   dmsConnector.Org_DB_Name := ThisUser.HostName + ':' + ThisUser.Database;
   if not ThisUser.Logon then
@@ -1116,6 +1134,13 @@ begin
     End;
   End;
 
+end;
+
+procedure TfrmMain.acEmailContactInfoExecute(Sender: TObject);
+begin
+  with TfrmContactInfo.Create(self) do begin
+    showModal;
+  end;
 end;
 
 procedure TfrmMain.acFragaAvropExecute(Sender: TObject);

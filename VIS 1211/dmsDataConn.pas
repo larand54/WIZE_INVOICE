@@ -58,6 +58,7 @@ type
   public
     { Public declarations }
 
+    LocalServer: string;
     DriveLetter, InifilesMap: String;
     LoginChanged: Boolean;
     Org_AD_Name: String;
@@ -215,13 +216,13 @@ end;
 
 procedure TdmsConnector.DataModuleCreate(Sender: TObject);
 begin
-
+  LocalServer := GetEnvironmentVariable('COMPUTERNAME')+'\sqlexpress';
 {$IFDEF DEBUG}
-  if (Pos('CARMAK',GetEnvironmentVariable('COMPUTERNAME')) > 0) then begin
+  if (Pos('CARMAK',localServer) > 0) then begin
     dmsConnector.DriveLetter := 'C:\';
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Server='+localServer);
         Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
         Params.add('MetaDefCatalog=woodsupport');
@@ -235,11 +236,11 @@ begin
   else begin
   end;
 {$ELSE}
-  if (GetEnvironmentVariable('COMPUTERNAME') = 'CARMAK-FASTER') then begin
+  if (Pos('CARMAK',localServer) > 0) then begin
     dmsConnector.DriveLetter := 'C:\';
       with dmsConnector.FDConnection1 do begin
         Params.Clear;
-        Params.Add('Server=carmak-speed\sqlexpress');
+        Params.Add('Server='+localServer);
         Params.Add('Database=woodsupport');
         Params.Add('OSAuthent=No');
         Params.add('MetaDefCatalog=woodsupport');

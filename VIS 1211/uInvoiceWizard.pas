@@ -571,7 +571,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;
@@ -705,7 +706,8 @@ begin
             GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
             cdsInvoiceHeadLanguageCode.AsInteger,
             cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-            cdsInvoiceHeadSupplierNo.AsInteger);
+            cdsInvoiceHeadSupplierNo.AsInteger,
+            cdsInvoiceLOShippingPlanNo.AsInteger);
 
           CalculateDueDate;
 
@@ -802,7 +804,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;
@@ -839,7 +842,8 @@ begin
           GetPaymentText(cdsInvoiceHeadCurrencyNo.AsInteger,
           cdsInvoiceHeadLanguageCode.AsInteger,
           cdsInvoiceHeadClientBillingAddressNo.AsInteger,
-          cdsInvoiceHeadSupplierNo.AsInteger);
+          cdsInvoiceHeadSupplierNo.AsInteger,
+          cdsInvoiceLOShippingPlanNo.AsInteger);
 
         cdsInvoiceHead.Post;
       End;

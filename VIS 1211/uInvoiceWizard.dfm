@@ -29,14 +29,18 @@ object fInvoiceWizard: TfInvoiceWizard
     Properties.ActivePage = tsParametrar
     Properties.CustomButtons.Buttons = <>
     OnPageChanging = pgPriceListGuidePageChanging
-    ClientRectBottom = 526
-    ClientRectLeft = 1
-    ClientRectRight = 1079
-    ClientRectTop = 21
+    ClientRectBottom = 523
+    ClientRectLeft = 4
+    ClientRectRight = 1076
+    ClientRectTop = 24
     object tsInvoiceHead: TcxTabSheet
       Caption = 'tsInvoiceHead'
       ImageIndex = 0
       OnEnter = tsInvoiceHeadEnter
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object Label17: TLabel
         Left = 147
         Top = 190
@@ -194,13 +198,19 @@ object fInvoiceWizard: TfInvoiceWizard
       Caption = 'tsAddress'
       ImageIndex = 3
       OnEnter = tsAddressEnter
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 1078
-        Height = 505
+        Width = 1072
+        Height = 499
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 1078
+        ExplicitHeight = 505
         object txtCustomer: TDBText
           Left = 32
           Top = 135
@@ -344,14 +354,20 @@ object fInvoiceWizard: TfInvoiceWizard
     object tsParametrar: TcxTabSheet
       Caption = 'tsParametrar'
       ImageIndex = 4
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 1078
-        Height = 505
+        Width = 1072
+        Height = 499
         Align = alClient
         TabOrder = 0
         OnEnter = Panel3Enter
+        ExplicitWidth = 1078
+        ExplicitHeight = 505
         object DBText7: TDBText
           Left = 200
           Top = 281
@@ -654,6 +670,10 @@ object fInvoiceWizard: TfInvoiceWizard
       Caption = 'tsAgent'
       ImageIndex = 5
       OnEnter = tsAgentEnter
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object DBText22: TDBText
         Left = 32
         Top = 144
@@ -753,13 +773,18 @@ object fInvoiceWizard: TfInvoiceWizard
       Caption = 'tsInvoiceRows'
       ImageIndex = 6
       OnEnter = tsInvoiceRowsEnter
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1078
+        Width = 1072
         Height = 137
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1078
         object bSelectInvoiceRows: TcxButton
           Left = 16
           Top = 88
@@ -799,10 +824,12 @@ object fInvoiceWizard: TfInvoiceWizard
       object grdFaktura: TcxGrid
         Left = 0
         Top = 137
-        Width = 1078
-        Height = 368
+        Width = 1072
+        Height = 362
         Align = alClient
         TabOrder = 1
+        ExplicitWidth = 1078
+        ExplicitHeight = 368
         object grdFakturaDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsrcInvoiceDetail
@@ -1226,13 +1253,18 @@ object fInvoiceWizard: TfInvoiceWizard
       Caption = 'tsShipToAddress'
       ImageIndex = 6
       OnEnter = tsShipToAddressEnter
+      ExplicitLeft = 1
+      ExplicitTop = 21
+      ExplicitWidth = 1078
+      ExplicitHeight = 505
       object grdShipAdr: TcxGrid
         Left = 0
         Top = 145
-        Width = 1078
+        Width = 1072
         Height = 121
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1078
         object grdShipAdrDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dmVidaInvoice.dsInvoiceShipToAddress
@@ -1320,10 +1352,11 @@ object fInvoiceWizard: TfInvoiceWizard
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 1078
+        Width = 1072
         Height = 145
         Align = alTop
         TabOrder = 1
+        ExplicitWidth = 1078
         object bSelectDeliveryAddress: TcxButton
           Left = 8
           Top = 80
@@ -1364,6 +1397,10 @@ object fInvoiceWizard: TfInvoiceWizard
     object tsNotering: TcxTabSheet
       Caption = 'Notering&&slutf'#246'r'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cxDBRichEdit1: TcxDBRichEdit
         Left = 0
         Top = 81
@@ -1374,16 +1411,19 @@ object fInvoiceWizard: TfInvoiceWizard
         Properties.ScrollBars = ssVertical
         Properties.SelectionBar = True
         TabOrder = 0
-        Height = 424
-        Width = 1078
+        ExplicitWidth = 1078
+        ExplicitHeight = 424
+        Height = 418
+        Width = 1072
       end
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 1078
+        Width = 1072
         Height = 81
         Align = alTop
         TabOrder = 1
+        ExplicitWidth = 1078
         object cxLabel8: TcxLabel
           Left = 8
           Top = 8
@@ -3936,7 +3976,7 @@ object fInvoiceWizard: TfInvoiceWizard
   object dxBarManager1: TdxBarManager
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (

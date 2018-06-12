@@ -370,6 +370,8 @@ type
     cds_ReportStaticsBankGiro: TStringField;
     cds_ReportStaticsIISalesPersonNo: TIntegerField;
     cds_ReportStaticsIISales: TStringField;
+    qryEmailContactInfo: TFDQuery;
+    qrySendTo: TFDQuery;
     procedure provSawMillLoadOrders1111GetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
     procedure cds_PkgNoSerie1PostError(DataSet: TDataSet; E: EDatabaseError;
@@ -392,6 +394,8 @@ type
     // function  WhoBelongsToLoadingLocation(const LoadingLocationNo : Integer) : Integer ;
 
   public
+    function getEmailContact(const aUserID: integer): string;
+    function getSendTo(const aClientNo: integer; const aType: string): string;
     procedure VerkBySR (const SRNo : integer) ;
     function  GetVerkOfLL(const LoadingLocationNo, SalesRegionNo : integer) : Integer ;
     function  GetCountryOfSalesRegion(const SalesRegionNo  : Integer) : Integer ;
@@ -767,6 +771,64 @@ Begin
     dmFR.RestoreCursor;
   end;
 End;
+
+function TdmsContact.getEmailContact(const aUserID: integer): string;
+begin
+  dmFR.SaveCursor;
+  try
+    result := 'Ange@adress.nu';
+    qryEmailContactInfo.Active := false;
+    qryEmailContactInfo.ParamByName('UserID').AsInteger := aUserID;
+    qryEmailContactInfo.Active := true;
+    qryEmailContactInfo.first;
+    if qryEmailContactInfo.Eof then
+      Exception.Create('Kontaktinfo saknas för användare:'+intToStr(aUserID))
+    else
+      result := qryEmailContactInfo.FieldByName('ContactInfoForEmail').AsString;
+  finally
+    dmFR.RestoreCursor;
+  end;
+end;
+
+
+function TdmsContact.getSendTo(const aClientNo: integer; const aType: string): string;
+var
+  RoleType: integer;
+begin
+  if aType = 'INV' then
+      RoleType := 9  // Fakturering - faktura
+  else if aType =  'FS' then
+      RoleType := 6   // Utlastning  - följesedel
+  else if aType =  'KON' then
+      RoleType := 2  // Försäljning - kontrakt
+  else
+    RoleType := -1;
+
+  if RoleType = -1 then
+  begin
+    Exception.Create('Okänd rapporttyp angiven:'+aType+ '!');
+  end
+  else
+  begin
+    dmFR.SaveCursor;
+    try
+      Result := '';
+      qrySendTo.Close;
+      qrySendTo.ParamByName('ClientNo').AsInteger := aClientNo;
+      qrySendTo.ParamByName('RoleType').AsInteger := RoleType;
+      qrySendTo.Open;
+      qrySendTo.First;
+      while not qrySendTo.Eof do
+      begin
+        Result := Trim(qrySendTo.FieldByName('EmailAddress').AsString) + ';' + Result;
+        qrySendTo.Next;
+      end;
+      qrySendTo.Close;
+    finally
+      dmFR.RestoreCursor;
+    end;
+  end;
+end;
 
 function TdmsContact.GetEmailAddress(const ClientNo: Integer): String;
 Begin

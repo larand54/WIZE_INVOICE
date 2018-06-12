@@ -1676,6 +1676,8 @@ type
     sp_GetInvoiceDetailsArticleNo: TIntegerField;
     sp_GetInvoiceDetailsOrderNo: TIntegerField;
     sp_GetInvoiceDetailsInternalPrice: TFloatField;
+    sq_GetPaymentText_Special: TFDQuery;
+    sq_GetPaymentText_SpecialPaymentText: TMemoField;
     procedure DataModuleCreate(Sender: TObject);
     procedure dspInvoiceShipToAddressGetTableName(Sender: TObject;
       DataSet: TDataSet; var TableName: String);
@@ -1928,7 +1930,7 @@ type
       RichEdit1: TRichEdit): Variant;
     Function GetInvoiceTextByClient(const ClientNo: Integer): Variant;
     function GetPaymentText(const CurrencyNo, LanguageCode,
-      AddressNo, SalesRegionNo : Integer): String;
+      AddressNo, SalesRegionNo, aShippingPlanNo : Integer): String;
     procedure OpenInvoiceHeaderForAttest(const InvoiceNo, InvoiceType: Integer);
     function NextProformaNo(const InternalInvoiceNo: Integer): Integer;
     procedure DeletePreliminaryInvoice(const InternalInvoiceNo: Integer);
@@ -3972,19 +3974,20 @@ begin
 end;
 
 function TdmVidaInvoice.GetPaymentText(const CurrencyNo, LanguageCode,
-  AddressNo, SalesRegionNo : Integer): String;
+  AddressNo, SalesRegionNo, aShippingPlanNo : Integer): String;
 Begin
-  sq_GetPaymentText.Close;
-  sq_GetPaymentText.ParamByName('CurrencyNo').AsInteger := CurrencyNo;
-  sq_GetPaymentText.ParamByName('LanguageCode').AsInteger := LanguageCode;
-  sq_GetPaymentText.ParamByName('AddressNo').AsInteger := AddressNo;
-  sq_GetPaymentText.ParamByName('SalesRegionNo').AsInteger := SalesRegionNo;
-  sq_GetPaymentText.Open;
-  if not sq_GetPaymentText.Eof then
-    Result := sq_GetPaymentTextPaymentText.AsString
+  sq_GetPaymentText_Special.Close;
+  sq_GetPaymentText_Special.ParamByName('LONo').AsInteger := aShippingPlanNo;
+  sq_GetPaymentText_Special.ParamByName('CurrencyNo').AsInteger := CurrencyNo;
+  sq_GetPaymentText_Special.ParamByName('LanguageCode').AsInteger := LanguageCode;
+  sq_GetPaymentText_Special.ParamByName('AddressNo').AsInteger := AddressNo;
+  sq_GetPaymentText_Special.ParamByName('SalesRegionNo').AsInteger := SalesRegionNo;
+  sq_GetPaymentText_Special.Open;
+  if not sq_GetPaymentText_Special.Eof then
+    Result := sq_GetPaymentText_SpecialPaymentText.AsString
   else
     Result := '';
-  sq_GetPaymentText.Close;
+  sq_GetPaymentText_Special.Close;
 End;
 
 procedure TdmVidaInvoice.DataModuleDestroy(Sender: TObject);

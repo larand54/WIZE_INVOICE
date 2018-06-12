@@ -2970,6 +2970,10 @@ object dmVidaInvoice: TdmVidaInvoice
     FetchOptions.AssignedValues = [evCache]
     SQL.Strings = (
       'SELECT'
+      'OH.SU,'
+      'OH.CurrencyNo,'
+      'OH.SalesRegionNo,'
+      'ST_ADR.CountryNo,'
       'CSH.ShippingPlanNo,'
       'CSH.CustomerNo,'
       'OH.CustomerNo AS CustomerNoOH,'
@@ -2984,7 +2988,12 @@ object dmVidaInvoice: TdmVidaInvoice
       'Cy.CityName as Destination,'
       'OH.InvoiceText,'
       'OH.OrderNoText,'
-      'PayText.PaymentText,'
+      ''
+      'CASE WHEN PayText1.PaymentText is null'
+      '     THEN PayText2.PaymentText'
+      #9' ELSE PayText1.PaymentText'
+      'END AS PaymentText,'
+      ''
       'OH.CurrencyNo,'
       ''
       'OH.ClientBillingAddressNo,'
@@ -3096,17 +3105,30 @@ object dmVidaInvoice: TdmVidaInvoice
       #9#9#9#9#9#9#9'ON'#9'ADR.AddressNo'#9#9'= CSH.ClientBillingAddressNo'
       ''
       
-        '        LEFT OUTER Join dbo.PaymentTextII PayText               ' +
-        '  ON      PayText.CurrencyNo = OH.CurrencyNo'
+        '    LEFT OUTER Join dbo.PaymentTextII PayText1       ON'#9'(CSH.Cus' +
+        'tomerNo = 388'
+      #9#9'                                        AND      OH.SU = 1'
+      #9#9#9#9#9#9#9'AND      PayText1.CurrencyNo = OH.CurrencyNo --10001'
+      #9#9#9#9#9#9#9'AND'#9'     PayText1.LanguageCode = OH.LanguageCode --1'
+      #9#9#9#9#9#9#9'AND      PayText1.CountryNo = ST_ADR.CountryNo --20002'
+      
+        '                            AND      PayText1.SalesRegionNo = OH' +
+        '.SalesRegionNo)'
+      ''
+      #9#9#9#9#9#9#9
+      
+        '    LEFT OUTER Join dbo.PaymentTextII PayText2       ON'#9'PayText2' +
+        '.CurrencyNo = OH.CurrencyNo'
       
         '                                                        AND     ' +
-        'PayText.LanguageCode = OH.LanguageCode'
+        'PayText2.LanguageCode = OH.LanguageCode'
       
         '                                                        AND     ' +
-        'PayText.CountryNo = ADR.CountryNo'
+        'PayText2.CountryNo = ADR.CountryNo'
       
         '                                                        AND     ' +
-        'PayText.SalesRegionNo = OH.SalesRegionNo'
+        'PayText2.SalesRegionNo = OH.SalesRegionNo'
+      #9#9#9#9#9#9#9#9#9#9#9#9#9#9
       ''
       #9'LEFT OUTER JOIN dbo.Address '#9#9'Agent_ADR'
       
@@ -3170,7 +3192,8 @@ object dmVidaInvoice: TdmVidaInvoice
       #9#9#9#9'AND IL.ShippingPlanNo = LS.ShippingPlanNo'
       'WHERE'
       ' CSH.ShippingPlanNo = :ShippingPlanNo'
-      'AND '#9'LO.CustomerNo = :CustomerNo'
+      'AND'
+      ' '#9'LO.CustomerNo = :CustomerNo'
       'AND LO.SenderLoadStatus = 2'
       'AND IL.InternalInvoiceNo IS NULL')
     Left = 64
@@ -18350,7 +18373,6 @@ object dmVidaInvoice: TdmVidaInvoice
     Top = 1280
   end
   object sp_GetInvoiceDetails: TFDStoredProc
-    Active = True
     Connection = dmsConnector.FDConnection1
     StoredProcName = 'dbo.Wize_GetInvoiceDetails'
     Left = 344
@@ -18541,6 +18563,80 @@ object dmVidaInvoice: TdmVidaInvoice
     object sp_GetInvoiceDetailsInternalPrice: TFloatField
       FieldName = 'InternalPrice'
       Origin = 'InternalPrice'
+    end
+  end
+  object sq_GetPaymentText_Special: TFDQuery
+    CachedUpdates = True
+    Connection = dmsConnector.FDConnection1
+    FetchOptions.AssignedValues = [evCache]
+    SQL.Strings = (
+      'DECLARE @SU int'
+      'IF :CustomerNo in (388)'
+      
+        '    SELECT TOP 1 @SU=OH.SU FROM dbo.CustomerShippingPlanDetails ' +
+        'csd'
+      #9#9' Inner Join dbo.Orders OH ON  OH.OrderNo = csd.OrderNo'
+      ' WHERE csd.ShippingPlanNo = :LONo'
+      '  ELSE '
+      '    SET @SU = 0'
+      ''
+      ''
+      'IF @SU = 1 '
+      
+        '  SELECT PaymentText FROM dbo.PaymentTextII PT WHERE PT.Language' +
+        'Code=1 AND PT.CountryNo=20002'
+      '               AND PT.CurrencyNo=10001 AND PT.SalesRegionNo=741'
+      '  ELSE'
+      '    '
+      
+        'Select PaymentText FROM dbo.PaymentTextII PayText, dbo.Address '#9 +
+        #9'Adr'
+      'WHERE'
+      'Adr.AddressNo = :AddressNo'
+      'AND PayText.CurrencyNo = :CurrencyNo'
+      'AND     PayText.LanguageCode = :LanguageCode'
+      'AND     PayText.CountryNo = Adr.CountryNo'
+      'AND PayText.SalesRegionNo = :SalesRegionNo')
+    Left = 184
+    Top = 720
+    ParamData = <
+      item
+        Name = 'CUSTOMERNO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 388
+      end
+      item
+        Name = 'LONO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'ADDRESSNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'CURRENCYNO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'LANGUAGECODE'
+        DataType = ftInteger
+        ParamType = ptInput
+      end
+      item
+        Name = 'SALESREGIONNO'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object sq_GetPaymentText_SpecialPaymentText: TMemoField
+      FieldName = 'PaymentText'
+      Origin = 'PaymentText'
+      BlobType = ftMemo
     end
   end
 end
