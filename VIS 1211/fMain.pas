@@ -1137,10 +1137,11 @@ begin
 end;
 
 procedure TfrmMain.acEmailContactInfoExecute(Sender: TObject);
+var frmContactInfo: TfrmContactInfo;
 begin
-  with TfrmContactInfo.Create(self) do begin
-    showModal;
-  end;
+  frmContactInfo := TfrmContactInfo.Create(self);
+  frmContactInfo.showModal;
+  frmContactInfo.Free;
 end;
 
 procedure TfrmMain.acFragaAvropExecute(Sender: TObject);

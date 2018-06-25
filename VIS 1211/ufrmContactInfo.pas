@@ -30,8 +30,6 @@ type
     con1: TFDConnection;
     fdgxwtcrsr1: TFDGUIxWaitCursor;
     fdphysmsqldrvrlnk1: TFDPhysMSSQLDriverLink;
-    cxGridContactInfoDBTableView1UserID: TcxGridDBColumn;
-    cxGridContactInfoDBTableView1ContactInfoForEmail: TcxGridDBColumn;
     qryNewUsers: TFDQuery;
     dsNewUsers: TDataSource;
     dbcbbNewUser: TDBComboBox;
@@ -60,6 +58,14 @@ type
     qryNewUsersPermitLevelMovePkgs: TIntegerField;
     qryNewUsersAct: TIntegerField;
     qryNewUsersCanChangeLOVolUnit: TIntegerField;
+    cxGridContactInfoDBTableView1UserID: TcxGridDBColumn;
+    cxGridContactInfoDBTableView1ContactInfoForEmail: TcxGridDBColumn;
+    qryContactInfouserName: TStringField;
+    cxGridContactInfoDBTableView1userName: TcxGridDBColumn;
+    lbl1: TLabel;
+    lbl2: TLabel;
+    lbl3: TLabel;
+    lbl4: TLabel;
     procedure btnCloseClick(Sender: TObject);
     procedure btnNewUserClick(Sender: TObject);
     procedure cxdbmEmailContactInfoExit(Sender: TObject);
@@ -68,6 +74,7 @@ type
   private
     { Private declarations }
     function checkNewusers: boolean;
+    procedure fillcombo;
     property newUsersExist: boolean read checkNewUsers;
   public
     { Public declarations }
@@ -90,13 +97,18 @@ end;
 
 procedure TfrmContactInfo.btnNewUserClick(Sender: TObject);
 begin
-  if not qryContactInfo.Active then qryContactInfo.Active := true;
-
-  if qryContactInfo.Locate('UserID', qryNewUsersUserID.AsInteger, []) then
+  if not qryContactInfo.Active then
+    qryContactInfo.Active := true;
+  if qryContactInfo.Locate('UserID', integer(dbcbbNewUser.Items.Objects[dbcbbNewUser.ItemIndex]), []) then
     qryContactInfo.Edit
   else
     qryContactInfo.Insert;
-    qryContactInfo.FieldByName('UserID').AsInteger := qryNewUsersUserID.AsInteger;
+  qryContactInfo.FieldByName('UserID').AsInteger := integer(dbcbbNewUser.Items.Objects[dbcbbNewUser.ItemIndex]);
+  qryContactInfo.FieldByName('userName').AsString := dbcbbNewUser.Items[dbcbbNewUser.ItemIndex];
+  if qryContactInfo.State in [dsEdit, dsInsert] then begin
+    qryContactInfo.Post;
+    refresh;
+  end;
 end;
 
 function TfrmContactInfo.checkNewusers: boolean;
@@ -110,6 +122,24 @@ end;
 procedure TfrmContactInfo.cxdbmEmailContactInfoExit(Sender: TObject);
 begin
   qryContactInfo.post;
+end;
+
+procedure TfrmContactInfo.fillcombo;
+var
+  cbo: TDBComboBox;
+begin
+  cbo := dbcbbNewUser;
+  cbo.Items.Clear;
+  cbo.Text := '';
+  if not qryNewUsers.Active then
+    qryNewUsers.Active := true;
+  while not qryNewUsers.EOF do begin
+    cbo.Items.AddObject(qryNewUsersUserName.AsString, TObject(qryNewUsersUserID.AsInteger));
+    qryNewUsers.Next;
+  end;
+  cbo.DropDownCount := cbo.Items.Count;
+  if cbo.Items.Count > 0 then
+    cbo.Text := cbo.Items[0];
 end;
 
 procedure TfrmContactInfo.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -162,6 +192,7 @@ begin
   dbcbbNewUser.Visible := newUsers;
   btnNewUser.Visible := newUsers;
   lblNewUser.Visible := newUsers;
+  fillCombo;
 end;
 
 end.

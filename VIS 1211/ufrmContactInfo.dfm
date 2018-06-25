@@ -2,8 +2,8 @@ object frmContactInfo: TfrmContactInfo
   Left = 0
   Top = 0
   Caption = 'L'#228'gg upp/redigera kontaktinfo f'#246'r email'
-  ClientHeight = 396
-  ClientWidth = 635
+  ClientHeight = 787
+  ClientWidth = 647
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -64,11 +64,42 @@ object frmContactInfo: TfrmContactInfo
       0000000000000000000000000000000000000000000000000000}
     OnClick = btnNewUserClick
   end
+  object lbl1: TLabel
+    Left = 232
+    Top = 8
+    Width = 130
+    Height = 13
+    Caption = '1. V'#228'lj anv'#228'ndare i combon'
+  end
+  object lbl2: TLabel
+    Left = 232
+    Top = 27
+    Width = 144
+    Height = 13
+    Caption = '2. Klicka p'#229' figuren till v'#228'nster'
+  end
+  object lbl3: TLabel
+    Left = 232
+    Top = 45
+    Width = 293
+    Height = 13
+    Caption = '3. Skriv in emailadressen i tabellen nedan. ENTER ger ny rad.'
+  end
+  object lbl4: TLabel
+    Left = 232
+    Top = 61
+    Width = 330
+    Height = 26
+    Caption = 
+      '4. Combon t'#246'ms p'#229' anv'#228'ndare alteftersom man l'#228'gger till anv'#228'ndar' +
+      'e'#13#10'    Och n'#228'r alla anv'#228'ndare lagts till s'#229' f'#246'rsvinner combon he' +
+      'lt. '
+  end
   object cxGridContactInfo: TcxGrid
-    Left = 16
-    Top = 80
-    Width = 601
-    Height = 273
+    Left = 8
+    Top = 93
+    Width = 631
+    Height = 655
     TabOrder = 0
     object cxGridContactInfoDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
@@ -77,20 +108,28 @@ object frmContactInfo: TfrmContactInfo
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsBehavior.ColumnHeaderHints = False
+      OptionsBehavior.EditAutoHeight = eahEditor
       OptionsCustomize.ColumnFiltering = False
       OptionsCustomize.ColumnGrouping = False
       OptionsCustomize.ColumnHidingOnGrouping = False
       OptionsCustomize.DataRowSizing = True
       OptionsView.CellAutoHeight = True
+      OptionsView.DataRowHeight = 170
       OptionsView.GroupByBox = False
+      OptionsView.Indicator = True
       object cxGridContactInfoDBTableView1UserID: TcxGridDBColumn
-        Caption = 'Anv'#228'ndar ID'
         DataBinding.FieldName = 'UserID'
+        Options.Editing = False
+      end
+      object cxGridContactInfoDBTableView1userName: TcxGridDBColumn
+        DataBinding.FieldName = 'userName'
+        Options.Editing = False
+        Width = 56
       end
       object cxGridContactInfoDBTableView1ContactInfoForEmail: TcxGridDBColumn
-        Caption = 'Kontaktinfo f'#246'r EMail'
         DataBinding.FieldName = 'ContactInfoForEmail'
-        Width = 534
+        PropertiesClassName = 'TcxMemoProperties'
+        Width = 483
       end
     end
     object cxGridContactInfoLevel1: TcxGridLevel
@@ -102,13 +141,15 @@ object frmContactInfo: TfrmContactInfo
     Top = 40
     Width = 145
     Height = 21
+    Style = csDropDownList
     DataField = 'UserName'
     DataSource = dsNewUsers
+    Sorted = True
     TabOrder = 1
   end
   object btnClose: TBitBtn
-    Left = 288
-    Top = 360
+    Left = 271
+    Top = 754
     Width = 75
     Height = 25
     Caption = '&St'#228'ng'
@@ -118,11 +159,11 @@ object frmContactInfo: TfrmContactInfo
     OnClick = btnCloseClick
   end
   object qryContactInfo: TFDQuery
-    Connection = dmsConnector.FDConnection1
+    Connection = con1
     SQL.Strings = (
       'SELECT * FROM dbo.UserContactInfo')
-    Left = 512
-    Top = 88
+    Left = 528
+    Top = 96
     object qryContactInfoUserID: TIntegerField
       FieldName = 'UserID'
       Origin = 'UserID'
@@ -134,11 +175,16 @@ object frmContactInfo: TfrmContactInfo
       Origin = 'ContactInfoForEmail'
       BlobType = ftMemo
     end
+    object qryContactInfouserName: TStringField
+      FieldName = 'userName'
+      Origin = 'userName'
+      Size = 50
+    end
   end
   object dsContactInfo: TDataSource
     DataSet = qryContactInfo
-    Left = 512
-    Top = 136
+    Left = 520
+    Top = 144
   end
   object con1: TFDConnection
     Params.Strings = (
@@ -148,20 +194,20 @@ object frmContactInfo: TfrmContactInfo
       'Server=CARMAK-FASTER\SQLEXPRESS'
       'DriverID=MSSQL')
     LoginPrompt = False
-    Left = 512
-    Top = 48
+    Left = 528
+    Top = 8
   end
   object fdgxwtcrsr1: TFDGUIxWaitCursor
     Provider = 'Forms'
     Left = 576
-    Top = 40
+    Top = 8
   end
   object fdphysmsqldrvrlnk1: TFDPhysMSSQLDriverLink
-    Left = 408
-    Top = 96
+    Left = 448
+    Top = 160
   end
   object qryNewUsers: TFDQuery
-    Connection = dmsConnector.FDConnection1
+    Connection = con1
     SQL.Strings = (
       
         'select * from dbo.users U where not exists(SELECT * FROM dbo.Use' +
